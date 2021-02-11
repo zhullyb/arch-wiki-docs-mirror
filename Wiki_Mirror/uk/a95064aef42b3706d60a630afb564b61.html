@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>dm-crypt (Українська)/Swap encryption (Українська) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Dm-crypt_Українська_Swap_encryption_Українська rootpage-Dm-crypt_Українська skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">dm-crypt (Українська)/Swap encryption (Українська)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"><span class="subpages">&lt; <a href="../uk/Dm-crypt.html" title="Dm-crypt (Українська)">Dm-crypt (Українська)</a></span></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<p><span></span>
+</p>
+<p>Залежно від вимог, можуть використовуватися різні методи для шифрування розділу <a href="../en/Swap.html" title="Swap">swap</a>, які описані нижче. Налаштування, при якому шифрування свопу повторно ініціалізується під час перезавантаження (з новим шифром), забезпечує більш високий захист даних, оскільки дозволяє уникнути чутливих фрагментів файлів, які, можливо, були досить давно записані у своп і збереглись без перезапису. Однак повторне шифрування свопу, як правило, також забороняє використання функції призупинення на диск.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1">
+<a href="#%D0%91%D0%B5%D0%B7_%D0%BF%D1%96%D0%B4%D1%82%D1%80%D0%B8%D0%BC%D0%BA%D0%B8_%D1%84%D1%83%D0%BD%D0%BA%D1%86%D1%96%D1%97_%D0%BF%D1%80%D0%B8%D0%B7%D1%83%D0%BF%D0%B8%D0%BD%D0%B5%D0%BD%D0%BD%D1%8F_%D0%BD%D0%B0_%D0%B4%D0%B8%D1%81%D0%BA"><span class="tocnumber">1</span> <span class="toctext">Без підтримки функції призупинення на диск</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#UUID_%D1%96_LABEL"><span class="tocnumber">1.1</span> <span class="toctext">UUID і LABEL</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#%D0%92%D0%B8%D0%BC%D0%BA%D0%BD%D0%B5%D0%BD%D0%BD%D1%8F_%D1%80%D0%B5%D0%B6%D0%B8%D0%BC%D1%83_%D0%B3%D0%BB%D0%B8%D0%B1%D0%BE%D0%BA%D0%BE%D0%B3%D0%BE_%D1%81%D0%BD%D1%83_%D0%B2_%D1%80%D0%BE%D0%B1%D0%BE%D1%87%D0%B8%D1%85_%D1%81%D0%B5%D1%80%D0%B5%D0%B4%D0%BE%D0%B2%D0%B8%D1%89%D0%B0%D1%85"><span class="tocnumber">1.2</span> <span class="toctext">Вимкнення режиму глибокого сну в робочих середовищах</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-4">
+<a href="#%D0%97_%D0%BF%D1%96%D0%B4%D1%82%D1%80%D0%B8%D0%BC%D0%BA%D0%BE%D1%8E_%D0%BF%D1%80%D0%B8%D0%B7%D1%83%D0%BF%D0%B8%D0%BD%D0%B5%D0%BD%D0%BD%D1%8F_%D0%BD%D0%B0_%D0%B4%D0%B8%D1%81%D0%BA"><span class="tocnumber">2</span> <span class="toctext">З підтримкою призупинення на диск</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#LVM_%D0%BD%D0%B0_LUKS"><span class="tocnumber">2.1</span> <span class="toctext">LVM на LUKS</span></a></li>
+<li class="toclevel-2 tocsection-6">
+<a href="#%D0%92%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F_%D1%80%D0%BE%D0%B7%D0%B4%D1%96%D0%BB%D1%83_%D0%BF%D1%96%D0%B4%D0%BA%D0%B0%D1%87%D0%BA%D0%B8"><span class="tocnumber">2.2</span> <span class="toctext">Використання розділу підкачки</span></a>
+<ul>
+<li class="toclevel-3 tocsection-7"><a href="#%D0%92%D0%B8%D0%B2%D0%B5%D1%80%D1%82_mkinitcpio"><span class="tocnumber">2.2.1</span> <span class="toctext">Виверт mkinitcpio</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-8"><a href="#%D0%92%D0%B8%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D0%BD%D1%8F_%D1%84%D0%B0%D0%B9%D0%BB%D0%B0_%D0%BF%D1%96%D0%B4%D0%BA%D0%B0%D1%87%D0%BA%D0%B8"><span class="tocnumber">2.3</span> <span class="toctext">Використання файла підкачки</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="#%D0%92%D1%96%D0%B4%D0%BE%D0%BC%D1%96_%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B8"><span class="tocnumber">3</span> <span class="toctext">Відомі проблеми</span></a></li>
+</ul>
+</div>
+
+<h2>
+<span id=".D0.91.D0.B5.D0.B7_.D0.BF.D1.96.D0.B4.D1.82.D1.80.D0.B8.D0.BC.D0.BA.D0.B8_.D1.84.D1.83.D0.BD.D0.BA.D1.86.D1.96.D1.97_.D0.BF.D1.80.D0.B8.D0.B7.D1.83.D0.BF.D0.B8.D0.BD.D0.B5.D0.BD.D0.BD.D1.8F_.D0.BD.D0.B0_.D0.B4.D0.B8.D1.81.D0.BA"></span><span class="mw-headline" id="Без_підтримки_функції_призупинення_на_диск">Без підтримки функції призупинення на диск</span>
+</h2>
+<p>У системах, де призупинення роботи на диск (сплячий режим) не є бажаною функцією, <code>/etc/crypttab</code> можна налаштувати для розшифровки розділу підкачки випадковим паролем із простим dm-crypt під час завантаження. Випадковий пароль відкидається під час вимкнення, залишаючи позаду лише зашифровані, недоступні дані в пристрої обміну.
+Щоб увімкнути цю функцію, просто розкоментуйте рядок, що починається з <code>swap</code>, у <code>/etc/crypttab</code>. Змініть параметр <code>&lt;device&gt;</code> на ім’я вашого пристрою підкачки. Наприклад, це буде виглядати приблизно так:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/crypttab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;name&gt;  &lt;device&gt;     &lt;password&gt;     &lt;options&gt;
+swap      /dev/sd<i>X#</i>    /dev/urandom   swap,cipher=aes-xts-plain64,size=256</pre>
+<p>Це відобразить <code>/dev/sd<i>X#</i></code> у <code>/dev/mapper/swap</code> як розділ підкачки, який можна додати в <code>/etc/fstab</code> як звичайний своп. Якщо у вас раніше був незашифрований розділ підкачки, не забудьте його відключити, або повторно використати його <a href="../en/Fstab.html" title="Fstab">fstab</a> запис, змінивши device на <code>/dev/mapper/swap</code>. Опцій за замовчуванням має бути достатньо для більшості використань. Інші варіанти та пояснення кожного стовпця наведено у <span class="plainlinks archwiki-template-man" title="$ man 5 crypttab"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/crypttab.5">crypttab(5)</a></span>, а також <a rel="nofollow" class="external text" href="https://gitlab.com/cryptsetup/cryptsetup/wikis/FrequentlyAskedQuestions#2-setup">point cryptsetup FAQ 2.3</a>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Попередження:</strong> Весь вміст зазначеного пристрою буде остаточно <b>видалено</b>. Небезпечно використовувати для пристрою підкачки просте іменування ядра, оскільки порядок іменування пристроїв(<i>наприклад</i> <code>/dev/sda</code>, <code>/dev/sdb</code>) може змінюватись при кожному завантаженні . Варіанти:
+<ul>
+<li>Використовуйте шляхи <code>by-id</code> та <code>by-path</code>. Однак вони обидва сприйнятливі до апаратних змін. Див. <a href="../en/Persistent_block_device_naming.html#by-id_and_by-path" title="Persistent block device naming">Persistent block device naming#by-id and by-path</a>.</li>
+<li>Використовуйте ім'я логічного тому <a href="../en/LVM.html" title="LVM">LVM</a>.</li>
+<li>Використовуйте метод, описаний у <a href="#UUID_%D1%96_LABEL">#UUID і LABEL</a>. <a href="../en/Persistent_block_device_naming.html#by-label" title="Persistent block device naming">Мітки</a> та <a href="../en/Persistent_block_device_naming.html#by-uuid" title="Persistent block device naming">UUIDS</a> <b>не можна</b> використовувати безпосередньо через рекреацію та повторне шифрування пристрою підкачки при кожному завантаженні за допомогою <code>mkswap</code>, див. <a rel="nofollow" class="external text" href="https://gitlab.com/cryptsetup/cryptsetup/wikis/FrequentlyAskedQuestions#2-setup">cryptsetup FAQ</a>.</li>
+</ul>
+</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примітка:</strong> Налаштування розділу підкачки іноді може бути невдалим, див. <a rel="nofollow" class="external text" href="https://github.com/systemd/systemd/issues/10179">systemd issue 10179</a>.</div>
+<p>Щоб використовувати постійне іменування пристрою <code>by-id</code> замість простого іменування ядра, спочатку визначте пристрій підкачки:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># find -L /dev/disk -samefile /dev/<i>sdaX</i></pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/dev/disk/by-id/ata-WDC_WD2500BEVT-22ZCT0_WD-WXE908VF0470-part<i>X</i>
+/dev/disk/by-id/wwn-0x60015ee0000b237f-part<i>X</i>
+</pre>
+<p>Потім використовуйте як постійне посилання, наприклад для розділу <code>/dev/sd<i>X#</i></code> (якщо повертаються два результати, як зазначено вище, виберіть один із них):
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/crypttab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;name&gt; &lt;device&gt;                                                        &lt;password&gt;    &lt;options&gt;
+swap     /dev/disk/by-id/ata-WDC_WD2500BEVT-22ZCT0_WD-WXE908VF0470-partX /dev/urandom  swap,cipher=aes-cbc-essiv:sha256,size=256</pre>
+<p>Зауважите, що після перезавантаження і активації зашифрованого розділу підкачки, запуск для нього <code>swapon -s</code> показує довільний запис для відображення пристрою (наприклад, <code>/dev/dm-1</code>), тоді як команда <code>lsblk</code> показує <b>crypt</b> у стовпці <code>FSTYPE</code>. Завдяки новому шифруванню при кожному завантаженні, UUID для <code>/dev/mapper/swap</code> буде змінюватися кожного разу.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примітка:</strong> Якщо розділ, вибраний для підкачки, раніше був розділом LUKS, crypttab не буде перезаписувати розділ, щоб створити розділ підкачки. Це захід безпеки для запобігання втраті даних від випадкової помилкової ідентифікації розділу підкачки в crypttab. Для того, щоб використовувати такий розділ, видаліть один раз заголовок LUKS <a href="../en/Dm-crypt/Drive_preparation.html#Wipe_LUKS_header" title="Dm-crypt/Drive preparation">LUKS header must be overwritten</a>.</div>
+<h3>
+<span id="UUID_.D1.96_LABEL"></span><span class="mw-headline" id="UUID_і_LABEL">UUID і LABEL</span>
+</h3>
+<p>Небезпечно використовувати crypttab розділ підкачки з простими іменами пристроїв ядра, такими як <code>/dev/sdX#</code> або навіть <code>/dev/disk/by-id/ata-SERIAL-partX</code>. Незначна зміна назв пристроїв або макета розділів та <code>/etc/crypttab</code> побачить ваші цінні дані, які будуть відформатовані під час наступного завантаження. Те саме, якщо ви використовуєте PARTUUID, а потім вирішите використовувати цей розділ для чогось іншого, не видаляючи спочатку запис crypttab.
+</p>
+<p>Надійніше визначити правильний розділ, надавши йому справжній UUID або LABEL. За замовчуванням це не працює, оскільки dm-crypt та <code>mkswap</code> просто перезаписують будь-який вміст у цьому розділі, який також видаляє UUID та LABEL; однак можна вказати зміщення підкачки. Це дозволяє створити дуже маленьку, порожню, неправдиву файлову систему, яка не має жодної іншої мети, окрім забезпечення постійного UUID або LABEL для шифрування свопа.
+</p>
+<p>Створіть <a href="../en/File_systems.html" class="mw-redirect" title="Filesystem">filesystem</a> з міткою на ваш вибір:
+</p>
+<pre># mkfs.ext2 -L <i>cryptswap</i> /dev/sd<i>X#</i> 1M
+</pre>
+<p>Незвичний параметр після імені пристрою обмежує розмір файлової системи до 1 Мб, залишаючи за собою місце для зашифрованого свопу.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># blkid /dev/sdX#</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/dev/sdX#: LABEL="cryptswap" UUID="b72c384e-bd3c-49aa-b7a7-a28ea81a2605" TYPE="ext2"</pre>
+<p>Завдяки цьому <code>/dev/sdX#</code> тепер легко можна ідентифікувати за допомогою UUID або LABEL, незалежно від того, як в майбутньому може змінитися назва пристрою або навіть номер розділу. Залишились лише відредагувати записи <code>/etc/crypttab</code> та <code>/etc/fstab</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/crypttab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;name&gt; &lt;device&gt;         &lt;password&gt;    &lt;options&gt;
+swap     LABEL=<i>cryptswap</i>  /dev/urandom  swap,offset=2048,cipher=aes-xts-plain64,size=512</pre>
+<p>Зверніть увагу на зміщення: це 2048 секторів по 512 байт, отже, 1 Мб. Таким чином зашифрований своп не вплине на LABEL/UUID файлової системи, вирівнювання даних також працює.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;filesystem&gt;    &lt;dir&gt;  &lt;type&gt;  &lt;options&gt;  &lt;dump&gt;  &lt;pass&gt;
+/dev/mapper/swap  none   swap    defaults   0       0</pre>
+<p>Використовуючи це налаштування, криптосвоп намагатиметься використовувати лише розділ із відповідною міткою, незалежно від імені пристрою. Якщо ви вирішите використовувати розділ для чогось іншого, відформатувавши його, мітка <i>cryptswap</i> також буде втрачена, тому кріптосвоп не перезапише його під час наступного завантаження.
+</p>
+<h3>
+<span id=".D0.92.D0.B8.D0.BC.D0.BA.D0.BD.D0.B5.D0.BD.D0.BD.D1.8F_.D1.80.D0.B5.D0.B6.D0.B8.D0.BC.D1.83_.D0.B3.D0.BB.D0.B8.D0.B1.D0.BE.D0.BA.D0.BE.D0.B3.D0.BE_.D1.81.D0.BD.D1.83_.D0.B2_.D1.80.D0.BE.D0.B1.D0.BE.D1.87.D0.B8.D1.85_.D1.81.D0.B5.D1.80.D0.B5.D0.B4.D0.BE.D0.B2.D0.B8.D1.89.D0.B0.D1.85"></span><span class="mw-headline" id="Вимкнення_режиму_глибокого_сну_в_робочих_середовищах">Вимкнення режиму глибокого сну в робочих середовищах</span>
+</h3>
+<p>Середовища робочого столу не можуть автоматично виявити, що розділ підкачки зашифрований випадковим ключем і не може використовуватися для призупинення на диск.
+</p>
+<p><a href="../en/Xfce.html" title="Xfce">Xfce</a> можна налаштувати на приховування своєї кнопки <i>Hibernate</i>, виконавши цю команду:
+</p>
+<pre>$ xfconf-query -c xfce4-session -np /shutdown/ShowHibernate -t bool -s false
+</pre>
+<h2>
+<span id=".D0.97_.D0.BF.D1.96.D0.B4.D1.82.D1.80.D0.B8.D0.BC.D0.BA.D0.BE.D1.8E_.D0.BF.D1.80.D0.B8.D0.B7.D1.83.D0.BF.D0.B8.D0.BD.D0.B5.D0.BD.D0.BD.D1.8F_.D0.BD.D0.B0_.D0.B4.D0.B8.D1.81.D0.BA"></span><span class="mw-headline" id="З_підтримкою_призупинення_на_диск">З підтримкою призупинення на диск</span>
+</h2>
+<p>Щоб мати змогу відновити роботу після призупинення роботи комп’ютера на диск (сплячого режиму), потрібно зберегти своп простір цілим. Отже, потрібно мати раніше існуючий розділ або файл підкачки LUKS, який можна зберігати на диску або вводити вручну під час запуску.
+</p>
+<p>Наступні три методи є альтернативами налаштування зашифрованого своп з підтримкою призупинення на диск. Якщо ви застосовуєте будь-який із них, пам’ятайте, що критичні дані, які система замінює, можуть потенційно залишатися в свопі протягом тривалого періоду (тобто доки він не буде перезаписаний). Щоб зменшити цей ризик, розгляньте можливість встановлення системного завдання, яке повторно шифрує своп, наприклад кожного разу, коли система переходить у звичайне відключення, разом із вибраним методом.
+</p>
+<h3>
+<span id="LVM_.D0.BD.D0.B0_LUKS"></span><span class="mw-headline" id="LVM_на_LUKS">LVM на LUKS</span>
+</h3>
+<p>Якщо том підкачки знаходиться у групі томів, яка активується в initramfs, просто дотримуйтесь інструкцій у <a href="../en/Power_management/Suspend_and_hibernate.html#Hibernation" title="Power management/Suspend and hibernate">Power management/Suspend and hibernate#Hibernation</a>.
+</p>
+<h3>
+<span id=".D0.92.D0.B8.D0.BA.D0.BE.D1.80.D0.B8.D1.81.D1.82.D0.B0.D0.BD.D0.BD.D1.8F_.D1.80.D0.BE.D0.B7.D0.B4.D1.96.D0.BB.D1.83_.D0.BF.D1.96.D0.B4.D0.BA.D0.B0.D1.87.D0.BA.D0.B8"></span><span class="mw-headline" id="Використання_розділу_підкачки">Використання розділу підкачки</span>
+</h3>
+<p>Щоб відновити роботу із зашифрованого розділу підкачки, зашифрований розділ потрібно розблокувати в initramfs.
+</p>
+<ul>
+<li>При використанні initramfs на основі busybox( це за замовчуванням) застосуйте виверт <a href="../en/Dm-crypt/System_configuration.html#Using_encrypt_hook" title="Dm-crypt/System configuration">encrypt</a>, дотримуйтесь інструкцій у <a href="#mkinitcpio_hook">#mkinitcpio hook</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.</li>
+<li>Коли ж використовуєте initramfs на основі systemd з mkinitcpio вивертом <a href="../en/Dm-crypt/System_configuration.html#Using_sd-encrypt_hook" class="mw-redirect" title="Sd-encrypt">sd-encrypt</a>, просто вкажіть додаткові параметри ядра <code>rd.luks</code>, щоб розблокувати розділ підкачки.</li>
+</ul>
+<h4>
+<span id=".D0.92.D0.B8.D0.B2.D0.B5.D1.80.D1.82_mkinitcpio"></span><span class="mw-headline" id="Виверт_mkinitcpio">Виверт mkinitcpio</span>
+</h4>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="../en/Dm-crypt/Specialties.html#Multiple_non-root_partitions" title="Dm-crypt/Specialties">dm-crypt/Specialties#Multiple non-root partitions</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Notes:</b> Same use case. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Dm-crypt_(%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D1%81%D1%8C%D0%BA%D0%B0)/Swap_encryption_(%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D1%81%D1%8C%D0%BA%D0%B0)">Talk:Dm-crypt (Українська)/Swap encryption (Українська)#</a>)</div>
+</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примітка:</strong> Цей розділ застосовується лише при використанні виверта <code>encrypt</code>, який може розблокувати лише один пристрій (<a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/23182">FS#23182</a>). З вивертом <code>sd-encrypt</code>, може бути розблоковано кілька пристроїв, див. <a href="../en/Dm-crypt/System_configuration.html#Using_sd-encrypt_hook" title="Dm-crypt/System configuration">dm-crypt/System configuration#Using sd-encrypt hook</a>.</div>
+<p>Якщо пристрій підкачки знаходиться на пристрої, відмінному від пристрою кореневої файлової системи, він не буде відкритий вивертом <code>encrypt</code>, тобто відновлення повинно відбутися до того, як <code>/etc/crypttab</code> може бути використаний, тому потрібно створити виверт у <code>/etc/mkinitcpio.conf</code>, щоб відкрити своп пристрій LUKS перед відновленням.
+</p>
+<p>Якщо ви хочете послуговуватись розділом, який зараз використовується системою, спочатку його потрібно відключити:
+</p>
+<pre># swapoff /dev/&lt;device&gt;
+</pre>
+<p>Також не забудьте видалити будь-який рядок із <code>/etc/crypttab</code>, що вказує на цей пристрій.
+</p>
+<p>Якщо ви повторно використовуєте існуючий своп <a href="../en/Partitioning.html" class="mw-redirect" title="Partition">partition</a>, і якщо розділ знаходиться в таблиці розділів GPT, вам потрібно буде використовувати <a href="../en/GPT_fdisk.html" class="mw-redirect" title="Gdisk">gdisk</a>, щоб встановити  на ньому атрибут розділу 63 "не монтувати автоматично "<a href="../en/GPT_fdisk.html#Prevent_GPT_partition_automounting" class="mw-redirect" title="Gdisk">partition attribute 63 "do not automount"</a>. Це не дозволить systemd-gpt-auto-generator виявити та ввімкнути розділ під час завантаження.
+</p>
+<p>Наступна установка має недолік, оскільки при кожному завантаженні потрібно додатково вручну вставляти парольну фразу для розділу підкачки.
+</p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Попередження:</strong> Не використовуйте це налаштування з файлом ключа, якщо <code>/boot</code> не зашифровано. Будь ласка, прочитайте про проблему, про яку повідомлено <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Talk:Dm-crypt&amp;oldid=255742#Suspend_to_disk_instructions_are_insecure">тут</a>. Або скористайтеся зашифрованим gnupg файлом ключів відповідно до <a rel="nofollow" class="external free" href="https://bbs.archlinux.org/viewtopic.php?id=120181">https://bbs.archlinux.org/viewtopic.php?id=120181</a>
+</div>
+<p>Щоб відформатувати зашифрований контейнер для розділу підкачки, створіть набір ключів для запам’ятовуваної користувачем парольної фрази.
+</p>
+<pre># cryptsetup luksFormat /dev/&lt;device&gt;
+</pre>
+<p>Відкрийте розділ у <code>/dev/mapper</code>:
+</p>
+<pre># cryptsetup open /dev/&lt;device&gt; swapDevice
+</pre>
+<p>Створіть файлову систему підкачки всередині відображеного розділу:
+</p>
+<pre># mkswap /dev/mapper/swapDevice
+</pre>
+<p>Тепер вам потрібно створити виверт, щоб відкрити підкачку під час завантаження. Ви можете встановити <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> та налаштувати пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mkinitcpio-openswap/">mkinitcpio-openswap</a></span><sup><small>AUR</small></sup>, або слідувати наступним інструкціям. Створіть файл хука, що містить команду відкриття вашого пристрою підкачки:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/initcpio/hooks/openswap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">run_hook ()
+{
+    cryptsetup open /dev/&lt;device&gt; swapDevice
+}
+</pre>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Попередження:</strong> Монтування файлової системи <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/power/swsusp.html">є небезпечною та руйнівною дією</a>. Файл ключів не слід читати з файлової системи, яка була змонтована під час призупинення роботи.</div>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Додайте інструкції, які не призведуть до втрати даних. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Dm-crypt_(%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D1%81%D1%8C%D0%BA%D0%B0)/Swap_encryption_(%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D1%81%D1%8C%D0%BA%D0%B0)">Talk:Dm-crypt (Українська)/Swap encryption (Українська)#</a>)</div>
+</div>
+<p>шляхом введення пароля під час завантаження або:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/initcpio/hooks/openswap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">run_hook ()
+{
+    ## Optional: To avoid race conditions
+    x=0;
+    while [ ! -b /dev/mapper/&lt;root-device&gt; ] &amp;&amp; [ $x -le 10 ]; do
+       x=$((x+1))
+       sleep .2
+    done
+    ## End of optional
+
+    mkdir crypto_key_device
+    mount /dev/mapper/&lt;root-device&gt; crypto_key_device
+    cryptsetup open --key-file crypto_key_device/&lt;path-to-the-key&gt; /dev/&lt;device&gt; swapDevice
+    umount crypto_key_device
+}
+</pre>
+<p>шляхом завантаження файлу із зашифрованного кореневого пристрою.
+</p>
+<p>На деяких комп’ютерах можуть виникати умови, що призводять до перегонів , коли mkinitcpio намагається встановити пристрій перед процесом дешифрування та завершенням переліку пристроїв. Коментований блок <i>Optional</i> затримає процес завантаження на 2 секунди, поки кореневий пристрій не буде готовий до монтування.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примітка:</strong> Якщо підкачка знаходиться на твердотільному диску (SSD), а Discard/TRIM бажана, опція <code>--allow-discards</code> повинна бути додана до рядка cryptsetup у виверті openswap вище. Див. <a href="../en/Dm-crypt/Specialties.html#Discard/TRIM_support_for_solid_state_drives_(SSD)" title="Dm-crypt/Specialties">Dm-crypt/Specialties#Discard/TRIM support for solid state drives (SSD)</a> або <a href="../en/Solid_state_drive.html" class="mw-redirect" title="SSD">SSD</a> для отримання додаткової інформації про Discard/TRIM. Крім того, вам потрібно додати опцію монтування 'discard' до вашого запису fstab для пристрою підкачки.</div>
+<p>Потім створіть і відредагуйте файл налаштування виверта:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/initcpio/install/openswap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">build ()
+{
+   add_runscript
+}
+help ()
+{
+cat&lt;&lt;HELPEOF
+  This opens the swap encrypted partition /dev/&lt;device&gt; in /dev/mapper/swapDevice
+HELPEOF
+}
+</pre>
+<p>Додайте виверт <code>openswap</code> в рядок <code>HOOKS</code> в <code>/etc/mkinitcpio.conf</code>, перед <code>filesystem</code>, але після <code>encrypt</code>. Не забудьте додати виверт <code>resume</code> після <code>openswap</code>.
+</p>
+<pre>HOOKS=(... encrypt openswap resume filesystems ...)
+</pre>
+<p>Перегенеруйте initramfs <a href="../en/Mkinitcpio.html#Image_creation_and_activation" class="mw-redirect" title="Regenerate the initramfs">Regenerate the initramfs</a>.
+</p>
+<p>Додайте відображений розділ до <code>/etc/fstab</code>, доповнивши таким рядком:
+</p>
+<pre>/dev/mapper/swapDevice swap swap defaults 0 0
+</pre>
+<p>Налаштуйте свою систему на відновлення з <code>/dev/mapper/swapDevice</code>. Наприклад, якщо ви використовуєте <a href="../en/GRUB.html" title="GRUB">GRUB</a> з підтримкою ядром сплячого режиму, додайте параметр ядра <code>resume=/dev/mapper/swapDevice</code> до GRUB, додавши його до <code>GRUB_CMDLINE_LINUX_DEFAULT</code> змінна в <code>/etc/default/grub</code>. Рядок grub.cfg для ядра із зашифрованими кореневим та своп розділами може виглядати так:
+</p>
+<pre>kernel /vmlinuz-linux cryptdevice=/dev/sda2:rootDevice root=/dev/mapper/rootDevice resume=/dev/mapper/swapDevice ro
+</pre>
+<p>Під час завантаження виверт <code>openswap</code> відкриє розділ підкачки, щоб відновлення ядра могло використовувати його. Якщо ви використовуєте спеціальні виверти для виходу з режиму глибокого сну, переконайтеся, що вони розміщені <b>після</b> <code>openswap</code> у масиві <code>HOOKS</code>. Зверніть увагу, що через відкриття розділу підкачки у initrd не має потреби вносити запис про swapDevice у <code>/etc/crypttab</code> в цьому випадку.
+</p>
+<h3>
+<span id=".D0.92.D0.B8.D0.BA.D0.BE.D1.80.D0.B8.D1.81.D1.82.D0.B0.D0.BD.D0.BD.D1.8F_.D1.84.D0.B0.D0.B9.D0.BB.D0.B0_.D0.BF.D1.96.D0.B4.D0.BA.D0.B0.D1.87.D0.BA.D0.B8"></span><span class="mw-headline" id="Використання_файла_підкачки">Використання файла підкачки</span>
+</h3>
+<p>Файл свопу може бути використаний для резервування місця підкачки в межах існуючого розділу, а також може бути встановлений всередині зашифрованого розділу блочного пристрою.
+</p>
+<p>Дотримуйтесь інструкцій щодо створення файлів підкачки у <a href="../en/Swap.html#Swap_file" title="Swap">Swap#Swap file</a> та налаштуйте сплячий режим відповідно до <a href="../en/Power_management/Suspend_and_hibernate.html#Hibernation_into_swap_file" title="Power management/Suspend and hibernate">Power management/Suspend and hibernate#Hibernation into swap file</a>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примітка:</strong> Під час відновлення з файлу підкачки параметр <code>resume</code> повинен вказувати на розблокований/відображений пристрій, що містить файлову систему з файлом підкачки.</div>
+<h2>
+<span id=".D0.92.D1.96.D0.B4.D0.BE.D0.BC.D1.96_.D0.BF.D1.80.D0.BE.D0.B1.D0.BB.D0.B5.D0.BC.D0.B8"></span><span class="mw-headline" id="Відомі_проблеми">Відомі проблеми</span>
+</h2>
+<ul><li>
+<code>Stopped (with error) /dev/dm-1</code> in logs. See <a rel="nofollow" class="external text" href="https://github.com/systemd/systemd/issues/1620">systemd issue 1620</a>.</li></ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../uk/Category:Data-at-rest_encryption.html" title="Category:Data-at-rest encryption (Українська)">Data-at-rest encryption (Українська)</a></li></ul>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+</ul>
+</div>
+</div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt_(%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D1%81%D1%8C%D0%BA%D0%B0)/Swap_encryption_(%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D1%81%D1%8C%D0%BA%D0%B0)&amp;oldid=651582">https://wiki.archlinux.org/index.php?title=Dm-crypt_(Українська)/Swap_encryption_(Українська)&amp;oldid=651582</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 February 2021, at 15:24.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

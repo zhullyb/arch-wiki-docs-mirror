@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Duplicity (Español) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Duplicity_Español rootpage-Duplicity_Español skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">Duplicity (Español)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> este artículo es una traducción de <a href="../en/Duplicity.html" title="Duplicity">Duplicity</a> revisada por última vez el <b>2021-02-11</b>. Si advierte que la versión inglesa <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Duplicity&amp;diff=0&amp;oldid=651954">ha cambiado</a> puede actualizar la traducción <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">usted mismo</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<div class="archwiki-template-meta-related-articles-start">
+<p>Artículos relacionados</p>
+<ul>
+<li><a href="../en/Synchronization_and_backup_programs.html" title="Synchronization and backup programs">Synchronization and backup programs</a></li>
+</ul>
+</div>
+<p><a rel="nofollow" class="external text" href="https://www.nongnu.org/duplicity/">Duplicity</a> es un programa de copias de seguridad en red.
+</p>
+<p>Puede guardar instantáneas de directorios y archivos en un archivo tar remoto encriptado con GnuPG, que actúa como repositorio de copias de seguridad.
+La conexión con el repositorio remoto puede realizarse a través de cualquiera de los siguientes protocolos: rsync, ftp, HSI, WebDAV, Tahoe-LAFS, o Amazon S3.
+</p>
+<p>Las copias de seguridad son incrementales, lo que significa que sólo se almacenan los cambios en los archivos (desde la última instantánea).
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1">
+<a href="#Instalaci%C3%B3n"><span class="tocnumber">1</span> <span class="toctext">Instalación</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Frontends"><span class="tocnumber">1.1</span> <span class="toctext">Frontends</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-3">
+<a href="#Uso_b%C3%A1sico"><span class="tocnumber">2</span> <span class="toctext">Uso básico</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#Hacer_copias_de_seguridad"><span class="tocnumber">2.1</span> <span class="toctext">Hacer copias de seguridad</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Restaurar_archivos_desde_la_copia_de_seguridad"><span class="tocnumber">2.2</span> <span class="toctext">Restaurar archivos desde la copia de seguridad</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Inspecci%C3%B3n_y_mantenimiento_del_repositorio"><span class="tocnumber">2.3</span> <span class="toctext">Inspección y mantenimiento del repositorio</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Ejemplo_de_script_de_copia_de_seguridad"><span class="tocnumber">2.4</span> <span class="toctext">Ejemplo de script de copia de seguridad</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#Soluci%C3%B3n_de_problemas"><span class="tocnumber">3</span> <span class="toctext">Solución de problemas</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">4</span> <span class="toctext">Véase también</span></a></li>
+</ul>
+</div>
+
+<h2>
+<span id="Instalaci.C3.B3n"></span><span class="mw-headline" id="Instalación">Instalación</span>
+</h2>
+<p><a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">Instale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=duplicity">duplicity</a></span>.
+</p>
+<h3><span class="mw-headline" id="Frontends">Frontends</span></h3>
+<ul>
+<li>
+<a href="../en/Duply.html" title="Duply">Duply</a>, un frontend de shell, disponible en el <a href="../es/Arch_User_Repository.html" class="mw-redirect" title="AUR (Español)">AUR</a>.</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=deja-dup">deja-dup</a></span>, un frontend fácil de utilizar. Proporciona la herramienta de línea de comandos <code>deja-dup</code> y el frontend GTK <code>deja-dup-preferences</code>.</li>
+</ul>
+<h2>
+<span id="Uso_b.C3.A1sico"></span><span class="mw-headline" id="Uso_básico">Uso básico</span>
+</h2>
+<h3><span class="mw-headline" id="Hacer_copias_de_seguridad">Hacer copias de seguridad</span></h3>
+<p>Para hacer una copia de seguridad de la carpeta local <i>/home/me</i> a la ubicación remota <i>/usr/backup</i> en el host <i>other.host</i> a través del protocolo <i>scp/ssh</i>, ejecute la orden
+</p>
+<pre>duplicity /home/me scp://uid@other.host//usr/backup
+</pre>
+<p>La primera vez que se ejecute esta orden, se creará una copia de seguridad completa. Si se vuelve a ejecutar exactamente la misma orden, se creará una copia de seguridad incremental en el repositorio de copias de seguridad existente.
+</p>
+<p>Las opciones adicionales de la línea de comandos permiten:
+</p>
+<ul>
+<li>incluir o excluir archivos y directorios específicos de la copia de seguridad (utilizando patrones de shell o expresiones regulares)</li>
+<li>ajustar el cifrado y la firma de las copias de seguridad</li>
+</ul>
+<h3><span class="mw-headline" id="Restaurar_archivos_desde_la_copia_de_seguridad">Restaurar archivos desde la copia de seguridad</span></h3>
+<p>Para restaurar la carpeta local <i>/home/me</i> al estado de la última instantánea guardada en el repositorio remoto <i>/usr/backup</i> en el host <i>other.host</i>, ejecute
+</p>
+<pre>duplicity scp://uid@other.host//usr/backup /home/me 
+</pre>
+<p>Nótese el orden inverso de los argumentos en comparación con el comando de copia de seguridad anterior. El argumento de la URL se trata siempre como el repositorio de la copia de seguridad, y el argumento de la ruta local como el directorio a sincronizar con la copia de seguridad. (¡Un repositorio local de copias de seguridad tendría que ser especificado explícitamente usando el prefijo de protocolo file://!)
+</p>
+<p>Las opciones adicionales de la línea de comandos permiten:
+</p>
+<ul>
+<li>restaurar un archivo específico en lugar de todo el repositorio</li>
+<li>restaurar archivos al estado que tenían en una fecha específica, en vez de a la instantánea más reciente disponible</li>
+</ul>
+<h3>
+<span id="Inspecci.C3.B3n_y_mantenimiento_del_repositorio"></span><span class="mw-headline" id="Inspección_y_mantenimiento_del_repositorio">Inspección y mantenimiento del repositorio</span>
+</h3>
+<p>Existen algunas opciones adicionales en la línea de comandos para comparar el estado del repositorio con el estado de los archivos locales, y para eliminar instantáneas antiguas de forma que sólo se mantenga una cantidad fija de instantáneas o sólo las que sean más recientes que una fecha determinada.
+</p>
+<p>Véase la página de manual para más detalles.
+</p>
+<h3><span class="mw-headline" id="Ejemplo_de_script_de_copia_de_seguridad">Ejemplo de script de copia de seguridad</span></h3>
+<pre>#!/bin/sh
+## Remote backup script. Requires duplicity and gpg-agent with the keys and passphrases loaded as root.
+## Uses separate encryption and signing keys
+## Usage:  'backup_remote.sh'
+
+enc_key=44D79E41
+sign_key=F5C978E3
+src="/mnt/backup/"
+dest="scp://destination.com//backups/homeserver"
+
+# Keychain is used to source the ssh-agent keys when running from a cron job
+type -P keychain &amp;&gt;/dev/null || { echo "I require keychain but it's not installed.  Aborting." &gt;&amp;2; exit 1; }
+eval `keychain --eval web_rsa` || exit 1
+## Note: can't use keychain for gpg-agent because it doesn't currently (2.7.1) read in all the keys correctly. 
+## Gpg will ask for a passphrase twice for each key...once for encryption/decryption and once for signing. 
+## This makes unattended backups impossible, especially when trying to resume an interrupted backup.
+if [ -f "${HOME}/.gnupg/gpg-agent-info" ]; then
+      . "${HOME}/.gnupg/gpg-agent-info"
+      export GPG_AGENT_INFO
+fi
+
+duplicity --use-agent \
+         --verbosity notice \
+         --encrypt-key "$enc_key" \
+         --sign-key "$sign_key" \
+         --full-if-older-than 60D \
+         --num-retries 3 \
+         --asynchronous-upload \
+         --volsize 100 \
+         --archive-dir /root/.cache/duplicity \
+         --log-file /var/log/duplicity.log \
+         --exclude /mnt/backup/fsarchiver \
+         --exclude '**rdiff-backup-data' \
+         "$src" "$dest"
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Hay un problema con la versión actual de pinentry (0.8.1-3) que no permite la introducción de la frase de contraseña para un gpg-agent root cuando se inicia sesión como root usando <i>su</i> o <i>sudo</i>. Si está accediendo a un servidor remoto en el que no se permite (o no se desea) el inicio de sesión directo ssh de root, entonces tiene que o bien <a rel="nofollow" class="external text" href="https://bugzilla.redhat.com/show_bug.cgi?id=677665">parchear pinentry</a> o bien hacer <code>chown root `tty`</code> antes de iniciarlo. Esto no es problema cuando se ejecuta gpg-agent como un usuario no root.</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Si desea iniciar gpg-agent en el inicio de sesión de root y luego almacenar en caché las frases de contraseña para gpg-agent a su conveniencia, puede añadir estas funciones a su /root/.bashrc:</div>
+<pre>function gpg_start {
+       gnupginf="${HOME}/.gnupg/gpg-agent-info"
+       if pgrep -u "${USER}" gpg-agent &gt;/dev/null 2&gt;&amp;1; then
+           eval "$(cat $gnupginf)"
+           eval "$(cut -d= -f1 &lt; $gnupginf | xargs echo export)"
+       else
+           eval "$(gpg-agent -s --daemon --write-env-file $gnupginf)"
+       fi
+}
+function keys {
+       touch test-gpg.txt
+       touch test-gpg.txt1
+       gpg -r 'Duplicity Encryption Key' -e test-gpg.txt
+       gpg -r 'Duplicity Signature Key' -e test-gpg.txt1
+       gpg -u &lt;signing key&gt; --detach-sign test-gpg.txt
+       gpg -u &lt;encryption key&gt; --detach-sign test-gpg.txt1
+       gpg -d test-gpg.txt.gpg
+       gpg -d test-gpg.txt1.gpg
+       rm test-gpg.txt*
+}
+gpg_start
+</pre>
+<h2>
+<span id="Soluci.C3.B3n_de_problemas"></span><span class="mw-headline" id="Solución_de_problemas">Solución de problemas</span>
+</h2>
+<p>Si obtiene errores gpg que mencionan "inappropriate ioctl for device" lo más probable es que tenga que ver con los cambios en el comportamiento del gpg-agent desde la versión 2.1 en adelante. Véase <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=190301">este hilo</a> para más información. En general, uno necesita permitir explícitamente que los programas proporcionen la frase de contraseña al agente gpg en vez de preguntar al usuario. 
+</p>
+<p>Los pasos necesarios para remediar este problema se detallan en <a href="../en/GnuPG.html#Unattended_passphrase" title="GnuPG">GnuPG#Unattended_passphrase</a>.
+</p>
+<h2>
+<span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
+</h2>
+<ul>
+<li><a rel="nofollow" class="external text" href="http://duplicity.nongnu.org/">Página web de Duplicity</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Duplicity_(software)" class="extiw" title="wikipedia:Duplicity (software)">Wikipedia:Duplicity (software)</a></li>
+<li><a rel="nofollow" class="external text" href="https://launchpad.net/deja-dup">Página web de Déjà Dup</a></li>
+</ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../es/Category:Backup.html" title="Category:Backup (Español)">Backup (Español)</a></li></ul>
+</div></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Duplicity_(Espa%C3%B1ol)&amp;oldid=651956">https://wiki.archlinux.org/index.php?title=Duplicity_(Español)&amp;oldid=651956</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 11 February 2021, at 20:28.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

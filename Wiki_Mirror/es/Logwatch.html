@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Logwatch (Español) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Logwatch_Español rootpage-Logwatch_Español skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">Logwatch (Español)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> este artículo es una traducción de <a href="../en/Logwatch.html" title="Logwatch">Logwatch</a> revisada por última vez el <b>2021-02-09</b>. Si advierte que la versión inglesa <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Logwatch&amp;diff=0&amp;oldid=651733">ha cambiado</a> puede actualizar la traducción <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">usted mismo</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<p><a rel="nofollow" class="external text" href="https://sourceforge.net/projects/logwatch/">Logwatch</a> es un potente y versátil parser y analizador de registros. Logwatch está diseñado para dar un informe unificado de toda la actividad en un servidor, que puede ser entregado a través de la línea de comandos o por correo electrónico.
+</p>
+<h2>
+<span id="Instalaci.C3.B3n"></span><span class="mw-headline" id="Instalación">Instalación</span>
+</h2>
+<p><a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">Instale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=logwatch">logwatch</a></span>.
+</p>
+<p>Además de los binarios, scripts y archivos de configuración de logwatch, el paquete pacman solía incluir una tarea <a href="../en/Cron.html" title="Cron">cron</a> que se instalaba como <code>/etc/cron.daily/0logwatch</code>. Es necesario <a href="../es/Systemd.html#Utilizar_las_unidades" title="Systemd (Español)">iniciar/activar</a> <code>logwatch.timer</code> para generar regularmente informes de logwatch.
+</p>
+<h2>
+<span id="Configuraci.C3.B3n"></span><span class="mw-headline" id="Configuración">Configuración</span>
+</h2>
+<p>Logwatch tiene un enfoque de configuración por niveles. Hay varios lugares donde se pueden especificar los detalles de configuración, y cada uno sustituye al anterior:
+</p>
+<ul>
+<li><code>/usr/share/logwatch/default.conf/*</code></li>
+<li><code>/etc/logwatch/conf/dist.conf/*</code></li>
+<li><code>/etc/logwatch/conf/*</code></li>
+<li>Los argumentos de la línea de comandos / script</li>
+</ul>
+<p>Logwatch analizará todas estas ubicaciones cuando se requiera.
+</p>
+<p>Dentro de estos directorios, hay varias áreas de configuración. Los archivos <code>logwatch.conf</code> son donde se encuentran la mayoría de las configuraciones de alto nivel, que permiten establecer dónde se envían los informes, cómo se organizan, etc. El archivo conf en <code>/usr/share/logwatch/default.conf/logwatch.conf</code> contiene todas las configuraciones por defecto y comentarios sobre lo que hacen. Se recomienda dejar la configuración por defecto y en su lugar redefinir una variable de ajuste que desee cambiar en <code>/etc/logwatch/conf/logwatch.conf</code>.
+</p>
+<p>Dentro del directorio logfiles/ de cualquiera de las ubicaciones de conf hay archivos de configuración que detallan archivos de registro específicos. Por defecto, la mayoría de los archivos de registro comunes que se encuentran en un sistema Linux ya están contemplados. Si cuenta con alguna aplicación esotérica que no tenga ya un archivo de registro conf, copie uno existente del directorio default.conf/logfiles/ y personalícelo para su aplicación.
+</p>
+<p>La carpeta services/ contiene definiciones conf similares, pero estas definen los distintos servicios reportados por logwatch. Esto es necesario porque a menudo varios servicios reportarán al mismo registro (por ejemplo, messages, dmesg, boot, etc.). Para más información, examine algunos de los archivos services/conf predeterminados.
+</p>
+<p>Tenga en cuenta que si desea que los mensajes de logwatch se envíen por correo electrónico, es necesario instalar un paquete que proporcione un frontend de sendmail. <a href="../es/Postfix.html" title="Postfix (Español)">Postfix</a> es una buena opción.
+</p>
+<p>Existe un útil documento suministrado con el paquete para ofrecer más información sobre la configuración. Se puede encontrar en <code>/usr/share/logwatch/HOWTO-Customize-LogWatch</code>.
+</p>
+<h2><span class="mw-headline" id="Soporte_de_systemd_journal">Soporte de systemd journal</span></h2>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Logwatch 7.5.0 ahora permite la consulta del registro de systemd a través de journalctl.</div>
+<p>Las anteriores versiones de Logwatch no permiten consultar el registro de systemd directamente. Por esta razón, se requiere un logger como syslog-ng para duplicar la salida de <i>journal</i> en archivos de registro externos (como en <code>/var/log</code>). Se está desarrollando un <a rel="nofollow" class="external text" href="https://sourceforge.net/p/logwatch/patches/34/">parche</a> para soportar el registro de systemd. De manera alternativa, un script personalizado podría duplicar parte de la funcionalidad de logwatch consultando directamente el registro y enviando correos electrónicos, como lo hace un script de Python en <a rel="nofollow" class="external text" href="https://tim.siosm.fr/blog/2014/02/24/journald-log-scanner-python/">esta entrada de blog</a>.
+</p>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../es/Category:Logging.html" title="Category:Logging (Español)">Logging (Español)</a></li></ul>
+</div></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Logwatch_(Espa%C3%B1ol)&amp;oldid=651742">https://wiki.archlinux.org/index.php?title=Logwatch_(Español)&amp;oldid=651742</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 February 2021, at 20:26.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

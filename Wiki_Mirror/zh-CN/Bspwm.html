@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>bspwm (简体中文) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Bspwm_简体中文 rootpage-Bspwm_简体中文 skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">bspwm (简体中文)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<p><span></span>
+</p>
+<div class="archwiki-template-meta-related-articles-start">
+<p>相关文章</p>
+<ul>
+<li><a href="../en/Window_manager.html" title="Window manager">Window manager</a></li>
+<li><a href="../en/Comparison_of_tiling_window_managers.html" title="Comparison of tiling window managers">Comparison of tiling window managers</a></li>
+</ul>
+</div>
+<p><a rel="nofollow" class="external text" href="https://github.com/baskerville/bspwm">bspwm</a> 是一个平铺窗口管理器，每一个窗口被表达为满二叉树的叶子。bspwm支持多显示器，可通过messages进行配置和控制。bspwm部分支持<a rel="nofollow" class="external text" href="https://specifications.freedesktop.org/wm-spec/wm-spec-latest.html">EWMH</a>。
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#%E5%AE%89%E8%A3%85"><span class="tocnumber">1</span> <span class="toctext">安装</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#%E5%90%AF%E5%8A%A8"><span class="tocnumber">2</span> <span class="toctext">启动</span></a></li>
+<li class="toclevel-1 tocsection-3">
+<a href="#%E9%85%8D%E7%BD%AE"><span class="tocnumber">3</span> <span class="toctext">配置</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#%E8%AE%BE%E7%BD%AE%E5%A4%9A%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="tocnumber">3.1</span> <span class="toctext">设置多显示器的注意事项</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#%E8%A7%84%E5%88%99%EF%BC%88rules%EF%BC%89"><span class="tocnumber">3.2</span> <span class="toctext">规则（rules）</span></a></li>
+<li class="toclevel-2 tocsection-6">
+<a href="#%E9%9D%A2%E6%9D%BF%EF%BC%88Panels%EF%BC%89"><span class="tocnumber">3.3</span> <span class="toctext">面板（Panels）</span></a>
+<ul>
+<li class="toclevel-3 tocsection-7"><a href="#%E4%BD%BF%E7%94%A8lemonbar"><span class="tocnumber">3.3.1</span> <span class="toctext">使用lemonbar</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#%E4%BD%BF%E7%94%A8yabar"><span class="tocnumber">3.3.2</span> <span class="toctext">使用yabar</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#%E4%BD%BF%E7%94%A8polybar"><span class="tocnumber">3.3.3</span> <span class="toctext">使用polybar</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-10">
+<a href="#%E6%9A%82%E5%AD%98%E5%99%A8/%E4%BE%BF%E7%AC%BA%EF%BC%88Scratchpad%EF%BC%89"><span class="tocnumber">3.4</span> <span class="toctext">暂存器/便笺（Scratchpad）</span></a>
+<ul>
+<li class="toclevel-3 tocsection-11"><a href="#%E4%BD%BF%E7%94%A8pid"><span class="tocnumber">3.4.1</span> <span class="toctext">使用pid</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#%E4%BD%BF%E7%94%A8%E7%B1%BB%E5%90%8D%EF%BC%88class_name%EF%BC%89"><span class="tocnumber">3.4.2</span> <span class="toctext">使用类名（class name）</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#%E5%85%B6%E4%BB%96"><span class="tocnumber">3.4.3</span> <span class="toctext">其他</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-14"><a href="#%E4%B8%8D%E5%90%8C%E8%AE%BE%E5%A4%87%E7%9A%84%E6%98%BE%E7%A4%BA%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="tocnumber">3.5</span> <span class="toctext">不同设备的显示器配置</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#%E8%AE%BE%E7%BD%AE%E6%9F%90%E4%B8%80%E6%A1%8C%E9%9D%A2%E7%9A%84%E6%89%80%E6%9C%89%E7%AA%97%E5%8F%A3%E5%9D%87%E4%B8%BA%E6%B5%AE%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="tocnumber">3.6</span> <span class="toctext">设置某一桌面的所有窗口均为浮动模式</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#%E9%94%AE%E7%9B%98"><span class="tocnumber">3.7</span> <span class="toctext">键盘</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-17">
+<a href="#%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4"><span class="tocnumber">4</span> <span class="toctext">故障排除</span></a>
+<ul>
+<li class="toclevel-2 tocsection-18"><a href="#%E5%B1%8F%E5%B9%95%E7%A9%BA%E7%99%BD%EF%BC%8C%E6%8C%89%E9%94%AE%E7%BB%91%E5%AE%9A%E4%B8%8D%E5%8F%AF%E7%94%A8"><span class="tocnumber">4.1</span> <span class="toctext">屏幕空白，按键绑定不可用</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#%E9%BC%A0%E6%A0%87%E6%8C%87%E9%92%88%E4%B8%BB%E9%A2%98%E6%B2%A1%E6%9C%89%E5%BA%94%E7%94%A8%E5%88%B0%E6%A1%8C%E9%9D%A2"><span class="tocnumber">4.2</span> <span class="toctext">鼠标指针主题没有应用到桌面</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#%E7%AA%97%E5%8F%A3%E5%A4%A7%E4%BA%8E%E5%AE%9E%E9%99%85%E8%BF%90%E8%A1%8C%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="tocnumber">4.3</span> <span class="toctext">窗口大于实际运行的应用程序</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#Java%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="tocnumber">4.4</span> <span class="toctext">Java程序的问题</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#fish_shell%E7%9A%84%E6%8C%89%E9%94%AE%E7%BB%91%E5%AE%9A%E9%97%AE%E9%A2%98"><span class="tocnumber">4.5</span> <span class="toctext">fish shell的按键绑定问题</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#%E4%BD%BF%E7%94%A8fish_shell%E7%9A%84%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="tocnumber">4.6</span> <span class="toctext">使用fish shell的性能问题</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#%E5%90%AF%E5%8A%A8%E6%97%B6%E6%8A%A5_%22Could_not_grab_key_43_with_modfield_68%22_%E9%94%99%E8%AF%AF"><span class="tocnumber">4.7</span> <span class="toctext">启动时报 "Could not grab key 43 with modfield 68" 错误</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#%E7%81%AB%E7%8B%90%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%88Firefox%EF%BC%89%E8%8F%9C%E5%8D%95%E5%9C%A8%E5%8F%B3%E9%94%AE%E5%8D%95%E5%87%BB%E6%97%B6%E8%87%AA%E5%8A%A8%E9%80%89%E6%8B%A9%E7%AC%AC%E4%B8%80%E9%80%89%E9%A1%B9"><span class="tocnumber">4.8</span> <span class="toctext">火狐浏览器（Firefox）菜单在右键单击时自动选择第一选项</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-26"><a href="#%E5%8F%A6%E8%AF%B7%E5%8F%82%E9%98%85"><span class="tocnumber">5</span> <span class="toctext">另请参阅</span></a></li>
+</ul>
+</div>
+
+<h2>
+<span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
+</h2>
+<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bspwm">bspwm</a></span> 或 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/bspwm-git/">bspwm-git</a></span><sup><small>AUR</small></sup> (开发版本）。
+</p>
+<h2>
+<span id=".E5.90.AF.E5.8A.A8"></span><span class="mw-headline" id="启动">启动</span>
+</h2>
+<p>使用 <a href="../en/Xinit.html" title="Xinit">xinit</a> 来启动 <code>bspwm</code>。
+</p>
+<h2>
+<span id=".E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="配置">配置</span>
+</h2>
+<p>示例配置文件位于 <code>/usr/share/doc/bspwm/examples/</code>。
+</p>
+<p>复制或安装 <code>bspwmrc</code> 和 <code>sxhkdrc</code> 分别到 <code>~/.config/bspwm/</code> 和 <code>~/.config/sxhkd/</code>。
+</p>
+<p>文件 <code>bspwmrc</code> 必须是可执行的，因为默认示例是一个shell脚本,此脚本随后通过 <code>bspc</code> 命令配置bspwm。
+</p>
+<pre>$ install -Dm755 /usr/share/doc/bspwm/examples/bspwmrc ~/.config/bspwm/bspwmrc
+$ install -Dm644 /usr/share/doc/bspwm/examples/sxhkdrc ~/.config/sxhkd/sxhkdrc
+</pre>
+<p>这两个文件会分别被用来设置窗口管理器和按键映射。
+</p>
+<p>查看 <span class="plainlinks archwiki-template-man" title="$ man 1 bspwm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/bspwm.1">bspwm(1)</a></span> 和 <span class="plainlinks archwiki-template-man" title="$ man 1 sxhkd"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/sxhkd.1">sxhkd(1)</a></span> 手册获取详细信息。
+</p>
+<h4>
+<span id=".E8.AE.BE.E7.BD.AE.E5.A4.9A.E6.98.BE.E7.A4.BA.E5.99.A8.E7.9A.84.E6.B3.A8.E6.84.8F.E4.BA.8B.E9.A1.B9"></span><span class="mw-headline" id="设置多显示器的注意事项">设置多显示器的注意事项</span>
+</h4>
+<p>以下示例配置将会配置10个桌面在单独的显示器上：
+</p>
+<pre>bspc monitor -d I II III IV V VI VII VIII IX X
+</pre>
+<p>你需要改变这一行并为你的每个显示器都添加一行，如下：
+</p>
+<pre>bspc monitor DVI-I-1 -d I II III IV
+bspc monitor DVI-I-2 -d V VI VII
+bspc monitor DP-1 -d VIII IX X
+</pre>
+<p>你可以使用 <code>xrandr -q</code> 或 <code>bspc query -M --names</code> 命令来查看显示器编号。
+</p>
+<p>在上面的示例中，桌面的总数保持在10个，在 sxhkdrc 中，这样每一个桌面仍然都可以使用 <code>super + {1-9,0}</code> 来定位。
+</p>
+<h3>
+<span id=".E8.A7.84.E5.88.99.EF.BC.88rules.EF.BC.89"></span><span class="mw-headline" id="规则（rules）">规则（rules）</span>
+</h3>
+<p>有两种方法来设置窗口规则 (截至 <a rel="nofollow" class="external text" href="https://github.com/baskerville/bspwm/commit/cd97a3290aa8d36346deb706fa307f5f8faa2f34">cd97a32</a>)
+</p>
+<p>第一种是通过使用内置的 rule 命令，如示例 bspwmrc 所示：
+</p>
+<pre>bspc rule -a Gimp desktop=^8 follow=on state=floating
+bspc rule -a Chromium desktop=^2
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+</pre>
+<p>第二种是使用外部的 rule 命令。虽然更加复杂，但是这允许你去构造更复杂的桌面规则。参考 <a rel="nofollow" class="external text" href="https://github.com/baskerville/bspwm/tree/master/examples/external_rules">these examples</a> 获取示例 rule 命令。
+</p>
+<p>如果某个特定的窗口似乎没有按照你的规则运行，请检查程序的类名。可以通过运行 <code>xprop | grep WM_CLASS</code> 来确保你在使用正确的字符串，这需要 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xprop">xorg-xprop</a></span> 软件包。
+</p>
+<h3>
+<span id=".E9.9D.A2.E6.9D.BF.EF.BC.88Panels.EF.BC.89"></span><span class="mw-headline" id="面板（Panels）">面板（Panels）</span>
+</h3>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8lemonbar"></span><span class="mw-headline" id="使用lemonbar">使用lemonbar</span>
+</h4>
+<p>在lemonbar的Github页面提供了一个 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lemonbar-git/">lemonbar-git</a></span><sup><small>AUR</small></sup> 的示例面板。你也可从 <a href="../en/Lemonbar.html" title="Lemonbar">lemonbar</a> 的维基页面得到了些许启发。面板将通过 bspwmrc 中的 <code>panel &amp;</code> 启动。检查在 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bspwm">bspwm</a></span> 软件包中的 <a href="../en/PKGBUILD.html#optdepends" class="mw-redirect" title="Optdepends">optdepends</a>，以获取可能需要的依赖。
+</p>
+<p>为了在你的状态栏（status bar）中显示系统信息，你可以使用各种系统调用（system calls）。示例将会展示给你如何编辑你的 <code>panel</code> 来使音量状态显示在你的状态栏中：
+</p>
+<pre>panel_volume()
+{
+        volStatus=$(amixer get Master | tail -n 1 | cut -d '[' -f 4 | sed 's/].*//g')
+        volLevel=$(amixer get Master | tail -n 1 | cut -d '[' -f 2 | sed 's/%.*//g')
+        # is alsa muted or not muted?
+        if [ "$volStatus" == "on" ]
+        then
+                echo "%{Fyellowgreen} $volLevel %{F-}"
+        else
+                # If it is muted, make the font red
+                echo "%{Findianred} $volLevel %{F-}"
+        fi
+}</pre>
+<p>之后，我们必须确保它已被调用并且重定向至 <code>$PANEL_FIFO</code> ：
+</p>
+<pre>while true; do
+echo "S" "$(panel_volume) $(panel_clock)" &gt; "$PANEL_FIFO"
+        sleep 1s
+done &amp;
+</pre>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8yabar"></span><span class="mw-headline" id="使用yabar">使用yabar</span>
+</h4>
+<p>使用lemonbar示例面板需要你配置你的环境（.profile），并确保面板脚本在你的路径上。<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/yabar/">yabar</a></span><sup><small>AUR</small></sup> 是更易配置的面板，只有一个配置文件。
+</p>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8polybar"></span><span class="mw-headline" id="使用polybar">使用polybar</span>
+</h4>
+<p>通过在你的配置文件中添加 <code>polybar <i>example</i> &amp;</code> 来使用 <a href="../en/Polybar.html" title="Polybar">Polybar</a>，其中的 <code><i>example</i></code> 就是状态栏的名称。
+</p>
+<h3>
+<span id=".E6.9A.82.E5.AD.98.E5.99.A8.2F.E4.BE.BF.E7.AC.BA.EF.BC.88Scratchpad.EF.BC.89"></span><span class="mw-headline" id="暂存器/便笺（Scratchpad）">暂存器/便笺（Scratchpad）</span>
+</h3>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8pid"></span><span class="mw-headline" id="使用pid">使用pid</span>
+</h4>
+<p>你可以使用 bspwm 的窗口标签来模仿下拉式终端（例如 i3wm 的便笺功能）。将下面的内容附加到 bspwm 的配置文件末尾（适用于你自己的终端）：
+</p>
+<pre>bspc rule -a scratchpad sticky=on state=floating hidden=on
+# check scratchpad already running
+[ "$(ps -x | grep -c 'scratchpad')" -eq "1" ] &amp;&amp; st -c scratchpad -e ~/bin/scratch &amp;
+</pre>
+<p><code>sticky</code> 标签可确保窗口总是出现在当前的桌面上。
+<code>~/bin/scratch</code> 是：
+</p>
+<pre>#!/usr/bin/sh
+# only add floating scratchpad window node id to /tmp/scratchid
+bspc query -N -n .floating | xargs -i sh -c 'bspc query  --node {} -T | grep -q scratchpad &amp;&amp; echo {} &gt; /tmp/scratchid'
+exec $SHELL
+</pre>
+<p>切换 Scratchpad 的热键应该绑定到：
+</p>
+<pre>id=$(cat /tmp/scratchid);\
+bspc node $id --flag hidden;bspc node -f $id
+</pre>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8.E7.B1.BB.E5.90.8D.EF.BC.88class_name.EF.BC.89"></span><span class="mw-headline" id="使用类名（class_name）">使用类名（class name）</span>
+</h4>
+<p>在此示例中我们将使用带有自定义类名的 <i>termite</i> 作为我们的下拉式终端。当然其类名没有必要必须是 <i>termite</i>。
+</p>
+<p>首先在你的路径中创建一个有如下内容的文件并确保其可执行。在此示例中我们命其名为 <code>scratchpad.sh</code> ：
+</p>
+<pre>#!/usr/bin/bash
+
+if [ -z $1 ]; then
+	echo "Usage: $0 &lt;name of hidden scratchpad window&gt;"
+	exit 1
+fi
+    
+pids=$(xdotool search --class ${1})
+for pid in $pids; do
+	echo "Toggle $pid"
+	bspc node $pid --flag hidden -f
+done
+</pre>
+<p>随后添加这个到你的 bspwm 配置中。
+</p>
+<pre>...
+bspc rule -a dropdown sticky=on state=floating hidden=on
+termite --class dropdown -e "zsh -i" &amp;
+...
+</pre>
+<p>为了切换窗口，一个在 <a href="../en/Sxhkd.html" title="Sxhkd">sxhkd</a> 中的自定义规则是必不可少的。给定自定义类名作为参数。
+</p>
+<pre>super + u
+        scratchpad.sh dropdown
+</pre>
+<h4>
+<span id=".E5.85.B6.E4.BB.96"></span><span class="mw-headline" id="其他">其他</span>
+</h4>
+<p>对于无需预定义规则就可使用任何窗口类型的Scratchpad，参阅：<a rel="nofollow" class="external autonumber" href="https://www.reddit.com/r/bspwm/comments/3xnwdf/i3_like_scratch_for_any_window_possible/cy6i585">[1]</a>
+</p>
+<p>有关支持更多开箱即用的终端，并具有用于执行诸如选择性启动tmuxinator / tmux会话，即时将任何窗口变成便笺本以及自动调整便笺本大小以适合当前显示器的标志的更复杂的便笺本脚本，参阅 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tdrop-git/">tdrop-git</a></span><sup><small>AUR</small></sup> 。
+</p>
+<h3>
+<span id=".E4.B8.8D.E5.90.8C.E8.AE.BE.E5.A4.87.E7.9A.84.E6.98.BE.E7.A4.BA.E5.99.A8.E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="不同设备的显示器配置">不同设备的显示器配置</span>
+</h3>
+<p>因为 <code>bspwmrc</code> 是一个shell脚本，这允许你做类似如下的操作：
+</p>
+<pre>#! /bin/sh
+
+ if [[ $(hostname) == 'myhost' ]]; then
+     bspc monitor eDP1 -d I II III IV V VI VII VIII IX X
+ elif [[ $(hostname) == 'otherhost' ]]; then
+     bspc monitor VGA-0 -d I II III IV V
+     bspc monitor VGA-1 -d VI VII VIII IX X
+ elif [[ $(hostname) == 'yetanotherhost' ]]; then
+     bspc monitor DVI-I-3 -d VI VII VIII IX X
+     bspc monitor DVI-I-2 -d I II III IV V
+ fi
+ 
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 使用hostname命令需要 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=inetutils">inetutils</a></span> 软件包。</div>
+<h3>
+<span id=".E8.AE.BE.E7.BD.AE.E6.9F.90.E4.B8.80.E6.A1.8C.E9.9D.A2.E7.9A.84.E6.89.80.E6.9C.89.E7.AA.97.E5.8F.A3.E5.9D.87.E4.B8.BA.E6.B5.AE.E5.8A.A8.E6.A8.A1.E5.BC.8F"></span><span class="mw-headline" id="设置某一桌面的所有窗口均为浮动模式">设置某一桌面的所有窗口均为浮动模式</span>
+</h3>
+<p>下面的示例会将 3 号桌面的所有窗口均设置为浮动窗口。当使用 GIMP 或其他多窗口的应用程序时非常有用。
+</p>
+<p>把这个脚本放到你的 <code>$PATH</code> 的某个位置并从 <code>.xinitrc</code> 或类似的（最后带有 <code>&amp;</code>）调用：
+</p>
+<pre>#!/bin/bash
+
+ # change the desktop number here
+ FLOATING_DESKTOP_ID=$(bspc query -D -d '^3')
+
+ bspc subscribe node_add | while read -a msg ; do
+    desk_id=${msg[2]}
+    wid=${msg[4]}
+    [ "$FLOATING_DESKTOP_ID" = "$desk_id" ] &amp;&amp; bspc node "$wid" -t floating
+ done
+ 
+</pre>
+<p>(<a rel="nofollow" class="external text" href="https://github.com/baskerville/bspwm/issues/428#issuecomment-199985423">源</a>)
+</p>
+<h3>
+<span id=".E9.94.AE.E7.9B.98"></span><span class="mw-headline" id="键盘">键盘</span>
+</h3>
+<p>bspwm 不会处理任何键盘输入而是提供 <i>bspc</i> 程序作为接口。
+</p>
+<p>你必须为快捷键设置一个守护程序例如 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sxhkd">sxhkd</a></span> （开发版本：<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/sxhkd-git/">sxhkd-git</a></span><sup><small>AUR</small></sup>）
+</p>
+<h2>
+<span id=".E6.95.85.E9.9A.9C.E6.8E.92.E9.99.A4"></span><span class="mw-headline" id="故障排除">故障排除</span>
+</h2>
+<h3>
+<span id=".E5.B1.8F.E5.B9.95.E7.A9.BA.E7.99.BD.EF.BC.8C.E6.8C.89.E9.94.AE.E7.BB.91.E5.AE.9A.E4.B8.8D.E5.8F.AF.E7.94.A8"></span><span class="mw-headline" id="屏幕空白，按键绑定不可用">屏幕空白，按键绑定不可用</span>
+</h3>
+<ul>
+<li>确保 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sxhkd">sxhkd</a></span> 已被安装。</li>
+<li>确保 sxhkd 正在运行。</li>
+<li>确保 <code>~/.config/bspwm/bspwmrc</code> 为可执行文件。</li>
+</ul>
+<h3>
+<span id=".E9.BC.A0.E6.A0.87.E6.8C.87.E9.92.88.E4.B8.BB.E9.A2.98.E6.B2.A1.E6.9C.89.E5.BA.94.E7.94.A8.E5.88.B0.E6.A1.8C.E9.9D.A2"></span><span class="mw-headline" id="鼠标指针主题没有应用到桌面">鼠标指针主题没有应用到桌面</span>
+</h3>
+<p>参阅 <a href="../en/Cursor_themes.html#Change_X_shaped_default_cursor" title="Cursor themes">Cursor themes#Change X shaped default cursor</a>
+</p>
+<h3>
+<span id=".E7.AA.97.E5.8F.A3.E5.A4.A7.E4.BA.8E.E5.AE.9E.E9.99.85.E8.BF.90.E8.A1.8C.E7.9A.84.E5.BA.94.E7.94.A8.E7.A8.8B.E5.BA.8F"></span><span class="mw-headline" id="窗口大于实际运行的应用程序">窗口大于实际运行的应用程序</span>
+</h3>
+<p>若你正在使用GTK3应用程序并且经常用于对话窗口，那么这种情况就会发生。修复方法是创建或添加以下内容到GTK3主题文件（<code>~/.config/gtk-3.0/gtk.css</code>）。
+</p>
+<pre>.window-frame, .window-frame:backdrop {
+  box-shadow: 0 0 0 black;
+  border-style: none;
+  margin: 0;
+  border-radius: 0;
+}
+    
+.titlebar {
+  border-radius: 0;
+}
+</pre>
+<p>(源: <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1404973#p1404973">Bspwm forum thread</a>)
+</p>
+<h3>
+<span id="Java.E7.A8.8B.E5.BA.8F.E7.9A.84.E9.97.AE.E9.A2.98"></span><span class="mw-headline" id="Java程序的问题">Java程序的问题</span>
+</h3>
+<p>如果你有例如Java程序窗口无法调整大小，或菜单在点击后立即关闭的问题，参阅<a href="../en/Java.html#Gray_window,_applications_not_resizing_with_WM,_menus_immediately_closing" title="Java">Java#Gray window, applications not resizing with WM, menus immediately closing</a>。
+</p>
+<p>此外，一些基于Java的应用程序显示不出任何窗口内容（例如 Intellij的IDE)。一个解决办法是安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wmname">wmname</a></span> 软件包并且添加以下内容到你的 <code>~/.config/bspwm/bspwmrc</code> ：
+</p>
+<pre>wmname LG3D
+</pre>
+<h3>
+<span id="fish_shell.E7.9A.84.E6.8C.89.E9.94.AE.E7.BB.91.E5.AE.9A.E9.97.AE.E9.A2.98"></span><span class="mw-headline" id="fish_shell的按键绑定问题">fish shell的按键绑定问题</span>
+</h3>
+<p>如果你正在使用 <a href="../en/Fish.html" title="Fish">fish</a> ，你会发现你不能切换桌面。这是因为 bspc 的 ^ 字符与 fish 不兼容。你可通过明确告诉 sxhkd 使用 bash 执行命令来解决问题。
+</p>
+<pre>$ set -U SXHKD_SHELL /usr/bin/bash
+</pre>
+<p>或者，将 ^ 字符在你的 sxhkdrc 中用反斜线(\)转义。
+</p>
+<h3>
+<span id=".E4.BD.BF.E7.94.A8fish_shell.E7.9A.84.E6.80.A7.E8.83.BD.E9.97.AE.E9.A2.98"></span><span class="mw-headline" id="使用fish_shell的性能问题">使用fish shell的性能问题</span>
+</h3>
+<p><a href="../en/Sxhkd.html" title="Sxhkd">sxhkd</a> 使用 SHELL 环境变量中的 shell 来执行命令。由于配置文件很大或配置不当，<a href="../en/Fish.html" title="Fish">fish</a> 的加载时间可能很长，因此所有 sxhkd 命令的执行时间可能比其他的shell都长。为了在不改变你的默认 shell 情况下修复这个问题，你可以明确地告诉 sxhkd 使用 bash 或其他更快的 shell 来执行命令 （比如sh）：
+</p>
+<pre>$ set -U SXHKD_SHELL sh
+</pre>
+<h3>
+<span id=".E5.90.AF.E5.8A.A8.E6.97.B6.E6.8A.A5_.22Could_not_grab_key_43_with_modfield_68.22_.E9.94.99.E8.AF.AF"></span><span class="mw-headline" id='启动时报_"Could_not_grab_key_43_with_modfield_68"_错误'>启动时报 "Could not grab key 43 with modfield 68" 错误</span>
+</h3>
+<p>要么你尝试绑定同一个键两次，要么你启动了两次 sxhkd ，检查 bspwmrc 和 <code>~/.profile</code> 或 <code>~/.bash_profile</code>，查看是否在启动 sxhkd 时有多余的命令。
+</p>
+<h3>
+<span id=".E7.81.AB.E7.8B.90.E6.B5.8F.E8.A7.88.E5.99.A8.EF.BC.88Firefox.EF.BC.89.E8.8F.9C.E5.8D.95.E5.9C.A8.E5.8F.B3.E9.94.AE.E5.8D.95.E5.87.BB.E6.97.B6.E8.87.AA.E5.8A.A8.E9.80.89.E6.8B.A9.E7.AC.AC.E4.B8.80.E9.80.89.E9.A1.B9"></span><span class="mw-headline" id="火狐浏览器（Firefox）菜单在右键单击时自动选择第一选项">火狐浏览器（Firefox）菜单在右键单击时自动选择第一选项</span>
+</h3>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a><b>This section is being considered for removal.</b><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> 应当作为bug报告给上游 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Bspwm_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Bspwm (简体中文)#</a>)</div>
+</div>
+<p>添加以下内容到 <code>userChrome.css</code> Firefox配置文件：
+</p>
+<pre>#contentAreaContextMenu{ margin: 5px 0 0 5px }
+</pre>
+<p>文件应位于 <code>~/.mozilla/firefox/<i>something</i>.default/chrome/</code> （如果没有，就创建一个）。在Firefox中，你必须到 <code>about:config</code> 页面开启 <code>toolkit.legacyUserProfileCustomizations.stylesheets</code> 选项；否则，Firefox会忽略 userChrome.css 文件。
+</p>
+<h2>
+<span id=".E5.8F.A6.E8.AF.B7.E5.8F.82.E9.98.85"></span><span class="mw-headline" id="另请参阅">另请参阅</span>
+</h2>
+<ul>
+<li>Mailing List: bspwm <i>at</i> librelist.com.</li>
+<li>
+<code>#bspwm</code> - IRC channel at irc.freenode.net</li>
+<li>
+<a rel="nofollow" class="external free" href="https://bbs.archlinux.org/viewtopic.php?id=149444">https://bbs.archlinux.org/viewtopic.php?id=149444</a> - Arch BBS thread</li>
+<li>
+<a rel="nofollow" class="external free" href="https://github.com/baskerville/bspwm">https://github.com/baskerville/bspwm</a> - GitHub project</li>
+<li>
+<a rel="nofollow" class="external free" href="https://github.com/windelicato/dotfiles/wiki/bspwm-for-dummies">https://github.com/windelicato/dotfiles/wiki/bspwm-for-dummies</a> - earsplit's "bspwm for dummies"</li>
+</ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Tiling_WMs.html" title="Category:Tiling WMs (简体中文)">Tiling WMs (简体中文)</a></li></ul>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Sections_flagged_with_Template:Remove.html" title="Category:Sections flagged with Template:Remove">Sections flagged with Template:Remove</a></li></ul>
+</div>
+</div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Bspwm_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=651953">https://wiki.archlinux.org/index.php?title=Bspwm_(简体中文)&amp;oldid=651953</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 11 February 2021, at 17:25.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

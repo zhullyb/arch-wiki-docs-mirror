@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>OpenVAS (Español) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-OpenVAS_Español rootpage-OpenVAS_Español skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">OpenVAS (Español)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> este artículo es una traducción de <a href="../en/OpenVAS.html" title="OpenVAS">OpenVAS</a> revisada por última vez el <b>2021-02-10</b>. Si advierte que la versión inglesa <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=OpenVAS&amp;diff=0&amp;oldid=651849">ha cambiado</a> puede actualizar la traducción <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">usted mismo</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<p><a rel="nofollow" class="external text" href="http://www.openvas.org/">OpenVAS</a> (Open Vulnerability Assessment System) es un escáner de seguridad de red con herramientas asociadas (como por ejemplo un frontend gráfico). El componente principal es un servidor con un conjunto de tests de vulnerabilidades de red (NVTs) para detectar problemas de seguridad en sistemas y aplicaciones remotas. 
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1">
+<a href="#Preinstalaci%C3%B3n"><span class="tocnumber">1</span> <span class="toctext">Preinstalación</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Redis"><span class="tocnumber">1.1</span> <span class="toctext">Redis</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#haveged"><span class="tocnumber">1.2</span> <span class="toctext">haveged</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-4"><a href="#Instalaci%C3%B3n"><span class="tocnumber">2</span> <span class="toctext">Instalación</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#Configuraci%C3%B3n_inicial"><span class="tocnumber">3</span> <span class="toctext">Configuración inicial</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Primeros_pasos"><span class="tocnumber">4</span> <span class="toctext">Primeros pasos</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#Systemd"><span class="tocnumber">5</span> <span class="toctext">Systemd</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Migraci%C3%B3n_a_nuevas_versiones_principales"><span class="tocnumber">6</span> <span class="toctext">Migración a nuevas versiones principales</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">7</span> <span class="toctext">Véase también</span></a></li>
+</ul>
+</div>
+
+<h2>
+<span id="Preinstalaci.C3.B3n"></span><span class="mw-headline" id="Preinstalación">Preinstalación</span>
+</h2>
+<h3><span class="mw-headline" id="Redis">Redis</span></h3>
+<p>Configure <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=redis">redis</a></span> como se indica en la <a rel="nofollow" class="external text" href="https://github.com/greenbone/openvas-scanner/blob/v5.0.9/doc/redis_config.txt">configuración redis OpenVAS</a>. En resumen, modifique lo siguiente en su /etc/redis.conf
+</p>
+<pre>unixsocket /var/lib/redis/redis.sock
+unixsocketperm 700
+port 0
+timeout 0
+databases 128
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Véase el documento anterior <code>OpenVAS redis configuration</code> sobre cómo calcular el número de <code>databases</code>
+</div>
+<p>De manera adicional, comente las siguientes líneas <code>save</code> (y otras similares) si están presentes para evitar que se bloquee la conexión del <code>openvas-scanner</code> a <code>redis</code>:
+</p>
+<pre>save 900 1
+save 300 10
+save 60 10000
+</pre>
+<p>Cree el archivo <code>/etc/openvas/openvassd.conf</code> y añada lo siguiente:
+</p>
+<pre>db_address = /var/lib/redis/redis.sock
+</pre>
+<p>Finalmente, reinicie <code>redis</code>:
+</p>
+<pre># systemctl restart redis
+</pre>
+<h3><span class="mw-headline" id="haveged">haveged</span></h3>
+<p>Si ejecuta OpenVAS en una máquina virtual o cualquier otro sistema que tenga una baja entropía, puede <a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">instalar</a> opcionalmente <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=haveged">haveged</a></span> para reunir más entropía. Esto es necesario para el material clave utilizado para las credenciales encriptadas guardadas dentro de la base de datos <code>openvas-manager</code>.
+</p>
+<h2>
+<span id="Instalaci.C3.B3n"></span><span class="mw-headline" id="Instalación">Instalación</span>
+</h2>
+<p><a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">Instale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openvas/">openvas</a></span><sup><small>AUR</small></sup> desde el <a href="../es/Arch_User_Repository.html" class="mw-redirect" title="AUR (Español)">AUR</a>.
+</p>
+<p>De manera altermativa, instale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/groups/x86_64/greenbone-vulnerability-manager/">greenbone-vulnerability-manager</a></span> que proporciona <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gvm-libs">gvm-libs</a></span> y Greenbone Security Assistant (GSA) <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=greenbone-security-assistant">greenbone-security-assistant</a></span>, el frontend web de OpenVAS.
+El daemon de análisis de vulnerabilidades (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openvas/">openvas</a></span><sup><small>AUR</small></sup>) y el Gestor de Vulnerabilidades Greenbone (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gvmd/">gvmd</a></span><sup><small>AUR</small></sup>) se movieron al <a href="../es/Arch_User_Repository.html" class="mw-redirect" title="AUR (Español)">AUR</a> y ya no se encuentran en los <a href="../es/Official_repositories.html" title="Official repositories (Español)">repositorios oficiales</a>.
+</p>
+<h2>
+<span id="Configuraci.C3.B3n_inicial"></span><span class="mw-headline" id="Configuración_inicial">Configuración inicial</span>
+</h2>
+<p>Cree certificados para el servidor y los clientes. Se utilizaron los valores por defecto:
+</p>
+<pre># gvm-manage-certs -a
+</pre>
+<p>Actualice los plugins y los datos de vulnerabilidad:
+</p>
+<pre># greenbone-nvt-sync
+# greenbone-scapdata-sync
+# greenbone-certdata-sync
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Si GSA se queja de que falta la base de datos scapdata, podría ser necesario utilizar greenbone-scapdata-sync --refresh.</div>
+<p>Añada una cuenta de usuario de administrador, y asegúrese de copiar la contraseña:
+</p>
+<pre># gvmd --create-user=admin --role=Admin
+</pre>
+<p>También puede cambiar la contraseña del usuario más tarde
+</p>
+<pre># gvmd --user=admin --new-password=&lt;contraseña&gt;
+</pre>
+<h2><span class="mw-headline" id="Primeros_pasos">Primeros pasos</span></h2>
+<p>Inicie el daemon <code>gvmd</code>
+</p>
+<pre># gvmd -p 9390 -a 127.0.0.1
+</pre>
+<p>Inicie la WebUI <a rel="nofollow" class="external text" href="https://community.greenbone.net/t/about-gvm-architecture/1231">Greenbone Security Assistant</a> (opcional)
+</p>
+<pre># gsad -f --listen=127.0.0.1 --mlisten=127.0.0.1 --mport=9390
+</pre>
+<p>Dirija su navegador web a <a rel="nofollow" class="external free" href="http://127.0.0.1">http://127.0.0.1</a> e inicie sesión con sus credenciales de administrador
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Por defecto, <code>gsad</code> se conectará al puerto 80. Si ya está ejecutando un servidor web, esto obviamente causará problemas. Cambie el parámetro <code>--port</code> a <code>gsad</code> para un puerto alternativo. Véase la página del manual <code>gsad</code> para conocer otras opciones como <code>--http-only</code>, <code>--no-redirect</code>, y más.</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> La WebUI <a rel="nofollow" class="external text" href="https://community.greenbone.net/t/about-gvm-architecture/1231">Greenbone Security Assistant</a> requiere el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/groups/x86_64/texlive-most/">texlive-most</a></span> para poder descargar los informes en PDF.</div>
+<h2><span class="mw-headline" id="Systemd">Systemd</span></h2>
+<p>Las unidades de systemd basadas en Redhat se encuentran en un paquete AUR llamado <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openvas-systemd/">openvas-systemd</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">enlace roto</a>: paquete no encontrado]</sup>. Contienen algunas modificaciones, como una mejor configuración TLS.
+</p>
+<h2>
+<span id="Migraci.C3.B3n_a_nuevas_versiones_principales"></span><span class="mw-headline" id="Migración_a_nuevas_versiones_principales">Migración a nuevas versiones principales</span>
+</h2>
+<p>La base de datos debe ser migrada cuando se mueva a una nueva versión principal:
+</p>
+<pre># gvmd --migrate
+</pre>
+<h2>
+<span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
+</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/es:OpenVAS" class="extiw" title="wikipedia:es:OpenVAS">Artículo de Wikipedia</a></li>
+<li>
+<a rel="nofollow" class="external text" href="http://www.openvas.org/">OpenVAS</a> Página web oficial de OpenVAS.</li>
+</ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
+<li><a href="../es/Category:Networking.html" title="Category:Networking (Español)">Networking (Español)</a></li>
+<li><a href="../es/Category:Security_testing.html" title="Category:Security testing (Español)">Security testing (Español)</a></li>
+</ul>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
+</div>
+</div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenVAS_(Espa%C3%B1ol)&amp;oldid=651869">https://wiki.archlinux.org/index.php?title=OpenVAS_(Español)&amp;oldid=651869</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 10 February 2021, at 22:06.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

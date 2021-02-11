@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Map scancodes to keycodes (简体中文) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Map_scancodes_to_keycodes_简体中文 rootpage-Map_scancodes_to_keycodes_简体中文 skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">Map scancodes to keycodes (简体中文)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>翻译状态：</strong>本文是 <a href="../en/Map_scancodes_to_keycodes.html" title="Map scancodes to keycodes">Map scancodes to keycodes</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-02-01。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Map_scancodes_to_keycodes&amp;diff=0&amp;oldid=650255">更改</a>，则您可以帮助同步翻译。</div>
+<p>该页面假定您已阅读 <a href="../zh-CN/Extra_keyboard_keys.html" title="Extra keyboard keys (简体中文)">Extra keyboard keys (简体中文)</a> ，它提供了更多的内容。
+</p>
+<p>将“扫描码”映射为“键位码”的动作，要比 Xorg 和 Linux 控制台更接近底层，所以对这个映射的更改在两者中均有效。
+</p>
+<p><a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/input-event-codes.h#n64">[1]</a><a rel="nofollow" class="external autonumber" href="https://elixir.bootlin.com/linux/latest/A/ident/hid_keyboard">[2]</a><a rel="nofollow" class="external autonumber" href="https://elixir.bootlin.com/linux/latest/A/ident/atkbd_set2_keycode">[3]</a>
+</p>
+<p>将“扫描码”映射到“键位码”方式有两种：
+</p>
+<ul>
+<li>使用 <a href="../zh-CN/Udev.html" title="Udev (简体中文)">udev (简体中文)</a>
+</li>
+<li>Using <span class="plainlinks archwiki-template-man" title="$ man 8 setkeycodes"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/setkeycodes.8">setkeycodes(8)</a></span>
+</li>
+</ul>
+<p>首选方法是使用 “udev”，因为它使用硬件信息（这是一个非常可靠的来源）来选择数据库中的键盘型号。如果能在数据库中找到键盘型号，则可以“开箱即用”地识别您的按键。
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#%E7%A1%AE%E5%AE%9A%E6%89%AB%E6%8F%8F%E7%A0%81"><span class="tocnumber">1</span> <span class="toctext">确定扫描码</span></a></li>
+<li class="toclevel-1 tocsection-2">
+<a href="#%E4%BD%BF%E7%94%A8_udev"><span class="tocnumber">2</span> <span class="toctext">使用 udev</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89hwdb%E7%9A%84%E7%A4%BA%E4%BE%8B"><span class="tocnumber">2.1</span> <span class="toctext">自定义hwdb的示例</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#%E6%9B%B4%E6%96%B0%E7%A1%AC%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95"><span class="tocnumber">2.2</span> <span class="toctext">更新硬件数据库索引</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#%E9%87%8D%E6%96%B0%E5%8A%A0%E8%BD%BD%E7%A1%AC%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95"><span class="tocnumber">2.3</span> <span class="toctext">重新加载硬件数据库索引</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="tocnumber">2.4</span> <span class="toctext">查询数据库</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="#%E4%BD%BF%E7%94%A8setkeycodes"><span class="tocnumber">3</span> <span class="toctext">使用setkeycodes</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#%E5%8F%82%E9%98%85"><span class="tocnumber">4</span> <span class="toctext">参阅</span></a></li>
+</ul>
+</div>
+
+<h2>
+<span id=".E7.A1.AE.E5.AE.9A.E6.89.AB.E6.8F.8F.E7.A0.81"></span><span class="mw-headline" id="确定扫描码">确定扫描码</span>
+</h2>
+<p>您需要知道要重新映射的键的“扫描代码”。详情请见<a href="../zh-CN/Extra_keyboard_keys.html#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A_%E6%98%A0%E5%B0%84%E6%89%AB%E6%8F%8F%E7%A0%81" title="Extra keyboard keys (简体中文)">Extra keyboard keys (简体中文)#第一步： 映射扫描码</a>。
+</p>
+<h2>
+<span id=".E4.BD.BF.E7.94.A8_udev"></span><span class="mw-headline" id="使用_udev">使用 udev</span>
+</h2>
+<p><a href="../zh-CN/Udev.html" title="Udev (简体中文)">udev (简体中文)</a>提供了一个称为"hwdb"的内置函数，用于维护 <code>/etc/udev/hwdb.bin</code> 中的硬件数据库索引。 数据库是从位于<code>/usr/lib/udev/hwdb.d/</code>、 <code>/run/udev/hwdb.d/</code> 和 <code>/etc/udev/hwdb.d/</code> 目录中的扩展名为.hwdb的文件编译而成的。 默认的 "扫描码到键码" 映射文件是 <code>/usr/lib/udev/hwdb.d/60-keyboard.hwdb</code> 。 有关详细信息，请参见<span class="plainlinks archwiki-template-man" title="$ man 7 udev"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/udev.7">udev(7)</a></span> 。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 从systemd 220开始，udev ABI进行了更改。 使用自定义udev hwdb规则的用户应根据新的ABI更新它们</div>
+<p><i>.hwdb</i> 文件可以包含不同键盘的多个映射块，也可以将一个块应用于多个键盘。 <code>evdev:</code> 前缀用于将块与硬件进行匹配，支持以下硬件匹配：
+</p>
+<ul><li>USB内核模式标识的通用输入设备（也包括USB键盘）：</li></ul>
+<pre>evdev:input:b<i>&lt;bus_id&gt;</i> v<i>&lt;vendor_id&gt;</i>p<i>&lt;product_id&gt;</i>e<i>&lt;version_id&gt;' -</i>&lt;modalias&gt;<i> </i></pre>
+<p>其中 <code><i>&lt;vendor_id&gt;</i></code>, <code><i>&lt;product_id&gt;</i></code> 和 <code><i>&lt;version_id&gt;</i></code> 是 <b>4位十六进制大写</b>的供应商，产品和版本ID ( 你可以通过运行<code>lsusb</code> 命令来得到它们)， <code><i>&lt;modalias&gt;</i></code>  是描述设备功能的任意长度的输入模态 (input-modalias). <code><i>&lt;bus_id&gt;</i></code> 是4位数的十六进制总线ID，对于USB设备，应为0003。<code><i>&lt;bus_id&gt;</i></code> 可能的值在 <code>/usr/include/linux/input.h</code> 中定义 (你可以运行 <code>awk '/BUS_/ {print $2, $3}' /usr/include/linux/input.h</code> 得到一个列表).
+</p>
+<p><code>evtest</code>可以一次性得到&lt;bus_id&gt;、&lt;vendor_id&gt;、 &lt;product_id&gt; 和 &lt;version_id&gt; 
+</p>
+<ul><li>AT键盘DMI数据匹配：</li></ul>
+<pre>evdev:atkbd:dmi:bvn*:bvr*:bd*:svn<i>&lt;vendor&gt;</i>:pn<i>&lt;product&gt;</i>:pvr*</pre>
+<p>其中 <code><i>&lt;vendor&gt;</i></code> 和 <code><i>&lt;product&gt;</i></code> 是由内核 DMI Modalias 导出的固件提供的字符串。
+</p>
+<ul><li>输入驱动程序设备名称和DMI数据匹配：</li></ul>
+<pre>evdev:name:<i>&lt;input device name&gt;</i>:dmi:bvn*:bvr*:bd*:svn<i>&lt;vendor&gt;</i>:pn*</pre>
+<p>其中 <code><i>&lt;input_device_name&gt;</i></code> 是驱动程序指定的名称设备 ，<code><i>&lt;vendor&gt;</i></code> 是由内核DMI modalias导出的固件提供的字符串。
+</p>
+<p>块主体中每一行的格式为 <code>KEYBOARD_KEY_<i>&lt;scancode&gt;</i>=<i>&lt;keycode&gt;</i></code>. <code><i>&lt;scancode&gt;</i></code> 的值是十六进制的，但是没有前导<code>0x</code>（即，是<code>a0</code>而不是<code>0xa0</code>）, 而 <code><i>&lt;keycode&gt;</i></code> 的值是小写的键名名称字符串，就像在<code>/usr/include/linux/input-event-codes.h</code>中列的一样（请参阅<code>KEY_<i>&lt;KEYCODE&gt;</i></code> 变量），<a rel="nofollow" class="external autonumber" href="https://hal.freedesktop.org/quirk/quirk-keymap-list.txt">[4]</a> 处有一个排序列表。注意不能在&lt;keycode&gt;中指定十进制值。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 用root身份运行<code>evemu-describe</code>来获取 这个设备（要自定义<i>hwdb</i> 规则的设备）的标识符， 该实用程序由 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=evemu">evemu</a></span> 软件包提供。
+通过以root用户身份运行 <code>evtest</code> 这个设备（要自定义<i>hwdb</i> 规则的设备）的标识符以及要使用的按键的扫描码。 该实用程序由<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=evtest">evtest</a></span>软件包提供。</div>
+<h3>
+<span id=".E8.87.AA.E5.AE.9A.E4.B9.89hwdb.E7.9A.84.E7.A4.BA.E4.BE.8B"></span><span class="mw-headline" id="自定义hwdb的示例">自定义hwdb的示例</span>
+</h3>
+<p>示例hwdb文件将匹配所有AT键盘：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/udev/hwdb.d/90-custom-keyboard.hwdb</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">evdev:atkbd:dmi:bvn*:bvr*:bd*:svn*:pn*:pvr*
+ KEYBOARD_KEY_10=suspend
+ KEYBOARD_KEY_a0=search
+</pre>
+<p>这是在笔记本电脑和USB键盘上重新绑定修饰符（modifiers）的示例：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/udev/hwdb.d/10-my-modifiers.hwdb</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">evdev:input:b0003v05AFp8277* # 在Kensington Slim Type USB（使用旧的ABI）上进行了测试
+ KEYBOARD_KEY_70039=leftalt  # 将capslock绑定到leftalt
+ KEYBOARD_KEY_700e2=leftctrl # 将leftalt绑定到leftctrl
+
+evdev:atkbd:dmi:*            # 内置键盘：匹配所有AT键盘
+ KEYBOARD_KEY_3a=leftalt     # 将capslock绑定到leftalt
+ KEYBOARD_KEY_38=leftctrl    # 将leftalt绑定到leftctrl
+</pre>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 上面的绑定的含义 A绑定到B，是指：在物理上按下A按键，计算机输入B按键</div>
+<p>要阻止<code> Sleep</code>键，请将其绑定到 "reserved" 关键字。 或者，您可以使用 "unknown" 将其映射到<code> NoSymbol</code>键。 例如：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/udev/hwdb.d/90-block-sleep.hwdb</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">evdev:input:b0003v03F0p020C* # hp 5308 keyboard controller
+ KEYBOARD_KEY_10082=reserved</pre>
+<h3>
+<span id=".E6.9B.B4.E6.96.B0.E7.A1.AC.E4.BB.B6.E6.95.B0.E6.8D.AE.E5.BA.93.E7.B4.A2.E5.BC.95"></span><span class="mw-headline" id="更新硬件数据库索引">更新硬件数据库索引</span>
+</h3>
+<p>更改配置文件后，需要重建硬件数据库索引 <code>hwdb.bin</code> 。
+</p>
+<ul><li>通过运行一下命令手动更新 <code>hwdb.bin</code>
+</li></ul>
+<pre># systemd-hwdb update
+</pre>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> <code>ConditionNeedsUpdate=/etc</code> seems to be commented out by default in <code>systemd-hwdb-update.service</code> (checked in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd">systemd</a></span> 232). (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Map_scancodes_to_keycodes_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Map scancodes to keycodes (简体中文)#</a>)</div>
+</div>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Don't edit in <code>/usr/lib/</code>, use <a href="../en/Systemd.html#Editing_provided_units" title="Systemd">systemctl edit</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Map_scancodes_to_keycodes_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Map scancodes to keycodes (简体中文)#</a>)</div>
+</div>
+<ul><li>通过注释掉<code>systemd-hwdb-update.service</code> 中的<code>ConditionNeedsUpdate</code>，在每次重新启动时自动更新。</li></ul>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/lib/systemd/system/systemd-hwdb-update.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#  该文件是systemd的一部分。
+.
+.
+#ConditionNeedsUpdate=/etc
+.
+.
+</pre>
+<p>在<code>systemd-hwdb-update.service</code>完成加载后，<code>systemd-trigger.service</code>将从<code>hwdb.bin</code>重新加载更改。
+</p>
+<ul><li>
+<a href="/index.php?title=Systemd(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;action=edit&amp;redlink=1" class="new" title="Systemd(简体中文) (page does not exist)">Systemd(简体中文)</a>升级后自动。</li></ul>
+<p>在<a href="../zh-CN/Systemd.html" title="Systemd (简体中文)">Systemd (简体中文)</a>的每次升级中，安装脚本都通过以root用户身份运行<code>udevadm hwdb --update</code>来重建<code>hwdb.bin</code>，因此我们不需要关心它 。
+</p>
+<h3>
+<span id=".E9.87.8D.E6.96.B0.E5.8A.A0.E8.BD.BD.E7.A1.AC.E4.BB.B6.E6.95.B0.E6.8D.AE.E5.BA.93.E7.B4.A2.E5.BC.95"></span><span class="mw-headline" id="重新加载硬件数据库索引">重新加载硬件数据库索引</span>
+</h3>
+<p>内核在启动过程中加载<code>hwdb.bin</code>，重新启动系统将保证加载更新后的<code>hwdb.bin</code>。
+</p>
+<p>使用 <code>udevadm</code>，可以通过运行下面命令来从更新后的<code>hwdb.bin</code>加载新的键映射。
+</p>
+<pre># udevadm trigger
+</pre>
+<p>Be aware that with <code>udevadm</code> only added or changed key mapping are loaded so if we delete a mapping from the config file, rebuild <code>hwdb.bin</code> and run <code>udevadm trigger</code> as the root user, then the deleted mapping still kept by the kernel, at least until a reboot.
+请注意，使用 <code>udevadm</code> 仅加载已添加或更改的键映射，因此，如果我们从配置文件中删除映射，重建 <code>hwdb.bin</code> 并以root用户身份运行 <code>udevadm trigger</code> ，那么删除的映射仍将保留在内核中，直到重新启动为止。
+</p>
+<h3>
+<span id=".E6.9F.A5.E8.AF.A2.E6.95.B0.E6.8D.AE.E5.BA.93"></span><span class="mw-headline" id="查询数据库">查询数据库</span>
+</h3>
+<p>您可以通过按键或运行 <code>udevadm info</code> 来检查配置是否已加载。 对于上面示例中的USB键盘，这将输出我们配置的映射，如下所示：
+</p>
+<pre># udevadm info /dev/input/by-path/*-usb-*-kbd | grep KEYBOARD_KEY
+E: KEYBOARD_KEY_70039=leftalt
+E: KEYBOARD_KEY_700e2=leftctrl
+</pre>
+<h2>
+<span id=".E4.BD.BF.E7.94.A8setkeycodes"></span><span class="mw-headline" id="使用setkeycodes">使用setkeycodes</span>
+</h2>
+<p><i>setkeycodes</i> 是一个将 <i>scancodes</i>-to-<i>keycodes</i> 映射表加载到Linux内核中的工具。 它的用法是：
+</p>
+<pre># setkeycodes <i>scancode</i> <i>keycode</i> ...
+</pre>
+<p>可以一次指定多个对。 <i>扫描码(Scancodes)</i> 以十六进制给出， <i>键位码</i> 以十进制给出。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 显然， <i>setkeycodes</i> 不适用于USB键盘（Linux 3.14.44-1-lts）：
+<pre># setkeycodes 45 30     # 将NumLock（0x45）绑定到AT键盘上的KEY_A（30）
+(successful)
+# setkeycodes 70053 30  # 将NumLock（0x70053）绑定到USB键盘上的KEY_A（30）
+KDSETKEYCODE: Invalid argument
+failed to set scancode 620d3 to keycode 31
+</pre>
+</div>
+<h2>
+<span id=".E5.8F.82.E9.98.85"></span><span class="mw-headline" id="参阅">参阅</span>
+</h2>
+<ul>
+<li><a rel="nofollow" class="external text" href="https://www.bilibili.com/read/cv5156572">B站 JimMoen：Linux通用键位修改（中）-实际操作</a></li>
+<li><a rel="nofollow" class="external text" href="https://blog.lilydjwg.me/2019/10/28/poker-ii.214858.html">依云's Blog：Poker II 键盘调教记</a></li>
+</ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Keyboard_configuration.html" title="Category:Keyboard configuration (简体中文)">Keyboard configuration (简体中文)</a></li></ul>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
+</ul>
+</div>
+</div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Map_scancodes_to_keycodes_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=651506">https://wiki.archlinux.org/index.php?title=Map_scancodes_to_keycodes_(简体中文)&amp;oldid=651506</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 February 2021, at 07:53.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>
