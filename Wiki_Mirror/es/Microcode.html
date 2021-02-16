@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,7 +34,7 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Estado de la traducción:</strong> este artículo es una traducción de <a href="../en/Microcode.html" title="Microcode">Microcode</a> revisada por última vez el <b>2020-12-06</b>. Si advierte que la versión inglesa <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Microcode&amp;diff=0&amp;oldid=632792">ha cambiado</a> puede actualizar la traducción <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">usted mismo</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Microcode.html" title="Microcode">Microcode</a> fue revisada el <b>2021-02-12</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Microcode&amp;diff=0&amp;oldid=646389">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
 <p>Los fabricantes de procesadores lanzan actualizaciones de estabilidad y seguridad para el <a href="https://en.wikipedia.org/wiki/es:Microc%C3%B3digo" class="extiw" title="wikipedia:es:Microcódigo">microcódigo</a> del procesador. Estas actualizaciones proporcionan correcciones de errores que pueden ser críticas para la estabilidad de su sistema. Sin ellas, puede experimentar falsos errores o paradas inesperadas del sistema que pueden ser difíciles de rastrear.
 </p>
 <p>Todos los usuarios con CPU AMD o Intel deben instalar las actualizaciones de microcódigo para garantizar la estabilidad del sistema.
@@ -97,23 +98,25 @@
 </div>
 
 <h2><span class="mw-headline" id="Carga_temprana">Carga temprana</span></h2>
-<p>El <a href="../es/Arch_boot_process.html#Gestor_de_arranque" class="mw-redirect" title="Boot loader (Español)">cargador de arranque</a> debe cargar el microcódigo. Debido a la gran variabilidad en la configuración de inicio de los usuarios, las actualizaciones de microcódigo pueden no ser activadas automáticamente por la configuración predeterminada de Arch. Muchos kernel de AUR han seguido el camino de los <a href="../es/Kernel.html" class="mw-redirect" title="Kernels (Español)">kernels</a> oficiales de Arch en este sentido.
-</p>
-<p>Estas actualizaciones deben activarse añadiendo <code>/boot/amd-ucode.img</code> o <code>/boot/intel-ucode.img</code> como el <b>primer initrd en el archivo de configuración del cargador de arranque</b>. Esto es un añadido al archivo initrd normal. Véase a continuación las instrucciones para los cargadores de arranque más comunes.
-</p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> En las secciones siguientes reemplace <code><i>fabricante_de_la_cpu</i></code> con su fabricante de CPU, es decir, <code>amd</code> o <code>intel</code>.</div>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Sugerencia:</strong> Para <a href="../es/Install_Arch_Linux_on_a_removable_medium.html" class="mw-redirect" title="Installing Arch Linux on a USB key (Español)">Arch Linux en una unidad extraíble</a> añada ambos archivos de microcódigo como <code>initrd</code> a la configuración del cargador de arranque. Su orden no importa siempre y cuando ambos estén especificados antes de la imagen real de initramfs.</div>
 <h3>
 <span id="Instalaci.C3.B3n"></span><span class="mw-headline" id="Instalación">Instalación</span>
 </h3>
-<p>Para los procesadores AMD, <a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">instale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=amd-ucode">amd-ucode</a></span>.
+<p>Según el procesador, <a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">instale</a> el siguiente paquete:
 </p>
-<p>Para los procesadores Intel, <a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">instale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=intel-ucode">intel-ucode</a></span>.
+<ul>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=amd-ucode">amd-ucode</a></span> para procesadores AMD,</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=intel-ucode">intel-ucode</a></span> para procesadores Intel.</li>
+</ul>
+<p>El <a href="../es/Arch_boot_process.html#Gestor_de_arranque" class="mw-redirect" title="Boot loader (Español)">cargador de arranque</a> debe cargar el microcódigo. Debido a la gran variabilidad en la configuración de inicio de los usuarios, las actualizaciones de microcódigo pueden no ser activadas automáticamente por la configuración predeterminada de Arch. Muchos kernel de AUR han seguido el camino de los <a href="../es/Kernel.html" class="mw-redirect" title="Kernels (Español)">kernels</a> oficiales de Arch en este sentido.
 </p>
-<p>Si su instalación de Arch es <a href="../es/Install_Arch_Linux_on_a_removable_medium.html" class="mw-redirect" title="Installing Arch Linux on a USB key (Español)">en una unidad extraíble</a> que necesita tener microcódigo para ambos fabricantes de procesadores, instale ambos paquetes.
+<p>Estas actualizaciones deben activarse añadiendo <code>/boot/amd-ucode.img</code> o <code>/boot/intel-ucode.img</code> como el <b>primer initrd en el archivo de configuración del cargador de arranque</b>. Esto es anterior al archivo initrd normal. Véase a continuación las instrucciones para los cargadores de arranque más comunes.
 </p>
+<p>En las siguientes secciones, reemplace <code><i>fabricante_de_la_cpu</i></code> por el fabricante de su CPU, es decir, <code>amd</code> o <code>intel</code>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Sugerencia:</strong> Para <a href="../es/Install_Arch_Linux_on_a_removable_medium.html" title="Install Arch Linux on a removable medium (Español)">Arch Linux en una unidad extraíble</a> que pueda ejecutarse en cualquiera de estos procesadores, instale ambos paquetes y añada ambos archivos de microcódigo como <code>initrd</code> a la configuración del cargador de arranque. Su orden no importa siempre que ambos estén especificados antes de la imagen initramfs.</div>
 <h3><span class="mw-headline" id="Configuration">Configuration</span></h3>
 <h4>
 <span id="Activar_la_carga_temprana_de_microc.C3.B3digo_en_kernels_personalizados"></span><span class="mw-headline" id="Activar_la_carga_temprana_de_microcódigo_en_kernels_personalizados">Activar la carga temprana de microcódigo en kernels personalizados</span>
@@ -374,8 +377,8 @@ Para <a href="../en/Category:Virtualization.html" class="mw-redirect" title="Vir
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Microcode_(Espa%C3%B1ol)&amp;oldid=643790">https://wiki.archlinux.org/index.php?title=Microcode_(Español)&amp;oldid=643790</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 6 December 2020, at 16:09.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Microcode_(Espa%C3%B1ol)&amp;oldid=652129">https://wiki.archlinux.org/index.php?title=Microcode_(Español)&amp;oldid=652129</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 February 2021, at 22:15.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

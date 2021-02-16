@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -102,12 +103,12 @@
 </p>
 <h3><span class="mw-headline" id="Graphical_front-ends">Graphical front-ends</span></h3>
 <ul><li>
-<b>ARandR</b> — Provide a simple visual front end for XRandR. Relative monitor positions are shown graphically and can be changed in a drag-and-drop way.</li></ul>
+<b>ARandR</b> — Simple visual front end for XRandR. Relative monitor positions are shown graphically and can be changed in a drag-and-drop way.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://christian.amsuess.com/tools/arandr/">https://christian.amsuess.com/tools/arandr/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=arandr">arandr</a></span>
 </dd></dl>
 <ul><li>
-<b>LXRandR</b> — Screen resolution and external monitors management tool for LXDE.</li></ul>
+<b>LXRandR</b> — Screen resolution and monitor position tool for LXDE. Also works in <a href="../en/Openbox.html" title="Openbox">Openbox</a>.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://wiki.lxde.org/en/LXRandR">https://wiki.lxde.org/en/LXRandR</a> || GTK 2: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxrandr">lxrandr</a></span>, GTK 3: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxrandr-gtk3">lxrandr-gtk3</a></span>
 </dd></dl>
@@ -196,12 +197,12 @@ fi
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Basic shell mistakes: relying on quoting errors to relay arguments (instead of using arrays), convoluted grep+sed pipes (instead of awk), echo -e (instead of printf), ancient backtick format (instead of <code>$()</code>) (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Xrandr">Talk:Xrandr#</a>)</div>
+<b>Reason:</b> Basic shell mistakes: relying on quoting errors to relay arguments (instead of using arrays), convoluted grep+sed pipes (instead of awk, ancient backtick format (instead of <code>$()</code>) (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Xrandr">Talk:Xrandr#</a>)</div>
 </div>
 <p>This script iterates through connected monitors, selects currently active monitor, turns next one on and the others off:
 </p>
 <pre># get info from xrandr
-connectedOutputs=$(xrandr | grep " connected" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/")
+connectedOutputs=$(xrandr | awk '$2 == "connected"{print $1}')
 activeOutput=$(xrandr | grep -E " connected (primary )?[1-9]+" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/")
 
 # initialize variables
@@ -240,7 +241,7 @@ done
 
 # check if the default setup needs to be executed then run it
 echo "Resulting Configuration:"
-if [ -z "$(echo $execute | grep "auto")" ]
+if ! (echo "$execute" | grep -q "auto")
 then
 	echo "Command: $default"
 	`$default`
@@ -248,7 +249,8 @@ else
 	echo "Command: $execute"
 	`$execute`
 fi
-echo -e "\n$(xrandr)"
+echo
+xrandr
 </pre>
 <h4><span class="mw-headline" id="Avoid_X_crash_with_xrasengan">Avoid X crash with xrasengan</span></h4>
 <p>Use this workaround to turn on connected outputs that may be in suspend mode and hence shown as disconnected, as is often the case of DisplayPort monitors:
@@ -482,8 +484,8 @@ EndSection</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xrandr&amp;oldid=637896">https://wiki.archlinux.org/index.php?title=Xrandr&amp;oldid=637896</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 October 2020, at 19:22.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xrandr&amp;oldid=652194">https://wiki.archlinux.org/index.php?title=Xrandr&amp;oldid=652194</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 February 2021, at 18:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -34,21 +35,22 @@
 <div class="mw-parser-output">
 <p><span></span>
 </p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Fstab.html" title="Fstab">fstab</a> fue revisada el <b>2021-02-02</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Fstab&amp;diff=0&amp;oldid=648729">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artículos relacionados</p>
 <ul>
-<li><a href="../en/Persistent_block_device_naming.html" title="Persistent block device naming">Persistent block device naming</a></li>
-<li><a href="../en/NTFS-3G.html" class="mw-redirect" title="NTFS Write Support">NTFS Write Support</a></li>
-<li><a href="../en/Firefox/Profile_on_RAM.html" class="mw-redirect" title="Firefox Ramdisk">Firefox Ramdisk</a></li>
-<li><a href="../en/General_troubleshooting.html#Boot_problems" class="mw-redirect" title="Boot debugging">Boot debugging</a></li>
-<li><a href="../es/Udev.html" title="Udev (Español)">udev (Español)</a></li>
+<li><a href="../es/Persistent_block_device_naming.html" title="Persistent block device naming (Español)">Persistent block device naming</a></li>
+<li><a href="../es/File_systems.html" title="File systems (Español)">File systems</a></li>
+<li><a href="../es/Tmpfs.html" title="Tmpfs (Español)">tmpfs</a></li>
+<li><a href="../es/Swap.html" title="Swap (Español)">swap</a></li>
 </ul>
 </div>
-<p>El archivo <a href="https://en.wikipedia.org/wiki/es:Fstab" class="extiw" title="wikipedia:es:Fstab">/etc/fstab</a> es usado para definir cómo las particiones, distintos dispositivos de bloques o sistemas de archivos remotos deben ser montados e integrados en el sistema. 
+<p>El archivo <span class="plainlinks archwiki-template-man" title="$ man 5 fstab"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fstab.5">fstab(5)</a></span> puede utilizarse para definir cómo deben montarse las particiones de disco, otros dispositivos de bloque o sistemas de archivos remotos en el sistema de archivos.
 </p>
-<p>Cada sistema de archivos se describe en una línea separada. Estas definiciones se convertirán con <a href="../es/Systemd.html" title="Systemd (Español)">systemd</a> en unidades montadas de forma dinámica en el arranque, y cuando se recargue la configuración del administrador del sistema.
+<p>Cada sistema de archivos se describe en una línea separada. Estas definiciones se convertirán en unidades de montaje <a href="../es/Systemd.html" title="Systemd (Español)">systemd</a> dinámicamente en el arranque, y cuando se recargue la configuración del gestor del sistema. La configuración por defecto ejecutará automáticamente <a href="../en/Fsck.html" title="Fsck">fsck</a> y montará los sistemas de archivos antes de iniciar los servicios que necesitan que sean montados. Por ejemplo, systemd se asegura automáticamente de que los montajes de sistemas de archivos remotos como <a href="../es/NFS.html" title="NFS (Español)">NFS</a> o <a href="../es/Samba.html" title="Samba (Español)">Samba</a> se inicien solo después de que se haya configurado la red. Por lo tanto, los montajes de sistemas de archivos locales y remotos especificados en <code>/etc/fstab</code> deberían funcionar de forma inmediata. Véase <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.mount.5">systemd.mount(5)</a></span> para más detalles.
 </p>
-<p>El archivo es leído por la orden <code>mount</code>, a la cual le basta con encontrar cualquiera de los directorios o dispositivos indicados en el archivo para completar el valor del siguiente parámetro. Al hacerlo, las opciones de montaje que se enumeran en fstab también se aplicarán.
+<p>La orden <code>mount</code> utilizará fstab, solo si se da una de las opciones de directorio o dispositivo, para rellenar el valor del otro parámetro. Al hacerlo, también se utilizarán las opciones de montaje que aparecen en fstab.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -56,315 +58,242 @@
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#Ejemplo_de_archivo"><span class="tocnumber">1</span> <span class="toctext">Ejemplo de archivo</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#Definiciones_de_los_campos"><span class="tocnumber">2</span> <span class="toctext">Definiciones de los campos</span></a></li>
-<li class="toclevel-1 tocsection-3">
-<a href="#Identificaci%C3%B3n_de_los_sistemas_de_archivos"><span class="tocnumber">3</span> <span class="toctext">Identificación de los sistemas de archivos</span></a>
+<li class="toclevel-1 tocsection-1"><a href="#Utilizaci%C3%B3n"><span class="tocnumber">1</span> <span class="toctext">Utilización</span></a></li>
+<li class="toclevel-1 tocsection-2">
+<a href="#Identificaci%C3%B3n_de_sistemas_de_archivos"><span class="tocnumber">2</span> <span class="toctext">Identificación de sistemas de archivos</span></a>
 <ul>
-<li class="toclevel-2 tocsection-4"><a href="#Nombre_del_kernel"><span class="tocnumber">3.1</span> <span class="toctext">Nombre del kernel</span></a></li>
-<li class="toclevel-2 tocsection-5"><a href="#Etiqueta"><span class="tocnumber">3.2</span> <span class="toctext">Etiqueta</span></a></li>
-<li class="toclevel-2 tocsection-6"><a href="#UUID"><span class="tocnumber">3.3</span> <span class="toctext">UUID</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Descriptores_del_nombre_del_kernel"><span class="tocnumber">2.1</span> <span class="toctext">Descriptores del nombre del kernel</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Etiquetas_del_sistema_de_archivos"><span class="tocnumber">2.2</span> <span class="toctext">Etiquetas del sistema de archivos</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#UUIDs_del_sistema_de_archivos"><span class="tocnumber">2.3</span> <span class="toctext">UUIDs del sistema de archivos</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Etiquetas_de_las_particiones_GPT"><span class="tocnumber">2.4</span> <span class="toctext">Etiquetas de las particiones GPT</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#UUIDs_de_las_particiones_GPT"><span class="tocnumber">2.5</span> <span class="toctext">UUIDs de las particiones GPT</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-7">
-<a href="#Consejos_y_trucos"><span class="tocnumber">4</span> <span class="toctext">Consejos y trucos</span></a>
+<li class="toclevel-1 tocsection-8">
+<a href="#Consejos_y_trucos"><span class="tocnumber">3</span> <span class="toctext">Consejos y trucos</span></a>
 <ul>
-<li class="toclevel-2 tocsection-8"><a href="#Montaje_autom%C3%A1tico_con_systemd"><span class="tocnumber">4.1</span> <span class="toctext">Montaje automático con systemd</span></a></li>
-<li class="toclevel-2 tocsection-9"><a href="#UUID_para_swap"><span class="tocnumber">4.2</span> <span class="toctext">UUID para swap</span></a></li>
-<li class="toclevel-2 tocsection-10"><a href="#Utilizar_rutas_que_contienen_espacios"><span class="tocnumber">4.3</span> <span class="toctext">Utilizar rutas que contienen espacios</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#Dispositivos_externos"><span class="tocnumber">4.4</span> <span class="toctext">Dispositivos externos</span></a></li>
-<li class="toclevel-2 tocsection-12"><a href="#Opciones_atime"><span class="tocnumber">4.5</span> <span class="toctext">Opciones atime</span></a></li>
-<li class="toclevel-2 tocsection-13">
-<a href="#tmpfs"><span class="tocnumber">4.6</span> <span class="toctext">tmpfs</span></a>
+<li class="toclevel-2 tocsection-9">
+<a href="#Montaje_autom%C3%A1tico_con_systemd"><span class="tocnumber">3.1</span> <span class="toctext">Montaje automático con systemd</span></a>
 <ul>
-<li class="toclevel-3 tocsection-14">
-<a href="#Uso"><span class="tocnumber">4.6.1</span> <span class="toctext">Uso</span></a>
-<ul>
-<li class="toclevel-4 tocsection-15"><a href="#Mejorar_el_tiempo_de_compilaci%C3%B3n"><span class="tocnumber">4.6.1.1</span> <span class="toctext">Mejorar el tiempo de compilación</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#Partici%C3%B3n_local"><span class="tocnumber">3.1.1</span> <span class="toctext">Partición local</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#Sistema_de_archivos_remoto"><span class="tocnumber">3.1.2</span> <span class="toctext">Sistema de archivos remoto</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#Sistema_de_archivos_encriptado"><span class="tocnumber">3.1.3</span> <span class="toctext">Sistema de archivos encriptado</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#Desmontaje_autom%C3%A1tico"><span class="tocnumber">3.1.4</span> <span class="toctext">Desmontaje automático</span></a></li>
 </ul>
 </li>
+<li class="toclevel-2 tocsection-14"><a href="#Dispositivos_externos"><span class="tocnumber">3.2</span> <span class="toctext">Dispositivos externos</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Espacios_en_la_ruta_de_acceso"><span class="tocnumber">3.3</span> <span class="toctext">Espacios en la ruta de acceso</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Opciones_de_atime"><span class="tocnumber">3.4</span> <span class="toctext">Opciones de atime</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Volver_a_montar_la_partici%C3%B3n_ra%C3%ADz"><span class="tocnumber">3.5</span> <span class="toctext">Volver a montar la partición raíz</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Montaje_autom%C3%A1tico_de_particiones_GPT"><span class="tocnumber">3.6</span> <span class="toctext">Montaje automático de particiones GPT</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-16"><a href="#Escribir_en_FAT32_como_usuario_normal"><span class="tocnumber">4.7</span> <span class="toctext">Escribir en FAT32 como usuario normal</span></a></li>
-<li class="toclevel-2 tocsection-17"><a href="#Volver_a_montar_la_partici%C3%B3n_root"><span class="tocnumber">4.8</span> <span class="toctext">Volver a montar la partición root</span></a></li>
-</ul>
-</li>
-<li class="toclevel-1 tocsection-18"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">5</span> <span class="toctext">Véase también</span></a></li>
+<li class="toclevel-1 tocsection-19"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">4</span> <span class="toctext">Véase también</span></a></li>
 </ul>
 </div>
 
-<h2><span class="mw-headline" id="Ejemplo_de_archivo">Ejemplo de archivo</span></h2>
-<p>He aquí una muestra de archivo <code>/etc/fstab</code>, utilizando nombres descriptivos del kernel:
+<h2>
+<span id="Utilizaci.C3.B3n"></span><span class="mw-headline" id="Utilización">Utilización</span>
+</h2>
+<p>Un simple <code>/etc/fstab</code>, usando UUIDs del sistema de archivos, muestra la siguiente salida:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;file system&gt;        &lt;dir&gt;         &lt;type&gt;    &lt;options&gt;             &lt;dump&gt; &lt;pass&gt;
-/dev/sda1              /             ext4      defaults,noatime      0      1
-/dev/sda2              none          swap      defaults              0      0
-/dev/sda3              /home         ext4      defaults,noatime      0      2</pre>
-<h2><span class="mw-headline" id="Definiciones_de_los_campos">Definiciones de los campos</span></h2>
-<p>El archivo <code>/etc/fstab</code> contiene los siguientes campos separados por un espacio o una tabulación:
-</p>
-<pre> &lt;file system&gt;        &lt;dir&gt;         &lt;type&gt;    &lt;options&gt;             &lt;dump&gt; &lt;pass&gt;
-</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;device&gt;                                &lt;dir&gt; &lt;type&gt; &lt;options&gt; &lt;dump&gt; &lt;fsck&gt;
+UUID=0a3407de-014b-458b-b5c1-848e92a327a3 /     ext4   noatime   0      1
+UUID=f9fe0b69-a280-415d-a03a-a32752370dee none  swap   defaults  0      0
+UUID=b411dc99-f0a0-4c87-9e05-184977be8539 /home ext4   noatime   0      2</pre>
 <ul>
 <li>
-<b>&lt;file system&gt;</b> - Define la partición o dispositivo de almacenamiento para ser montado.</li>
+<code>&lt;device&gt;</code> describe el dispositivo especial de bloques o el sistema de archivos remoto que se va a montar; véase <a href="#Identificaci%C3%B3n_de_sistemas_de_archivos">#Identificación de sistemas de archivos</a>.</li>
 <li>
-<b>&lt;dir&gt;</b> - Indica a la orden mount el punto de montaje donde la partición (<i>&lt;file system&gt;</i>) será montada.</li>
+<code>&lt;dir&gt;</code> describe el directorio <a href="../es/File_systems.html#Montar_un_sistema_de_archivos" title="File systems (Español)">mount</a>.</li>
 <li>
-<b>&lt;type&gt;</b> - Indica el tipo de sistema de archivos de la partición o dispositivo de almacenamiento para ser montado. Hay muchos sistemas de archivos diferentes que son compatibles como, por ejemplo: <code>ext2</code>, <code>ext3</code>, <code>ext4</code>, <code>reiserfs</code>, <code>xfs</code>, <code>jfs</code>, <code>smbfs</code>, <code>iso9660</code>, <code>vfat</code>, <code>ntfs</code>, <code>swap</code> y <code>auto</code>. El <i>type</i> <code>auto</code> permite a la orden <i>mount</i> determinar qué tipo de sistema de archivos se utiliza. Esta opción es útil para proporcionar soporte a unidades ópticas (CD/DVD).</li>
+<code>&lt;tipo&gt;</code> el tipo de <a href="../es/File_systems.html" title="File systems (Español)">sistema de archivos</a>.</li>
 <li>
-<b>&lt;options&gt;</b> - Indica las opciones de montaje que la orden mount utilizará para montar el sistema de archivos. Tenga en cuenta que algunas opciones de montaje son para ​​sistema de archivos específicos <span class="plainlinks archwiki-template-man" title="$ man 8 mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mount.8">mount(8)</a></span>. Algunas de las opciones más comunes son:</li>
+<code>&lt;options&gt;</code> las opciones de montaje asociadas; véase <span class="plainlinks archwiki-template-man" title="$ man 8 mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mount.8#FILESYSTEM-INDEPENDENT_MOUNT_OPTIONS">mount(8) § FILESYSTEM-INDEPENDENT_MOUNT_OPTIONS</a></span> y <span class="plainlinks archwiki-template-man" title="$ man 5 ext4"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ext4.5#MOUNT_OPTIONS">ext4(5) § MOUNT_OPTIONS</a></span>.</li>
+<li>
+<code>&lt;dump&gt;</code> es comprobado por la utilidad <span class="plainlinks archwiki-template-man" title="$ man 8 dump"><a rel="nofollow" class="external text" href="http://linux.die.net/man/8/dump">dump(8)</a></span>. Este campo suele estar configurado como <code>0</code>, lo que desactiva la comprobación.</li>
+<li>
+<code>&lt;fsck&gt;</code> establece el orden de las comprobaciones del sistema de archivos en el momento del arranque; véase <span class="plainlinks archwiki-template-man" title="$ man 8 fsck"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsck.8">fsck(8)</a></span>. Para el dispositivo raíz debe ser <code>1</code>. Para otras particiones debe ser <code>2</code>, o <code>0</code> para desactivar la comprobación.</li>
 </ul>
-<dl><dd><ul>
-<li>
-<code>auto</code> - El sistema de archivos será montado automáticamente durante el arranque, o cuando la orden <code>mount -a</code> se invoque.</li>
-<li>
-<code>noauto</code> - El sistema de archivos no será montado automáticamente, solo cuando se le ordene manualmente.</li>
-<li>
-<code>exec</code> - Permite la ejecución de binarios residentes en el sistema de archivos.</li>
-<li>
-<code>noexec</code> - No permite la ejecución de binarios que se encuentren en el sistema de archivos.</li>
-<li>
-<code>ro</code> - Monta el sistema de archivos en modo sólo lectura.</li>
-<li>
-<code>rw</code> -  Monta el sistema de archivos en modo lectura-escritura.</li>
-<li>
-<code>user</code> - Permite a cualquier usuario montar el sistema de archivos. Esta opción incluye <code>noexec</code>, <code>nosuid</code>, <code>nodev</code>, a menos que se indique lo contrario.</li>
-<li>
-<code>users</code> - Permite que cualquier usuario perteneciente al grupo users montar el sistema de archivos.</li>
-<li>
-<code>nouser</code> - Solo el usuario root puede montar el sistema de archivos.</li>
-<li>
-<code>owner</code> - Permite al propietario del dispositivo montarlo.</li>
-<li>
-<code>sync</code> - Todo el I/O se debe hacer de forma sincrónica.</li>
-<li>
-<code>async</code> - Todo el I/O se debe hacer de forma asíncrona.</li>
-<li>
-<code>dev</code> - Intérprete de los dispositivos especiales o de bloque del sistema de archivos.</li>
-<li>
-<code>nodev</code> - Impide la interpretación de los dispositivos especiales o de bloques del sistema de archivos.</li>
-<li>
-<code>suid</code> - Permite las operaciones de suid, y sgid bits. Se utiliza principalmente para permitir a los usuarios comunes ejecutar binarios con privilegios concedidos temporalmente con el fin de realizar una tarea específica.</li>
-<li>
-<code>nosuid</code> - Bloquea el funcionamiento de suid, y sgid bits</li>
-<li>
-<code>noatime</code> - No actualiza el inode con el tiempo de acceso al filesystem. Puede aumentar las prestaciones (véase <a href="#Opciones_atime">opciones atime</a>).</li>
-<li>
-<code>nodiratime</code> - No actualiza el inode de los directorios con el tiempo de acceso al filesystem. Puede aumentar las prestaciones (véase <a href="#Opciones_atime">opciones atime</a>).</li>
-<li>
-<code>relatime</code> - Actualiza en el inode solo los tiempos relativos a modificaciones o cambios de los archivos. Los tiempos de acceso vienen actualizados solo si el último acceso es anterior respecto al de la última modificación. (Similar a noatime, pero no interfiere con programas como mutt u otras aplicaciones que deben conocer si un archivo ha sido leido después de la última modificación). Puede aumentar las prestaciones (véase <a href="#Opciones_atime">opciones atime</a>).</li>
-<li>
-<code>discard</code> - Emite las órdenes <a href="../en/Solid_state_drive.html#TRIM" class="mw-redirect" title="SSD">TRIM</a> para dispositivos de bloques subyacentes cuando se liberan los bloques. Recomendado para usar si el sistema de archivos se encuentra en un <a href="../en/Solid_state_drive.html" class="mw-redirect" title="SSD">SSD</a>.</li>
-<li>
-<code>flush</code> - La opción <code>vfat</code> permite eliminar datos con más frecuencia, de modo que los cuadros de diálogo de copia o las barras de progreso se mantenga hasta que se hayan escrito todos los datos.</li>
-<li>
-<code>nofail</code> - Monta el dispositivo cuando está presente, pero ignora su ausencia. Esto evita que se cometan errores durante el arranque para los medios extraíbles.</li>
-<li>
-<code>defaults</code> - Asigna las opciones de montaje predeterminadas que serán utilizadas para el sistema de archivos. Las opciones predeterminadas para <code>ext4</code> son: <code>rw</code>, <code>suid</code>, <code>dev</code>, <code>exec</code>, <code>auto</code>, <code>nouser</code>, <code>async</code>.</li>
-</ul></dd></dl>
-<ul><li>
-<b>&lt;dump&gt;</b> - Utilizado por el programa dump (<i>«volcado»</i>) para decidir cuándo hacer una copia de seguridad. Dump comprueba la entrada en el archivo fstab y el número de la misma le indica si un sistema de archivos debe ser respaldado o no. La entradas posibles son 0 y 1. Si es 0, dump ignorará el sistema de archivos, mientras que si el valor es 1, dump hará una copia de seguridad. La mayoría de los usuarios no tendrán dump instalado, por lo que deben poner el valor 0 para la entrada &lt;dump&gt;.</li></ul>
-<ul><li>
-<b>&lt;pass&gt;</b> -Utilizado por <a href="../en/Fsck.html" title="Fsck">fsck</a> para decidir el orden en el que los sistemas de archivos serán comprobados. Las entradas posibles son 0, 1 y 2. El sistema de archivos raíz (<i>«root»</i>) debe tener la más alta prioridad: 1 -todos los demás sistemas de archivos que desea comprobar deben tener un 2-. La utilidad fsck no comprobará los sistemas de archivos que vengan ajustados con un valor 0 en &lt;pass&gt;.</li></ul>
-<h2>
-<span id="Identificaci.C3.B3n_de_los_sistemas_de_archivos"></span><span class="mw-headline" id="Identificación_de_los_sistemas_de_archivos">Identificación de los sistemas de archivos</span>
-</h2>
-<p>Hay tres maneras de identificar una partición o un dispositivo de almacenamiento en <code>/etc/fstab</code>: por el nombre descriptivo del kernel, por la etiqueta o por la UUID. La ventaja de usar etiquetas o UUID, es que no dependen del orden en el que las unidades son (físicamente) conectadas a la máquina. Esto es útil si se cambia el orden de los dispositivos de almacenamiento en la BIOS, o si se cambia el cableado de conexión de los dispositivos de almacenamiento. Ocurre, también, a veces, que la BIOS cambia el orden de los dispositivos de almacenamiento. Léase más sobre este tema en el artículo  <a href="../en/Persistent_block_device_naming.html" title="Persistent block device naming">Persistent block device naming</a>.
-</p>
-<p>Para mostrar información básica acerca de las particiones, ejecute:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ lsblk -f</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">NAME   FSTYPE LABEL      UUID                                 MOUNTPOINT
-sda                                                           
-├─sda1 ext4   Arch_Linux 978e3e81-8048-4ae1-8a06-aa727458e8ff /
-├─sda2 ntfs   Windows    6C1093E61093B594                     
-└─sda3 ext4   Storage    f838b24e-3a66-4d02-86f4-a2e73e454336 /media/Storage
-sdb                                                           
-├─sdb1 ntfs   Games      9E68F00568EFD9D3                     
-└─sdb2 ext4   Backup     14d50a6c-e083-42f2-b9c4-bc8bae38d274 /media/Backup
-sdc                                                           
-└─sdc1 vfat   Camera     47FA-4071                            /media/Camera</pre>
-<h3><span class="mw-headline" id="Nombre_del_kernel">Nombre del kernel</span></h3>
-<p>Ejecute <code>lsblk -f</code> para mostrar la lista de las particiones, y coloque el nombre visualizado precedido del prefijo <code>/dev</code>.
-</p>
-<p>Véase el <a href="#Ejemplo_de_archivo">ejemplo</a> anterior.
-</p>
-<h3><span class="mw-headline" id="Etiqueta">Etiqueta</span></h3>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Cada etiqueta (<i>«label»</i>) debe ser única, para evitar posibles conflictos.</div>
-<p>Para etiquetar un dispositivo o partición, véase <a href="../en/Persistent_block_device_naming.html" title="Persistent block device naming">este artículo</a>. También puede instalar y usar <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gparted">gparted</a></span>, pero para cambiar el nombre de la partición raíz tendrá que hacerse desde una distribución Linux «live» (Parted Magic, Ubuntu, etc.), ya que la partición se debe desmontar primero.
-</p>
-<p>Ejecute <code>lsblk -f</code> para mostrar la lista de las particiones, y coloque la etiqueta visualizada precedida del prefijo <code>LABEL=</code>:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;file system&gt;        &lt;dir&gt;         &lt;type&gt;    &lt;options&gt;             &lt;dump&gt; &lt;pass&gt; 
-LABEL=Arch_Linux       /             ext4      defaults,noatime      0      1
-LABEL=Arch_Swap        none          swap      defaults              0      0</pre>
-<h3><span class="mw-headline" id="UUID">UUID</span></h3>
-<p>Todas las particiones y dispositivos tienen un UUID único. Los UUID son generados por las utilidades de creación del sistema de archivos (por ejemplo, <code>mkfs.*</code>) al crear o formatear una partición.
-</p>
-<p>Ejecute <code>lsblk -f</code> para mostrar la lista de las particiones, y coloque el número identifidor de la unidad visualizado precedido del prefijo <code>UUID=</code> :
-</p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Sugerencia:</strong> Si desea conocer solo el UUID de una partición específica, escriba:
-<pre>$ lsblk -no UUID /dev/sda2
-</pre>
+<strong>Sugerencia:</strong> 
+<ul>
+<li>Los del tipo <code>auto</code> permiten que la orden mount adivine qué tipo de sistema de archivos se utiliza. Esto es útil para <a href="../es/Optical_disc_drive.html" title="Optical disc drive (Español)">medios ópticos</a> (CD/DVD/Blu-ray).</li>
+<li>Si el sistema de archivos raíz es <a href="../en/Btrfs.html" title="Btrfs">btrfs</a> o <a href="../en/XFS.html" title="XFS">XFS</a>, el orden de fsck debe establecerse en <code>0</code> en lugar de <code>1</code>. Véase <span class="plainlinks archwiki-template-man" title="$ man 8 fsck.btrfs"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsck.btrfs.8">fsck.btrfs(8)</a></span> y <span class="plainlinks archwiki-template-man" title="$ man 8 fsck.xfs"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsck.xfs.8">fsck.xfs(8)</a></span>.</li>
+</ul>
 </div>
+<p>Todos los dispositivos especificados dentro de <code>/etc/fstab</code> se montarán automáticamente al iniciar y cuando se utilice la opción <code>-a</code> con <span class="plainlinks archwiki-template-man" title="$ man 8 mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mount.8">mount(8)</a></span> a menos que se especifique la opción <code>noauto</code>. Los dispositivos listados y no presentes darán lugar a un error salvo que se utilice la opción <code>nofail</code>.
+</p>
+<p>Véase <span class="plainlinks archwiki-template-man" title="$ man 5 fstab"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fstab.5#DESCRIPTION">fstab(5) § DESCRIPTION</a></span> para más detalles.
+</p>
+<h2>
+<span id="Identificaci.C3.B3n_de_sistemas_de_archivos"></span><span class="mw-headline" id="Identificación_de_sistemas_de_archivos">Identificación de sistemas de archivos</span>
+</h2>
+<p>Hay diferentes maneras de identificar los sistemas de archivos que se montarán en <code>/etc/fstab</code>: por el descriptor de nombre del kernel, la etiqueta y UUID del sistema de archivos, y la etiqueta y UUID de la partición GPT para los discos GPT. El UUID o el PARTUUID deben ser favorecidos sobre los descriptores de nombre del kernel y las etiquetas. Véase <a href="../es/Persistent_block_device_naming.html" title="Persistent block device naming (Español)">Nombres de dispositivos de bloques persistentes</a> para más detalles. Se recomienda leer ese artículo primero antes de proceder.
+</p>
+<p>En esta sección, se describe cómo montar sistemas de archivos utilizando todos los métodos de montaje disponibles mediante ejemplos. La salida de las órdenes <code>lsblk -f</code> y <code>blkid</code> utilizados en los siguientes ejemplos están disponibles en el artículo <a href="../es/Persistent_block_device_naming.html" title="Persistent block device naming (Español)">Nombres de dispositivos de bloques persistentes</a>.
+</p>
+<p>Para utilizar los <a href="../es/Device_file.html#Nombres_de_dispositivos_de_bloque" title="Device file (Español)">descriptores de nombres del kernel</a>, utilice <code>/dev/sd<i>xy</i></code> en la primera columna.
+</p>
+<h3><span class="mw-headline" id="Descriptores_del_nombre_del_kernel">Descriptores del nombre del kernel</span></h3>
+<p>Ejecute <code>lsblk -f</code> para listar las particiones y anteponer los valores de la columna <i>NAME</i> con <code>/dev/</code>.
+</p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;file system&gt;                            &lt;dir&gt;     &lt;type&gt;    &lt;options&gt;             &lt;dump&gt; &lt;pass&gt;
-UUID=24f28fc6-717e-4bcd-a5f7-32b959024e26  /         ext4      defaults,noatime      0      1
-UUID=03ec5dd3-45c0-4f95-a363-61ff321a09ff  /home     ext4      defaults,noatime      0      2
-UUID=4209c845-f495-4c43-8a03-5363dd433153  none      swap      defaults              0      0</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;device&gt;        &lt;dir&gt;        &lt;type&gt;        &lt;options&gt;        &lt;dump&gt; &lt;fsck&gt;
+/dev/sda1         /boot        vfat          defaults         0      2
+/dev/sda2         /            ext4          defaults         0      1
+/dev/sda3         /home        ext4          defaults         0      2
+/dev/sda4         none         swap          defaults         0      0
+</pre>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Advertencia:</strong> Los descriptores de nombres del kernel no son <a href="../es/Persistent_block_device_naming.html" title="Persistent block device naming (Español)">persistentes</a> y pueden cambiar en cada arranque, por lo que no deberían utilizarse en los archivos de configuración.</div>
+<h3><span class="mw-headline" id="Etiquetas_del_sistema_de_archivos">Etiquetas del sistema de archivos</span></h3>
+<p>Ejecute <code>lsblk -f</code> para listar las particiones y anteponer los valores de la columna <a href="../es/Persistent_block_device_naming.html#by-label" title="Persistent block device naming (Español)">LABEL</a> con <code>LABEL=</code> o, alternativamente, ejecute <code>blkid</code> y utilice los valores de LABEL sin las comillas:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;device&gt;        &lt;dir&gt;        &lt;type&gt;        &lt;options&gt;        &lt;dump&gt; &lt;fsck&gt;
+LABEL=EFI         /boot        vfat          defaults         0      2
+LABEL=SYSTEM      /            ext4          defaults         0      1
+LABEL=DATA        /home        ext4          defaults         0      2
+LABEL=SWAP        none         swap          defaults         0      0</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Si alguno de sus campos contiene espacios, véase <a href="#Espacios_en_la_ruta_de_acceso">#Espacios en la ruta de acceso</a>.</div>
+<h3><span class="mw-headline" id="UUIDs_del_sistema_de_archivos">UUIDs del sistema de archivos</span></h3>
+<p>Ejecute <code>lsblk -f</code> para listar las particiones y anteponer los valores de la columna <a href="../es/Persistent_block_device_naming.html#by-uuid" title="Persistent block device naming (Español)">UUID</a> con <code>UUID=</code> o, alternativamente, ejecute <code>blkid</code> y utilice los valores UUID sin las comillas:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;device&gt;                                &lt;dir&gt; &lt;type&gt; &lt;options&gt; &lt;dump&gt; &lt;fsck&gt;
+UUID=CBB6-24F2                            /boot vfat   defaults  0      2
+UUID=0a3407de-014b-458b-b5c1-848e92a327a3 /     ext4   defaults  0      1
+UUID=b411dc99-f0a0-4c87-9e05-184977be8539 /home ext4   defaults  0      2
+UUID=f9fe0b69-a280-415d-a03a-a32752370dee none  swap   defaults  0      0</pre>
+<h3><span class="mw-headline" id="Etiquetas_de_las_particiones_GPT">Etiquetas de las particiones GPT</span></h3>
+<p>Ejecute <code>blkid</code> para listar las particiones, y utilice los valores de <a href="../es/Persistent_block_device_naming.html#by-partlabel" title="Persistent block device naming (Español)">PARTLABEL</a> sin las comillas:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;device&gt;                           &lt;dir&gt; &lt;type&gt; &lt;options&gt; &lt;dump&gt; &lt;fsck&gt;
+PARTLABEL=EFI\040SYSTEM\040PARTITION /boot vfat   defaults  0      2
+PARTLABEL=GNU/LINUX                  /     ext4   defaults  0      1
+PARTLABEL=HOME                       /home ext4   defaults  0      2
+PARTLABEL=SWAP                       none  swap   defaults  0      0</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Si alguno de sus campos contiene espacios, consulte <a href="#Espacios_en_la_ruta_de_acceso">#Espacios en la ruta de acceso</a>.</div>
+<h3><span class="mw-headline" id="UUIDs_de_las_particiones_GPT">UUIDs de las particiones GPT</span></h3>
+<p>Ejecute <code>blkid</code> para listar las particiones, y utilice los valores de <a href="../es/Persistent_block_device_naming.html#by-partuuid" title="Persistent block device naming (Español)">PARTUUID</a> sin las comillas:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># &lt;device&gt;                                    &lt;dir&gt; &lt;type&gt; &lt;options&gt; &lt;dump&gt; &lt;fsck&gt;
+PARTUUID=d0d0d110-0a71-4ed6-936a-304969ea36af /boot vfat   defaults  0      2
+PARTUUID=98a81274-10f7-40db-872a-03df048df366 /     ext4   defaults  0      1
+PARTUUID=7280201c-fc5d-40f2-a9b2-466611d3d49e /home ext4   defaults  0      2
+PARTUUID=039b6c1c-7553-4455-9537-1befbc9fbc5b none  swap   defaults  0      0</pre>
 <h2><span class="mw-headline" id="Consejos_y_trucos">Consejos y trucos</span></h2>
 <h3>
 <span id="Montaje_autom.C3.A1tico_con_systemd"></span><span class="mw-headline" id="Montaje_automático_con_systemd">Montaje automático con systemd</span>
 </h3>
-<p>Si tiene una partición <code>/home</code> grande, tal vez sería mejor permitir que los servicios que no dependen de <code>/home</code> se inicien, mientras <code>/home</code> es comprobada. Esto se puede lograr mediante la adición de las siguientes opciones en la entrada de la partición <code>/home</code> en <code>/etc/fstab</code>:
+<p>Véase <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.mount.5">systemd.mount(5)</a></span> para todas las opciones de montaje de systemd.
+</p>
+<h4>
+<span id="Partici.C3.B3n_local"></span><span class="mw-headline" id="Partición_local">Partición local</span>
+</h4>
+<p>En el caso de una partición grande, puede ser más eficiente permitir que los servicios que no dependen de ella se inicien mientras es comprobada por <i>fsck</i>. Esto se puede conseguir añadiendo las siguientes opciones a la entrada <code>/etc/fstab</code> de la partición:
 </p>
 <pre>noauto,x-systemd.automount
 </pre>
-<p>Esto comprobará el sistema de archivos y montará <code>/home</code> cuando se acceda a la misma por primera vez, y el kenel demorará todos los accesos a los archivos de <code>/home</code>, almacenándolos en un búfer, hasta que la partición esté lista.
+<p>Esto hará fsck y montará la partición sólo cuando se acceda a ella por primera vez, y el kernel cargará todo el acceso a los archivos hasta que esté listo.
+Este método puede ser relevante si uno tiene, por ejemplo, una partición <code>/home</code> significativamente grande.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Esto hará que el sistema de archivos de la partición <code>/home</code>  se marque con el tipo <code>autofs</code>, que se ignora por <a href="../en/Locate.html" class="mw-redirect" title="Mlocate">mlocate</a> de forma predeterminada. El aumento de velocidad de automontaje de <code>/home</code> puede no ser más que de uno o dos segundos, dependiendo de su sistema, por lo que este arreglo puede no valer la pena.</div>
-<p>Lo mismo se aplica a los montajes del sistema de archivos remoto. Si  quiere que se monte solo cuando se acceda, tendrá que usar el parámetro <code>noauto,x-systemd.automount</code>. Además, puede utilizar la opción <code>x-systemd.device-timeout=#</code> para especificar un tiempo de espera para el caso de que el recurso de red no esté disponible.
+<strong>Nota:</strong> Esto hará que el sistema de archivos sea del tipo <code>autofs</code>, el cual es ignorado por <a href="../es/Mlocate.html" title="Mlocate (Español)">mlocate</a> por defecto.</div>
+<h4><span class="mw-headline" id="Sistema_de_archivos_remoto">Sistema de archivos remoto</span></h4>
+<p>Lo mismo se aplica a los montajes de sistemas de archivos remotos. Si se desea que se monten sólo al acceder a ellos, se tendrán que usar los parámetros <code>noauto,x-systemd.automount</code>. Además, puede utilizar la opción <code>x-systemd.mount-timeout=</code> para especificar el tiempo que systemd debe esperar a que termine la orden de montaje. Además, la opción <code>_netdev</code> asegura que systemd entienda que el montaje depende de la red y lo ordene después de que la red esté en línea.
 </p>
-<p>Si tiene sistemas de archivos cifrados con keyfiles, también puede añadir el parámetro <code>noauto</code> para las entradas correspondientes de <code>/etc/crypttab</code>. <i>systemd</i> no abrirá el dispositivo cifrado en el arranque, sino que esperará hasta que realmente se acceda al mismo y entonces lo abrirá automáticamente con el archivo de claves (<i>«keyfiles»</i>) especificado antes de montarlo. Esto podría ahorrar unos segundos en el arranque si se está usando, por ejemplo, un dispositivo RAID cifrado, porque <i>systemd</i> no tiene que esperar a que el dispositivo esté disponible. Por ejemplo:
+<pre>noauto,x-systemd.automount,x-systemd.mount-timeout=30,_netdev
+</pre>
+<h4><span class="mw-headline" id="Sistema_de_archivos_encriptado">Sistema de archivos encriptado</span></h4>
+<p>Si tiene sistemas de archivos encriptados con ficheros de claves, también puede añadir el parámetro <code>noauto</code> a las entradas correspondientes en <code>/etc/crypttab</code>. Entonces <i>systemd</i> no abrirá el dispositivo encriptado en el arranque, sino que esperará hasta que se acceda a él y lo abrirá automáticamente con el archivo de claves especificado antes de montarlo. Esto puede ahorrar algunos segundos en el arranque si está usando un dispositivo RAID encriptado, por ejemplo, porque systemd no tiene que esperar a que el dispositivo esté disponible. Por ejemplo:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/crypttab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">data /dev/md0 /root/key noauto</pre>
-<h3><span class="mw-headline" id="UUID_para_swap">UUID para swap</span></h3>
-<p>En caso de que la partición de intercambio no tenga un UUID, será posible agregarlo manualmente. Es el caso de que no se muestre el UUID de swap cuando se ejecuta la orden <code>lsblk-f</code>. Estos son algunos pasos a seguir para poder asignar un UUID a la partición swap:
-</p>
-<p>Identifique la partición swap:
-</p>
-<pre># swapon -s
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">data /dev/md0 /root/key noauto
 </pre>
-<p>Desactive la partición swap:
+<h4>
+<span id="Desmontaje_autom.C3.A1tico"></span><span class="mw-headline" id="Desmontaje_automático">Desmontaje automático</span>
+</h4>
+<p>También puede especificar un tiempo de espera para un montaje con la opción <code>x-systemd.idle-timeout</code>. Por ejemplo
 </p>
-<pre># swapoff /dev/sda7
+<pre>noauto,x-systemd.automount,x-systemd.idle-timeout=1min
 </pre>
-<p>Vuelva a crear la partición swap con un nuevo UUID asignado a la misma:
+<p>Esto hará que systemd lo desmonte después de que haya estado inactivo durante 1 minuto.
 </p>
-<pre># mkswap -U random /dev/sda7
-</pre>
-<p>Active nuevamente swap:
-</p>
-<pre># swapon /dev/sda7
-</pre>
-<h3><span class="mw-headline" id="Utilizar_rutas_que_contienen_espacios">Utilizar rutas que contienen espacios</span></h3>
-<p>Si algún punto de montaje contiene espacios en el nombre, use el carácter de la barra invertida <code>\</code> seguido por el código de 3 dígitos <code>040</code> para emular el espacio:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">UUID=47FA-4071     /home/username/Camera<font color="grey">\040</font>Pictures   vfat  defaults,noatime       0  0
-/dev/sda7          /media/100<font color="grey">\040</font>GB<font color="grey">\040</font>(Storage)       ext4  defaults,noatime,user  0  2</pre>
 <h3><span class="mw-headline" id="Dispositivos_externos">Dispositivos externos</span></h3>
-<p>Los dispositivos externos que van a ser montados cuando estén presentes pero ignorados si estén ausentes, pueden requerir el uso de la opción <code>nofail</code>. Esta opción evita que se muestren mensajes de error durante el arranque.
+<p>Los dispositivos externos que deben ser montados cuando están presentes pero ignorados si están ausentes pueden requerir la opción <code>nofail</code>. Esto evita que se reporten errores en el arranque. Por ejemplo: 
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/dev/sdg1        /media/backup    jfs    defaults,nofail    0  2</pre>
-<h3><span class="mw-headline" id="Opciones_atime">Opciones atime</span></h3>
-<p>El uso de las opciones <code>noatime</code>, <code>nodiratime</code> o <code>relatime</code> pueden mejorar las prestaciones del disco. De forma predeterminada, Linux mantiene un registro (lo escribe en el disco) de cada lectura efectuada <code>atime</code>. Esto es útil cuando se usa Linux para servidores, pero no tiene mucho valor cuando se usa para escritorio. El inconveniente de la opción predefinida <code>atime</code> es que incluso la lectura de un archivo desde la memoria caché (lectura desde la memoria, en lugar desde el disco directamente), aún en este caso, ¡resultará registrado! Usando la opción <code>noatime</code> deshabilita completamente la actualización del tiempo de acceso a los archivos cada vez que se lee un archivo. Esto funciona bien para casi todas las aplicaciones, excepto para algunas raras como <a href="../en/Mutt.html" title="Mutt">Mutt</a> que necesitan dicha información. El uso de la opción <code>relatime</code> permite la actualización de los tiempos de acceso al archivo solo si el archivo viene modificado (a diferencia de <code>noatime</code> donde el tiempo de acceso a los archivos leídos no vendrá actualizado y será anterior respecto al tiempo de modificación del archivo). La opción <code>nodiratime</code>  deshabilita la escritura de los tiempos de acceso a los archivos, solo para los directorios, mientras que para el resto de los archivos todavía los tiempos de acceso serán actualizados. El mejor compromiso podría ser el uso de <code>relatime</code> que no influyen en el funcionamiento de los programas como <a href="../en/Mutt.html" title="Mutt">Mutt</a>, pero todavía se obtendrá un aumento del rendimiento porque los tiempos de acceso a los archivos vendrán actualizados solo si los archivos son modificados.
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/dev/sdg1        /media/backup    jfs    nofail,x-systemd.device-timeout=1ms    0  2</pre>
+<p>La opción <code>nofail</code> combina mejor con la opción <code>x-systemd.device-timeout</code>. Esto se debe a que el tiempo de espera del dispositivo por defecto es de 90 segundos, por lo que un dispositivo externo desconectado con sólo <code>nofail</code> hará que su arranque tarde 90 segundos más, a menos que reconfigure el tiempo de espera como se muestra. Asegúrese de no establecer el tiempo de espera en 0, ya que esto se traduce en un tiempo de espera infinito.
 </p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> La opción <code>noatime</code> ya incluye <code>nodiratime</code>. No es necesario especificar ambas. <a rel="nofollow" class="external autonumber" href="http://lwn.net/Articles/244941/">[1]</a>
-</div>
-<h3><span class="mw-headline" id="tmpfs">tmpfs</span></h3>
-<p><a href="https://en.wikipedia.org/wiki/es:Tmpfs" class="extiw" title="wikipedia:es:Tmpfs">tmpfs</a> es un sistema de archivos temporal que reside en la memoria y/o en la partición de intercambio, dependiendo de lo mucho que se llene. El montaje de carpetas en tmpfs puede ser una manera eficaz de acelerar los accesos en la lectura de los archivos, o para asegurar que sus contenidos se borren automáticamente después del reinicio.
-</p>
-<p>Algunas carpetas donde tmpfs es comúnmente utilizado son <a rel="nofollow" class="external text" href="http://www.pathname.com/fhs/2.2/fhs-3.15.html">/tmp</a>, <a rel="nofollow" class="external text" href="http://www.pathname.com/fhs/2.2/fhs-5.9.html">/var/lock</a> y <a rel="nofollow" class="external text" href="http://www.pathname.com/fhs/2.2/fhs-5.13.html">/var/run</a>. NO lo use para <a rel="nofollow" class="external text" href="http://www.pathname.com/fhs/2.2/fhs-5.15.html">/var/tmp</a>, porque esa carpeta es para los archivos temporales que deben ser conservados después del reinicio. Arch usa el directorio <code>/run</code> como tmpfs, con <code>/var/run</code> y <code>/var/lock</code> simplemente existentes como enlaces simbólicos para permitir la compatibilidad. tmpfs también se utiliza por <code>/tmp</code> en la configuración predeterminada del archivo <code>/etc/fstab</code>.
-</p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Al utilizar <a href="../en/Systemd.html" title="Systemd">systemd</a>, los archivos y las carpetas temporales en tmpfs se pueden recrear en el arranque usando <a href="../en/Systemd.html#Temporary_files" title="Systemd">tmpfiles.d</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.</div>
-<p>De forma predeterminada, una partición tmpfs tiene establecido el tamaño máximo a la mitad de la memoria RAM total, pero esto se puede personalizar. Tenga en cuenta que el actual consumo de memoria/swap depende de lo mucho que se llenen, y la partición tmpfs no consumen memoria hasta que no viene usada.
-</p>
-<p>Para usar tmpfs para <code>/tmp</code>, añada esta línea a <code>/etc/fstab</code>:
+<h3><span class="mw-headline" id="Espacios_en_la_ruta_de_acceso">Espacios en la ruta de acceso</span></h3>
+<p>Dado que los espacios se utilizan en <code>fstab</code> para delimitar los campos, si algún campo (<i>PARTLABEL</i>, <i>LABEL</i> o el punto de montaje) contiene espacios, éstos deben ser sustituidos por caracteres de escape <code>\</code> seguidos del código octal de 3 dígitos <code>040</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">tmpfs   /tmp         tmpfs   nodev,nosuid                  0  0</pre>
-<p>Se puede o no especificar el tamaño aquí, pero debe dejar la opción <code>mode</code> inalterada en este caso, para asegurarse de que tiene los permisos correctos (1777). En el ejemplo anterior, <code>/tmp</code> se establece para utilizar hasta la mitad de la memoria RAM total. Para definir explícitamente un tamaño máximo, utilice la opción <code>size</code> de la orden mount:
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">UUID=47FA-4071     /home/username/Camera<font color="grey">\040</font>Pictures   vfat  noatime       0  0
+/dev/sda7          /media/100<font color="grey">\040</font>GB<font color="grey">\040</font>(Storage)       ext4  noatime,user  0  2</pre>
+<h3><span class="mw-headline" id="Opciones_de_atime">Opciones de atime</span></h3>
+<p>Las siguientes opciones de atime pueden afectar al rendimiento de la unidad.
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">tmpfs   /tmp         tmpfs   nodev,nosuid,size=2G          0  0</pre>
-<p>He aquí un ejemplo más avanzado que muestra cómo agregar puntos de montaje tmpfs para los usuarios. Esto es útil para los sitios web, los archivos tmp de mysql, <code>~/.vim/</code>, y otros. Es importante tratar de obtener las opciones de montaje ideales para el propósito que se está tratando de lograr. La meta es tener tantos valores seguros como sea posible para evitar abusos. Limitar el tamaño y la especificación de uid y gid + mode es muy seguro. <a href="#V%C3%A9ase_tambi%C3%A9n">Más información</a>.
+<ul><li>La opción <code>strictatime</code> actualiza el tiempo de acceso de los archivos cada vez que se accede a ellos. Esto es más útil cuando Linux se utiliza para servidores, pues no tiene mucho sentido para uso de escritorio. El inconveniente de la opción <code>strictatime</code> es que incluso la lectura de un archivo desde la caché de páginas (lectura desde la memoria en lugar de la unidad de disco) seguirá dando lugar a una escritura.</li></ul>
+<ul><li>La opción <code>noatime</code> desactiva por completo la escritura de los tiempos de acceso a los archivos en la unidad cada vez que se lee un archivo. Esto funciona bien para casi todas las aplicaciones, excepto para aquellas que necesitan saber si un archivo ha sido leído desde la última vez que fue modificado. La información del tiempo de escritura a un archivo continuará actualizándose cada vez que se escriba en el archivo con esta opción activada.</li></ul>
+<ul><li>La opción <code>nodiratime</code> desactiva la escritura de los tiempos de acceso a los archivos sólo para los directorios, mientras que otros archivos siguen recibiendo los tiempos de acceso. <div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> <code>noatime</code> implica <code>nodiratime</code>. <a rel="nofollow" class="external text" href="http://lwn.net/Articles/244941/">No es necesario especificar ambos</a>.</div>
+</li></ul>
+<ul><li>
+<code>relatime</code> actualiza el tiempo de acceso, pero solamente si el tiempo de acceso anterior fue inferior al tiempo de modificación o cambio actual. Además, desde Linux 2.6.30, la hora de acceso siempre se actualiza si la hora de acceso anterior era superior a las 24 horas. Esta opción se utiliza cuando se especifica la opción <code>defaults</code>, la opción <code>atime</code> (que significa utilizar el valor por defecto del kernel, que es <code>relatime</code>; véase <span class="plainlinks archwiki-template-man" title="$ man 8 mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mount.8">mount(8)</a></span> y <a href="https://en.wikipedia.org/wiki/Stat_(system_call)#Criticism_of_atime" class="extiw" title="wikipedia:Stat (system call)">wikipedia:Stat (system call)#Criticism of atime</a>) o ninguna opción.</li></ul>
+<p>Cuando se utiliza <a href="../es/Mutt.html" title="Mutt (Español)">Mutt</a> u otras aplicaciones que necesitan saber si un archivo ha sido leído desde la última vez que fue modificado, la opción <code>noatime</code> no debe ser utilizada. El uso de la opción <code>relatime</code> es aceptable y sigue proporcionando una mejora de rendimiento.
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">tmpfs   /www/cache    tmpfs  rw,size=1G,nr_inodes=5k,noexec,nodev,nosuid,uid=648,gid=648,mode=1700   0  0</pre>
-<p>Véase la página man relativa a la orden <code>mount</code> para obtener más información. Una opción útil de montaje según la página del manual es <code>default</code>.
+<p>Desde el kernel 4.0 existe otra opción relacionada:
 </p>
-<p>Reinicie para que los cambios surtan efecto. Tenga en cuenta que si bien puede ser tentador simplemente ejecutar <code>mount -a</code> para hacer efectivos los cambios inmediatamente, esto hará que todos los archivos que actualmente residen en estos directorios sean inaccesibles (esto es especialmente problemático para ejecutar programas con archivos de bloqueo, por ejemplo ). Sin embargo, si todos los directorios están vacíos, es seguro ejecutar <code>mount -a</code> en lugar de reiniciar (o móntelos manualmente).
+<ul><li>
+<code>lazytime</code> reduce las escrituras en disco manteniendo los cambios en las marcas de tiempo del inodo (tiempos de acceso, modificación y creación) sólo en memoria. Las marcas de tiempo en el disco se actualizan sólo cuando (1) el nodo del archivo necesita ser actualizado por algún cambio no relacionado con las marcas de tiempo del archivo, (2) se produce una sincronización con el disco, (3) un nodo no eliminado es desalojado de la memoria o (4) si han pasado más de 24 horas desde la última vez que la copia en memoria fue escrita en el disco.</li></ul>
+<dl><dd><div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Advertencia:</strong> En caso de que se produzca una caida del sistema, los tiempos de acceso y modificación en disco podrían estar desfasados hasta 24 horas.</div></dd></dl>
+<p>Tenga en cuenta que la opción <code>lazytime</code> funciona <b>en combinación</b> con las opciones <code>*atime</code> anteriormente mencionadas , no como alternativa. Por defecto es <code>relatime</code> , pero puede ser incluso <code>strictatime</code> con el mismo o menor coste de escrituras en disco que la simmple opción <code>relatime</code>.
 </p>
-<p>Después de aplicar los cambios, es posible que desee verificar que todo es correcto, comprobando <code>/proc/mounts</code> con la orden <code>findmnt</code>:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ findmnt --target /tmp</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">TARGET SOURCE FSTYPE OPTIONS
-/tmp   tmpfs  tmpfs  rw,nosuid,nodev,relatime</pre>
-<h4><span class="mw-headline" id="Uso">Uso</span></h4>
-<p>En general, las tareas y programas con intensas demandas de I/O realizando frecuentemente operaciones de lectura/escritura, pueden beneficiarse del uso de una carpeta como tmpfs. Algunas aplicaciones pueden obtener incluso una mejora sustancial mediante la descarga de parte (o todos) sus datos en la memoria compartida. Por ejemplo, <a href="../en/Firefox/Profile_on_RAM.html" class="mw-redirect" title="Firefox Ramdisk">reubicar el perfil de Firefox en la RAM</a> muestra una mejora significativa en las prestaciones.
-</p>
-<h5>
-<span id="Mejorar_el_tiempo_de_compilaci.C3.B3n"></span><span class="mw-headline" id="Mejorar_el_tiempo_de_compilación">Mejorar el tiempo de compilación</span>
-</h5>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> La carpeta tmpfs (<code>/tmp</code>, en este caso) tiene que ser montada sin la opción <code>noexec</code>, lo que evitará que los scripts de compilación u otras utilidades se ejecuten. De otro modo, dado que el tamaño predeterminado, como se indica <a href="#tmpfs">más arriba</a>, equivale a la mitad de la memoria RAM disponible, podría quedarse sin espacio.</div>
-<p>Puede ejecutar <a href="../en/Makepkg.html" title="Makepkg">makepkg</a> con una carpeta tmpfs como el directorio para la compilación (que también puede ser configurado en <code>/etc/makepkg.conf</code>):
-</p>
-<pre>$ BUILDDIR=/tmp/makepkg makepkg
-</pre>
-<h3><span class="mw-headline" id="Escribir_en_FAT32_como_usuario_normal">Escribir en FAT32 como usuario normal</span></h3>
-<p>Para poder escribir en una partición FAT32, es necesario hacer algunos cambios en el archivo <code>/etc/fstab</code>.
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/dev/sdxY    /mnt/some_folder  vfat   user,rw,umask=000              0  0</pre>
-<p>El parámetro <code>user</code> significa que cualquier usuario (que no sea root) puede montar y desmontar la partición <code>/dev/sdX</code>. El parámetro <code>rw</code> da acceso de lectura-escritura; la opción <code>umask</code> quita los permisos seleccionados (por ejemplo <code>umask=111</code> quita los permisos de ejecución). El problema es que esta entrada quita también los permisos de ejecución sobre los directorios, así que hay que corregirla con <code>dmask=000</code>.
-Y, ¿por qué el uso de estas opciones? Porque sin estas opciones todos los archivos son ejecutables. Puede utilizar la opción <code>showexec</code>, en lugar de las opciones umask y dmask, que muestra todos los archivos ejecutables de Windows (com, exe, bat) coloreados.
-</p>
-<p>Por ejemplo, si su partición FAT32 está en <code>/dev/sda9</code>, y desea montarla en <code>/mnt/fat32</code>, entonces se debería utilizar:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/dev/sda9    /mnt/fat32        vfat   user,rw,umask=111,dmask=000    0  0</pre>
 <h3>
-<span id="Volver_a_montar_la_partici.C3.B3n_root"></span><span class="mw-headline" id="Volver_a_montar_la_partición_root">Volver a montar la partición root</span>
+<span id="Volver_a_montar_la_partici.C3.B3n_ra.C3.ADz"></span><span class="mw-headline" id="Volver_a_montar_la_partición_raíz">Volver a montar la partición raíz</span>
 </h3>
-<p>Si por alguna razón la partición raíz se ha montado incorrectamente con acceso de sólo lectura, vuelva a montar la partición con la siguiente orden:
+<p>Si por alguna razón la partición raíz ha sido montada incorrectamente como de sólo lectura, vuelva a montar la partición raíz con acceso de lectura-escritura con la siguiente orden:
 </p>
 <pre># mount -o remount,rw /
 </pre>
+<h3>
+<span id="Montaje_autom.C3.A1tico_de_particiones_GPT"></span><span class="mw-headline" id="Montaje_automático_de_particiones_GPT">Montaje automático de particiones GPT</span>
+</h3>
+<p>En un disco con particiones <a href="../es/Partitioning.html#GUID_Partition_Table" title="Partitioning (Español)">GPT</a> es posible omitir las particiones <code>/</code>, <code>/home</code>, <code>/srv</code> y swap de <code>/etc/fstab</code> particionando según la <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Discoverable Partitions Specification</a>. Véase <a href="../es/Systemd.html#Montaje_autom%C3%A1tico_de_particiones_GPT" title="Systemd (Español)">Systemd (Español)#Montaje automático de particiones GPT</a>.
+</p>
 <h2>
 <span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
 </h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="https://www.kernel.org/pub/linux/docs/lanana/device-list/devices-2.6.txt">Full device listing including block device</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.pathname.com/fhs/2.2/index.html">Filesystem Hierarchy Standard</a></li>
-<li>
-<a rel="nofollow" class="external text" href="http://www.askapache.com/web-hosting/super-speed-secrets.html">30x Faster Web-Site Speed</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-02]</sup> (Detailed tmpfs)</li>
-<li><a href="../es/Samba.html#Agregando_una_comparticion_a_fstab" title="Samba (Español)">Agregando una comparticion a fstab</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.kernel.org/pub/linux/docs/lanana/device-list/devices-2.6.txt">Listado completo de dispositivos, incluyendo el dispositivo de bloques</a></li>
+<li><a rel="nofollow" class="external text" href="https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html">Filesystem Hierarchy Standard</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.askapache.com/optimize/super-speed-secrets/">30x Faster Cache and Site Speed with TMPFS</a></li>
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
 <li><a href="../es/Category:File_systems.html" title="Category:File systems (Español)">File systems (Español)</a></li>
 <li><a href="../es/Category:Boot_process.html" title="Category:Boot process (Español)">Boot process (Español)</a></li>
-<li><a href="../es/Category:Configuration_files.html" title="Category:Configuration files (Español)">Configuration files (Español)</a></li>
 </ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fstab_(Espa%C3%B1ol)&amp;oldid=638391">https://wiki.archlinux.org/index.php?title=Fstab_(Español)&amp;oldid=638391</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:11.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fstab_(Espa%C3%B1ol)&amp;oldid=652252">https://wiki.archlinux.org/index.php?title=Fstab_(Español)&amp;oldid=652252</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 February 2021, at 21:47.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,88 +34,104 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <p><span></span>
-Un disco RAM (ramdisk) es un área de memoria utilizada como disco. Muchas distribuciones usan /dev/ram para esto, pero en Arch no están disponibles de los dispositivos /dev/ram, por lo que hay que usar <a href="../es/Fstab.html" title="Fstab (Español)">/etc/fstab</a> para crear un disco RAM. Es extremadamente importante acordarse de que los discos RAM se almacenan en memoria y, por consiguiente, son volátiles. Cualquier cosa almacenada en un disco RAM, se perderá si apaga el equipo o se interrumpe la alimentación de la memoria. Por lo tanto, es necesario guardar el contenido de tu disco RAM en un soporte persistente, si quieres conservarlo.
 </p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Tmpfs.html" title="Tmpfs">Tmpfs</a> fue revisada el <b>2021-02-12</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Tmpfs&amp;diff=0&amp;oldid=637974">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<p><a href="https://en.wikipedia.org/wiki/es:Tmpfs" class="extiw" title="wikipedia:es:Tmpfs">tmpfs</a> es un sistema de archivos temporal que reside en la memoria y/o partición(es) de intercambio. Montar directorios como tmpfs puede ser una forma eficaz de acelerar el acceso a sus archivos o de asegurarse de que su contenido se borre automáticamente al reiniciar.
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Sugerencia:</strong> Los archivos temporales en los directorios tmpfs se pueden volver a crear en el arranque utilizando <a href="../es/Systemd.html#Archivos_temporales" class="mw-redirect" title="Systemd-tmpfiles (Español)">systemd-tmpfiles</a>.</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#%C2%BFPor_qu%C3%A9_usar_uno?"><span class="tocnumber">1</span> <span class="toctext">¿Por qué usar uno?</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#C%C3%B3mo_crear_un_disco_RAM"><span class="tocnumber">2</span> <span class="toctext">Cómo crear un disco RAM</span></a></li>
-<li class="toclevel-1 tocsection-3"><a href="#Ejemplo_de_uso"><span class="tocnumber">3</span> <span class="toctext">Ejemplo de uso</span></a></li>
-<li class="toclevel-1 tocsection-4"><a href="#Enlaces_de_inter%C3%A9s"><span class="tocnumber">4</span> <span class="toctext">Enlaces de interés</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#Utilizaci%C3%B3n"><span class="tocnumber">1</span> <span class="toctext">Utilización</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Ejemplos"><span class="tocnumber">2</span> <span class="toctext">Ejemplos</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Desactivar_el_montaje_autom%C3%A1tico"><span class="tocnumber">3</span> <span class="toctext">Desactivar el montaje automático</span></a></li>
+<li class="toclevel-1 tocsection-4">
+<a href="#Soluci%C3%B3n_de_problemas"><span class="tocnumber">4</span> <span class="toctext">Solución de problemas</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Abrir_enlaces_simb%C3%B3licos_en_tmpfs_cuando_falla_la_ra%C3%ADz"><span class="tocnumber">4.1</span> <span class="toctext">Abrir enlaces simbólicos en tmpfs cuando falla la raíz</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-6"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">5</span> <span class="toctext">Véase también</span></a></li>
 </ul>
 </div>
 
 <h2>
-<span id=".C2.BFPor_qu.C3.A9_usar_uno.3F"></span><span class="mw-headline" id="¿Por_qué_usar_uno?">¿Por qué usar uno?</span>
+<span id="Utilizaci.C3.B3n"></span><span class="mw-headline" id="Utilización">Utilización</span>
 </h2>
-<p>Un disco RAM se almacena en RAM y, en consecuencia, es mucho más rápido que un disco o dispositivo de almacenamiento convencional. Así pues, si necesitas manipular ficheros a alta velocidad, un disco RAM puede resultar ser una solución ideal. Algunos usos relativamente comunes incluyen /tmp, /var/cache/pacman o /var/lib/pacman, aunque estoy convencido de que se te han venido a la cabeza muchos más.
+<p>Algunos directorios en los que se utilice comúnmente <span class="plainlinks archwiki-template-man" title="$ man 5 tmpfs"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tmpfs.5">tmpfs(5)</a></span> son <a rel="nofollow" class="external text" href="http://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch03s18.html">/tmp</a>, <a rel="nofollow" class="external text" href="http://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s09.html">/var/lock</a> y <a rel="nofollow" class="external text" href="http://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s13.html">/var/run</a>. No lo utilice en <a rel="nofollow" class="external text" href="http://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s15.html">/var/tmp</a>, porque esa carpeta está destinada a archivos temporales que se conservan durante los reinicios.
 </p>
-<h2>
-<span id="C.C3.B3mo_crear_un_disco_RAM"></span><span class="mw-headline" id="Cómo_crear_un_disco_RAM">Cómo crear un disco RAM</span>
-</h2>
-<p>Para crear un disco RAM, debes proceder igual que para montar cualquier otro dispositivo de almacenamiento. En primer lugar, debes elegir el punto de montaje deseado (directorio) y, a continuación, añadirlo a /etc/fstab, tal como se indica seguidamente:
+<p>Arch utiliza un directorio tmpfs <code>/run</code>, con <code>/var/run</code> y <code>/var/lock</code> simplemente existiendo como enlaces simbólicos por compatibilidad. También se utiliza para <code>/tmp</code> por la configuración predeterminada de systemd y no requiere una entrada en <a href="../es/Fstab.html" title="Fstab (Español)">fstab</a> a menos que se necesite una configuración específica.
 </p>
-<pre>none     /directorio/punto/montaje     ramfs  defaults   0     0
-</pre>
-<p>Si no dispones de una gran cantidad de memoria RAM, se recomienda usar 'tmpfs' en lugar de 'ramfs', dado que tmpfs usará Swap (memoria de intercambio; disco) cuando la memoria RAM se agote, mientras que ramfs no. Por supuesto, es lógico pensar que el acceso a Swap echará por tierra todo el beneficio de los discos RAM, por lo que no parece muy lógico usarse a menos que tengas mucha o suficiente memoria libre.
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span> 2.2 y posterior espera que tmpfs se monte en <code>/dev/shm</code> para <a href="https://en.wikipedia.org/wiki/Shared_memory#Support_on_Unix-like_systems" class="extiw" title="wikipedia:Shared memory">memoria compartida POSIX</a>. El montaje de tmpfs en <code>/dev/shm</code> es gestionado automáticamente por <a href="../es/Systemd.html" title="Systemd (Español)">systemd</a> y la configuración manual en <a href="../es/Fstab.html" title="Fstab (Español)">fstab</a> no es necesaria.
 </p>
-<h2><span class="mw-headline" id="Ejemplo_de_uso">Ejemplo de uso</span></h2>
-<p>Los ficheros que a editar son /etc/fstab, /etc/rc.local y /etc/rc.local.shutdown para almacenar /tmp, /var/cache/pacman y /var/lib/pacman en RAM y copiarlos a disco antes de apagar el equipo. Las partes irrelevantes de los ficheros han sido eliminadas para ahorrar espacio.
+<p>Generalmente, las tareas y los programas que ejecutan operaciones frecuentes de lectura/escritura pueden beneficiarse del uso de una carpeta tmpfs. Algunas aplicaciones pueden incluso recibir una ganancia sustancial al descargar algunos (o todos) sus datos en la memoria compartida. Por ejemplo, <a href="../en/Firefox/Profile_on_RAM.html" class="mw-redirect" title="Firefox on RAM">reubicar el perfil de Firefox en la RAM</a> muestra una mejora significativa en el rendimiento.
 </p>
-<p><b>/etc/fstab:</b>
+<h2><span class="mw-headline" id="Ejemplos">Ejemplos</span></h2>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> El consumo real de memoria/intercambio depende de cuánto se utilice, ya que las particiones tmpfs no consumen memoria hasta que realmente se necesita.</div>
+<p>De forma predeterminada, una partición tmpfs tiene su tamaño máximo establecido en la mitad de la RAM disponible, sin embargo, es posible cambiar este valor.
+Para establecer explícitamente un tamaño máximo, en este ejemplo para cambiarlo en <code>/tmp</code>, utilice la opción de montaje <code>size</code>:
 </p>
-<pre>none        /tmp         ramfs   defaults              0 0
-none        /mnt/ramdisk ramfs   defaults              0 0
-</pre>
-<p><b>/etc/rc.local:</b>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">tmpfs   /tmp         tmpfs   rw,nodev,nosuid,size=2G          0  0</pre>
+<p>Para especificar un montaje más seguro, especifique la siguiente opción de montaje:
 </p>
-<pre>chmod 777 /tmp
-touch /etc/ramdisk.sh
-
-/bin/cat - &gt;&gt; /etc/ramdisk.sh &lt;&lt; EOT
-#!/bin/sh
-
-cd /var/ &amp;&amp; /bin/tar cf abs.tar abs/
-cd /var/cache/ &amp;&amp; /bin/tar cf pacman.tar pacman/
-cd /var/lib/ &amp;&amp; /bin/tar cf pacman.tar pacman/
-
-/bin/mkdir /mnt/ramdisk/var/
-/bin/mkdir /mnt/ramdisk/var/cache/
-/bin/mkdir /mnt/ramdisk/var/lib/
-
-/bin/mv /var/abs /mnt/ramdisk/var &amp;&amp; /bin/ln -s /mnt/ramdisk/var/abs /var/abs
-/bin/mv /var/cache/pacman /mnt/ramdisk/var/cache &amp;&amp;  /bin/ln -s /mnt/ramdisk/var/lib/pacman /var/lib/pacman
-/bin/mv /var/lib/pacman /mnt/ramdisk/var/lib &amp;&amp; /bin/ln -s /mnt/ramdisk/var/cache/pacman /var/cache/pacman
-
-/bin/ln -s /tmp /mnt/ramdisk/tmp
-/bin/chmod 777 /mnt/ramdisk/tmp
-EOT
-
-/etc/ramdisk.sh &amp;
-</pre>
-<p><b>/etc/rc.local.shutdown:</b>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">tmpfs   /www/cache    tmpfs  rw,size=1G,nr_inodes=5k,noexec,nodev,nosuid,uid=<i>usuario</i>,gid=<i>grupo</i>,mode=1700 0 0</pre>
+<p>Véase la página de manual <span class="plainlinks archwiki-template-man" title="$ man 5 tmpfs"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tmpfs.5">tmpfs(5)</a></span> y <a href="../es/Security.html#Sistema_de_archivos" title="Security (Español)">Security (Español)#Sistema de archivos</a> para más información.
 </p>
-<pre>echo "Guardando el contenido de memoria a disco"
-rm /var/abs
-rm /var/cache/pacman
-rm /var/lib/pacman
-mv /mnt/ramdisk/var/abs /var
-mv /mnt/ramdisk/var/cache/pacman /var/cache
-mv /mnt/ramdisk/var/lib/pacman /var/lib
+<p>Reinicie para que los cambios surtan efecto. Tenga en cuenta que aunque pueda ser tentador ejecutar <code>mount -a</code> para que los cambios sean efectivos inmediatamente, esto hará que los archivos que actualmente residen en estos directorios sean inaccesibles (esto es especialmente problemático para ejecutar programas con archivos de bloqueo, por ejemplo). Sin embargo, si todos están vacíos, debería ser seguro ejecutar <code>mount -a</code> en lugar de reiniciar (o montarlos individualmente).
+</p>
+<p>Después de aplicar los cambios, verifique que surtieron efecto mirando <code>/proc/mounts</code> y utilizando <code>findmnt</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ findmnt /tmp</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">TARGET SOURCE FSTYPE OPTIONS
+/tmp   tmpfs  tmpfs  rw,nosuid,nodev,relatime</pre>
+<p>tmpfs también puede cambiar de tamaño temporalmente sin la necesidad de reiniciar, por ejemplo, cuando necesite ejecutarse rápidamente un trabajo de compilación grande. En este caso, ejecute:
+</p>
+<pre># mount -o remount,size=4G,noatime /tmp
 </pre>
 <h2>
-<span id="Enlaces_de_inter.C3.A9s"></span><span class="mw-headline" id="Enlaces_de_interés">Enlaces de interés</span>
+<span id="Desactivar_el_montaje_autom.C3.A1tico"></span><span class="mw-headline" id="Desactivar_el_montaje_automático">Desactivar el montaje automático</span>
 </h2>
-<ul>
-<li><a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=50893">How to mount Ramdisk</a></li>
-<li><a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=326269">Ramdrive setup</a></li>
-<li><a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/filesystems/tmpfs.html">Official tmpfs documentation</a></li>
-<li><a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/filesystems/ramfs-rootfs-initramfs.html">Official ramfs documentation</a></li>
-</ul>
+<p>En <a href="../es/Systemd.html" title="Systemd (Español)">systemd</a>, <code>/tmp</code> se monta automáticamente como un tmpfs, si no es ya un punto de montaje dedicado (ya sea tmpfs o en disco) en <code>/etc/fstab</code>. Para desactivar el montaje automático, <a href="../es/Systemd.html#Utilizar_las_unidades" class="mw-redirect" title="Mask (Español)">enmascare</a> la unidad systemd <code>tmp.mount</code>.
+</p>
+<p>Los archivos ya no se almacenarán en un tmpfs, sino en el dispositivo de bloque. El contenido de <code>/tmp</code> ahora se conservará entre reinicios, lo que podría no ser el comportamiento deseado. Para recuperar el comportamiento anterior y limpiar la carpeta <code>/tmp</code> automáticamente al reiniciar, considere utilizar <span class="plainlinks archwiki-template-man" title="$ man 5 tmpfiles.d"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tmpfiles.d.5">tmpfiles.d(5)</a></span>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/tmpfiles.d/tmp.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># véase tmpfiles.d(5)
+# activar siempre la limpieza de la carpeta /tmp
+D! /tmp 1777 root root 0
+
+# eliminar los archivos en /var/tmp con más de 10 días
+D /var/tmp 1777 root root 10d
+
+# los puntos de montaje del espacio de nombres (PrivateTmp=yes) se excluyen de la eliminación
+x /tmp/systemd-private-*
+x /var/tmp/systemd-private-*
+X /tmp/systemd-private-*/tmp
+X /var/tmp/systemd-private-*/tmp</pre>
+<h2>
+<span id="Soluci.C3.B3n_de_problemas"></span><span class="mw-headline" id="Solución_de_problemas">Solución de problemas</span>
+</h2>
+<h3>
+<span id="Abrir_enlaces_simb.C3.B3licos_en_tmpfs_cuando_falla_la_ra.C3.ADz"></span><span class="mw-headline" id="Abrir_enlaces_simbólicos_en_tmpfs_cuando_falla_la_raíz">Abrir enlaces simbólicos en tmpfs cuando falla la raíz</span>
+</h3>
+<p>Considerando que <code>/tmp</code> está utilizando tmpfs, cambie el directorio actual a <code>/tmp</code>, luego cree un archivo y un enlace simbólico a ese archivo en el mismo directorio <code>/tmp</code>. Es de esperar que se produzcan errores de permiso denegado al intentar leer el enlace simbólico debido a que <code>/tmp</code> <a rel="nofollow" class="external text" href="https://wiki.ubuntu.com/Security/Features#Symlink_restrictions">tiene el "bit pegajoso" activado</a>.
+</p>
+<p>Este comportamiento se puede controlar mediante <code>/proc/sys/fs/protected_symlinks</code> o simplemente mediante sysctl: <code>sysctl -w fs.protected_symlinks=0</code>. Véase <a href="../en/Sysctl.html#Configuration" title="Sysctl">Sysctl#Configuration</a> para hacerlo permanente.
+</p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Advertencia:</strong> ¡Cambiar este comportamiento puede generar problemas de seguridad!</div>
+<h2>
+<span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
+</h2>
+<ul><li><a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/filesystems/tmpfs.html">Documentación del kernel Linux</a></li></ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
@@ -125,8 +142,8 @@ mv /mnt/ramdisk/var/lib/pacman /var/lib
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tmpfs_(Espa%C3%B1ol)&amp;oldid=638667">https://wiki.archlinux.org/index.php?title=Tmpfs_(Español)&amp;oldid=638667</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:19.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tmpfs_(Espa%C3%B1ol)&amp;oldid=651995">https://wiki.archlinux.org/index.php?title=Tmpfs_(Español)&amp;oldid=651995</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 February 2021, at 00:43.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

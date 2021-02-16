@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -38,8 +39,37 @@
 <li><a href="../en/Full_system_backup_with_tar.html" title="Full system backup with tar">Full system backup with tar</a></li>
 </ul>
 </div>
-<p>It is possible to make compressed read-only backup archives of whole filesystems in the <a href="../en/File_systems.html#Read-only_file_systems" class="mw-redirect" title="SquashFS">SquashFS</a> format. It is convenient since you can mount it and find/grep/cp/tree in it without decompressing the whole archive. Backup and retrieval may take less time compared to tar, but modifying an existing archive is impossible.
+<p>Compressed backup archives of whole filesystems can be made in the <a href="../en/File_systems.html#Read-only_file_systems" class="mw-redirect" title="SquashFS">SquashFS</a> format. Backup and retrieval takes relatively less time with its random access capability, but any kind of modification other than appending is not yet impossible.
 </p>
+<table class="wikitable">
+
+<tbody>
+<tr>
+<th>Device File
+</th>
+<th>Description
+</th>
+</tr>
+<tr>
+<td>/dev/sdB
+</td>
+<td>Backup Drive
+</td>
+</tr>
+<tr>
+<td>/dev/sdL
+</td>
+<td>Live Medium
+</td>
+</tr>
+<tr>
+<td>/dev/sdSRC
+</td>
+<td>Drive to Be Backed Up
+</td>
+</tr>
+</tbody>
+</table>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> SquashFS does not support <a href="../en/Access_Control_Lists.html" title="Access Control Lists">Access Control Lists</a>.<a rel="nofollow" class="external autonumber" href="https://www.kernel.org/doc/html/latest/filesystems/squashfs.html#todo-list">[1]</a>
 </div>
@@ -49,104 +79,212 @@
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#Prepare_a_live_medium"><span class="tocnumber">1</span> <span class="toctext">Prepare a live medium</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#Backup_in_live_environment"><span class="tocnumber">2</span> <span class="toctext">Backup in live environment</span></a></li>
-<li class="toclevel-1 tocsection-3"><a href="#Restore_(decompress)"><span class="tocnumber">3</span> <span class="toctext">Restore (decompress)</span></a></li>
-<li class="toclevel-1 tocsection-4"><a href="#Restore_(mount_and_copy)"><span class="tocnumber">4</span> <span class="toctext">Restore (mount and copy)</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#Pros_and_cons"><span class="tocnumber">1</span> <span class="toctext">Pros and cons</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Prepare_the_backup_drive"><span class="tocnumber">2</span> <span class="toctext">Prepare the backup drive</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Prepare_a_live_medium"><span class="tocnumber">3</span> <span class="toctext">Prepare a live medium</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Back_up"><span class="tocnumber">4</span> <span class="toctext">Back up</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#(Optional)_Test_backup_in_QEMU"><span class="tocnumber">5</span> <span class="toctext">(Optional) Test backup in QEMU</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#(Optional)_Inspect_backup"><span class="tocnumber">6</span> <span class="toctext">(Optional) Inspect backup</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#Retrieve_file_from_backup"><span class="tocnumber">7</span> <span class="toctext">Retrieve file from backup</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Restore_backup"><span class="tocnumber">8</span> <span class="toctext">Restore backup</span></a></li>
 </ul>
 </div>
 
-<h2><span class="mw-headline" id="Prepare_a_live_medium">Prepare a live medium</span></h2>
-<p>Creating SquashFS archives requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=squashfs-tools">squashfs-tools</a></span>. This package is included in the official Arch Linux installation image.
+<h2><span class="mw-headline" id="Pros_and_cons">Pros and cons</span></h2>
+<p>Pros:
 </p>
-<h2><span class="mw-headline" id="Backup_in_live_environment">Backup in live environment</span></h2>
-<p>Boot into the live environment and mount filesystems you would like to backup.
+<ul>
+<li>No partitioning, no guessing how much size is required</li>
+<li>Residing in the kernel ever since <a rel="nofollow" class="external text" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/filesystems/squashfs.txt?h=v2.6.29">2.6.29</a>, <a href="../en/File_systems.html#Read-only_file_systems" class="mw-redirect" title="SquashFS">SquashFS</a> should be supported by most rescue disks</li>
+<li>
+<a href="https://en.wikipedia.org/wiki/Tar_(computing)#Random_access" class="extiw" title="wikipedia:Tar (computing)">Random access</a><sup>[citation needed]</sup>, with a plain <code>mount</code>
+</li>
+<li>Duplicate files are removed by default (unless <code>-no-duplicates</code> flag is on)</li>
+</ul>
+<p>Cons:
 </p>
+<ul>
+<li>All <a href="../en/Access_Control_Lists.html" class="mw-redirect" title="ACL">ACLs</a> are lost</li>
+<li>Not accessible from Windows<sup>(1)</sup>
+</li>
+<li>Appendable but impossible to remove things from it</li>
+<li>To use the disk for some other purposes, you have to destroy the backup<sup>(2)</sup>
+</li>
+</ul>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The following example is EFI-grub installation w/ <code>sdb1</code> as EFI partition and <code>sdb2</code> as root partition.</div>
-<pre># fsck /dev/sdb2
-# fsck /dev/sdb1
-# mount -o ro /dev/sdb2 /mnt
-# mount -o ro /dev/sdb1 /mnt/boot/efi
-# <i>/path/to/mksquashfs.sh</i> SOURCE_DIRECTORY BACKUP_ARCHIVE_DIRECTORY
-</pre>
-<p>where
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">mksquashfs.sh</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/bash
-if [ $# -ne 2 ] || [ ! -d "$1" ] || [ ! -d "$2" ]; then
-  echo
-  echo "  mksquashfs.sh &lt;SOURCE_DIRECTORY&gt; &lt;BACKUP_ARCHIVE_DIRECTORY&gt;"
-  echo
-  exit 1
-fi
-echo -ne "\n  Have you fsck'd? "
-read -r
-echo
-mksquashfs \
-  "$1" "$2/$(date +%Y%m%d_%a).sfs" \
-  -comp gzip \
-  -xattrs \
-  -progress \
-  -mem 5G \
-  -wildcards \
-  -e \
-  var/cache/pacman/pkg \
-  var/lib/pacman/sync \
-  var/log/journal \
-  boot/efi \
-  boot/grub \
-  boot/initramfs-linux"*".img \
-  boot/vmlinuz-linux
-</pre>
-<h2>
-<span id="Restore_.28decompress.29"></span><span class="mw-headline" id="Restore_(decompress)">Restore (decompress)</span>
-</h2>
-<div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> The following is complete but not yet tested. Data may be overwritten. Use at your own risk.</div>
-<pre>#!/bin/bash
-
-# Path to extract files
-target=/mnt
-
-# Path to backup SquashFS archive file
-archive=<i>/somewhere/backup.sfs</i>
-
-unsquashfs -stat $archive
-unsquashfs -force -dest $target $archive</pre>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> To make system bootable after restore, you should:
+<strong>Note:</strong> 
 <ol>
-<li>Fix fstab</li>
-<li>arch-chroot
-<ol>
-<li>mkinitcpio -p linux</li>
-<li>grub-install</li>
-<li>grub-mkconfig</li>
+<li>
+<a rel="nofollow" class="external text" href="https://github.com/AgentD/squashfs-tools-ng">squashfs-tools-ng</a> may support SquashFS image files but Windows itself does not support partitionless drives at all.</li>
+<li>
+<i>Don't grab the <a href="https://en.wikipedia.org/wiki/Lifebuoy" class="extiw" title="wikipedia:Lifebuoy">lifebuoy</a> when you need a <a href="https://en.wikipedia.org/wiki/Swim_ring" class="extiw" title="wikipedia:Swim ring">swim ring</a>.</i> File sharing and backup should be in separate disks. Please <a rel="nofollow" class="external text" href="https://askubuntu.com/a/594861">buy adequate backup hardware</a>.</li>
 </ol>
+</div>
+<h2><span class="mw-headline" id="Prepare_the_backup_drive">Prepare the backup drive</span></h2>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> 
+<ul>
+<li>All data on the backup drive will be lost.</li>
+<li>All data on machine may be lost if an incorrect device file is specified.</li>
+</ul>
+</div>
+<ol>
+<li>Wipe out all partitions <code>/dev/sdBN</code>, then the partition table <code>/dev/sdB</code>, with <a href="../en/Device_file.html#wipefs" class="mw-redirect" title="Wipefs">wipefs</a>.</li>
+<li>Synchronize all write caches <code># sync</code>
+</li>
+<li>Inform the OS of partition table changes <code># partprobe</code>
+</li>
+<li>Check for bad blocks:
+<ul>
+<li>If the backup drive is an <a href="../en/Solid_state_drive.html" class="mw-redirect" title="SSD">SSD</a>, use <a href="../en/S.M.A.R.T..html" title="S.M.A.R.T.">S.M.A.R.T.</a>.</li>
+<li>If the backup drive is an HDD, use <a href="../en/Badblocks.html" title="Badblocks">badblocks</a>.</li>
+</ul>
 </li>
 </ol>
+<h2><span class="mw-headline" id="Prepare_a_live_medium">Prepare a live medium</span></h2>
+<p><a href="../en/Installation_guide.html#Prepare_an_installation_medium" title="Installation guide">Installation guide#Prepare an installation medium</a> or <a href="../en/Archiso.html" title="Archiso">archiso</a> to /dev/sdL
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> Creating SquashFS filesystem requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=squashfs-tools">squashfs-tools</a></span>, which is included in the <a rel="nofollow" class="external text" href="https://archlinux.org/download/">official Arch Linux installation image</a>.</div>
+<h2><span class="mw-headline" id="Back_up">Back up</span></h2>
+<p><a href="../en/Installation_guide.html#Boot_the_live_environment" title="Installation guide">Installation guide#Boot the live environment</a>
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> If you don't have enough USB ports for both the backup drive and live medium:
+<ol>
+<li>Boot the live medium</li>
+<li>When the boot loader menu appears, press 'e'</li>
+<li>Append <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/d5102724fbacb8f980db346e0caa8b5a85d9edb6/docs/README.bootparams#L26">copytoram</a> to <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a>
+</li>
+<li>
+<code># udisksctl power-off -b /dev/sdL</code> (requires <a href="../en/Archiso.html#Prepare_a_custom_profile" title="Archiso">archiso releng</a> with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=udisks2">udisks2</a></span> in <a href="../en/Archiso.html#Selecting_packages" title="Archiso">packages.x86_64</a>)</li>
+<li>Make sure the live medium stops spinning and disconnect it</li>
+</ol>
 </div>
-<h2>
-<span id="Restore_.28mount_and_copy.29"></span><span class="mw-headline" id="Restore_(mount_and_copy)">Restore (mount and copy)</span>
-</h2>
+<p>Mount filesystems you would like to backup. (e.g. /dev/sdSRC to /mnt)
+</p>
+<pre># fsck /dev/sdSRC
+# mount -o ro /dev/sdSRC /mnt</pre>
+<p>Back up (<a rel="nofollow" class="external text" href="https://github.com/Un1Gfn/archiso/blob/master/mksquashfs.sh">example script</a>)
+</p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> The following is not yet tested. Data may be overwritten. Use at your own risk.</div>
-<pre># mount <i>somewhere</i>/backup.sfs /mnt
-# cp /mnt/<i>somefile</i> <i>/somewhere/damaged-somefile</i>
+<strong>Warning:</strong> 
+<ul>
+<li>All data on the backup drive will be lost.</li>
+<li>All data on machine may be lost if an incorrect device file is specified.</li>
+</ul>
+</div>
+<pre># mksquashfs /mnt /dev/sdB \
+  -not-reproducible \
+  -xattrs \
+  -wildcards \
+  -noappend \
+  -progress \
+  -mem 5G \
+  -e \
+    var/cache/pacman/pkg \
+    var/lib/pacman/sync \
+    var/log/journal \
+    boot/efi \
+    boot/grub \
+    boot/initramfs-linux"*".img \
+    boot/vmlinuz-linux</pre>
+<dl>
+<dt>-not-reproducible</dt>
+<dd>Slightly increase backup speed</dd>
+<dt>-noappend</dt>
+<dd>Overwrite</dd>
+<dt>-mem</dt>
+<dd>RAM granted to mksquashfs</dd>
+<dt>-e</dt>
+<dd>List of exclude dirs/files</dd>
+</dl>
+<h2>
+<span id=".28Optional.29_Test_backup_in_QEMU"></span><span class="mw-headline" id="(Optional)_Test_backup_in_QEMU">(Optional) Test backup in QEMU</span>
+</h2>
+<p>Grant permission
+</p>
+<pre>$ sudo chown $USER:$USER /dev/sdB
 </pre>
+<p>Launch QEMU
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> <a href="../en/Kernel.html" title="Kernel">Kernel</a> and <a href="../en/Arch_boot_process.html#initramfs" class="mw-redirect" title="Initramfs">initramfs</a> from the host machine are used.</div>
+<pre>$ qemu-system-x86_64 \
+  -kernel /boot/vmlinuz-linux \
+  -append "root=/dev/sdB ro loglevel=3 init=/usr/lib/systemd/systemd" \
+  -initrd /boot/initramfs-linux-fallback.img \
+  -drive file=/dev/sdB,index=0,media=disk,format=raw \
+  -m <i>virtual_machine_ram_in_MiB</i> \
+  --enable-kvm \
+  -cpu host</pre>
+<h2>
+<span id=".28Optional.29_Inspect_backup"></span><span class="mw-headline" id="(Optional)_Inspect_backup">(Optional) Inspect backup</span>
+</h2>
+<p>Get backup date
+</p>
+<pre># date --date=@"$(unsquashfs -mkfs-time /dev/sdB)"
+</pre>
+<p>More superblock information
+</p>
+<pre># unsquashfs -stat /dev/sdB
+</pre>
+<p>Checksum
+</p>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> <code>unsquashfs -stat</code> and <code>df</code> gives different sizes (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Full_system_backup_with_SquashFS">Talk:Full system backup with SquashFS#</a>)</div>
+</div>
+<pre># COUNT="$(unsquashfs -stat /dev/sdB | grep -F 'Filesystem size' | cut -d' ' -f3)"
+# echo "$COUNT Byte"
+# numfmt --to=iec-i "$COUNT"
+# head -c "$COUNT" /dev/sdB | sha1sum | tee -a sha1sum.txt</pre>
+<h2><span class="mw-headline" id="Retrieve_file_from_backup">Retrieve file from backup</span></h2>
+<pre># mount /dev/sdB /mnt
+# cp /mnt/<i>path/to/file</i> <i>/path/to/destination</i>
+</pre>
+<h2><span class="mw-headline" id="Restore_backup">Restore backup</span></h2>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Add <code>unsquashfs</code> oneliner (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Full_system_backup_with_SquashFS">Talk:Full system backup with SquashFS#</a>)</div>
+</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 
+<p>To make system bootable after restore:
+</p>
+<ul>
+<li>fix <a href="../en/Fstab.html" title="Fstab">fstab</a>
+</li>
+<li>arch-chroot
+<ul>
+<li><a href="../en/Mkinitcpio.html#Image_creation_and_activation" class="mw-redirect" title="Regenerate the initramfs">regenerate the initramfs</a></li>
+<li>install and configure <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot loader">boot loader</a>
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Backup.html" title="Category:Backup">Backup</a></li></ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+</ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Full_system_backup_with_SquashFS&amp;oldid=640209">https://wiki.archlinux.org/index.php?title=Full_system_backup_with_SquashFS&amp;oldid=640209</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 November 2020, at 07:58.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Full_system_backup_with_SquashFS&amp;oldid=652179">https://wiki.archlinux.org/index.php?title=Full_system_backup_with_SquashFS&amp;oldid=652179</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 February 2021, at 16:21.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

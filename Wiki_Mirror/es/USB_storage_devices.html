@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,18 +33,17 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="../File:Tango-preferences-desktop-locale.png" decoding="async" width="48" height="48"></a><b>Este artículo o sección necesita ser <a href="../es/ArchWiki:Contributing.html#Traducir_contenido" title="ArchWiki:Contributing (Español)">traducido</a>.</b><a href="../File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="../File:Tango-preferences-desktop-locale.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Notas:</b> Desactualizado. (Discusión en <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:USB_storage_devices_(Espa%C3%B1ol)">Talk:USB storage devices (Español)#</a>)</div>
-</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/USB_storage_devices.html" title="USB storage devices">USB storage devices</a> fue revisada el <b>2021-02-15</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=USB_storage_devices&amp;diff=0&amp;oldid=628206">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artículos relacionados</p>
 <ul>
-<li><a href="../en/File_systems.html#Mount_a_file_system" class="mw-redirect" title="Mount">Mount</a></li>
+<li><a href="../es/File_systems.html#Montar_un_sistema_de_archivos" class="mw-redirect" title="Mount (Español)">Montaje</a></li>
 </ul>
 </div>
-<p>Este documento describe cómo usar las populares memorias USB con Linux. No obstante, también es válido para otros dispositivos, como las cámaras digitales que actúan como si fueran meros dispositivos USB de almacenamiento.
+<p>Este artículo describe cómo utilizar las memorias USB en Linux. También es válido para otros dispositivos (como las cámaras digitales) que actúan como si fueran un simple dispositivo de almacenamiento USB.
+</p>
+<p>Si dispone de un sistema actualizado con el kernel estándar de Arch y un <a href="../es/Desktop_environment.html" title="Desktop environment (Español)">entorno de escritorio</a> moderno, su dispositivo debería simplemente aparecer en el escritorio, sin necesidad de abrir la terminal.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -51,83 +51,124 @@
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#Cargar_el_m%C3%B3dulo_%22usb_storage%22_en_el_kernel"><span class="tocnumber">1</span> <span class="toctext">Cargar el módulo "usb_storage" en el kernel</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#Montar_la_memoria_USB"><span class="tocnumber">2</span> <span class="toctext">Montar la memoria USB</span></a></li>
-<li class="toclevel-1 tocsection-3"><a href="#Reparticionar_la_memoria_USB"><span class="tocnumber">3</span> <span class="toctext">Reparticionar la memoria USB</span></a></li>
-<li class="toclevel-1 tocsection-4"><a href="#Montar_el_dispositivo_USB_como_un_usuario_normal"><span class="tocnumber">4</span> <span class="toctext">Montar el dispositivo USB como un usuario normal</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#Montaje_autom%C3%A1tico_con_udisks"><span class="tocnumber">1</span> <span class="toctext">Montaje automático con udisks</span></a></li>
+<li class="toclevel-1 tocsection-2">
+<a href="#Montaje_manual"><span class="tocnumber">2</span> <span class="toctext">Montaje manual</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#Conseguir_un_kernel_que_soporte_usb_storage"><span class="tocnumber">2.1</span> <span class="toctext">Conseguir un kernel que soporte usb_storage</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Identificar_el_dispositivo"><span class="tocnumber">2.2</span> <span class="toctext">Identificar el dispositivo</span></a></li>
+<li class="toclevel-2 tocsection-5">
+<a href="#Montar_la_memoria_USB"><span class="tocnumber">2.3</span> <span class="toctext">Montar la memoria USB</span></a>
+<ul>
+<li class="toclevel-3 tocsection-6"><a href="#Como_root"><span class="tocnumber">2.3.1</span> <span class="toctext">Como root</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#Permitir_la_escritura_a_usuarios_normales"><span class="tocnumber">2.3.2</span> <span class="toctext">Permitir la escritura a usuarios normales</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#Como_usuario_normal_con_fstab"><span class="tocnumber">2.3.3</span> <span class="toctext">Como usuario normal con fstab</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#Herramientas_de_montaje"><span class="tocnumber">2.3.4</span> <span class="toctext">Herramientas de montaje</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10">
+<a href="#Soluci%C3%B3n_de_problemas"><span class="tocnumber">3</span> <span class="toctext">Solución de problemas</span></a>
+<ul>
+<li class="toclevel-2 tocsection-11"><a href="#El_sistema_no_reconoce_ning%C3%BAn_dispositivo_de_almacenamiento_USB"><span class="tocnumber">3.1</span> <span class="toctext">El sistema no reconoce ningún dispositivo de almacenamiento USB</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#El_dispositivo_USB_es_detectado_pero_no_es_posible_montarlo"><span class="tocnumber">3.2</span> <span class="toctext">El dispositivo USB es detectado pero no es posible montarlo</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#El_dispositivo_no_se_apaga_despu%C3%A9s_de_desmontar_todas_las_particiones"><span class="tocnumber">3.3</span> <span class="toctext">El dispositivo no se apaga después de desmontar todas las particiones</span></a></li>
+</ul>
+</li>
 </ul>
 </div>
 
 <h2>
-<span id="Cargar_el_m.C3.B3dulo_.22usb_storage.22_en_el_kernel"></span><span class="mw-headline" id='Cargar_el_módulo_"usb_storage"_en_el_kernel'>Cargar el módulo "usb_storage" en el kernel</span>
+<span id="Montaje_autom.C3.A1tico_con_udisks"></span><span class="mw-headline" id="Montaje_automático_con_udisks">Montaje automático con udisks</span>
 </h2>
-<p>Si no utiliza un kernel personalizado, ya puede comenzar, pues todos los kernel empaquetados para Arch están adecuadamente configurados. Si utiliza un kernel personalizado, asegúrese de que está compilado con "SCSI-Support", "SCSI-Disk-Support" y "usb_storage". Si utiliza el [][udev]] más reciente, puede simplemente insertar su dispositivo que el sistema se encargará de cargar automáticamente todos los módulos del kernel que sean necesarios. Algunas versiones más antiguas de udev necesitarían tener instalado también <a href="/index.php?title=HotPlug&amp;action=edit&amp;redlink=1" class="new" title="HotPlug (page does not exist)">hotplug</a>. Por otro lado, puede hacer lo mismo manualmente:
+<p>Se trata del método más fácil y habitual. Es utilizado por muchos <a href="../es/Desktop_environment.html" title="Desktop environment (Español)">entornos de escritorio</a>, pero también puede usarse por separado.
 </p>
-<pre># modprobe usb-storage
-# modprobe sd_mod      (sólo para los kernel sin SCSI)
+<p>Véase <a href="../en/Udisks.html" title="Udisks">Udisks</a> para obtener más información, incluyendo la lista de ayudantes de montaje.
+</p>
+<h2><span class="mw-headline" id="Montaje_manual">Montaje manual</span></h2>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Antes de decidir que Arch Linux no monte su dispositivo USB, asegúrese de comprobar todos los puertos disponibles. Algunos puertos podrían no compartir el mismo controlador, impidiéndole montar el dispositivo.</div>
+<h3><span class="mw-headline" id="Conseguir_un_kernel_que_soporte_usb_storage">Conseguir un kernel que soporte usb_storage</span></h3>
+<p>Si no está usando un kernel personalizado, no se preocupe, ya que todos los kernels por defecto de Arch Linux están correctamente configurados. Si usa un kernel personalizado, asegúrese de que está compilado con SCSI-Support, SCSI-Disk-Support y usb_storage. Si utiliza la última versión de <a href="../es/Udev.html" title="Udev (Español)">udev</a>, simplemente conecte el dispositivo y el sistema cargará automáticamente todos los módulos del kernel necesarios.
+</p>
+<h3><span class="mw-headline" id="Identificar_el_dispositivo">Identificar el dispositivo</span></h3>
+<p>Lo primero que se necesita para acceder a un dispositivo de almacenamiento es conocer el identificador asignado por el kernel. Véase <a href="../es/Fstab.html#Identificaci%C3%B3n_de_sistemas_de_archivos" title="Fstab (Español)">Fstab_(Español)#Identificación_de_sistemas_de_archivos</a> para obtener más detalles.
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Sugerencia:</strong> Para saber cuál es su dispositivo USB, puede comparar la salida de <code>lsblk -f</code> (explicado en el artículo enlazado) cuando el dispositivo USB está conectado y cuando está desconectado.</div>
+<h3><span class="mw-headline" id="Montar_la_memoria_USB">Montar la memoria USB</span></h3>
+<p>Hay que crear el directorio en el que se va a montar el dispositivo:
+</p>
+<pre># mkdir /mnt/usbstick
 </pre>
-<h2><span class="mw-headline" id="Montar_la_memoria_USB">Montar la memoria USB</span></h2>
-<p>Después de insertar el dispositivo puede montarlo como root con
+<h4><span class="mw-headline" id="Como_root">Como root</span></h4>
+<p>Monte el dispositivo como root con la siguiente orden (no olvide sustituir <b>device_node</b> por la ruta que ha encontrado):
 </p>
-<pre># mount -t vfat /dev/sda1 /mnt/usbstick
+<pre># mount <b>device_node</b> /mnt/usbstick
 </pre>
-<p>Nota: /dev/sda1 es variable. Si su disco duro está asignado a /dev/sda1, tendrá probablemente que utilizar /dev/sdb1. Para comprobar dónde está su dispositivo USB, busque /dev/sd* en la salida de dmesg. Utilice lsusb para verificar que su dispositivo USB es efectivamente reconocido por el sistema, si se produce un error.
+<p>o bien
 </p>
-<p>La opción -t especifica el tipo de sistema de archivos. Si el dispositivo está formateado como fat32 utilice entonces el parámetro vfat. Se supone por defecto que los dispositivos <tt>sdx</tt> están formateados como fat32, así que esta opción puede omitirse. 
-</p>
-<p>Nota: the directory you mount the stick into must exist before you issue the mount command.
-</p>
-<p>If you use <a href="../en/KDE.html" title="KDE">KDE</a> or <a href="../es/GNOME.html" title="GNOME (Español)">GNOME</a>, they should show you the inserted device right on your desktop so you don't need to mount it manually.
-</p>
-<p><b>Nota:</b> Si obtiene un mensaje de error como "Error org.freedesktop.DBus.Error.AccessDenied.", pruebe a añadir su usuario al grupo 'storage'.
-</p>
-<h2><span class="mw-headline" id="Reparticionar_la_memoria_USB">Reparticionar la memoria USB</span></h2>
-<p>A veces el dispositivo está dividido hasta un máximo de cuatro particiones, y Linux no puede leer nada. Para solucionar esto tiene que reparticionar el dispositivo con <code>fdisk</code>. Asegúrese de que no queda ningún archivo en el dispositivo (si lo utilizaba antes en Windows, Mac OS o lo que sea). Teclee:
-</p>
-<pre># modprobe usb_storage
-# fdisk /dev/sda
+<pre># mount -U <b>UUID</b> /mnt/usbstick
 </pre>
-<p>Elimine todas las particiones que aparezcan (<i>d</i> y número de la partición), cree una nueva partición con <i>n</i> (le sugiero que utilice una única partición), pulse <i>w</i> para escribir los cambios y salga.
+<p>Si <code>mount</code> no reconoce el <a href="../es/File_systems.html" title="File systems (Español)">sistema de archivos</a> del dispositivo, intente usar la opción  <code>-t</code>. Véase <span class="plainlinks archwiki-template-man" title="$ man 8 mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mount.8">mount(8)</a></span> para obtener más detalles. Si el montaje no funciona, pruebe a <a href="../es/File_systems.html#Crear_un_sistema_de_archivos" title="File systems (Español)">recrear el sistema de archivos</a> o incluso <a href="../es/Partitioning.html" title="Partitioning (Español)">reparticionar el disco</a>.
 </p>
-<p>Cree un sistema de ficheros en el dispositivo:
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Véase <a rel="nofollow" class="external autonumber" href="https://gist.github.com/anonymous/a69093a51f83b53d9fc5">[1]</a> para ejemplos de scripts de montaje/desmontaje usando <a href="../es/Sudo.html" title="Sudo (Español)">sudo</a>.</div>
+<h4><span class="mw-headline" id="Permitir_la_escritura_a_usuarios_normales">Permitir la escritura a usuarios normales</span></h4>
+<p>Si desea permitir que los usuarios no root puedan escribir en la memoria USB, ejecute la siguiente orden:
 </p>
-<pre># mkfs.vfat /dev/sda1
+<pre># mount -o gid=users,fmask=113,dmask=002 /dev/sda1 /mnt/usbstick
 </pre>
-<p>Si no dispone de mkfs.vfat en su sistema use pacman para instalar dosfstools:
+<p>Si no funciona, asegúrese de que el <a href="../es/File_systems.html" title="File systems (Español)">sistema de archivos</a> es montable y escribible como root. Véase la sección anterior para más detalles.
 </p>
-<pre># pacman -S dosfstools
+<h4><span class="mw-headline" id="Como_usuario_normal_con_fstab">Como usuario normal con fstab</span></h4>
+<p>Véase <a href="../es/FAT.html#Escribir_en_FAT32_como_usuario_normal" title="FAT (Español)">FAT_(Español)#Escribir_en_FAT32_como_usuario_normal</a> si desea que un usuario normal realice el montaje/desmontaje.
+</p>
+<h4><span class="mw-headline" id="Herramientas_de_montaje">Herramientas de montaje</span></h4>
+<p>Existen múltiples <a href="../en/List_of_applications/Utilities.html#Mount_tools" title="List of applications/Utilities">herramientas de montaje</a> que facilitan la acción de montaje como usuario normal.
+</p>
+<h2>
+<span id="Soluci.C3.B3n_de_problemas"></span><span class="mw-headline" id="Solución_de_problemas">Solución de problemas</span>
+</h2>
+<h3>
+<span id="El_sistema_no_reconoce_ning.C3.BAn_dispositivo_de_almacenamiento_USB"></span><span class="mw-headline" id="El_sistema_no_reconoce_ningún_dispositivo_de_almacenamiento_USB">El sistema no reconoce ningún dispositivo de almacenamiento USB</span>
+</h3>
+<p>Si ha conectado su dispositivo de almacenamiento USB al ordenador y no aparece en la lista de <code>lsblk</code> o <code>dmesg</code>, asegúrese de que la BIOS tiene activados tanto XHCI Handoff como EHCI Handoff.
+</p>
+<h3><span class="mw-headline" id="El_dispositivo_USB_es_detectado_pero_no_es_posible_montarlo">El dispositivo USB es detectado pero no es posible montarlo</span></h3>
+<p>Si ha actualizado recientemente su kernel, los módulos para el almacenamiento USB del kernel actualmente en ejecución fueron eliminados y reemplazados por módulos para el kernel recién instalado. Estos módulos no se cargarán hasta que reinicie y ejecute el nuevo kernel.
+</p>
+<h3>
+<span id="El_dispositivo_no_se_apaga_despu.C3.A9s_de_desmontar_todas_las_particiones"></span><span class="mw-headline" id="El_dispositivo_no_se_apaga_después_de_desmontar_todas_las_particiones">El dispositivo no se apaga después de desmontar todas las particiones</span>
+</h3>
+<p>Si no se apaga un dispositivo, esto puede resultar en:
+</p>
+<ul>
+<li>que una unidad de disco duro no aparque su cabeza, emitiendo un débil sonido de rascado mientras gira y degradando el dispositivo <a rel="nofollow" class="external autonumber" href="http://linuxfocus.org/~guido/scripts/spin-down-usb-hard-drive-linux.html">[2]</a>, o bien</li>
+<li>que una unidad de estado sólido (especialmente las más antiguas) no vacíe sus búferes de caché ni actualice sus tablas de asignación, perdiendo datos <a rel="nofollow" class="external autonumber" href="https://www.kingston.com/us/solutions/servers-data-centers/ssd-power-loss-protection">[3]</a>.</li>
+</ul>
+<p>Cuando desmonta las particiones, el dispositivo sigue encendido. Debe pedirle al sistema que lo apague primero para poder retirarlo de forma segura: <a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/a/43450">[4]</a>
+</p>
+<pre># echo 1 &gt; /sys/block/<i>nombre_del_disco</i>/device/delete
 </pre>
-<p>Ahora puede monrtarlo y desmontarlo como se mencionó anteriormente.
+<p>Si usa <a href="../en/Udisks.html" title="Udisks">udisks</a>, puede ejecutar las siguientes órdenes: <a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/a/178648">[5]</a>
 </p>
-<h2><span class="mw-headline" id="Montar_el_dispositivo_USB_como_un_usuario_normal">Montar el dispositivo USB como un usuario normal</span></h2>
-<p>Si quiere que los usuarios sin privilegios de administrador sean capaces de montar dispositivos USB, añada la siguiente línea a su /etc/fstab file:
-</p>
-<pre>/dev/sda1 /mnt/usbstick vfat rw,noauto,async,user 0 0
-</pre>
-<p>Ahora, cualquier usuario puede montarlo con:
-</p>
-<pre>mount /mnt/usbstick
-</pre>
-<p>Y desmontarlo con:
-</p>
-<pre>umount /mnt/usbstick
+<pre>$ udisksctl unmount -b /dev/sd<i>XY</i>
+$ udisksctl power-off -b /dev/sd<i>X</i>
 </pre>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../es/Category:Storage.html" title="Category:Storage (Español)">Storage (Español)</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../es/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (Español)">Pages or sections flagged with Template:Translateme (Español)</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=USB_storage_devices_(Espa%C3%B1ol)&amp;oldid=556285">https://wiki.archlinux.org/index.php?title=USB_storage_devices_(Español)&amp;oldid=556285</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 November 2018, at 23:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=USB_storage_devices_(Espa%C3%B1ol)&amp;oldid=652519">https://wiki.archlinux.org/index.php?title=USB_storage_devices_(Español)&amp;oldid=652519</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 February 2021, at 20:26.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

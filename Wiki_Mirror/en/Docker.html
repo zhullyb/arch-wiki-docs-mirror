@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -231,7 +232,7 @@ ExecStart=/usr/bin/dockerd -H unix:///var/run/docker.sock -H tcp://0.0.0.0:4243<
 </p>
 <pre># firewall-cmd --zone=public --add-rich-rule='rule family="ipv6" destination not address="fd00::1/80" source address="fd00::/80" masquerade'
 </pre>
-<p>If you use <a href="../en/Uncomplicated_Firewall.html" class="mw-redirect" title="Ufw">ufw</a>, you need to first enable ipv6 forwarding following <a href="../en/Uncomplicated_Firewall.html#Forward_policy" title="Uncomplicated Firewall">Uncomplicated_Firewall#Forward_policy</a>. Next you need to edit <code>/etc/default/ufw</code> and uncomment the following lines
+<p>If you use <a href="../en/Uncomplicated_Firewall.html" class="mw-redirect" title="Ufw">ufw</a>, you need to first enable ipv6 forwarding following <a href="../en/Uncomplicated_Firewall.html#Forward_policy" title="Uncomplicated Firewall">Uncomplicated Firewall#Forward policy</a>. Next you need to edit <code>/etc/default/ufw</code> and uncomment the following lines
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/ufw/sysctl.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">net/ipv6/conf/default/forwarding=1
@@ -409,19 +410,19 @@ net/ipv6/conf/all/forwarding=1</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> nvidia-docker is a legacy method for running NVIDIA GPU accelerated containers used prior to Docker 19.03 and has been deprecated. If you are using Docker version 19.03 or higher, it is recommended to use <a href="#With_NVIDIA_Container_Toolkit_(recommended)">NVIDIA Container Toolkit</a> instead.</div>
 <h3><span class="mw-headline" id="Arch_Linux_image_with_CUDA">Arch Linux image with CUDA</span></h3>
-<p>You can use the following <code>Dockerfile</code> to build a custom Arch Linux image with CUDA:
+<p>You can use the following <code>Dockerfile</code> to build a custom Arch Linux image with CUDA. It uses the <a rel="nofollow" class="external text" href="https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/syntax.md">Dockerfile frontend syntax 1.2</a> to cache pacman packages on the host. The <code>DOCKER_BUILDKIT=1</code> <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a> must be set on the client before building the Docker image.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">Dockerfile</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">FROM archlinux
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># syntax = docker/dockerfile:1.2
+
+FROM archlinux
 
 # use faster mirror to speed up the image build
 RUN echo 'Server = https://mirror.pkgbuild.com/$repo/os/$arch' &gt; /etc/pacman.d/mirrorlist
 
 # install packages
-RUN pacman -Suy --noconfirm --needed base base-devel cuda
-
-# clean up
-RUN find /var/cache/pacman/ -type f -delete
+RUN --mount=type=cache,sharing=locked,target=/var/cache/pacman \
+    pacman -Suy --noconfirm --needed base base-devel cuda
 
 # configure nvidia container runtime
 # https://github.com/NVIDIA/nvidia-container-runtime#environment-variables-oci-spec
@@ -462,7 +463,7 @@ done</pre>
 </p>
 <pre># docker kill &lt;CONTAINER ID&gt;
 </pre>
-<p>Delete all containers listed by ID:
+<p>Delete containers listed by ID:
 </p>
 <pre># docker rm &lt;CONTAINER ID&gt;
 </pre>
@@ -470,7 +471,7 @@ done</pre>
 </p>
 <pre># docker images
 </pre>
-<p>Delete all images by ID:
+<p>Delete images by ID:
 </p>
 <pre># docker rmi &lt;IMAGE ID&gt;
 </pre>
@@ -552,6 +553,14 @@ TasksMax=infinity</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">{
   "iptables": false
 }</pre>
+<p>If there is already a network bridge configured for KVM, this may be fixable by telling docker about it.  See <a rel="nofollow" class="external autonumber" href="https://muthii.com/blog/?p=540">[14]</a> where docker configuration is modified as:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/docker/daemon.json</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">{
+  "bridge": "existing-bridge"
+}</pre>
+<p>Be sure to replace "existing-bridge" with the actual name of your network bridge.
+</p>
 <h3><span class="mw-headline" id="Image_pulls_from_Docker_Hub_are_rate_limited">Image pulls from Docker Hub are rate limited</span></h3>
 <p>Beginning on November 1st 2020, rate limiting is enabled for downloads from Docker Hub from anonymous and free accounts. See the <a rel="nofollow" class="external text" href="https://docs.docker.com/docker-hub/download-rate-limit/">rate limit documentation</a> for more information.
 </p>
@@ -592,8 +601,8 @@ $ docker run cr.example.com/nginx:1.19.3
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Docker&amp;oldid=646123">https://wiki.archlinux.org/index.php?title=Docker&amp;oldid=646123</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 December 2020, at 20:55.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Docker&amp;oldid=652516">https://wiki.archlinux.org/index.php?title=Docker&amp;oldid=652516</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 February 2021, at 19:34.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

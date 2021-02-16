@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -196,7 +197,7 @@ Do not forget to check that "edns" is not disabled.
 </p>
 <p>Then you should pass DS records (from dsset-example.com. file) to parent zone owner probably using your registrar website. It glues parent zone with your KSK.
 </p>
-<p>KSK (and corresponding DS records) should be changed rarely because of it needs manual intervention, ZSK can be changed more often because of this key is usually shorter to be faster in signature checking.
+<p>KSK (and corresponding DS records) should be changed rarely because it needs manual intervention, ZSK can be changed more often because this key is usually shorter to be faster in signature checking.
 </p>
 <p>You can schedule old ZSK key expiration and generate new one using:
 </p>
@@ -227,33 +228,43 @@ You can disable this feature by setting its value to 0.
 <h2><span class="mw-headline" id="Running_BIND_in_a_chrooted_environment">Running BIND in a chrooted environment</span></h2>
 <p>Running in a <a href="../en/Chroot.html" title="Chroot">chroot</a> environment is not required but improves security.
 </p>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> <code>/srv/</code> is an odd place for chroots, <code>/var/lib/</code> would be a more common place. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:BIND">Talk:BIND#</a>)</div>
+</div>
 <h3><span class="mw-headline" id="Creating_the_Jail_House">Creating the Jail House</span></h3>
 <p>In order to do this, we first need to create a place to keep the jail, we shall use <code>/srv/named</code>, and then put the required files into the jail.
 </p>
-<pre> mkdir -p /srv/named/{dev,etc,usr/lib/engines,var/{run,log,named}}
- # Copy over required system files
- cp -av /etc/{localtime,named.conf} /srv/named/etc/
- cp -av /usr/lib/engines-1.1/* /srv/named/usr/lib/engines/
- cp -av /var/named/* /srv/named/var/named/.
- # Set up required dev nodes
- mknod /srv/named/dev/null c 1 3
- mknod /srv/named/dev/random c 1 8
- # Set Ownership of the files
- chown -R named:named /srv/named
+<pre># mkdir -p /srv/named/{dev,etc,usr/lib/engines,var/{run,log,named}}
+</pre>
+<p>Copy over required system files:
+</p>
+<pre># cp -av /etc/{localtime,named.conf} /srv/named/etc/
+# cp -av /usr/lib/engines-1.1/* /srv/named/usr/lib/engines/
+# cp -av /var/named/* /srv/named/var/named/.
+</pre>
+<p>Set up required dev nodes:
+</p>
+<pre># mknod /srv/named/dev/null c 1 3
+# mknod /srv/named/dev/random c 1 8
+</pre>
+<p>Set <a href="../en/File_permissions_and_attributes.html#Changing_ownership" class="mw-redirect" title="Ownership">ownership</a> of the files:
+</p>
+<pre># chown -R named:named /srv/named
 </pre>
 <p>This should create the required file system for the jail.
 </p>
 <h3><span class="mw-headline" id="Service_File">Service File</span></h3>
 <p>Next we need to create the new service file which will allow force bind into the chroot
 </p>
-<pre> cp -av /usr/lib/systemd/system/named.service /etc/systemd/system/named-chroot.service
+<pre># cp -av /usr/lib/systemd/system/named.service /etc/systemd/system/named-chroot.service
 </pre>
 <p>we need to edit how the service calls bind.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/named-chroot.service</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">  ExecStart=/usr/bin/named -4 -f -u named -t "/srv/named"
-</pre>
-<p>Now, restart the systemd service.
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">ExecStart=/usr/bin/named -4 -f -u named -t "/srv/named"</pre>
+<p>Now, reload systemd <code>systemctl daemon-reload</code>, and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> the <code>named-chroot.service</code>.
 </p>
 <h2><span class="mw-headline" id="See_also_2">See also</span></h2>
 <ul>
@@ -280,6 +291,7 @@ You can disable this feature by setting its value to 0.
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 <li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
 </div>
@@ -289,8 +301,8 @@ You can disable this feature by setting its value to 0.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=BIND&amp;oldid=623695">https://wiki.archlinux.org/index.php?title=BIND&amp;oldid=623695</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 July 2020, at 11:07.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=BIND&amp;oldid=652161">https://wiki.archlinux.org/index.php?title=BIND&amp;oldid=652161</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 February 2021, at 03:59.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

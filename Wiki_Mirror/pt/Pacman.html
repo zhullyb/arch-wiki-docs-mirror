@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,7 +36,7 @@
 <p><span></span>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="../en/Pacman.html" title="Pacman">Pacman</a>. Data da última tradução: 2020-09-08. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Pacman&amp;diff=0&amp;oldid=633050">alterações</a> na versão em inglês.</div>
+<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="../en/Pacman.html" title="Pacman">Pacman</a>. Data da última tradução: 2021-02-12. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Pacman&amp;diff=0&amp;oldid=651819">alterações</a> na versão em inglês.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artigos relacionados</p>
 <ul>
@@ -141,15 +142,16 @@
 <li class="toclevel-2 tocsection-42"><a href="#Congelamento_de_downloads_de_pacote"><span class="tocnumber">3.16</span> <span class="toctext">Congelamento de downloads de pacote</span></a></li>
 <li class="toclevel-2 tocsection-43"><a href="#Falha_ao_obter_arquivo_'core.db'_do_espelho"><span class="tocnumber">3.17</span> <span class="toctext">Falha ao obter arquivo 'core.db' do espelho</span></a></li>
 <li class="toclevel-2 tocsection-44"><a href="#erro:_'pacote-local.pkg.tar':_permiss%C3%A3o_negada"><span class="tocnumber">3.18</span> <span class="toctext">erro: 'pacote-local.pkg.tar': permissão negada</span></a></li>
+<li class="toclevel-2 tocsection-45"><a href="#erro:_n%C3%A3o_foi_poss%C3%ADvel_determinar_o_ponto_de_montagem_do_cachedir:_/var/cache/pacman/pkg"><span class="tocnumber">3.19</span> <span class="toctext">erro: não foi possível determinar o ponto de montagem do cachedir: /var/cache/pacman/pkg</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-45">
+<li class="toclevel-1 tocsection-46">
 <a href="#Entendendo"><span class="tocnumber">4</span> <span class="toctext">Entendendo</span></a>
 <ul>
-<li class="toclevel-2 tocsection-46"><a href="#O_que_acontece_durante_a_instala%C3%A7%C3%A3o/atualiza%C3%A7%C3%A3o/remo%C3%A7%C3%A3o_de_pacote"><span class="tocnumber">4.1</span> <span class="toctext">O que acontece durante a instalação/atualização/remoção de pacote</span></a></li>
+<li class="toclevel-2 tocsection-47"><a href="#O_que_acontece_durante_a_instala%C3%A7%C3%A3o/atualiza%C3%A7%C3%A3o/remo%C3%A7%C3%A3o_de_pacote"><span class="tocnumber">4.1</span> <span class="toctext">O que acontece durante a instalação/atualização/remoção de pacote</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-47"><a href="#Veja_tamb%C3%A9m"><span class="tocnumber">5</span> <span class="toctext">Veja também</span></a></li>
+<li class="toclevel-1 tocsection-48"><a href="#Veja_tamb%C3%A9m"><span class="tocnumber">5</span> <span class="toctext">Veja também</span></a></li>
 </ul>
 </div>
 
@@ -386,6 +388,10 @@
 </p>
 <pre># paccache -ruk0
 </pre>
+<p>Ou você pode combiná-lo para pacotes instalados e desinstalados. Por exemplo, para manter os dois últimos pacotes instalados, mas remover todas as versões em cache de pacotes desinstalados, use o seguinte:
+</p>
+<pre># paccache -rk2 -ruk0
+</pre>
 <p>Veja <code>paccache -h</code> para mais opções.
 </p>
 <p>O <i>pacman</i> também tem algumas opções embutidas para limpar o cache e os arquivos de base de dados restantes dos repositórios que não estão mais listados no arquivo de configuração <code>/etc/pacman.conf</code>. No entanto, o <i>pacman</i> não oferece a possibilidade de manter um número de versões anteriores e, portanto, é mais agressivo do que as opções padrão do <i>paccache</i>.
@@ -409,15 +415,15 @@
 </pre>
 <p>Instale um pacote "local" que não seja de um repositório remoto (ex., o pacote é do <a href="../pt/Arch_User_Repository.html" class="mw-redirect" title="AUR (Português)">AUR</a>):
 </p>
-<pre># pacman -U <i>/caminho/para/pacote/nome_pacote-versão.pkg.tar.xz</i>
+<pre># pacman -U <i>/caminho/para/pacote/nome_pacote-versão.pkg.tar.zst</i>
 </pre>
 <p>Para manter uma cópia do pacote local no cache do <i>pacman</i>, use:
 </p>
-<pre># pacman -U file:///<i>caminho/para/pacote/nome_pacote-versão.pkg.tar.xz</i>
+<pre># pacman -U file:///<i>caminho/para/pacote/nome_pacote-versão.pkg.tar.zst</i>
 </pre>
 <p>Instale um pacote "remoto" (não de um repositório indicado nos arquivos de configuração do pacman):
 </p>
-<pre># pacman -U <i>http://www.exemplo.com/repo/exemplo.pkg.tar.xz</i>
+<pre># pacman -U <i>http://www.exemplo.com/repo/exemplo.pkg.tar.zst</i>
 </pre>
 <p>Para inibir as ações <code>-S</code>, <code>-U</code> e <code>-R</code>, a opção <code>-p</code> pode ser usada.
 </p>
@@ -547,7 +553,7 @@ extra/mariadb           10.1.9-4     10.1.10-1      0.26 MiB      13.80 MiB
 <h4><span class="mw-headline" id="Hooks">Hooks</span></h4>
 <p><i>pacman</i> pode executar hooks de pré- e pós-transação do diretório <code>/usr/share/libalpm/hooks/</code>; mais diretórios podem ser especificados com a opção <code>HookDir</code> no <code>pacman.conf</code>, que tem como padrão <code>/etc/pacman.d/hooks</code>. Nomes de arquivo hook devem ser sufixados com <i>.hook</i>. Hooks do pacman não são interativos.
 </p>
-<p>Hooks do <i>pacman</i> são usados, por exemplo, em combinação com <code>systemd-sysusers</code> e <code>systemd-tmpfiles</code> para criar automaticamente arquivos e usuários de sistema durante a isntalação dos pacotes. Por exemplo, o pacote <code>tomcat8</code> especifica que ele deseja um usuário de sistema chamado <code>tomcat8</code> e certos diretórios pertencentes a este usuário. Os hooks do <i>pacman</i> <code>systemd-sysusers.hook</code> e <code>systemd-tmpfiles.hook</code> chamam <code>systemd-sysusers</code> e <code>systemd-tmpfiles</code> quando o <i>pacman</i> determina que o pacote <code>tomcat8</code> contém arquivos especificando usuários e arquivos tmp.
+<p>Hooks do <i>pacman</i> são usados, por exemplo, em combinação com <code>systemd-sysusers</code> e <code>systemd-tmpfiles</code> para criar automaticamente arquivos e usuários de sistema durante a isntalação dos pacotes. Por exemplo, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tomcat8">tomcat8</a></span> especifica que ele deseja um usuário de sistema chamado <code>tomcat8</code> e certos diretórios pertencentes a este usuário. Os hooks do <i>pacman</i> <code>systemd-sysusers.hook</code> e <code>systemd-tmpfiles.hook</code> chamam <code>systemd-sysusers</code> e <code>systemd-tmpfiles</code> quando o <i>pacman</i> determina que <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tomcat8">tomcat8</a></span> contém arquivos especificando usuários e arquivos tmp.
 </p>
 <p>Para mais informações sobre hooks do alpm, veja <span class="plainlinks archwiki-template-man" title="$ man 5 alpm-hooks"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/alpm-hooks.5">alpm-hooks(5)</a></span>.
 </p>
@@ -626,7 +632,9 @@ Ocorreram erros e, portanto, nenhum pacote foi atualizado.
 </li>
 <li>Monte os sistemas de arquivos proc, sysfs e dev também: <code>mount -t proc proc /mnt/proc; mount --rbind /sys /mnt/sys; mount --rbind /dev /mnt/dev </code>
 </li>
-<li>Se o sistema usa locais padrão de base de dados e diretórios, você pode agora atualizar a base de dados do <i>pacman</i> do sistema e atualizá-lo via <code>pacman --sysroot /mnt -Syu</code> como root.</li>
+<li>Se o sistema usa locais padrão de base de dados e diretórios, você pode agora atualizar a base de dados do <i>pacman</i> do sistema e atualizá-lo via <code>pacman --sysroot /mnt -Syu</code> como root.
+<ul><li>Alternativamente, se você não consegue atualizar, confira <a href="../pt/e746729236f459b9c753b9b9307aab6d.html#Reinstalando_todos_pacotes" class="mw-redirect" title="Pacman/Dicas e truques">Pacman/Dicas e truques#Reinstalando todos pacotes</a>.</li></ul>
+</li>
 <li>Após a atualização, uma forma de verificar se pacotes não atualizados, mas ainda quebrados: <code>find /mnt/usr/lib -size 0</code>
 </li>
 <li>Seguido pela reinstalação de qualquer pacote ainda quebrado via <code>pacman --sysroot /mnt -S <i>pacote</i></code>.</li>
@@ -651,7 +659,7 @@ Ocorreram erros e, portanto, nenhum pacote foi atualizado.
 </pre>
 <p>Mas você pode precisar atualizar algumas delas, dependendo do seu problema. Um exemplo de extração de um pacote é
 </p>
-<pre># tar -xvpwf <i>pacote.tar.xz</i> -C / --exclude .PKGINFO --exclude .INSTALL --exclude .MTREE --exclude .BUILDINFO
+<pre># tar -xvpwf <i>pacote.tar.zst</i> -C / --exclude .PKGINFO --exclude .INSTALL --exclude .MTREE --exclude .BUILDINFO
 </pre>
 <p>Note que o uso da opção <code>w</code> para modo interativo. Executar não interativamente é muito arriscado já que você pode acabar sobrescrevendo um arquivo importante. Também tenha cuidado ao extrair pacotes na ordem correta (i.e. dependências primeiro). <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=95007">Essa publicação no fórum</a> contém um exemplo deste processo no qual apenas duas dependências do <i>pacman</i> estava quebradas.
 </p>
@@ -758,6 +766,16 @@ Ocorreram erros e, portanto, nenhum pacote foi atualizado.
 </h3>
 <p>Se você deseja instalar um pacote em uma montagem sshfs usando <code>pacman -U</code> e receber esse erro, mova o pacote para um diretório local e tente instalar novamente.
 </p>
+<h3>
+<span id="erro:_n.C3.A3o_foi_poss.C3.ADvel_determinar_o_ponto_de_montagem_do_cachedir:_.2Fvar.2Fcache.2Fpacman.2Fpkg"></span><span class="mw-headline" id="erro:_não_foi_possível_determinar_o_ponto_de_montagem_do_cachedir:_/var/cache/pacman/pkg">erro: não foi possível determinar o ponto de montagem do cachedir: /var/cache/pacman/pkg</span>
+</h3>
+<p>Ao executar, por exemplo, <code>pacman -Syu</code> dentro de um ambiente chroot, um erro é encontrado:
+</p>
+<pre>erro: não foi possível determinar o ponto de montagem do cachedir: /var/cache/pacman/pkg
+erro: falha ao efetuar a transação (não há espaço livre suficiente em disco)
+</pre>
+<p>Isso é frequentemente causado pelo diretório chroot não ser um ponto de montagem quando o chroot é inserido. Veja a nota em <a href="../pt/Install_Arch_Linux_from_existing_Linux.html#Selecionando_um_espelho_e_baixando_ferramentas_b%C3%A1sicas" class="mw-redirect" title="Instalar a partir de um Linux existente">Instalar a partir de um Linux existente#Selecionando um espelho e baixando ferramentas básicas</a> para uma solução, e <span class="plainlinks archwiki-template-man" title="$ man 8 arch-chroot"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/arch-chroot.8">arch-chroot(8)</a></span> para uma explicação e um exemplo do uso de montagem de ligação para tornar o diretório chroot um ponto de montagem.
+</p>
 <h2><span class="mw-headline" id="Entendendo">Entendendo</span></h2>
 <h3>
 <span id="O_que_acontece_durante_a_instala.C3.A7.C3.A3o.2Fatualiza.C3.A7.C3.A3o.2Fremo.C3.A7.C3.A3o_de_pacote"></span><span class="mw-headline" id="O_que_acontece_durante_a_instalação/atualização/remoção_de_pacote">O que acontece durante a instalação/atualização/remoção de pacote</span>
@@ -802,8 +820,8 @@ Ocorreram erros e, portanto, nenhum pacote foi atualizado.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pacman_(Portugu%C3%AAs)&amp;oldid=646998">https://wiki.archlinux.org/index.php?title=Pacman_(Português)&amp;oldid=646998</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:22.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pacman_(Portugu%C3%AAs)&amp;oldid=652063">https://wiki.archlinux.org/index.php?title=Pacman_(Português)&amp;oldid=652063</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 February 2021, at 12:53.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

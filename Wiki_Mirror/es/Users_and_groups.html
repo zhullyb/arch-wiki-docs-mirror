@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,7 +34,7 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Estado de la traducción:</strong> este artículo es una traducción de <a href="../en/Users_and_groups.html" title="Users and groups">Users and groups</a> revisada por última vez el <b>2020-11-16</b>. Si advierte que la versión inglesa <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Users_and_groups&amp;diff=0&amp;oldid=635081">ha cambiado</a> puede actualizar la traducción <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">usted mismo</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Users_and_groups.html" title="Users and groups">Users and groups</a> fue revisada el <b>2021-02-14</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Users_and_groups&amp;diff=0&amp;oldid=652417">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artículos relacionados</p>
 <ul>
@@ -66,17 +67,18 @@
 </ul>
 </li>
 <li class="toclevel-1 tocsection-10"><a href="#Base_de_datos_del_usuario"><span class="tocnumber">6</span> <span class="toctext">Base de datos del usuario</span></a></li>
-<li class="toclevel-1 tocsection-11"><a href="#Administraci%C3%B3n_de_grupos"><span class="tocnumber">7</span> <span class="toctext">Administración de grupos</span></a></li>
-<li class="toclevel-1 tocsection-12">
-<a href="#Listado_de_grupos"><span class="tocnumber">8</span> <span class="toctext">Listado de grupos</span></a>
+<li class="toclevel-1 tocsection-11"><a href="#Comprobaciones_autom%C3%A1ticas_de_integridad"><span class="tocnumber">7</span> <span class="toctext">Comprobaciones automáticas de integridad</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#Administraci%C3%B3n_de_grupos"><span class="tocnumber">8</span> <span class="toctext">Administración de grupos</span></a></li>
+<li class="toclevel-1 tocsection-13">
+<a href="#Listado_de_grupos"><span class="tocnumber">9</span> <span class="toctext">Listado de grupos</span></a>
 <ul>
-<li class="toclevel-2 tocsection-13"><a href="#Grupos_de_usuarios"><span class="tocnumber">8.1</span> <span class="toctext">Grupos de usuarios</span></a></li>
-<li class="toclevel-2 tocsection-14"><a href="#Grupos_del_sistema"><span class="tocnumber">8.2</span> <span class="toctext">Grupos del sistema</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#Grupos_pre-systemd"><span class="tocnumber">8.3</span> <span class="toctext">Grupos pre-systemd</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#Grupos_no_utilizados"><span class="tocnumber">8.4</span> <span class="toctext">Grupos no utilizados</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Grupos_de_usuarios"><span class="tocnumber">9.1</span> <span class="toctext">Grupos de usuarios</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Grupos_del_sistema"><span class="tocnumber">9.2</span> <span class="toctext">Grupos del sistema</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Grupos_pre-systemd"><span class="tocnumber">9.3</span> <span class="toctext">Grupos pre-systemd</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Grupos_no_utilizados"><span class="tocnumber">9.4</span> <span class="toctext">Grupos no utilizados</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-17"><a href="#Otras_herramientas_relacionadas_con_estas_bases_de_datos"><span class="tocnumber">9</span> <span class="toctext">Otras herramientas relacionadas con estas bases de datos</span></a></li>
+<li class="toclevel-1 tocsection-18"><a href="#Otras_herramientas_relacionadas_con_estas_bases_de_datos"><span class="tocnumber">10</span> <span class="toctext">Otras herramientas relacionadas con estas bases de datos</span></a></li>
 </ul>
 </div>
 
@@ -356,6 +358,13 @@ drwxrwx--- 1 root vboxsf 16384 Jan 29 11:02 sf_Shared</pre>
 </pre>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Advertencia:</strong> En Arch Linux los valores predeterminados de los archivos se crean como archivos <i>.pacnew</i> mediante nuevas versiones del paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=filesystem">filesystem</a></span>. A menos que Pacman genere mensajes relacionados para la acción, estos archivos <i>.pacnew</i> pueden, y deberían, ser descartados/eliminados. Los nuevos usuarios y grupos predeterminados necesarios se añaden o se vuelven a añadir según sea necesario por <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-sysusers"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-sysusers.8">systemd-sysusers(8)</a></span> o el script de instalación del paquete.</div>
+<h2>
+<span id="Comprobaciones_autom.C3.A1ticas_de_integridad"></span><span class="mw-headline" id="Comprobaciones_automáticas_de_integridad">Comprobaciones automáticas de integridad</span>
+</h2>
+<p>En lugar de ejecutar <code>pwck</code> manualmente, el servicio systemd <code>shadow.timer</code>, que es parte y está activado por la instalación del paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=shadow">shadow</a></span>, ejecutará a diario la comprobación <code>pwck</code> tanto a los grupos como a los usuarios.
+</p>
+<p>Si se encuentran discrepancias, el grupo se puede editar con la orden <code>vigr</code> y los usuarios con <code>vipw</code>. Esto proporciona un margen adicional de protección ya que estas órdenes bloquean las bases de datos para su edición. Tenga en cuenta que el editor de texto predeterminado es vi, pero se usará un editor alternativo si se establece la <a href="../es/Environment_variables.html" class="mw-redirect" title="Environment variable (Español)">variable de entorno</a> <code>EDITOR</code>, entonces se utilizará ese editor en su lugar.
+</p>
 <h2>
 <span id="Administraci.C3.B3n_de_grupos"></span><span class="mw-headline" id="Administración_de_grupos">Administración de grupos</span>
 </h2>
@@ -740,8 +749,8 @@ grupo_nuevo}}):
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Users_and_groups_(Espa%C3%B1ol)&amp;oldid=641698">https://wiki.archlinux.org/index.php?title=Users_and_groups_(Español)&amp;oldid=641698</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 November 2020, at 12:39.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Users_and_groups_(Espa%C3%B1ol)&amp;oldid=652419">https://wiki.archlinux.org/index.php?title=Users_and_groups_(Español)&amp;oldid=652419</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 February 2021, at 22:55.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

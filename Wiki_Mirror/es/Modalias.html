@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,39 +33,27 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a><b>La <a href="../es/ArchWiki:Contributing.html#Tareas_avanzadas" title="ArchWiki:Contributing (Español)">traducción</a> de este artículo o sección no refleja el texto original.</b><a href="../File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Motivos:</b> Desactualizado. (Discusión en <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Modalias_(Espa%C3%B1ol)">Talk:Modalias (Español)#</a>)</div>
-</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Modalias.html" title="Modalias">Modalias</a> fue revisada el <b>2021-02-12</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Modalias&amp;diff=0&amp;oldid=633230">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<p>Este documento servirá como introducción acerca de cómo el núcleo Linux y sus módulos detectan y reconocen el hardware, y de cómo se traduce esto a un archivo virtual de sysfs llamado 'modalias'
+</p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1">
-<a href="#Introducci%C3%B3n_a_Modalias"><span class="tocnumber">1</span> <span class="toctext">Introducción a Modalias</span></a>
-<ul>
-<li class="toclevel-2 tocsection-2"><a href="#%C2%BFQu%C3%A9_es_ese_'modalias'_del_que_habla?"><span class="tocnumber">1.1</span> <span class="toctext">¿Qué es ese 'modalias' del que habla?</span></a></li>
-<li class="toclevel-2 tocsection-3"><a href="#%C2%BFQu%C3%A9_es_un_archivo_modalias?"><span class="tocnumber">1.2</span> <span class="toctext">¿Qué es un archivo modalias?</span></a></li>
-<li class="toclevel-2 tocsection-4"><a href="#%C2%BFC%C3%B3mo_se_usa_esta_informaci%C3%B3n?"><span class="tocnumber">1.3</span> <span class="toctext">¿Cómo se usa esta información?</span></a></li>
-<li class="toclevel-2 tocsection-5"><a href="#%C2%BFDe_d%C3%B3nde_viene_este_archivo_modules.alias?"><span class="tocnumber">1.4</span> <span class="toctext">¿De dónde viene este archivo modules.alias?</span></a></li>
-<li class="toclevel-2 tocsection-6"><a href="#%C2%BFC%C3%B3mo_funciona_hwdetect?"><span class="tocnumber">1.5</span> <span class="toctext">¿Cómo funciona hwdetect?</span></a></li>
-<li class="toclevel-2 tocsection-7"><a href="#%C2%BFC%C3%B3mo_funciona_udev?"><span class="tocnumber">1.6</span> <span class="toctext">¿Cómo funciona udev?</span></a></li>
-<li class="toclevel-2 tocsection-8"><a href="#Vea_tambi%C3%A9n"><span class="tocnumber">1.7</span> <span class="toctext">Vea también</span></a></li>
-</ul>
-</li>
+<li class="toclevel-1 tocsection-1"><a href="#%C2%BFQu%C3%A9_es_un_'modalias'?"><span class="tocnumber">1</span> <span class="toctext">¿Qué es un 'modalias'?</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#%C2%BFQu%C3%A9_es_un_archivo_modalias?"><span class="tocnumber">2</span> <span class="toctext">¿Qué es un archivo modalias?</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#%C2%BFC%C3%B3mo_se_usa_esta_informaci%C3%B3n?"><span class="tocnumber">3</span> <span class="toctext">¿Cómo se usa esta información?</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#%C2%BFDe_d%C3%B3nde_viene_este_archivo_modules.alias?"><span class="tocnumber">4</span> <span class="toctext">¿De dónde viene este archivo modules.alias?</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#%C2%BFC%C3%B3mo_funciona_udev?"><span class="tocnumber">5</span> <span class="toctext">¿Cómo funciona udev?</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Vea_tambi%C3%A9n"><span class="tocnumber">6</span> <span class="toctext">Vea también</span></a></li>
 </ul>
 </div>
 
-<h1>
-<span id="Introducci.C3.B3n_a_Modalias"></span><span class="mw-headline" id="Introducción_a_Modalias">Introducción a Modalias</span>
-</h1>
-<p>Este documento servirá como introducción acerca de cómo el núcleo Linux y sus módulos detectan y reconocen el hardware, y de cómo se traduce esto a un archivo virtual de sysfs llamado 'modalias'
-</p>
 <h2>
-<span id=".C2.BFQu.C3.A9_es_ese_.27modalias.27_del_que_habla.3F"></span><span class="mw-headline" id="¿Qué_es_ese_'modalias'_del_que_habla?">¿Qué es ese 'modalias' del que habla?</span>
+<span id=".C2.BFQu.C3.A9_es_un_.27modalias.27.3F"></span><span class="mw-headline" id="¿Qué_es_un_'modalias'?">¿Qué es un 'modalias'?</span>
 </h2>
 <p>Modalias es un pequeño truco por parte de sysfs para exportar información acerca del hardware a un archivo llamado 'modalias'. Este archivo contiene simplemente la información que presenta el hardware normal con un determinado formato. Echemos un vistazo antes de continuar a este ejemplo:
 </p>
@@ -199,22 +188,9 @@ i  8A
 <p>Muestra los alias encontrados anteriormente mediante grep en el archivo de alias. Estos alias exportados por cada módulo, son recogidos por depmod y mezclados dinámicamente en el archivo modules.alias. No hay cambios manuales en una tabla de consulta, si no que se construye al vuelo. Cada módulo sabe con exactitud con qué puede trabajar, y en consecuencia depmod puede utilizar esa información para ayudar en la carga de módulos.
 </p>
 <h2>
-<span id=".C2.BFC.C3.B3mo_funciona_hwdetect.3F"></span><span class="mw-headline" id="¿Cómo_funciona_hwdetect?">¿Cómo funciona hwdetect?</span>
-</h2>
-<p>hwdetect es la herramienta específica de Arch que carga módulos en base a estos modalias. Todo lo que hacer es volcar estos modalias en el sistema, y ejecutar "modprobe --show-depends &lt;alias&gt;" para cada uno de ellos. Esto construye una lista con todos los módulos con los que puede trabajar su hardware. Es así de simple. Por supuesto, hay correcciones hechas para ciertas cositas que no son detectadas correctamente.
-</p>
-<p>En esencia, se hace lo siguiente:
-</p>
-<pre>modprobe -a $(find /sys/devices -name modalias -exec cat {} +)
-</pre>
-<p>Por supuesto, esto no es *exacto*, ya que hwdetect carga también dispositivos pnp y módulos de disco, que no son exportados mediante modalias. No obstante, la configuración de modalias hace que todo esto sea sencillo y directo.
-</p>
-<h2>
 <span id=".C2.BFC.C3.B3mo_funciona_udev.3F"></span><span class="mw-headline" id="¿Cómo_funciona_udev?">¿Cómo funciona udev?</span>
 </h2>
-<p>Ahora, puede estar usted pensando, "Eso tiene sentido, encuentras simplemente todos los modalias del sistema y los cargas, pero ¿cómo funciona esto cuando insertas un nuevo dispositivo? ¿Tengo que recorrer todo el sistema de nuevo?"
-</p>
-<p>No.  udev está estrechamente ligado a sysfs (el sistema de ficheros que expone los modalias en primer lugar). De hecho, cargar módulos basándose en los modalias cuando se inserta un nuevo dispositivo (o cuando udev se inicia por primera vez en el arranque), es extremadamente sencillo:
+<p>udev está estrechamente ligado a sysfs (el sistema de ficheros que expone los modalias en primer lugar). De hecho, cargar módulos basándose en los modalias cuando se inserta un nuevo dispositivo (o cuando udev se inicia por primera vez en el arranque), es extremadamente sencillo:
 </p>
 <pre>DRIVER!="?*", ENV{MODALIAS}=="?*", RUN{builtin}="kmod load $env{MODALIAS}"
 </pre>
@@ -233,10 +209,7 @@ i  8A
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../es/Category:Kernel.html" title="Category:Kernel (Español)">Kernel (Español)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../es/Category:Pages_or_sections_flagged_with_Template:Bad_translation.html" title="Category:Pages or sections flagged with Template:Bad translation (Español)">Pages or sections flagged with Template:Bad translation (Español)</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -244,8 +217,8 @@ i  8A
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Modalias_(Espa%C3%B1ol)&amp;oldid=644890">https://wiki.archlinux.org/index.php?title=Modalias_(Español)&amp;oldid=644890</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 December 2020, at 22:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Modalias_(Espa%C3%B1ol)&amp;oldid=652053">https://wiki.archlinux.org/index.php?title=Modalias_(Español)&amp;oldid=652053</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 February 2021, at 11:53.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

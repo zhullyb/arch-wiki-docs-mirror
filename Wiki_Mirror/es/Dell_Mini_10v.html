@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,129 +33,136 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="../File:Tango-preferences-desktop-locale.png" decoding="async" width="48" height="48"></a><b>Este artículo o sección necesita ser <a href="../es/ArchWiki:Contributing.html#Traducir_contenido" title="ArchWiki:Contributing (Español)">traducido</a>.</b><a href="../File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="../File:Tango-preferences-desktop-locale.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Notas:</b> Desactualizado (Discusión en <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Dell_Mini_10v_(Espa%C3%B1ol)">Talk:Dell Mini 10v (Español)#</a>)</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Dell_Mini_10v.html" title="Dell Mini 10v">Dell Mini 10v</a> fue revisada el <b>2021-02-07</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Dell_Mini_10v&amp;diff=0&amp;oldid=618217">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<div class="archwiki-template-meta-related-articles-start">
+<p>Artículos relacionados</p>
+<ul>
+<li><a href="../es/Laptop.html" title="Laptop (Español)">Laptop</a></li>
+<li><a href="../es/Touchpad_Synaptics.html" title="Touchpad Synaptics (Español)">Touchpad Synaptics</a></li>
+<li><a href="../es/General_recommendations.html" title="General recommendations (Español)">Recomendaciones generales</a></li>
+</ul>
 </div>
+<p>Este artículo trata sobre la instalación y configuración de Arch Linux en el portátil Dell Mini 10v, un netbook con pantalla de 10" de la marca Dell. Se cubre la configuración de la tarjeta gráfica, la tarjeta inalámbrica y el panel táctil.
+</p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#Introducci%C3%B3n"><span class="tocnumber">1</span> <span class="toctext">Introducción</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#Antes_de_empezar"><span class="tocnumber">1</span> <span class="toctext">Antes de empezar</span></a></li>
 <li class="toclevel-1 tocsection-2">
-<a href="#Hardware"><span class="tocnumber">2</span> <span class="toctext">Hardware</span></a>
+<a href="#Xorg"><span class="tocnumber">2</span> <span class="toctext">Xorg</span></a>
 <ul>
-<li class="toclevel-2 tocsection-3"><a href="#Video"><span class="tocnumber">2.1</span> <span class="toctext">Video</span></a></li>
-<li class="toclevel-2 tocsection-4"><a href="#Audio"><span class="tocnumber">2.2</span> <span class="toctext">Audio</span></a></li>
-<li class="toclevel-2 tocsection-5"><a href="#Tarjeta_Inal%C3%A1mbrica"><span class="tocnumber">2.3</span> <span class="toctext">Tarjeta Inalámbrica</span></a></li>
-<li class="toclevel-2 tocsection-6"><a href="#Webcam"><span class="tocnumber">2.4</span> <span class="toctext">Webcam</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Panel_t%C3%A1ctil"><span class="tocnumber">2.1</span> <span class="toctext">Panel táctil</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-7">
-<a href="#Extras"><span class="tocnumber">3</span> <span class="toctext">Extras</span></a>
+<li class="toclevel-1 tocsection-4"><a href="#Wifi"><span class="tocnumber">3</span> <span class="toctext">Wifi</span></a></li>
+<li class="toclevel-1 tocsection-5">
+<a href="#Alimentaci%C3%B3n"><span class="tocnumber">4</span> <span class="toctext">Alimentación</span></a>
 <ul>
-<li class="toclevel-2 tocsection-8"><a href="#Synaptics"><span class="tocnumber">3.1</span> <span class="toctext">Synaptics</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Estado_de_la_bater%C3%ADa"><span class="tocnumber">4.1</span> <span class="toctext">Estado de la batería</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Suspensi%C3%B3n_a_la_RAM"><span class="tocnumber">4.2</span> <span class="toctext">Suspensión a la RAM</span></a></li>
 </ul>
 </li>
 </ul>
 </div>
 
-<h2>
-<span id="Introducci.C3.B3n"></span><span class="mw-headline" id="Introducción">Introducción</span>
-</h2>
-<p>Este artículo pretende ofrecer al usuario una guía básica de configuración para una netbook Dell Inspiron mini 10v.
-El hardware de estos equipos varía, así que nos enfocaremos en un modelo: el PRN 6326, también conocida como <a rel="nofollow" class="external text" href="http://www.dell.com/us/dfh/p/inspiron-mini10/pd?cs=22">Mini 10v</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-12-22]</sup> y pertenece a la serie 1010.
+<h2><span class="mw-headline" id="Antes_de_empezar">Antes de empezar</span></h2>
+<p>Este artículo pretende ayudar a los usuarios con los detalles de la instalación de Arch Linux en el Dell Mini 10v. Asimismo, se presupone que el usuario también está siguiendo la <a href="../es/Installation_guide.html" title="Installation guide (Español)">guía de instalación</a>.
 </p>
-<p>Como era de esperarse, asumimos que existe una instalación fresca de Arch Linux, la cual puede encontrarse en esta Wiki como <a href="../es/Installation_guide.html" class="mw-redirect" title="Beginners' guide (Español)">Beginners' guide (Español)</a>. Ya que este equipo no dispone de una unidad óptica para gestionar la instalacion, puede adaptar otros medios externos como una <a href="../es/USB_flash_installation_medium.html" class="mw-redirect" title="Install from a USB flash drive (Español)">Unidad Flash USB</a> o un CD-ROM externo USB.
+<p>El hardware puede variar, sin embargo, aquí se asume la siguiente lista de hardware:
 </p>
-<p><br>
-</p>
-<h2><span class="mw-headline" id="Hardware">Hardware</span></h2>
-<p>Comenzamos detectando el hardware del equipo mediante:
+<dl>
+<dt>Audio</dt>
+<dd>Intel Corporation 82801G card</dd>
+<dd>Chip Realtek ALC272 (de alsamixer)</dd>
+</dl>
+<dl>
+<dt>Vídeo</dt>
+<dd>Intel Corporation Mobile 945GME</dd>
+</dl>
+<dl>
+<dt>NIC por cable</dt>
+<dd>Realtek RTL8101E/RTL8102E</dd>
+</dl>
+<dl>
+<dt>NIC inalámbrica</dt>
+<dd>Broadcom Corporation BCM4312 802.11b/g</dd>
+</dl>
+<dl>
+<dt>Bluetooth</dt>
+<dd>Dell 365 Bluetooth 2.1+EDR</dd>
+</dl>
+<dl>
+<dt>Webcam</dt>
+<dd>Syntek Integrated Webcam</dd>
+</dl>
+<p>Para listar el hardware, ejecute la orden:
 </p>
 <pre>$ lspci &amp;&amp; lsusb
 </pre>
-<p>Nos centraremos en los dispositivos siguientes:
+<p>El portátil no posee unidad de disco óptico. Esto significa que Arch Linux tendrá que ser instalado a través de uno de los dos métodos mencionados a continuación:
 </p>
-<dl><dd>
-<ul><li><b>Video</b></li></ul>
-<dl><dd>Intel Corporation Mobile 945GME</dd></dl>
-<ul><li><b>Audio</b></li></ul>
-<dl><dd>Intel Corporation 82801 Mobile</dd></dl>
-<ul><li><b>Tarjeta Inalámbrica</b></li></ul>
-<dl><dd>Broadcom BCM4312 802.11b/g LP-PHY</dd></dl>
-<ul><li><b>Webcam</b></li></ul>
-<dl><dd>Suyin Corp.</dd></dl>
-</dd></dl>
-<p><br>
+<ul>
+<li>Mediante una <a href="../es/USB_flash_installation_medium.html" title="USB flash installation medium (Español)">memoria USB</a> (recomendado)</li>
+<li>Mediante una unidad externa de CD-ROM USB.</li>
+</ul>
+<p>Para seleccionar el medio de arranque requerido para instalar Arch Linux, presione <code>F12</code> para abrir el menú de arranque cuando se inicie.
 </p>
-<h3><span class="mw-headline" id="Video">Video</span></h3>
-<p>La configuración de este chip no suele dar problemas en Arch Linux, después de pasar por el apartado de la instalación de las <i>X</i> en la <a href="../es/Installation_guide.html#Instalar_X" class="mw-redirect" title="Beginners' guide (Español)">La Guía de Principiantes</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>, instale el driver correspondiente:
-</p>
-<pre># pacman -S xf86-video-intel
-</pre>
-<p><br>
-</p>
-<h3><span class="mw-headline" id="Audio">Audio</span></h3>
-<p>La tarjeta de sonido puede ser configurada fácilmente, siguendo los pasos que se enlistan en la
-<a href="../es/Installation_guide.html#Sonido" class="mw-redirect" title="Beginners' guide (Español)">Sección de Instalación de ALSA</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>. Una vez hecho esto, y en cuanto el entorno gráfico arranque, asegúrese de ejecutar:
-</p>
-<pre>$ alsamixer
-</pre>
-<p>Utilizando las teclas de cursor, seleccione <b>PCM</b> y aumente el valor a 100, seguido de la tecla <i>Esc</i>. Para finalizar guarde la configuración anterior con el siguiente comando:
-</p>
-<pre># alsactl store
-</pre>
-<p><br>
+<h2><span class="mw-headline" id="Xorg">Xorg</span></h2>
+<p>Véase <a href="../es/Xorg.html" title="Xorg (Español)">Xorg</a> e <a href="../es/Intel_graphics.html" title="Intel graphics (Español)">Intel graphics</a>.
 </p>
 <h3>
-<span id="Tarjeta_Inal.C3.A1mbrica"></span><span class="mw-headline" id="Tarjeta_Inalámbrica">Tarjeta Inalámbrica</span>
+<span id="Panel_t.C3.A1ctil"></span><span class="mw-headline" id="Panel_táctil">Panel táctil</span>
 </h3>
-<p>See <a href="../en/Broadcom_wireless.html" title="Broadcom wireless">Broadcom wireless</a>
+<p>Véase <a href="../es/Touchpad_Synaptics.html" title="Touchpad Synaptics (Español)">Touchpad Synaptics</a> para más información.
 </p>
-<p><br>
+<p>Para ignorar los movimientos, el desplazamiento y los toques en la sección inferior del touchpad, donde se encuentran los botones del mismo, es necesario realizar la siguiente configuración manual. Añada las opciones 'JumpyCursorThreshold' y 'AreaBottomEdge' a <code>/etc/X11/xorg.conf.d/10-synaptics.conf</code>:
 </p>
-<h3><span class="mw-headline" id="Webcam">Webcam</span></h3>
-<p>Este dispositivo queda configurado al <a href="../es/Installation_guide.html#Instalar_X" class="mw-redirect" title="Beginners' guide (Español)">Instalar las X</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>, sólo necesitamos <b>Cheese</b>, el cual gestionará nuestra Webcam. Si eligió <a href="../es/GNOME.html" title="GNOME (Español)">GNOME</a> como entorno de escritorio puede encontrarlo en el menú Aplicaciones &gt; Sonido y Vídeo &gt; Cheese. En cualquier caso puede instalarlo con:
-</p>
-<pre># pacman -S cheese
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/X11/xorg.conf.d/10-synaptics.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Section "InputClass"
+    Identifier "touchpad catchall"
+    Driver "synaptics"
+    MatchIsTouchpad "on"
+        Option "TapButton1" "1"
+        Option "TapButton2" "2"
+        Option "TapButton3" "3"
+        Option "JumpyCursorThreshold" "90"
+        Option "AreaBottomEdge" "4100"
+EndSection
 </pre>
-<p><br>
+<p>Una vez Xorg sea reiniciado, la parte inferior del touchpad se desactivará, permitiendo al usuario hacer clic sin movimientos involuntarios del ratón.
 </p>
-<h2><span class="mw-headline" id="Extras">Extras</span></h2>
-<h3><span class="mw-headline" id="Synaptics">Synaptics</span></h3>
-<p>Para el funcionamiento básico del touchpad requerimos instalar el <a href="../en/Touchpad_Synaptics.html" title="Touchpad Synaptics">Touchpad Synaptics</a>, el paquete correcto para nuestro caso es el siguiente:
+<h2><span class="mw-headline" id="Wifi">Wifi</span></h2>
+<p>Véase <a href="../en/Broadcom_wireless.html" title="Broadcom wireless">Broadcom wireless</a>
 </p>
-<pre># pacman -S pacman -S xf86-input-synaptics
-</pre>
-<p>Notaremos que el <i>Scroll</i> y el <i>Tapping</i> no funciona, esto requiere la edición del archivo <i>/etc/X11/xorg.conf.d/10-synaptics.conf</i>. A partir de la línea 8 justo debajo del Tapbutton3, agregue las siguientes líneas respetando la indentación:
+<h2>
+<span id="Alimentaci.C3.B3n"></span><span class="mw-headline" id="Alimentación">Alimentación</span>
+</h2>
+<h3>
+<span id="Estado_de_la_bater.C3.ADa"></span><span class="mw-headline" id="Estado_de_la_batería">Estado de la batería</span>
+</h3>
+<p>Para conocer las utilidades existentes para monitorizar el estado de la batería, véase <a href="../es/Laptop.html" title="Laptop (Español)">Laptop</a>.
 </p>
-<pre>Option "JumpyCursorThreshold" "90"
-Option "AreaBottomEdge" "4100"
-</pre>
+<h3>
+<span id="Suspensi.C3.B3n_a_la_RAM"></span><span class="mw-headline" id="Suspensión_a_la_RAM">Suspensión a la RAM</span>
+</h3>
+<p>Véase <a href="../es/e5a47c8ab94436d8f3264044821abac3.html" title="Power management (Español)/Suspend and hibernate (Español)">Suspender e hibernar</a>.
+</p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../es/Category:Dell.html" title="Category:Dell (Español)">Dell (Español)</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../es/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (Español)">Pages or sections flagged with Template:Translateme (Español)</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-</ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dell_Mini_10v_(Espa%C3%B1ol)&amp;oldid=646400">https://wiki.archlinux.org/index.php?title=Dell_Mini_10v_(Español)&amp;oldid=646400</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 23 December 2020, at 09:49.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dell_Mini_10v_(Espa%C3%B1ol)&amp;oldid=651128">https://wiki.archlinux.org/index.php?title=Dell_Mini_10v_(Español)&amp;oldid=651128</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 6 February 2021, at 23:20.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

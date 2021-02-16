@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -178,7 +179,7 @@
 <li class="toclevel-2 tocsection-59"><a href="#SSH"><span class="tocnumber">11.3</span> <span class="toctext">SSH</span></a></li>
 <li class="toclevel-2 tocsection-60"><a href="#DNS"><span class="tocnumber">11.4</span> <span class="toctext">DNS</span></a></li>
 <li class="toclevel-2 tocsection-61"><a href="#Proxies"><span class="tocnumber">11.5</span> <span class="toctext">Proxies</span></a></li>
-<li class="toclevel-2 tocsection-62"><a href="#Managing_SSL_certificates"><span class="tocnumber">11.6</span> <span class="toctext">Managing SSL certificates</span></a></li>
+<li class="toclevel-2 tocsection-62"><a href="#Managing_TLS_certificates"><span class="tocnumber">11.6</span> <span class="toctext">Managing TLS certificates</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-63">
@@ -243,7 +244,7 @@
 </p>
 <p>Tools like <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pwgen">pwgen</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/apg/">apg</a></span><sup><small>AUR</small></sup> can generate random passwords. However, these passwords can be difficult to memorize. One memorization technique (for ones typed often) is to generate a long password and memorize a minimally secure number of characters, temporarily writing down the full generated string. Over time, increase the number of characters typed - until the password is ingrained in muscle memory and need not be remembered. This technique is more difficult, but can provide confidence that a password will not turn up in wordlists or "intelligent" brute force attacks that combine words and substitute characters.
 </p>
-<p>One technique for memorizing a password is to use a mnemonic phase, where each word in the phase reminds you of the next character in the password.
+<p>One technique for memorizing a password is to use a mnemonic phrase, where each word in the phrase reminds you of the next character in the password.
 Take for instance “the girl is walking down the rainy street” could be translated to <code>t6!WdtR5</code> or, less simply, <code>t&amp;6!RrlW@dtR,57</code>.
 This approach could make it easier to remember a password, but note that the various letters have very different probabilities of being found at the start of words (<a href="https://en.wikipedia.org/wiki/Letter_frequency#Relative_frequencies_of_the_first_letters_of_a_word_in_the_English_language" class="extiw" title="wikipedia:Letter frequency">Wikipedia:Letter frequency</a>). 
 </p>
@@ -352,6 +353,8 @@ password required pam_unix.so use_authtok sha512 shadow</pre>
 <p>Once the computer is powered on and the drive is mounted, however, its data becomes just as vulnerable as an unencrypted drive. It is therefore best practice to unmount data partitions as soon as they are no longer needed.
 </p>
 <p>Certain programs, like <a href="../en/Dm-crypt.html" title="Dm-crypt">dm-crypt</a>, allow the user to encrypt a loop file as a virtual volume. This is a reasonable alternative to full-disk encryption when only certain parts of the system need be secure.
+</p>
+<p>You may also encrypt a drive with the key stored in a <a href="../en/Trusted_Platform_Module.html" class="mw-redirect" title="TPM">TPM</a>, although it has had <a rel="nofollow" class="external text" href="https://tpm.fail">vulnerabilites in the past</a> and the key can be extracted by a <a rel="nofollow" class="external text" href="https://pulsesecurity.co.nz/articles/TPM-sniffing">bus sniffing attack</a>.
 </p>
 <h3><span class="mw-headline" id="File_systems">File systems</span></h3>
 <p>The kernel now prevents security issues related to hardlinks and symlinks if the <code>fs.protected_hardlinks</code> and <code>fs.protected_symlinks</code> sysctl switches are enabled, so there is no longer a major security benefit from separating out world-writable directories.
@@ -655,8 +658,8 @@ Randomization under memory exhaustion @0 : No randomization
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/sysctl.d/51-dmesg-restrict.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">kernel.dmesg_restrict = 1</pre>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> This is enabled by default in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-hardened">linux-hardened</a></span>.</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> This is enabled by default in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span><a rel="nofollow" class="external autonumber" href="https://github.com/archlinux/svntogit-packages/commit/b78bc292e2218661a3b70163ec30711c87100941">[2]</a>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-zen">linux-zen</a></span><a rel="nofollow" class="external autonumber" href="https://github.com/archlinux/svntogit-packages/commit/5962e24fe3062a3a96dbc1876ba8ea4ef1d500c9">[3]</a> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-hardened">linux-hardened</a></span>.</div>
 <h3><span class="mw-headline" id="Restricting_access_to_kernel_pointers_in_the_proc_filesystem">Restricting access to kernel pointers in the proc filesystem</span></h3>
 <p>Setting <code>kernel.kptr_restrict</code> to 1 will hide kernel symbol addresses in <code>/proc/kallsyms</code> from regular users without <code>CAP_SYSLOG</code>, making it more difficult for kernel exploits to resolve addresses/symbols dynamically. This will not help that much on a pre-compiled Arch Linux kernel, since a determined attacker could just download the kernel package and get the symbols manually from there, but if you are compiling your own kernel, this can help mitigating local root exploits. This will break some <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=perf">perf</a></span> commands when used by non-root users (but many <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=perf">perf</a></span> features require root access anyway). See <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/34323">FS#34323</a> for more information.
 </p>
@@ -734,7 +737,7 @@ SupplementaryGroups=proc</pre>
 <p>All <a href="../en/Kernel.html#Officially_supported_kernels" title="Kernel">officially supported kernels</a> initialize the LSM, but none of them enforce any lockdown mode. 
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> Active LSMs can be verified by running <code>cat /sys/kernel/security/lsm</code>. If the output does not have <code>lockdown</code> in it, set the <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> <code>lsm=lockdown,yama</code> and reboot.</div>
+<strong>Tip:</strong> Active LSMs can be verified by running <code>cat /sys/kernel/security/lsm</code>. If the output does not have <code>lockdown</code> in it, set the <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> <code>lsm=lockdown,yama,bpf</code> and reboot.</div>
 <p>Lockdown has two modes of operation:
 </p>
 <ul>
@@ -818,37 +821,23 @@ SupplementaryGroups=proc</pre>
 </p>
 <p>Denying root login is also a good practice, both for tracing intrusions and adding an additional layer of security before root access. For OpenSSH, see <a href="../en/OpenSSH.html#Deny" title="OpenSSH">OpenSSH#Deny</a>.
 </p>
+<p>Mozilla publishes an <a rel="nofollow" class="external text" href="https://infosec.mozilla.org/guidelines/openssh.html">OpenSSH configuration guide</a> which configures more verbose audit logging and restricts ciphers.
+</p>
 <h3><span class="mw-headline" id="DNS">DNS</span></h3>
 <p>The default domain name resolution (DNS) configuration is highly compatible but has security weaknesses. See <a href="../en/Domain_name_resolution.html#Privacy_and_security" title="Domain name resolution">DNS privacy and security</a> for more information.
 </p>
 <h3><span class="mw-headline" id="Proxies">Proxies</span></h3>
 <p>Proxies are commonly used as an extra layer between applications and the network, sanitizing data from untrusted sources. The attack surface of a small proxy running with lower privileges is significantly smaller than a complex application running with the end user privileges.
 </p>
-<p>For example the DNS resolver is implemented in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span>, that is linked with the application (that may be running as root), so a bug in the DNS resolver might lead to a remote code execution. This can be prevented by installing a DNS caching server, such as <a href="../en/Dnsmasq.html" title="Dnsmasq">dnsmasq</a>, which acts as a proxy. <a rel="nofollow" class="external autonumber" href="https://googleonlinesecurity.blogspot.it/2016/02/cve-2015-7547-glibc-getaddrinfo-stack.html">[2]</a>
+<p>For example the DNS resolver is implemented in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span>, that is linked with the application (that may be running as root), so a bug in the DNS resolver might lead to a remote code execution. This can be prevented by installing a DNS caching server, such as <a href="../en/Dnsmasq.html" title="Dnsmasq">dnsmasq</a>, which acts as a proxy. <a rel="nofollow" class="external autonumber" href="https://googleonlinesecurity.blogspot.it/2016/02/cve-2015-7547-glibc-getaddrinfo-stack.html">[4]</a>
 </p>
-<h3><span class="mw-headline" id="Managing_SSL_certificates">Managing SSL certificates</span></h3>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="../en/Transport_Layer_Security.html" title="Transport Layer Security">Transport Layer Security</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Notes:</b> There is a dedicated article. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Security">Talk:Security#</a>)</div>
-</div>
-<p>See <a href="../en/OpenSSL.html" title="OpenSSL">OpenSSL</a> and <a href="../en/Network_Security_Services.html" title="Network Security Services">Network Security Services</a> (NSS) for managing custom server-side SSL certificates. Notably, the related <a href="../en/Certbot.html" class="mw-redirect" title="Let’s Encrypt">Let’s Encrypt</a> project is also supported. 
-</p>
-<p>The default internet SSL certificate trustchains are provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ca-certificates">ca-certificates</a></span> package and its dependencies. Note that Arch relies on trust-sources (e.g. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ca-certificates-mozilla">ca-certificates-mozilla</a></span>) providing the certificates to be trusted per default by the system. 
-</p>
-<p>There may be occasions when you want to deviate from the default. For example, you may read some <a rel="nofollow" class="external text" href="https://www.theregister.co.uk/2016/05/27/blue_coat_ca_certs/">news</a> and want to distrust a certificate rather than wait until the trust-source providers do. The Arch infrastructure makes such easy:
-</p>
-<ol>
-<li>Obtain the respective certificate in .crt format (Example: <a rel="nofollow" class="external text" href="https://crt.sh/?id=19538258">view</a>, <a rel="nofollow" class="external text" href="https://crt.sh/?d=19538258">download</a>; in case of an existing trusted root certificate authority, you may also find it extracted in the system path),</li>
-<li>Copy it to <code>/etc/ca-certificates/trust-source/blacklist/</code> and</li>
-<li>Run <code>update-ca-trust</code> as root.</li>
-</ol>
-<p>To check the blacklisting works as intended, you may re-open your preferred browser and do so via its GUI, which should show it as <b>untrusted</b> now.
+<h3><span class="mw-headline" id="Managing_TLS_certificates">Managing TLS certificates</span></h3>
+<p>See <a href="../en/Transport_Layer_Security.html#Trust_management" class="mw-redirect" title="TLS">TLS#Trust management</a>.
 </p>
 <h2><span class="mw-headline" id="Physical_security">Physical security</span></h2>
 <p>Physical access to a computer is root access given enough time and resources. However, a high <i>practical</i> level of security can be obtained by putting up enough barriers.
 </p>
-<p>An attacker can gain full control of your computer on the next boot by simply attaching a malicious IEEE 1394 (FireWire), Thunderbolt or PCI Express device as they are given full memory access.<a rel="nofollow" class="external autonumber" href="https://www.breaknenter.org/projects/inception/">[3]</a><sup title="Last check status: SSL error">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup> There is little you can do from preventing this, or modification of the hardware itself - such as flashing malicious firmware onto a drive. However, the vast majority of attackers will not be this knowledgeable and determined.
+<p>An attacker can gain full control of your computer on the next boot by simply attaching a malicious IEEE 1394 (FireWire), Thunderbolt or PCI Express device as they are given full memory access.<a rel="nofollow" class="external autonumber" href="https://www.breaknenter.org/projects/inception/">[5]</a><sup title="Last check status: SSL error">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup> There is little you can do from preventing this, or modification of the hardware itself - such as flashing malicious firmware onto a drive. However, the vast majority of attackers will not be this knowledgeable and determined.
 </p>
 <p><a href="#Data-at-rest_encryption">#Data-at-rest encryption</a> will prevent access to your data if the computer is stolen, but malicious firmware can be installed to obtain this data upon your next log in by a resourceful attacker.
 </p>
@@ -953,8 +942,8 @@ esac
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Security&amp;oldid=648075">https://wiki.archlinux.org/index.php?title=Security&amp;oldid=648075</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 3 January 2021, at 09:36.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Security&amp;oldid=652382">https://wiki.archlinux.org/index.php?title=Security&amp;oldid=652382</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 February 2021, at 20:09.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

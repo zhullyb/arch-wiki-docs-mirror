@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,12 +33,18 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="../File:Tango-preferences-desktop-locale.png" decoding="async" width="48" height="48"></a><b>Este artículo o sección necesita ser <a href="../es/ArchWiki:Contributing.html#Traducir_contenido" title="ArchWiki:Contributing (Español)">traducido</a>.</b><a href="../File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="../File:Tango-preferences-desktop-locale.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Notas:</b> Desactualizado. (Discusión en <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Irssi_(Espa%C3%B1ol)">Talk:Irssi (Español)#</a>)</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Irssi.html" title="Irssi">Irssi</a> fue revisada el <b>2021-02-09</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Irssi&amp;diff=0&amp;oldid=650205">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<div class="archwiki-template-meta-related-articles-start">
+<p>Artículos relacionados</p>
+<ul>
+<li><a href="../es/Arch_IRC_channels.html" class="mw-redirect" title="IRC channels (Español)">IRC channels (Español)</a></li>
+<li><a href="../es/Arch_IRC_channels.html" class="mw-redirect" title="IRC (Español)">IRC (Español)</a></li>
+<li><a href="../en/WeeChat.html" title="WeeChat">WeeChat</a></li>
+<li><a href="../en/HexChat.html" title="HexChat">HexChat</a></li>
+</ul>
 </div>
-<p><a rel="nofollow" class="external text" href="http://www.irssi.org">irssi</a> es un cliente IRC (<i>Internet Relay Chat</i>) modular cuya interfaz gráfica está basada en la biblioteca <code>ncurses</code>.
+<p><a rel="nofollow" class="external text" href="http://www.irssi.org">irssi</a> es un cliente <a href="https://en.wikipedia.org/wiki/es:Internet_Relay_Chat" class="extiw" title="wikipedia:es:Internet Relay Chat">IRC (Español)</a> (<i>Internet Relay Chat</i>) modular basado en la biblioteca <code>ncurses</code>. También soporta los protocolos <a href="https://en.wikipedia.org/wiki/SILC_(protocol)" class="extiw" title="wikipedia:SILC (protocol)">SILC</a> e <a rel="nofollow" class="external text" href="http://www.icb.net/_jrudd/icb/protocol.html">ICB</a> mediante plugins.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -46,87 +53,409 @@
 </div>
 <ul>
 <li class="toclevel-1 tocsection-1"><a href="#Instalaci%C3%B3n"><span class="tocnumber">1</span> <span class="toctext">Instalación</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#Configuraci%C3%B3n"><span class="tocnumber">2</span> <span class="toctext">Configuración</span></a></li>
-<li class="toclevel-1 tocsection-3"><a href="#Instalando_Scripts"><span class="tocnumber">3</span> <span class="toctext">Instalando Scripts</span></a></li>
-<li class="toclevel-1 tocsection-4"><a href="#Enlaces_Externos"><span class="tocnumber">4</span> <span class="toctext">Enlaces Externos</span></a></li>
+<li class="toclevel-1 tocsection-2">
+<a href="#Uso"><span class="tocnumber">2</span> <span class="toctext">Uso</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#Comandos"><span class="tocnumber">2.1</span> <span class="toctext">Comandos</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-4">
+<a href="#Configuraci%C3%B3n"><span class="tocnumber">3</span> <span class="toctext">Configuración</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Autenticaci%C3%B3n_mediante_SASL"><span class="tocnumber">3.1</span> <span class="toctext">Autenticación mediante SASL</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Conectar_autom%C3%A1ticamente_a_#archlinux_al_iniciar"><span class="tocnumber">3.2</span> <span class="toctext">Conectar automáticamente a #archlinux al iniciar</span></a></li>
+<li class="toclevel-2 tocsection-7">
+<a href="#Conexi%C3%B3n_mediante_TLS"><span class="tocnumber">3.3</span> <span class="toctext">Conexión mediante TLS</span></a>
+<ul>
+<li class="toclevel-3 tocsection-8"><a href="#Certificados_de_cliente"><span class="tocnumber">3.3.1</span> <span class="toctext">Certificados de cliente</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-9"><a href="#Registro_autom%C3%A1tico"><span class="tocnumber">3.4</span> <span class="toctext">Registro automático</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Ocultar_joins,_parts_y_quits"><span class="tocnumber">3.5</span> <span class="toctext">Ocultar joins, parts y quits</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Desplazamiento_con_el_rat%C3%B3n"><span class="tocnumber">3.6</span> <span class="toctext">Desplazamiento con el ratón</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-12">
+<a href="#Trucos_y_consejos"><span class="tocnumber">4</span> <span class="toctext">Trucos y consejos</span></a>
+<ul>
+<li class="toclevel-2 tocsection-13"><a href="#Proxy_HTTP"><span class="tocnumber">4.1</span> <span class="toctext">Proxy HTTP</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Lista_de_usuarios_con_tmux"><span class="tocnumber">4.2</span> <span class="toctext">Lista de usuarios con tmux</span></a></li>
+<li class="toclevel-2 tocsection-15">
+<a href="#Hostname_virtual_(vhost)"><span class="tocnumber">4.3</span> <span class="toctext">Hostname virtual (vhost)</span></a>
+<ul>
+<li class="toclevel-3 tocsection-16"><a href="#Preconfiguraciones_necesarias"><span class="tocnumber">4.3.1</span> <span class="toctext">Preconfiguraciones necesarias</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#Habilitar_el_vhost"><span class="tocnumber">4.3.2</span> <span class="toctext">Habilitar el vhost</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-18"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">5</span> <span class="toctext">Véase también</span></a></li>
 </ul>
 </div>
 
 <h2>
 <span id="Instalaci.C3.B3n"></span><span class="mw-headline" id="Instalación">Instalación</span>
 </h2>
-<p>irssi se encuentra disponible en los repositorios de Arch; simplemente ejecute, como <i>root</i>:
+<p><a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">Instale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=irssi">irssi</a></span>.
 </p>
-<pre># pacman -S irssi</pre>
+<p>Múltiples scripts están disponibles en el AUR con el nombre <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/?O=0&amp;K=irssi-script"><b>irssi-script</b></a> así como en <a rel="nofollow" class="external text" href="http://scripts.irssi.org/">repositorio de scripts de Irssi</a>.
+</p>
+<h2><span class="mw-headline" id="Uso">Uso</span></h2>
+<p>Para una introducción detallada consulte la <a rel="nofollow" class="external text" href="https://irssi.org/documentation">documentación oficial</a>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Esta sección asume que tiene conocimiento acerca de los fundamentos de IRC y que ha usado otros clientes en el pasado</div>
+<p>Se recomienda ejecutar irssi desde un <a href="../en/Category:Terminal_multiplexers.html" class="mw-redirect" title="Terminal multiplexer">multiplexor de terminal</a> como <a href="../es/Tmux.html" title="Tmux (Español)">Tmux (Español)</a> o <a href="../en/GNU_Screen.html" title="GNU Screen">GNU Screen</a>. Estos permiten al usuario desconectarse y reconectarse fácilmente a una sesión, además scripts como <a rel="nofollow" class="external text" href="http://wouter.coekaerts.be/site/irssi/nicklist">nicklist.pl</a> dependen de una ventana secundaria. Para iniciar <i>irssi</i>, ejecute
+</p>
+<pre>$ irssi
+</pre>
+<p>Consulte también <span class="plainlinks archwiki-template-man" title="$ man 1 irssi"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/irssi.1">irssi(1)</a></span>.
+</p>
+<h3><span class="mw-headline" id="Comandos">Comandos</span></h3>
+<p>Los comandos de irssi comienzan con una barra diagonal y no distinguen entre mayúsculas y minúsculas. Puede encontrar información sobre ellos usando el comando <code>/help</code>, la cual también está <a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/">disponible en línea</a>.
+</p>
+<table class="wikitable">
+<tbody>
+<tr>
+<th style="font-weight: bold;">Comando
+</th>
+<th style="font-weight: bold;">Descripción
+</th>
+</tr>
+<tr>
+<td>
+<a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/help/">/help</a>
+</td>
+<td>Mostrar todos los comandos o describir un comando determinado.
+</td>
+</tr>
+<tr>
+<td>
+<a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/network/">/network</a>
+</td>
+<td>Gestiona tus redes de IRC.
+</td>
+</tr>
+<tr>
+<td>
+<a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/server/">/server</a>
+</td>
+<td>Gestiona tus servidores de IRC.
+</td>
+</tr>
+<tr>
+<td>
+<a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/connect/">/connect</a>
+</td>
+<td>Conectarse a un servidor o red.
+</td>
+</tr>
+<tr>
+<td>
+<a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/disconnect/">/disconnect</a>
+</td>
+<td>Cierra la conexión actual con un servidor.
+</td>
+</tr>
+<tr>
+<td>
+<code>ALT+(1-0,q-p,etc)</code>
+</td>
+<td>Cambia la ventana activa. <code>Ctrl+n</code> pasa a la siguiente ventana, <code>Ctrl+p</code> a la ventana anterior.
+</td>
+</tr>
+<tr>
+<td>
+<a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/window/">/window</a>
+</td>
+<td>Gestiona las ventanas de irssi.
+</td>
+</tr>
+<tr>
+<td>
+<a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/layout/">/layout</a>
+</td>
+<td>Guardar o eliminar la disposición de sus ventanas.
+</td>
+</tr>
+<tr>
+<td>
+<a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/statusbar/">/statusbar</a>
+</td>
+<td>Gestiona la barra de estado.
+</td>
+</tr>
+<tr>
+<td>
+<a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/set/">/set</a>
+</td>
+<td>Ver o cambiar la configuración de irssi.
+</td>
+</tr>
+<tr>
+<td>
+<a rel="nofollow" class="external text" href="https://irssi.org/documentation/help/alias/">/alias</a>
+</td>
+<td>Gestiona tus alias.
+</td>
+</tr>
+</tbody>
+</table>
 <h2>
 <span id="Configuraci.C3.B3n"></span><span class="mw-headline" id="Configuración">Configuración</span>
 </h2>
-<p>Puede configurarlo editando cualquiera de estos dos ficheros (vea la <i>man page</i>, <span class="plainlinks archwiki-template-man" title="$ man 1 irssi"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/irssi.1">irssi(1)</a></span>, para más información):
+<p>Irssi instala su configuración de defecto en <code>/etc/irssi.conf</code>, si al invocar irssi no se encuentra un archivo de configuración entonces el archivo de defecto es copiado a <code>~/.irssi/config</code>. La configuración de defecto incluye acceso a múltiples servidores, chatnets y canales. Puedes iniciar irssi con un archivo de configuración alterno usando la bandera <code>--config</code>.
+</p>
+<ul>
+<li>La orden <code>/save</code> guardará la configuración actual al archivo de configuración de irssi.</li>
+<li>La orden <code>/save layout</code> guardará la localización de las ventanas abiertas actualmente.</li>
+</ul>
+<h3>
+<span id="Autenticaci.C3.B3n_mediante_SASL"></span><span class="mw-headline" id="Autenticación_mediante_SASL">Autenticación mediante SASL</span>
+</h3>
+<p>Irssi soporta autenticación mediante el framework <a href="https://en.wikipedia.org/wiki/es:Simple_Authentication_and_Security_Layer" class="extiw" title="wikipedia:es:Simple Authentication and Security Layer">SASL (Español)</a> (Simple Authentication and Security Layer).
+</p>
+<p>Puede agregar una red (<i>network</i>) con SASL siguiendo estas órdenes:
+</p>
+<pre>/SERVER ADD -ssl -ssl_verify -ssl_capath /etc/ssl/certs -network freenode -port 6697 chat.freenode.net
+/NETWORK ADD -sasl_mechanism plain -sasl_username <i>usuario</i> -sasl_password <i>contraseña</i> freenode
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> 
+<ul>
+<li>Asegúrese de emplear mayúsculas y minúsculas correctamente para el nombre de la red.</li>
+<li>El primer comando se encarga de agregar un servidor con <a href="#Conexi%C3%B3n_mediante_TLS">#Conexión mediante TLS</a>.</li>
+<li>Sólo ejecute el segundo comando si la red ya existe.</li>
+<li>Si la contraseña contiene el carácter <code>$</code> asegúrate de anteponer otro <code>$</code> para que <i>irssi</i> logre asignarla correctamente.</li>
+</ul>
+</div>
+<p>Reinicie irssi, conecte a la red y busque por el mensaje <i>SASL authentication succeeded</i>.
+</p>
+<h3>
+<span id="Conectar_autom.C3.A1ticamente_a_.23archlinux_al_iniciar"></span><span class="mw-headline" id="Conectar_automáticamente_a_#archlinux_al_iniciar">Conectar automáticamente a #archlinux al iniciar</span>
+</h3>
+<p>Inicie irssi y escriba la siguiente orden:
+</p>
+<pre>/server add -auto -network freenode chat.freenode.net
+</pre>
+<p><code>freenode</code> puede ser sustituido por cualquier palabra, por ejemplo la abreviación <code>fn</code>.
+</p>
+<p>Es importante asegurarse que la autenticación mediante SASL esté configurada correctamente. Es posible usar NickServ manualmente con <code>autosendcmd</code> en lugar SASL, sin embargo, esto causa una condición de carrera al unirse automáticamente a canales. Si se desea, también es posible autenticarse usando certificados SSL reemplazando el uso de contraseñas con NickServ.
+</p>
+<pre>/channel add -auto #archlinux freenode
+/channes add -auto #archlinux-offtopic freenode
+</pre>
+<h3>
+<span id="Conexi.C3.B3n_mediante_TLS"></span><span class="mw-headline" id="Conexión_mediante_TLS">Conexión mediante TLS</span>
+</h3>
+<p>Freenode dispone de los puertos 6697, 7000 y 7070 para conexiones SSL/TLS (<b>no</b> 6667). Para conectarse a Freenode mediante TLS es necesario configurar una nueva conexión. Inicie irssi y escriba la orden:
+</p>
+<pre>/server add -auto -tls -tls_verify -network freenode -port 6697 chat.freenode.net
+</pre>
+<p>Guarde los cambios realizados con:
+</p>
+<pre>/save
+</pre>
+<p>Si todo resultó exitoso se ajustará a "Z" el mode set. Aparecerá un mensaje similar a: <i>Mode change (+Zi) for user su-nick</i>
+</p>
+<h4><span class="mw-headline" id="Certificados_de_cliente">Certificados de cliente</span></h4>
+<p>Redes como Freenode y OFTC permiten autenticación mediante certificados SSL, la cual es una alternativa a la autenticación mediante contraseñas en texto plano. Consulte <a rel="nofollow" class="external text" href="https://freenode.net/kb/answer/certfp">autenticando mediante CERTFP</a> (en Inglés) para conocer a fondo los detalles.
+</p>
+<p>Para crear un certificado válido durante 730 días que no requiera contraseña ejecute los siguientes comandos (cuando se solicite proveer detalles de <i>Common Name</i> o <i>state</i> puede colocar información cualquiera):
+</p>
+<pre>$ openssl req -newkey rsa:2048 -days 730 -x509 -keyout irssi.key -out irssi.crt -nodes 
+$ cat irssi.crt irssi.key &gt; ~/.irssi/irssi.pem
+$ chmod 600 ~/.irssi/irssi.pem
+$ rm irssi.crt irssi.key
+</pre>
+<p>Seguido, procedemos a obtener el <i>fingerprint</i> del certificado:
+</p>
+<pre>$ openssl x509 -sha1 -fingerprint -noout -in ~/.irssi/irssi.pem | sed -e 's/^.*=//;s/://g;y/ABCDEF/abcdef/'
+</pre>
+<p>Esta orden hará que el <i>fingerprint</i> sea mostrado en pantalla (el comando <code>sed</code> se encarga de dar un formato correcto al <i>fingerprint</i> al eliminar caracteres innecesarios). Copie la salida del comando anterior, pues ésta será empleada para realizar el registro del certificado en irssi.
+</p>
+<p>Una vez iniciado irssi desconecte de la red y agregue el certificado de cliente junto con las llaves correspondientes. Omita la opción <code>-ssl_pass</code> si el certificado de cliente fue creado sin una contraseña:
+</p>
+<pre>/disconnect Freenode
+/server add -ssl_cert ~/.irssi/irssi.pem -ssl_pass &lt;contraseña_de_irssi.pem&gt; -network freenode chat.freenode.net 6697
+</pre>
+<p>Ahora conecte de nuevo a la red (<b>evite</b> usar la orden <code>/reconnect</code>) y registre su <i>fingerprint</i>:
+</p>
+<pre>/connect Freenode
+/msg NickServ identify SU_CONTRASEÑA
+/msg NickServ cert add SU_FINGERPRINT
+</pre>
+<p>Hasta este punto puede eliminar su contraseña del archivo de configuración (en caso de que haberse configurado de esta forma) y guardar la configuración actual con la orden:
+</p>
+<pre>/save
+</pre>
+<h3>
+<span id="Registro_autom.C3.A1tico"></span><span class="mw-headline" id="Registro_automático">Registro automático</span>
+</h3>
+<pre>/set autolog on
+/save
+</pre>
+<h3>
+<span id="Ocultar_joins.2C_parts_y_quits"></span><span class="mw-headline" id="Ocultar_joins,_parts_y_quits">Ocultar joins, parts y quits</span>
+</h3>
+<p>Con el fin de ignorar los mensajes automáticos mostrados cuando un usuario ingresa (joins), deja (leaves) y cierra su conexión (quits) a un canal podemos ingresar la siguiente orden, la cual evitará estos mensajes en todos los canales en los que hayamos ingresado:
+</p>
+<pre>/ignore * joins parts quits
+</pre>
+<p>Véase <a rel="nofollow" class="external text" href="https://github.com/lifeforms/irssi-smartfilter">smartfilter</a> para restringir mensajes join únicamente a usuarios activos.
+</p>
+<h3>
+<span id="Desplazamiento_con_el_rat.C3.B3n"></span><span class="mw-headline" id="Desplazamiento_con_el_ratón">Desplazamiento con el ratón</span>
+</h3>
+<p>Para habilitar el desplazamiento con el ratón escriba la siguiente orden:
+</p>
+<pre>/run scriptassist
+/script install mouse.pl
+</pre>
+<p>Para habilitar automáticamente este script cuando irssi inicia ejecute el comando:
+</p>
+<pre>/script autorun mouse.pl
+</pre>
+<h2><span class="mw-headline" id="Trucos_y_consejos">Trucos y consejos</span></h2>
+<h3><span class="mw-headline" id="Proxy_HTTP">Proxy HTTP</span></h3>
+<p>Para ejecutar irssi detrás de un servidor proxy HTTP es necesario ejecutar las siguientes instrucciones:
+</p>
+<pre>/SET use_proxy ON
+/SET proxy_address &lt;Dirección IP del proxy&gt;
+/SET proxy_port &lt;Puerto del proxy&gt;
+/SET -clear proxy_string
+/SET proxy_string_after conn %s %d
+/EVAL set proxy_string connect %s:%d HTTP/1.0\n\n
+</pre>
+<p>Irssi alterará su archivo de configuración correspondiente; si el proxy no es necesario configure nuevamente <code>use_proxy</code> a <code>OFF</code>.
+</p>
+<p>Si el proxy requiere una contraseña ejecute la orden:
+</p>
+<pre>/SET proxy_password &lt;contraseña&gt;
+</pre>
+<p>En caso de que la contraseña ya no sea necesaria escriba:
+</p>
+<pre>/SET -clear proxy_password
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Configurar SSL detrás de un proxy hará que la conexión falle si se utilizan estos ajustes</div>
+<h3><span class="mw-headline" id="Lista_de_usuarios_con_tmux">Lista de usuarios con tmux</span></h3>
+<p>El plugin <a rel="nofollow" class="external text" href="https://scripts.irssi.org/scripts/nicklist.pl">nicklist</a> agrega un panel que lista los nicks de los usuarios conectados al canal actual. Existen dos formas de usarlo:
 </p>
 <ul>
 <li>
-<code>/etc/irssi.conf</code><br>Los cambios que realice en este fichero afectarán a todas las instancias de irssi.</li>
+<b>screen</b>, el cual simplemente agrega la lista a la derecha de irssi, sin embargo toda la ventana se redibuja cada vez que irssi imprime una linea.</li>
 <li>
-<code>~/.irssi/config</code><br>Si por el contrario desea especificar opciones separadas para su usuario, edite este fichero. (Si el directorio no existe, irssi lo creará junto al fichero <code>config</code> al arrancar).</li>
+<b>fifo</b>, como su nombre lo sugiere escribe la lista en un archivo <i>fifo</i> (first in first out), el cual puede leerse de forma continua con alguna orden como <code>cat ~/.irssi/nicklistfifo</code>.</li>
 </ul>
-<h2><span class="mw-headline" id="Instalando_Scripts">Instalando Scripts</span></h2>
-<p>El ejemplo que sigue muestra cómo instalar el <i>script</i> para verificar la escritura (<i>spell checking</i>).
-En una terminal, ejecute:
+<p>La lista de usuarios con <i>fifo</i> será más eficiente con con el comando:
 </p>
-<pre># pacman -S ispell
-$ mkdir -p ~/.irssi/scripts/autorun
-$ cd ~/.irssi/scripts
-$ wget [http://scripts.irssi.org/scripts/spell.pl http://scripts.irssi.org/scripts/spell.pl]
-# perl -MCPAN -e 'install Lingua::Ispell'
-$ irssi
+<pre>/NICKLIST FIFO
 </pre>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Recuerde que los comandos marcados con el caracter <b>#</b> deberán ser ejecutados como <i>root</i>.</div>
-<p>Si no desea utilizar CPAN, vea: <a rel="nofollow" class="external text" href="http://search.cpan.org/~jdporter/Lingua-Ispell-0.07/lib/Lingua/Ispell.pm">http://search.cpan.org/~jdporter/Lingua-Ispell-0.07/lib/Lingua/Ispell.pm</a>
+<p>Este archivo <i>fifo</i> se puede utilizar en un panel de tmux dividido verticalmente, con irssi en un panel izquierdo y la salida de la orden <code>cat</code> anterior en un panel pequeño a su derecha. Dado que el panel depende de la dimensión de la sesión tmux que lo crea, una sesión posterior con una diferente geometría necesita recrearlo (lo que también implica un cambio en las dimensiones de la ventana de irssi).
 </p>
-<p>Ahora, en irssi:
+<p>Por ejemplo, el siguiente script primero comprueba si irssi está en ejecución, si no se encuentra se crea una nueva sesión de tmux, una ventana con el nombre <i>irssi</i> y posteriormente ejecuta la orden <code>irssi</code>, finalmente crea un panel derecho con la salida de la orden <code>cat</code>. Sin embargo, si irssi está en ejecución, simplemente se adjunta a la sesión y recrea el panel con <code>cat</code>. 
 </p>
-<pre>/script load spell.pl</pre>
-<p>Si funcionó, deberá aprecer algo como lo siguiente:
-</p>
-<pre>- - Irssi: Loaded script spell
-/bind meta-s /_spellcheck
+<pre>#!/bin/bash
+
+T3=$(pgrep -u $USER -x irssi)
+
+irssi_nickpane() {
+    tmux setw main-pane-width $(( $(tput cols) - 21));
+    tmux splitw -v "cat ~/.irssi/nicklistfifo";
+    tmux selectl main-vertical;
+    tmux selectw -t irssi;
+    tmux selectp -t 0;
+}
+
+irssi_repair() {
+    tmux selectw -t irssi
+    (( $(tmux lsp | wc -l) &gt; 1 )) &amp;&amp; tmux killp -a -t 0
+    irssi_nickpane
+}
+
+if [ -z "$T3" ]; then
+    tmux new-session -d -s main;
+    tmux new-window -t main -n irssi irssi;
+    irssi_nickpane ;
+fi
+    tmux attach-session -d -t main;
+    irssi_repair ;
+exit 0
 </pre>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Podrá verificar la escritura de la línea actual utilizando la combinación <b>meta-s</b>, siendo <i>meta</i> normalmente <i>Alt</i>.</div>
-<p>Si desea que el <i>script</i> se ejecute automáticamente al correr irssi, puede hacer lo siguiente:
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Sugerencia:</strong> En lugar de realizar los pasos anteriores use <a rel="nofollow" class="external text" href="http://anti.teamidiot.de/static/nei/*/Code/Irssi/tmux-nicklist-portable.pl">este plugin</a>, el cual se encarga de crear un panel con la lista de usuarios dentro de tmux.</div>
+<h3>
+<span id="Hostname_virtual_.28vhost.29"></span><span class="mw-headline" id="Hostname_virtual_(vhost)">Hostname virtual (vhost)</span>
+</h3>
+<p>Un vhost puede ser usado para cambiar el hostname cuando <i>irssi</i> está conectado a un servidor de IRC, el hostname es visto cuando se une/parte o algun otro usuario ejecuta la orden <code>whois</code>. Asignar un vhost se hace con frecuencia en los servidores que tienen una dirección IP estática. Sin un hostname virtual la salida de la orden <code>whois</code> se vería así:
 </p>
-<pre>$ cd ~/.irssi/scripts/autorun
-$ ln -s ../ispell.pl .
+<pre>nick@123.456.78.90.isp.com
 </pre>
-<h2><span class="mw-headline" id="Enlaces_Externos">Enlaces Externos</span></h2>
+<p>Por otra parte, el resultado de un vhost configurado sería el siguiente, siempre y cuando se tenga el dominio <i>ejemplo.com</i> disponible:
+</p>
+<pre>nick@ejemplo.com
+</pre>
+<p>Tome en cuenta que no todos los servidores de IRC soportan el uso de vhost. Esto puede ser configurado individualmente entre los servidores y no la red, así que si estás experimentando problemas con un servidor prueba con otro en la misma red.
+</p>
+<h4><span class="mw-headline" id="Preconfiguraciones_necesarias">Preconfiguraciones necesarias</span></h4>
+<p>Irssi soporta el uso de un hostname virtual siempre y cuando se hayan establecido las configuraciones requeridas. Esto incluye que su host soporte <a href="https://en.wikipedia.org/wiki/es:B%C3%BAsqueda_DNS_inversa" class="extiw" title="wikipedia:es:Búsqueda DNS inversa">Búsqueda DNS inversa (rDNS)</a> usando <a href="https://en.wikipedia.org/wiki/es:Anexo:Tipos_de_registros_DNS" class="extiw" title="wikipedia:es:Anexo:Tipos de registros DNS">Registro de puntero (PTR)</a>. Además, debe añadir la línea apropiada a su archivo <code>/etc/hosts</code>. 
+</p>
+<p>Para ver si esto funciona, pruebe con la utilidad de búsqueda de DNS del host incluida en <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bind">bind</a></span> de la siguiente forma (donde <i>ip</i> es una dirección IPv4 normal):
+</p>
+<pre>host <i>ip</i>
+</pre>
+<p>Si esta orden devuelve algo similar a la siguiente linea entonces su rDNS está trabajando.
+</p>
+<pre><i>ip</i>.in-addr.arpa nombre de dominio puntero ejemplo.com
+</pre>
+<h4><span class="mw-headline" id="Habilitar_el_vhost">Habilitar el vhost</span></h4>
+<p>Hay un par de maneras de conectarse a un servidor con un hostname determinado. Una de ellas es utilizar el comando <code>server</code> con un argumento <code>-host</code> como el siguiente:
+</p>
+<pre>/SERVER -host ejemplo.com irc.freenode.org
+</pre>
+<p>Otra forma sería establecer el hostname (vhost) con la orden <code>set</code> que guardará tu hostname en <code>~/.irssi/config</code>:
+</p>
+<pre>/SET hostname ejemplo.com
+/SAVE
+/SERVER irc.freenode.org
+</pre>
+<h2>
+<span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
+</h2>
 <ul>
 <li>
-<a rel="nofollow" class="external text" href="https://linuxtidbits.wordpress.com/2008/01/09/setting-up-irssi/">Puesta en marcha de irssi</a> (en inglés)</li>
+<a rel="nofollow" class="external text" href="https://irssi.org/">Sitio oficial de Irssi</a> (en inglés)</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.irssi.org/">Sitio oficial de irssi</a> (en inglés)</li>
+<a rel="nofollow" class="external text" href="https://scripts.irssi.org/">Repositorio oficial de scripts de Irssi</a> (en inglés)</li>
 <li>
-<a rel="nofollow" class="external text" href="http://scripts.irssi.org/">Guións de Irssi</a> (en inglés)</li>
+<a rel="nofollow" class="external text" href="https://linuxtidbits.wordpress.com/2008/01/09/setting-up-irssi/">Configurando Irssi</a> (en inglés)</li>
+<li>
+<a rel="nofollow" class="external text" href="https://quadpoint.org/articles/irssi/">Guía para usar eficientemente Irssi y Screen</a> (en inglés) por Matt Sparks</li>
+<li>
+<a rel="nofollow" class="external text" href="http://jasonwryan.com/blog/2011/11/07/irc-dzen/">Notificaciones de IRC con dzen2</a> (en inglés) por Jason Ryan</li>
+<li>
+<a rel="nofollow" class="external text" href="https://pthree.org/2010/02/02/irssis-channel-network-server-and-connect-what-it-means/">¿Qué significan /channel, /network, /server y /connect en Irssi?</a> (en inglés) por Aaron Toponce</li>
+<li>
+<a rel="nofollow" class="external text" href="https://web.archive.org/web/20160227121906/http://awesome.naquadah.org/wiki/Irssi_tips">Consejos para Irssi</a> (en inglés) (Wayback Machine)</li>
+<li>
+<a rel="nofollow" class="external text" href="https://gist.github.com/drye/5520101">Unidad de systemd para irssi</a> (en inglés) (Gist en Github)</li>
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
 <li><a href="../es/Category:Internet_Relay_Chat.html" title="Category:Internet Relay Chat (Español)">Internet Relay Chat (Español)</a></li>
 <li><a href="../es/Category:Console_applications.html" title="Category:Console applications (Español)">Console applications (Español)</a></li>
 </ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../es/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (Español)">Pages or sections flagged with Template:Translateme (Español)</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Irssi_(Espa%C3%B1ol)&amp;oldid=631210">https://wiki.archlinux.org/index.php?title=Irssi_(Español)&amp;oldid=631210</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 11 August 2020, at 20:17.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Irssi_(Espa%C3%B1ol)&amp;oldid=651684">https://wiki.archlinux.org/index.php?title=Irssi_(Español)&amp;oldid=651684</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 February 2021, at 10:10.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

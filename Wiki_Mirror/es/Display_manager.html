@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,15 +33,15 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Display_manager.html" title="Display manager">Display manager</a> fue revisada el <b>2021-02-04</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Display_manager&amp;diff=0&amp;oldid=649685">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artículos relacionados</p>
 <ul>
-<li><a href="../es/Desktop_environment.html" class="mw-redirect" title="Desktop Environment (Español)">Desktop Environment (Español)</a></li>
-<li><a href="../es/Window_manager.html" class="mw-redirect" title="Window Manager (Español)">Window Manager (Español)</a></li>
-<li><a href="../es/Xinit.html#Inicio_autom%C3%A1tico_de_X_al_inicio_de_sesi%C3%B3n" class="mw-redirect" title="Start X at Login (Español)">Start X at Login (Español)</a></li>
+<li><a href="../es/Xinit.html#Inicio_autom%C3%A1tico_de_X_al_inicio_de_sesi%C3%B3n" title="Xinit (Español)">Iniciar X al iniciar sesión</a></li>
 </ul>
 </div>
-<p>El <a href="https://en.wikipedia.org/wiki/es:X_Display_Manager" class="extiw" title="wikipedia:es:X Display Manager">gestor de pantalla</a> (siglas en inglés DM) también conocido como gestor de inicio de sesión, es una interfaz gráfica que se muestra al final del proceso de arranque, en lugar de la shell por defecto. Hay varios tipos de gestores de pantalla, al igual que existen diferentes tipos de <a href="../es/Window_manager.html" title="Window manager (Español)">gestores de ventanas</a> y de <a href="../es/Desktop_environment.html" title="Desktop environment (Español)">entornos de escritorios</a>. Estos gestores suelen proporcionar un cierto grado de personalización y disponibilidad de temas con cada uno.
+<p>Un <a href="https://en.wikipedia.org/wiki/X_display_manager_(program_type)" class="extiw" title="wikipedia:X display manager (program type)">gestor de pantalla</a>, o gestor de inicio de sesión, es típicamente una interfaz gráfica de usuario que se muestra al final del proceso de arranque en lugar del shell por defecto. Hay varias implementaciones de gestores de pantalla, al igual que hay varios tipos de <a href="../es/Window_manager.html" title="Window manager (Español)">gestores de ventanas</a> y <a href="../es/Desktop_environment.html" title="Desktop environment (Español)">entornos de escritorio</a>. Normalmente hay una cierta cantidad de personalización y tematización disponible para cada uno.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -51,173 +52,195 @@
 <li class="toclevel-1 tocsection-1">
 <a href="#Lista_de_gestores_de_pantalla"><span class="tocnumber">1</span> <span class="toctext">Lista de gestores de pantalla</span></a>
 <ul>
-<li class="toclevel-2 tocsection-2"><a href="#De_consola"><span class="tocnumber">1.1</span> <span class="toctext">De consola</span></a></li>
-<li class="toclevel-2 tocsection-3"><a href="#Gr%C3%A1ficos"><span class="tocnumber">1.2</span> <span class="toctext">Gráficos</span></a></li>
+<li class="toclevel-2 tocsection-2"><a href="#Gestores_de_consola"><span class="tocnumber">1.1</span> <span class="toctext">Gestores de consola</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Gestores_gr%C3%A1ficos"><span class="tocnumber">1.2</span> <span class="toctext">Gestores gráficos</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Daemons_de_inicio_de_sesi%C3%B3n"><span class="tocnumber">1.3</span> <span class="toctext">Daemons de inicio de sesión</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-4">
-<a href="#Cargar_el_gestor_de_inicio_de_sesi%C3%B3n"><span class="tocnumber">2</span> <span class="toctext">Cargar el gestor de inicio de sesión</span></a>
+<li class="toclevel-1 tocsection-5">
+<a href="#Cargar_el_gestor_de_pantalla"><span class="tocnumber">2</span> <span class="toctext">Cargar el gestor de pantalla</span></a>
 <ul>
-<li class="toclevel-2 tocsection-5"><a href="#Utilizar_systemd-logind"><span class="tocnumber">2.1</span> <span class="toctext">Utilizar systemd-logind</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Usar_systemd-logind"><span class="tocnumber">2.1</span> <span class="toctext">Usar systemd-logind</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-6">
-<a href="#Consejos_y_trucos"><span class="tocnumber">3</span> <span class="toctext">Consejos y trucos</span></a>
+<li class="toclevel-1 tocsection-7">
+<a href="#Configuraci%C3%B3n_de_la_sesi%C3%B3n"><span class="tocnumber">3</span> <span class="toctext">Configuración de la sesión</span></a>
 <ul>
-<li class="toclevel-2 tocsection-7"><a href="#Lista_de_sesi%C3%B3n"><span class="tocnumber">3.1</span> <span class="toctext">Lista de sesión</span></a></li>
-<li class="toclevel-2 tocsection-8"><a href="#Iniciar_autom%C3%A1ticamente"><span class="tocnumber">3.2</span> <span class="toctext">Iniciar automáticamente</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Ejecutar_~/.xinitrc_como_una_sesi%C3%B3n"><span class="tocnumber">3.1</span> <span class="toctext">Ejecutar ~/.xinitrc como una sesión</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Iniciar_aplicaciones_sin_un_gestor_de_ventanas"><span class="tocnumber">3.2</span> <span class="toctext">Iniciar aplicaciones sin un gestor de ventanas</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-9">
-<a href="#Problemas_conocidos"><span class="tocnumber">4</span> <span class="toctext">Problemas conocidos</span></a>
+<li class="toclevel-1 tocsection-10">
+<a href="#Consejos_y_trucos"><span class="tocnumber">4</span> <span class="toctext">Consejos y trucos</span></a>
 <ul>
-<li class="toclevel-2 tocsection-10"><a href="#Incompatibilidad_con_systemd"><span class="tocnumber">4.1</span> <span class="toctext">Incompatibilidad con systemd</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Inicio_autom%C3%A1tico"><span class="tocnumber">4.1</span> <span class="toctext">Inicio automático</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Establecer_el_idioma_para_la_sesi%C3%B3n_de_usuario"><span class="tocnumber">4.2</span> <span class="toctext">Establecer el idioma para la sesión de usuario</span></a></li>
 </ul>
 </li>
 </ul>
 </div>
 
 <h2><span class="mw-headline" id="Lista_de_gestores_de_pantalla">Lista de gestores de pantalla</span></h2>
-<h3><span class="mw-headline" id="De_consola">De consola</span></h3>
+<h3><span class="mw-headline" id="Gestores_de_consola">Gestores de consola</span></h3>
 <ul><li>
-<b><a href="../en/CDM.html" title="CDM">CDM</a> (Console Display Manager) </b> —  Gestor de pantallas ultraminimalista, pero con todas las funciones de un administrador de inicio de sesión, escrito en bash</li></ul>
+<b><a href="../en/CDM.html" title="CDM">CDM</a></b> — Gestor de inicio de sesión ultra-minimalista, pero con un montón de funciones, escrito en Bash.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="https://github.com/ghost1227/cdm">https://github.com/ghost1227/cdm</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cdm-git/">cdm-git</a></span><sup><small>AUR</small></sup>
+<a rel="nofollow" class="external free" href="https://github.com/evertiro/cdm">https://github.com/evertiro/cdm</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cdm/">cdm</a></span><sup><small>AUR</small></sup>
+</dd></dl>
+<ul><li>
+<b><a href="../en/Console_TDM.html" title="Console TDM">Console TDM</a></b> — Extensión para <i>xinit</i> escrito en puro Bash.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://github.com/dopsi/console-tdm">https://github.com/dopsi/console-tdm</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/console-tdm/">console-tdm</a></span><sup><small>AUR</small></sup>
+</dd></dl>
+<ul><li>
+<b><a href="../en/Nodm.html" title="Nodm">nodm</a></b> — Gestor de pantalla minimalista para inicios de sesión automáticos, sin mantenimiento desde 2017.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://github.com/spanezz/nodm">https://github.com/spanezz/nodm</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nodm">nodm</a></span>
+</dd></dl>
+<ul><li>
+<b>Ly</b> — Gestor de pantalla TUI ligero (tipo ncurses) para Linux y BSD.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://github.com/nullgemm/ly">https://github.com/nullgemm/ly</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ly/">ly</a></span><sup><small>AUR</small></sup>
+</dd></dl>
+<ul><li>
+<b>tbsm</b> — Un lanzador de aplicaciones o de puras sesiones bash. Soporta X y Wayland.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://loh-tar.github.io/tbsm/">https://loh-tar.github.io/tbsm/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tbsm/">tbsm</a></span><sup><small>AUR</small></sup>
+</dd></dl>
+<ul><li>
+<b>emptty</b> — Un sencillo gestor de pantallas CLI en TTY con soporte para X y Wayland.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://github.com/tvrzna/emptty/">https://github.com/tvrzna/emptty/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/emptty-git/">emptty-git</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <h3>
-<span id="Gr.C3.A1ficos"></span><span class="mw-headline" id="Gráficos">Gráficos</span>
+<span id="Gestores_gr.C3.A1ficos"></span><span class="mw-headline" id="Gestores_gráficos">Gestores gráficos</span>
 </h3>
 <ul><li>
-<b><a href="../en/GDM.html" title="GDM">GDM</a></b> — Gestor de inicio de sesión de <a href="../es/GNOME.html" title="GNOME (Español)">GNOME</a>
-</li></ul>
+<b><a href="../es/Enlightenment.html#Entrance" title="Enlightenment (Español)">Entrance</a></b> — Gestor de pantalla de <a href="../es/Enlightenment.html" title="Enlightenment (Español)">Enlightenment</a>.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="https://projects.gnome.org/gdm/">https://projects.gnome.org/gdm/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gdm">gdm</a></span>
+<a rel="nofollow" class="external free" href="https://github.com/Obsidian-StudiosInc/entrance">https://github.com/Obsidian-StudiosInc/entrance</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/entrance-git/">entrance-git</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
-<b>KDM</b> — Gestor de inicio de sesión de <a href="../en/KDE.html" title="KDE">KDE</a>4</li></ul>
+<b><a href="../es/GDM.html" title="GDM (Español)">GDM</a></b> — Gestor de pantalla de <a href="../es/GNOME.html" title="GNOME (Español)">GNOME</a>.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="https://www.kde.org/">https://www.kde.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/kdebase-workspace/">kdebase-workspace</a></span><sup><small>AUR</small></sup>
+<a rel="nofollow" class="external free" href="https://wiki.gnome.org/Projects/GDM">https://wiki.gnome.org/Projects/GDM</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gdm">gdm</a></span>
 </dd></dl>
 <ul><li>
-<b><a href="../en/LightDM.html" title="LightDM">LightDM</a></b> — Gestor de pantalla multiescritorio, que puede utilizar varios frontends escritos en cualquier conjunto de herramientas</li></ul>
+<b><a href="../es/LightDM.html" title="LightDM (Español)">LightDM</a></b> — Gestor de pantalla multiescritorio, puede usar varios front-ends escritos en cualquier toolkit.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="https://www.freedesktop.org/wiki/Software/LightDM">https://www.freedesktop.org/wiki/Software/LightDM</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lightdm">lightdm</a></span>
+<a rel="nofollow" class="external free" href="https://github.com/CanonicalLtd/lightdm/">https://github.com/CanonicalLtd/lightdm/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lightdm">lightdm</a></span>
 </dd></dl>
 <ul><li>
-<b><a href="../en/LXDM.html" title="LXDM">LXDM</a></b> — Gestor de inicio de sesión de <a href="../en/LXDE.html" title="LXDE">LXDE</a>. Puede usarse independientemente del entorno de escritorio LXDE.</li></ul>
+<b><a href="../en/LXDM.html" title="LXDM">LXDM</a></b> — Gestor de pantalla de <a href="../es/LXDE.html" title="LXDE (Español)">LXDE</a>. Puede utilizarse independientemente del entorno de escritorio LXDE.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://sourceforge.net/projects/lxdm/">https://sourceforge.net/projects/lxdm/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxdm">lxdm</a></span>
 </dd></dl>
 <ul><li>
-<b>MDM</b> — Gestor de inicio de sesión de MDM, fork de GDM 2</li></ul>
-<dl><dd>
-<a rel="nofollow" class="external free" href="https://github.com/linuxmint/mdm">https://github.com/linuxmint/mdm</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mdm-display-manager/">mdm-display-manager</a></span><sup><small>AUR</small></sup>
-</dd></dl>
-<ul><li>
-<b><a href="../en/Display_manager.html" class="mw-redirect" title="Qingy">Qingy</a></b> — Acceso gráfico para el inicio de sesión independiente para X Windows, altamente configurable y muy ligero (utiliza DirectFB)</li></ul>
-<dl><dd>
-<a rel="nofollow" class="external free" href="http://qingy.sourceforge.net/">http://qingy.sourceforge.net/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/qingy/">qingy</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">enlace roto</a>: package not found]</sup>
-</dd></dl>
-<ul><li>
-<b>SDDM</b> — Gestor de pantalla basado en QML</li></ul>
+<b><a href="../en/SDDM.html" title="SDDM">SDDM</a></b> — Gestor de pantalla basado en QML y sucesor de KDM; recomendado para <a href="../es/KDE.html#Plasma" title="KDE (Español)">Plasma</a> y <a href="../en/LXQt.html" title="LXQt">LXQt</a>.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://github.com/sddm/sddm">https://github.com/sddm/sddm</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sddm">sddm</a></span>
 </dd></dl>
 <ul><li>
-<b><a href="../en/SLiM.html" title="SLiM">SLiM</a> (Simple Login Manager)</b> — Solución de acceso gráfico para el inicio de sesión elegante y ligero</li></ul>
+<b><a href="../en/XDM.html" title="XDM">XDM</a></b> — Gestor de pantalla X con soporte para XDMCP, selector de host.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://slim.berlios.de/">http://slim.berlios.de/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=slim">slim</a></span>
+<span class="plainlinks archwiki-template-man" title="$ man 8 xdm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xdm.8">xdm(8)</a></span> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xdm">xorg-xdm</a></span>
 </dd></dl>
+<h3>
+<span id="Daemons_de_inicio_de_sesi.C3.B3n"></span><span class="mw-headline" id="Daemons_de_inicio_de_sesión">Daemons de inicio de sesión</span>
+</h3>
 <ul><li>
-<b><a href="../en/XDM.html" title="XDM">XDM</a></b> — X Display Manager con soporte para XDMCP, host chooser.</li></ul>
+<b><a href="../en/Greetd.html" title="Greetd">greetd</a></b> — Daemon de inicio de sesión mínimo, flexible y agnóstico que admite tanto la bienvenida por consola como de manera gráfica.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://www.x.org/archive/X11R7.5/doc/man/man1/xdm.1.html">http://www.x.org/archive/X11R7.5/doc/man/man1/xdm.1.html</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xdm">xorg-xdm</a></span>
+<a rel="nofollow" class="external free" href="https://git.sr.ht/~kennylevinsen/greetd">https://git.sr.ht/~kennylevinsen/greetd</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/greetd-git/">greetd-git</a></span><sup><small>AUR</small></sup>
 </dd></dl>
-<h2>
-<span id="Cargar_el_gestor_de_inicio_de_sesi.C3.B3n"></span><span class="mw-headline" id="Cargar_el_gestor_de_inicio_de_sesión">Cargar el gestor de inicio de sesión</span>
-</h2>
-<p>Para <a href="../es/Systemd.html#Utilizar_las_unidades" title="Systemd (Español)">activar</a> el acceso gráfico, ejecute el demonio del <a class="mw-selflink selflink">gestor de pantallas</a> preferido (por ejemplo, <a href="../en/SDDM.html" title="SDDM">SDDM</a>).
+<h2><span class="mw-headline" id="Cargar_el_gestor_de_pantalla">Cargar el gestor de pantalla</span></h2>
+<p>Para habilitar el inicio de sesión gráfico, <a href="../es/Systemd.html#Utilizar_las_unidades" title="Systemd (Español)">habilite</a> el servicio systemd apropiado. Por ejemplo, para <a href="../en/SDDM.html" title="SDDM">SDDM</a>, active <code>sddm.service</code>.
 </p>
-<pre># systemctl enable sddm
+<p>Esto debería funcionar sin necesidad de configuración. Si no es así, puede que tenga que restablecer un enlace simbólico personalizado <code>default.target</code> para que apunte al <code>graphical.target</code> por defecto. Véase <a href="../es/Systemd.html#Cambiar_el_target_predeterminado_para_arrancar" title="Systemd (Español)">Systemd (Español)#Cambiar el target predeterminado para arrancar</a>.
+</p>
+<p>Después de habilitar <a href="../en/SDDM.html" title="SDDM">SDDM</a>, debe establecerse un enlace simbólico <code>display-manager.service</code> en <code>/etc/systemd/system/</code>. Es posible que tenga que utilizar <code>--force</code> para anular los enlaces simbólicos antiguos.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ file /etc/systemd/system/display-manager.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/etc/systemd/system/display-manager.service: symbolic link to /usr/lib/systemd/system/sddm.service
 </pre>
-<p>Esto debería funcionar sin configuración adicional. En su defecto,  quizás tenga un <i>default.target</i> establecido manualmente o procedente de una instalación antigua
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ls -l /etc/systemd/system/default.target</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/etc/systemd/system/default.target -&gt; /usr/lib/systemd/system/graphical.target</pre>
-<p>Bastaría con eliminar el enlace simbólico y <i>systemd</i> utilizará su <i>default.target</i> existente (es decir, <i>graphical.target</i>).
-</p>
-<pre># rm /etc/systemd/system/default.target
-</pre>
-<p>Después de activar sddm debe mostrarse un enláce simbólico de «display-manager.service» establecido en /etc/systemd/system/
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ls -l /etc/systemd/system/display-manager.service</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/etc/systemd/system/display-manager.service -&gt; /usr/lib/systemd/system/sddm.service</pre>
-<h3><span class="mw-headline" id="Utilizar_systemd-logind">Utilizar systemd-logind</span></h3>
-<p>Con el fin de comprobar el estado de la sesión del usuario, puede utilizar <code>loginctl</code>. Todas las acciones <a href="../en/Polkit.html" title="Polkit">polkit</a>, como suspender el sistema o montar unidades externas, funcionarán sin configuración adicional.
+<h3><span class="mw-headline" id="Usar_systemd-logind">Usar systemd-logind</span></h3>
+<p>Para comprobar el estado de su sesión de usuario, puede usar <i>loginctl</i>. Todas las acciones de <a href="../en/Polkit.html" title="Polkit">polkit</a> como suspender el sistema o montar discos externos funcionarán sin necesidad de configuración.
 </p>
 <pre>$ loginctl show-session $XDG_SESSION_ID
 </pre>
-<h2><span class="mw-headline" id="Consejos_y_trucos">Consejos y trucos</span></h2>
-<h3>
-<span id="Lista_de_sesi.C3.B3n"></span><span class="mw-headline" id="Lista_de_sesión">Lista de sesión</span>
-</h3>
-<p>Muchos gestores de pantalla leen las sesiones disponibles en el directorio <code>/usr/share/xsessions/</code>. Este contiene <a rel="nofollow" class="external text" href="https://specifications.freedesktop.org/desktop-entry-spec/latest/">archivos de entrada de escritorio</a> estándar para cada gestor de pantalla/gestor de ventanas.
+<h2>
+<span id="Configuraci.C3.B3n_de_la_sesi.C3.B3n"></span><span class="mw-headline" id="Configuración_de_la_sesión">Configuración de la sesión</span>
+</h2>
+<p>Muchos gestores de pantalla leen las sesiones disponibles del directorio <code>/usr/share/xsessions/</code>. Contiene <a rel="nofollow" class="external text" href="https://specifications.freedesktop.org/desktop-entry-spec/latest/">archivos de entrada de escritorio</a> estándares para cada uno de los entornos de escritorio o gestores de ventanas. Algunos gestores de pantalla utilizan un directorio separado <code>/usr/share/wayland-sessions/</code> para listar las sesiones específicas de <a href="../es/Wayland.html" title="Wayland (Español)">Wayland</a>.
 </p>
-<p>Para añadir/eliminar entradas en la lista de sesión del gestor de pantalla, cree/quite los archivos .desktop de <code>/usr/share/xsessions/</code> según desee. Un archivo .desktop típico se vería así:
+<p>Para añadir/eliminar entradas a la lista de sesiones de su gestor de pantalla; cree/elimine los archivos <i>.desktop</i> en <code>/usr/share/xsessions/</code> como desee. Un archivo <i>.desktop</i> típico tendrá un aspecto similar a:
 </p>
 <pre>[Desktop Entry]
-Encoding=UTF-8
 Name=Openbox
 Comment=Log in using the Openbox window manager (without a session manager)
 Exec=/usr/bin/openbox-session
 TryExec=/usr/bin/openbox-session
 Icon=openbox.png
-Type=XSession
+Type=Application
 </pre>
 <h3>
-<span id="Iniciar_autom.C3.A1ticamente"></span><span class="mw-headline" id="Iniciar_automáticamente">Iniciar automáticamente</span>
+<span id="Ejecutar_.7E.2F.xinitrc_como_una_sesi.C3.B3n"></span><span class="mw-headline" id="Ejecutar_~/.xinitrc_como_una_sesión">Ejecutar ~/.xinitrc como una sesión</span>
 </h3>
-<p>La mayor parte de las fuentes de los gestores de pantallas son <code>/etc/xprofile</code>, <code>~/.xprofile</code> y <code>/etc/X11/xinit/xinitrc.d/</code>. Para más información, consulte <a href="../es/Xprofile.html" title="Xprofile (Español)">xprofile</a>.
+<p>La instalación de <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xinit-xsession/">xinit-xsession</a></span><sup><small>AUR</small></sup> proporciona una opción para ejecutar su <a href="../es/Xinit.html#xinitrc" title="Xinit (Español)">xinitrc</a> como una sesión. Simplemente establezca <code>xinitrc</code> como sesión en la configuración de su gestor de pantalla y asegúrese de que el archivo <code>~/.xinitrc</code> es ejecutable.
 </p>
-<h2><span class="mw-headline" id="Problemas_conocidos">Problemas conocidos</span></h2>
-<h3><span class="mw-headline" id="Incompatibilidad_con_systemd">Incompatibilidad con systemd</span></h3>
-<p><i>Gestores de inicio de sesión afectados: MDM, SDDM, <a href="../en/SLiM.html" title="SLiM">SLiM</a></i>
+<h3><span class="mw-headline" id="Iniciar_aplicaciones_sin_un_gestor_de_ventanas">Iniciar aplicaciones sin un gestor de ventanas</span></h3>
+<p>También es posible lanzar una aplicación sin ninguna decoración, escritorio o gestor de ventanas. Por ejemplo, para lanzar <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/google-chrome/">google-chrome</a></span><sup><small>AUR</small></sup> cree un archivo <code>web-browser.desktop</code> en <code>/usr/share/xsessions/</code> tal que así:
 </p>
-<p>Algunos gestores de pantallas no son totalmente compatibles con systemd, porque utilizan los procesos de sesión de PAM. Esto provoca diversos problemas, en el segundo inicio de sesión, por ejemplo:
+<pre>[Desktop Entry]
+Name=Web Browser
+Comment=Use a web browser as your session
+Exec=/usr/bin/google-chrome --auto-launch-at-startup
+TryExec=/usr/bin/google-chrome --auto-launch-at-startup
+Icon=google-chrome
+Type=Application
+</pre>
+<p>En este caso, una vez que inicie sesión, la aplicación establecida con <code>Exec</code> será lanzada inmediatamente. Cuando cierre la aplicación, volverá al gestor de inicio de sesión (igual que al cerrar la sesión de un entorno de escritorio o gestor de ventanas normal).
 </p>
-<ul>
-<li>El applet de NetworkManager no funciona.</li>
-<li>El volumen de PulseAudio no se puede ajustar.</li>
-<li>Falla el acceso a GNOME con otro usuario.</li>
-</ul>
-<p>Véanse los siguientes informes bugtacker para más detalles:
+<p>Es importante recordar que la mayoría de las aplicaciones gráficas no están pensadas para ser lanzadas de esta manera y puede que tenga que hacer ajustes manuales o sufrir limitaciones (no hay un gestor de ventanas, así que no espere poder mover o redimensionar <i>ninguna</i> ventana, incluyendo los diálogos; sin embargo, puede ser capaz de establecer la geometría de la ventana en los archivos de configuración de la aplicación).
 </p>
-<ul>
-<li>MDM: <a rel="nofollow" class="external autonumber" href="https://github.com/linuxmint/mdm/issues/32">[1]</a>
-</li>
-<li>SDDM: <a rel="nofollow" class="external autonumber" href="https://github.com/sddm/sddm/pull/95">[2]</a> (fixed in git master)</li>
-<li>SLiM: <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/34329">FS#34329</a> <a rel="nofollow" class="external autonumber" href="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=19102&amp;group_id=2663">[3]</a>
-</li>
-</ul>
+<p>Véase también <a href="../es/Xinit.html#Iniciar_aplicaciones_sin_un_gestor_de_ventanas" title="Xinit (Español)">Xinit (Español)#Iniciar aplicaciones sin un gestor de ventanas</a>.
+</p>
+<h2><span class="mw-headline" id="Consejos_y_trucos">Consejos y trucos</span></h2>
+<h3>
+<span id="Inicio_autom.C3.A1tico"></span><span class="mw-headline" id="Inicio_automático">Inicio automático</span>
+</h3>
+<p>La mayoría de los gestores de pantalla tienen como fuente <code>/etc/xprofile</code>, <code>~/.xprofile</code> y <code>/etc/X11/xinit/xinitrc.d/</code>. Para más detalles, véase <a href="../es/Xprofile.html" title="Xprofile (Español)">xprofile</a>.
+</p>
+<h3>
+<span id="Establecer_el_idioma_para_la_sesi.C3.B3n_de_usuario"></span><span class="mw-headline" id="Establecer_el_idioma_para_la_sesión_de_usuario">Establecer el idioma para la sesión de usuario</span>
+</h3>
+<p>
+Para los gestores de pantalla que utilizan <a rel="nofollow" class="external text" href="https://freedesktop.org/wiki/Software/AccountsService/">AccountsService</a>, el <a href="../es/Locale.html" title="Locale (Español)">locale</a> para la sesión de usuario puede establecerse editando:</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/var/lib/AccountsService/users/$USER</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[User]
+Language=<i>your_locale</i></pre>
+<p>donde <i>your_locale</i> es un valor como, por ejemplo, <code>en_GB.UTF-8</code>.
+</p>
+<p>De manera alternativa, puede conseguirlo usando <a href="../es/D-Bus.html" title="D-Bus (Español)">D-Bus</a>:
+<code>busctl call org.freedesktop.Accounts /org/freedesktop/Accounts/User$UID org.freedesktop.Accounts.User SetLanguage s <i>your_locale</i></code>
+</p>
+<p>Cierre sesión y vuelva a entrar para que los cambios surtan efecto.
+</p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
 <li><a href="../es/Category:Graphical_user_interfaces.html" title="Category:Graphical user interfaces (Español)">Graphical user interfaces (Español)</a></li>
 <li><a href="../es/Category:Lists_of_software.html" title="Category:Lists of software (Español)">Lists of software (Español)</a></li>
 </ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Display_manager_(Espa%C3%B1ol)&amp;oldid=640402">https://wiki.archlinux.org/index.php?title=Display_manager_(Español)&amp;oldid=640402</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 2 November 2020, at 19:25.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Display_manager_(Espa%C3%B1ol)&amp;oldid=651310">https://wiki.archlinux.org/index.php?title=Display_manager_(Español)&amp;oldid=651310</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 February 2021, at 23:00.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

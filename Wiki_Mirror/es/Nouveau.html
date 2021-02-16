@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,15 +33,19 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Nouveau.html" title="Nouveau">Nouveau</a> fue revisada el <b>2021-02-10</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Nouveau&amp;diff=0&amp;oldid=640573">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artículos relacionados</p>
 <ul>
-<li><a href="../es/NVIDIA.html" title="NVIDIA (Español)">NVIDIA (Español)</a></li>
-<li><a href="../es/Xorg.html" title="Xorg (Español)">Xorg (Español)</a></li>
-<li><a href="../es/Bumblebee.html" title="Bumblebee (Español)">Bumblebee (Español)</a></li>
+<li><a href="../es/NVIDIA.html" title="NVIDIA (Español)">NVIDIA</a></li>
+<li><a href="../es/Xorg.html" title="Xorg (Español)">Xorg</a></li>
+<li><a href="../es/Bumblebee.html" title="Bumblebee (Español)">Bumblebee</a></li>
 </ul>
 </div>
-<p>Este artículo describe la instalación y configuración del controlador de código abierto <a rel="nofollow" class="external text" href="https://nouveau.freedesktop.org/">Nouveau</a> para las tarjetas gráficas NVIDIA. Para obtener información sobre el controlador propietario, véase <a href="../es/NVIDIA.html" title="NVIDIA (Español)">NVIDIA</a>.
+<p>Este artículo trata sobre el controlador de código abierto <a rel="nofollow" class="external text" href="https://nouveau.freedesktop.org/">Nouveau</a> para tarjetas gráficas NVIDIA. Para obtener información sobre el controlador propietario, consulte <a href="../es/NVIDIA.html" title="NVIDIA (Español)">NVIDIA</a>.
+</p>
+<p>Busque el <a rel="nofollow" class="external text" href="https://nouveau.freedesktop.org/wiki/CodeNames">nombre en código</a> de su tarjeta (se puede encontrar una lista más detallada en <a href="https://en.wikipedia.org/wiki/Comparison_of_Nvidia_Graphics_Processing_Units" class="extiw" title="wikipedia:Comparison of Nvidia Graphics Processing Units">Wikipedia</a>), y compárelo con la <a rel="nofollow" class="external text" href="https://nouveau.freedesktop.org/wiki/FeatureMatrix/">matriz de características</a> para ver las características soportadas.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -48,272 +53,281 @@
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#Con_el_controlador_propietario_NVIDIA_instalado"><span class="tocnumber">1</span> <span class="toctext">Con el controlador propietario NVIDIA instalado</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#Instalaci%C3%B3n"><span class="tocnumber">1</span> <span class="toctext">Instalación</span></a></li>
 <li class="toclevel-1 tocsection-2">
-<a href="#Instalaci%C3%B3n"><span class="tocnumber">2</span> <span class="toctext">Instalación</span></a>
+<a href="#Carga"><span class="tocnumber">2</span> <span class="toctext">Carga</span></a>
 <ul>
-<li class="toclevel-2 tocsection-3"><a href="#Activar_Hardware_Acceleration"><span class="tocnumber">2.1</span> <span class="toctext">Activar Hardware Acceleration</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Habilitar_el_inicio_anticipado_KMS"><span class="tocnumber">2.1</span> <span class="toctext">Habilitar el inicio anticipado KMS</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-4">
-<a href="#Cargar_el_m%C3%B3dulo"><span class="tocnumber">3</span> <span class="toctext">Cargar el módulo</span></a>
+<a href="#Consejos_y_trucos"><span class="tocnumber">3</span> <span class="toctext">Consejos y trucos</span></a>
 <ul>
-<li class="toclevel-2 tocsection-5">
-<a href="#KMS"><span class="tocnumber">3.1</span> <span class="toctext">KMS</span></a>
+<li class="toclevel-2 tocsection-5"><a href="#Mantener_el_controlador_NVIDIA_instalado"><span class="tocnumber">3.1</span> <span class="toctext">Mantener el controlador NVIDIA instalado</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Instalar_los_%C3%BAltimos_paquetes_de_desarrollo"><span class="tocnumber">3.2</span> <span class="toctext">Instalar los últimos paquetes de desarrollo</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Dual_head"><span class="tocnumber">3.3</span> <span class="toctext">Dual head</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Configurar_la_resoluci%C3%B3n_de_la_consola"><span class="tocnumber">3.4</span> <span class="toctext">Configurar la resolución de la consola</span></a></li>
+<li class="toclevel-2 tocsection-9">
+<a href="#Gesti%C3%B3n_de_energ%C3%ADa"><span class="tocnumber">3.5</span> <span class="toctext">Gestión de energía</span></a>
 <ul>
-<li class="toclevel-3 tocsection-6"><a href="#Inicio_tard%C3%ADo"><span class="tocnumber">3.1.1</span> <span class="toctext">Inicio tardío</span></a></li>
-<li class="toclevel-3 tocsection-7"><a href="#Inicio_temprano"><span class="tocnumber">3.1.2</span> <span class="toctext">Inicio temprano</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#Control_del_ventilador"><span class="tocnumber">3.5.1</span> <span class="toctext">Control del ventilador</span></a></li>
 </ul>
 </li>
+<li class="toclevel-2 tocsection-11"><a href="#Optimus"><span class="tocnumber">3.6</span> <span class="toctext">Optimus</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Sincronizaci%C3%B3n_vertical"><span class="tocnumber">3.7</span> <span class="toctext">Sincronización vertical</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-8">
-<a href="#Consejos_y_trucos"><span class="tocnumber">4</span> <span class="toctext">Consejos y trucos</span></a>
+<li class="toclevel-1 tocsection-13">
+<a href="#Soluci%C3%B3n_de_problemas"><span class="tocnumber">4</span> <span class="toctext">Solución de problemas</span></a>
 <ul>
-<li class="toclevel-2 tocsection-9"><a href="#Mantener_el_controlador_NVIDIA_instalado"><span class="tocnumber">4.1</span> <span class="toctext">Mantener el controlador NVIDIA instalado</span></a></li>
-<li class="toclevel-2 tocsection-10"><a href="#Instalar_los_paquetes_m%C3%A1s_recientes_de_desarrollo"><span class="tocnumber">4.2</span> <span class="toctext">Instalar los paquetes más recientes de desarrollo</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#Problemas_de_lagrimeo_con_la_composici%C3%B3n"><span class="tocnumber">4.3</span> <span class="toctext">Problemas de lagrimeo con la composición</span></a></li>
-<li class="toclevel-2 tocsection-12"><a href="#Dual_Head"><span class="tocnumber">4.4</span> <span class="toctext">Dual Head</span></a></li>
-<li class="toclevel-2 tocsection-13"><a href="#Configuraci%C3%B3n_de_la_resoluci%C3%B3n_de_la_consola"><span class="tocnumber">4.5</span> <span class="toctext">Configuración de la resolución de la consola</span></a></li>
-<li class="toclevel-2 tocsection-14"><a href="#Administraci%C3%B3n_de_energ%C3%ADa"><span class="tocnumber">4.6</span> <span class="toctext">Administración de energía</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#Activar_MSI_(Message_Signaled_Interrupts)"><span class="tocnumber">4.7</span> <span class="toctext">Activar MSI (Message Signaled Interrupts)</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#Optimus"><span class="tocnumber">4.8</span> <span class="toctext">Optimus</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Desactivar_MSI"><span class="tocnumber">4.1</span> <span class="toctext">Desactivar MSI</span></a></li>
+<li class="toclevel-2 tocsection-15">
+<a href="#Problema_de_salidas_fantasma"><span class="tocnumber">4.2</span> <span class="toctext">Problema de salidas fantasma</span></a>
+<ul>
+<li class="toclevel-3 tocsection-16"><a href="#Par%C3%A1metros_del_kernel"><span class="tocnumber">4.2.1</span> <span class="toctext">Parámetros del kernel</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#Configuraci%C3%B3n_de_Xorg"><span class="tocnumber">4.2.2</span> <span class="toctext">Configuración de Xorg</span></a></li>
+<li class="toclevel-3 tocsection-18"><a href="#Xrandr"><span class="tocnumber">4.2.3</span> <span class="toctext">Xrandr</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-17">
-<a href="#Soluci%C3%B3n_de_problemas"><span class="tocnumber">5</span> <span class="toctext">Solución de problemas</span></a>
-<ul>
-<li class="toclevel-2 tocsection-18"><a href="#Problema_con_salida_fantasma"><span class="tocnumber">5.1</span> <span class="toctext">Problema con salida fantasma</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Bloqueos_aleatorios_con_mensajes_de_error_del_kernel"><span class="tocnumber">4.3</span> <span class="toctext">Bloqueos aleatorios con mensajes de error del kernel</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Flat_Panel_Table_Invalid"><span class="tocnumber">4.4</span> <span class="toctext">Flat Panel Table Invalid</span></a></li>
 </ul>
 </li>
 </ul>
 </div>
 
-<h2><span class="mw-headline" id="Con_el_controlador_propietario_NVIDIA_instalado">Con el controlador propietario NVIDIA instalado</span></h2>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Esta sección está destinada únicamente para las personas que tienen instalado el controlador <a href="../es/NVIDIA.html" title="NVIDIA (Español)">NVIDIA</a>. No es de utilidad para los demás usuarios.</div>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Sugerencia:</strong> Si desea mantener instalado el controlador de Nvidia junto con Nouveau, ello <a href="#Mantener_el_controlador_NVIDIA_instalado">requierá alguna configuración adicional</a> a fin de poder cargar el controlador Nouveau en lugar de Nvidia.</div>
-<p>Si ya tiene instalado el controlador propietario de Nvidia, proceda primero a retirarlo:
-</p>
-<pre># pacman -Rdds nvidia nvidia-utils nvidia-libgl
-</pre>
-<p>Asegúrese de eliminar también el archivo <code>/etc/X11/xorg.conf</code> que el controlador de Nvidia ha creado (o deshacer los cambios), o, de lo contrario X fallará y no cargará adecuadamente el controlador Nouveau.
-</p>
 <h2>
 <span id="Instalaci.C3.B3n"></span><span class="mw-headline" id="Instalación">Instalación</span>
 </h2>
-<p>Antes de continuar, eche un vistazo a <a rel="nofollow" class="external text" href="http://nouveau.freedesktop.org/wiki/HardwareStatus">HardwareStatus</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-04]</sup> para ver qué características son compatibles con una determinada arquitectura, y a la lista de <a rel="nofollow" class="external text" href="https://nouveau.freedesktop.org/wiki/CodeNames">codenames</a> de la propia tarjeta de vídeo. También puede consultar <a href="https://en.wikipedia.org/wiki/Comparison_of_Nvidia_Graphics_Processing_Units" class="extiw" title="wikipedia:Comparison of Nvidia Graphics Processing Units">Wikipedia</a> para una lista más detallada. Asegúrese igualmente de que tiene instalado <a href="../es/Xorg.html" title="Xorg (Español)">Xorg</a> correctamente.
-</p>
-<p><a href="../es/Help:Reading.html#Instalaci.C3.B3n_de_paquetes" title="Help:Reading (Español)">Instale</a> el controlador DDX con el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-nouveau">xf86-video-nouveau</a></span>, el cual está disponible en los <a href="../es/Official_repositories.html" title="Official repositories (Español)">repositorios oficiales</a>. Dicho paquete aporta <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nouveau-dri">nouveau-dri</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">enlace roto</a>: package not found]</sup> como una dependencia, proporcionando el controlador DRI para una aceleración 3D.
-</p>
-<p>Para utilizar aplicaciones de 32-bit con aceleración 3D en sistemas de x86_64, instale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lib32-nouveau-dri">lib32-nouveau-dri</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">enlace roto</a>: package not found]</sup> disponible en el repositorio <a href="../en/Official_repositories.html#multilib" class="mw-redirect" title="Multilib">multilib</a>.
-</p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Consulte la <a rel="nofollow" class="external text" href="https://nouveau.freedesktop.org/wiki/MesaDrivers">página de Nouveau MesaDrivers</a> antes de informar de errores relativos al uso de los controladores para la aceleración 3D.</div>
-<h3><span class="mw-headline" id="Activar_Hardware_Acceleration">Activar Hardware Acceleration</span></h3>
-<p>Para activar el acceso a la aceleración por hardware, el framebuffer, y los dispositivos de captura de vídeo, el usuario debe ser añadido al grupo <code>video</code>.
-</p>
-<pre># gpasswd -a [user] video
-</pre>
-<h2>
-<span id="Cargar_el_m.C3.B3dulo"></span><span class="mw-headline" id="Cargar_el_módulo">Cargar el módulo</span>
-</h2>
-<p>El módulo del kernel Nouveau debe cargar bien de forma automática en el arranque del sistema.
-</p>
-<p>Si esto no sucede, entonces:
+<p><a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">Instale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mesa">mesa</a></span>, que proporciona el controlador DRI para la aceleración 3D.
 </p>
 <ul>
-<li>Asegúrese de <b>no</b> tener <code>nomodeset</code> o <code>vga=</code> en los <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetros del kernel</a>, de lo contrario el módulo Nouveau no será capaz de arrancar con éxito el kernel mode-setting (KMS) (véase más abajo).</li>
-<li>Asimismo, compruebe que no ha desactivado el módulo de Nouveau mediante el uso del método blacklist en <code>/etc/modprobe.d/</code>.</li>
+<li>Para obtener soporte de las aplicaciones 32 bits, instale también el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lib32-mesa">lib32-mesa</a></span> del repositorio <a href="../es/Official_repositories.html#multilib" title="Official repositories (Español)">multilib</a>.</li>
+<li>Para obtener el controlador DDX (la cual proporciona aceleración 2D en <a href="../es/Xorg.html" title="Xorg (Español)">Xorg</a>), instale el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-nouveau">xf86-video-nouveau</a></span>.</li>
 </ul>
-<h3><span class="mw-headline" id="KMS">KMS</span></h3>
+<p>Véase también <a href="../en/Hardware_video_acceleration.html" title="Hardware video acceleration">Aceleración por hardware</a>.
+</p>
+<h2><span class="mw-headline" id="Carga">Carga</span></h2>
+<p>El módulo del kernel de Nouveau debería cargarse automáticamente al arrancar el sistema. Si no lo hace, entonces:
+</p>
+<ul>
+<li>Asegúrese de que <b>no</b> tiene <code>nomodeset</code> o <code>vga=</code> como <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetro del kernel</a>, ya que Nouveau requiere la configuración del modo kernel.</li>
+<li>Además, compruebe que no tiene Nouveau deshabilitado usando cualquier técnica de lista negra de modprobe dentro de <code>/etc/modprobe.d/</code> o <code>/usr/lib/modprobe.d/</code>.</li>
+<li>Si después de todo lo anterior nouveau sigue sin cargar, compruebe dmesg para saber si hay un error de opcode. Añada <code>nouveau.config=NvBios=PRAMIN</code> a sus <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetros del Kernel</a> para evitar la deshabilitación del módulo.<a rel="nofollow" class="external autonumber" href="https://nouveau.freedesktop.org/wiki/TroubleShooting/#index10h3">[1]</a>
+</li>
+<li>Compruebe si <code>/etc/X11/xorg.conf</code> existe y hace referencia al controlador <code>nvidia</code>. Probablemente sea una buena idea renombrar el archivo.</li>
+</ul>
+<h3><span class="mw-headline" id="Habilitar_el_inicio_anticipado_KMS">Habilitar el inicio anticipado KMS</span></h3>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Sugerencia:</strong> Si tiene problemas con la resolución, compruebe <a href="../es/Kernel_mode_setting.html#Forzar_modos" title="Kernel mode setting (Español)">esta página</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.</div>
-<p><a href="../es/Kernel_mode_setting.html" title="Kernel mode setting (Español)">Kernel Mode Setting</a> (KMS) es requerido por el controlador Nouveau. Durante el arranque del sistema, la resolución es probable que cambie cuando KMS inicializa el controlador de vídeo. Simplemente instalando el controlador Nouveau debe ser suficiente para que el sistema reconozca y se inicialice en modo <i>«Late Start»</i> (inicio tardío) (véase más abajo). Lectura adicional recomendada: <a rel="nofollow" class="external text" href="https://nouveau.freedesktop.org/wiki/KernelModeSetting">KernelModeSetting</a>.
+<strong>Sugerencia:</strong> Si tiene problemas con la resolución, compruebe <a href="../es/Kernel_mode_setting.html#Forzar_modos_y_EDID" title="Kernel mode setting (Español)">Kernel mode setting (Español)#Forzar modos y EDID</a>.</div>
+<p>El <a href="../es/Kernel_mode_setting.html" title="Kernel mode setting (Español)">Kernel Mode Setting</a> (KMS) es requerido por el controlador Nouveau. Por defecto, el KMS se realiza después de cargar los otros módulos del kernel. Verá el texto "Cargando módulos" y el tamaño del texto puede cambiar, posiblemente con un parpadeo indeseado. Véase <a rel="nofollow" class="external text" href="https://nouveau.freedesktop.org/wiki/KernelModeSetting">Nouveau KernelModeSetting</a> para más detalles.
 </p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Algunos usuarios pueden preferir el método de inicio temprano, ya que no causa el cambio molesto de resolución durante el proceso de arranque</div>
-<h4>
-<span id="Inicio_tard.C3.ADo"></span><span class="mw-headline" id="Inicio_tardío">Inicio tardío</span>
-</h4>
-<p>Con esta elección KMS se activa cuando los otros módulos del kernel se carguen. Usted verá el texto <i>«Loading modules»</i> (Cargando los módulos) y el tamaño del texto puede cambiar, posiblemente con un parpadeo no deseado.
+<p>También es posible iniciar el KMS lo antes posible en el proceso de arranque, al cargar <a href="../es/Arch_boot_process.html#initramfs" title="Arch boot process (Español)">initramfs</a>. 
 </p>
-<h4><span class="mw-headline" id="Inicio_temprano">Inicio temprano</span></h4>
-<p>Este método iniciará KMS lo antes posible en el proceso de arranque, cuando <a href="../es/Mkinitcpio.html" title="Mkinitcpio (Español)">initramfs</a> se carga. Aquí se indica cómo hacer esto con los paquetes oficiales:
-</p>
-<p>Añadir <code>nouveau</code> a la matriz <code>MODULES</code> en <code>/etc/mkinitcpio.conf</code>: 
+<p>Para ello, añada <code>nouveau</code> a la matriz <code>MODULES</code> en <code>/etc/mkinitcpio.conf</code> (los nombres de los módulos están separados por espacios): 
 </p>
 <pre>MODULES="... nouveau ..."
 </pre>
-<p>Si está utilizando un archivo EDID personalizado, debe introducirlo en initramfs, así:
+<p>Si usa un archivo EDID personalizado, también debería incluirlo en el initramfs:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">FILES="/lib/firmware/edid/your_edid.bin"</pre>
-<p>Vuelva a generar la imagen ramdisk inicial:
+<p>Vuelva a generar la imagen inicial del ramdisk:
 </p>
-<pre># mkinitcpio -p &lt;kernel preestablecido, por ejemplo linux&gt;
+<pre># mkinitcpio -p &lt;kernel preset; e.g. <i>linux</i>&gt;
 </pre>
-<p>Si experimenta problemas con nouveau y se ve obligado a reconstruir nouveau-drm varias veces para propósitos de prueba, no agregue <code>nouveau</code> a initramfs. Es fácil de obviar para reconstruir el initramfs y hacer alguna prueba más difícil. Solo tiene que utilizar <i>late start</i> (inicio tardío) hasta que esté seguro de que el sistema es estable. Puede haber otros problemas con initramfs si necesita un firmware personalizado (por lo general no se recomienda).
+<p>Si tiene problemas con Nouveau que le conllevan a recompilar nouveau-drm varias veces por razones de testeo, no añada <code>nouveau</code> al initramfs. Es demasiado fácil olvidarse de recompilar initramfs y solo hará más difícil cualquier prueba. Use "Late start" solo cuando esté seguro de que el sistema es estable. Puede haber problemas adicionales con initramfs si necesita un firmware personalizado (generalmente no es aconsejable).
 </p>
 <h2><span class="mw-headline" id="Consejos_y_trucos">Consejos y trucos</span></h2>
 <h3><span class="mw-headline" id="Mantener_el_controlador_NVIDIA_instalado">Mantener el controlador NVIDIA instalado</span></h3>
-<p>Si desea conservar el controlador propietario NVIDIA instalado, pero desea utilizar el controlador Nouveau, comente nouveau en blacklist en <code>etc/modprobe.d/nouveau_blacklist.conf</code> modificándolo de la siguiente manera:
+<p>Si desea mantener el driver propietario de NVIDIA instalado (y no está usando OpenGL), pero quiere usar el controlador Nouveau, comente la lista negra de nouveau en <code>/etc/modprobe.d/nouveau_blacklist.conf</code>, <code>/usr/lib/modprobe.d/nvidia.conf</code>, o <code>/usr/lib/modprobe.d/nvidia-dkms.conf</code> modificándolo de la siguiente manera:
 </p>
-<pre><b>#</b>blacklist nouveau
+<pre>#blacklist nouveau
 </pre>
-<p>Y ordene a Xorg cargar el controlador nouveau en vez del de nvidia, creando el archivo <code>/etc/X11/xorg.conf.d/20-nouveau.conf</code> con el siguiente contenido:
+<p>Y dígale a Xorg que cargue nouveau en vez de nvidia creando el archivo <code>/etc/X11/xorg.conf.d/20-nouveau.conf</code> con el siguiente contenido:
 </p>
 <pre>Section "Device"
     Identifier "Nvidia card"
-    Driver     "nouveau"
+    Driver "nouveau"
 EndSection
 </pre>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Sugerencia:</strong> Puede utilizar <a href="../es/NVIDIA.html#Cambiar_entre_los_controladores_NVIDIA_y_nouveau" title="NVIDIA (Español)">estos scripts</a> si pretende cambiar entre los controladores propietario y libre muy a menudo.</div>
-<p>Si ya ha utilizado el controlador de NVIDIA, y desea probar Nouveau sin reiniciar el sistema, asegúrese de que el módulo 'nvidia' ya no se carga:
+<p>Si ya ha utilizado el controlador de NVIDIA, y desea probar Nouveau sin necesidad de reiniciar, asegúrese de que el módulo 'nvidia' ya no está cargado:
 </p>
 <pre># rmmod nvidia
 </pre>
-<p>A continuación, cargue el módulo 'nouveau':
+<p>Después, cargue el módulo 'nouveau': 
 </p>
 <pre># modprobe nouveau
 </pre>
-<p>Y compruebe que carga bien mirando los mensajes del kernel:
+<p>Y compruebe que se cargó correctamente mirando los mensajes del kernel:
 </p>
 <pre>$ dmesg
 </pre>
 <h3>
-<span id="Instalar_los_paquetes_m.C3.A1s_recientes_de_desarrollo"></span><span class="mw-headline" id="Instalar_los_paquetes_más_recientes_de_desarrollo">Instalar los paquetes más recientes de desarrollo</span>
+<span id="Instalar_los_.C3.BAltimos_paquetes_de_desarrollo"></span><span class="mw-headline" id="Instalar_los_últimos_paquetes_de_desarrollo">Instalar los últimos paquetes de desarrollo</span>
 </h3>
-<p>Se puede probar un controlador en su versión más reciente (-git), a través de AUR:
+<p>Para obtener las últimas mejoras de Nouveau
 </p>
 <ul>
-<li>Puede usar <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mesa-git/">mesa-git</a></span><sup><small>AUR</small></sup>, que permitirá la instalación del último controlador mesa (incluyendo la última versión del controlador DRI).</li>
-<li>También puede usar <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xf86-video-nouveau-git/">xf86-video-nouveau-git</a></span><sup><small>AUR</small></sup>, que permitirá la instalación de la última versión del controlador DDX.</li>
-<li>Del mismo modo, se puede intentar instalar una versión del kernel más reciente, a través de paquetes de AUR como <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-mainline/">linux-mainline</a></span><sup><small>AUR</small></sup> en la que el código Nouveau DRM permitiría un mejor rendimiento.</li>
-<li>Para obtener las últimas mejoras de nouveau, debe utilizar el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-git/">linux-git</a></span><sup><small>AUR</small></sup> de AUR, y editar el PKGBUILD para dirigirlo al repositorio propio del proyecto nouveau, que actualmente se encuentra en: <a rel="nofollow" class="external free" href="git://anongit.freedesktop.org/nouveau/linux-2.6">git://anongit.freedesktop.org/nouveau/linux-2.6</a>.</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-git/">linux-git</a></span><sup><small>AUR</small></sup> Use PKGBUILD para utilizar el árbol de Nouveau en <a rel="nofollow" class="external free" href="https://github.com/skeggsb/linux/">https://github.com/skeggsb/linux/</a>, en vez de hacer un paquete de cero.</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libdrm-git/">libdrm-git</a></span><sup><small>AUR</small></sup>
+</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lib32-libdrm-git/">lib32-libdrm-git</a></span><sup><small>AUR</small></sup>
+</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lib32-mesa-git/">lib32-mesa-git</a></span><sup><small>AUR</small></sup>
+</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mesa-git/">mesa-git</a></span><sup><small>AUR</small></sup>
+</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xf86-video-nouveau-git/">xf86-video-nouveau-git</a></span><sup><small>AUR</small></sup>
+</li>
 </ul>
-<p>La fuente de las versiones más recientes se puede encontrar aquí:  <a rel="nofollow" class="external free" href="https://nouveau.freedesktop.org/wiki/Source">https://nouveau.freedesktop.org/wiki/Source</a>.
+<h3><span class="mw-headline" id="Dual_head">Dual head</span></h3>
+<p>Véase <a href="../en/Multihead.html#RandR" title="Multihead">Multihead#RandR</a> para saber cómo configurar múltiples monitores usando <a href="https://en.wikipedia.org/wiki/RandR" class="extiw" title="wikipedia:RandR">RandR</a>.
 </p>
 <h3>
-<span id="Problemas_de_lagrimeo_con_la_composici.C3.B3n"></span><span class="mw-headline" id="Problemas_de_lagrimeo_con_la_composición">Problemas de lagrimeo con la composición</span>
+<span id="Configurar_la_resoluci.C3.B3n_de_la_consola"></span><span class="mw-headline" id="Configurar_la_resolución_de_la_consola">Configurar la resolución de la consola</span>
 </h3>
-<p>Edita tu <code>/etc/X11/xorg.conf.d/20-nouveau.conf</code>, y en la sección Device añadir:
+<p>Puede pasar la resolución a nouveau con la opción de línea de kernel <code>video=</code> (véase <a href="../es/Kernel_mode_setting.html" title="Kernel mode setting (Español)">KMS</a>).
 </p>
-<pre>Section "Device"
-    Identifier "nvidia card"
-    Driver     "nouveau"
-    Option     "GLXVBlank" "true"
-EndSection</pre>
-<h3><span class="mw-headline" id="Dual_Head">Dual Head</span></h3>
-<p>Nouveau soporta la extensión xrandr para modesetting y múltiples monitores. Consulte la página <a href="../en/Xrandr.html" class="mw-redirect" title="RandR12">RandR12</a> para el tutorial.
+<h3>
+<span id="Gesti.C3.B3n_de_energ.C3.ADa"></span><span class="mw-headline" id="Gestión_de_energía">Gestión de energía</span>
+</h3>
+<p>La falta de una adecuada gestión de energía en el controlador nouveau es una de las principales causas de los problemas de rendimiento, ya que la mayoría de tarjetas permanecerán en su estado de menor energía con velocidades de reloj más bajas durante su uso. El soporte experimental para el reclocking de la GPU está disponible para algunas tarjetas (véase <a rel="nofollow" class="external text" href="https://nouveau.freedesktop.org/wiki/PowerManagement">Nouveau PowerManagement</a>) y desde el kernel 4.5 puede ser controlado a través de una interfaz debugfs localizada en <code>/sys/kernel/debug/dri/*/pstate</code>.
 </p>
-<p>Aquí está una muestra completa <code>/etc/X11/xorg.conf.d/20-nouveau.conf</code> para la ejecución de 2 monitores en modo dual head. Es posible que prefiera utilizar una herramienta gráfica para configurar los monitores como el panel de GNOME Control Center's Display (<code>gnome-control-center display</code>).
+<p>Por ejemplo, para comprobar los estados de energía disponibles y la configuración actual de la primera tarjeta de su sistema, ejecute
 </p>
-<pre># el del derecho
-Section "Monitor"
-          Identifier   "NEC"
-          Option       "PreferredMode" "1280x1024_60.00"
-EndSection
-
-# el del izquierdo
-Section "Monitor"
-          Identifier   "FUS"
-          Option       "PreferredMode" "1280x1024_60.00"
-          Option       "LeftOf"        "NEC"
-EndSection
-
-Section "Device"
-    Identifier "nvidia card"
-    Driver     "nouveau"
-    Option     "Monitor-DVI-I-1" "NEC"
-    Option     "Monitor-DVI-I-2" "FUS"
-EndSection
-
-Section "Screen"
-    Identifier   "screen1"
-    DefaultDepth  24
-      SubSection "Display"
-       Depth      24
-       Virtual    2560 2048
-      EndSubSection
-    Device       "nvidia card"
-EndSection
-
-Section "ServerLayout"
-    Identifier "layout1"
-    Screen     "screen1"
-EndSection
+<pre># cat /sys/kernel/debug/dri/0/pstate
 </pre>
-<h3>
-<span id="Configuraci.C3.B3n_de_la_resoluci.C3.B3n_de_la_consola"></span><span class="mw-headline" id="Configuración_de_la_resolución_de_la_consola">Configuración de la resolución de la consola</span>
-</h3>
-<p>Use la herramienta <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fbset">fbset</a></span>  para ajustar la resolución de la consola.
+<p>También es posible establecer/forzar manualmente un determinado estado de energía escribiendo en dicha interfaz:
 </p>
-<p>También puede pasar la resolución de nouveau con la opción <b>video=</b> a la línea del kernel (vea <a href="../es/Kernel_mode_setting.html" title="Kernel mode setting (Español)">KMS</a>).
+<pre># echo <i>pstate</i> &gt; /sys/kernel/debug/dri/0/pstate
+</pre>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Advertencia:</strong> El soporte para el reclocking es altamente experimental. Establecer manualmente el estado de energía puede colgar su sistema, causar corrupción o sobrecalentar la tarjeta.</div>
+<h4><span class="mw-headline" id="Control_del_ventilador">Control del ventilador</span></h4>
+<p>Si está implementado para su tarjeta, es posible configurar el control de los ventiladores a través de <code>/sys</code>.
 </p>
-<h3>
-<span id="Administraci.C3.B3n_de_energ.C3.ADa"></span><span class="mw-headline" id="Administración_de_energía">Administración de energía</span>
-</h3>
-<p>El escalado de la GPU para la gestión de la energía se encuentra en distintas etapas de desarrollo dependiendo de la GPU. Véase la página <a rel="nofollow" class="external text" href="https://nouveau.freedesktop.org/wiki/PowerManagement">Nouveau PowerManagement</a> para obtener más detalles.
-</p>
-<h3>
-<span id="Activar_MSI_.28Message_Signaled_Interrupts.29"></span><span class="mw-headline" id="Activar_MSI_(Message_Signaled_Interrupts)">Activar MSI (Message Signaled Interrupts)</span>
-</h3>
-<p>Esta opción puede proporcionar una ligera ventaja en términos de rendimiento. Es solo compatible con tarjetas NV50+ y está desactivada por defecto.
+<pre>$ find /sys -name pwm1_enable
+/sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/hwmon/hwmon1/pwm1_enable
+$ readlink /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/driver
+../../../../bus/pci/drivers/nouveau
+</pre>
+<p>Es posible ajustar <code>pwm1_enable</code> a los valores 0, 1 o 2, lo que significa que el control del ventilador sería NINGUNO, MANUAL y AUTO respectivamente. Si elige el control manual del ventilador, puede configurar <code>pwm1</code> manualmente, por ejemplo a 40 para el 40%.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Advertencia:</strong> Este procedimiento puede causar inestabilidad con alguna combinación de la placa base / GPU</div>
-<p>Inserte la siguiente línea en <code>/etc/modprobe.d/nouveau.conf</code>: 
+<strong>Advertencia:</strong> ¡Úselo bajo su propia responsabilidad! ¡No sobrecaliente la tarjeta!</div>
+<p>También puede establecerse mediante una regla udev:
 </p>
-<pre>options nouveau msi=1
+<pre>$ cat /etc/udev/rules.d/50-nouveau-hwmon.rules
+ACTION=="add", SUBSYSTEM=="hwmon", DRIVERS=="nouveau", ATTR{pwm1_enable}="2"
 </pre>
-<p>Si se utiliza el <a href="#Inicio_temprano">inicio temprano</a>, agregue la línea <code>FILES="/etc/modprobe.d/nouveau.conf"</code> al archivo <code>/etc/mkinitcpio.conf</code>, y, a continuación, vuelva a regenerar la imagen del kernel:
+<p>Fuentes:
 </p>
-<pre># mkinitcpio -p &lt;kernel predefinido, por ejemplo linux&gt;
-</pre>
-<p>Reinicie el sistema para hacer efectivos los cambios.
-</p>
+<ul>
+<li><a rel="nofollow" class="external free" href="http://floppym.blogspot.de/2013/07/fan-control-with-nouveau.html">http://floppym.blogspot.de/2013/07/fan-control-with-nouveau.html</a></li>
+<li>
+<a rel="nofollow" class="external free" href="https://kalgan.cc/blog/posts/Controlling_nVidia_cards_fans_with_nouveau_in_Debian/">https://kalgan.cc/blog/posts/Controlling_nVidia_cards_fans_with_nouveau_in_Debian/</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-04-01]</sup>
+</li>
+</ul>
 <h3><span class="mw-headline" id="Optimus">Optimus</span></h3>
-<p>Tiene dos soluciones para utilizar Optimus en un ordenador portátil (también conocidos como gráficos híbridos, cuando tiene dos GPU en su portatil: <a href="../en/Bumblebee.html" title="Bumblebee">bumblebee</a> y <a href="../en/PRIME.html" title="PRIME">PRIME</a>
+<p>Existen dos posibilidades para usar <a href="../en/NVIDIA_Optimus.html" class="mw-redirect" title="Optimus">Optimus</a> en un portátil (también conocido como gráficos híbridos, cuando se tienen dos GPUs en el portátil): <a href="../es/Bumblebee.html" title="Bumblebee (Español)">Bumblebee</a> y <a href="../en/PRIME.html" title="PRIME">PRIME</a>
 </p>
+<h3>
+<span id="Sincronizaci.C3.B3n_vertical"></span><span class="mw-headline" id="Sincronización_vertical">Sincronización vertical</span>
+</h3>
+<p>Los compositores de Xorg son propensos a mostrar problemas con Nouveau. A diferencia de la mayoría de ellos, <a href="../en/Picom.html" title="Picom">Picom</a> ofrece un montón de opciones de configuración para obtener un resultado más suave y libre de tearing. Una configuración que se espera que ofrezca un buen resultado sería la siguiente
+</p>
+<pre>picom -b --unredir-if-possible --backend xr_glx_hybrid --vsync --use-damage --glx-no-stencil
+</pre>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Sugerencia:</strong> No olvide desactivar la composición del gestor de ventanas de su entorno de escritorio (como KWin) cuando se use un compositor diferente.</div>
 <h2>
 <span id="Soluci.C3.B3n_de_problemas"></span><span class="mw-headline" id="Solución_de_problemas">Solución de problemas</span>
 </h2>
-<p>Agregue lo siguiente a la línea de órdenes del kernel (si está utilizando GRUB presione <code>e</code> al mostrase el menú de inicio para poder editarlo) para activar la depuración del vídeo::
+<p>Agregue <code>drm.debug=14</code> y <code>log_buf_len=16M</code> a sus <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetros del kernel</a> para activar la depuración de vídeo:
 </p>
-<pre>drm.debug=14 log_buf_len=16M
+<p>Cree un registro verboso de Xorg:
+</p>
+<pre>$ startx -- -logverbose 9 -verbose 9
 </pre>
-<p>Cree un archivo que registre detalladamente el proceso de Xorg:
+<p>Vea los parámetros y valores del módulo de vídeo cargado:
 </p>
-<pre>startx -- -logverbose 9 -verbose 9
+<pre>$ modinfo -p video
 </pre>
-<p>Visualice los valores y parámetros cargados del módulo de vídeo:
+<h3><span class="mw-headline" id="Desactivar_MSI">Desactivar MSI</span></h3>
+<p>Si sigue teniendo problemas para cargar el módulo o iniciar X server, agregue <code>nouveau.config=NvMSI=0</code> a sus <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetros del Kernel</a>.
 </p>
-<pre>modinfo -p video
-</pre>
-<h4><span class="mw-headline" id="Problema_con_salida_fantasma">Problema con salida fantasma</span></h4>
-<p>Es posible que el controlador nouveau detecte salidas «fantasma». Por ejemplo, cuando tanto VGA-1 como LVDS-1 aparecen como conectados pero solo LVDS-1 está presente.
+<p>Fuente: <a rel="nofollow" class="external free" href="https://bugs.freedesktop.org/show_bug.cgi?id=78441">https://bugs.freedesktop.org/show_bug.cgi?id=78441</a>
 </p>
-<p>Esto provoca problemas de visualización y una pantalla corrupta.
+<h3><span class="mw-headline" id="Problema_de_salidas_fantasma">Problema de salidas fantasma</span></h3>
+<p>Es posible que el controlador nouveau detecte salidas "fantasma". Por ejemplo, que tanto VGA-1 como LVDS-1 se muestren como conectados pero sólo LVDS-1 esté realmente presente.
 </p>
-<p>El problema se puede solucionar mediante la desactivación de la salida fantasma (VGA-1 en el ejemplo) en la línea de órdenes del kernel de su gestor de arranque. Esto se puede lograr añadiendo lo siguiente:
+<p>Esto causa problemas de visualización y/o impide la suspensión al cerrar la tapa.
+</p>
+<h4>
+<span id="Par.C3.A1metros_del_kernel"></span><span class="mw-headline" id="Parámetros_del_kernel">Parámetros del kernel</span>
+</h4>
+<p>El problema se puede solucionar desactivando la salida fantasma (VGA-1 en los ejemplos dados) con los <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetros del kernel</a>:
 </p>
 <pre>video=VGA-1:d
 </pre>
-<p>Donde <b>d</b> = desactivar.
+<p>Donde <b>d</b> = deshabilitar.
 </p>
-<p>La salida fantasma también se puede desactivar en X añadiendo lo siguiente a <code>/etc/X11/xorg.conf.d/20-nouveau.conf</code>:
+<p>El módulo del kernel de nouveau también tiene una opción para deshabilitar la detección de salida de TV <a rel="nofollow" class="external autonumber" href="https://nouveau.freedesktop.org/wiki/KernelModuleParameters/#tv_disable">[2]</a>:
+</p>
+<pre> tv_disable=1
+</pre>
+<h4>
+<span id="Configuraci.C3.B3n_de_Xorg"></span><span class="mw-headline" id="Configuración_de_Xorg">Configuración de Xorg</span>
+</h4>
+<p>La salida fantasma se puede desactivar en <a href="../es/Xorg.html" title="Xorg (Español)">Xorg</a> añadiendo lo siguiente a <code>/etc/X11/xorg.conf.d/20-nouveau.conf</code>:
 </p>
 <pre>Section "Monitor"
 Identifier "VGA-1"
 Option "Ignore" "1"
 EndSection
 </pre>
-<p><b>Fuente: </b>
-<b></b>
-<a rel="nofollow" class="external free" href="http://gentoo-en.vfose.ru/wiki/Nouveau#Phantom_and_unpopulated_output_connector_issues">http://gentoo-en.vfose.ru/wiki/Nouveau#Phantom_and_unpopulated_output_connector_issues</a>
+<p>Fuente: <a rel="nofollow" class="external free" href="http://gentoo-en.vfose.ru/wiki/Nouveau#Phantom_and_unpopulated_output_connector_issues">http://gentoo-en.vfose.ru/wiki/Nouveau#Phantom_and_unpopulated_output_connector_issues</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2017-06-01]</sup>
+</p>
+<h4><span class="mw-headline" id="Xrandr">Xrandr</span></h4>
+<p><a href="../en/Xrandr.html" title="Xrandr">Xrandr</a> puede desactivar la salida:
+</p>
+<pre> $ xrandr --output VGA-1 --off
+</pre>
+<p>Esto puede añadirse a la configuración de <a href="../es/Xinit.html" title="Xinit (Español)">xinit</a>.
+</p>
+<h3><span class="mw-headline" id="Bloqueos_aleatorios_con_mensajes_de_error_del_kernel">Bloqueos aleatorios con mensajes de error del kernel</span></h3>
+<p>Al usar Nouveau, algunos chips de Nvidia pueden causar bloqueos aleatorios del sistema y más comúnmente lanzar muchos mensajes del kernel, vistos con <i>dmesg</i>. Pruebe a agregar el <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetro del kernel</a> <code>nouveau.noaccel=1</code>. Véase <a rel="nofollow" class="external autonumber" href="https://fedoraproject.org/wiki/Common_kernel_problems#Systems_with_nVidia_adapters_using_the_nouveau_driver_lock_up_randomly">[3]</a> para más información.
+</p>
+<p>Como alternativa, también puede usar la <a href="../es/Environment_variables.html" title="Environment variables (Español)">variable de entorno</a> <code>QT_XCB_FORCE_SOFTWARE_OPENGL=1</code> para desactivar la aceleración de OpenGL en las aplicaciones Qt.
+</p>
+<h3><span class="mw-headline" id="Flat_Panel_Table_Invalid">Flat Panel Table Invalid</span></h3>
+<p>Las tarjetas gráficas NVIDIA con chipsets recientes pueden causar problemas de arranque - esto incluye que X11 no pueda iniciarse y que lspci se congele indefinidamente<a rel="nofollow" class="external autonumber" href="https://bugzilla.redhat.com/show_bug.cgi?id=1425253">[4]</a><a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=192532">[5]</a><a rel="nofollow" class="external autonumber" href="https://stackoverflow.com/questions/28062458/nouveau-error-while-booting-arch">[6]</a><a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=207602">[7]</a><a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/questions/207895/how-do-i-install-antergos-with-a-gtx-970">[8]</a>.
+</p>
+<p>Esto puede romper las distribuciones/medios de instalación en vivo. Se puede detectar ejecutando lspci, o comprobando el registro de systemd para el error:
+</p>
+<pre>nouveau E[     DRM]Pointer to flat panel table invalid
+</pre>
+<p>El sistema podría iniciar si el controlador Nouveau está desactivado al pasar los siguientes <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetros del kernel</a>:
+</p>
+<pre>modprobe.blacklist=nouveau
+</pre>
+<p>El controlador Nouveau puede entonces cargarse con
+</p>
+<pre>modprobe nouveau
+</pre>
+<p>En consecuencia, el sistema debería funcionar correctamente.
+Si tiene otra tarjeta gráfica Nvidia, o simplemente desea estar seguro, puede desactivar la tarjeta problemática mediante:
+</p>
+<pre>$ echo 1 &gt; /sys/bus/pci/devices/[id tarjeta del dispositivo]/remove
+</pre>
+<p>El controlador propietario de <a href="../es/NVIDIA.html" title="NVIDIA (Español)">Nvidia</a> funciona bien actualmente (versión 381).
 </p>
 </div>
 </div>
@@ -324,11 +338,7 @@ EndSection
 <li><a href="../es/Category:X_server.html" title="Category:X server (Español)">X server (Español)</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -336,8 +346,8 @@ EndSection
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Nouveau_(Espa%C3%B1ol)&amp;oldid=638529">https://wiki.archlinux.org/index.php?title=Nouveau_(Español)&amp;oldid=638529</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Nouveau_(Espa%C3%B1ol)&amp;oldid=651750">https://wiki.archlinux.org/index.php?title=Nouveau_(Español)&amp;oldid=651750</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 February 2021, at 23:08.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -86,7 +87,7 @@
 </p>
 <p>First, copy all config files from <code>/etc/sane.d/</code> to <code>/etc/scanbd/sane.d/</code> (these will be needed later):
 </p>
-<pre># cp /etc/sane.d/* /etc/scanbd/sane.d/
+<pre># cp -r /etc/sane.d/* /etc/scanbd/sane.d/
 </pre>
 <p>Modify <code>/etc/sane.d/dll.conf</code> so that it includes <i>only</i> the "net" directive (either delete the other directives (printers), or comment them with # symbol):
 </p>
@@ -114,7 +115,7 @@ epson2
 # systemctl start scanbd.service
 # systemctl start scanbm.socket
 </pre>
-<p>You can check <code>/var/log/everything</code> to see if the scanbd service and scanbm socket were started. To increase debugging verbosity, change <code>debug-level = 7</code> in <code>/etc/scanbd/scanbd.conf</code> and restart the scanbd service.
+<p>You can check <code>systemctl status scanbd.service</code> and <code>systemctl status scanbm.socket</code> to see if the scanbd service and scanbm socket were started. To increase debugging verbosity, change <code>debug-level = 7</code> in <code>/etc/scanbd/scanbd.conf</code> and restart the scanbd service.
 </p>
 <h3><span class="mw-headline" id="scanbd_configuration">scanbd configuration</span></h3>
 <p>If you are lucky, your scanner might work almost out of the box and you would only want to modify the action scripts, which define what is done when a particular button is pressed.
@@ -168,8 +169,8 @@ include(scanner.d/snapscan.conf)
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Scanner_Button_Daemon&amp;oldid=629463">https://wiki.archlinux.org/index.php?title=Scanner_Button_Daemon&amp;oldid=629463</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 August 2020, at 15:48.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Scanner_Button_Daemon&amp;oldid=652280">https://wiki.archlinux.org/index.php?title=Scanner_Button_Daemon&amp;oldid=652280</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 February 2021, at 07:51.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

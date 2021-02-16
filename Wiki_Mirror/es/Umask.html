@@ -2,10 +2,11 @@
 <html class="client-nojs" lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<title>Umask (Español) - ArchWiki</title>
+<title>umask (Español) - ArchWiki</title>
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -20,7 +21,7 @@
 	<div id="siteNotice" class="mw-body-content"></div>
 	<div class="mw-indicators mw-body-content">
 	</div>
-	<h1 id="firstHeading" class="firstHeading" lang="en">Umask (Español)</h1>
+	<h1 id="firstHeading" class="firstHeading" lang="en">umask (Español)</h1>
 	<div id="bodyContent" class="mw-body-content">
 		<div id="siteSub" class="noprint">From ArchWiki</div>
 		<div id="contentSub"></div>
@@ -32,74 +33,158 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p>El modo de creación de archivos de la máscara de usuario (<a href="https://en.wikipedia.org/wiki/es:Umask" class="extiw" title="wikipedia:es:Umask">umask</a>) se utiliza para determinar el permiso de un archivo para los archivos recién creados. Se puede utilizar para controlar el permiso predeterminado del archivo para los nuevos archivos. Es un número <a href="https://en.wikipedia.org/wiki/es:Octal" class="extiw" title="wikipedia:es:Octal">octal</a> de cuatro dígitos.
+<p><span></span>
 </p>
-<h2><span class="mw-headline" id="Configurar_UMASK">Configurar UMASK</span></h2>
-<p>Se puede configurar el valor umask en <code>/etc/bashrc</code> o <code>/etc/profile</code> (este último para todos los usuarios). Por defecto, la mayoría de las distribuciones Linux establecen el valor en 0022 (022) o 0002 (002).
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Umask.html" title="Umask">Umask</a> fue revisada el <b>2021-02-12</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Umask&amp;diff=0&amp;oldid=652067">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<div class="archwiki-template-meta-related-articles-start">
+<p>Artículos relacionados</p>
+<ul>
+<li><a href="../en/File_permissions_and_attributes.html" title="File permissions and attributes">File permissions and attributes</a></li>
+</ul>
+</div>
+<p>La utilidad <a href="https://en.wikipedia.org/wiki/es:umask" class="extiw" title="wikipedia:es:umask">umask</a> se utiliza para controlar la máscara del modo de creación de archivos, que determina el valor inicial de los bits de permisos para los archivos recién creados. El comportamiento de esta utilidad está estandarizado por <a href="https://en.wikipedia.org/wiki/es:POSIX" class="extiw" title="wikipedia:es:POSIX">POSIX</a> y se describe en el <a rel="nofollow" class="external text" href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/umask.html">Manual del programador POSIX</a>. Debido a que <i>umask</i> afecta el entorno de ejecución actual del shell, generalmente se implementa como una orden integrada en el shell.
 </p>
-<p>Abra el archivo <code>/etc/profile</code> (global) o <code>~/.bashrc</code>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Significado_de_la_m%C3%A1scara_de_modo"><span class="tocnumber">1</span> <span class="toctext">Significado de la máscara de modo</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Mostrar_el_valor_de_la_m%C3%A1scara_actual"><span class="tocnumber">2</span> <span class="toctext">Mostrar el valor de la máscara actual</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Establecer_el_valor_de_la_m%C3%A1scara"><span class="tocnumber">3</span> <span class="toctext">Establecer el valor de la máscara</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">4</span> <span class="toctext">Véase también</span></a></li>
+</ul>
+</div>
+
+<h2>
+<span id="Significado_de_la_m.C3.A1scara_de_modo"></span><span class="mw-headline" id="Significado_de_la_máscara_de_modo">Significado de la máscara de modo</span>
+</h2>
+<p>La máscara de modo contiene los bits de permiso que <b>no</b> deben establecerse en un archivo recién creado, por lo tanto, es la <a href="https://en.wikipedia.org/wiki/es:Negaci%C3%B3n_l%C3%B3gica" class="extiw" title="wikipedia:es:Negación lógica">negación lógica</a> de los bits de permiso establecidos en un archivo recién creado. Si algún bit de la máscara se establece en <code>1</code>, el permiso correspondiente para el archivo recién creado se desactivará. Por lo tanto, la máscara actúa como un filtro para eliminar los bits de permiso y ayuda a configurar el acceso predeterminado a los archivos.
 </p>
-<pre># vi /etc/profile
+<p>El valor resultante para los bits de permiso que se establecerán en un archivo recién creado se calcula utilizando la <a href="https://en.wikipedia.org/wiki/es:Adjunci%C3%B3n_l%C3%B3gica" class="extiw" title="wikipedia:es:Adjunción lógica">adjunción lógica</a> bit a bit, que se puede expresar en notación lógica:
+</p>
+<pre>R: (D &amp; (~M))
 </pre>
-<p>o
+<p>Es decir, los permisos resultantes <code>R</code> son el resultado de <a href="https://en.wikipedia.org/wiki/es:conjunci%C3%B3n_l%C3%B3gica" class="extiw" title="wikipedia:es:conjunción lógica">conjunción bit a bit</a> de los permisos predeterminados <code>D</code> y la <a href="https://en.wikipedia.org/wiki/es:Operador_a_nivel_de_bits#NOT" class="extiw" title="wikipedia:es:Operador a nivel de bits">negación bit a bit</a> de la máscara del modo de creación de archivos <code>M</code>.
 </p>
-<pre>$ vi ~/.bashrc
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> 
+<ul>
+<li>Linux no permite que se cree un archivo con permisos de ejecución, los permisos de creación predeterminados son <code>777</code> para directorios y solo <code>666</code> para archivos.</li>
+<li>En Linux, solo se utilizan los bits de permiso de archivo de la máscara; véase <span class="plainlinks archwiki-template-man" title="$ man 2 umask"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/umask.2">umask(2)</a></span>. Los bits "suid", "sgid" y "pegajoso" de la máscara se ignoran.</li>
+</ul>
+</div>
+<p>Por ejemplo, supongamos que la máscara del modo de creación de archivos es <code>027</code>. Aquí la representación bit a bit de cada dígito representa:
+</p>
+<ul>
+<li>
+<code>0</code> representa los bits del permiso de <i>usuario</i> no establecido en un archivo recién creado</li>
+<li>
+<code>2</code> representa los bits del permiso de <i>grupo</i> no establecido en un archivo recién creado</li>
+<li>
+<code>7</code> representa los bits del permiso de <i>otros</i> no establecido en un archivo recién creado</li>
+</ul>
+<p>Con la información proporcionada por la tabla a continuación, esto significa que para un archivo recién creado, por ejemplo, propiedad del usuario <code>Usuario1</code> y del grupo <code>Grupo1</code>, <code>Usuario1</code> tiene todas las permisos (valor octal <code>7</code>) para el archivo recién creado, otros usuarios del grupo <code>Grupo1</code> no tienen permisos de escritura (valor octal <code>5</code>) y cualquier otro el usuario no tiene ningún permiso (valor octal <code>0</code>) para el archivo recién creado. Entonces, con la máscara <code>027</code> tomada para este ejemplo, los archivos se crearán con permisos <code>750</code>.
+</p>
+<table class="wikitable">
+<caption>
+</caption>
+<tbody>
+<tr>
+<th>Octal</th>
+<th>Binary</th>
+<th>Significado
+</th>
+</tr>
+<tr>
+<td><code>0</code></td>
+<td><code>000</code></td>
+<td>sin permisos
+</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td><code>001</code></td>
+<td>solo ejecución
+</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><code>010</code></td>
+<td>solo escritura
+</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td><code>011</code></td>
+<td>escritura y ejecución
+</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td><code>100</code></td>
+<td>solo lectura
+</td>
+</tr>
+<tr>
+<td><code>5</code></td>
+<td><code>101</code></td>
+<td>lectura y ejecución
+</td>
+</tr>
+<tr>
+<td><code>6</code></td>
+<td><code>110</code></td>
+<td>lectura y escritura
+</td>
+</tr>
+<tr>
+<td><code>7</code></td>
+<td><code>111</code></td>
+<td>lectura, escritura y ejecución
+</td>
+</tr>
+</tbody>
+</table>
+<h2>
+<span id="Mostrar_el_valor_de_la_m.C3.A1scara_actual"></span><span class="mw-headline" id="Mostrar_el_valor_de_la_máscara_actual">Mostrar el valor de la máscara actual</span>
+</h2>
+<p>Para mostrar la máscara actual, simplemente invoque <code>umask</code> sin especificar ningún argumento. El estilo de salida predeterminado depende de la implementación, pero generalmente es octal:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ umask</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">0027
 </pre>
-<p>Añada/modifique la línea siguiente para configurar una nueva umask:
+<p>Cuando se utiliza la opción <code>-S</code>, estandarizada por POSIX, la máscara se mostrará con notación simbólica. Sin embargo, el <b>valor de notación simbólica siempre será el complemento lógico del valor octal</b>, es decir, los bits de permiso que se establecerán en el archivo recién creado:
 </p>
-<pre>umask 022
-</pre>
-<p>Guarde y cierre el archivo. Los cambios tendrán efecto después del siguiente inicio de sesión.
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ umask -S</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">u=rwx,g=rx,o=</pre>
+<h2>
+<span id="Establecer_el_valor_de_la_m.C3.A1scara"></span><span class="mw-headline" id="Establecer_el_valor_de_la_máscara">Establecer el valor de la máscara</span>
+</h2>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Los valores de Umask se pueden establecer caso por caso. Por ejemplo, los usuarios de escritorio pueden considerar que los permisos restringidos en su carpeta de inicio son suficientes (<code>useradd -m</code> crea el directorio con el permiso <code>700</code> de forma predeterminada), ya que hacen que todos los archivos dentro de estos sean inaccesibles para otros usuarios. Si esto no es práctico (por ejemplo, cuando se utiliza el <a href="../es/Apache_HTTP_Server.html" title="Apache HTTP Server (Español)">Servidor HTTP Apache</a>) y los archivos públicos se almacenan entre los privados, entonces considere restringir la umask en su lugar.</div>
+<p>Puede establecer el valor de umask mediante la orden <i>umask</i>. La cadena que especifica la máscara de modo sigue las mismas reglas sintácticas que el argumento de modo de <a href="../en/File_permissions_and_attributes.html#Changing_permissions" class="mw-redirect" title="Chmod">chmod</a> (véase <a rel="nofollow" class="external text" href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/chmod.html#tag_20_17_13">Manual del programador POSIX</a> para más detalles).
 </p>
-<p>Pero, ¿qué es 0022 y 0002?
+<p>El valor de umask de todo el sistema se puede establecer en <code>/etc/profile</code> o en los archivos de configuración predeterminados del <a href="../es/Command-line_shell.html" class="mw-redirect" title="Shell (Español)">shell</a>, por ejemplo <code>/etc/bash.bashrc</code>. La mayoría de las distribuciones Linux, incluido Arch, establecen un valor predeterminado <code>022</code> de umask (véase <a rel="nofollow" class="external text" href="https://github.com/archlinux/svntogit-packages/blob/packages/filesystem/trunk/profile">/etc/profile</a>). También se puede configurar umask con <code>pam_umask.so</code> pero puede ser anulado por <code>/etc/profile</code> o similar.
 </p>
-<p>El umask por defecto <code>0002</code> se utiliza para los usuarios regulares. Con esta máscara, los permisos predeterminados de los directorios son 775, y los permisos predeterminados de los archivos son 664.
-</p>
-<p>El umask por defecto para el usuario root es <code>0022 </code>, y como resultado, los permisos predeterminados de los directorios son 755, y los permisos predeterminados de los archivos son 644.
-</p>
-<p>Para los directorios, los permisos de base son 0777 (rwxrwxrwx) y para los archivos son 0666 (rw-rw-rw).
-</p>
-<p>Para calcular los permisos de los directorios para un valor umask de 022 (usuario root):
-</p>
-<pre>Default permission: 777
-Subtract umask value: 022 (-)
-Directory permission: 755
-</pre>
-<p>Para calcular los permisos de los archivos para un valor umask de 022 (usuario root):
-</p>
-<pre>Default permission: 666
-Subtract umask value: 022 (-)
-File permission: 644
-</pre>
-<p>En el ejemplo siguiente se exponen los pasos necesarios para establecer un valor umask que resultará en valores de permisos para los directorios de 700 y para los archivos de usuario de 600. La idea muy simple es que solo el usuario podrá leer o escribir el archivo, o acceder a los contenidos del directorio.
-</p>
-<pre>Default permissions:777 / 666    # Permisos por defecto
-Subtract umask value: 077 (-)    # Reste el valor umask
-Resulting permissions:700 / 600  # Permisos resultantes
-</pre>
-<pre>$ umask 077
-$ touch file.txt
-$ mkdir directory
-$ ls -ld file.txt directory
-</pre>
-<p>Salida:
-</p>
-<pre>drwx------ 2 vivek vivek 4096 2007-02-01 02:21 directory
--rw------- 1 vivek vivek    0 2007-02-01 02:21 file.txt
-</pre>
-<pre>Muestra de valores umask y permisos
-valor umask 	Usuario Grupo 	Otros
-0000 		all 	all 	all
-0007 		all 	all 	none
-0027 		all 	read 	none
-</pre>
-<p>Para obtener más información, véase 'man bash' y 'help umask'.
+<p>Si necesita establecer un valor diferente, puede editar directamente dicho archivo, afectando así a todos los usuarios, o llamar a <code>umask</code> desde el archivo de configuración de usuario de su shell, por ejemplo <code>~/.bashrc</code> para cambiar solo su umask, sin embargo, estos cambios solo tendrán efecto después del próximo inicio de sesión. Para cambiar su umask solo durante su sesión actual, simplemente ejecute <code>umask</code> y escriba el valor deseado. Por ejemplo, ejecutar <code>umask 077</code> le dará permisos de lectura y escritura para archivos nuevos, y permisos de lectura, escritura y ejecución para carpetas nuevas.
 </p>
 <h2>
 <span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
 </h2>
-<p><a rel="nofollow" class="external free" href="http://www.cyberciti.biz/tips/understanding-linux-unix-umask-value-usage.html">http://www.cyberciti.biz/tips/understanding-linux-unix-umask-value-usage.html</a> (fuente de este artículo)
-</p>
+<ul>
+<li>Manual del programador POSIX:
+<ul>
+<li>
+<a rel="nofollow" class="external text" href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/umask.html">umask</a> (también disponible como <span class="plainlinks archwiki-template-man" title="$ man 1p umask"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/umask.1p">umask(1p)</a></span>)</li>
+<li>
+<a rel="nofollow" class="external text" href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/chmod.html#tag_20_17_13">chmod (descripción extendida)</a> (también disponible como <span class="plainlinks archwiki-template-man" title="$ man 1p chmod"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/chmod.1p">chmod(1p)</a></span>)</li>
+</ul>
+</li>
+<li><a rel="nofollow" class="external text" href="https://blogs.gentoo.org/mgorny/2011/10/18/027-umask-a-compromise-between-security-and-simplicity/">027 umask: un compromiso entre seguridad y simplicidad</a></li>
+</ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
@@ -114,8 +199,8 @@ valor umask 	Usuario Grupo 	Otros
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Umask_(Espa%C3%B1ol)&amp;oldid=586534">https://wiki.archlinux.org/index.php?title=Umask_(Español)&amp;oldid=586534</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 October 2019, at 16:50.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Umask_(Espa%C3%B1ol)&amp;oldid=652068">https://wiki.archlinux.org/index.php?title=Umask_(Español)&amp;oldid=652068</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 February 2021, at 13:05.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

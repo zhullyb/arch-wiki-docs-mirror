@@ -2,10 +2,11 @@
 <html class="client-nojs" lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<title>Chroot (Español) - ArchWiki</title>
+<title>chroot (Español) - ArchWiki</title>
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -20,7 +21,7 @@
 	<div id="siteNotice" class="mw-body-content"></div>
 	<div class="mw-indicators mw-body-content">
 	</div>
-	<h1 id="firstHeading" class="firstHeading" lang="en">Chroot (Español)</h1>
+	<h1 id="firstHeading" class="firstHeading" lang="en">chroot (Español)</h1>
 	<div id="bodyContent" class="mw-body-content">
 		<div id="siteSub" class="noprint">From ArchWiki</div>
 		<div id="contentSub"></div>
@@ -32,15 +33,19 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
+<p><span></span>
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Chroot.html" title="Chroot">chroot</a> fue revisada el <b>2021-02-02</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Chroot&amp;diff=0&amp;oldid=648866">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artículos relacionados</p>
 <ul>
-<li><a href="../en/ArchWiki:Archive.html" class="mw-redirect" title="Install bundled 32-bit system in Arch64">Install bundled 32-bit system in Arch64</a></li>
 <li><a href="../en/PRoot.html" title="PRoot">PRoot</a></li>
-<li><a href="../es/Systemd-nspawn.html" title="Systemd-nspawn (Español)">systemd-nspawn (Español)</a></li>
+<li><a href="../en/Linux_Containers.html" title="Linux Containers">Linux Containers</a></li>
+<li><a href="../es/Systemd-nspawn.html" title="Systemd-nspawn (Español)">systemd-nspawn</a></li>
 </ul>
 </div>
-<p><a href="https://en.wikipedia.org/wiki/Chroot" class="extiw" title="wikipedia:Chroot">Chroot</a> es el proceso por el que se cambia el directorio root del disco aparente (y el actual proceso en marcha y sus descendientes) a otro directorio root. Al cambiar a otro directorio root no se puede acceder a los archivos y órdenes fuera de ese directorio. Este directorio se llama <i>jaula chroot</i>. El cambio de root se hace comúnmente para el mantenimiento del sistema, como puede ser volver a instalar el gestor de arranque o restablecer una contraseña olvidada.
+<p>Un <a href="https://en.wikipedia.org/wiki/Chroot" class="extiw" title="wikipedia:Chroot">chroot</a> es una operación que cambia el directorio raíz aparente para el proceso en ejecución actual y sus subsidiarios. Un programa que se ejecuta en este entorno modificado no puede acceder a los archivos y comandos fuera de ese árbol de directorios del entorno. Este entorno modificado se denomina <i>jaula chroot</i>.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -48,271 +53,200 @@
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#Requisitos"><span class="tocnumber">1</span> <span class="toctext">Requisitos</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#Montar_las_particiones"><span class="tocnumber">2</span> <span class="toctext">Montar las particiones</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#Razonamiento"><span class="tocnumber">1</span> <span class="toctext">Razonamiento</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Requisitos"><span class="tocnumber">2</span> <span class="toctext">Requisitos</span></a></li>
 <li class="toclevel-1 tocsection-3">
-<a href="#Cambiar_root"><span class="tocnumber">3</span> <span class="toctext">Cambiar root</span></a>
+<a href="#Utilizaci%C3%B3n"><span class="tocnumber">3</span> <span class="toctext">Utilización</span></a>
 <ul>
-<li class="toclevel-2 tocsection-4"><a href="#Usando_arch-chroot"><span class="tocnumber">3.1</span> <span class="toctext">Usando arch-chroot</span></a></li>
-<li class="toclevel-2 tocsection-5"><a href="#Usando_chroot"><span class="tocnumber">3.2</span> <span class="toctext">Usando chroot</span></a></li>
-<li class="toclevel-2 tocsection-6"><a href="#Usando_systemd-nspawn"><span class="tocnumber">3.3</span> <span class="toctext">Usando systemd-nspawn</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Usar_arch-chroot"><span class="tocnumber">3.1</span> <span class="toctext">Usar arch-chroot</span></a></li>
+<li class="toclevel-2 tocsection-5">
+<a href="#Introducir_un_chroot"><span class="tocnumber">3.2</span> <span class="toctext">Introducir un chroot</span></a>
+<ul>
+<li class="toclevel-3 tocsection-6"><a href="#Ejecutar_una_sola_orden_y_salir"><span class="tocnumber">3.2.1</span> <span class="toctext">Ejecutar una sola orden y salir</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-7"><a href="#Ejecutar_aplicaciones_gr%C3%A1ficas_en_entornos_chroot"><span class="tocnumber">4</span> <span class="toctext">Ejecutar aplicaciones gráficas en entornos chroot</span></a></li>
-<li class="toclevel-1 tocsection-8"><a href="#Realizar_el_mantenimiento_del_sistema"><span class="tocnumber">5</span> <span class="toctext">Realizar el mantenimiento del sistema</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Usar_chroot"><span class="tocnumber">3.3</span> <span class="toctext">Usar chroot</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#Ejecutar_aplicaciones_gr%C3%A1ficas_desde_chroot"><span class="tocnumber">4</span> <span class="toctext">Ejecutar aplicaciones gráficas desde chroot</span></a></li>
 <li class="toclevel-1 tocsection-9">
-<a href="#Salir_del_entorno_chroot"><span class="tocnumber">6</span> <span class="toctext">Salir del entorno chroot</span></a>
+<a href="#Sin_privilegios_root"><span class="tocnumber">5</span> <span class="toctext">Sin privilegios root</span></a>
 <ul>
-<li class="toclevel-2 tocsection-10"><a href="#Desmonte_recursivo"><span class="tocnumber">6.1</span> <span class="toctext">Desmonte recursivo</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#PRoot"><span class="tocnumber">5.1</span> <span class="toctext">PRoot</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Fakechroot"><span class="tocnumber">5.2</span> <span class="toctext">Fakechroot</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-11"><a href="#Ejemplo"><span class="tocnumber">7</span> <span class="toctext">Ejemplo</span></a></li>
-<li class="toclevel-1 tocsection-12"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">8</span> <span class="toctext">Véase también</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">6</span> <span class="toctext">Véase también</span></a></li>
 </ul>
 </div>
 
+<h2><span class="mw-headline" id="Razonamiento">Razonamiento</span></h2>
+<p>El cambio de root se realiza comúnmente para realizar el mantenimiento del sistema en sistemas en los que ya no es posible arrancar y/o iniciar sesión. Unos ejemplos típicos son:
+</p>
+<ul>
+<li>Reinstalar el <a href="../es/Arch_boot_process.html#Gestor_de_arranque" title="Arch boot process (Español)">gestor de arranque</a>.</li>
+<li>Reconstruir la <a href="../es/Mkinitcpio.html" title="Mkinitcpio (Español)">imagen initramfs</a>.</li>
+<li>Actualizar o <a href="../es/Downgrading_packages.html" title="Downgrading packages (Español)">degradar paquetes</a>.</li>
+<li>Restablecer una <a href="../en/Reset_lost_root_password.html" class="mw-redirect" title="Password recovery">contraseña olvidada</a>.</li>
+<li>Compilar paquetes en un chroot limpio, véase <a href="../DeveloperWiki:Building_in_a_clean_chroot.html" title="DeveloperWiki:Building in a clean chroot">DeveloperWiki:Building in a clean chroot</a>.</li>
+</ul>
+<p>Véase también <a href="https://en.wikipedia.org/wiki/Chroot#Limitations" class="extiw" title="wikipedia:Chroot">Wikipedia:Chroot#Limitations</a>.
+</p>
 <h2><span class="mw-headline" id="Requisitos">Requisitos</span></h2>
-<ul><li>Tendrá que arrancar desde otro entorno Linux para funcionar (por ejemplo, desde un LiveCD o un medio flash USB, o desde otra distribución Linux instalada).</li></ul>
-<ul><li>Se requieren privilegios de root con el fin de efectuar chroot.</li></ul>
-<ul><li>Asegúrese de que la arquitectura del entorno de Linux que haya arrancado coincide con la arquitectura del directorio root que desea introducir (es decir, i686, x86_64). Puede encontrar la arquitectura de su entorno actual con la orden:</li></ul>
-<dl><dd><pre># uname -m</pre></dd></dl>
-<ul><li>Si necesita algún módulo del kernel cargado en el entorno chroot, cárguelos antes de efectuar el cambio de root. Dichos módulos pueden ser útiles para inicializar la partición de intercambio (<code>swapon /dev/sdxY</code>) y para establecer una conexión a Internet antes de efectuar chroot.</li></ul>
-<h2><span class="mw-headline" id="Montar_las_particiones">Montar las particiones</span></h2>
-<p>La partición root del sistema Linux, donde se está tratando de efectuar chroot, necesita estar montada previamente. Para saber el nombre asignado por el kernel a dicha partición, ejecute:
-</p>
-<pre># lsblk /dev/sda
-</pre>
-<p>También puede ejecutar la siguiente orden para tener una idea de la distribución de las particiones.
-</p>
-<pre># fdisk -l
-</pre>
-<p>Ahora cree un directorio (por ejemplo, arch) en el que desee montar la partición root (por ejemplo, la partición sda3) y móntela:
-</p>
-<pre># mkdir /mnt/arch                 # crea el directorio
-# mount /dev/sda3 /mnt/arch       # monta la partición root
-</pre>
-<p>A continuación, si tiene particiones separadas para otras partes del sistema (por ejemplo, <code>/boot</code>, <code>/home</code>, <code>/var</code>, etc.), debe montarlas, de este modo:
-</p>
-<pre># mount /dev/sda1 /mnt/arch/boot/
-# mount /dev/sdb5 /mnt/arch/home/
-# mount ...
-</pre>
-<p>Si bien es posible montar sistemas de archivos después de efectuar chroot, es más conveniente hacerlo antes. La razón de esto es que se tendrán que desmontar los sistemas de archivos creados temporalmente después de salir de la jaula, así que este procedimiento le permite desmontar todos los sistemas de archivos con una sola orden. Por otro lado, esto también permite un cierre más seguro. Debido a que el entorno de Linux externo conoce todas las particiones montadas, puede desmontarlas con seguridad  durante el apagado.
-</p>
-<h2><span class="mw-headline" id="Cambiar_root">Cambiar root</span></h2>
-<h3><span class="mw-headline" id="Usando_arch-chroot">Usando arch-chroot</span></h3>
-<p>El script <code>arch-chroot</code> es parte del paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=arch-install-scripts">arch-install-scripts</a></span> de los <a href="../es/Official_repositories.html" title="Official repositories (Español)">repositorios oficiales</a>.  El script monta los sistemas de archivos de la API como <code>/proc</code> y pone disponible al chroot <code>/etc/resolv.conf</code>  antes de ejecutar <code>/usr/bin/chroot</code>.
-</p>
-<p>Ejecute arch-chroot con el nuevo directorio raíz como primer argumento:
-</p>
-<pre># arch-chroot /mnt/arch
-</pre>
-<p>Para usar la shell bash en vez de sh usado por defecto:
-</p>
-<pre># arch-chroot /mnt/arch /bin/bash
-</pre>
-<p>Para ejecutar <code>mkinitcpio -p linux</code> desde el chroot y salir inmediatamente:
-</p>
-<pre># arch-chroot /mnt/arch /usr/bin/mkinitcpio -p linux
-</pre>
-<h3><span class="mw-headline" id="Usando_chroot">Usando chroot</span></h3>
-<div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Advertencia:</strong> Al usar el parámetro <code>--rbind</code>, algunos sub directorios <code>dev/</code> y <code>sys/</code> no se va a poder desmontar. Al intentar el desmonte con <code>umount -l</code> romperá la sesión, requiriendo reiniciar el sistema. En lo posible use <code>-o bind</code> en su lugar.</div>
-<p>Monte los sistemas de archivos temporales:
-</p>
-<pre># cd /mnt/arch
-# mount -t proc proc proc/
-# mount -t sysfs sys sys/
-# mount -o bind /dev dev/
-# mount -t devpts pts dev/pts/
-</pre>
-<p>Si se establece una conexión a Internet y desea utilizarla en el entorno chroot, puede que tenga que copiar sus servidores DNS para que se conecten a la red:
-</p>
-<pre># cp -L /etc/resolv.conf etc/resolv.conf
-</pre>
-<p>Ahora efectúe chroot en el sistema instalado y defina la shell:
-</p>
-<pre># chroot /mnt/arch /usr/bin/bash
-</pre>
+<ul>
+<li>Privilegios de root.</li>
+<li>Otro entorno Linux, por ejemplo, un LiveCD o un USB, o de otra distribución Linux existente.</li>
+<li>Mismos entornos de arquitectura; es decir, el chroot desde y el chroot hasta. La arquitectura del entorno actual puede descubrirse con: <code>uname -m</code> (por ejemplo, i686 o x86_64).</li>
+<li>Módulos del kernel necesarios cargados en el entorno chroot.</li>
+<li>Swap activado en caso de ser necesario: <pre># swapon /dev/sd<i>xY</i></pre>
+</li>
+<li>Conexión a internet en caso de ser necesario.</li>
+</ul>
+<h2>
+<span id="Utilizaci.C3.B3n"></span><span class="mw-headline" id="Utilización">Utilización</span>
+</h2>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> 
 <ul>
-<li>Si ve el error <code>chroot: cannot run command '/bin/bash': Exec format error</code>, es probable que las dos arquitecturas no coincidan.</li>
-<li>Si ve el error <code>chroot: '/usr/bin/bash': permission denied</code>, vuelva a montar con el permiso exec: <code>mount -o remount,exec /mnt/arch</code>.</li>
+<li>Algunas herramientas <a href="../es/Systemd.html" title="Systemd (Español)">systemd</a> como <i>hostnamectl</i>, <i>localectl</i> y <i>timedatectl</i> no pueden ser utilizadas dentro de un chroot, ya que requieren una conexión <a href="../es/D-Bus.html" title="D-Bus (Español)">dbus</a> activa. <a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/issues/798#issuecomment-126568596">[1]</a>
+</li>
+<li>El sistema de archivos que servirá como la nueva raíz (<code>/</code>) de su chroot debe ser accesible (es decir, descifrado y montado).</li>
 </ul>
 </div>
-<p>De manera opcional, para suministrar una configuración propia a Bash (<code>~/.bashrc</code> y <code>/etc/bash.bashrc</code>), ejecute:
+<p>Hay dos formas principales de usar chroot, las cuales se describen a continuación.
 </p>
-<pre># source ~/.bashrc
-# source /etc/profile
+<h3><span class="mw-headline" id="Usar_arch-chroot">Usar arch-chroot</span></h3>
+<p>El script bash <code>arch-chroot</code> es parte del paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=arch-install-scripts">arch-install-scripts</a></span>.  Antes de ejecutar <code>/usr/bin/chroot</code>, el script monta sistemas de archivos API como <code>/proc</code> y hace que <code>/etc/resolv.conf</code> esté disponible desde el chroot.
+</p>
+<h3><span class="mw-headline" id="Introducir_un_chroot">Introducir un chroot</span></h3>
+<p>Ejecute arch-chroot con el nuevo directorio raíz como primer argumento:
+</p>
+<pre># arch-chroot <i>ubicación/del/nuevo/root</i>
 </pre>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Sugerencia:</strong> Opcionalmente también puede crear un prompt único capaz de diferenciar el entorno chroot:
-<pre># export PS1="(chroot) $PS1"</pre>
-</div>
-<h3><span class="mw-headline" id="Usando_systemd-nspawn">Usando systemd-nspawn</span></h3>
-<p>Como alternativa, puede usar <code>systemd-nspawn</code> para lograr lo mismo, con beneficios adicionales (ver la página del manual de «systemd-nspawn»).
+<p>Por ejemplo, en la <a href="../es/Installation_guide.html" title="Installation guide (Español)">guía de instalación</a> este directorio sería <code>/mnt</code>:
 </p>
-<p>Los pasos son muy similares:
-</p>
-<ul><li>Primero monte la partición <code>root</code>:</li></ul>
-<pre># mkdir /mnt/arch
-# mount /dev/sdx3 /mnt/arch
+<pre># arch-chroot /mnt
 </pre>
-<ul><li>A continuación, monte las particiones <code>boot</code> y <code>home</code> en la partición root:</li></ul>
-<pre># mount /dev/sdx1 /mnt/arch/boot
-# mount /dev/sdx4 /mnt/arch/home
-</pre>
-<ul><li>Luego, basta con hacer <code>cd</code> en la partición root y ejecutar systemd-nspawn:</li></ul>
-<pre># cd /mnt/arch
-# systemd-nspawn
-</pre>
-<p>Como puede ver, no hay necesidad de preocuparse por montar <code>proc</code>, <code>sys</code>, <code>dev</code> o <code>dev/pts</code>. <code>systemd-nspawn</code> inicia un proceso init nuevo en el entorno creado, que se encarga de todo. Es como arrancar un segundo sistema operativo Linux en la misma máquina, pero que no se comporta como una máquina virtual.
-</p>
-<p>Para salir, simplemente cierre la sesión o ejecute la orden <code>poweroff</code>. A continuación, puede desmontar las particiones como se ha descrito anteriormente (sin tener que preocuparse de proc, sys, etc).
-</p>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> Describe the steps to run an X server inside the systemd-nspawn container. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Chroot_(Espa%C3%B1ol)">Talk:Chroot (Español)#</a>)</div>
-</div>
-<h2>
-<span id="Ejecutar_aplicaciones_gr.C3.A1ficas_en_entornos_chroot"></span><span class="mw-headline" id="Ejecutar_aplicaciones_gráficas_en_entornos_chroot">Ejecutar aplicaciones gráficas en entornos chroot</span>
-</h2>
-<p>Si tiene <a href="../es/Xorg.html" title="Xorg (Español)">X</a> ejecutándose en el sistema, puede iniciar aplicaciones gráficas desde el entorno chroot.
-</p>
-<p>Para permitir la conexión a un servidor X en un entorno chroot, abra un terminal dentro del servidor X (es decir, dentro del escritorio del usuario donde se ha iniciado actualmente sesión), y, a continuación, ejecute la siguiente orden que concede permisos a cualquiera para conectarse al servidor X del usuario:
-</p>
-<pre>$ xhost +
-</pre>
-<p>Después, para dirigir las aplicaciones al servidor X desde el entorno chroot, establezca  la variable de entorno del DISPLAY  dentro del entorno chroot, para que coincida con la variable del DISPLAY del usuario al que pertenece el servidor X. Así, por ejemplo, ejecute: 
-</p>
-<pre>$ echo $DISPLAY
-</pre>
-<p>como el usuario que es propietario del servidor X para ver el valor de DISPLAY. Si el valor es Y. If the value is ":0" (por ejemplo), entonces en el entorno chroot ejecute:
-</p>
-<pre># export DISPLAY=:0
-</pre>
-<p>Ahora puede iniciar aplicaciones gráficas desde la línea de órdenes del entorno chroot.
-</p>
-<h2><span class="mw-headline" id="Realizar_el_mantenimiento_del_sistema">Realizar el mantenimiento del sistema</span></h2>
-<p>En este punto puede realizar cualquier mantenimiento del sistema  que necesite dentro del entorno chroot. Algunos ejemplos comunes son:
-</p>
-<ul>
-<li>Volver a instalar el gestor de arranque.</li>
-<li>Reconstruir la imagen <a href="../es/Mkinitcpio.html" title="Mkinitcpio (Español)">initramfs</a>.</li>
-<li>Actualizar o realizar <a href="../en/Downgrading_packages.html" title="Downgrading packages">downgrade</a> de paquetes.</li>
-<li>Restablecer una <a href="../en/Reset_lost_root_password.html" class="mw-redirect" title="Password recovery">contraseña olvidada</a>.</li>
-</ul>
-<h2><span class="mw-headline" id="Salir_del_entorno_chroot">Salir del entorno chroot</span></h2>
-<p>Cuando haya terminado con el mantenimiento del sistema, salga de chroot:
+<p>Para salir del chroot simplemente use
 </p>
 <pre># exit
 </pre>
-<p>A continuación, desmonte los sistemas de archivos temporales y los dispositivos montados:
+<h4><span class="mw-headline" id="Ejecutar_una_sola_orden_y_salir">Ejecutar una sola orden y salir</span></h4>
+<p>Para ejecutar una orden desde el chroot y salir de nuevo, anexe la siguiente orden al final de la línea:
 </p>
-<pre># umount {proc,sys,dev,boot,[...],}
+<pre># arch-chroot <i>ubicación/del/nuevo/root</i> <i>miorden</i>
 </pre>
-<p>Por último, desmonte la partición root:
+<p>Por ejemplo, para ejecutar <code>mkinitcpio -p linux</code> para un chroot ubicado en <code>/mnt/arch</code> haga:
 </p>
-<pre># cd ..
-# umount arch/
+<pre># arch-chroot /mnt/arch mkinitcpio -p linux
+</pre>
+<h3><span class="mw-headline" id="Usar_chroot">Usar chroot</span></h3>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Advertencia:</strong> Cuando se utiliza <code>--rbind</code>, algunos subdirectorios de <code>dev/</code> y <code>sys/</code> no serán desmontables. Si se intenta desmontar con <code>umount -l</code> en esta situación romperá su sesión, requiriendo un reinicio. Si es posible, utilice <code>-o bind</code> en su lugar.</div>
+<p>En el siguiente ejemplo, la ruta <code><i>/ubicación/de/nueva/raíz</i></code> es el directorio donde reside la nueva raíz.
+</p>
+<p>En primer lugar, monte los sistemas de archivos temporales de la API:
+</p>
+<pre># cd <i>/ubicación/del/nuevo/root</i>
+# mount -t proc /proc proc/
+# mount -t sysfs /sys sys/
+# mount --rbind /dev dev/
+</pre>
+<p>Y opcionalmente
+</p>
+<pre># mount --rbind /run run/
+</pre>
+<p>Si está ejecutando un sistema UEFI también necesitará acceso a las variables EFI. De lo contrario, al instalar GRUB recibirá un mensaje similar a <code>UEFI variables not supported on this machine</code>:
+</p>
+<pre># mount --rbind /sys/firmware/efi/efivars sys/firmware/efi/efivars/
+</pre>
+<p>A continuación, para utilizar una conexión a Internet en el entorno chroot, copie los detalles del DNS:
+</p>
+<pre># cp /etc/resolv.conf etc/resolv.conf
+</pre>
+<p>Finalmente, para cambiar el root a <code><i>/ubiación/de/nuevo/root</i></code> usando el bash:
+</p>
+<pre># chroot <i>ubicación/del/nuevo/root</i> /bin/bash
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Si obtiene un error diciendo que <code>/mnt</code> (o cualquier otra partición) está ocupada, esto puede significar una de estas dos cosas:
-<ul><li>Que un programa ha quedado ejecutándose dentro del entorno chroot.</li></ul>
-<ul><li>O, más normalmente, que un submontaje todavía existe (por ejemplo, <code>/mnt/arch/boot</code> en <code>/mnt/arch</code>). Compruebe, con la orden <code>lsblk</code>, si hay puntos de montaje pendientes:</li></ul>
-<dl><dd><pre>lsblk /dev/sda</pre></dd></dl>
-<dl><dd>Si aún sigue sin poder desmontar una partición, use la opción <code>--force</code>:</dd></dl>
-<dl><dd><pre># umount -f /mnt</pre></dd></dl>
+<strong>Nota:</strong> Si le sale el error:
+<ul>
+<li>
+<code>chroot: no se puede ejecutar la orden '/usr/bin/bash': Exec format error</code>, es probable que las arquitecturas del entorno del host y del entorno chroot no coincidan.</li>
+<li>
+<code>chroot: '/usr/bin/bash': permiso denegado</code>, vuelva a montar con el permiso de ejecución: <code>mount -o remount,exec <i>/ubicación/de/nuevo/root</i></code>.
+<ul><li>si esto no lo arregla, entonces <a rel="nofollow" class="external text" href="https://www.tldp.org/LDP/LG/issue52/okopnik.html">asegúrese de que</a> los componentes base del nuevo entorno están intactos (si es un Arch root intente <code>paccheck --root=<i>/localización/del/nuevo/root</i> --files --file-properties --md5sum glibc filesystem</code>, con <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pacutils">pacutils</a></span>)</li></ul>
+</li>
+</ul>
 </div>
-<p>Después de esto, será capaz de reiniciar el sistema de forma segura.
+<p>Después del chroot puede ser necesario cargar la configuración local del bash:
 </p>
-<h3><span class="mw-headline" id="Desmonte_recursivo">Desmonte recursivo</span></h3>
-<p>Para desmontar de manera recursiva, sin necesidad de desmontar cada directorio manualmente, ejecute:
+<pre># source /etc/profile
+# source ~/.bashrc
+</pre>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Sugerencia:</strong> Opcionalmente, cree un prompt único para poder diferenciar su entorno chroot:
+<pre># export PS1="(chroot) $PS1"</pre>
+</div>
+<p>Cuando haya terminado con el chroot, puedes salir de él mediante:
+</p>
+<pre># exit
+</pre>
+<p>A continuación, desmonte los sistemas de archivos temporales:
 </p>
 <pre># cd /
-# umount --recursive <i>/mnt</i>
+# umount --recursive <i>/ubicación/del/nuevo/root</i>
 </pre>
-<h2><span class="mw-headline" id="Ejemplo">Ejemplo</span></h2>
-<p>Esto puede proteger su sistema contra ataques desde Internet durante la navegación: 
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Si hay un error que menciona algo así como <code>umount: /ruta: el dispositivo está ocupado</code> esto suele significar que: un programa (incluso un shell) se dejó ejecutando en el chroot o que todavía existe un sub-montaje.  Salga del programa, use <code>findmnt -R <i>/ubicación/del/nuevo/root</i></code> para encontrarlo y luego <code>umount</code> lo sub-monta. Puede ser complicado usar <code>umount</code> en algunas cosas y uno puede esperar que <code>umount --force</code> funcione, como último recurso use <code>umount --lazy</code> que simplemente las libera. En cualquier caso, para estar seguro, <code>reboot</code> lo antes posible si no se resuelven para evitar posibles conflictos futuros.</div>
+<h2>
+<span id="Ejecutar_aplicaciones_gr.C3.A1ficas_desde_chroot"></span><span class="mw-headline" id="Ejecutar_aplicaciones_gráficas_desde_chroot">Ejecutar aplicaciones gráficas desde chroot</span>
+</h2>
+<p>Si tiene un <a href="../es/Xorg.html" title="Xorg (Español)">servidor X</a> funcionando en su sistema, puede iniciar aplicaciones gráficas desde el entorno chroot.
 </p>
-<pre># # as root: 
-# cd /home/<i>user</i>
-# mkdir myroot
-# pacman -S arch-install-scripts
-# # pacstrap must see myroot as mounted: 
-# mount --bind myroot myroot
-# pacstrap -i myroot base base-devel
-# mount -t proc proc myroot/proc/
-# mount -t sysfs sys myroot/sys/
-# mount -o bind /dev myroot/dev/
-# mount -t devpts pts myroot/dev/pts/
-# cp -i /etc/resolv.conf myroot/etc/
-# chroot myroot
-# # inside chroot: 
-# passwd # set a password 
-# useradd -m -s /bin/bash <i>user</i>
-# passwd <i>user</i> # set a password
-# # in a shell outside the chroot: 
-# pacman -S xorg-server-xnest
-# # in a shell outside the chroot you can run this as <i>user</i>: 
-$ Xnest -ac -geometry 1024x716+0+0 :1
-# # continue inside the chroot: 
-# pacman -S xterm
-# DISPLAY=:1
-# xterm
-# # xterm is now running in Xnest 
-# pacman -S xorg-server xorg-xinit xorg-server-utils
-# pacman -S openbox
-# # for java we need icedtea-web which requires some fonts: 
-# nano /etc/locale.gen
-# # uncomment en_US.UTF-8 UTF-8, save and exit 
-# locale-gen
-# echo LANG=en_US.UTF-8 &gt; /etc/locale.conf
-# export LANG=en_US.UTF-8
-# pacman -S ttf-dejavu
-# pacman -S icedtea-web
-# pacman -S firefox
-# firefox
-# # firefox is now running in Xnest 
-# exit
-# # outside chroot: 
-# chroot --userspec=<i>user</i> myroot
-# # inside chroot as <i>user</i>: 
-$ DISPLAY=:1
-$ openbox &amp;
-$ HOME="/home/<i>user</i>"
-$ firefox</pre>
-<p><br>
+<p>Para permitir que el entorno chroot se conecte a un servidor X, abra una terminal virtual dentro del servidor X (es decir, dentro del escritorio del usuario que está conectado en ese momento), y luego ejecute la orden <a href="../en/Xhost.html" title="Xhost">xhost</a>, que da permiso a cualquiera para conectarse al servidor X del usuario (véase también <a href="../en/Xhost.html" title="Xhost">Xhost</a>):
 </p>
+<pre>$ xhost +local:
+</pre>
+<p>Luego, para dirigir las aplicaciones al servidor X desde el chroot, configure la variable de entorno DISPLAY dentro del chroot para que coincida con la variable DISPLAY del usuario propietario del servidor X. Así, por ejemplo, ejecute
+</p>
+<pre>$ echo $DISPLAY
+</pre>
+<p>como el usuario propietario del servidor X para ver el valor de DISPLAY. Si el valor es ":0" (por ejemplo), entonces en el entorno chroot ejecute:
+</p>
+<pre># export DISPLAY=:0
+</pre>
+<h2><span class="mw-headline" id="Sin_privilegios_root">Sin privilegios root</span></h2>
+<p>Chroot requiere de privilegios root, que pueden no ser deseables o posibles para el usuario en ciertas situaciones. Sin embargo, hay varias formas de simular un comportamiento similar al de chroot utilizando implementaciones alternativas.
+</p>
+<h3><span class="mw-headline" id="PRoot">PRoot</span></h3>
+<p><a href="../en/PRoot.html" title="PRoot">PRoot</a> puede ser usado para cambiar el directorio raíz aparente y usar <code>mount --bind</code> sin privilegios de root. Esto es útil para confinar aplicaciones a un solo directorio o ejecutar programas construidos para una arquitectura de CPU diferente, pero tiene limitaciones debido a que todos los archivos son propiedad del usuario en el sistema anfitrión. PRoot proporciona un argumento <code>--root-id</code> que puede ser utilizado como una solución para algunas de estas limitaciones de una manera similar (aunque más limitada) a <i>fakeroot</i>.
+</p>
+<h3><span class="mw-headline" id="Fakechroot">Fakechroot</span></h3>
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fakechroot">fakechroot</a></span> es un shim de biblioteca que intercepta la llamada a chroot y falsea los resultados. Se puede utilizar junto con <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fakeroot">fakeroot</a></span> para simular un chroot como un usuario normal. 
+</p>
+<pre># fakechroot fakeroot chroot ~/mi-chroot bash
+</pre>
 <h2>
 <span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
 </h2>
-<ul>
-<li><a href="../es/Systemd-nspawn.html" title="Systemd-nspawn (Español)">systemd-nspawn (Español)</a></li>
-<li><a rel="nofollow" class="external text" href="https://help.ubuntu.com/community/BasicChroot">Basic Chroot</a></li>
-</ul>
+<ul><li><a rel="nofollow" class="external text" href="https://help.ubuntu.com/community/BasicChroot">Basic Chroot</a></li></ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
 <li><a href="../es/Category:System_recovery.html" title="Category:System recovery (Español)">System recovery (Español)</a></li>
 <li><a href="../es/Category:Sandboxing.html" title="Category:Sandboxing (Español)">Sandboxing (Español)</a></li>
 <li><a href="../es/Category:Commands.html" title="Category:Commands (Español)">Commands (Español)</a></li>
 </ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chroot_(Espa%C3%B1ol)&amp;oldid=638321">https://wiki.archlinux.org/index.php?title=Chroot_(Español)&amp;oldid=638321</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:09.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chroot_(Espa%C3%B1ol)&amp;oldid=651462">https://wiki.archlinux.org/index.php?title=Chroot_(Español)&amp;oldid=651462</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 February 2021, at 07:28.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

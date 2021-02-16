@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -52,43 +53,66 @@
 <li class="toclevel-1 tocsection-2">
 <a href="#Configuration"><span class="tocnumber">2</span> <span class="toctext">Configuration</span></a>
 <ul>
-<li class="toclevel-2 tocsection-3">
-<a href="#OpenSwan"><span class="tocnumber">2.1</span> <span class="toctext">OpenSwan</span></a>
+<li class="toclevel-2 tocsection-3"><a href="#NetworkManager"><span class="tocnumber">2.1</span> <span class="toctext">NetworkManager</span></a></li>
+<li class="toclevel-2 tocsection-4">
+<a href="#OpenSwan"><span class="tocnumber">2.2</span> <span class="toctext">OpenSwan</span></a>
 <ul>
-<li class="toclevel-3 tocsection-4"><a href="#Running_Openswan_in_a_container"><span class="tocnumber">2.1.1</span> <span class="toctext">Running Openswan in a container</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#Running_Openswan_in_a_container"><span class="tocnumber">2.2.1</span> <span class="toctext">Running Openswan in a container</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-5"><a href="#xl2tpd"><span class="tocnumber">2.2</span> <span class="toctext">xl2tpd</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#xl2tpd"><span class="tocnumber">2.3</span> <span class="toctext">xl2tpd</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-6">
+<li class="toclevel-1 tocsection-7">
 <a href="#Routing"><span class="tocnumber">3</span> <span class="toctext">Routing</span></a>
 <ul>
-<li class="toclevel-2 tocsection-7"><a href="#Routing_traffic_to_a_single_IP_address_or_Subnet_through_the_tunnel"><span class="tocnumber">3.1</span> <span class="toctext">Routing traffic to a single IP address or Subnet through the tunnel</span></a></li>
-<li class="toclevel-2 tocsection-8"><a href="#Routing_all_traffic_through_the_tunnel"><span class="tocnumber">3.2</span> <span class="toctext">Routing all traffic through the tunnel</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Routing_traffic_to_a_single_IP_address_or_Subnet_through_the_tunnel"><span class="tocnumber">3.1</span> <span class="toctext">Routing traffic to a single IP address or Subnet through the tunnel</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Routing_all_traffic_through_the_tunnel"><span class="tocnumber">3.2</span> <span class="toctext">Routing all traffic through the tunnel</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-9"><a href="#Troubleshooting"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a></li>
-<li class="toclevel-1 tocsection-10">
+<li class="toclevel-1 tocsection-10"><a href="#Troubleshooting"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a></li>
+<li class="toclevel-1 tocsection-11">
 <a href="#Tips_and_Tricks"><span class="tocnumber">5</span> <span class="toctext">Tips and Tricks</span></a>
 <ul>
-<li class="toclevel-2 tocsection-11"><a href="#Script_start_up_and_shut_down"><span class="tocnumber">5.1</span> <span class="toctext">Script start up and shut down</span></a></li>
-<li class="toclevel-2 tocsection-12"><a href="#A_further_script"><span class="tocnumber">5.2</span> <span class="toctext">A further script</span></a></li>
-<li class="toclevel-2 tocsection-13"><a href="#Script_to_resolve_dns_names_and_connect"><span class="tocnumber">5.3</span> <span class="toctext">Script to resolve dns names and connect</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Script_start_up_and_shut_down"><span class="tocnumber">5.1</span> <span class="toctext">Script start up and shut down</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#A_further_script"><span class="tocnumber">5.2</span> <span class="toctext">A further script</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Script_to_resolve_dns_names_and_connect"><span class="tocnumber">5.3</span> <span class="toctext">Script to resolve dns names and connect</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-14"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-15"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xl2tpd">xl2tpd</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openswan/">openswan</a></span><sup><small>AUR</small></sup> (To use with NetworkManager: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=strongswan">strongswan</a></span>) packages.
+<p>To use with NetworkManager, <a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=networkmanager-l2tp">networkmanager-l2tp</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=strongswan">strongswan</a></span> packages.
+</p>
+<p>Otherwise <a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xl2tpd">xl2tpd</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openswan/">openswan</a></span><sup><small>AUR</small></sup> packages.
 </p>
 <p>Now you can <a href="../../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>openswan.service</code>. If it's not running you may get an error message about a missing pluto_ctl <code>connect(pluto_ctl) failed: No such file or directory</code>.
 </p>
 <p>Run <code>ipsec verify</code> to check your configuration and resolve possible issues before continuing.
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
+<h3><span class="mw-headline" id="NetworkManager">NetworkManager</span></h3>
+<p>Open you NetworkManager UI, then:
+</p>
+<ol>
+<li>Go to Network &gt; VPN. Click "+"</li>
+<li>Select "Layer 2 Tunneling Protocol (L2TP)."</li>
+<li>You can choose a name for the VPN.</li>
+<li>Enter Your VPN Server IP for the Gateway.</li>
+<li>Enter Your VPN Username for the User name.</li>
+<li>Right-click the ? in the Password field, select Store the password only for this user. (If this option gives you trouble, you might want to use "Store password for all users")</li>
+<li>Enter Your VPN Password for the Password.</li>
+<li>Leave the NT Domain field blank.</li>
+<li>Click the IPsec Settings... button.</li>
+<li>Check the Enable IPsec tunnel to L2TP host checkbox.</li>
+<li>Leave the Gateway ID field blank.</li>
+<li>Enter Your VPN IPsec PSK for the Pre-shared key.</li>
+<li>OK, then click Add to save the VPN connection information.</li>
+</ol>
+<p>Now you should be able to start the VPN, by switching the Toggle-Button on.
+</p>
 <h3><span class="mw-headline" id="OpenSwan">OpenSwan</span></h3>
 <p>Edit <code>/etc/ipsec.conf</code> to contain the following lines:
 </p>
@@ -121,7 +145,7 @@ conn L2TP-PSK
 </p>
 <pre>192.168.0.123 68.68.32.79 : PSK "<b>your_pre_shared_key</b>"
 </pre>
-<p>Remember to replace the local (<code>192.168.0.123</code>) and remote (<code>68.68.32.79</code>) IP addresses with the correct numbers for your location. The pre-shared key will be supplied by the VPN provider and will need to be placed in this file in cleartext form. You may find this file already exists and already have some data, try to back it up and create a new file only with your PSK if you'll see "Can't authenticate: no preshared key found for ..." when enabling connection in next section.
+<p>Remember to replace the local (<code>192.168.0.123</code>) and remote (<code>68.68.32.79</code>) IP addresses with the correct numbers for your location. The pre-shared key will be supplied by the VPN provider and will need to be placed in this file in cleartext form. You may find this file already exists and already have some data, try to back it up and create a new file only with your PSK if you'll see "Can't authenticate: no preshared key found for ..." when enabling connection in next section. Don't forget to set proper permissions (600) for this file or you will get error message "We cannot identify ourselves with either end of this connection.".
 </p>
 <p>Add the connection, so it's available to use:
 </p>
@@ -217,11 +241,17 @@ See example below for command to identify tunnel device name and peer ip and the
 <p>The route creation can also be automated by placing a script in /etc/ppp/ip-up.d.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
+<p><b>Issue:</b> journalctl logs <b>VPN connection: failed to connect: 'Could not restart the ipsec service.</b>
+</p>
+<p><b>Solution</b> Make sure you have strongswan installed
+</p>
+<p><br>
+</p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The first step may be to use the <b>ipsec verify</b> command to check the configuration of the installed IPSEC.</div>
 <p><b>Issue:</b> I get a message from pppd saying "Failed to authenticate ourselves to peer" and I've verified my password is correct. What could be wrong?
 </p>
-<p><b>Solution:</b> If you see the following in your /var/log/daemon.log:
+<p><b>Solution 1:</b> If you see the following in your /var/log/daemon.log:
 </p>
 <pre>Dec 20 15:14:03 myhost pppd[26529]: rcvd [CHAP Challenge id=0x1 &lt;some_or_another_hash&gt;, name = "SonicWALL"]
 Dec 20 15:14:03 myhost pppd[26529]: sent [CHAP Response id=0x1 &lt;some_or_another_hash&gt;, name = "your_vpn_username"]
@@ -241,6 +271,18 @@ Dec 20 15:14:03 myhost pppd[26529]: rcvd [LCP TermAck id=0x3]</pre>
 </pre>
 <p>This will cause the SonicWALL to default to the next authentication mechanism, namely MSCHAP-v2. This should authenticate successfully, and from this point xl2tpd should successfully construct a tunnel between you and the remote L2TP server.
 </p>
+<p><b>Solution 2:</b> If you see the following in your <code>journalctl -ru xl2tpd</code>:
+</p>
+<pre>vas. 03 12:31:21 myhost pppd[8922]: rcvd [LCP EchoRep id=0x0 magic=&lt;some_or_another_hash&gt;]
+vas. 03 12:31:21 myhost pppd[8922]: rcvd [CHAP Failure id=0x1 "E=691 R=0 C=&lt;some_or_another_hash&gt; V=3 M=bad username or password"]
+vas. 03 12:31:21 myhost pppd[8922]: MS-CHAP authentication failed: bad username or password
+vas. 03 12:31:21 myhost pppd[8922]: CHAP authentication failed</pre>
+<p>Try adding domain name in front of username in your options.l2tpd.client file (note the double backslash), i.e:
+</p>
+<pre>…
+name DOMAIN\\your_vpn_username
+password your_password
+</pre>
 <h2><span class="mw-headline" id="Tips_and_Tricks">Tips and Tricks</span></h2>
 <h3><span class="mw-headline" id="Script_start_up_and_shut_down">Script start up and shut down</span></h3>
 <p>You can create some scripts either in your home directory or elsewhere(remember where you put them) to bring up the tunnel then shut it back down.
@@ -402,6 +444,7 @@ if __name__ == "__main__":
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a rel="nofollow" class="external free" href="https://openswan.org/">https://openswan.org/</a></li>
+<li><a rel="nofollow" class="external free" href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md#ubuntu-linux">https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md#ubuntu-linux</a></li>
 <li><a rel="nofollow" class="external free" href="https://github.com/xelerance/xl2tpd">https://github.com/xelerance/xl2tpd</a></li>
 <li>
 <a rel="nofollow" class="external free" href="https://strongvpn.com/forum/viewtopic.php?pid=1844">https://strongvpn.com/forum/viewtopic.php?pid=1844</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-01 ⓘ]</sup> (<a rel="nofollow" class="external text" href="https://web.archive.org/web/20130129212118/https://strongvpn.com/forum/viewtopic.php?pid=1844">archive link</a>) — The main source used to write the initial revisions of this article.</li>
@@ -423,8 +466,8 @@ if __name__ == "__main__":
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Openswan_L2TP/IPsec_VPN_client_setup&amp;oldid=622141">https://wiki.archlinux.org/index.php?title=Openswan_L2TP/IPsec_VPN_client_setup&amp;oldid=622141</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 June 2020, at 12:32.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Openswan_L2TP/IPsec_VPN_client_setup&amp;oldid=652171">https://wiki.archlinux.org/index.php?title=Openswan_L2TP/IPsec_VPN_client_setup&amp;oldid=652171</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 February 2021, at 09:48.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

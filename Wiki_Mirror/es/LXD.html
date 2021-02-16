@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,8 +34,8 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Estado de la traducción:</strong> este artículo es una traducción de <a href="../en/LXD.html" title="LXD">LXD</a> revisada por última vez el <b>2020-02-10</b>. Si advierte que la versión inglesa <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=LXD&amp;diff=0&amp;oldid=597151">ha cambiado</a> puede actualizar la traducción <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">usted mismo</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
-<p><b><a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/">LXD</a></b> es un «hipervisor» de contenedores y máquinas virtuales, además de una nueva experiencia de usuario para los <a href="../en/Linux_Containers.html" title="Linux Containers">contenedores de Linux</a>.
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/LXD.html" title="LXD">LXD</a> fue revisada el <b>2021-01-30</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=LXD&amp;diff=0&amp;oldid=649058">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<p><b><a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/">LXD</a></b> es un es un administrador/hipervisor para contenedores (a través de <a href="../en/Linux_Containers.html" class="mw-redirect" title="LXC">LXC</a>) y máquinas virtuales (a través de <a href="../es/QEMU.html" title="QEMU (Español)">QEMU</a>).
 </p>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artículos relacionados</p>
@@ -52,7 +53,7 @@
 <a href="#Preparaci%C3%B3n"><span class="tocnumber">1</span> <span class="toctext">Preparación</span></a>
 <ul>
 <li class="toclevel-2 tocsection-2"><a href="#Software_requerido"><span class="tocnumber">1.1</span> <span class="toctext">Software requerido</span></a></li>
-<li class="toclevel-2 tocsection-3"><a href="#M%C3%A9todo_alternativo_de_instalaci%C3%B3n"><span class="tocnumber">1.2</span> <span class="toctext">Método alternativo de instalación</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Configuraci%C3%B3n_para_contenedores_sin_privilegios"><span class="tocnumber">1.2</span> <span class="toctext">Configuración para contenedores sin privilegios</span></a></li>
 <li class="toclevel-2 tocsection-4"><a href="#Configurar_LXD"><span class="tocnumber">1.3</span> <span class="toctext">Configurar LXD</span></a></li>
 <li class="toclevel-2 tocsection-5"><a href="#Accediendo_a_LXD_como_un_usuario_sin_privilegios"><span class="tocnumber">1.4</span> <span class="toctext">Accediendo a LXD como un usuario sin privilegios</span></a></li>
 </ul>
@@ -60,23 +61,43 @@
 <li class="toclevel-1 tocsection-6">
 <a href="#Utilizaci%C3%B3n"><span class="tocnumber">2</span> <span class="toctext">Utilización</span></a>
 <ul>
-<li class="toclevel-2 tocsection-7"><a href="#Crear_contenedor"><span class="tocnumber">2.1</span> <span class="toctext">Crear contenedor</span></a></li>
-<li class="toclevel-2 tocsection-8"><a href="#Redes_en_LXD"><span class="tocnumber">2.2</span> <span class="toctext">Redes en LXD</span></a></li>
-<li class="toclevel-2 tocsection-9"><a href="#lxd-agent_dentro_de_una_VM"><span class="tocnumber">2.3</span> <span class="toctext">lxd-agent dentro de una VM</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Resumen_de_las_%C3%B3rdenes"><span class="tocnumber">2.1</span> <span class="toctext">Resumen de las órdenes</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Crear_un_contenedor"><span class="tocnumber">2.2</span> <span class="toctext">Crear un contenedor</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Crear_una_m%C3%A1quina_virtual"><span class="tocnumber">2.3</span> <span class="toctext">Crear una máquina virtual</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Utilizar_y_administrar_un_contenedor_o_VM"><span class="tocnumber">2.4</span> <span class="toctext">Utilizar y administrar un contenedor o VM</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Configuraci%C3%B3n_de_contenedor/VM_(opcional)"><span class="tocnumber">2.5</span> <span class="toctext">Configuración de contenedor/VM (opcional)</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-10">
-<a href="#Soluci%C3%B3n_de_problemas"><span class="tocnumber">3</span> <span class="toctext">Solución de problemas</span></a>
+<li class="toclevel-1 tocsection-12">
+<a href="#Consejos_y_trucos"><span class="tocnumber">3</span> <span class="toctext">Consejos y trucos</span></a>
 <ul>
-<li class="toclevel-2 tocsection-11"><a href="#Comprobar_la_configuraci%C3%B3n_del_kernel"><span class="tocnumber">3.1</span> <span class="toctext">Comprobar la configuración del kernel</span></a></li>
-<li class="toclevel-2 tocsection-12"><a href="#Lanzar_un_contenedor_sin_CONFIG_USER_NS"><span class="tocnumber">3.2</span> <span class="toctext">Lanzar un contenedor sin CONFIG_USER_NS</span></a></li>
-<li class="toclevel-2 tocsection-13"><a href="#Los_l%C3%ADmites_de_recursos_no_se_aplican_cuando_se_ven_desde_dentro_de_un_contenedor"><span class="tocnumber">3.3</span> <span class="toctext">Los límites de recursos no se aplican cuando se ven desde dentro de un contenedor</span></a></li>
-<li class="toclevel-2 tocsection-14"><a href="#Fallo_en_el_inicio_de_una_VM"><span class="tocnumber">3.4</span> <span class="toctext">Fallo en el inicio de una VM</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#Sin_IPv4_con_systemd-networkd"><span class="tocnumber">3.5</span> <span class="toctext">Sin IPv4 con systemd-networkd</span></a></li>
+<li class="toclevel-2 tocsection-13">
+<a href="#Acceder_a_los_contenedores_por_nombre_de_host"><span class="tocnumber">3.1</span> <span class="toctext">Acceder a los contenedores por nombre de host</span></a>
+<ul>
+<li class="toclevel-3 tocsection-14"><a href="#Otra_soluci%C3%B3n"><span class="tocnumber">3.1.1</span> <span class="toctext">Otra solución</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-16"><a href="#Desinstalar"><span class="tocnumber">4</span> <span class="toctext">Desinstalar</span></a></li>
-<li class="toclevel-1 tocsection-17"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">5</span> <span class="toctext">Véase también</span></a></li>
+<li class="toclevel-2 tocsection-15">
+<a href="#Utilizar_las_aplicaciones_Wayland_y_Xorg"><span class="tocnumber">3.2</span> <span class="toctext">Utilizar las aplicaciones Wayland y Xorg</span></a>
+<ul>
+<li class="toclevel-3 tocsection-16"><a href="#M%C3%A9todo_1:_Utilice_el_servidor_Wayland_o_Xorg_del_host"><span class="tocnumber">3.2.1</span> <span class="toctext">Método 1: Utilice el servidor Wayland o Xorg del host</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-17"><a href="#Contenedores_con_privilegios"><span class="tocnumber">3.3</span> <span class="toctext">Contenedores con privilegios</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-18">
+<a href="#Soluci%C3%B3n_de_problemas"><span class="tocnumber">4</span> <span class="toctext">Solución de problemas</span></a>
+<ul>
+<li class="toclevel-2 tocsection-19"><a href="#lxd-agent_dentro_de_una_m%C3%A1quina_virtual"><span class="tocnumber">4.1</span> <span class="toctext">lxd-agent dentro de una máquina virtual</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Verificar_la_configuraci%C3%B3n_del_kernel"><span class="tocnumber">4.2</span> <span class="toctext">Verificar la configuración del kernel</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#Los_l%C3%ADmites_de_recursos_no_se_aplican_cuando_se_ven_desde_dentro_de_un_contenedor"><span class="tocnumber">4.3</span> <span class="toctext">Los límites de recursos no se aplican cuando se ven desde dentro de un contenedor</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Falla_el_inicio_de_una_m%C3%A1quina_virtual"><span class="tocnumber">4.4</span> <span class="toctext">Falla el inicio de una máquina virtual</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#Sin_IPv4_con_systemd-networkd"><span class="tocnumber">4.5</span> <span class="toctext">Sin IPv4 con systemd-networkd</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-24"><a href="#Desinstalar"><span class="tocnumber">5</span> <span class="toctext">Desinstalar</span></a></li>
+<li class="toclevel-1 tocsection-25"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">6</span> <span class="toctext">Véase también</span></a></li>
 </ul>
 </div>
 
@@ -84,106 +105,263 @@
 <span id="Preparaci.C3.B3n"></span><span class="mw-headline" id="Preparación">Preparación</span>
 </h2>
 <h3><span class="mw-headline" id="Software_requerido">Software requerido</span></h3>
-<p>Instale <a href="../en/Linux_Containers.html" class="mw-redirect" title="LXC">LXC</a> y el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxd">lxd</a></span>, entonces <a href="../es/Systemd.html#Utilizar_las_unidades" class="mw-redirect" title="Start (Español)">inicie</a> <code>lxd.service</code>.
-</p>
-<p>Véase <a href="../en/Linux_Containers.html#Enable_support_to_run_unprivileged_containers_(optional)" title="Linux Containers">Linux Containers#Enable support to run unprivileged containers (optional)</a> si desea ejecutar contenedores <i>sin privilegios</i>. De lo contrario véase <a href="#Lanzar_un_contenedor_sin_CONFIG_USER_NS">#Lanzar un contenedor sin CONFIG_USER_NS</a>.
+<p>Instale el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxd">lxd</a></span>, entonces <a href="../es/Systemd.html#Utilizar_las_unidades" class="mw-redirect" title="Enable (Español)">active</a> <code>lxd.service</code>.
 </p>
 <h3>
-<span id="M.C3.A9todo_alternativo_de_instalaci.C3.B3n"></span><span class="mw-headline" id="Método_alternativo_de_instalación">Método alternativo de instalación</span>
+<span id="Configuraci.C3.B3n_para_contenedores_sin_privilegios"></span><span class="mw-headline" id="Configuración_para_contenedores_sin_privilegios">Configuración para contenedores sin privilegios</span>
 </h3>
-<p>Un método alternativo de instalación es a través de <a href="../en/Snap.html" class="mw-redirect" title="Snapd">snapd</a>, instalando el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/snapd/">snapd</a></span><sup><small>AUR</small></sup> y ejecutando:
+<p>Se recomienda utilizar contenedores sin privilegios (véase <a href="../en/Linux_Containers.html#Privileged_containers_or_unprivileged_containers" title="Linux Containers">Linux Containers#Privileged containers or unprivileged containers</a> para obtener una explicación de la diferencia).
 </p>
-<pre># snap install lxd
-</pre>
+<p>Para poder utilizarlos, necesita <a href="../en/Linux_Containers.html#Enable_support_to_run_unprivileged_containers_(optional)" title="Linux Containers">activar el soporte para ejecutar contenedores sin privilegios</a>.
+</p>
+<p>Una vez activado, todos los contenedores se iniciarán <code>unpriviledged</code> (sin privilegios) de forma predeterminada.
+</p>
+<p>Para ver la alternativa, véase <a href="#Contenedores_con_privilegios">cómo configurar contenedores con privilegios</a>.
+</p>
 <h3><span class="mw-headline" id="Configurar_LXD">Configurar LXD</span></h3>
-<p>LXD necesita configurar un grupo de almacenamiento y (si desea acceso a Internet) la configuración de red. Para ello, ejecute lo siguiente como superusuario:
+<p>En el primer arranque, es necesario configurar LXD.
+</p>
+<p>Ejecute como superusuario:
 </p>
 <pre># lxd init
 </pre>
+<p>Esto iniciará una configuración interactiva y guiada en el terminal, que cubre diferentes temas como almacenamientos, redes, etc.
+</p>
+<p>Puede encontrar una descripción general en <a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/getting-started-cli/#initial-configuration">Guía de inicio</a>.
+</p>
 <h3><span class="mw-headline" id="Accediendo_a_LXD_como_un_usuario_sin_privilegios">Accediendo a LXD como un usuario sin privilegios</span></h3>
 <p>Por defecto, el demonio LXD permite el acceso a los usuarios del grupo <code>lxd</code>, así que añada su usuario al grupo:
 </p>
-<pre># usermod -a -G lxd &lt;usuario&gt;
+<pre># usermod -a -G lxd <i>usuario</i>
 </pre>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Advertencia:</strong> Cualquiera añadido al grupo <code>lxd</code> es equivalente al superusuario. Más información <a rel="nofollow" class="external text" href="https://github.com/lxc/lxd#security">aquí</a> y <a rel="nofollow" class="external text" href="https://bugs.launchpad.net/ubuntu/+source/lxd/+bug/1829071">aquí</a>.</div>
+<strong>Advertencia:</strong> Cualquiera añadido al grupo <code>lxd</code> es equivalente al superusuario. Para más información véase <a rel="nofollow" class="external autonumber" href="https://github.com/lxc/lxd#security">[1]</a> y <a rel="nofollow" class="external autonumber" href="https://bugs.launchpad.net/ubuntu/+source/lxd/+bug/1829071">[2]</a>.</div>
 <h2>
 <span id="Utilizaci.C3.B3n"></span><span class="mw-headline" id="Utilización">Utilización</span>
 </h2>
-<h3><span class="mw-headline" id="Crear_contenedor">Crear contenedor</span></h3>
-<p>LXD tiene dos partes, el demonio (el binario lxd) y el cliente (el binario lxc). Ahora que el demonio está configurado y en ejecución, puede crear un contenedor:
+<p>LXD consta de dos partes:
 </p>
-<pre>$ lxc launch ubuntu:16.04
+<p><br>
+</p>
+<ul>
+<li>el demonio (el binario <i>lxd</i>)</li>
+<li>el cliente (el binario <i>lxc</i>)</li>
+</ul>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> lxc no es LXC; el nombre es un poco confuso, puede leer la <a rel="nofollow" class="external text" href="https://discuss.linuxcontainers.org/t/comparing-lxd-vs-lxc/24">publicación del foro sobre la comparación de LXD vs LXC</a> con respecto a la diferencia.</div>
+<p>El cliente se utiliza para controlar uno o varios demonios.
+</p>
+<p>El cliente también se puede utilizar para controlar servidores LXD remotos.
+</p>
+<h3>
+<span id="Resumen_de_las_.C3.B3rdenes"></span><span class="mw-headline" id="Resumen_de_las_órdenes">Resumen de las órdenes</span>
+</h3>
+<p>Puede obtener una descripción general de todas las órdenes disponibles escribiendo:
+</p>
+<pre>$ lxc
 </pre>
-<p>Alternativamente, también puede usar un host LXD remoto como fuente de imágenes. Viene uno preconfigurado en LXD, llamado "images" (images.linuxcontainers.org)
+<h3><span class="mw-headline" id="Crear_un_contenedor">Crear un contenedor</span></h3>
+<p>Puede crear un contenedor con <code>lxc launch</code>, por ejemplo:
 </p>
-<pre>$ lxc launch images:centos/7/amd64 centos
+<pre>$ lxc launch ubuntu:20.04
+</pre>
+<p>Los contenedores se basan en imágenes, que se descargan de servidores de imágenes o servidores LXD remotos.
+</p>
+<p>Puede ver la lista de servidores ya añadidos con:
+</p>
+<pre>$ lxc remote list
+</pre>
+<p>Puede listar todas las imágenes en un servidor con <code> lxc image list</code>, por ejemplo:
+</p>
+<pre>$ lxc image list images:
+</pre>
+<p>Esto le mostrará todas las imágenes en uno de los servidores predeterminados: <a rel="nofollow" class="external text" href="https://images.linuxcontainers.org">images.linuxcontainers.org</a>
+</p>
+<p>También puede buscar imágenes añadiendo términos como el nombre de la distribución:
+</p>
+<pre>$ lxc image list images:debian
+</pre>
+<p>Lanza un contenedor con una imagen de un servidor específico con:
+</p>
+<pre>$ lxc launch servername:imagename
+</pre>
+<p>Por ejemplo:
+</p>
+<pre>$ lxc launch images:centos/8/amd64 centos
 </pre>
 <p>Para crear un contenedor Arch de amd64:
 </p>
 <pre>$ lxc launch images:archlinux/current/amd64 arch
 </pre>
-<h3><span class="mw-headline" id="Redes_en_LXD">Redes en LXD</span></h3>
-<p>LXD utiliza las capacidades de red de LXC. Por defecto, conecta contenedores al dispositivo de red <code>lxcbr0</code>. Consulte la documentación de LXC en la <a href="../en/Linux_Containers.html#Host_network_configuration" title="Linux Containers">configuración de la red</a> para configurar un puente <i>(bridge)</i> para sus contenedores.
-</p>
-<p>Si desea utilizar una interfaz diferente a <code>lxcbr0</code>, edite la predeterminada utilizando la herramienta de línea de órdenes lxc:
-</p>
-<pre>$ lxc profile edit default
-</pre>
-<p>Se abrirá un editor con un archivo de configuración que, de forma predeterminada, contiene:
-</p>
-<pre>name: default
-config: {}
-devices:
-  eth0:
-    name: eth0
-    nictype: bridged
-    parent: lxcbr0
-    type: nic
-</pre>
-<p>Puede establecer el parámetro <code>parent</code> al puente que desee que LXD conecte los contenedores de forma predeterminada.
-</p>
-<h3><span class="mw-headline" id="lxd-agent_dentro_de_una_VM">lxd-agent dentro de una VM</span></h3>
-<p>Dentro de las VMs <code>lxd-agent</code> no está instalado por defecto en el sistema operativo. Este se puede instalar en el equipo montando un recurso de red compartido <code>9p</code>. Esto requiere acceso a la consola con un usuario válido.
-</p>
-<pre>   $ lxc console v1
-   To detach from the console, press: &lt;ctrl&gt;+a q
-   
-   Ubuntu 18.04.3 LTS v1 ttyS0
-   
-   v1 login: ubuntu
-   Password: 
-   Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-74-generic x86_64)
-   
-   ubuntu@v1:~$ sudo -i
-   root@v1:~# mount -t 9p config /mnt/
-   root@v1:~# cd /mnt/
-   root@v1:/mnt# ./install.sh 
-   Created symlink /etc/systemd/system/multi-user.target.wants/lxd-agent.service → /lib/systemd/system/lxd-agent.service.
-   Created symlink /etc/systemd/system/multi-user.target.wants/lxd-agent-9p.service → /lib/systemd/system/lxd-agent-9p.service.
-   
-   LXD agent has been installed, reboot to confirm setup.
-   To start it now, unmount this filesystem and run: systemctl start lxd-agent-9p lxd-agent
-   root@v1:/mnt# reboot
-</pre>
-<p>Tras esto <code>lxd-agent</code> estará disponible y <code>lxc exec</code> funcionará dentro de la VM.
-</p>
-<h2>
-<span id="Soluci.C3.B3n_de_problemas"></span><span class="mw-headline" id="Solución_de_problemas">Solución de problemas</span>
-</h2>
 <h3>
-<span id="Comprobar_la_configuraci.C3.B3n_del_kernel"></span><span class="mw-headline" id="Comprobar_la_configuración_del_kernel">Comprobar la configuración del kernel</span>
+<span id="Crear_una_m.C3.A1quina_virtual"></span><span class="mw-headline" id="Crear_una_máquina_virtual">Crear una máquina virtual</span>
 </h3>
-<p>Por defecto, el kernel de Arch Linux está compilado correctamente para los contenedores de Linux y su interfaz LXD. Sin embargo, si está utilizando un kernel personalizado o con opciones modificadas, el kernel podría estar configurado incorrectamente. Verifique que el kernel en ejecución esté correctamente configurado para ejecutar un contenedor:
+<p>Simplemente añada la opción <code>--vm</code> a <code>lxc launch</code>:
 </p>
-<pre>$ lxc-checkconfig
+<pre>$ lxc launch ubuntu:20.04 --vm
 </pre>
-<h3><span class="mw-headline" id="Lanzar_un_contenedor_sin_CONFIG_USER_NS">Lanzar un contenedor sin CONFIG_USER_NS</span></h3>
-<p>Para lanzar imágenes debe proporcionar <code>security.privileged=true</code> durante la creación de la imagen:
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> 
+<ul>
+<li>Por ahora, las máquinas virtuales admiten menos funciones que los contenedores (véase <a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/advanced-guide/#difference-between-containers-and-virtual-machines">Diferencia entre contenedores y máquinas virtuales</a> por ejemplo).</li>
+<li>Solo las variantes <code>cloud</code> de las imágenes oficiales activan el lxd-agent listo para usar (que es necesario para las órdenes habituales de lxc como <code>lxc exec</code>).<br>Puede buscar imágenes en la nube con <code>lxc image list images: cloud</code> o <code>lxc image list images: nombre-distribución cloud</code>.<br>Si utiliza otras imágenes o encuentra problemas, eche un vistazo a <a href="#lxd-agent_dentro_de_una_m%C3%A1quina_virtual">#lxd-agent dentro de una máquina virtual</a>.</li>
+</ul>
+</div>
+<h3><span class="mw-headline" id="Utilizar_y_administrar_un_contenedor_o_VM">Utilizar y administrar un contenedor o VM</span></h3>
+<p>Véase <a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/getting-started-cli/#instance-management">Gestión de instancias en la Guía de introducción oficial de LXD</a>.
 </p>
-<pre>$ lxc launch ubuntu:16.04 ubuntu -c security.privileged=true
+<h3>
+<span id="Configuraci.C3.B3n_de_contenedor.2FVM_.28opcional.29"></span><span class="mw-headline" id="Configuración_de_contenedor/VM_(opcional)">Configuración de contenedor/VM (opcional)</span>
+</h3>
+<p>Puede añadir varias opciones a las instancias (contenedores y VM).
+</p>
+<p>Véase <a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/advanced-guide/#configuration-of-instances">Configuración de instancias en la Guía avanzada oficial de LXD</a> para obtener más detalles.
+</p>
+<h2><span class="mw-headline" id="Consejos_y_trucos">Consejos y trucos</span></h2>
+<h3><span class="mw-headline" id="Acceder_a_los_contenedores_por_nombre_de_host">Acceder a los contenedores por nombre de host</span></h3>
+<p>Esto supone que está utilizando el puente predeterminado, que se llama lxdbr0 y que está utilizando <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a>.
+</p>
+<pre> # systemd-resolve --interface lxdbr0 --set-domain '~lxd' --set-dns $(lxc network get lxdbr0 ipv4.address | cut -d / -f 1)
 </pre>
-<p>O para una imagen ya existente puede editar la configuración:
+<p>Ahora puede acceder a los contenedores por su nombre:
+</p>
+<pre> $ ping <i>nombrecontenedor</i>.lxd
+</pre>
+<h4>
+<span id="Otra_soluci.C3.B3n"></span><span class="mw-headline" id="Otra_solución">Otra solución</span>
+</h4>
+<p>Parece que la solución systemd-resolve deja de funcionar después de un tiempo.
+</p>
+<p>Otra solución es crear un <code>/etc/systemd/network/lxd.network</code> que contenga (reemplace x e y para que coincida con la IP de su bridge):
+</p>
+<pre> [Match]
+ Name=lxdbr0
+ [Network]
+ DNS=10.x.y.1
+ Domains=~lxd
+ IgnoreCarrierLoss=yes
+ [Address]
+ Address=10.x.y.1/24
+ Gateway=10.x.y.1
+</pre>
+<p>Y luego <a href="../es/Systemd.html#Utilizar_las_unidades" class="mw-redirect" title="Enable (Español)">active)</a> e <a href="../es/Systemd.html#Utilizar_las_unidades" class="mw-redirect" title="Start (Español)">inicie</a> <code>systemd-networkd.service</code>.
+</p>
+<h3><span class="mw-headline" id="Utilizar_las_aplicaciones_Wayland_y_Xorg">Utilizar las aplicaciones Wayland y Xorg</span></h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Considere siempre las implicaciones de seguridad, ya que algunos de los métodos descritos pueden debilitar la separación entre el contenedor y el host.</div>
+<p>Existen varios métodos para utilizar aplicaciones GUI dentro de contenedores.
+</p>
+<p>Puede encontrar una descripción general en el Foro oficial de LXD: <a rel="nofollow" class="external free" href="https://discuss.linuxcontainers.org/t/overview-gui-inside-containers/8767">https://discuss.linuxcontainers.org/t/overview-gui-inside-containers/8767</a>
+</p>
+<h4>
+<span id="M.C3.A9todo_1:_Utilice_el_servidor_Wayland_o_Xorg_del_host"></span><span class="mw-headline" id="Método_1:_Utilice_el_servidor_Wayland_o_Xorg_del_host">Método 1: Utilice el servidor Wayland o Xorg del host</span>
+</h4>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> La utilización de Xorg podría debilitar la separación entre el contenedor y el host, porque Xorg permite que las aplicaciones accedan a otras ventanas de aplicaciones. Por lo tanto, las aplicaciones de contenedor pueden tener acceso a las ventanas de las aplicaciones de host.
+Utilice Wayland en su lugar (pero tenga en cuenta que las desventajas de Xorg también se aplican a XWayland).</div>
+<p><b>Resumen:</b> En este método otorgamos a los contenedores acceso a los sockets del host de Wayland (+ XWayland) o Xorg.
+</p>
+<p><b>1. Añada los siguientes dispositivos a un perfil de contenedores.</b>
+</p>
+<p>Véase también: <a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/docs/master/instances#device-types">Documentación LXD sobre dispositivos</a>
+</p>
+<p>Dispositivo general para la GPU:
+</p>
+<pre>mygpu:
+   type: gpu
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> La ruta debajo de "listen" es diferente, porque las carpetas /run y /tmp pueden estar anuladas, véase: <a rel="nofollow" class="external free" href="https://github.com/lxc/lxd/issues/4540">https://github.com/lxc/lxd/issues/4540</a>
+</div>
+<p>Dispositivo para Wayland Socket:
+<b>Notas:</b>
+</p>
+<ul>
+<li>Ajuste la pantalla (wayland-0) en consecuencia.</li>
+<li>Añada las carpetas en /mnt y /tmp dentro del contenedor, si aún no existen.</li>
+</ul>
+<pre>Waylandsocket:
+    bind: container
+    connect: unix:/run/user/1000/wayland-0
+    listen: unix:/mnt/wayland1/wayland-0
+    uid: "1000"
+    gid: "1000"
+    security.gid: "1000"
+    security.uid: "1000"
+    mode: "0777"
+    type: proxy
+</pre>
+<p>Dispositivo para el socket Xorg (o XWayland):
+<i> 'Nota:'</i> Ajuste el número de pantalla en consecuencia (por ejemplo, X1 en lugar de X0).
+</p>
+<pre>Xsocket:
+    bind: container
+    connect: unix:/tmp/.X11-unix/X0
+    listen: unix:/mnt/xorg1/X0
+    uid: "1000"
+    gid: "1000"
+    security.gid: "1000"
+    security.uid: "1000"
+    mode: "0777"
+    type: proxy
+</pre>
+<p><b>2. Vincule los sockets a la ubicación correcta dentro del contenedor </b>.
+</p>
+<p><b>Nota:</b> Estos scripts deben ejecutarse después de cada inicio del contenedor; puede automatizar esto con systemd, por ejemplo.
+</p>
+<p>Shell-Script para vincular el socket Wayland:
+</p>
+<pre>#!/bin/sh
+mkdir /run/user/1000
+ln -s /mnt/wayland1/wayland-0 /run/user/1000/wayland-0
+</pre>
+<p>Vincula el socket Xorg (o XWayland):
+</p>
+<pre>#!/bin/sh
+ln -s /mnt/xorg1/X0 /tmp/.X11-unix/X0
+</pre>
+<p><b>3. Añada variables de entorno a la configuración de los usuarios dentro del contenedor.</b>
+</p>
+<p><b>Nota:</b> Ajuste los números de pantalla y/o el nombre del archivo (.profile) según corresponda.
+</p>
+<p>Para Wayland:
+</p>
+<pre>$ echo "export XDG_RUNTIME_DIR=/run/user/1000" &gt;&gt; ~/.profile
+$ echo "export WAYLAND_DISPLAY=wayland-0" &gt;&gt; ~/.profile
+$ echo "export QT_QPA_PLATFORM=wayland" &gt;&gt; ~/.profile
+</pre>
+<p>Para Xorg (or XWayland):
+</p>
+<pre>$ echo "export DISPLAY=:0" &gt;&gt; .profile
+</pre>
+<p>Recargue el .profile:
+</p>
+<pre>$ . .profile
+</pre>
+<p><b>4. Instale el software necesario en el contenedor.</b>
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Es necesario añadir el software necesario.
+Por ahora puede instalar una aplicación GUI de ejemplo, esto probablemente también instalará todos los paquetes necesarios.</div>
+<p><b>5. Inicie aplicaciones GUI.</b>
+</p>
+<p>Ahora debería poder iniciar aplicaciones GUI dentro del contenedor (a través del terminal, por ejemplo) y hacer que aparezcan como una ventana en la pantalla de su host.
+</p>
+<p>Puede probar "glxgears", por ejemplo.
+</p>
+<h3><span class="mw-headline" id="Contenedores_con_privilegios">Contenedores con privilegios</span></h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Los contenedores privilegiados no están aislados del anfitrión.
+<p>El usuario root del contenedor es el usuario root del host.
+</p>
+En su lugar, utilice contenedores sin privilegios siempre que sea posible.</div>
+<p>Si desea configurar un contenedor privilegiado, debe proporcionar la clave de configuración <code>security.privileged=true</code>.
+</p>
+<p>O durante la creación del contenedor:
+</p>
+<pre>$ lxc launch ubuntu:20.04 ubuntu -c security.privileged=true
+</pre>
+<p>O para un contenedor ya existente, puede editar la configuración:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ lxc config edit ubuntu</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">name: ubuntu
@@ -193,32 +371,70 @@ config:
   ...
   security.privileged: "true"
   ...
-devices:
-  root:
-    path: /
-    type: disk
-ephemeral: false
 </pre>
-<p>O para activar <code>security.privileged=true</code> para los nuevos contenedores, edite la configuración para el perfil predeterminado <i>(default)</i>:
+<h2>
+<span id="Soluci.C3.B3n_de_problemas"></span><span class="mw-headline" id="Solución_de_problemas">Solución de problemas</span>
+</h2>
+<h3>
+<span id="lxd-agent_dentro_de_una_m.C3.A1quina_virtual"></span><span class="mw-headline" id="lxd-agent_dentro_de_una_máquina_virtual">lxd-agent dentro de una máquina virtual</span>
+</h3>
+<p>Dentro de algunas imágenes de máquinas virtuales, el <code>lxd-agent</code> no está activado de forma predeterminada.
 </p>
-<pre>$ lxc profile edit default
+<p>En este caso, debe activarlo manualmente, por ejemplo, montando un recurso compartido de red <code>9p</code>. Esto requiere acceso a la consola con un usuario válido.
+</p>
+<p>Inicie sesión con <code>lxc console</code> y reemplace <code>nombre-máquinavirtual</code> en consecuencia:
+</p>
+<pre> $ lxc console nombre-máquinavirtual
+</pre>
+<p>Inicie sesión como root:
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> En algunos sistemas, primero debe configurar una contraseña de root para poder iniciar sesión como root.
+Puede utilizar <a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/advanced-guide/#cloud-init">cloud-init</a> para esto, por ejemplo.</div>
+<pre>$ su root
+</pre>
+<p>Monte el recurso compartido de red:
+</p>
+<pre>$ mount -t 9p config /mnt/
+</pre>
+<p>Vaya a la carpeta y ejecute el script de instalación (esto activará el agente lxd dentro de la VM):
+</p>
+<pre>$ cd /mnt/
+$ ./install.sh 
+</pre>
+<p>Después de una instalación exitosa, reinicie con:
+</p>
+<pre>$ reboot
+</pre>
+<p>Luego, el <code>lxd-agent</code> estará disponible y <code>lxc exec</code> debería funcionar.
+</p>
+<h3>
+<span id="Verificar_la_configuraci.C3.B3n_del_kernel"></span><span class="mw-headline" id="Verificar_la_configuración_del_kernel">Verificar la configuración del kernel</span>
+</h3>
+<p>Por defecto, el kernel de Arch Linux está compilado correctamente para contenedores de Linux y su interfaz LXD. Sin embargo, si está utilizando un kernel personalizado o ha cambiado las opciones del kernel, es posible que el kernel esté configurado incorrectamente. Verifique que su kernel esté configurado correctamente:
+</p>
+<pre>$ lxc-checkconfig
 </pre>
 <h3>
 <span id="Los_l.C3.ADmites_de_recursos_no_se_aplican_cuando_se_ven_desde_dentro_de_un_contenedor"></span><span class="mw-headline" id="Los_límites_de_recursos_no_se_aplican_cuando_se_ven_desde_dentro_de_un_contenedor">Los límites de recursos no se aplican cuando se ven desde dentro de un contenedor</span>
 </h3>
-<p>El servicio lxcfs (encontrado en el repositorio Community) necesita ser instalado e iniciado:
+<p>Instale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxcfs">lxcfs</a></span> y <a href="../es/Systemd.html#Utilizar_las_unidades" class="mw-redirect" title="Start (Español)">inicie</a> <code>lxcfs.service</code>.
 </p>
-<pre>$ systemctl start lxcfs
-</pre>
-<p>lxd tendrá que ser reiniciado. Active lxcfs para que el servicio se inicie en el arranque.
+<p>LXD deberá reiniciarse. <a href="../es/Systemd.html#Utilizar_las_unidades" class="mw-redirect" title="Enable (Español)">Active</a> <code>lxcfs.service</code> para que el servicio se inicie en el momento del arranque.
 </p>
-<h3><span class="mw-headline" id="Fallo_en_el_inicio_de_una_VM">Fallo en el inicio de una VM</span></h3>
+<h3>
+<span id="Falla_el_inicio_de_una_m.C3.A1quina_virtual"></span><span class="mw-headline" id="Falla_el_inicio_de_una_máquina_virtual">Falla el inicio de una máquina virtual</span>
+</h3>
+<p>Si observa el error: <code>Error: Required EFI firmware settings file missing: /usr/share/ovmf/x64/OVMF_VARS.ms.fd</code>
+</p>
 <p>Arch Linux no distribuye el firmware ovmf firmado para inicio seguro, así que para arrancar máquinas virtuales debe desactivar el arranque seguro por el momento.
 </p>
 <pre>$ lxc launch ubuntu:18.04 test-vm --vm -c security.secureboot=false
 </pre>
-<p>Esto también se puede añadir al perfil predeterminado.
+<p>Esto también se puede añadir al perfil predeterminado haciendo:
 </p>
+<pre>$ lxc profile set default security.secureboot=false
+</pre>
 <h3><span class="mw-headline" id="Sin_IPv4_con_systemd-networkd">Sin IPv4 con systemd-networkd</span></h3>
 <p>A partir de la versión 244.1, systemd detecta si los contenedores pueden escribir en <code>/sys</code>. Si es así, udev se inicia automáticamente y rompe IPv4 en contenedores sin privilegios. Véase <a rel="nofollow" class="external text" href="https://github.com/systemd/systemd-stable/commit/96d7083c5499b264ecebd6a30a92e0e8fda14cd5">commit bf331d8</a> y el <a rel="nofollow" class="external text" href="https://discuss.linuxcontainers.org/t/no-ipv4-on-arch-linux-containers/6395">debate en linuxcontainers</a>.
 </p>
@@ -230,12 +446,8 @@ BindReadOnlyPaths=/sys</pre>
 <p>También podría solucionar este problema estableciendo <code>raw.lxc: lxc.mount.auto = proc:rw sys:ro</code> en el perfil del contenedor para asegurarse de que <code>/sys</code> es de solo lectura para todo el contenedor, aunque esto podría ser problemático, según el debate vinculado arriba.
 </p>
 <h2><span class="mw-headline" id="Desinstalar">Desinstalar</span></h2>
-<p><a href="../es/Systemd.html#Utilizar_las_unidades" class="mw-redirect" title="Stop (Español)">Detenga</a> y desactive <code>lxd.service</code> y <code>lxd.socket</code>:
+<p><a href="../es/Systemd.html#Utilizar_las_unidades" class="mw-redirect" title="Stop (Español)">Detenga</a> y desactive <code>lxd.service</code> y <code>lxd.socket</code>. Luego <a href="../es/Pacman.html#Desinstalar_paquetes" class="mw-redirect" title="Uninstall (Español)">desinstale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxd">lxd</a></span>.
 </p>
-<p>Luego desinstale el paquete a través de pacman:
-</p>
-<pre> # pacman -R lxd
-</pre>
 <p>Si desinstaló el paquete sin desactivar el servicio, es posible que tenga un enlace simbólico roto en <code>/etc/systemd/system/multi-user.wants/lxd.service</code>.
 </p>
 <p>Si desea eliminar todos los datos:
@@ -248,9 +460,14 @@ BindReadOnlyPaths=/sys</pre>
 <span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
 </h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="https://lxd.readthedocs.io">Documentation oficial</a></li>
-<li><a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/">La página oficial de LXD</a></li>
+<li><a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/">Página oficial de LXD</a></li>
+<li><a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/docs/master/">Documentación oficial</a></li>
+<li><a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/getting-started-cli/">Guía de inicio</a></li>
+<li><a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/advanced-guide/">Guía avanzada</a></li>
+<li><a rel="nofollow" class="external text" href="https://discuss.linuxcontainers.org/">Foro oficial</a></li>
 <li><a rel="nofollow" class="external text" href="https://github.com/lxc/lxd">La página en GitHub de LXD</a></li>
+<li><a rel="nofollow" class="external text" href="https://discuss.linuxcontainers.org/c/tutorials/16">Tutoriales en el foro de LXD</a></li>
+<li><a rel="nofollow" class="external text" href="https://discuss.linuxcontainers.org/tag/release">Notas de las versiones en el foro de LXD</a></li>
 </ul>
 </div>
 </div>
@@ -262,8 +479,8 @@ BindReadOnlyPaths=/sys</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=LXD_(Espa%C3%B1ol)&amp;oldid=597189">https://wiki.archlinux.org/index.php?title=LXD_(Español)&amp;oldid=597189</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 10 February 2020, at 21:12.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=LXD_(Espa%C3%B1ol)&amp;oldid=650295">https://wiki.archlinux.org/index.php?title=LXD_(Español)&amp;oldid=650295</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 30 January 2021, at 20:14.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

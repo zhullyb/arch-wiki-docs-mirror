@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -53,10 +54,11 @@
 <li class="toclevel-2 tocsection-7"><a href="#Japanese"><span class="tocnumber">6.1</span> <span class="toctext">Japanese</span></a></li>
 <li class="toclevel-2 tocsection-8"><a href="#Chinese"><span class="tocnumber">6.2</span> <span class="toctext">Chinese</span></a></li>
 <li class="toclevel-2 tocsection-9"><a href="#Chinese_in_Noto_Fonts"><span class="tocnumber">6.3</span> <span class="toctext">Chinese in Noto Fonts</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#CJK,_but_other_Latin_fonts_are_preferred"><span class="tocnumber">6.4</span> <span class="toctext">CJK, but other Latin fonts are preferred</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-10"><a href="#Alternate_stylistic_sets_for_fonts"><span class="tocnumber">7</span> <span class="toctext">Alternate stylistic sets for fonts</span></a></li>
-<li class="toclevel-1 tocsection-11"><a href="#See_also"><span class="tocnumber">8</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#Alternate_stylistic_sets_for_fonts"><span class="tocnumber">7</span> <span class="toctext">Alternate stylistic sets for fonts</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#See_also"><span class="tocnumber">8</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -549,6 +551,335 @@ or
     &lt;/match&gt;
 &lt;/fontconfig&gt;
 </pre>
+<h3>
+<span id="CJK.2C_but_other_Latin_fonts_are_preferred"></span><span class="mw-headline" id="CJK,_but_other_Latin_fonts_are_preferred">CJK, but other Latin fonts are preferred</span>
+</h3>
+<p>Need <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=noto-fonts-cjk">noto-fonts-cjk</a></span>.
+</p>
+<p>You can replace <code>PT Serif</code>/<code>Roboto</code>/<code>Cascadia Code PL</code> to your favorite <code>serif</code>/<code>sans-serif</code>/<code>monospace</code> fonts.
+</p>
+<p>Also, replace every <code>weak</code> binding font to your language, It's will be used when the <code>lang</code> attribute is not given.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.config/fontconfig/fonts.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE fontconfig SYSTEM "fonts.dtd"&gt;
+&lt;fontconfig&gt;
+  &lt;alias binding="strong"&gt;
+    &lt;family&gt;serif&lt;/family&gt;
+    &lt;prefer&gt;
+      &lt;family&gt;PT Serif&lt;/family&gt;
+    &lt;/prefer&gt;
+  &lt;/alias&gt;
+
+  &lt;alias binding="strong"&gt;
+    &lt;family&gt;sans-serif&lt;/family&gt;
+    &lt;prefer&gt;
+      &lt;family&gt;Roboto&lt;/family&gt;
+    &lt;/prefer&gt;
+  &lt;/alias&gt;
+
+  &lt;alias binding="strong"&gt;
+    &lt;family&gt;monospace&lt;/family&gt;
+    &lt;prefer&gt;
+      &lt;family&gt;Cascadia Code PL&lt;/family&gt;
+    &lt;/prefer&gt;
+  &lt;/alias&gt;
+
+  &lt;!-- Serif CJK --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;ja&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Serif CJK JP&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;ko&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Serif CJK KR&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-cn&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Serif CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-tw&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Serif CJK TC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hans&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Serif CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hant&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Serif CJK TC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="weak"&gt;
+      &lt;string&gt;Noto Serif CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;!-- Sans CJK --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;ja&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK JP&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;ko&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK KR&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-cn&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-tw&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK TC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hk&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK HK&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hans&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hant&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK TC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang"&gt;
+      &lt;string&gt;zh-hant-hk&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK HK&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="weak"&gt;
+      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;!-- Sans Mono CJK --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;ja&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK JP&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;ko&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK KR&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-cn&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-tw&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK TC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hk&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK HK&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hans&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hant&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK TC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang"&gt;
+      &lt;string&gt;zh-hant-hk&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK HK&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;match target="pattern"&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="weak"&gt;
+      &lt;string&gt;Noto Sans Mono CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+&lt;/fontconfig&gt;
+</pre>
 <h2><span class="mw-headline" id="Alternate_stylistic_sets_for_fonts">Alternate stylistic sets for fonts</span></h2>
 <p>Certain fonts come with alternate stylistic sets for characters through an OpenType feature. 
 Generally these stylistic sets are named <code>ss0x</code> and contain small changes to individual characters.
@@ -588,8 +919,8 @@ This shows how to change the default dotted zero to a slashed zero for the monos
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Font_configuration/Examples&amp;oldid=642907">https://wiki.archlinux.org/index.php?title=Font_configuration/Examples&amp;oldid=642907</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 30 November 2020, at 20:10.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Font_configuration/Examples&amp;oldid=652515">https://wiki.archlinux.org/index.php?title=Font_configuration/Examples&amp;oldid=652515</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 February 2021, at 19:05.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

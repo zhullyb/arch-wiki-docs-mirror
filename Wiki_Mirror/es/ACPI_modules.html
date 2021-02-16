@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,7 +34,7 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Estado de la traducción:</strong> este artículo es una traducción de <a href="../en/ACPI_modules.html" title="ACPI modules">ACPI modules</a> revisada por última vez el <b>2020-11-05</b>. Si advierte que la versión inglesa <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=ACPI_modules&amp;diff=0&amp;oldid=610842">ha cambiado</a> puede actualizar la traducción <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">usted mismo</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/ACPI_modules.html" title="ACPI modules">ACPI modules</a> fue revisada el <b>2021-02-14</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=ACPI_modules&amp;diff=0&amp;oldid=640797">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artículos relacionados</p>
 <ul>
@@ -88,7 +89,7 @@
 <li>toshiba_acpi (útil en portátiles Toshiba)</li>
 <li>video (estado de los dispositivos de vídeo)</li>
 </ul>
-<p>lista completa de su kernel en ejecución:
+<p>Se puede obtener una lista completa para su kernel en ejecución con la siguiente orden:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ls -l /usr/lib/modules/$(uname -r)/kernel/drivers/acpi</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">total 112
@@ -114,18 +115,10 @@ drwxr-xr-x 2 root root  4096 Aug 29 23:59 apei
 <h2>
 <span id="C.C3.B3mo_seleccionar_los_adecuados"></span><span class="mw-headline" id="Cómo_seleccionar_los_adecuados">Cómo seleccionar los adecuados</span>
 </h2>
-<p>Debe ir probando los módulos que funcionan en su máquina:
+<p>Debe ir probando los módulos que funcionan en su máquina utilizando <code>modprobe <i>módulo</i></code>, entonces compruebe si el módulo es compatible con su hardware utilizando <code>dmesg</code>. Puede ser útil añadir una búsqueda de texto <i>grep</i> para restringir los resultados:
 </p>
-<pre># modprobe &lt;módulo&gt;
-</pre>
-<p>A continuación, compruebe si el módulo es compatible con su hardware utilizando:
-</p>
-<pre>$ dmesg
-</pre>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Sugerencia:</strong> Puede ser útil añadir una búsqueda de texto <i>grep</i> para restringir los resultados.</div>
-<pre>$ dmesg | grep acpi
-[    0.000000] ACPI: LAPIC (acpi_id[0x00] lapic_id[0x00] enabled)
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep -i acpi</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[    0.000000] ACPI: LAPIC (acpi_id[0x00] lapic_id[0x00] enabled)
 [    0.000000] ACPI: LAPIC (acpi_id[0x01] lapic_id[0x04] enabled)
 [    0.000000] ACPI: LAPIC (acpi_id[0x02] lapic_id[0x01] enabled)
 [    0.000000] ACPI: LAPIC (acpi_id[0x03] lapic_id[0x05] enabled)
@@ -141,10 +134,8 @@ drwxr-xr-x 2 root root  4096 Aug 29 23:59 apei
 <h2>
 <span id="Obteniendo_informaci.C3.B3n"></span><span class="mw-headline" id="Obteniendo_información">Obteniendo información</span>
 </h2>
-<p>Para obtener la información de la batería, simplemente <a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">instale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=acpi">acpi</a></span> desde los <a href="../es/Official_repositories.html" title="Official repositories (Español)">repositorios oficiales</a> y ejecute:
+<p>Para obtener la información de la batería, simplemente <a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">instale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=acpi">acpi</a></span> y ejecute  <code>acpi -i</code>.
 </p>
-<pre>acpi -i
-</pre>
 <p>El uso de <code>/proc</code> para almacenar información ACPI ha sido desaconsejado y desaprobado desde Linux 2.6.24. Los mismos datos están ahora disponibles en <code>/sys</code>, y las partes de interés pueden (deberían) suscribirse a los eventos ACPI desde el kernel a través de netlink. Por ejemplo, para la batería:
 </p>
 <pre>/sys/class/power_supply/BAT0/
@@ -160,11 +151,13 @@ drwxr-xr-x 2 root root  4096 Aug 29 23:59 apei
 </h3>
 <p>A veces verá "ACPI: EC: input buffer is not empty, aborting transaction". Este es un problema con ACPI, más específicamente una incompatibilidad de la BIOS. Puede haber cuatro formas de resolver este problema:
 </p>
-<ul><li>Si está disponible, <a href="../en/Flashing_BIOS_from_Linux.html" class="mw-redirect" title="Flash BIOS">actualice la BIOS</a>.</li></ul>
-<ul><li>Utilice <code>acpi=off</code> como <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetro del kernel</a>, sin embargo, esto matará todas las funciones ACPI, como la carga de la batería y el ahorro de energía.</li></ul>
-<ul><li>En algunos casos, se informó que desactivando <a href="../en/Display_Power_Management_Signaling.html" class="mw-redirect" title="DPMS">DPMS</a> se solucionó el problema <a rel="nofollow" class="external autonumber" href="https://ubuntuforums.org/showthread.php?p=8030130#10">[1]</a>. Sin embargo, el brillo de la pantalla ya no puede ser totalmente controlable: <pre>$ xset dpms force off</pre>
-</li></ul>
-<ul><li>Construya un <a href="../es/Kernel.html" title="Kernel (Español)">kernel</a> a medida con los parches en <a rel="nofollow" class="external text" href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/578506">bugs.launchpad.net</a>.</li></ul>
+<ul>
+<li>Si está disponible, <a href="../en/Flashing_BIOS_from_Linux.html" class="mw-redirect" title="Flash BIOS">actualice la BIOS</a>.</li>
+<li>Utilice <code>acpi=off</code> como <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetro del kernel</a>, sin embargo, esto matará todas las funciones ACPI, como la carga de la batería y el ahorro de energía.</li>
+<li>En algunos casos, se informó que desactivando <a href="../en/Display_Power_Management_Signaling.html" class="mw-redirect" title="DPMS">DPMS</a> se solucionó el problema <a rel="nofollow" class="external autonumber" href="https://ubuntuforums.org/showthread.php?p=8030130#10">[1]</a>. Sin embargo, el brillo de la pantalla ya no puede ser totalmente controlable: <pre>$ xset dpms force off</pre>
+</li>
+<li>Construya un <a href="../es/Kernel.html" title="Kernel (Español)">kernel</a> a medida con los parches en <a rel="nofollow" class="external text" href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/578506">bugs.launchpad.net</a>.</li>
+</ul>
 <h2>
 <span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
 </h2>
@@ -179,8 +172,8 @@ drwxr-xr-x 2 root root  4096 Aug 29 23:59 apei
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ACPI_modules_(Espa%C3%B1ol)&amp;oldid=640739">https://wiki.archlinux.org/index.php?title=ACPI_modules_(Español)&amp;oldid=640739</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 5 November 2020, at 21:00.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ACPI_modules_(Espa%C3%B1ol)&amp;oldid=652425">https://wiki.archlinux.org/index.php?title=ACPI_modules_(Español)&amp;oldid=652425</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 February 2021, at 23:19.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
