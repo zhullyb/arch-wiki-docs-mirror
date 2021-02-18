@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,7 +34,7 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/Capabilities.html" title="Capabilities">Capabilities</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2020-11-28。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Capabilities&amp;diff=0&amp;oldid=642630">更改</a>，则您可以帮助同步翻译。</div>
+<strong>翻译状态：</strong>本文是 <a href="../en/Capabilities.html" title="Capabilities">Capabilities</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-02-17。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Capabilities&amp;diff=0&amp;oldid=645592">更改</a>，则您可以帮助同步翻译。</div>
 <p><b>能力(capability)</b> (POSIX 1003.1e, <span class="plainlinks archwiki-template-man" title="$ man 7 capabilities"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/capabilities.7">capabilities(7)</a></span>) 用更小的粒度控制超级管理员权限，可以避免使用 root 权限。软件开发者应该为二进制文件赋予最小权限，而不是使用强大的<a href="https://en.wikipedia.org/wiki/Setuid" class="extiw" title="wikipedia:Setuid">setuid</a>。很多软件包用了能力，比如 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iputils">iputils</a></span> 提供的<code>ping</code> 使用了 <code>CAP_NET_RAW</code> （能力的一种） ，因此 <code>ping</code> 可以被普通用户执行（效果和使用 <b>setuid</b> 相似）,同时减少了<code>ping</code>的潜在安全隐患。
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -56,7 +57,8 @@
 </ul>
 </li>
 <li class="toclevel-1 tocsection-10"><a href="#%E5%AE%9E%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="tocnumber">4</span> <span class="toctext">实用命令</span></a></li>
-<li class="toclevel-1 tocsection-11"><a href="#%E5%8F%82%E9%98%85"><span class="tocnumber">5</span> <span class="toctext">参阅</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#%E4%B8%BA%E7%A8%8B%E5%BA%8F%E4%B8%B4%E6%97%B6%E6%8E%88%E4%BA%88%E8%83%BD%E5%8A%9B"><span class="tocnumber">5</span> <span class="toctext">为程序临时授予能力</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#%E5%8F%82%E9%98%85"><span class="tocnumber">6</span> <span class="toctext">参阅</span></a></li>
 </ul>
 </div>
 
@@ -118,6 +120,20 @@ security.capability=0sAQAAAgAgAAAAAAAAAAAAAAAAAAA=</pre>
 <pre>$ find /usr/bin /usr/lib -perm /2000 -group root
 </pre>
 <h2>
+<span id=".E4.B8.BA.E7.A8.8B.E5.BA.8F.E4.B8.B4.E6.97.B6.E6.8E.88.E4.BA.88.E8.83.BD.E5.8A.9B"></span><span class="mw-headline" id="为程序临时授予能力">为程序临时授予能力</span>
+</h2>
+<p><span class="plainlinks archwiki-template-man" title="$ man 1 capsh"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/capsh.1">capsh(1)</a></span>可以以指定的能力运行程序，而不需要修改文件扩展属性。
+</p>
+<p>下面的例子展示了如何为 <a href="../en/GNU.html#Toolchain" class="mw-redirect" title="GDB">GDB</a> 赋予 <code>CAP_SYS_PTRACE</code> 能力来调试程序：
+</p>
+<pre>$ sudo -E capsh --caps="cap_setpcap,cap_setuid,cap_setgid+ep cap_sys_ptrace+eip" --keep=1 --user="$USER" --addamb="cap_sys_ptrace" --shell=/usr/bin/gdb -- -p &lt;pid&gt;
+</pre>
+<p><a href="../en/Network_tools.html#Netcat" class="mw-redirect" title="Netcat">netcat</a> 绑定低端口号的例子：
+</p>
+<pre>$ sudo -E capsh --caps="cap_setpcap,cap_setuid,cap_setgid+ep cap_net_bind_service+eip" --keep=1 --user="$USER" --addamb="cap_net_bind_service" --shell=/usr/bin/nc -- -lvtn 123
+Listening on 0.0.0.0 123
+</pre>
+<h2>
 <span id=".E5.8F.82.E9.98.85"></span><span class="mw-headline" id="参阅">参阅</span>
 </h2>
 <ul>
@@ -136,8 +152,8 @@ security.capability=0sAQAAAgAgAAAAAAAAAAAAAAAAAAA=</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Capabilities_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=642633">https://wiki.archlinux.org/index.php?title=Capabilities_(简体中文)&amp;oldid=642633</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 28 November 2020, at 08:06.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Capabilities_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=652650">https://wiki.archlinux.org/index.php?title=Capabilities_(简体中文)&amp;oldid=652650</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 10:20.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

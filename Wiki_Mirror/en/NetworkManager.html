@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -266,9 +267,7 @@
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/networkmanager-libreswan/">networkmanager-libreswan</a></span><sup><small>AUR</small></sup>
 </li>
-<li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/networkmanager-l2tp/">networkmanager-l2tp</a></span><sup><small>AUR</small></sup>
-</li>
+<li><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=networkmanager-l2tp">networkmanager-l2tp</a></span></li>
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/networkmanager-ssh-git/">networkmanager-ssh-git</a></span><sup><small>AUR</small></sup>
 </li>
@@ -282,19 +281,19 @@
 <p>NetworkManager comes with <span class="plainlinks archwiki-template-man" title="$ man 1 nmcli"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/nmcli.1">nmcli(1)</a></span> and <span class="plainlinks archwiki-template-man" title="$ man 1 nmtui"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/nmtui.1">nmtui(1)</a></span>.
 </p>
 <h3><span class="mw-headline" id="nmcli_examples">nmcli examples</span></h3>
-<p>List nearby wifi networks:
+<p>List nearby Wi-Fi networks:
 </p>
 <pre>$ nmcli device wifi list
 </pre>
-<p>Connect to a wifi network:
+<p>Connect to a Wi-Fi network:
 </p>
 <pre>$ nmcli device wifi connect <i>SSID_or_BSSID</i> password <i>password</i>
 </pre>
-<p>Connect to a hidden network:
+<p>Connect to a hidden Wi-Fi network:
 </p>
 <pre>$ nmcli device wifi connect <i>SSID_or_BSSID</i> password <i>password</i> hidden yes
 </pre>
-<p>Connect to a wifi on the <code>wlan1</code> wifi interface:
+<p>Connect to a Wi-Fi on the <code>wlan1</code> interface:
 </p>
 <pre>$ nmcli device wifi connect <i>SSID_or_BSSID</i> password <i>password</i> ifname wlan1 <i>profile_name</i>
 </pre>
@@ -302,19 +301,23 @@
 </p>
 <pre>$ nmcli device disconnect ifname eth0
 </pre>
-<p>Reconnect an interface marked as disconnected:
-</p>
-<pre>$ nmcli connection up uuid <i>UUID</i>
-</pre>
-<p>Get a list of UUIDs:
+<p>Get a list of connections with their names, UUIDs, types and backing devices:
 </p>
 <pre>$ nmcli connection show
+</pre>
+<p>Activate a connection (i.e. connect to a network with an existing profile):
+</p>
+<pre>$ nmcli connection up <i>name_or_uuid</i>
+</pre>
+<p>Delete a connection:
+</p>
+<pre>$ nmcli connection delete <i>name_or_uuid</i>
 </pre>
 <p>See a list of network devices and their state:
 </p>
 <pre>$ nmcli device
 </pre>
-<p>Turn off wifi:
+<p>Turn off Wi-Fi:
 </p>
 <pre>$ nmcli radio wifi off
 </pre>
@@ -647,7 +650,7 @@ servers=::1,127.0.0.1</pre>
 <li>If <code>/usr/bin/resolvconf</code> exists, then <a href="#Use_openresolv">resolvconf is used</a>. This is the equivalent of <code>main.rc-manager=resolvconf</code>.</li>
 <li>If <code>/etc/resolv.conf</code> is a regular file, then NetworkManager writes to it directly. This is the equivalent of <code>main.rc-manager=file</code>.</li>
 </ul>
-<p>Further details are provided in the <span class="plainlinks archwiki-template-man" title="$ man 5 NetworkManager"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/NetworkManager.5">NetworkManager(5)</a></span> man page.
+<p>Further details are provided in the <span class="plainlinks archwiki-template-man" title="$ man 5 NetworkManager.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/NetworkManager.conf.5">NetworkManager.conf(5)</a></span> man page.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> Using openresolv allows NetworkManager to coexists with other <i>resolvconf</i> supporting software or, for example, to run a local DNS caching and split-DNS resolver for which openresolv has a <a href="../en/Openresolv.html#Subscribers" title="Openresolv">subscriber</a>. Note that conditional forwarding is <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/NetworkManager/NetworkManager/issues/153">not yet fully supported</a> when using NetworkManager with openresolv.</div>
@@ -1132,7 +1135,7 @@ $ ip netns exec <i>MY_NAMESPACE</i> killall NetworkManager
 <p>otherwise NetworkManager will later fail to establish the connection with a <code>device is strictly unmanaged</code> error.
 </p>
 <h3><span class="mw-headline" id="Automatically_connect_to_VPN">Automatically connect to VPN</span></h3>
-<p>NetworkManager can be set to automatically connect to a VPN when connecting to the internet, on a per network basis. The VPN connection itself can be added in GNOME's NetworkManager font-end, but to make it automatically use the VPN <code>nmcli</code> must be used. Other front-ends might not have this limitation.
+<p>NetworkManager can be set to automatically connect to a VPN when connecting to the internet, on a per network basis. The VPN connection itself can be added in GNOME's NetworkManager front-end, but to make it automatically use the VPN <code>nmcli</code> must be used. Other front-ends might not have this limitation.
 </p>
 <p>First, make sure to make the VPN connection available to all users. In the GNOME this is a matter of checking a box under the <code>details</code> tab. Under the <code>Identity</code> tab, in the password field, click the icon on the right side in the field, and set it to <code>Store the password for all users</code>.
 </p>
@@ -1353,8 +1356,8 @@ $ nmcli device wifi connect <i>SSID</i> password <i>password</i>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NetworkManager&amp;oldid=649036">https://wiki.archlinux.org/index.php?title=NetworkManager&amp;oldid=649036</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 January 2021, at 13:04.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NetworkManager&amp;oldid=652666">https://wiki.archlinux.org/index.php?title=NetworkManager&amp;oldid=652666</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 13:47.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

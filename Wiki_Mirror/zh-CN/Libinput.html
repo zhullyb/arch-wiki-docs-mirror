@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -52,6 +53,8 @@
 <p>来自<a rel="nofollow" class="external text" href="https://freedesktop.org/wiki/Software/libinput/">libinput</a> wiki 项目
 </p>
 <dl><dd>libinput 是一个函数库，在 Wayland 上用来接收设备的输入，在 X.Org 上提供输入设备的驱动。它提供对设备事件的检测和接收。对输入设备信号进行处理。它提供了一些列的函数供用户使用。</dd></dl>
+<p>需要注意的是， X.Org 输入驱动为大多数常规<a href="../en/Xorg.html#Input_devices" title="Xorg">输入设备</a>提供了支持，libinput 项目的目标是为触摸板和触摸屏的触摸功能（如多点触控、手势等）提供高级支持。详情请参见 <a rel="nofollow" class="external text" href="https://wayland.freedesktop.org/libinput/doc/latest/">libinput 文档</a>。
+</p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -99,18 +102,18 @@
 <h2>
 <span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
 </h2>
-<p>在 Wayland 上使用 libinput 不需要安装。<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libinput">libinput</a></span> 包是所有 Wayland 图形环境的依赖包并且已经安装，也不需要额外的驱动。
+<p>在 Wayland 上使用 libinput 一般不需要手动安装。<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libinput">libinput</a></span> 包是所有 Wayland 图形环境的依赖包并且已经安装，也不需要额外的驱动。
 </p>
-<p>如果想要在 <a href="../en/Xorg.html" title="Xorg">Xorg</a> 上 <a href="../zh-CN/Help:Reading.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" class="mw-redirect" title="安装">安装</a> libinput，使用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-input-libinput">xf86-input-libinput</a></span> 包。此包允许 libinput 在 X 上作为驱动使用。此驱动会代替 evdev 和 synaptics 运行。 <a rel="nofollow" class="external autonumber" href="https://freedesktop.org/wiki/Software/libinput/">[1]</a>
+<p>如果想要在 <a href="../en/Xorg.html" title="Xorg">Xorg</a> 上使用 libinput，需要<a href="../zh-CN/Help:Reading.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" class="mw-redirect" title="安装">安装</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-input-libinput">xf86-input-libinput</a></span> 包。这是 libinput 的一个包装（wrapper），能够使 libinput 用于 X 上的输入设备。同时此驱动可以作为 evdev 和 synaptics 的替代品 <a rel="nofollow" class="external autonumber" href="https://freedesktop.org/wiki/Software/libinput/">[1]</a>。也就是说，其他用于 X 输入的软件包（即以 <code>xf86-input-</code> 为前缀的软件包）都可以使用这个驱动替换
 </p>
-<p>你可能也要安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xinput">xorg-xinput</a></span> 来更改 runtime 设置
+<p>你可能还要安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xinput">xorg-xinput</a></span> 以便在程序运行时更改设置。
 </p>
 <h2>
 <span id=".E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="配置">配置</span>
 </h2>
-<p>在 <a href="../en/Wayland.html" title="Wayland">Wayland</a> 上, 这里没有配置文件。 是否可配置这是由你的桌面环境开发者所决定的。详情请看 <a href="#Graphical_tools">#Graphical tools</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>.
+<p>在 <a href="../en/Wayland.html" title="Wayland">Wayland</a> 上, 没有关于 libinput 的配置文件。 可配置内容由你使用的桌面环境对 libinput 的支持情况决定。详情请见 <a href="#%E5%9B%BE%E5%BD%A2%E5%B7%A5%E5%85%B7">#图形工具</a> 部分。
 </p>
-<p>对于 <a href="../en/Xorg.html" title="Xorg">Xorg</a>, 默认的配置文件在 <code>/usr/share/X11/xorg.conf.d/40-libinput.conf</code>. 没必要用额外的配置文件来自动检测键盘，触摸板，小红点和触摸屏。
+<p>对于 <a href="../en/Xorg.html" title="Xorg">Xorg</a>, 默认的配置文件安装在 <code>/usr/share/X11/xorg.conf.d/40-libinput.conf</code>。一般没有必要使用额外的配置文件来检测键盘，触摸板，指点杆（小红点）和触摸屏。
 </p>
 <h3>
 <span id=".E4.BD.BF.E7.94.A8_xinput"></span><span class="mw-headline" id="使用_xinput">使用 xinput</span>
@@ -121,37 +124,47 @@
 </pre>
 <p>这将会输出系统中的设备和它们被 libinput 支持的具体特性。
 </p>
-<p>重启图形环境之后，如果没有其它驱动程序被配置为优先级，设备应由具有默认配置的 libinput 管理。
+<p>重启图形环境之后，如果没有其它驱动程序被配置为优先，设备应由具有默认配置的 libinput 管理。
 </p>
-<p>参见 <span class="plainlinks archwiki-template-man" title="$ man 4 libinput"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/libinput.4">libinput(4)</a></span> 了解可设定的常规选项和有关允许参数的信息。<i>xinput</i> 工具用于查看或更改运行中的的特定设备的可用选项。例如：
+<p>参见 <span class="plainlinks archwiki-template-man" title="$ man 4 libinput"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/libinput.4">libinput(4)</a></span> 了解可设定的常规选项和一些参数信息。<i>xinput</i> 工具用于查看或更改运行中的特定设备的设置。例如：
+</p>
+<p>查看所有设备并确定其名称和编号：
 </p>
 <pre>$ xinput list
 </pre>
-<p>查看所有设备并确定其名称和编号。 在下文中，<code><i>device</i></code> 是用于标识要操作的设备的名称或编号。
+<p>查看 <i>device</i> 的设置
+（在下文中，<code><i>device</i></code> 表示要操作的设备的名称或编号）：
 </p>
 <pre>$ xinput list-props <i>device</i>
 </pre>
-<p>查看
+<p>修改 <i>device</i> 的某项设置：
 </p>
-<pre>$ xinput set-prop <i>device</i> <i>option-number</i> <i>setting</i>
+<pre>$ xinput set-prop <i>device</i> <i>option</i> <i>setting</i>
 </pre>
-<p>以及修改一项设置。例如，设置开启 libinput 的两种单击选项（303），则使用以下命令：
+<p>上文中 <code><i>optioin</i></code> 既可以是设置项的名称，也可以是其对应编号。
+例如，修改“libinput Click Method Enabled (303)”项目的两个值，可以使用以下命令：
 </p>
 <pre>$ xinput set-prop 14 303 {1 1}
+</pre>
+<p>或者
+</p>
+<pre>$ xinput set-prop 14 "libinput Click Method Enabled" 1 1
 </pre>
 <h3>
 <span id=".E4.BD.BF.E7.94.A8_Xorg_.E9.85.8D.E7.BD.AE.E6.96.87.E4.BB.B6"></span><span class="mw-headline" id="使用_Xorg_配置文件">使用 Xorg 配置文件</span>
 </h3>
-<p>参见 <a href="../en/Xorg.html#Using_.conf_files" title="Xorg">Xorg#Using .conf files</a> 了解永久的选项设置。<a href="../en/Logitech_Marble_Mouse.html#Using_libinput" title="Logitech Marble Mouse">Logitech Marble Mouse#Using libinput</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 和 <a href="#Button_re-mapping">#Button re-mapping</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 中做出了举例。
+<p>参见 <a href="../en/Xorg.html#Using_.conf_files" title="Xorg">Xorg#Using .conf files</a> 了解永久的选项设置。<a href="../en/Logitech_Marble_Mouse.html#libinput" title="Logitech Marble Mouse">Logitech Marble Mouse#libinput</a> 和 <a href="#%E6%8C%89%E9%94%AE%E6%98%A0%E5%B0%84">#按键映射</a> 中列举了几个例子。
 </p>
-<p><a href="../en/Xorg.html#Input_devices" title="Xorg">Xorg#Input devices</a> 的替代驱动程序通常可以安装共存。如果您打算为一个设备切换驱动程序以使用 libinput，请确保没有其它驱动程序的旧配置文件 <code>/etc/X11/xorg.conf.d/</code> 拥有优先级。
+<p><a href="../en/Xorg.html#Input_devices" title="Xorg">Xorg#Input devices</a> 的替代驱动程序通常可以同时安装。如果您打算将一个设备的驱动程序切换到 libinput，请确保没有在 <code>/etc/X11/xorg.conf.d/</code> 的配置文件中为其它驱动程序配置优先。
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> 如果你同时安装了 libinput 和 synaptics 并使用其默认配置（即 <code>/etc/X11/xorg.conf.d/</code> 中没有属于两者中任一的文件），synaptics 将因其在默认安装目录中拥有更高的数字顺序 <code>70-</code> 而获得优先级。为了避免这种情况，您可以将默认的 libinput 配置文件（<code>40-libinput.conf</code>）符号链接到目录搜索顺序优先于 <code>70-synaptics.conf</code> 的 <code>/etc/X11/xorg.conf.d/</code> 中去取代它：
+<strong>Tip:</strong> 如果你同时安装了 libinput 和 synaptics 并使用其默认配置（即 <code>/etc/X11/xorg.conf.d/</code> 中没有属于两者中任一的文件），synaptics 将因其在默认安装目录中拥有更高的数字顺序 <code>70-</code> 而获得较高优先级。为了避免这种情况，您可以将默认的 libinput 配置文件（<code>40-libinput.conf</code>）符号链接到目录搜索顺序优先于 <code>70-synaptics.conf</code> 的 <code>/etc/X11/xorg.conf.d/</code> 中去取代它：
 <pre># ln -s /usr/share/X11/xorg.conf.d/40-libinput.conf /etc/X11/xorg.conf.d/40-libinput.conf
 </pre>
-如果你的 <code>/etc/X11/xorg.conf.d/</code> 中<i>确认</i>存在两者的配置文件，libinput 的文件一定拥有较次的优先级顺序; 见 <a href="/index.php?title=Xorg%EF%BC%83Using_.conf_files&amp;action=edit&amp;redlink=1" class="new" title="Xorg＃Using .conf files (page does not exist)">Xorg＃Using .conf files</a>。如果要禁用 libinput（并回退到较旧的驱动程序）- 只需从 <code>/etc/X11/xorg.conf.d/</code> 中删除之前创建的符号链接即可。</div>
-<p>检查哪些设备是由 libinput 管理的一种方法是查看 <a href="/index.php?title=Xorg%EF%BC%83General&amp;action=edit&amp;redlink=1" class="new" title="Xorg＃General (page does not exist)">xorg logfile</a>。以下是一个例子：
+如果在 <code>/etc/X11/xorg.conf.d/</code> 目录下这两个配置文件***同时存在***，libinput 的配置一定是处于较低优先级的；参见 <a href="../en/Xorg.html#Using_.conf_files" title="Xorg">Xorg#Using .conf files</a>。如果要禁用 libinput（并回退到较旧的驱动程序）， 只需从 <code>/etc/X11/xorg.conf.d/</code> 中删除之前创建的符号链接即可。</div>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> 如果配置文件不起作用，请检查非特权用户是否拥有该文件读取权限</div>
+<p>检查哪些设备是由 libinput 管理的一种方法是查看 <a href="../en/Xorg.html#General" title="Xorg">xorg 日志文件</a>。以下是一个例子：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ grep -e "Using input driver 'libinput'" <i>/path/to/Xorg.0.log</i></pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[    28.799] (II) Using input driver 'libinput' for 'Power Button'
@@ -164,12 +177,12 @@
 [    28.895] (II) Using input driver 'libinput' for 'ThinkPad Extra Buttons'</pre>
 <p>这是一台 <code>/etc/X11/xorg.conf.d/</code> 中没有任何配置文件的笔记本电脑，也就是说，设备是被自动检测出来的。
 </p>
-<p>当然，你可以选择为一个设备使用替代的驱动程序，而为其它设备选择 libinput。许多因素可能会影响到底使用哪个驱动程序。举个例子，与 <a href="../en/Touchpad_Synaptics.html" title="Touchpad Synaptics">Touchpad Synaptics</a> 相比，libinput 驱动程序根据自己的喜好去自定义触摸板行为的选项较少，但处理多点触控事件的程序逻辑要多得多（例如，手掌检测）。因此，如果你在使用某个驱动程序的时候，在硬件上遭遇了问题，那么尝试一下替代驱动程序是合理的。
+<p>当然，你可以选择为一个设备使用替代的驱动程序，而为其它设备选择 libinput。许多因素可能会影响到底使用哪个驱动程序。举个例子，与 <a href="../en/Touchpad_Synaptics.html" title="Touchpad Synaptics">Touchpad Synaptics</a> 相比，libinput 驱动程序能根据自己的喜好去自定义触摸板行为的选项较少，但处理多点触控事件的程序逻辑要多得多（例如，手掌检测）。因此，如果你在使用某个驱动程序的时候，在硬件上遭遇了问题，那么尝试一下替代驱动程序是合理的。
 </p>
-<p>自定义配置文件应放在 <code>/etc/X11/xorg.conf.d/</code> 中，并且通常选择被广泛使用的命名模式 <code>30-touchpad.conf</code> 作为文件名。
+<p>自定义配置文件应放在 <code>/etc/X11/xorg.conf.d/</code> 中，并且遵循被广泛使用的命名模式，通常选择 <code>30-touchpad.conf</code> 作为文件名。
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> 阅读 <code>/usr/share/X11/xorg.conf.d/40-libinput.conf</code> 中的 CONFIGURATION DETAILS 以获取指导并参考 <span class="plainlinks archwiki-template-man" title="$ man 4 libinput"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/libinput.4">libinput(4)</a></span> 手册页有关可用配置选项的详细说明</div>
+<strong>Tip:</strong> 阅读 <code>/usr/share/X11/xorg.conf.d/40-libinput.conf</code> 中的详细配置以获取指导并参考 <span class="plainlinks archwiki-template-man" title="$ man 4 libinput"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/libinput.4">libinput(4)</a></span> 手册页获取有关可用配置选项的详细说明</div>
 <p>一个基本的配置应该遵循以下的结构：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/X11/xorg.conf.d/30-touchpad.conf</pre>
@@ -179,7 +192,7 @@
     ...
 EndSection
 </pre>
-<p>你可以在单个配置文件中定义任意多的部分（通常每个输入设备一个配置部分）
+<p>你可以在单个配置文件中定义任意多的 Section（通常每个输入设备只配置一个 Section）
 要配置你选择的设备，请指定 INPUTCLASS SECTION <span class="plainlinks archwiki-template-man" title="$ man 5 xorg.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xorg.conf.5">xorg.conf(5)</a></span> 中的一个过滤器，例如：
 </p>
 <ul>
@@ -206,28 +219,28 @@ EndSection
 <h3>
 <span id=".E5.9B.BE.E5.BD.A2.E5.B7.A5.E5.85.B7"></span><span class="mw-headline" id="图形工具">图形工具</span>
 </h3>
-<p>There are different GUI tools:
+<p>下面列出了一些图形工具：
 </p>
 <ul>
 <li>
 <a href="../en/GNOME.html" title="GNOME">GNOME</a>:
 <ul>
-<li>Control center has a basic UI. See <a href="../en/GNOME.html#Mouse_and_touchpad" title="GNOME">GNOME#Mouse and touchpad</a>.</li>
+<li>控制中心（Control center）带有一个基础配置页面，详见 <a href="../en/GNOME.html#Mouse_and_touchpad" title="GNOME">GNOME#Mouse and touchpad</a>.</li>
 <li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gnome-tweaks">gnome-tweaks</a></span> offers some additional settings.</li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gnome-tweaks">gnome-tweaks</a></span> 提供一些其他设置。</li>
 </ul>
 </li>
 <li>
 <a href="../en/Cinnamon.html" title="Cinnamon">Cinnamon</a>:
-<ul><li>Similar to the GNOME UI, with more options.</li></ul>
+<ul><li>与 GNOME 界面相似，可更改选项更多。</li></ul>
 </li>
 <li>
 <a href="../en/KDE.html#Plasma" class="mw-redirect" title="KDE Plasma">KDE Plasma</a> 5:
-<ul>
-<li>Set of keyboard, mouse, controller, and touch pad options. Some features are still placeholders.</li>
+<ul><li>键盘，鼠标和控制器可以通过系统设置（System Settings）配置。</li></ul>
+</li>
 <li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/kcm-pointing-devices-git/">kcm-pointing-devices-git</a></span><sup><small>AUR</small></sup> is a rewritten KCM for all input devices supported by libinput.</li>
-</ul>
+<a href="../en/Xfce.html" title="Xfce">Xfce</a>
+<ul><li>在 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xfce4-settings">xfce4-settings</a></span> 下的“鼠标和触摸板（Mouse and Touchpad）”子菜单中进行配置。</li></ul>
 </li>
 </ul>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
@@ -400,10 +413,7 @@ $ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Input_devices.html" title="Category:Input devices (简体中文)">Input devices (简体中文)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../zh-CN/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (简体中文)">Pages or sections flagged with Template:Translateme (简体中文)</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../zh-CN/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (简体中文)">Pages or sections flagged with Template:Translateme (简体中文)</a></li></ul>
 </div>
 </div>
 	</div>
@@ -411,8 +421,8 @@ $ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Libinput_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=627825">https://wiki.archlinux.org/index.php?title=Libinput_(简体中文)&amp;oldid=627825</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 August 2020, at 12:24.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Libinput_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=652715">https://wiki.archlinux.org/index.php?title=Libinput_(简体中文)&amp;oldid=652715</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 February 2021, at 10:20.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

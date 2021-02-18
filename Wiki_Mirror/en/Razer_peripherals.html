@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -88,6 +89,13 @@
 <a href="#Troubleshooting_2"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
 <li class="toclevel-2 tocsection-17"><a href="#Mouse_randomly_stops_working"><span class="tocnumber">4.1</span> <span class="toctext">Mouse randomly stops working</span></a></li>
+<li class="toclevel-2 tocsection-18">
+<a href="#CAPS_Lock_makes_Razer_Blade_Stealth_crash"><span class="tocnumber">4.2</span> <span class="toctext">CAPS Lock makes Razer Blade Stealth crash</span></a>
+<ul>
+<li class="toclevel-3 tocsection-19"><a href="#If_using_Xorg"><span class="tocnumber">4.2.1</span> <span class="toctext">If using Xorg</span></a></li>
+<li class="toclevel-3 tocsection-20"><a href="#If_using_Xwayland"><span class="tocnumber">4.2.2</span> <span class="toctext">If using Xwayland</span></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -233,6 +241,29 @@ After install run as root
 </pre>
 <p>Connect the mouse and it should be working.
 </p>
+<h3><span class="mw-headline" id="CAPS_Lock_makes_Razer_Blade_Stealth_crash">CAPS Lock makes Razer Blade Stealth crash</span></h3>
+<p>The crash is caused by keyboard built-in driver.
+</p>
+<h4><span class="mw-headline" id="If_using_Xorg">If using Xorg</span></h4>
+<p>Get the keyboard description:
+</p>
+<pre>$ xinput list | grep "Set 2 keyboard"
+</pre>
+<p>And create the file below, here we assume the above command returned "AT Raw Set 2 keyboard".
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/X11/xorg.conf.d/00-keyboard-razer.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Section "InputClass"
+    Identifier      "Disable built-in keyboard"
+    MatchProduct    "AT Raw Set 2 keyboard"
+    Option          "Ignore"    "true"
+EndSection</pre>
+<h4><span class="mw-headline" id="If_using_Xwayland">If using Xwayland</span></h4>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/default/keyboard</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">XKBOPTIONS="ctrl:nocaps"</pre>
+<p>CAPS Lock will now be identified as another CTRL key.
+</p>
+<p>Source: <a rel="nofollow" class="external free" href="https://github.com/rolandguelle/razer-blade-stealth-linux/blob/master/ubuntu-18-04.md#13-caps-lock-crash">https://github.com/rolandguelle/razer-blade-stealth-linux/blob/master/ubuntu-18-04.md#13-caps-lock-crash</a>
+</p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
@@ -253,8 +284,8 @@ After install run as root
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Razer_peripherals&amp;oldid=590347">https://wiki.archlinux.org/index.php?title=Razer_peripherals&amp;oldid=590347</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 27 November 2019, at 10:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Razer_peripherals&amp;oldid=652664">https://wiki.archlinux.org/index.php?title=Razer_peripherals&amp;oldid=652664</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 11:21.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -654,12 +654,17 @@ Randomization under memory exhaustion @~0: No randomization
 Randomization under memory exhaustion @0 : No randomization
 </pre>
 <h3><span class="mw-headline" id="Restricting_access_to_kernel_logs">Restricting access to kernel logs</span></h3>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a><b>This section is being considered for removal.</b><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> All <a href="../en/Kernel.html#Officially_supported_kernels" title="Kernel">officially supported kernels</a> have <code>CONFIG_SECURITY_DMESG_RESTRICT=y</code>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Security">Talk:Security#</a>)</div>
+</div>
 <p>The kernel logs contain useful information for an attacker trying to exploit kernel vulnerabilities, such as sensitive memory addresses. The <code>kernel.dmesg_restrict</code> flag was to forbid access to the logs without the <code>CAP_SYS_ADMIN</code> capability (which only processes running as root have by default).
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/sysctl.d/51-dmesg-restrict.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">kernel.dmesg_restrict = 1</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> This is enabled by default in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span><a rel="nofollow" class="external autonumber" href="https://github.com/archlinux/svntogit-packages/commit/b78bc292e2218661a3b70163ec30711c87100941">[2]</a>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-zen">linux-zen</a></span><a rel="nofollow" class="external autonumber" href="https://github.com/archlinux/svntogit-packages/commit/5962e24fe3062a3a96dbc1876ba8ea4ef1d500c9">[3]</a> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-hardened">linux-hardened</a></span>.</div>
+<strong>Note:</strong> This is enabled by default in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span><a rel="nofollow" class="external autonumber" href="https://github.com/archlinux/svntogit-packages/commit/b78bc292e2218661a3b70163ec30711c87100941">[2]</a>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span><a rel="nofollow" class="external autonumber" href="https://github.com/archlinux/svntogit-packages/commit/283332609549a479357d2d58adf80d12e89e345f">[3]</a>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-zen">linux-zen</a></span><a rel="nofollow" class="external autonumber" href="https://github.com/archlinux/svntogit-packages/commit/5962e24fe3062a3a96dbc1876ba8ea4ef1d500c9">[4]</a> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-hardened">linux-hardened</a></span>.</div>
 <h3><span class="mw-headline" id="Restricting_access_to_kernel_pointers_in_the_proc_filesystem">Restricting access to kernel pointers in the proc filesystem</span></h3>
 <p>Setting <code>kernel.kptr_restrict</code> to 1 will hide kernel symbol addresses in <code>/proc/kallsyms</code> from regular users without <code>CAP_SYSLOG</code>, making it more difficult for kernel exploits to resolve addresses/symbols dynamically. This will not help that much on a pre-compiled Arch Linux kernel, since a determined attacker could just download the kernel package and get the symbols manually from there, but if you are compiling your own kernel, this can help mitigating local root exploits. This will break some <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=perf">perf</a></span> commands when used by non-root users (but many <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=perf">perf</a></span> features require root access anyway). See <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/34323">FS#34323</a> for more information.
 </p>
@@ -829,7 +834,7 @@ SupplementaryGroups=proc</pre>
 <h3><span class="mw-headline" id="Proxies">Proxies</span></h3>
 <p>Proxies are commonly used as an extra layer between applications and the network, sanitizing data from untrusted sources. The attack surface of a small proxy running with lower privileges is significantly smaller than a complex application running with the end user privileges.
 </p>
-<p>For example the DNS resolver is implemented in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span>, that is linked with the application (that may be running as root), so a bug in the DNS resolver might lead to a remote code execution. This can be prevented by installing a DNS caching server, such as <a href="../en/Dnsmasq.html" title="Dnsmasq">dnsmasq</a>, which acts as a proxy. <a rel="nofollow" class="external autonumber" href="https://googleonlinesecurity.blogspot.it/2016/02/cve-2015-7547-glibc-getaddrinfo-stack.html">[4]</a>
+<p>For example the DNS resolver is implemented in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span>, that is linked with the application (that may be running as root), so a bug in the DNS resolver might lead to a remote code execution. This can be prevented by installing a DNS caching server, such as <a href="../en/Dnsmasq.html" title="Dnsmasq">dnsmasq</a>, which acts as a proxy. <a rel="nofollow" class="external autonumber" href="https://googleonlinesecurity.blogspot.it/2016/02/cve-2015-7547-glibc-getaddrinfo-stack.html">[5]</a>
 </p>
 <h3><span class="mw-headline" id="Managing_TLS_certificates">Managing TLS certificates</span></h3>
 <p>See <a href="../en/Transport_Layer_Security.html#Trust_management" class="mw-redirect" title="TLS">TLS#Trust management</a>.
@@ -837,7 +842,7 @@ SupplementaryGroups=proc</pre>
 <h2><span class="mw-headline" id="Physical_security">Physical security</span></h2>
 <p>Physical access to a computer is root access given enough time and resources. However, a high <i>practical</i> level of security can be obtained by putting up enough barriers.
 </p>
-<p>An attacker can gain full control of your computer on the next boot by simply attaching a malicious IEEE 1394 (FireWire), Thunderbolt or PCI Express device as they are given full memory access.<a rel="nofollow" class="external autonumber" href="https://www.breaknenter.org/projects/inception/">[5]</a><sup title="Last check status: SSL error">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup> There is little you can do from preventing this, or modification of the hardware itself - such as flashing malicious firmware onto a drive. However, the vast majority of attackers will not be this knowledgeable and determined.
+<p>An attacker can gain full control of your computer on the next boot by simply attaching a malicious IEEE 1394 (FireWire), Thunderbolt or PCI Express device as they are given full memory access.<a rel="nofollow" class="external autonumber" href="https://www.breaknenter.org/projects/inception/">[6]</a><sup title="Last check status: SSL error">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup> There is little you can do from preventing this, or modification of the hardware itself - such as flashing malicious firmware onto a drive. However, the vast majority of attackers will not be this knowledgeable and determined.
 </p>
 <p><a href="#Data-at-rest_encryption">#Data-at-rest encryption</a> will prevent access to your data if the computer is stolen, but malicious firmware can be installed to obtain this data upon your next log in by a resourceful attacker.
 </p>
@@ -932,6 +937,7 @@ esac
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
+<li><a href="../en/Category:Sections_flagged_with_Template:Remove.html" title="Category:Sections flagged with Template:Remove">Sections flagged with Template:Remove</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
 <li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
@@ -942,8 +948,8 @@ esac
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Security&amp;oldid=652382">https://wiki.archlinux.org/index.php?title=Security&amp;oldid=652382</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 February 2021, at 20:09.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Security&amp;oldid=652573">https://wiki.archlinux.org/index.php?title=Security&amp;oldid=652573</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 February 2021, at 13:41.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -157,11 +158,10 @@
 <li class="toclevel-2 tocsection-51"><a href="#Switch_on_connect"><span class="tocnumber">9.4</span> <span class="toctext">Switch on connect</span></a></li>
 <li class="toclevel-2 tocsection-52"><a href="#Script_for_switching_analog_outputs"><span class="tocnumber">9.5</span> <span class="toctext">Script for switching analog outputs</span></a></li>
 <li class="toclevel-2 tocsection-53"><a href="#Disable_muting_media_on_entering_voice_call_(module-role-cork)"><span class="tocnumber">9.6</span> <span class="toctext">Disable muting media on entering voice call (module-role-cork)</span></a></li>
-<li class="toclevel-2 tocsection-54"><a href="#Disable_auto_switching_headset_to_HSP/HFP"><span class="tocnumber">9.7</span> <span class="toctext">Disable auto switching headset to HSP/HFP</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-55"><a href="#Troubleshooting"><span class="tocnumber">10</span> <span class="toctext">Troubleshooting</span></a></li>
-<li class="toclevel-1 tocsection-56"><a href="#See_also"><span class="tocnumber">11</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-54"><a href="#Troubleshooting"><span class="tocnumber">10</span> <span class="toctext">Troubleshooting</span></a></li>
+<li class="toclevel-1 tocsection-55"><a href="#See_also"><span class="tocnumber">11</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -650,10 +650,14 @@ allow-moves=true</pre>
 <strong>Note:</strong> You could possibly also keep the libao standard of outputting to the <i>alsa</i> driver and its default device if you install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseaudio-alsa">pulseaudio-alsa</a></span> since the ALSA default device then <b>is</b> PulseAudio.</div>
 <h2><span class="mw-headline" id="Audio_post-processing">Audio post-processing</span></h2>
 <h3><span class="mw-headline" id="PulseEffects">PulseEffects</span></h3>
-<p>PulseEffects is a GTK advanced utility for applying audio effects to applications output or to microphone before sending its audio stream to a recording tool. The user has full control over which effects to apply and their order. To install it, choose between <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseeffects">pulseeffects</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/pulseeffects-git/">pulseeffects-git</a></span><sup><small>AUR</small></sup>.
+<p>PulseEffects is a GTK advanced utility for applying audio effects to applications output or to microphone before sending its audio stream to a recording tool. The user has full control over which effects to apply and their order.
 </p>
 <p>Effects for applications output are limiter, auto gain, expander, compressor, multiband compressor, equalizer, bass enhancer, exciter, crystalizer, reverberation, crossfeed, filter (lowpass, highpass, bandpass and bandreject modes), stereo tools, loudness, maximizer, pitch, gate, multiband gate, deesser and convolver. Effects applicable to input streams are gate, multiband gate, WebRTC, limiter, compressor, multiband compressor, equalizer, reverberation, pitch, filter (lowpass, highpass, bandpass and bandreject modes) and deesser.
 </p>
+<p>In order to use PulseEffects with PulseAudio, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/pulseeffects-legacy-git/">pulseeffects-legacy-git</a></span><sup><small>AUR</small></sup>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseeffects">pulseeffects</a></span> package from the official repositories requires replacing PulseAudio with <a href="../en/PipeWire.html" title="PipeWire">PipeWire</a> and will fail to launch with the error <code>Failed to get required plugin: pipewiresrc</code> otherwise. See <a href="../en/PipeWire.html#PulseEffects" title="PipeWire">PipeWire#PulseEffects</a> and <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/69437">FS#69437</a> for details.</div>
 <p>If PulseEffects plugins are greyed out after installing plugins, trying to start the daemon produces an error, or no devices are shown in the <i>Settings &gt; PulseAudio</i> tab, consider clearing the cache as shown in <a rel="nofollow" class="external autonumber" href="https://github.com/wwmm/pulseeffects/issues/488#issuecomment-484101349">[3]</a>.
 </p>
 <p>A collection of PulseEffects presets can be found in <a rel="nofollow" class="external text" href="https://github.com/wwmm/pulseeffects/wiki/Community-presets">community presets</a>.
@@ -1154,14 +1158,6 @@ fi
 </pre>
 <p><br>
 </p>
-<h3>
-<span id="Disable_auto_switching_headset_to_HSP.2FHFP"></span><span class="mw-headline" id="Disable_auto_switching_headset_to_HSP/HFP">Disable auto switching headset to HSP/HFP</span>
-</h3>
-<p>When using a bluetooth headset that supports multiple profiles, some applications switch to HSP/HFP profile automatically. If this behaviour is undesired you can disable this by appending the auto_switch=false parameter to the bluetooth-policy module:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pulse/default.pa </pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">load-module module-bluetooth-policy auto_switch=false
-</pre>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <p>See <a href="../en/PulseAudio/Troubleshooting.html" title="PulseAudio/Troubleshooting">PulseAudio/Troubleshooting</a>.
 </p>
@@ -1189,8 +1185,8 @@ fi
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PulseAudio&amp;oldid=648643">https://wiki.archlinux.org/index.php?title=PulseAudio&amp;oldid=648643</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 10 January 2021, at 16:45.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PulseAudio&amp;oldid=652541">https://wiki.archlinux.org/index.php?title=PulseAudio&amp;oldid=652541</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 February 2021, at 01:46.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

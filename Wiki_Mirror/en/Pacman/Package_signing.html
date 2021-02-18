@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -80,15 +81,27 @@
 <li class="toclevel-1 tocsection-9">
 <a href="#Troubleshooting"><span class="tocnumber">3</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-10"><a href="#Cannot_import_keys"><span class="tocnumber">3.1</span> <span class="toctext">Cannot import keys</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#Disabling_signature_checking"><span class="tocnumber">3.2</span> <span class="toctext">Disabling signature checking</span></a></li>
-<li class="toclevel-2 tocsection-12"><a href="#Resetting_all_the_keys"><span class="tocnumber">3.3</span> <span class="toctext">Resetting all the keys</span></a></li>
-<li class="toclevel-2 tocsection-13"><a href="#Removing_stale_packages"><span class="tocnumber">3.4</span> <span class="toctext">Removing stale packages</span></a></li>
-<li class="toclevel-2 tocsection-14"><a href="#Signature_is_unknown_trust"><span class="tocnumber">3.5</span> <span class="toctext">Signature is unknown trust</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#Updating_keys_via_proxy"><span class="tocnumber">3.6</span> <span class="toctext">Updating keys via proxy</span></a></li>
+<li class="toclevel-2 tocsection-10">
+<a href="#signature_from_xxx_is_invalid"><span class="tocnumber">3.1</span> <span class="toctext">signature from xxx is invalid</span></a>
+<ul>
+<li class="toclevel-3 tocsection-11"><a href="#Removing_stale_packages"><span class="tocnumber">3.1.1</span> <span class="toctext">Removing stale packages</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#Resetting_all_the_keys"><span class="tocnumber">3.1.2</span> <span class="toctext">Resetting all the keys</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#Disabling_signature_checking"><span class="tocnumber">3.1.3</span> <span class="toctext">Disabling signature checking</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-16"><a href="#See_also"><span class="tocnumber">4</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-2 tocsection-14">
+<a href="#Cannot_import_keys"><span class="tocnumber">3.2</span> <span class="toctext">Cannot import keys</span></a>
+<ul>
+<li class="toclevel-3 tocsection-15"><a href="#Upgrade_the_system"><span class="tocnumber">3.2.1</span> <span class="toctext">Upgrade the system</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#Change_keyserver"><span class="tocnumber">3.2.2</span> <span class="toctext">Change keyserver</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#Clean_cached_packages"><span class="tocnumber">3.2.3</span> <span class="toctext">Clean cached packages</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-18"><a href="#Signature_is_unknown_trust"><span class="tocnumber">3.3</span> <span class="toctext">Signature is unknown trust</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Updating_keys_via_proxy"><span class="tocnumber">3.4</span> <span class="toctext">Updating keys via proxy</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-20"><a href="#See_also"><span class="tocnumber">4</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -181,6 +194,7 @@ Include = /etc/pacman.d/mirrorlist
 <div>
 <b>Reason:</b> Instructions could be clearer (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Pacman/Package_signing">Talk:Pacman/Package signing#</a>)</div>
 </div>
+<h3><span class="mw-headline" id="signature_from_xxx_is_invalid">signature from xxx is invalid</span></h3>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> <i>pacman-key</i> depends on <a href="../../en/System_time.html" title="System time">system time</a>. If your system clock is wrong, you'll get:
 <pre>error: PackageName: signature from "User &lt;email@archlinux.org&gt;" is invalid
@@ -188,6 +202,29 @@ error: failed to commit transaction (invalid or corrupted package (PGP signature
 Errors occured, no packages were upgraded.
 </pre>
 </div>
+<p>This is a gpg-related error. It means in plain English: the package in question on disk is not identical by that signed by the Trusted User. It's generally hard to pinpoint the cause but more often that not simply deleting the file and fetch it again might help. In any event it is related to gpg and the keys used to sign packages.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> In february 2021 upgrading a very old arch installation by <a href="../../User:Egils.html" title="User:Egils">Egils</a> resulted in 20 packages being invalid out of 1000 in total. Removing them and rerunning pacman solved the issue.</div>
+<p>The three sections below are all known to be working solutions for most of the cases. If you are unsure, ask in the forums to get advice.
+</p>
+<h4><span class="mw-headline" id="Removing_stale_packages">Removing stale packages</span></h4>
+<p>If the same packages keep failing and you are sure you did all the <i>pacman-key</i> stuff right, try removing them like so <code>rm /var/cache/pacman/pkg/<i>badpackage</i>*</code> so that they are freshly downloaded.
+</p>
+<p>This might actually be the solution if you get a message like <code>error: linux: signature from "Some Person &lt;Some.Person@example.com&gt;" is invalid</code> or similar when upgrading (i.e. you might not be the victim of a MITM attack after all, your downloaded file was simply corrupt).
+</p>
+<h4><span class="mw-headline" id="Resetting_all_the_keys">Resetting all the keys</span></h4>
+<p>If you want to remove or reset all the keys installed in your system, you can remove <code>/etc/pacman.d/gnupg</code> folder as root and rerun <code>pacman-key --init</code> followed by <code>pacman-key --populate archlinux</code> to re-add the default keys. If <i>archlinux-keyring</i> is not up-to-date, it may be necessary to run <code>pacman -S archlinux-keyring</code> before a full system update.
+</p>
+<h4><span class="mw-headline" id="Disabling_signature_checking">Disabling signature checking</span></h4>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> Use with caution. Disabling package signing will allow <i>pacman</i> to install untrusted packages automatically.</div>
+<p>If you are not concerned about package signing, you can disable PGP signature checking completely. Edit <code>/etc/pacman.conf</code> and uncomment the following line under <code>[options]</code>:
+</p>
+<pre>SigLevel = Never
+</pre>
+<p>You need to comment out any repository-specific SigLevel settings too because they override the global settings. This will result in no signature checking, which was the behavior before pacman 4. If you decide to do this, you do not need to set up a keyring with <i>pacman-key</i>. You can change this option later if you decide to enable package verification.
+</p>
 <h3><span class="mw-headline" id="Cannot_import_keys">Cannot import keys</span></h3>
 <p>There are multiple possible sources of this problem:
 </p>
@@ -198,42 +235,26 @@ Errors occured, no packages were upgraded.
 <li>Your <i>pacman</i> cache contains copy of unsigned packages from previous attempts.</li>
 <li>
 <code>dirmngr</code> is not correctly configured</li>
+<li>you have not upgraded in a long time and gpg/pacman currently does not handle that well</li>
 </ul>
-<p>You might be stuck because of outdated <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=archlinux-keyring">archlinux-keyring</a></span> package when doing an upgrade synchronization. Try if <a href="../../en/Pacman.html#Upgrading_packages" title="Pacman">upgrading the system</a> can fix it first.
+<p>You might be stuck because of outdated <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=archlinux-keyring">archlinux-keyring</a></span> package when doing an upgrade synchronization.
 </p>
-<div class="noprint archwiki-template-message">
-<p><a href="../../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> Silly "if that does not work, try this" list. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Pacman/Package_signing">Talk:Pacman/Package signing#</a>)</div>
-</div>
-<p>If it does not help and your date is correct, you could try to switch to the Ubuntu keyserver. To do this, edit <code>/etc/pacman.d/gnupg/gpg.conf</code> and change the <code>keyserver</code> line to:
+<p>Below is a few sections that could work depending on your case.
+</p>
+<h4><span class="mw-headline" id="Upgrade_the_system">Upgrade the system</span></h4>
+<p>Try if <a href="../../en/Pacman.html#Upgrading_packages" title="Pacman">upgrading the system</a> can fix it first. 
+</p>
+<h4><span class="mw-headline" id="Change_keyserver">Change keyserver</span></h4>
+<p>If you suspect that something is not working right with the keyserver, you could try to switch to the Ubuntu keyserver. To do this, edit <code>/etc/pacman.d/gnupg/gpg.conf</code> and change the <code>keyserver</code> line to:
 </p>
 <pre>keyserver hkp://keyserver.ubuntu.com
 </pre>
-<p>If you happen to forget to run <code>pacman-key --populate archlinux</code> you might get some errors while importing keys.
-</p>
-<p>If none of this helps, your <i>pacman</i> cache, located at <code>/var/cache/pacman/pkg/</code> might contain unsigned packages from previous attempts. Try cleaning the cache manually or run:
+<h4><span class="mw-headline" id="Clean_cached_packages">Clean cached packages</span></h4>
+<p>If you suspect that your pacman cache at <code>/var/cache/pacman/pkg/</code> might contain unsigned packages. Try cleaning the cache manually or run:
 </p>
 <pre># pacman -Sc
 </pre>
 <p>which removes all cached packages that have not been installed.
-</p>
-<h3><span class="mw-headline" id="Disabling_signature_checking">Disabling signature checking</span></h3>
-<div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Use with caution. Disabling package signing will allow <i>pacman</i> to install untrusted packages automatically.</div>
-<p>If you are not concerned about package signing, you can disable PGP signature checking completely. Edit <code>/etc/pacman.conf</code> and uncomment the following line under <code>[options]</code>:
-</p>
-<pre>SigLevel = Never
-</pre>
-<p>You need to comment out any repository-specific SigLevel settings too because they override the global settings. This will result in no signature checking, which was the behavior before pacman 4. If you decide to do this, you do not need to set up a keyring with <i>pacman-key</i>. You can change this option later if you decide to enable package verification.
-</p>
-<h3><span class="mw-headline" id="Resetting_all_the_keys">Resetting all the keys</span></h3>
-<p>If you want to remove or reset all the keys installed in your system, you can remove <code>/etc/pacman.d/gnupg</code> folder as root and rerun <code>pacman-key --init</code> followed by <code>pacman-key --populate archlinux</code> to re-add the default keys. If <i>archlinux-keyring</i> is not up-to-date, it may be necessary to run <code>pacman -S archlinux-keyring</code> before a full system update.
-</p>
-<h3><span class="mw-headline" id="Removing_stale_packages">Removing stale packages</span></h3>
-<p>If the same packages keep failing and you are sure you did all the <i>pacman-key</i> stuff right, try removing them like so <code>rm /var/cache/pacman/pkg/<i>badpackage</i>*</code> so that they are freshly downloaded.
-</p>
-<p>This might actually be the solution if you get a message like <code>error: linux: signature from "Some Person &lt;Some.Person@example.com&gt;" is invalid</code> or similar when upgrading (i.e. you might not be the victim of a MITM attack after all, your downloaded file was simply corrupt).
 </p>
 <h3><span class="mw-headline" id="Signature_is_unknown_trust">Signature is unknown trust</span></h3>
 <p>Sometimes when running <code>pacman -Syu</code> you might encounter this error:
@@ -249,7 +270,8 @@ Errors occured, no packages were upgraded.
 <li>
 <a href="#Adding_unofficial_keys">manually signing the untrusted key locally</a>, or</li>
 <li>
-<a href="#Resetting_all_the_keys">resetting all the keys</a>.</li>
+<a href="#Resetting_all_the_keys">resetting all the keys</a>, or</li>
+<li>setting temporarily <code>SigLevel</code> to <code>TrustAll</code> (not recommended).</li>
 </ul>
 <h3><span class="mw-headline" id="Updating_keys_via_proxy">Updating keys via proxy</span></h3>
 <p>In order to use a proxy when updating keys the <code>honor-http-proxy</code> option must be set in both <code>/etc/gnupg/dirmngr.conf</code> and <code>/etc/pacman.d/gnupg/dirmngr.conf</code>. See <a href="../../en/GnuPG.html#Use_a_keyserver" title="GnuPG">GnuPG#Use a keyserver</a> for more information.
@@ -281,8 +303,8 @@ Errors occured, no packages were upgraded.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pacman/Package_signing&amp;oldid=648883">https://wiki.archlinux.org/index.php?title=Pacman/Package_signing&amp;oldid=648883</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 January 2021, at 21:10.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pacman/Package_signing&amp;oldid=652700">https://wiki.archlinux.org/index.php?title=Pacman/Package_signing&amp;oldid=652700</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 20:49.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

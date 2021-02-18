@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -151,7 +152,7 @@
 <ul>
 <li>The <a rel="nofollow" class="external text" href="http://libvirt.org/drvlxc.html">libvirt LXC driver</a> has no dependency on the <a href="../en/Linux_Containers.html" class="mw-redirect" title="LXC">LXC</a> userspace tools provided by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxc">lxc</a></span>, therefore there is no need to install the package if planning on using the driver.</li>
 <li>
-<a href="../en/Xen.html" title="Xen">Xen</a> support is available, but not by default. You need to use the <a href="../en/Arch_Build_System.html" class="mw-redirect" title="ABS">ABS</a> to modify <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libvirt">libvirt</a></span>'s <a href="../en/PKGBUILD.html" title="PKGBUILD">PKGBUILD</a> and build it without the <code>--without-xen</code> option. As VirtualBox in turn has no planned stable support for Xen, you might as well replace it with <code>--without-vbox</code>.</li>
+<a href="../en/Xen.html" title="Xen">Xen</a> support is available, but not by default (<a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/27356">FS#27356</a>). You need to use the <a href="../en/Arch_Build_System.html" class="mw-redirect" title="ABS">ABS</a> to modify <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libvirt">libvirt</a></span>'s <a href="../en/PKGBUILD.html" title="PKGBUILD">PKGBUILD</a> and build it without the <code>-Ddriver_libxl=disabled</code> option.</li>
 </ul>
 </li></ul>
 <p>For network connectivity, install:
@@ -593,6 +594,8 @@ $ virsh -c qemu:///system net-dumpxml default
 </pre>
 <h2><span class="mw-headline" id="Sharing_data_between_host_and_guest">Sharing data between host and guest</span></h2>
 <h3><span class="mw-headline" id="Virtio-FS">Virtio-FS</span></h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> Virtio-FS is not supported in QEMU/KVM user sessions.</div>
 <p>The description here will use hugepages to enable the usage of shared folders. <a rel="nofollow" class="external text" href="https://libvirt.org/kbase/virtiofs.html">Sharing files with Virtio-FS</a> lists an overview of the supported options to enable filesharing with the guest.
 </p>
 <p>First you need to <a href="../en/KVM.html#Enabling_huge_pages" title="KVM">enable hugepages</a> which are used by the virtual machine:
@@ -717,7 +720,7 @@ for domainID in domains:
 </pre>
 <p>You will also need to tell QEMU to use the PulseAudio backend and identify the server to connect to. First add the qemu namespace to you domain.
 </p>
-<pre>&lt;domain type='kvm' xmlns:qemu='<a rel="nofollow" class="external free" href="http://libvirt.org/schemas/domain/qemu/1.0'">http://libvirt.org/schemas/domain/qemu/1.0'</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-27 ⓘ]</sup>&gt;
+<pre>&lt;domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'&gt;
 </pre>
 <p>Then add the following section to your domain configuration using <code>virsh edit</code>.
 </p>
@@ -750,7 +753,6 @@ If you plan to run the VM in headless mode, consider removing some of the unnece
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
 </div>
 </div>
@@ -759,8 +761,8 @@ If you plan to run the VM in headless mode, consider removing some of the unnece
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Libvirt&amp;oldid=649280">https://wiki.archlinux.org/index.php?title=Libvirt&amp;oldid=649280</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 19 January 2021, at 16:48.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Libvirt&amp;oldid=652726">https://wiki.archlinux.org/index.php?title=Libvirt&amp;oldid=652726</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 February 2021, at 14:33.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

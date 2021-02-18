@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -149,7 +150,7 @@ zh_TW.UTF-8
 <pre>en_US.UTF-8 UTF-8
 zh_CN.UTF-8 UTF-8
 </pre>
-<p>Then execute the <code>locale-gen</code> command, you can use these locales in the system. You can use the locale command to view the currently used locale: You can also use the <code>locale</code> command to view the currently used locale: You can also use the  <code>locale -a</code> command to view the currently available locale.
+<p>After executing <code>locale-gen</code>, you can now use these locales in the system. You can use <code>locale</code> to view the currently used locale(s), and <code>locale -a</code> to view the currently available locales.
 </p>
 <h4><span class="mw-headline" id="Enable_Chinese_locale">Enable Chinese locale</span></h4>
 <p>In Arch Linux, set the globally effective locale through the <code>/etc/locale.conf</code> file:
@@ -157,7 +158,7 @@ zh_CN.UTF-8 UTF-8
 <pre>LANG=en_US.UTF-8
 </pre>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> It is not recommended to set Chinese locale here, it will cause tty garbled characters; Chinese can also be displayed and input under tty, but you need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/zhcon/">zhcon</a></span><sup><small>AUR</small></sup> or other packages.</div>
+<strong>Warning:</strong> It is not recommended to set Chinese locales here, since it would cause tty garbled characters; Chinese can also be displayed and input under tty, but you need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/zhcon/">zhcon</a></span><sup><small>AUR</small></sup> or other packages.</div>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> If you want to patch the kernel in Chinese, please refer to <a rel="nofollow" class="external autonumber" href="http://blog.chinaunix.net/space.php?uid=436750&amp;do=blog&amp;id=2123586">[1]</a>.</div>
 <p>For specific users, you can also set your own user environment in <code>~/.bashrc</code>, <code>~/.xinitrc</code>, or <code>~/.xprofile</code>. The difference is:
@@ -173,22 +174,22 @@ zh_CN.UTF-8 UTF-8
 <h5><span class="mw-headline" id="Enable_Chinese_locale_in_the_graphical_interface_separately">Enable Chinese locale in the graphical interface separately</span></h5>
 <p>It is not recommended to use the global Chinese locale in <code>/etc/locale.conf</code>, which will cause tty garbled characters.
 </p>
-<p>As mentioned earlier, the Chinese locale can be set separately in <code>~/.xinitrc</code> or <code>~/.xprofile</code> . Add the following content to the front-end comment of the above file (if you are not sure which file to use, you can add both):
+<p>As mentioned earlier, the Chinese locale can be set separately in <code>~/.xinitrc</code> or <code>~/.xprofile</code>. Add the following content to the front-end comment of the above file (if you are not sure which file to use, you can add both):
 </p>
 <pre>export LANG=zh_CN.UTF-8
 export LANGUAGE=zh_CN:en_US
 </pre>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If you want to put these two lines in <code>~/.xinitrc</code> , please put them before the <code>exec <i>_example_WM_or_DE_</i></code> line. This is a common mistake.</div>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> If you want to put these two lines in <code>~/.xinitrc</code>, put them before the <code>exec <i>_example_WM_or_DE_</i></code> line. This is a common mistake.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> This method is suitable for users with SLiM or no login manager. <a href="../../en/GDM.html" title="GDM">GDM</a> and <a href="../../en/SDDM.html" title="SDDM">SDDM</a> users can select the language in the <a href="../../en/GNOME.html" title="GNOME">GNOME</a> or <a href="../../en/KDE.html" title="KDE">KDE</a> settings.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> It is not recommended that the global export <code>export LC_ALL</code> cover all locale settings. <code>LC_ALL</code> should be reserved for diagnostic debugging purposes. The global setting <code>LC_ALL</code> will bring unnecessary difficulties for diagnosing language setting problems.</div>
+<strong>Note:</strong> It is not recommended to cover all locale settings with the global export <code>export LC_ALL</code>. <code>LC_ALL</code> should be reserved for diagnostic debugging purposes. The global setting <code>LC_ALL</code> will bring unnecessary difficulties for diagnosing language setting problems.</div>
 <h3><span class="mw-headline" id="Chinese_fonts">Chinese fonts</span></h3>
 <h4><span class="mw-headline" id="Install_fonts">Install fonts</span></h4>
-<p>In addition to setting up the locale, you also need to install Chinese fonts.
+<p>In addition to setting up the locales, you also need to install Chinese fonts.
 </p>
-<p>Commonly used free (GPL or compatible copyright) Chinese fonts are:
+<p>Commonly used free (GPL or compatible copyright) Chinese fonts include:
 </p>
 <ul>
 <li><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wqy-microhei">wqy-microhei</a></span></li>
@@ -201,7 +202,7 @@ export LANGUAGE=zh_CN:en_US
 <li><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=adobe-source-han-serif-cn-fonts">adobe-source-han-serif-cn-fonts</a></span></li>
 <li><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=noto-fonts-cjk">noto-fonts-cjk</a></span></li>
 </ul>
-<p>System fonts will be installed to <code>/usr/share/fonts</code> by default. If you do not have root authority or only plan to use certain fonts yourself, you can directly copy these fonts to the <code>~/.fonts</code> directory (or its subdirectories) and add the path to <code>/etc/fonts/local.conf</code>. For details, see the following chapters.
+<p>System fonts will be installed to <code>/usr/share/fonts</code> by default. If you do not have root authority or plan to use certain fonts yourself, you can directly copy these fonts to the <code>~/.fonts</code> directory (or its subdirectories) and add the path to <code>/etc/fonts/local.conf</code>. For details, see the following chapters.
 </p>
 <p>See also: <a rel="nofollow" class="external autonumber" href="http://wiki.debian.org.hk/w/Where_can_I_find_fonts_for_GNU/Linux">[2]</a>
 </p>
@@ -209,7 +210,7 @@ export LANGUAGE=zh_CN:en_US
 <h5><span class="mw-headline" id="fontconfig_settings">fontconfig settings</span></h5>
 <p>The setting file of fontconfig is <code>~/.fonts.conf</code> (user) or <code>/etc/fonts/conf.d</code> (global). It is recommended to modify the former.
 </p>
-<p>For Chinese font settings, see: <a href="../../zh-CN/Fonts.html" title="Fonts (简体中文)">Fonts (简体中文)</a>、<a href="../../zh-CN/Font_configuration.html" title="Font configuration (简体中文)">Font configuration (简体中文)</a>.
+<p>For Chinese fonts settings, see: <a href="../../zh-CN/Fonts.html" title="Fonts (简体中文)">Fonts (简体中文)</a>、<a href="../../zh-CN/Font_configuration.html" title="Font configuration (简体中文)">Font configuration (简体中文)</a>.
 </p>
 <p><a href="../../zh-CN/784ee7356f06b02cab22bcd0e7f95c7d.html" title="Font Configuration (简体中文)/Chinese (简体中文)">Font Configuration (简体中文)/Chinese (简体中文)</a> provides a demonstration of Chinese fontconfig.
 </p>
@@ -223,13 +224,13 @@ export LANGUAGE=zh_CN:en_US
 <h5>
 <span id="Fixed_Simplified_Chinese_display_as_a_variant_.28Japanese.29_glyph"></span><span class="mw-headline" id="Fixed_Simplified_Chinese_display_as_a_variant_(Japanese)_glyph">Fixed Simplified Chinese display as a variant (Japanese) glyph</span>
 </h5>
-<p>After installing Noto Sans CJK or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=adobe-source-han-sans-otc-fonts">adobe-source-han-sans-otc-fonts</a></span> (Siyuan Bold) or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=adobe-source-han-serif-otc-fonts">adobe-source-han-serif-otc-fonts</a></span> (Siyuan Song), in some cases (framework undefined area) The shape of the Chinese character does not match the standard form. For example, the font shape of the 门, 关, and 复 does not match the standard Chinese.
+<p>After installing Noto Sans CJK, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=adobe-source-han-sans-otc-fonts">adobe-source-han-sans-otc-fonts</a></span> (Siyuan Bold) or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=adobe-source-han-serif-otc-fonts">adobe-source-han-serif-otc-fonts</a></span> (Siyuan Song), in some cases (framework undefined area) the shape of Chinese characters do not match the standard form. For example, the font shape of the 门, 关, and 复 do not match standard Chinese.
 </p>
-<p>This is because different default fonts can be set in each program, such as Arial or Tohamo, and the attributes of these fonts are controlled by <a href="../../zh-CN/Font_configuration.html" class="mw-redirect" title="Fontconfig (简体中文)">fontconfig</a> and the order of use is based on the regional code and the default order of A-Z alphabet order, because <code>ja-JP</code> is before <code>zh_{CN,HK,SG,TW}</code> , So Japanese fonts are displayed first.
+<p>This is because different default fonts can be set in each program, such as Arial or Tohamo, and the attributes of these fonts are controlled by <a href="../../zh-CN/Font_configuration.html" class="mw-redirect" title="Fontconfig (简体中文)">fontconfig</a> and the order of use is based on the regional code and the default order of A-Z alphabet order. Since <code>ja-JP</code> is before <code>zh_{CN,HK,SG,TW}</code>, Japanese fonts are displayed first.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> You can set the font separately in the settings of the Chromium/Chrome/Firefox browser, for example, adjust the font option to Noto xxx CJK SC.</div>
-<p>You can use the following methods to solve (taking simplified Chinese as an example):
+<strong>Tip:</strong> You can set the font separately in the Chromium/Chrome/Firefox browser settings, for example, adjust the font option to Noto xxx CJK SC.</div>
+<p>You can use the following methods to solve the issue (taking simplified Chinese as an example):
 </p>
 <ul><li>Only install Simplified Chinese fonts in cjk, such as Siyuan Bold Simplified Chinese package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=adobe-source-han-sans-cn-fonts">adobe-source-han-sans-cn-fonts</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=adobe-source-han-serif-cn-fonts">adobe-source-han-serif-cn-fonts</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/noto-fonts-sc/">noto-fonts-sc</a></span><sup><small>AUR</small></sup>。</li></ul>
 <ul><li>Add <code>LANG=zh_CN.UTF-8</code> to <code>locale.conf</code> to set Simplified Chinese as the default language. Since the <a href="../../en/Locale.html" title="Locale">Locale</a> is defined for the locale (ie CJK priority), the default priority is ignored.</li></ul>
@@ -258,7 +259,7 @@ export LANGUAGE=zh_CN:en_US
     &lt;/prefer&gt;
   &lt;/alias&gt;
 &lt;/fontconfig&gt;</pre>
-<p>If you installed <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=adobe-source-han-sans-otc-fonts">adobe-source-han-sans-otc-fonts</a></span>, write:
+<p>If you installed <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=adobe-source-han-sans-otc-fonts">adobe-source-han-sans-otc-fonts</a></span>:
 </p>
 <pre>&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE fontconfig SYSTEM "fonts.dtd"&gt;
@@ -282,7 +283,7 @@ export LANGUAGE=zh_CN:en_US
     &lt;/prefer&gt;
   &lt;/alias&gt;
 &lt;/fontconfig&gt;</pre>
-<p>Note that if you create an xml file in the <code>/etc/fonts/conf.avail</code> Note that if you create an xml file in the <code>/etc/fonts/conf.d</code> , for example:
+<p>Note that if you create an xml file in the <code>/etc/fonts/conf.avail</code> Note that if you create an xml file in the <code>/etc/fonts/conf.d</code>, for example:
 </p>
 <pre># ln -s /etc/fonts/conf.avail/64-language-selector-prefer.conf /etc/fonts/conf.d/64-language-selector-prefer.conf
 </pre>
@@ -305,24 +306,24 @@ export LANGUAGE=zh_CN:en_US
 </p>
 <h2><span class="mw-headline" id="Cultural_configuration_in_software">Cultural configuration in software</span></h2>
 <h3><span class="mw-headline" id="Firefox">Firefox</span></h3>
-<p>Simplified Chinese users install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=firefox-i18n-zh-cn">firefox-i18n-zh-cn</a></span>。
+<p>Simplified Chinese installation: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=firefox-i18n-zh-cn">firefox-i18n-zh-cn</a></span>。
 </p>
-<p>Traditional Chinese users install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=firefox-i18n-zh-tw">firefox-i18n-zh-tw</a></span>。
+<p>Traditional Chinese installation: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=firefox-i18n-zh-tw">firefox-i18n-zh-tw</a></span>。
 </p>
 <h3><span class="mw-headline" id="Libreoffice">Libreoffice</span></h3>
-<p>Simplified Chinese users install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libreoffice-fresh-zh-cn">libreoffice-fresh-zh-cn</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libreoffice-still-zh-cn">libreoffice-still-zh-cn</a></span>.
+<p>Simplified Chinese installation: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libreoffice-fresh-zh-cn">libreoffice-fresh-zh-cn</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libreoffice-still-zh-cn">libreoffice-still-zh-cn</a></span>.
 </p>
-<p>Traditional Chinese users install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libreoffice-fresh-zh-tw">libreoffice-fresh-zh-tw</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libreoffice-still-zh-cn">libreoffice-still-zh-cn</a></span>.
+<p>Traditional Chinese installation: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libreoffice-fresh-zh-tw">libreoffice-fresh-zh-tw</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libreoffice-still-zh-cn">libreoffice-still-zh-cn</a></span>.
 </p>
 <h3><span class="mw-headline" id="PDF_reader">PDF reader</span></h3>
-<p>Most PDF viewers already support Chinese. But there are some parts that need to install additional language packs/fonts:
+<p>Most PDF viewers already support Chinese. But there are some additional language packs/fonts that need to be installed:
 </p>
-<p>Arcobat's font is <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/acroread-fonts/">acroread-fonts</a></span><sup><small>AUR</small></sup>, or you can install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/acroread-fonts-systemwide/">acroread-fonts-systemwide</a></span><sup><small>AUR</small></sup> to use system-wide fonts.
+<p>Arcobat's fonts is <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/acroread-fonts/">acroread-fonts</a></span><sup><small>AUR</small></sup>, or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/acroread-fonts-systemwide/">acroread-fonts-systemwide</a></span><sup><small>AUR</small></sup> for system-wide fonts.
 </p>
 <p>okular，<a href="../../en/GNOME/Document_viewer.html" class="mw-redirect" title="Evince">evince</a> and other poppler related readers and <a href="../../en/Inkscape.html" title="Inkscape">Inkscape</a>, Krita, MyPaint and other image processing tools that can handle pdf: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=poppler-data">poppler-data</a></span> needs to be installed
 </p>
 <h3><span class="mw-headline" id="Java">Java</span></h3>
-<p>For Sun <a href="../../en/Java.html" title="Java">Java</a> users, create a <code>fallback</code> directory in <code>/opt/java/jre/lib/fonts</code>, and then link or copy several Chinese fonts to this directory to make the java program display Chinese correctly. For example, if <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jre/">jre</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=opendesktop-fonts">opendesktop-fonts</a></span> have been installed, use the following command:
+<p>For Sun <a href="../../en/Java.html" title="Java">Java</a> users, create a <code>fallback</code> directory in <code>/opt/java/jre/lib/fonts</code>, and then link or copy several Chinese fonts to this directory to allow java programs to display Chinese correctly. For example, if <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jre/">jre</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=opendesktop-fonts">opendesktop-fonts</a></span> have been installed, use the following command:
 </p>
 <pre># ln -s /usr/share/fonts/TTF/odosung.ttc /opt/java/jre/lib/fonts/fallback/
 # cd /opt/java/jre/lib/fonts/fallback/
@@ -338,7 +339,7 @@ set fileencodings=utf8,cp936,gb18030,big5
 ...</pre>
 <h3><span class="mw-headline" id="Chinese_video_subtitles">Chinese video subtitles</span></h3>
 <h4><span class="mw-headline" id="MPlayer">MPlayer</span></h4>
-<p>To enable <a href="../../en/MPlayer.html" title="MPlayer">MPlayer</a> to display subtitles correctly, the key is to make the encoding of the subtitle file consistent with the encoding used in mplayer config. The subtitle file is encoded as gbk, then <code>subcp=cp936</code>; the subtitle file is encoded as utf-8, then <code>subcp=utf8</code>. If the subtitle file is encoded as utf-8 and set to <code>subcp=cp936</code>, some garbled characters will appear. Another simpler method is to set to <code>subcp=enca:zh:ucs-2</code>, and enca is responsible for the encoding and display of subtitles.
+<p>To allow <a href="../../en/MPlayer.html" title="MPlayer">MPlayer</a> to display subtitles correctly, the key is to make the encoding of the subtitle file consistent with the encoding used in mplayer config. The subtitle file is encoded as gbk, then <code>subcp=cp936</code>; the subtitle file is encoded as utf-8, then <code>subcp=utf8</code>. If the subtitle file is encoded as utf-8 and set to <code>subcp=cp936</code>, some garbled characters will appear. Another simpler method is to set to <code>subcp=enca:zh:ucs-2</code>, and enca is responsible for the encoding and display of subtitles.
 </p>
 <p>Modify <code>~/.mplayer/config</code>:
 </p>
@@ -358,7 +359,7 @@ subcp=enca:zh:ucs-2</pre>
 <p>In totem 1.4.0, since gstreamer0.10 is used, it should be able to automatically load srt subtitles with the same name.
 </p>
 <h3><span class="mw-headline" id="LaTeX">LaTeX</span></h3>
-<p>First you need to install the CJK package, then you need to install the appropriate font. For details, please refer to: <a rel="nofollow" class="external autonumber" href="http://www.ctex.org">[6]</a>.
+<p>You need to install the CJK package, and then the appropriate fonts. For details, please refer to: <a rel="nofollow" class="external autonumber" href="http://www.ctex.org">[6]</a>.
 </p>
 <h2><span class="mw-headline" id="Garbled_problem">Garbled problem</span></h2>
 <p>The basic principle to avoid garbled characters: use utf-8 instead of gbk/gb2312.
@@ -369,7 +370,7 @@ subcp=enca:zh:ucs-2</pre>
 <pre>$ convmv -f GBK -t UTF-8 --notest --nosmart file
 </pre>
 <p><code>-f</code> specifies the original encoding, and <code>-t</code> specifies the output encoding. Use <code>convmv --list</code> 可查询所有支持的编码。
-<code>--notest</code> means not to test but to transcode (if you do not use this parameter, only the conversion result will be printed instead of actual transcoding), <code>--smart</code> means if it is already UTF-8, it will be ignored.
+<code>--notest</code> means not to test but to transcode (if you do not use this parameter, only the conversion result will be printed instead of actual transcoding), <code>--smart</code> allows <a href="/index.php?title=Template:Convmv&amp;action=edit&amp;redlink=1" class="new" title="Template:Convmv (page does not exist)">Template:Convmv</a> to ignore the request if it is already in UTF-8.
 </p>
 <h3><span class="mw-headline" id="File_content_is_garbled">File content is garbled</span></h3>
 <p>Use the <code>iconv</code> command to convert the format. For example:
@@ -379,11 +380,11 @@ subcp=enca:zh:ucs-2</pre>
 <p><code>-f</code> specifies the original encoding, and <code>-t</code> specifies the output encoding. Use <code>iconv -l</code> to query all supported encodings. <code>-o</code> specifies the output file.
 </p>
 <h3><span class="mw-headline" id="zip_compressed_package_is_garbled">zip compressed package is garbled</span></h3>
-<p>How to avoid: Under non-utf8 coding environment (generally the Chinese environment under windows is), do not use zip for compression (<a href="../../en/P7zip.html" class="mw-redirect" title="7z">7z</a> is recommended). Solution: Install and use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/unzip-iconv/">unzip-iconv</a></span><sup><small>AUR</small></sup> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/unzip-natspec/">unzip-natspec</a></span><sup><small>AUR</small></sup> instead of the original <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=unzip">unzip</a></span> to decompress. For example:
+<p>How to avoid: Under non-utf8 coding environment (generally the Chinese environment under windows is), do not use zip for compression (<a href="../../en/P7zip.html" class="mw-redirect" title="7z">7z</a> is recommended). Solution: Install and use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/unzip-iconv/">unzip-iconv</a></span><sup><small>AUR</small></sup> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/unzip-natspec/">unzip-natspec</a></span><sup><small>AUR</small></sup> instead of the original <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=unzip">unzip</a></span> program to decompress. For example:
 </p>
 <pre>$ unzip -O gbk file.zip
 </pre>
-<p><code>file.zip</code> is a compressed file, <code>gbk</code> is the encoding format of the file, specified with <code>-O</code> (the original unzip has no <code>-O</code> option).
+<p><code>file.zip</code> is the compressed file, <code>gbk</code> is the encoding format of the file, specified with <code>-O</code> (the original unzip has no <code>-O</code> option).
 </p>
 <h3><span class="mw-headline" id="MP3_file_label_garbled">MP3 file label garbled</span></h3>
 <p>For players that use <a href="../../en/GStreamer.html" title="GStreamer">GStreamer</a> as the backend, such as <a href="../../en/Rhythmbox.html" title="Rhythmbox">Rhythmbox</a> and totem, after setting the following environment variables, the GB3 encoded ID3 tag in mp3 can be read correctly:
@@ -468,8 +469,8 @@ remote_charsets=gb2312
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Localization/Simplified_Chinese&amp;oldid=623684">https://wiki.archlinux.org/index.php?title=Localization/Simplified_Chinese&amp;oldid=623684</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 July 2020, at 10:53.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Localization/Simplified_Chinese&amp;oldid=652675">https://wiki.archlinux.org/index.php?title=Localization/Simplified_Chinese&amp;oldid=652675</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 15:46.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

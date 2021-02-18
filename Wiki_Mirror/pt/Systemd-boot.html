@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,7 +36,7 @@
 <p><span></span>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="../en/Systemd-boot.html" title="Systemd-boot">Systemd-boot</a>. Data da última tradução: 2020-11-20. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;diff=0&amp;oldid=641892">alterações</a> na versão em inglês.</div>
+<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="../en/Systemd-boot.html" title="Systemd-boot">Systemd-boot</a>. Data da última tradução: 2021-02-17. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;diff=0&amp;oldid=649691">alterações</a> na versão em inglês.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artigos relacionados</p>
 <ul>
@@ -127,12 +128,17 @@
 <h3>
 <span id="Instala.C3.A7.C3.A3o_usando_XBOOTLDR"></span><span class="mw-headline" id="Instalação_usando_XBOOTLDR">Instalação usando XBOOTLDR</span>
 </h3>
-<p>Desde a versão 242 do systemd, uma partição <code><i>boot</i></code> separada do tipo <code>"Linux extended boot"</code> pode ser criada para manter o kernel e initramfs separados da partição <code><i>esp</i></code>. XBOOTLDR <a rel="nofollow" class="external autonumber" href="https://systemd.io/BOOT_LOADER_SPECIFICATION">[1]</a> deve ter o tipo de partição GUID <code>"bc13c2ff-59e6-4262-a352-b275fd6f7172"</code>.
+<p>Uma partição <code><i>boot</i></code> separada do tipo <code>"Linux extended boot"</code> pode ser criada para manter o kernel e initramfs separados da partição <code><i>esp</i></code>. XBOOTLDR <a rel="nofollow" class="external autonumber" href="https://systemd.io/BOOT_LOADER_SPECIFICATION">[1]</a> deve ter o tipo de partição GUID <code>"bc13c2ff-59e6-4262-a352-b275fd6f7172"</code>.
 </p>
 <p>Isto é particularmente útil para <a href="../pt/Dual_boot_with_Windows.html" class="mw-redirect" title="Dual boot com Windows">dual boot com Windows</a> com uma <a href="../pt/EFI_system_partition.html" class="mw-redirect" title="Partição de sistema EFI">partição de sistema EFI</a> que é muito pequena. Caso contrário, crie uma partição <code><i>esp</i></code> normal e depois crie outra partição para <code><i>boot</i></code> no mesmo dispositivo de armazenamento físico. O tamanho do <code><i>boot</i></code> deve ser o bastante para acomodar todos os kernels que você vai instalar.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> systemd-boot não faz verificação de tipo do sistema de arquivos para a ESP. Então, é possível usar outros sistemas de arquivos mas somente se sua implementação UEFI pode ler durante a inicialização.</div>
+<strong>Nota:</strong> 
+<ul>
+<li>systemd-boot não faz verificação de tipo do sistema de arquivos para a ESP. Então, é possível usar outros sistemas de arquivos mas somente se sua implementação UEFI pode ler durante a inicialização.</li>
+<li>Um firmware UEFI pode pular o carregamento de outras partições que não são a ESP quando o modo "fast boot" está habilitado. Isto pode levar ao "systemd-boot" falhando em encontrar entradas na partição XBOOTLDR. Você pode querer desabilitar o "fast boot" para o XBOOTLDR funcionar.</li>
+</ul>
+</div>
 <p>Durante a instalação monte a <code><i>esp</i></code> para <code>/mnt/efi</code> e <code><i>boot</i></code> para <code>/mnt/boot</code>.
 </p>
 <p>Uma vez no ambiente chroot use o comando:
@@ -173,7 +179,7 @@ Target = systemd
 Description = Updating systemd-boot
 When = PostTransaction
 Exec = /usr/bin/bootctl update</pre>
-<p>Se você tem <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" title="Unified Extensible Firmware Interface/Secure Boot">Secure Boot</a> habilitado, você pode querer instalar um <a href="../pt/Pacman.html#Hooks" class="mw-redirect" title="Hook do pacman">hook do pacman</a> para automaticamente reassinar o kernel e o systemd-boot quando este for atualizado.
+<p>Se você tem <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> habilitado, você pode querer instalar um <a href="../pt/Pacman.html#Hooks" class="mw-redirect" title="Hook do pacman">hook do pacman</a> para automaticamente reassinar o kernel e o systemd-boot quando este for atualizado.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pacman.d/hooks/99-secureboot.hook</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Trigger]
@@ -272,7 +278,12 @@ As opções possíveis são:
 <code>linux</code> e <code>initrd</code> seguido por um caminho relativo dos arquivos correspondentes na ESP;  e.x. <code>/vmlinuz-linux</code>; isto vai ser automaticamente traduzido em <code>efi <i>caminho</i></code> e <code>options initrd=<i>caminho</i></code> – esta sintaxe é somente suportada por conveniência e não há diferenças em função.</li></ul>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> Se <code>options</code> está presente na entrada de boot e <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> está desabilitado, o valor de <code>options</code> vai sobrescrever qualquer linha <code>.cmdline</code> inserida na imagem EFI que está especificada pelo <code>efi</code> ou <code>linux</code> (veja <a href="#Preparando_uma_imagem_de_kernel_unificada">#Preparando uma imagem de kernel unificada</a>). Com Secure Boot, no entanto, <code>options</code> (e quaisquer modificações feitas a linha de comando do kernel na interface do gerenciador de boot) serão ignoradas, e somente as <code>.cmdline</code> serão usadas. </div>
-<p>Um exemplo de um arquivo de configuração para inicializar o Arch de uma partição com rótulo <i>arch_os</i> e carregando o <a href="../en/Microcode.html" title="Microcode">microcode</a> da CPU da Intel é:
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Provide an example entry with fallback initramfs. It may not be immediately obvious that you need to create a separate entry file for it, an example would make it clear. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-boot_(Portugu%C3%AAs)">Talk:Systemd-boot (Português)#</a>)</div>
+</div>
+<p>Um exemplo de um arquivo de configuração para inicializar o Arch de uma partição com <a href="../pt/Persistent_block_device_naming.html#by-label" class="mw-redirect" title="Nomeação persistente de dispositivo de bloco">rótulo</a> <i>arch_os</i> e carregando o <a href="../en/Microcode.html" title="Microcode">microcode</a> da CPU da Intel é:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/loader/entries/arch.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">title   Arch Linux
@@ -301,6 +312,11 @@ options root="LABEL=<i>arch_os</i>" rw</pre>
 <h4>
 <span id="Shells_EFI_ou_outras_aplica.C3.A7.C3.B5es_EFI"></span><span class="mw-headline" id="Shells_EFI_ou_outras_aplicações_EFI">Shells EFI ou outras aplicações EFI</span>
 </h4>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> If the UEFI shell is placed as <code>/shellx64.efi</code> in the ESP, it will be autodetected. Using multiple UEFI shell versions is uncommon, so provide a better example with some other EFI application. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-boot_(Portugu%C3%AAs)">Talk:Systemd-boot (Português)#</a>)</div>
+</div>
 <p>Caso você tenha instalado <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_Shell" title="Unified Extensible Firmware Interface">shells EFI</a> e <a href="../en/REFInd.html#Tools" title="REFInd">outras aplicações EFI</a> na ESP, você pode usar os seguintes exemplos.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -381,9 +397,9 @@ efi     /EFI/shellx64_v2.efi
 </h3>
 <p>O gerenciador de boot é integrado com o comando systemctl, permitindo escolher que opção você quer inicializar depois de reiniciar. Por exemplo, suponha que você tenha compilado um kernel customizado e criou um arquivo de entrada <code><i>esp</i>/loader/entries/arch-custom.conf</code> para inicializar ele, você pode executar
 </p>
-<pre>$ systemctl reboot --boot-loader-entry=arch-custom
+<pre>$ systemctl reboot --boot-loader-entry=arch-custom.conf
 </pre>
-<p>e seu sistema irá reiniciar nesta entrada mantendo a opção padrão intacta para inicializações subsequentes. Para ver uma lista de entradas possíveis use a opção <code>--help</code>.
+<p>e seu sistema irá reiniciar nesta entrada mantendo a opção padrão intacta para inicializações subsequentes. Para ver uma lista de entradas possíveis use a opção <code>--boot-loader-entry=help</code>.
 </p>
 <p>Se você quer inicializar no firmware da sua placa-mãe diretamente, você pode usar esse comando:
 </p>
@@ -485,16 +501,20 @@ options apm=power-off boot=live live-media-path=/grml/ nomce net.ifnames=0</pre>
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../pt/Category:Boot_loaders.html" title="Category:Boot loaders (Português)">Boot loaders (Português)</a></li></ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-boot_(Portugu%C3%AAs)&amp;oldid=641980">https://wiki.archlinux.org/index.php?title=Systemd-boot_(Português)&amp;oldid=641980</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 November 2020, at 00:19.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-boot_(Portugu%C3%AAs)&amp;oldid=652665">https://wiki.archlinux.org/index.php?title=Systemd-boot_(Português)&amp;oldid=652665</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 11:57.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

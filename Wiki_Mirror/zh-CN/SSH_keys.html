@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,11 +33,15 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p>SSH 密钥对可以让您方便的登录到 SSH 服务器，而无需输入密码。由于您无需发送您的密码到网络中，SSH 密钥对被认为是更加安全的方式。再加上使用密码短语 (passphrase) 的使用，安全性会更上一层楼。
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>翻译状态：</strong>本文是 <a href="../en/SSH_keys.html" title="SSH keys">SSH keys</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-2-16。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=SSH_keys&amp;diff=0&amp;oldid=650980">更改</a>，则您可以帮助同步翻译。</div>
+<p>对于使用<a href="https://en.wikipedia.org/wiki/zh:%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86" class="extiw" title="wikipedia:zh:公开密钥加密">公钥加密</a>与<a href="https://en.wikipedia.org/wiki/Challenge-response_authentication" class="extiw" title="wikipedia:Challenge-response authentication">质询-应答式认证</a>的 SSH 服务器，SSH 密钥可以为您提供证明身份的方法。基于密钥的认证主要优点在于，与密码认证相比，它不易遭受<a href="https://en.wikipedia.org/wiki/zh:%E8%9B%AE%E5%8A%9B%E6%94%BB%E5%87%BB" class="extiw" title="wikipedia:zh:蛮力攻击">暴力破解攻击</a>，且在服务器被攻破的情况下也不会泄露您的有效凭证。<a rel="nofollow" class="external autonumber" href="https://tools.ietf.org/html/rfc4251#section-9.4.4">[1]</a>
 </p>
-<p>同时，我们可以使用 SSH agent 来帮助我们记住密码短语，无需我们记住每一个密钥对的密码短语，减轻了我们的负担。
+<p>不仅如此，与传统的密码认证相比，SSH 密钥认证也可以更加便利。当与被称作 SSH agent 的程序共用时，SSH 密钥可以让您无需记住或输入每个系统的密码，就能够连接到一个或多个服务器。
 </p>
-<p>本文将为您介绍如何管理密钥对，以方便的连接到您的 SSH 服务器。本文默认您已经熟知 <a href="../zh-CN/Secure_Shell.html" title="Secure Shell (简体中文)">SSH</a>，并安装好位于<a href="../zh-CN/Official_repositories.html" title="Official repositories (简体中文)">官方软件仓库</a> 的 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openssh">openssh</a></span>。
+<p>基于密钥的认证并非没有缺点，可能也并非适用于一切环境，但在很多情况下可以提供一些有力的优势。对 SSH 密钥如何工作的概略理解会帮助您决定如何以及何时使用它们，以满足您的需求。
+</p>
+<p>本文假定您已经对于 <a href="../zh-CN/Secure_Shell.html" title="Secure Shell (简体中文)">SSH</a> 有了基本理解，并<a href="../zh-CN/Help:Reading.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" title="Help:Reading (简体中文)">安装</a>了 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openssh">openssh</a></span> 软件包。
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -48,65 +53,69 @@
 <li class="toclevel-1 tocsection-2">
 <a href="#%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="tocnumber">2</span> <span class="toctext">生成密钥对</span></a>
 <ul>
-<li class="toclevel-2 tocsection-3"><a href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E5%8A%A0%E5%AF%86%E6%96%B9%E5%BC%8F"><span class="tocnumber">2.1</span> <span class="toctext">选择合适的加密方式</span></a></li>
-<li class="toclevel-2 tocsection-4">
+<li class="toclevel-2 tocsection-3">
+<a href="#%E9%80%89%E6%8B%A9%E8%AE%A4%E8%AF%81%E5%AF%86%E9%92%A5%E7%A7%8D%E7%B1%BB"><span class="tocnumber">2.1</span> <span class="toctext">选择认证密钥种类</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#RSA"><span class="tocnumber">2.1.1</span> <span class="toctext">RSA</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#ECDSA"><span class="tocnumber">2.1.2</span> <span class="toctext">ECDSA</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#Ed25519"><span class="tocnumber">2.1.3</span> <span class="toctext">Ed25519</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-7">
 <a href="#%E9%80%89%E6%8B%A9%E5%AF%86%E9%92%A5%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE%E4%BB%A5%E5%8F%8A%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD"><span class="tocnumber">2.2</span> <span class="toctext">选择密钥存储位置以及密码短语</span></a>
 <ul>
-<li class="toclevel-3 tocsection-5"><a href="#%E4%B8%8D%E4%BF%AE%E6%94%B9%E5%AF%86%E9%92%A5%E5%AF%B9%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD"><span class="tocnumber">2.2.1</span> <span class="toctext">不修改密钥对的情况下修改密码短语</span></a></li>
-<li class="toclevel-3 tocsection-6"><a href="#%E7%AE%A1%E7%90%86%E5%A4%9A%E7%BB%84%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="tocnumber">2.2.2</span> <span class="toctext">管理多组密钥对</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#%E4%B8%8D%E4%BF%AE%E6%94%B9%E5%AF%86%E9%92%A5%E5%AF%B9%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD"><span class="tocnumber">2.2.1</span> <span class="toctext">不修改密钥对的情况下修改密码短语</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#%E7%AE%A1%E7%90%86%E5%A4%9A%E7%BB%84%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="tocnumber">2.2.2</span> <span class="toctext">管理多组密钥对</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#%E5%9C%A8%E7%A1%AC%E4%BB%B6%E4%BB%A4%E7%89%8C%E4%B8%8A%E5%AD%98%E5%82%A8_SSH_%E5%AF%86%E9%92%A5"><span class="tocnumber">2.2.3</span> <span class="toctext">在硬件令牌上存储 SSH 密钥</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-7">
+<li class="toclevel-1 tocsection-11">
 <a href="#%E5%B0%86%E5%85%AC%E9%92%A5%E5%A4%8D%E5%88%B6%E5%88%B0%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A"><span class="tocnumber">3</span> <span class="toctext">将公钥复制到远程服务器上</span></a>
 <ul>
-<li class="toclevel-2 tocsection-8"><a href="#%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E6%B3%95"><span class="tocnumber">3.1</span> <span class="toctext">简单的方法</span></a></li>
-<li class="toclevel-2 tocsection-9"><a href="#%E4%BC%A0%E7%BB%9F%E7%9A%84%E6%96%B9%E6%B3%95"><span class="tocnumber">3.2</span> <span class="toctext">传统的方法</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#%E7%AE%80%E6%98%93%E6%96%B9%E5%BC%8F"><span class="tocnumber">3.1</span> <span class="toctext">简易方式</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#%E6%89%8B%E5%8A%A8%E6%96%B9%E5%BC%8F"><span class="tocnumber">3.2</span> <span class="toctext">手动方式</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-10">
-<a href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="tocnumber">4</span> <span class="toctext">安全性</span></a>
+<li class="toclevel-1 tocsection-14">
+<a href="#SSH_agents"><span class="tocnumber">4</span> <span class="toctext">SSH agents</span></a>
 <ul>
-<li class="toclevel-2 tocsection-11"><a href="#%E7%A6%81%E7%94%A8%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95"><span class="tocnumber">4.1</span> <span class="toctext">禁用密码登录</span></a></li>
-<li class="toclevel-2 tocsection-12"><a href="#%E5%8F%8C%E5%9B%A0%E7%B4%A0%E8%AE%A4%E8%AF%81%E4%B8%8E%E5%85%AC%E9%92%A5"><span class="tocnumber">4.2</span> <span class="toctext">双因素认证与公钥</span></a></li>
+<li class="toclevel-2 tocsection-15">
+<a href="#ssh-agent"><span class="tocnumber">4.1</span> <span class="toctext">ssh-agent</span></a>
+<ul>
+<li class="toclevel-3 tocsection-16"><a href="#%E7%94%A8_systemd_user_%E5%90%AF%E5%8A%A8_ssh-agent"><span class="tocnumber">4.1.1</span> <span class="toctext">用 systemd user 启动 ssh-agent</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#ssh-agent_%E4%BD%9C%E4%B8%BA%E5%8C%85%E8%A3%85%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C"><span class="tocnumber">4.1.2</span> <span class="toctext">ssh-agent 作为包装程序运行</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-13">
-<a href="#SSH_agents"><span class="tocnumber">5</span> <span class="toctext">SSH agents</span></a>
-<ul>
-<li class="toclevel-2 tocsection-14">
-<a href="#ssh-agent"><span class="tocnumber">5.1</span> <span class="toctext">ssh-agent</span></a>
-<ul>
-<li class="toclevel-3 tocsection-15"><a href="#ssh-agent_%E4%BD%9C%E4%B8%BA%E5%8C%85%E8%A3%85%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C"><span class="tocnumber">5.1.1</span> <span class="toctext">ssh-agent 作为包装程序运行</span></a></li>
-</ul>
-</li>
-<li class="toclevel-2 tocsection-16"><a href="#GnuPG"><span class="tocnumber">5.2</span> <span class="toctext">GnuPG</span></a></li>
-<li class="toclevel-2 tocsection-17">
-<a href="#Keychain"><span class="tocnumber">5.3</span> <span class="toctext">Keychain</span></a>
-<ul>
-<li class="toclevel-3 tocsection-18"><a href="#%E5%8F%A6%E4%B8%80%E7%A7%8D%E5%90%AF%E5%8A%A8_keychain_%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="tocnumber">5.3.1</span> <span class="toctext">另一种启动 keychain 的方式</span></a></li>
-</ul>
-</li>
+<li class="toclevel-2 tocsection-18"><a href="#GnuPG_Agent"><span class="tocnumber">4.2</span> <span class="toctext">GnuPG Agent</span></a></li>
 <li class="toclevel-2 tocsection-19">
-<a href="#envoy"><span class="tocnumber">5.4</span> <span class="toctext">envoy</span></a>
+<a href="#Keychain"><span class="tocnumber">4.3</span> <span class="toctext">Keychain</span></a>
 <ul>
-<li class="toclevel-3 tocsection-20"><a href="#%E5%88%A9%E7%94%A8_KDE_%E7%94%B5%E5%AD%90%E9%92%B1%E5%8C%85%E5%AD%98%E5%82%A8%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD%E5%B9%B6%E5%92%8C_envoy_%E9%85%8D%E5%90%88%E5%B7%A5%E4%BD%9C"><span class="tocnumber">5.4.1</span> <span class="toctext">利用 KDE 电子钱包存储密码短语并和 envoy 配合工作</span></a></li>
+<li class="toclevel-3 tocsection-20"><a href="#%E5%AE%89%E8%A3%85"><span class="tocnumber">4.3.1</span> <span class="toctext">安装</span></a></li>
+<li class="toclevel-3 tocsection-21"><a href="#%E9%85%8D%E7%BD%AE"><span class="tocnumber">4.3.2</span> <span class="toctext">配置</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#%E6%8F%90%E7%A4%BA"><span class="tocnumber">4.3.3</span> <span class="toctext">提示</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-21">
-<a href="#pam_ssh"><span class="tocnumber">5.5</span> <span class="toctext">pam_ssh</span></a>
+<li class="toclevel-2 tocsection-23">
+<a href="#envoy"><span class="tocnumber">4.4</span> <span class="toctext">envoy</span></a>
 <ul>
-<li class="toclevel-3 tocsection-22"><a href="#pam_ssh_%E5%B7%B2%E7%9F%A5%E9%97%AE%E9%A2%98"><span class="tocnumber">5.5.1</span> <span class="toctext">pam_ssh 已知问题</span></a></li>
+<li class="toclevel-3 tocsection-24"><a href="#%E5%88%A9%E7%94%A8_KDE_%E7%94%B5%E5%AD%90%E9%92%B1%E5%8C%85%E5%AD%98%E5%82%A8%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD%E5%B9%B6%E5%92%8C_envoy_%E9%85%8D%E5%90%88%E5%B7%A5%E4%BD%9C"><span class="tocnumber">4.4.1</span> <span class="toctext">利用 KDE 电子钱包存储密码短语并和 envoy 配合工作</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-23"><a href="#GNOME_Keyring"><span class="tocnumber">5.6</span> <span class="toctext">GNOME Keyring</span></a></li>
+<li class="toclevel-2 tocsection-25">
+<a href="#pam_ssh"><span class="tocnumber">4.5</span> <span class="toctext">pam_ssh</span></a>
+<ul>
+<li class="toclevel-3 tocsection-26"><a href="#pam_ssh_%E5%B7%B2%E7%9F%A5%E9%97%AE%E9%A2%98"><span class="tocnumber">4.5.1</span> <span class="toctext">pam_ssh 已知问题</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-24">
-<a href="#%E7%96%91%E9%9A%BE%E6%8E%92%E8%A7%A3"><span class="tocnumber">6</span> <span class="toctext">疑难排解</span></a>
+<li class="toclevel-2 tocsection-27"><a href="#GNOME_Keyring"><span class="tocnumber">4.6</span> <span class="toctext">GNOME Keyring</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-28">
+<a href="#%E7%96%91%E9%9A%BE%E6%8E%92%E8%A7%A3"><span class="tocnumber">5</span> <span class="toctext">疑难排解</span></a>
 <ul>
-<li class="toclevel-2 tocsection-25"><a href="#%E4%BD%BF%E7%94%A8_kdm"><span class="tocnumber">6.1</span> <span class="toctext">使用 kdm</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#%E4%BD%BF%E7%94%A8_kdm"><span class="tocnumber">5.1</span> <span class="toctext">使用 kdm</span></a></li>
 </ul>
 </li>
 </ul>
@@ -115,102 +124,177 @@
 <h2>
 <span id=".E8.83.8C.E6.99.AF"></span><span class="mw-headline" id="背景">背景</span>
 </h2>
-<p>SSH 密钥对总是成双出现的，一把公钥，一把私钥。公钥可以自由的放在您所需要连接的 SSH 服务器上，而私钥必须稳妥的保管好。
+<p>SSH 密钥都是成对生成的，其一称为公钥，另一则称为私钥。私钥只由您所知，必须安全保管。相对地，公钥可以向您想连接的任何 SSH 服务器自由地共享。
 </p>
-<p>所谓"公钥登录"，原理很简单，就是用户将自己的公钥储存在远程主机上。登录的时候，远程主机会向用户发送一段随机字符串，用户用自己的私钥加密后，再发回来。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录 shell，不再要求密码。这样子，我们即可保证了整个登录过程的安全，也不会受到中间人攻击。
+<p>如果一个 SSH 服务器在文件中存有您的公钥，并收到了您的连接请求，就会使用您的公钥构建一个质询问题并发送给您。这一质询问题是一条加密信息，必须得到正确应答，服务器才能允许您访问。这条编码信息特别安全是在于，只有私钥持有者才能理解它。公钥可以用来加密信息，但不能用来解密同一条信息。只有您，私钥的持有者，能够正确理解这一质询问题并产生合适的应答。
+</p>
+<p>这一<a href="https://en.wikipedia.org/wiki/Challenge-response_authentication" class="extiw" title="wikipedia:Challenge-response authentication">质询-应答</a>过程发生在后台，对用户不可见。只要您持有私钥（一般存放在 <code>~/.ssh/</code> 目录下），您的 SSH 客户端就应当能够向服务器回复正确的应答。
+</p>
+<p>私钥是受保护的秘密，因此建议以加密形式将其存储在磁盘上。当需要被加密的私钥时，为了解密它，需要先输入密码。虽然这在表面上可能像是您在向 SSH 服务器提供登录密码，但该密码只用于解密本地系统上的私钥。该密码并未通过网络传输。
 </p>
 <h2>
 <span id=".E7.94.9F.E6.88.90.E5.AF.86.E9.92.A5.E5.AF.B9"></span><span class="mw-headline" id="生成密钥对">生成密钥对</span>
 </h2>
-<p>我们可以使用 <code>ssh-keygen</code> 命令生成密钥对
+<p>通过运行 <code>ssh-keygen</code> 命令可以生成密钥对，默认为3072位的 RSA（以及 SHA256），<span class="plainlinks archwiki-template-man" title="$ man 1 ssh-keygen"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ssh-keygen.1">ssh-keygen(1)</a></span> 手册页称其“<i>一般被认为充足</i>”且应当兼容于几乎所有客户端和服务器：
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ssh-keygen -t ecdsa -b 521 -C "$(whoami)@$(hostname)-$(date -I)"
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ssh-keygen
 </pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Generating public/private ecdsa key pair.
-Enter file in which to save the key (/home/username/.ssh/id_ecdsa):
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /home/username/.ssh/id_ecdsa.
-Your public key has been saved in /home/username/.ssh/id_ecdsa.pub.
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Generating public/private rsa key pair.
+Enter file in which to save the key (/home/&lt;username&gt;/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/&lt;username&gt;/.ssh/id_rsa.
+Your public key has been saved in /home/&lt;username&gt;/.ssh/id_rsa.pub.
 The key fingerprint is:
-dd:15:ee:24:20:14:11:01:b8:72:a2:0f:99:4c:79:7f username@localhost-2011-12-22
+SHA256:gGJtSsV8BM+7w018d39Ji57F8iO6c0N2GZq3/RY2NhI username@hostname
 The key's randomart image is:
-+--[ECDSA  521]---+
-|     ..oB=.   .  |
-|    .    . . . . |
-|  .  .      . +  |
-| oo.o    . . =   |
-|o+.+.   S . . .  |
-|=.   . E         |
-| o    .          |
-|  .              |
-|                 |
-+-----------------+</pre>
-<p>在上面这个例子中，<code>ssh-keygen</code> 生成了一对长度为 521 bit (<code>-b 521</code>) 的 ECDSA (<code>-t ecdsa</code>) 加密的密钥对，comment 为 <code>-C "$(whoami)@$(hostname)-$(date -I)"</code>。而 <a rel="nofollow" class="external text" href="http://www.cs.berkeley.edu/~dawnsong/papers/randomart.pdf">randomart image</a> 是 OpenSSH 5.1 引入的一种简单的识别指纹 (fingerprint) 的图像。
++---[RSA 3072]----+
+|   ooo.          |
+|   oo+.          |
+|  + +.+          |
+| o +   +     E . |
+|  .   . S . . =.o|
+|     . + . . B+@o|
+|      + .   oo*=O|
+|       .   ..+=o+|
+|           o=ooo+|
++----[SHA256]-----+</pre>
+<p><a rel="nofollow" class="external text" href="http://www.cs.berkeley.edu/~dawnsong/papers/randomart.pdf">randomart 图像</a>作为一种简便的密钥指纹视觉辨识方式在 <a rel="nofollow" class="external text" href="http://www.openssh.com/txt/release-5.1">OpenSSH 5.1</a> 中引入。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 可以使用 <code>-a</code> 开关来指定密码加密的 KDF rounds 数量。</div>
+<p>也可以用 <code>-C</code> 开关对公钥添加可选的注释栏，从而在 <code>~/.ssh/known_hosts</code>、<code>~/.ssh/authorized_keys</code> 以及 <code>ssh-add -L</code> 输出等处更轻松地辨识它。例如：
+</p>
+<pre>$ ssh-keygen -C "$(whoami)@$(uname -n)-$(date -I)"
+</pre>
+<p>会添加一条注释，说明是哪个用户何时在哪台机器上创建的密钥。
 </p>
 <h3>
-<span id=".E9.80.89.E6.8B.A9.E5.90.88.E9.80.82.E7.9A.84.E5.8A.A0.E5.AF.86.E6.96.B9.E5.BC.8F"></span><span class="mw-headline" id="选择合适的加密方式">选择合适的加密方式</span>
+<span id=".E9.80.89.E6.8B.A9.E8.AE.A4.E8.AF.81.E5.AF.86.E9.92.A5.E7.A7.8D.E7.B1.BB"></span><span class="mw-headline" id="选择认证密钥种类">选择认证密钥种类</span>
 </h3>
-<p>椭圆曲线数字签名算法 (ECDSA) 生成的密钥更小，安全性更高。OpenSSH 5.7 建议默认使用 ECDSA，详情参见 <a rel="nofollow" class="external text" href="http://www.openssh.com/txt/release-5.7">OpenSSH 5.7 Release Notes</a>。较旧的 OpenSSH 版本可能不支持 ECDSA 密钥，需要注意。而一些厂商因专利问题，暂未提供 ECDSA 的实现。
+<p>OpenSSH（对于认证密钥）支持数种签名算法，按照所采用的数学性质可分为两类：
+</p>
+<ol>
+<li>
+<a href="https://en.wikipedia.org/wiki/zh:%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95" class="extiw" title="wikipedia:zh:数字签名算法">DSA</a> 以及 <a href="https://en.wikipedia.org/wiki/zh:RSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95" class="extiw" title="wikipedia:zh:RSA加密算法">RSA</a>，依赖于对两个大质数之积进行分解的<a href="https://en.wikipedia.org/wiki/zh:%E6%95%B4%E6%95%B0%E5%88%86%E8%A7%A3#.E9.9A.BE.E5.BA.A6.E4.B8.8E.E5.A4.8D.E6.9D.82.E5.BA.A6" class="extiw" title="wikipedia:zh:整数分解">实际困难</a>；</li>
+<li>
+<a href="https://en.wikipedia.org/wiki/zh:%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95" class="extiw" title="wikipedia:zh:椭圆曲线数字签名算法">ECDSA</a> 以及 <a href="https://en.wikipedia.org/wiki/zh:Curve25519" class="extiw" title="wikipedia:zh:Curve25519">Ed25519</a>，依赖于椭圆曲线<a href="https://en.wikipedia.org/wiki/zh:%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0" class="extiw" title="wikipedia:zh:离散对数">离散对数</a>问题。（<a rel="nofollow" class="external text" href="https://www.certicom.com/content/certicom/en/52-the-elliptic-curve-discrete-logarithm-problem.html">例</a>）</li>
+</ol>
+<p><a rel="nofollow" class="external text" href="https://blog.cloudflare.com/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/">椭圆曲线密码学</a>（ECC）算法是对于公钥密码体制的<a href="https://en.wikipedia.org/wiki/Elliptic_curve_cryptography#History" class="extiw" title="wikipedia:Elliptic curve cryptography">较新发展</a>。其主要优势之一是<a href="https://en.wikipedia.org/wiki/Elliptic_curve_cryptography#Rationale" class="extiw" title="wikipedia:Elliptic curve cryptography">以较小密钥提供同等安全性</a>的能力，使得计算密集操作更少（<i>也就是</i>密钥创建、加密及解密更快）且存储及传输的要求更低。
+</p>
+<p>由于已发现的漏洞，OpenSSH 7.0<a rel="nofollow" class="external text" href="https://archlinux.org/news/openssh-70p1-deprecates-ssh-dss-keys/">废弃并禁用了对 DSA 密钥的支持</a>，因此<a href="https://en.wikipedia.org/wiki/zh:%E5%AF%86%E7%A0%81%E4%BD%93%E5%88%B6" class="extiw" title="wikipedia:zh:密码体制">密码体制</a>的选择范围就限定在了 RSA 或两种 ECC 之一当中。
+</p>
+<p><a href="#RSA">#RSA</a> 密钥会提供最大的可移植性，而 <a href="#Ed25519">#Ed25519</a> 会提供最佳的安全性，但需要新版本的客户端与服务器<a rel="nofollow" class="external autonumber" href="https://www.gentoo.org/support/news-items/2015-08-13-openssh-weak-keys.html">[2]</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-04-02 ⓘ]</sup>。. <a href="#ECDSA">#ECDSA</a> 兼容性可能比 Ed25519 更好（虽然还是不如 RSA），但存在对于其安全性的怀疑（见下文）。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> 截至 2014 年06 月 10 日，这个 <a rel="nofollow" class="external text" href="https://bugzilla.gnome.org/show_bug.cgi?id=641082">GNOME bug</a> 导致 Gnome Keyring 暂不支持 ECDSA。</div>
-<p>如果您要生成 RSA (768-16384 bit) 或者 DSA (1024 bit) 密钥对，需要使用 <code>-t rsa</code> 或者 <code>-t dsa</code>，并修改 <code>-b</code> 选项。<code>-b</code> 可以省略，<code>ssh-keygen</code> 会生成一个默认大小的密钥对。
+<strong>注意：</strong> 这些密钥只用于认证您的身份；选择更强的密钥并不会在通过SSH传输数据时加重 CPU 负担。</div>
+<h4><span class="mw-headline" id="RSA">RSA</span></h4>
+<p><code>ssh-keygen</code> 默认使用 RSA，因此无需使用 <code>-t</code> 选项指定它。它提供所有算法当中最佳的兼容性，但提供充足安全性所需的密钥尺寸较大。
 </p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> 这些密钥对是用于认证的，选择更加复杂的密钥类型并不会在登录时加重您的 CPU 负担。</div>
+<p>密钥尺寸最小为1024位，默认为3072（见 <span class="plainlinks archwiki-template-man" title="$ man 1 ssh-keygen"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ssh-keygen.1">ssh-keygen(1)</a></span>），最大为 16384。
+</p>
+<p>如果您想生成较强的 RSA 密钥对（<i>例如</i>为了防范先进或未知攻击以及较高级的攻击者），只需为 <code>-b</code> 选项指定比默认高一点的值：
+</p>
+<pre>$ ssh-keygen -b 4096
+</pre>
+<p>需要明白的是，使用更长的密钥存在收益递减。<a rel="nofollow" class="external autonumber" href="https://security.stackexchange.com/a/25377">[3]</a><a rel="nofollow" class="external autonumber" href="https://www.gnupg.org/faq/gnupg-faq.html#no_default_of_rsa4096">[4]</a> GnuPG 常见问答记载：“<i>如果你需要的安全性比 RSA-2048 所提供的更强，应该做的是改用椭圆曲线密码学——而不是接着使用 RSA</i>。”<a rel="nofollow" class="external autonumber" href="https://www.gnupg.org/faq/gnupg-faq.html#please_use_ecc">[5]</a>
+</p>
+<p>另一方面，最新版本的 <a rel="nofollow" class="external text" href="https://www.nsa.gov/ia/programs/suiteb_cryptography/index.shtml">NSA Fact Sheet Suite B Cryptography</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-04-02 ⓘ]</sup> 建议对于 RSA 使用最少3072位的模，同时“<i>为即将到来的抗量子算法迁移（做准备）</i>”。<a rel="nofollow" class="external autonumber" href="http://www.keylength.com/en/6/">[6]</a>
+</p>
+<h4><span class="mw-headline" id="ECDSA">ECDSA</span></h4>
+<p>椭圆曲线数字签名算法（ECDSA）<a rel="nofollow" class="external text" href="http://www.openssh.com/txt/release-5.7">在 OpenSSH 5.7中</a>作为首选的认证算法被引入。一些提供商也由于潜在的专利问题禁用了所需的实现。
+</p>
+<p>对于它的担忧有两种：
+</p>
+<ol>
+<li>
+<i>政治上的担忧</i>：在 NSA（美国国家安全局）被曝在软件、硬件组件及发布的标准中蓄意植入后门之后，由 NIST（美国国家标准技术研究所）产生的曲线的可信性<a rel="nofollow" class="external text" href="https://crypto.stackexchange.com/questions/10263/should-we-trust-the-nist-recommended-ecc-parameters">受到了质疑</a>；密码领域的知名人士对于 NIST 曲线的设计方式<a rel="nofollow" class="external text" href="https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html#c1675929">表示</a> <a rel="nofollow" class="external text" href="http://safecurves.cr.yp.to/rigid.html">了</a> <a rel="nofollow" class="external text" href="https://www.hyperelliptic.org/tanja/vortraege/20130531.pdf">怀疑</a>，并且之前已经有主动的污染<a rel="nofollow" class="external text" href="https://www.schneier.com/blog/archives/2007/11/the_strange_sto.html">被</a> <a rel="nofollow" class="external text" href="http://www.scientificamerican.com/article/nsa-nist-encryption-scandal/">证实</a>。</li>
+<li>
+<i>技术上的担忧</i>：对于<a rel="nofollow" class="external text" href="http://blog.cr.yp.to/20140323-ecdsa.html">正确实现该标准的困难</a>以及在实现不够谨慎情况下降低安全性的<a rel="nofollow" class="external text" href="http://www.gossamer-threads.com/lists/openssh/dev/57162#57162">迟缓与设计缺陷</a>。</li>
+</ol>
+<p><a rel="nofollow" class="external text" href="https://git.libssh.org/projects/libssh.git/tree/doc/curve25519-sha256@libssh.org.txt#n4">libssh curve25519 介绍</a>当中很好地总结了上述担忧。尽管政治上的担忧仍受到争议，但有<a rel="nofollow" class="external text" href="https://news.ycombinator.com/item?id=7597653">明确的共识</a>认为 <a href="#Ed25519">#Ed25519</a> 技术上更优越，因此应当优先采用。
+</p>
+<h4><span class="mw-headline" id="Ed25519">Ed25519</span></h4>
+<p><a rel="nofollow" class="external text" href="http://ed25519.cr.yp.to/">Ed25519</a> 在2014年1月被引入 <a rel="nofollow" class="external text" href="http://www.openssh.com/txt/release-6.5">OpenSSH 6.5</a>：“<i>Ed25519 是一种能够提供比 ECDSA 及 DSA 更佳安全性及良好性能的椭圆曲线签名体系</i>”。其主要长处在于速度、时间恒定运行时（从而能够对抗侧信道攻击）以及无需晦暗不明的硬编码常数。<a rel="nofollow" class="external autonumber" href="https://git.libssh.org/projects/libssh.git/tree/doc/curve25519-sha256@libssh.org.txt">[7]</a> 关于其工作方式，参见由一位 Mozilla 开发者撰写的<a rel="nofollow" class="external text" href="https://blog.mozilla.org/warner/2011/11/29/ed25519-keys/">博客文章</a>。
+</p>
+<p>它已经在<a href="https://en.wikipedia.org/wiki/zh:Curve25519#.E6.99.AE.E5.8F.8A" class="extiw" title="wikipedia:zh:Curve25519">众多应用及库中</a>得到实现，并且在 OpenSSH 中是<a rel="nofollow" class="external text" href="https://www.libssh.org/2013/11/03/openssh-introduces-curve25519-sha256libssh-org-key-exchange/">默认的密钥交换算法</a>（与密钥<i>签名</i>不同）。
+</p>
+<p>Ed25519 密钥对生成方法如下：
+</p>
+<pre>$ ssh-keygen -t ed25519
+</pre>
+<p>所有 Ed25519 密钥都是256位，故无需设置密钥尺寸。
+</p>
+<p>注意较老的 SSH 客户端与服务器可能不支持这些密钥。
+</p>
 <h3>
 <span id=".E9.80.89.E6.8B.A9.E5.AF.86.E9.92.A5.E5.AD.98.E5.82.A8.E4.BD.8D.E7.BD.AE.E4.BB.A5.E5.8F.8A.E5.AF.86.E7.A0.81.E7.9F.AD.E8.AF.AD"></span><span class="mw-headline" id="选择密钥存储位置以及密码短语">选择密钥存储位置以及密码短语</span>
 </h3>
-<p>输入 <code>ssh-keygen</code> 时，它会询问您将密钥对保存到何处，文件名如何命令等。默认情况下，密钥对保存到 <code>~/.ssh</code> 下，文件名则根据加密类型自动命名为 <code>id_ecdsa</code> (私钥)，<code>id_ecdsa.pub</code> (公钥)。建议您采用默认的存储位置和文件名。
+<p>运行 <code>ssh-keygen</code> 时，它会询问您希望的私钥文件名称及位置。默认情况下，密钥保存到 <code>~/.ssh</code> 目录下，并根据所使用的加密类型命名。为使下文中的示例代码正确工作，建议您接受默认的名称和位置。
 </p>
-<p>而在 <code>ssh-keygen</code> 请求您输入一个密码短语时，您应该输入一些难以猜到的短语。如果短语足够随机和复杂，则私钥落入贼人之手时就不会容易被破解掉。
+<p>当系统向您询问密码短语时，如果您在乎私钥的安全性，请选择难以猜到的密码。更长、更随机的密码一般会更强，当私钥落入贼人之手时更不容易被破解掉。
 </p>
-<p>当然，您也可以不输入任何密码短语，也能够生成所需的密钥对。虽然这用起来挺方便的，但是您应该知道这会很危险。在没有输入密码短语的情况下，您的私钥未经加密就存储在您的硬盘上，任何人拿到您的私钥都可以随意的访问对应的 SSH 服务器。还有一种情况，如果您不是 <code>root</code> 用户，则该机器上的 <code>root</code> 用户可以完全拥有您的密钥对，因为他的权限是最大的。
+<p>在没有密码短语的情况下生成私钥也是可能的。虽然也许很方便，但您需要明白随之而来的风险。在没有密码短语的情况下，您的私钥会以未加密形式存储在硬盘上。任何能接触到您私钥文件的人之后都能够在您使用基于密钥认证连接的任何 SSH 服务器面前冒用您的身份。更进一步，没有密码短语，您也必须信任 root 用户，因为他可以绕过文件权限并能够随时访问您未加密的私钥文件。
 </p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 从前，私钥密码都是以一种不安全的方式编码的：仅一遍 MD5 散列。OpenSSH 6.5及之后版本支持一种新的、更安全的格式来编码您的私钥。从 <a rel="nofollow" class="external text" href="http://www.openssh.com/txt/release-7.8">OpenSSH 版本7.8</a>开始默认使用该格式。Ed25519 密钥一直采用新的编码格式。只需按下节所述更改密钥的密码短语即可升级到新格式。</div>
 <h4>
 <span id=".E4.B8.8D.E4.BF.AE.E6.94.B9.E5.AF.86.E9.92.A5.E5.AF.B9.E7.9A.84.E6.83.85.E5.86.B5.E4.B8.8B.E4.BF.AE.E6.94.B9.E5.AF.86.E7.A0.81.E7.9F.AD.E8.AF.AD"></span><span class="mw-headline" id="不修改密钥对的情况下修改密码短语">不修改密钥对的情况下修改密码短语</span>
 </h4>
-<p>您可以使用 <code>ssh-keygen</code> 命令来修改密码短语，而无需改动密钥对。假设您要修改的密钥对使用 RSA 加密，输入以下命令即可：
+<p>如果不希望使用原本选择的 SSH 密钥密码短语或者必须更换，可以使用 <code>ssh-keygen</code> 命令来修改密码短语，而无需改动实际密钥。此法也可用于将密码编码格式改为新标准。
 </p>
 <pre>$ ssh-keygen -f ~/.ssh/id_rsa -p
 </pre>
 <h4>
 <span id=".E7.AE.A1.E7.90.86.E5.A4.9A.E7.BB.84.E5.AF.86.E9.92.A5.E5.AF.B9"></span><span class="mw-headline" id="管理多组密钥对">管理多组密钥对</span>
 </h4>
-<p>您可以创建 <code>~/.ssh/config</code> 来管理多组密钥对，每一个 SSH 服务器对应一组密钥对。或者，您甚至可以对所有的 SSH 服务器使用同一组密钥对。不过如果您觉得这样不合适，还是编辑配置文件：
+<p>对多台主机使用同一 SSH 密钥对是可能的，尽管受到争议<a rel="nofollow" class="external autonumber" href="https://security.stackexchange.com/questions/40050/best-practice-separate-ssh-key-per-host-and-user-vs-one-ssh-key-for-all-hos">[8]</a> <a rel="nofollow" class="external autonumber" href="https://security.stackexchange.com/questions/10963/whats-the-common-pragmatic-strategy-for-managing-key-pairs">[9]</a>。
+</p>
+<p>另一方面，使用您 OpenSSH 配置文件中的 <code>IdentityFile</code> 指令，为多台主机管理不同的密钥对就比较容易了：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.ssh/config</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Host SERVERNAME1
-  IdentitiesOnly yes
-  IdentityFile ~/.ssh/id_rsa_SERVER1
-  # CheckHostIP yes
-  # Port 22
-Host SERVERNAME2
-  IdentitiesOnly yes
-  IdentityFile ~/.ssh/id_rsa_SERVER2
-  # CheckHostIP no
-  # Port 2177
-ControlMaster auto
-ControlPath /tmp/%r@%h:%p</pre>
-<p>更多选项帮助请参考
-</p>
-<pre>$ man ssh_config 5
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Host SERVER1
+   IdentitiesOnly yes
+   IdentityFile ~/.ssh/id_rsa_SERVER1
+
+Host SERVER2
+   IdentitiesOnly yes
+   IdentityFile ~/.ssh/id_ed25519_SERVER2
 </pre>
+<p>对于这些选项的完整描述见 <span class="plainlinks archwiki-template-man" title="$ man 5 ssh_config"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ssh_config.5">ssh_config(5)</a></span>。
+</p>
+<h4>
+<span id=".E5.9C.A8.E7.A1.AC.E4.BB.B6.E4.BB.A4.E7.89.8C.E4.B8.8A.E5.AD.98.E5.82.A8_SSH_.E5.AF.86.E9.92.A5"></span><span class="mw-headline" id="在硬件令牌上存储_SSH_密钥">在硬件令牌上存储 SSH 密钥</span>
+</h4>
+<p>SSH 密钥也可以存储在智能卡或 USB 令牌等安全令牌上。这样做的好处是私钥安全地存储在令牌上，而不是存储在磁盘中。当使用安全令牌时，敏感的私钥也从来不会存在于 PC 的内存当中；密码学操作在令牌自身上进行。密码学令牌还有一点好处是，它不与单台电脑绑定；可以将其从一台电脑上轻松取下，四处携带之后在其他电脑上使用。
+</p>
+<p>硬件令牌的例子如下所述：
+</p>
+<ul>
+<li>
+<a href="../en/YubiKey.html#SSH_notes" title="YubiKey">YubiKey#SSH notes</a> 用于 FIDO/U2F keys 的原生 OpenSSH 支持</li>
+<li><a href="../en/YubiKey.html#SSH_keys" title="YubiKey">YubiKey#SSH keys</a></li>
+<li><a href="../en/Trusted_Platform_Module.html#Securing_SSH_Keys" title="Trusted Platform Module">Trusted Platform Module#Securing SSH Keys</a></li>
+</ul>
 <h2>
 <span id=".E5.B0.86.E5.85.AC.E9.92.A5.E5.A4.8D.E5.88.B6.E5.88.B0.E8.BF.9C.E7.A8.8B.E6.9C.8D.E5.8A.A1.E5.99.A8.E4.B8.8A"></span><span class="mw-headline" id="将公钥复制到远程服务器上">将公钥复制到远程服务器上</span>
 </h2>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> 在<a href="../zh-CN/OpenSSH.html#%E5%BC%BA%E5%88%B6%E5%85%AC%E9%92%A5%E9%AA%8C%E8%AF%81" title="OpenSSH (简体中文)">强制公钥认证</a>的情况下如何实现？ (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:SSH_keys_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:SSH keys (简体中文)#</a>)</div>
+</div>
 <p>创建好密钥对之后，您需要将公钥上传到远程服务器上，以便用于 SSH 密钥认证登录。公钥文件名和私钥文件名相同，只不过公钥文件带有扩展名 <code>.pub</code> 而私钥文件名则没有。千万不要将私钥上传，私钥应该保存在本地。
 </p>
-<h3>
-<span id=".E7.AE.80.E5.8D.95.E7.9A.84.E6.96.B9.E6.B3.95"></span><span class="mw-headline" id="简单的方法">简单的方法</span>
-</h3>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> 如果您的远程服务器默认使用的是 non-<code>sh</code> 的 shell，比如 <code>tcsh</code>，则此方法可能不奏效。详情参见这个 <a rel="nofollow" class="external text" href="https://bugzilla.redhat.com/show_bug.cgi?id=1045191">bug</a>。</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 如果使用以下两种方法外的方法请不要忘记注册公钥文件，您只需要命令</div>
 <pre>$ cat ~/.ssh/id_ecdsa.pub &gt;&gt; ~/.ssh/authorized_keys
 </pre>
+<h3>
+<span id=".E7.AE.80.E6.98.93.E6.96.B9.E5.BC.8F"></span><span class="mw-headline" id="简易方式">简易方式</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 如果您的远程服务器默认使用的是 non-<code>sh</code> 的 shell，比如 <code>tcsh</code>，且使用早于6.6.1p1版本的 OpenSSH，则此方法可能不奏效。见 <a rel="nofollow" class="external text" href="https://bugzilla.redhat.com/show_bug.cgi?id=1045191">该 bug 报告</a>。</div>
 <p>如果您的公钥文件为 <code>~/.ssh/id_rsa.pub</code>，您只需要输入命令
 </p>
 <pre>$ ssh-copy-id remote-server.org
@@ -219,22 +303,24 @@ ControlPath /tmp/%r@%h:%p</pre>
 </p>
 <pre>$ ssh-copy-id username@remote-server.org
 </pre>
-<p>如果您的公钥文件名不是默认的，您会得到错误 <code>/usr/bin/ssh-copy-id: ERROR: No identities found</code>。这种情况下，您需要修改命令为
+<p>如果您的公钥文件名不是默认的 <code>~/.ssh/id_rsa.pub</code>，您会得到错误 <code>/usr/bin/ssh-copy-id: ERROR: No identities found</code>。这种情况下，您需要显式提供公钥的位置：
 </p>
 <pre>$ ssh-copy-id -i ~/.ssh/id_ecdsa.pub username@remote-server.org
 </pre>
-<p>如果远程服务器监听端口不是 22,您也需要指明端口
+<p>如果远程服务器监听端口不是默认的22，请在主机参数中指明：
 </p>
 <pre>$ ssh-copy-id -i ~/.ssh/id_ecdsa.pub -p 221 username@remote-server.org
 </pre>
 <h3>
-<span id=".E4.BC.A0.E7.BB.9F.E7.9A.84.E6.96.B9.E6.B3.95"></span><span class="mw-headline" id="传统的方法">传统的方法</span>
+<span id=".E6.89.8B.E5.8A.A8.E6.96.B9.E5.BC.8F"></span><span class="mw-headline" id="手动方式">手动方式</span>
 </h3>
-<p>使用命令
+<p>对于 OpenSSH，默认需要将公钥添加到 <code>~/.ssh/authorized_keys</code>。先从复制公钥到远程服务器开始。
 </p>
 <pre>$ scp ~/.ssh/id_ecdsa.pub username@remote-server.org:
 </pre>
-<p>将位于<code>~/.ssh/id_ecdsa.pub</code>的公钥上传到服务器。注意，该命令最末的 <code>:</code> 不可省略。上传成功之后，先使用口令登录到服务器，将公钥文件重命名为 <code>authorized_keys</code>，并移动到 <code>~/.ssh</code> 下，若 <code>~/.ssh</code> 不存在则新建一个。
+<p>以上示例通过 <code>scp</code> 将公钥（<code>id_ecdsa.pub</code>）复制到您在远程服务器上的主目录。别忘了加上服务器地址末尾的 <code>:</code>。并请注意，您的公钥名称可能与此例所示不同。
+</p>
+<p>在远程服务器上，如果还没有 <code>~/.ssh</code> 目录，您需要创建一个；然后将您的公钥追加到 <code>authorized_keys</code>。
 </p>
 <pre>$ ssh username@remote-server.org
 username@remote-server.org's password:
@@ -244,194 +330,141 @@ $ cat ~/id_ecdsa.pub &gt;&gt; ~/.ssh/authorized_keys
 $ rm ~/id_ecdsa.pub
 $ chmod 600 ~/.ssh/authorized_keys
 </pre>
-<p>上面最后两个命令移除服务器上的公钥，并设置 <code>authorized_keys</code> 的权限为只有您，也即文件拥有者，有读写权限。
+<p>上面最后两个命令将公钥文件从服务器上删除，并设置 <code>authorized_keys</code> 文件的权限，这样只有作为文件拥有者的您能够读取及写入。
 </p>
-<h2>
-<span id=".E5.AE.89.E5.85.A8.E6.80.A7"></span><span class="mw-headline" id="安全性">安全性</span>
-</h2>
-<h3>
-<span id=".E7.A6.81.E7.94.A8.E5.AF.86.E7.A0.81.E7.99.BB.E5.BD.95"></span><span class="mw-headline" id="禁用密码登录">禁用密码登录</span>
-</h3>
-<p>将公钥上传到 SSH 服务器上之后，您就不再需要输入 SSH 账户密码来登录了。直接使用账户密码登录容易受到暴力破解的攻击。倘若您没有提供 SSH 私钥，默认情况下，SSH 服务器就会让您直接使用密码登录，这就有可能让不法之徒来猜测您的密码，有一定的安全隐患。要禁用这一行为，您需要编辑 SSH 服务器上的 <code>/etc/ssh/sshd_config</code>：
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/ssh/sshd_config</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">PasswordAuthentication no
-ChallengeResponseAuthentication no</pre>
-<h3>
-<span id=".E5.8F.8C.E5.9B.A0.E7.B4.A0.E8.AE.A4.E8.AF.81.E4.B8.8E.E5.85.AC.E9.92.A5"></span><span class="mw-headline" id="双因素认证与公钥">双因素认证与公钥</span>
-</h3>
-<p>从 OpenSSH 6.2 开始，您可以使用 <code>AuthenticationMethods</code> 选项来自己添加工具链进行认证。这样就可以配合公钥使用双因素认证了。
-</p>
-<p>谷歌身份验证器设置请参考 <a href="../en/Google_Authenticator.html" title="Google Authenticator">Google Authenticator</a>。
-</p>
-<p>如果您使用 PAM (Pluggable Authentication Module，插入式验证模块)，编辑下面这几行：
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/ssh/sshd_config</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">ChallengeResponseAuthentication yes
-AuthenticationMethods publickey,keyboard-interactive:pam
-</pre>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pam.d/sshd</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#%PAM-1.0
-auth required pam_google_authenticator.so
-</pre>
-<p>如果您设置 PAM 仅使用 <code>pam_google_authenticator.so</code>，则 <code>sshd</code> 则会采用双因素认证，而无需密码。如果双因素认证失败，即使有有效的公钥，<i>sshd</i> 也不允许登录。您可以加上 <code>nullok</code> 选项来允许用户使用公钥登录：
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pam.d/sshd</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#%PAM-1.0
-auth required pam_google_authenticator.so nullok
-</pre>
 <h2><span class="mw-headline" id="SSH_agents">SSH agents</span></h2>
-<p>如果您的私钥使用密码短语来加密了的话，每一次使用 SSH 密钥对进行登录的时候，您都必须输入正确的密码短语。
+<p>如果您的私钥使用密码短语来加密了的话，每一次试图连接到使用公钥认证的 SSH 服务器的时候，您都必须输入密码短语。每次唤起 <code>ssh</code> 或 <code>scp</code> 时都需要密码短语来解密您的私钥以便认证能够继续。
 </p>
-<p>而 SSH agent 程序能够将您的已解密的私钥缓存起来，在需要的时候提供给您的 SSH 客户端。这样子，您就只需要将私钥加入 SSH agent 缓存的时候输入一次密码短语就可以了。这为您经常使用 SSH 连接提供了不少便利。
+<p>而 SSH agent 程序能够将您的已解密的私钥缓存起来，并代表您将其提供给 SSH 客户端。这样子，您就只需要将私钥加入 SSH agent 缓存的时候输入一次密码短语就可以了。这为您经常使用 SSH 连接提供了不少便利。
 </p>
-<p>SSH agent 一般会设置成在登录会话的时候自动启动，并在整个会话中保持运行。有不少的 SSH agent 供您选择，我们将为您介绍几种常用的 SSH agent，您可以根据您的需要进行选择。
+<p>SSH agent 一般会设置成在登录会话的时候自动启动，并在整个会话中保持运行。有多种 agent、前端及配置都能够达成这一效果。本节概述了多种不同的解决方案，能够适应以满足您的特定需求。
 </p>
 <h3><span class="mw-headline" id="ssh-agent">ssh-agent</span></h3>
-<p>ssh-agent 是 OpenSSH 自带的一个 SSH agent，它可以直接作为 SSH agent 来使用，或者作为其他 SSH agent 的后端。<code>ssh-agent</code> 运行时会自动 fork 它自身，然后打印出其所需的环境变量。
+<p>ssh-agent 是 OpenSSH 自带的默认 agent。它可以直接使用，或者作为下文所述的几种前端解决方案的后端。<code>ssh-agent</code> 运行时会自动 fork 到后台，然后打印出其所需的环境变量。如
 </p>
-<pre>$ ssh-agent
-SSH_AUTH_SOCK=/tmp/ssh-vEGjCM2147/agent.2147; export SSH_AUTH_SOCK;
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ssh-agent</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">SSH_AUTH_SOCK=/tmp/ssh-vEGjCM2147/agent.2147; export SSH_AUTH_SOCK;
 SSH_AGENT_PID=2148; export SSH_AGENT_PID;
-echo Agent pid 2148;
-</pre>
-<p>要使用这些环境变量，您需要使用 <code>eval</code> 命令来运行它
+echo Agent pid 2148;</pre>
+<p>要使用这些环境变量，请使用 <code>eval</code> 命令来运行它。
 </p>
-<pre>$ eval $(ssh-agent)
-Agent pid 2157
-</pre>
-<p>您可以将上述命令添加到 <code>~/.bash_profile</code>，以便您启动 <a href="../zh-CN/Bash.html#%E7%99%BB%E5%BD%95%E5%A4%96%E5%A3%B3" title="Bash (简体中文)">登录外壳</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 的时候它自动运行。
-</p>
-<pre>$ echo 'eval $(ssh-agent)' &gt;&gt; ~/.bash_profile
-</pre>
-<p>如果您想要所有的用户都可以使用 <code>ssh-agent</code>，可以直接把上述命令加入到 <code>/etc/profile</code>。
-</p>
-<pre># echo 'eval $(ssh-agent)' &gt;&gt; /etc/profile
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ eval $(ssh-agent)</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Agent pid 2157
 </pre>
 <p><code>ssh-agent</code> 运行起来之后，您还需要将您的私钥加入它的缓存。
 </p>
-<pre>$ ssh-add ~/.ssh/id_ecdsa
-Enter passphrase for /home/user/.ssh/id_ecdsa:
-Identity added: /home/user/.ssh/id_ecdsa (/home/user/.ssh/id_ecdsa)
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ssh-add ~/.ssh/id_ed25519</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Enter passphrase for /home/user/.ssh/id_ed25519:
+Identity added: /home/user/.ssh/id_ed25519 (/home/user/.ssh/id_ed25519)
 </pre>
-<p>如果您想要在登录 shell 的时候自动添加您的私钥到 <code>ssh-agent</code> 的缓存，您需要在 <code>~/.bash_profile</code> 加入以下命令：
+<p>如果您的私钥已加密，<code>ssh-add</code> 会提示您输入密码短语。一旦您的私钥被成功添加到 agent，您不需要再输入密码短语就能够建立 SSH 连接了。
 </p>
-<pre>ssh-add
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 要让包括 <code>git</code> 在内的所有 <code>ssh</code> 客户端在第一次使用时就把密钥存储在 agent 中，请将配置 <code>AddKeysToAgent yes</code> 添加到 <code>~/.ssh/config</code>。其他可能的值有 <code>confirm</code>、<code>ask</code> 和 <code>no</code>（默认）。</div>
+<p>为了自动启动 agent 并确保同一时间只有一个 <code>ssh-agent</code> 进程在运行，添加以下内容到您的 <code>~/.bashrc</code>：
+</p>
+<pre>if ! pgrep -u "$USER" ssh-agent &gt; /dev/null; then
+    ssh-agent -t 1h &gt; "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+if [[ ! "$SSH_AUTH_SOCK" ]]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" &gt;/dev/null
+fi
 </pre>
-<p>如果您的私钥已用密码短语加密，<code>ssh-add</code> 会提示您输入密码短语。输入正确的密码短语之后，您在*当前会话*中就不需要再次输入密码短语就能够使用密钥对进行 SSH 登录了。
+<p>如果还没有 <code>ssh-agent</code> 进程在运行的话，该脚本会自动启动一个，并保存其输出。如果已经有一个在运行了，就会读取缓存的 <code>ssh-agent</code> 输出并执行之，从而设置必要的环境变量。解密密钥的存活时间设置为1小时。
 </p>
-<p>如果您想要在用到私钥的时候再输入密码短语，您可以添加以下命令到 <code>~/.bashrc</code>：
+<p>本节后面会介绍几种 <code>ssh-agent</code> 的前端及其他 agent，也能够避免这一问题。
 </p>
-<pre>$ ssh-add -l &gt;/dev/null || alias ssh='ssh-add -l &gt;/dev/null || ssh-add &amp;&amp; unalias ssh; ssh'
-</pre>
-<p>但是这样做有个缺点，每次启动 <a href="../zh-CN/Bash.html#%E7%99%BB%E5%BD%95%E5%A4%96%E5%A3%B3" title="Bash (简体中文)">登录外壳</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 都会产生一个 <code>ssh-agent</code> 实例，并在会话期间一直运行。不久之后，您的系统中就会有多个根本不再需要的 <code>ssh-agent</code> 进程在运行。稍后，我们将为您介绍其他 <code>ssh-agent</code> 前端，它们能够避免这个问题。
+<h4>
+<span id=".E7.94.A8_systemd_user_.E5.90.AF.E5.8A.A8_ssh-agent"></span><span class="mw-headline" id="用_systemd_user_启动_ssh-agent">用 systemd user 启动 ssh-agent</span>
+</h4>
+<p>通过 <a href="../zh-CN/a87ea26bff3744e8b00320e027759a76.html" title="Systemd (简体中文)/User (简体中文)">Systemd_(简体中文)/User_(简体中文)</a> 机制来启动 agent 同样可行。如果想要在登录时运行 SSH agent 而不论 X 是否在运行的话，可用此法。
 </p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.config/systemd/user/ssh-agent.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
+Description=SSH key agent
+
+[Service]
+Type=simple
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+# DISPLAY required for ssh-askpass to work
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
+
+[Install]
+WantedBy=default.target</pre>
+<p>然后在您的登录 shell 初始化文件（如 <code>~/.bash_profile</code>）中 <i>export</i> <a href="../zh-CN/Environment_variables.html" title="Environment variables (简体中文)">环境变量</a> <code>SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"</code>。
+</p>
+<p>最后，加上 <code>--user</code> 标志 <a href="../zh-CN/Systemd.html#%E4%BD%BF%E7%94%A8%E5%8D%95%E5%85%83" title="Systemd (简体中文)">enable</a> 或 <a href="../zh-CN/Systemd.html#%E4%BD%BF%E7%94%A8%E5%8D%95%E5%85%83" title="Systemd (简体中文)">start</a> 服务。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 如果您使用 GNOME，该环境变量默认会被覆盖。见 <a href="../zh-CN/2f866f9b5094337533be6abeab55a352.html#%E7%A6%81%E7%94%A8%E9%92%A5%E5%8C%99%E7%8E%AF%E7%9A%84%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E7%BB%84%E4%BB%B6" title="GNOME (简体中文)/Keyring (简体中文)">GNOME_(简体中文)/Keyring_(简体中文)#禁用钥匙环的守护进程组件</a>。</div>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 当按上述方法通过 systemd 启动 agent 时，可以自动输入您默认密钥的密码短语并将其添加到 agent。详见 <a rel="nofollow" class="external text" href="https://github.com/capocasa/systemd-user-pam-ssh">systemd-user-pam-ssh</a>。</div>
 <h4>
 <span id="ssh-agent_.E4.BD.9C.E4.B8.BA.E5.8C.85.E8.A3.85.E7.A8.8B.E5.BA.8F.E8.BF.90.E8.A1.8C"></span><span class="mw-headline" id="ssh-agent_作为包装程序运行">ssh-agent 作为包装程序运行</span>
 </h4>
-<p>根据加州大学伯克利分校实验室的这份 <a rel="nofollow" class="external text" href="http://upc.lbl.gov/docs/user/sshagent.shtml">ssh-agent 教程</a>，还有一个随 X 会话启动 <code>ssh-agent</code> 的方法，该法用于您在使用命令 <code>startx</code> 启动 X的时候，可以在命令前加上 <code>ssh-agent</code>：
+<p><a rel="nofollow" class="external text" href="http://upc.lbl.gov/docs/user/sshagent.shtml">加州大学伯克利分校实验室的这份 ssh-agent 教程</a>还介绍了一种随每个 X 会话启动 <code>ssh-agent</code> 的方法。基本用法是，如果您使用命令 <code>startx</code> 正常启动 X，您可以改成像这样在前面加上 <code>ssh-agent</code>：
 </p>
 <pre>$ ssh-agent startx
 </pre>
-<p>您也可以在 <code>.bash_aliases</code> 中设置别名以方便使用：
+<p>您也可以在 <code>.bash_aliases</code> 或等同文件中设置别名，就不用再费心了：
 </p>
 <pre>alias startx='ssh-agent startx'
 </pre>
-<p>这样做可以避免多个会话中存在多余的 <code>ssh-agent</code> 进程，实际上，整个 X 会话中只有一个 <code>ssh-agent</code> 在运行了。
-</p>
-<h3><span class="mw-headline" id="GnuPG">GnuPG</span></h3>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> GnuPG &lt; 2.0.21 不支持 ECC。GnuPG &gt;= 2.0.21 支持 ECDSA。</div>
-<p><a href="../en/GnuPG.html" title="GnuPG">GnuPG</a> 可以从 <a href="../zh-CN/Official_repositories.html" title="Official repositories (简体中文)">官方软件仓库</a> 安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gnupg">gnupg</a></span>。如果您已经在使用 GnuPG，您也许想要 GnuPG 来缓存您的私钥。当然咯，有些用户比较喜欢在 GnuPG 对话框来输入 PIN 码，这样子管理密码短语也是不错的选择。
-</p>
-<p>{注意|如果您使用 KDE 作为桌面环境，且安装了 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=kde-agent">kde-agent</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：package not found]</sup> 的话，您只需在 <code>~/.gnupg/gpg-agent.conf</code> 中设置 <code>enable-ssh-support</code>。否则，请继续阅读。}
-</p>
-<p>要使用 GnuPG agent，您首先要启动 <i>gpg-agent</i>，并加上 <code>--enable-ssh-support</code> 选项。比如，记得给脚本加上可执行权限：
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/profile.d/gpg-agent.sh</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/sh
-
-# Start the GnuPG agent and enable OpenSSH agent emulation
-gnupginf="${HOME}/.gpg-agent-info"
-
-if pgrep -x -u "${USER}" gpg-agent &gt;/dev/null 2&gt;&amp;1; then
-    eval `cat $gnupginf`
-    eval `cut -d= -f1 $gnupginf | xargs echo export`
-else
-    eval `gpg-agent -s --enable-ssh-support --daemon --write-env-file "$gnupginf"`
-fi
-</pre>
-<p><code>gpg-agent</code> 运行起来之后，您就可以使用 <code>ssh-add</code> 命令来认证密钥对，正如上文中 <code>ssh-agent</code> 做的那样。已认证的密钥对列表保存在 <code>~/.gnupg/sshcontrol</code> 文件中。此后，在需要使用您的私钥密码短语是，GnuPG 会显示一个对话框让您输入。您可以通过配置文件 <code>~/.gnupg/gpg-agent.conf</code> 来管理您的密码短语缓存。比如，下面这个例子说明如何使用 <code>gpg-agent</code> 来缓存您的密钥 3 小时：
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.gnupg/gpg-agent.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">  # Cache settings
-  default-cache-ttl 10800
-  default-cache-ttl-ssh 10800
-</pre>
-<p>您还可以在此文件中设置 PIN 输入框 (GTK、QT 或者 ncurses 版本) 等内容。
+<p>这样做可以避免多个会话中存在多余的 <code>ssh-agent</code> 进程。整个 X 会话中只会有一个 <code>ssh-agent</code> 在运行。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> 您必须创建一个 <code>gpg-agent.conf</code> 文件，<code>write-env-file</code> 变量必须设置好，以便允许 <code>gpg-agent</code> 在 SSH 登录过程中的使用。</div>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.gnupg/gpg-agent.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">  # Environment file
-  write-env-file /home/username/.gpg-agent-info
-  
-  # Keyboard control
-  #no-grab
-    
-  # PIN entry program
-  #pinentry-program /usr/bin/pinentry-curses
-  #pinentry-program /usr/bin/pinentry-qt4
-  #pinentry-program /usr/bin/pinentry-kwallet
-  pinentry-program /usr/bin/pinentry-gtk-2
-
-</pre>
-<p>要使用 <code>gpg-agent</code> 作为 SSH agent，您需要 source &amp; export <code>gpg-agent</code> 写入 <code>~/.gpg-agent-info</code> 文件的环境变量，也就是 <code>write-env-file</code> 所指的文件。
+<strong>注意：</strong> 作为调用 <code>ssh-agent startx</code> 的替代方案，可以将 <code>eval $(ssh-agent)</code> 添加到 <code>~/.xinitrc</code>。</div>
+<p>见<a href="#Calling_x11-ssh-askpass_with_ssh-add">下文有关协同使用 x11-ssh-askpass 与 ssh-add 的说明</a>了解如何立即将密钥添加到 agent。
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.bashrc</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
-
-if [ -f "${HOME}/.gpg-agent-info" ]; then
-  . "${HOME}/.gpg-agent-info"
-  export GPG_AGENT_INFO
-  export SSH_AUTH_SOCK
-fi
-</pre>
+<h3><span class="mw-headline" id="GnuPG_Agent">GnuPG Agent</span></h3>
+<p><a href="../zh-CN/GnuPG.html#gpg-agent" title="GnuPG (简体中文)">gpg-agent</a> 提供对 OpenSSH agent 的模拟。必要配置见 <a href="../zh-CN/GnuPG.html#SSH_agent" title="GnuPG (简体中文)">GnuPG_(简体中文)#SSH_agent</a>。
+</p>
 <h3><span class="mw-headline" id="Keychain">Keychain</span></h3>
 <p><a rel="nofollow" class="external text" href="http://www.funtoo.org/Keychain">Keychain</a> 是一个用来方便管理 SSH 密钥对的程序，它能尽最大努力去减少对用户的打扰。实际上，它就是一个 shell 脚本，驱动 <code>ssh-agent</code> 或者 <code>gpg-add</code> 来工作。一个值得注意的特性是，keychain 在多个会话中重复使用同一个 <code>ssh-agent</code> 进程。这意味着您只需要在机器启动时输入一次密码短语即可。
 </p>
-<p>您可以从 <a href="../zh-CN/Official_repositories.html" title="Official repositories (简体中文)">官方软件仓库</a> 安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=keychain">keychain</a></span>。
-</p>
-<p>将下列内容加入到 <code>~/.bash_profile</code>：
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.bash_profile</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">eval $(keychain --eval --agents ssh -Q --quiet id_ecdsa)
-</pre>
-<p>如有需要，请把 <code>id_ecdsa</code> 换成您的私钥路径。如果您使用的 shell 不兼容 <a href="../zh-CN/Bash.html" title="Bash (简体中文)">Bash (简体中文)</a>，请参考 <code>keychain --help</code> 或者 <span class="plainlinks archwiki-template-man" title="$ man 1 keychain"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/keychain.1">keychain(1)</a></span>。
-</p>
-<p>要测试 keychain 是否配置成功，请注销当前会话，重新登录。如果这是您第一次运行 keychain，则您会被要求输入私钥的密码短语。因为 keychain 复用已成功登录的会话中的 <code>ssh-agent</code> 进程，所以您再次登录是就无需输入密码短语了。当您重启机器时，您才会被要求再次输入密码短语。
+<h4>
+<span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
+</h4>
+<p><a href="../zh-CN/Help:Reading.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" title="Help:Reading (简体中文)">安装</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=keychain">keychain</a></span> 软件包。
 </p>
 <h4>
-<span id=".E5.8F.A6.E4.B8.80.E7.A7.8D.E5.90.AF.E5.8A.A8_keychain_.E7.9A.84.E6.96.B9.E5.BC.8F"></span><span class="mw-headline" id="另一种启动_keychain_的方式">另一种启动 keychain 的方式</span>
+<span id=".E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="配置">配置</span>
 </h4>
-<p>调用 keychain 的方法有很多种，您可以自行尝试，找到最适合您的那一种。<code>keychain</code> 命令提供了不少的选项来进行设置，您可以参考它的手册。
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>警告：</strong> 2015-09-26时情况，<code>-Q, --quick</code> 选项存在预期之外的副作用，导致 <i>keychain</i> 在重新登陆时切换到新产生的 <i>ssh-agent</i> （至少在使用 <a href="../zh-CN/GNOME.html" title="GNOME (简体中文)">GNOME</a> 的系统上如此），使您不得不重新添加所有先前注册的密钥。</div>
+<p>将类似以下的行加入到您 <a href="../en/Command-line_shell.html" class="mw-redirect" title="Shell">shell</a> 的 配置文件中，<i>例如</i>若您使用<a href="../zh-CN/Bash.html" title="Bash (简体中文)">Bash</a>：
 </p>
-<p>这里我们介绍其中一种不错的方法，以 <code>root</code> 身份创建 <code>/etc/profile.d/keychain.sh</code>，并添加下列内容：
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/profile.d/keychain.sh</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/usr/bin/keychain -Q -q --nogui ~/.ssh/id_ecdsa
-[[ -f $HOME/.keychain/$HOSTNAME-sh ]] &amp;&amp; source $HOME/.keychain/$HOSTNAME-sh
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.bashrc</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">eval $(keychain --eval --quiet id_ed25519 id_rsa ~/.keys/my_custom_key)
 </pre>
-<p>记得给该脚本加上可执行权限：
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 之所以使用 <code>~/.bashrc</code> 而非上游建议的 <code>~/.bash_profile</code>，是因为在 Arch 上登录与非登录 shell 都会使用它，因此同样适用于文字与图形环境。关于二者之间差异的更多信息见<a href="../zh-CN/Bash.html#%E8%B0%83%E7%94%A8" title="Bash (简体中文)">Bash_(简体中文)#调用</a>。</div>
+<p>上例当中，
 </p>
-<pre># chmod +x /etc/profile.d/keychain.sh
-</pre>
-<p>如果您想要在第一次使用私钥时才输入密码短语，而非一开机登录就输入的话，您可以将下列内容加入 <code>~/.bashrc</code>：
+<ul>
+<li>
+<code>--eval</code> 开关可以输出供 <code>eval</code> 命令执行的行；这样可以设置必要的环境变量，让 SSH 客户端能够找到您的 agent。</li>
+<li>
+<code>--quiet</code> 会把输出限制为只包含警告、错误及用户提示。</li>
+</ul>
+<p>如例子所示，可在命令行中指定多个密钥。keychain 默认会在 <code>~/.ssh/</code> 目录中寻找密钥对，但对于位于非标准位置的密钥可以使用绝对路径。也可使用 <code>--confhost</code> 选项告知 keychain 在 <code>~/.ssh/config</code> 中寻找为特定主机定义的 <code>IdentityFile</code> 设置，并使用这些路径来定位密钥。
 </p>
-<pre>alias ssh='eval $(/usr/bin/keychain --eval --agents ssh -Q --quiet ~/.ssh/id_ecdsa) &amp;&amp; ssh'
-</pre>
-<p>这样子，当您开机后首次使用密钥对连接 SSH 服务器时，您才需要提供密码短语。但是，这只在 <code>~/.bashrc</code> 可用的情况下才奏效，所以您应该保证第一次使用 SSH 连接时是在终端下进行的。
+<p>关于如何为其他 shell 设置<i>keychain</i>的详情见 <code>keychain --help</code> 或者 <span class="plainlinks archwiki-template-man" title="$ man 1 keychain"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/keychain.1">keychain(1)</a></span>。
 </p>
+<p>要测试 keychain，只需打开一个终端模拟器，或注销当前会话再重新登录。它应该会使用 <code>$SSH_ASKPASS</code> 中设置的程序或在终端上提示您输入指定私钥的密码短语（如果有）。
+</p>
+<p>因为 keychain 重新使用之前的登录中的 <i>ssh-agent</i> 进程，所以您再次登录或打开新终端时应该就无需输入密码短语了。每当您重启机器时，您才会被要求再次输入密码短语。
+</p>
+<h4>
+<span id=".E6.8F.90.E7.A4.BA"></span><span class="mw-headline" id="提示">提示</span>
+</h4>
+<ul><li>
+<i>keychain</i> 需要公钥文件与相应私钥存放在同一目录下，带有 <code>.pub</code> 扩展名。如私钥为符号链接，公钥与符号链接一起存放或与符号链接目标在同一目录都能找得到（该功能需要系统上有 <code>readlink</code> 命令）。</li></ul>
+<ul><li>要禁用图形提示，始终在终端中输入密码短语，请使用 <code>--nogui</code> 选项。举例来说，这样可以从密码管理器中复制粘贴长密码。</li></ul>
+<ul><li>如果您想要等到需要时再提示解锁密钥，而不是一开始就提示，请使用 <code>--noask</code> 选项。</li></ul>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> Keychain 能够以同样的方式管理 <a href="../zh-CN/GnuPG.html" title="GnuPG (简体中文)">GPG</a> 密钥。它默认只会尝试启动 <i>ssh-agent</i>，但使用 <code>--agents</code> 选项可以改变这一行为，<i>例如</i> <code>--agents ssh,gpg</code>。见 <span class="plainlinks archwiki-template-man" title="$ man 1 keychain"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/keychain.1">keychain(1)</a></span>。</div>
 <h3><span class="mw-headline" id="envoy">envoy</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 注意: envoy作者已经不再维护该项目，请慎重使用
@@ -567,9 +600,9 @@ chmod 755 ~/.kde4/env/ssh-agent-startup.sh ~/.kde4/shutdown/ssh-agent-shutdown.s
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Secure_Shell.html" title="Category:Secure Shell (简体中文)">Secure Shell (简体中文)</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 <li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 </ul>
 </div>
 </div>
@@ -578,8 +611,8 @@ chmod 755 ~/.kde4/env/ssh-agent-startup.sh ~/.kde4/shutdown/ssh-agent-shutdown.s
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SSH_keys_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=641410">https://wiki.archlinux.org/index.php?title=SSH_keys_(简体中文)&amp;oldid=641410</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 November 2020, at 02:16.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SSH_keys_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=652643">https://wiki.archlinux.org/index.php?title=SSH_keys_(简体中文)&amp;oldid=652643</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 08:22.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

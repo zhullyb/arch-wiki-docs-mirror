@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,6 +36,8 @@
 <p>From the <a rel="nofollow" class="external text" href="https://www.wireguard.com/">WireGuard</a> project homepage: 
 </p>
 <dl><dd>WireGuard is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. Initially released for the Linux kernel, it is now cross-platform (Windows, macOS, BSD, iOS, Android) and widely deployable.</dd></dl>
+<p>A rough introduction to the main concepts used in this article can be found on <a rel="nofollow" class="external text" href="https://www.wireguard.com/">WireGuard</a> project homepage. Wireguard is in the Linux kernel since March 2020. 
+</p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -121,26 +124,11 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<ol>
-<li>
-<a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-tools">wireguard-tools</a></span>.</li>
-<li>For Linux kernels &lt; 5.6 additionally install the appropriate kernel module: (not needed when using the default <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> package)
-<ul>
-<li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-lts">wireguard-lts</a></span> for the LTS <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span> kernel.</li>
-<li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-dkms">wireguard-dkms</a></span> for the DKMS variant for other Linux &lt; 5.6 <a href="../en/Kernel.html" title="Kernel">kernels</a>.</li>
-</ul>
-</li>
-</ol>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> <a href="#systemd-networkd">systemd-networkd</a> and <a href="#NetworkManager">NetworkManager</a> both have native support for setting up WireGuard interfaces, they only require the kernel module.</div>
+<p>For recent kernels (≥ 5.6) and if using <a href="#systemd-networkd">systemd-networkd</a> or <a href="#NetworkManager">NetworkManager</a> as network manager, no additional tools are required to set up a WireGuard interface. Else, <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-tools">wireguard-tools</a></span>.
+</p>
+<p>If using a Linux <a href="../en/Kernel.html" title="Kernel">kernel</a> older than 5.6, additionally install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-dkms">wireguard-dkms</a></span> for the kernel module.
+</p>
 <h3><span class="mw-headline" id="Graphical_clients">Graphical clients</span></h3>
-<ul><li>
-<b>TunSafe</b> — High performance and secure VPN client that uses the WireGuard protocol</li></ul>
-<dl><dd>
-<a rel="nofollow" class="external free" href="https://tunsafe.com/">https://tunsafe.com/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tunsafe/">tunsafe</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tunsafe-git/">tunsafe-git</a></span><sup><small>AUR</small></sup>
-</dd></dl>
 <ul><li>
 <b>Qomui</b> — OpenVPN Gui with advanced features and support for multiple providers</li></ul>
 <dl><dd>
@@ -232,10 +220,8 @@
 <p>The internal addresses will be new addresses, created either manually using the <span class="plainlinks archwiki-template-man" title="$ man 8 ip"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ip.8">ip(8)</a></span> utility or by network management software, which will be used internally within the new WireGuard network. The following examples will use 10.0.0.0/24 and fdc9:281f:04d7:9ee9::/64 as the internal network. The <code>/24</code> and <code>/64</code> in the IP addresses is the <a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation" class="extiw" title="wikipedia:Classless Inter-Domain Routing">CIDR</a>.
 </p>
 <h3><span class="mw-headline" id="Key_generation">Key generation</span></h3>
-<p>Create a private and public key for each peer.
+<p>Create a private and public key for each peer. If connecting dozens of peers optionally consider a vanity keypair to personalize the Base64 encoded public key string. See <a href="#Vanity_keys">#Vanity keys</a>.
 </p>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> Optionally consider a vanity keypair. See <a href="#Vanity_keys">#Vanity keys</a>.</div>
 <p>To create a private key run:
 </p>
 <pre>$ (umask 0077; wg genkey &gt; peer_A.key)
@@ -329,7 +315,7 @@ $ wg genpsk &gt; peer_B-peer_C.psk
 <p>See <a href="../en/Sysctl.html#Configuration" title="Sysctl">sysctl#Configuration</a> for instructions on how to set the <i>sysctl</i> parameters on boot.
 </p>
 <h5><span class="mw-headline" id="Site-to-site">Site-to-site</span></h5>
-<p>For connect two (or more) networks, apply both <a href="#Point-to-site">#Point-to-site</a> and <a href="#Site-to-point">#Site-to-point</a> on all <i>sites</i>.
+<p>To connect two (or more) networks, apply both <a href="#Point-to-site">#Point-to-site</a> and <a href="#Site-to-point">#Site-to-point</a> on all <i>sites</i>.
 </p>
 <h5><span class="mw-headline" id="Routing_all_traffic_over_WireGuard">Routing all traffic over WireGuard</span></h5>
 <div class="noprint archwiki-template-message">
@@ -609,6 +595,76 @@ Name=wg0
 [Network]
 Address=10.0.0.3/24
 Address=fdc9:281f:04d7:9ee9::3/64</pre>
+<p><b>Routing all traffic over Wireguard</b>
+</p>
+<p>In this example Peer B connects to peer A with public IP address 89.0.99.9. Peer B routs all its traffic over Wireguard tunnel and uses Peer A for handling DNS requests.
+</p>
+<p><b>Peer A setup</b>
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/network/20-wired.network</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Match]
+Name=en*
+
+[Network]
+DHCP=ipv4
+IPForward=ipv4</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/network/50-wg0.netdev</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[NetDev]
+Name=wg0
+Kind=wireguard
+Description=WireGuard peer 10.50.0.1
+
+[WireGuard]
+ListenPort=59998
+PrivateKey=<i>PEER_A_PRIVATE_KEY</i>
+
+[WireGuardPeer]
+PublicKey=<i>PEER_B_PUBLIC_KEY</i>
+PresharedKey=<i>PEER_A-PEER_B-PRESHARED_KEY</i>
+AllowedIPs=10.50.0.2/32</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/network/50-wg0.network</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Match]
+Name=wg0
+
+[Network]
+Address=10.50.0.1/24</pre>
+<p><b>Peer B setup:</b>
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/network/50-wg0.netdev</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[NetDev]
+Name=wg0
+Kind=wireguard
+Description=WireGuard peer 10.50.0.2
+
+[WireGuard]
+FirewallMark=0x8888
+PrivateKey=<i>PEER_B_PRIVATE_KEY</i>
+
+[WireGuardPeer]
+PublicKey=<i>PEER_A_PUBLIC_KEY</i>
+PresharedKey=<i>PEER_A-PEER_B-PRESHARED_KEY</i>
+AllowedIPs=0.0.0.0/0
+Endpoint=89.0.99.9:59998</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/network/50-wg0.network</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Match]
+Name=wg0
+
+[Network]
+Address=10.50.0.2/24
+DNS=10.50.0.1
+DNSDefaultRoute=true
+Domains=~.
+
+[RoutingPolicyRule]
+FirewallMark=0x8888
+InvertRule=true
+Table=1000
+Priority=10
+
+[Route]
+Gateway=10.50.0.1
+GatewayOnLink=true
+Table=1000</pre>
 <h4><span class="mw-headline" id="Netctl">Netctl</span></h4>
 <p><a href="../en/Netctl.html" title="Netctl">Netctl</a> has native support for setting up WireGuard interfaces. At least Netctl version ≥ 1.23 is recommended as previous versions had various bugs around WireGuard implementation. A typical set of WireGuard netctl profile configuration files would look like this.
 </p>
@@ -838,10 +894,10 @@ method=manual</pre>
 <p>If the server has a public IP configured, be sure to:
 </p>
 <ul>
-<li>Allow UDP traffic on the specified port(s) on which WireGuard will be running (for example allowing traffic on 51820/udp).</li>
+<li>Allow UDP traffic on the specified port(s) on which WireGuard will be running (for example allowing traffic on <code>51820/UDP</code>).</li>
 <li>Setup the forwarding policy for the firewall if it is not included in the WireGuard config for the interface itself <code>/etc/wireguard/wg0.conf</code>. The example below should have the iptables rules and work as-is.</li>
 </ul>
-<p>If the server is behind NAT, be sure to forward the specified port(s) on which WireGuard will be running (for example, 51820/UDP) from the router to the WireGuard server.
+<p>If the server is behind NAT, be sure to forward the specified port(s) on which WireGuard will be running (for example, <code>51820/UDP</code>) from the router to the WireGuard server.
 </p>
 <h3><span class="mw-headline" id="Key_generation_2">Key generation</span></h3>
 <p>Generate key pairs for the server and for each client as explained in <a href="#Key_generation">#Key generation</a>.
@@ -873,7 +929,7 @@ PresharedKey = <i>PRE-SHARED_KEY</i>
 AllowedIPs = 10.200.200.3/32</pre>
 <p>Additional peers ("clients") can be listed in the same format as needed. Each peer requires the <code>PublicKey</code> to be set. However, specifying <code>PresharedKey</code> is optional.
 </p>
-<p>Notice that the <code>Address</code> has a netmask of "/24" and the clients on <code>AllowedIPs</code> "/32". The clients only use their IP and the server only sends back their respective address.
+<p>Notice that the <code>Address</code> has a netmask of <code>/24</code> and the clients on <code>AllowedIPs</code> <code>/32</code>. The clients only use their IP and the server only sends back their respective address.
 </p>
 <p>The interface can be managed manually using <span class="plainlinks archwiki-template-man" title="$ man 8 wg-quick"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/wg-quick.8">wg-quick(8)</a></span> or using a <a href="../en/Systemd.html" title="Systemd">systemd</a> service managed via <span class="plainlinks archwiki-template-man" title="$ man 1 systemctl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemctl.1">systemctl(1)</a></span>.
 </p>
@@ -1101,8 +1157,8 @@ ExecStart=/bin/sh -c 'for i in /etc/wireguard/*.conf; do /usr/share/wireguard-to
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=WireGuard&amp;oldid=646140">https://wiki.archlinux.org/index.php?title=WireGuard&amp;oldid=646140</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 December 2020, at 03:08.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=WireGuard&amp;oldid=652572">https://wiki.archlinux.org/index.php?title=WireGuard&amp;oldid=652572</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 February 2021, at 13:33.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

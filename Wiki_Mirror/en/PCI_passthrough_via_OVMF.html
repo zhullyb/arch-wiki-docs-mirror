@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -405,7 +406,7 @@ IOMMU Group 13:
 	Kernel modules: snd_hda_intel
 </pre>
 <h2><span class="mw-headline" id="Setting_up_an_OVMF-based_guest_VM">Setting up an OVMF-based guest VM</span></h2>
-<p>OVMF is an open-source UEFI firmware for QEMU virtual machines. While it is possible to use SeaBIOS to get similar results to an actual PCI passthough, the setup process is different and it is generally preferable to use the EFI method if your hardware supports it.
+<p>OVMF is an open-source UEFI firmware for QEMU virtual machines. While it is possible to use SeaBIOS to get similar results to an actual PCI passthrough, the setup process is different and it is generally preferable to use the EFI method if your hardware supports it.
 </p>
 <h3><span class="mw-headline" id="Configuring_libvirt">Configuring libvirt</span></h3>
 <p><a href="../en/Libvirt.html" title="Libvirt">Libvirt</a> is a wrapper for a number of virtualization utilities that greatly simplifies the configuration and deployment process of virtual machines. In the case of KVM and QEMU, the frontend it provides allows us to avoid dealing with the permissions for QEMU and make it easier to add and remove various devices on a live VM. Its status as a wrapper, however, means that it might not always support all of the latest qemu features, which could end up requiring the use of a wrapper script to provide some extra arguments to QEMU.
@@ -675,6 +676,10 @@ cgroup_device_acl = [
 </p>
 <p>Arch kernels have THP compiled in and enabled by default with <code>/sys/kernel/mm/transparent_hugepage/enabled</code> set to <code>madvise</code> mode.
 </p>
+<p>Also when trying to allocate pages for <code>virsh</code>, e.g. <code>virsh allocpages 2M 2048</code>, you might need to free up cached RAM. This is because your system might have allocated RAM for cache resources over time. One possible solution is to drop the page cache of your system:
+</p>
+<p><code># echo 1 &gt; /proc/sys/vm/drop_caches</code>
+</p>
 <h4><span class="mw-headline" id="Static_huge_pages">Static huge pages</span></h4>
 <p>While transparent huge pages should work in the vast majority of cases, they can also be allocated statically during boot. This should only be needed to make use 1 GiB hugepages on machines that support it, since transparent huge pages normally only go up to 2 MiB.
 </p>
@@ -743,10 +748,16 @@ Use the <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel 
 <p>See <a rel="nofollow" class="external text" href="https://www.removeddit.com/r/VFIO/comments/6vgtpx/high_dpc_latency_and_audio_stuttering_on_windows/dm0sfto/">this Removeddit mirror of a Reddit thread</a> for more info. (<a rel="nofollow" class="external text" href="https://www.reddit.com/r/VFIO/comments/6vgtpx/high_dpc_latency_and_audio_stuttering_on_windows/dm0sfto/">The original thread</a> is worthless because of deleted comments.)
 </p>
 <h4><span class="mw-headline" id="Dynamically_isolating_CPUs">Dynamically isolating CPUs</span></h4>
-<p>The isolcpus kernel parameter will permanently reserve CPU cores, even when the guest is not running. A more flexible alternative is to use the cset tool from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cpuset-git/">cpuset-git</a></span><sup><small>AUR</small></sup> to dynamically isolate CPUs when starting the guest.
+<p>The isolcpus kernel parameter will permanently reserve CPU cores, even when the guest is not running. A more flexible alternative is to dynamically isolate CPUs when starting the guest. This can be achieved with the following alternatives:
 </p>
-<p>See this <a rel="nofollow" class="external text" href="https://www.redhat.com/archives/vfio-users/2016-September/msg00072.html">vfio-users post</a> for more info, as well as this <a rel="nofollow" class="external text" href="https://rokups.github.io/#!pages/gaming-vm-performance.md">blog post</a> and this <a rel="nofollow" class="external text" href="https://github.com/PassthroughPOST/VFIO-Tools/blob/master/libvirt_hooks/hooks/cset.sh">script</a> for working examples.
-</p>
+<ul>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cpuset-git/">cpuset-git</a></span><sup><small>AUR</small></sup> (<a rel="nofollow" class="external text" href="https://www.redhat.com/archives/vfio-users/2016-September/msg00072.html">vfio-users post</a>, <a rel="nofollow" class="external text" href="https://rokups.github.io/#!pages/gaming-vm-performance.md">blog post</a>, <a rel="nofollow" class="external text" href="https://github.com/PassthroughPOST/VFIO-Tools/blob/master/libvirt_hooks/hooks/cset.sh">example script</a>)</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vfio-isolate/">vfio-isolate</a></span><sup><small>AUR</small></sup>
+</li>
+<li>systemd (<a rel="nofollow" class="external text" href="https://www.reddit.com/r/VFIO/comments/ebe3l5/deprecated_isolcpus_workaround/fem8jgk">reddit post</a>)</li>
+</ul>
 <h3><span class="mw-headline" id="Improving_performance_on_AMD_CPUs">Improving performance on AMD CPUs</span></h3>
 <p>Starting with QEMU 3.1 the TOPOEXT cpuid flag is disabled by default. In order to use hyperthreading (SMT) on AMD CPUs you need to manually enable it:
 </p>
@@ -768,7 +779,8 @@ Use the <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel 
 <h4><span class="mw-headline" id="Drivers">Drivers</span></h4>
 <ul>
 <li>Linux guests should support these out of the box on any modern kernel</li>
-<li>macOS has rudimentary <code>virtio-blk</code> support starting in Mojave via <code>AppleVirtIO.kext</code> but performance is poor and TRIM does not appear to work. SATA is still suggested</li>
+<li>macOS has <code>virtio-blk</code> support starting in Mojave via <code>AppleVirtIO.kext</code>
+</li>
 <li>Windows needs the <a rel="nofollow" class="external text" href="https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/">Windows virtio drivers</a>. <code>virtio-scsi</code> uses the <code>vioscsi</code> driver. <code>virtio-blk</code> uses the <code>viostor</code> driver</li>
 <li>Windows can be installed directly onto these disks by selecting 'load driver' on the installer disk selection menu. The windows iso and virtio driver iso should both be attached as regular SATA/IDE cdroms during the installation process</li>
 <li>To switch boot disks to virtio on an existing Windows installation:
@@ -875,7 +887,7 @@ Use the <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel 
 <div>
 <b>Reason:</b> A number of users have been having issues with this, it should probably be adressed by the article. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PCI_passthrough_via_OVMF#Additionnal_sections">Talk:PCI passthrough via OVMF#Additionnal sections</a>)</div>
 </div>
-<p>Due to how vfio-pci uses your vendor and device id pair to identify which device they need to bind to at boot, if you have two GPUs sharing such an ID pair you will not be able to get your passthough driver to bind with just one of them. This sort of setup makes it necessary to use a script, so that whichever driver you are using is instead assigned by pci bus address using the <code>driver_override</code> mechanism.
+<p>Due to how vfio-pci uses your vendor and device id pair to identify which device they need to bind to at boot, if you have two GPUs sharing such an ID pair you will not be able to get your passthrough driver to bind with just one of them. This sort of setup makes it necessary to use a script, so that whichever driver you are using is instead assigned by pci bus address using the <code>driver_override</code> mechanism.
 </p>
 <h4><span class="mw-headline" id="Script_variants">Script variants</span></h4>
 <h5><span class="mw-headline" id="Passthrough_all_GPUs_but_the_boot_GPU">Passthrough all GPUs but the boot GPU</span></h5>
@@ -1049,7 +1061,7 @@ virsh attach-device win10 /home/$USER/.VFIOinput/input_keyboard.xml</pre>
 </h3>
 <p>If you find your PCI devices grouped among others that you do not wish to pass through, you may be able to seperate them using Alex Williamson's ACS override patch. Make sure you understand <a rel="nofollow" class="external text" href="https://vfio.blogspot.com/2014/08/iommu-groups-inside-and-out.html">the potential risk</a> of doing so. 
 </p>
-<p>You will need a kernel with the patch applied. The easiest method to acquiring this is through the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-vfio/">linux-vfio</a></span><sup><small>AUR</small></sup> package. 
+<p>You will need a kernel with the patch applied. The easiest method to acquiring this is through the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-zen">linux-zen</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-vfio/">linux-vfio</a></span><sup><small>AUR</small></sup> package.
 </p>
 <p>In addition, the ACS override patch needs to be enabled with kernel command line options.  The patch file adds the following documentation:
 </p>
@@ -1695,8 +1707,8 @@ kernel: pcieport 0000:00:01.1: AER: device recovery successful
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=648918">https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=648918</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 January 2021, at 11:51.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=652704">https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=652704</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 February 2021, at 01:52.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

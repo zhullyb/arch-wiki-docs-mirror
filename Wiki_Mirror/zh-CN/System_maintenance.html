@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -39,7 +40,7 @@
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/System_maintenance.html" title="System maintenance">System_maintenance</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2018-11-02。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=System_maintenance&amp;diff=0&amp;oldid=546559">更改</a>，则您可以帮助同步翻译。</div>
+<strong>翻译状态：</strong>本文是 <a href="../en/System_maintenance.html" title="System maintenance">System_maintenance</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-02-17。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=System_maintenance&amp;diff=0&amp;oldid=647948">更改</a>，则您可以帮助同步翻译。</div>
 <p>要持续使用 Arch linux，需要进行系统日常维护，每个用户都应该及时维护系统。
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -61,7 +62,7 @@
 <li class="toclevel-2 tocsection-5"><a href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="tocnumber">2.1</span> <span class="toctext">配置文件</span></a></li>
 <li class="toclevel-2 tocsection-6"><a href="#%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="tocnumber">2.2</span> <span class="toctext">安装的软件包</span></a></li>
 <li class="toclevel-2 tocsection-7"><a href="#Pacman_%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="tocnumber">2.3</span> <span class="toctext">Pacman 数据库</span></a></li>
-<li class="toclevel-2 tocsection-8"><a href="#LUKS_headers"><span class="tocnumber">2.4</span> <span class="toctext">LUKS headers</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#%E5%8A%A0%E5%AF%86%E5%85%83%E6%95%B0%E6%8D%AE"><span class="tocnumber">2.4</span> <span class="toctext">加密元数据</span></a></li>
 <li class="toclevel-2 tocsection-9"><a href="#%E7%B3%BB%E7%BB%9F%E5%92%8C%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE"><span class="tocnumber">2.5</span> <span class="toctext">系统和用户数据</span></a></li>
 </ul>
 </li>
@@ -73,31 +74,32 @@
 <li class="toclevel-2 tocsection-13"><a href="#%E4%B8%8D%E6%94%AF%E6%8C%81%E9%83%A8%E5%88%86%E5%8D%87%E7%BA%A7"><span class="tocnumber">3.3</span> <span class="toctext">不支持部分升级</span></a></li>
 <li class="toclevel-2 tocsection-14"><a href="#%E6%B3%A8%E6%84%8F%E6%9B%B4%E6%96%B0%E6%97%B6%E7%9A%84%E6%8F%90%E9%86%92"><span class="tocnumber">3.4</span> <span class="toctext">注意更新时的提醒</span></a></li>
 <li class="toclevel-2 tocsection-15"><a href="#%E5%A4%84%E7%90%86%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%9B%B4%E6%96%B0"><span class="tocnumber">3.5</span> <span class="toctext">处理配置文件更新</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#%E5%9B%9E%E9%80%80%E6%9C%89%E9%97%AE%E9%A2%98%E7%9A%84%E6%9B%B4%E6%96%B0"><span class="tocnumber">3.6</span> <span class="toctext">回退有问题的更新</span></a></li>
-<li class="toclevel-2 tocsection-17"><a href="#%E6%A3%80%E6%9F%A5%E5%AD%A4%E7%AB%8B%E5%92%8C%E6%9C%AA%E4%BD%BF%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="tocnumber">3.7</span> <span class="toctext">检查孤立和未使用软件包</span></a></li>
-<li class="toclevel-2 tocsection-18"><a href="#%E4%BD%BF%E7%94%A8%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="tocnumber">3.8</span> <span class="toctext">使用包管理器安装软件</span></a></li>
-<li class="toclevel-2 tocsection-19"><a href="#%E9%80%89%E6%8B%A9%E5%BC%80%E6%BA%90%E9%A9%B1%E5%8A%A8"><span class="tocnumber">3.9</span> <span class="toctext">选择开源驱动</span></a></li>
-<li class="toclevel-2 tocsection-20"><a href="#%E8%B0%A8%E6%85%8E%E4%BD%BF%E7%94%A8%E9%9D%9E%E5%AE%98%E6%96%B9%E6%88%96%E6%B5%8B%E8%AF%95%E4%B8%8D%E8%B6%B3%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="tocnumber">3.10</span> <span class="toctext">谨慎使用非官方或测试不足的软件包</span></a></li>
-<li class="toclevel-2 tocsection-21"><a href="#%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F%E5%88%97%E8%A1%A8"><span class="tocnumber">3.11</span> <span class="toctext">更新镜像列表</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#%E5%9C%A8%E6%9B%B4%E6%96%B0%E5%90%8E%E9%87%8D%E5%90%AF%E7%A8%8B%E5%BA%8F%E5%92%8C%E7%B3%BB%E7%BB%9F"><span class="tocnumber">3.6</span> <span class="toctext">在更新后重启程序和系统</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#%E5%9B%9E%E9%80%80%E6%9C%89%E9%97%AE%E9%A2%98%E7%9A%84%E6%9B%B4%E6%96%B0"><span class="tocnumber">3.7</span> <span class="toctext">回退有问题的更新</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#%E6%A3%80%E6%9F%A5%E5%AD%A4%E7%AB%8B%E5%92%8C%E6%9C%AA%E4%BD%BF%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="tocnumber">3.8</span> <span class="toctext">检查孤立和未使用软件包</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#%E4%BD%BF%E7%94%A8%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="tocnumber">3.9</span> <span class="toctext">使用包管理器安装软件</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#%E9%80%89%E6%8B%A9%E5%BC%80%E6%BA%90%E9%A9%B1%E5%8A%A8"><span class="tocnumber">3.10</span> <span class="toctext">选择开源驱动</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#%E8%B0%A8%E6%85%8E%E4%BD%BF%E7%94%A8%E9%9D%9E%E5%AE%98%E6%96%B9%E6%88%96%E6%B5%8B%E8%AF%95%E4%B8%8D%E8%B6%B3%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="tocnumber">3.11</span> <span class="toctext">谨慎使用非官方或测试不足的软件包</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F%E5%88%97%E8%A1%A8"><span class="tocnumber">3.12</span> <span class="toctext">更新镜像列表</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-22">
+<li class="toclevel-1 tocsection-23">
 <a href="#%E6%B8%85%E7%90%86%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="tocnumber">4</span> <span class="toctext">清理文件系统</span></a>
 <ul>
-<li class="toclevel-2 tocsection-23"><a href="#%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%BC%93%E5%AD%98"><span class="tocnumber">4.1</span> <span class="toctext">软件包缓存</span></a></li>
-<li class="toclevel-2 tocsection-24"><a href="#%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="tocnumber">4.2</span> <span class="toctext">不需要的软件包</span></a></li>
-<li class="toclevel-2 tocsection-25"><a href="#%E6%97%A7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="tocnumber">4.3</span> <span class="toctext">旧配置文件</span></a></li>
-<li class="toclevel-2 tocsection-26"><a href="#%E7%A0%B4%E6%8D%9F%E7%9A%84%E8%BD%AF%E9%93%BE%E6%8E%A5"><span class="tocnumber">4.4</span> <span class="toctext">破损的软链接</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%BC%93%E5%AD%98"><span class="tocnumber">4.1</span> <span class="toctext">软件包缓存</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="tocnumber">4.2</span> <span class="toctext">不需要的软件包</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#%E6%97%A7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="tocnumber">4.3</span> <span class="toctext">旧配置文件</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#%E7%A0%B4%E6%8D%9F%E7%9A%84%E8%BD%AF%E9%93%BE%E6%8E%A5"><span class="tocnumber">4.4</span> <span class="toctext">破损的软链接</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-27">
+<li class="toclevel-1 tocsection-28">
 <a href="#%E6%8A%80%E5%B7%A7"><span class="tocnumber">5</span> <span class="toctext">技巧</span></a>
 <ul>
-<li class="toclevel-2 tocsection-28"><a href="#%E4%BD%BF%E7%94%A8%E7%BB%8F%E8%BF%87%E9%AA%8C%E8%AF%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="tocnumber">5.1</span> <span class="toctext">使用经过验证的软件包</span></a></li>
-<li class="toclevel-2 tocsection-29"><a href="#%E5%AE%89%E8%A3%85%E5%86%85%E6%A0%B8%E7%9A%84%E9%95%BF%E6%9C%9F%E6%94%AF%E6%8C%81%E7%89%88%E6%9C%AC"><span class="tocnumber">5.2</span> <span class="toctext">安装内核的长期支持版本</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#%E4%BD%BF%E7%94%A8%E7%BB%8F%E8%BF%87%E9%AA%8C%E8%AF%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="tocnumber">5.1</span> <span class="toctext">使用经过验证的软件包</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#%E5%AE%89%E8%A3%85%E5%86%85%E6%A0%B8%E7%9A%84%E9%95%BF%E6%9C%9F%E6%94%AF%E6%8C%81%E7%89%88%E6%9C%AC"><span class="tocnumber">5.2</span> <span class="toctext">安装内核的长期支持版本</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-30"><a href="#%E5%8F%82%E9%98%85"><span class="tocnumber">6</span> <span class="toctext">参阅</span></a></li>
+<li class="toclevel-1 tocsection-31"><a href="#%E5%8F%82%E9%98%85"><span class="tocnumber">6</span> <span class="toctext">参阅</span></a></li>
 </ul>
 </div>
 
@@ -116,7 +118,7 @@
 <h3>
 <span id=".E6.97.A5.E5.BF.97.E6.96.87.E4.BB.B6"></span><span class="mw-headline" id="日志文件">日志文件</span>
 </h3>
-<p>检查 <code>/var/log</code> 日志文件中是否存在错误, 检查<a href="../en/Systemd.html#Journal" title="Systemd">systemd 日志</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>中的高优先级错误：
+<p>检查 <code>/var/log</code> 日志文件中是否存在错误, 检查<a href="../zh-CN/61459eb94c08a3c4c4402301dc7b793b.html" title="Systemd (简体中文)/Journal (简体中文)">systemd 日志</a>中的高优先级错误：
 </p>
 <pre> # journalctl -p 3 -xb
 </pre>
@@ -134,7 +136,7 @@
 <h3>
 <span id=".E9.85.8D.E7.BD.AE.E6.96.87.E4.BB.B6"></span><span class="mw-headline" id="配置文件">配置文件</span>
 </h3>
-<p>在编辑任何配置文件前，先保留备份。这样出问题是可以直接还原。<a href="../en/Vim.html" title="Vim">vim</a> 和 <a href="../en/Emacs.html" title="Emacs">emacs</a> 编辑器会自动备份，<a href="../en/Etckeeper.html" title="Etckeeper">etckeeper</a> 可以将 <code>/etc</code> 纳入版本控制系统。详情请参考 <a href="../en/Dotfiles.html#Version_control" title="Dotfiles">dotfiles#Version control</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>。
+<p>在编辑任何配置文件前，先保留备份。这样出问题是可以直接还原。<a href="../en/Vim.html" title="Vim">vim</a> 和 <a href="../en/Emacs.html" title="Emacs">emacs</a> 编辑器会自动备份，<a href="../en/Etckeeper.html" title="Etckeeper">etckeeper</a> 可以将 <code>/etc</code> 纳入版本控制系统。详情请参考 <a href="../en/Dotfiles.html#Tracking_dotfiles_directly_with_Git" title="Dotfiles">dotfiles#Tracking dotfiles directly with Git</a>。
 </p>
 <h3>
 <span id=".E5.AE.89.E8.A3.85.E7.9A.84.E8.BD.AF.E4.BB.B6.E5.8C.85"></span><span class="mw-headline" id="安装的软件包">安装的软件包</span>
@@ -148,8 +150,10 @@
 </h3>
 <p>参考 <a href="../en/Pacman/Tips_and_tricks.html#Back_up_the_pacman_database" title="Pacman/Tips and tricks">pacman/Tips and tricks#Back up the pacman database</a>.
 </p>
-<h3><span class="mw-headline" id="LUKS_headers">LUKS headers</span></h3>
-<p>如果 LUKS 使用密码加密，建议定期检查和同步 LUKS 加密分区的头部数据。参考 <a href="../en/Dm-crypt/Device_encryption.html#Backup_and_restore" title="Dm-crypt/Device encryption">Dm-crypt/Device encryption#Backup and restore</a>.
+<h3>
+<span id=".E5.8A.A0.E5.AF.86.E5.85.83.E6.95.B0.E6.8D.AE"></span><span class="mw-headline" id="加密元数据">加密元数据</span>
+</h3>
+<p>参阅 <a href="../en/Data-at-rest_encryption.html#Backup_for_disk_encryption_scenarios" title="Data-at-rest encryption">Data-at-rest encryption#Backup for disk encryption scenarios</a>.
 </p>
 <h3>
 <span id=".E7.B3.BB.E7.BB.9F.E5.92.8C.E7.94.A8.E6.88.B7.E6.95.B0.E6.8D.AE"></span><span class="mw-headline" id="系统和用户数据">系统和用户数据</span>
@@ -168,12 +172,14 @@
 <h3>
 <span id=".E5.8D.87.E7.BA.A7.E5.89.8D.E7.9A.84.E5.87.86.E5.A4.87"></span><span class="mw-headline" id="升级前的准备">升级前的准备</span>
 </h3>
-<p>建议升级前访问 <a rel="nofollow" class="external text" href="https://archlinux.org/">Arch Linux 主页</a>查看最新消息（或订阅 <a rel="nofollow" class="external text" href="https://archlinux.org/feeds/news/">RSS</a>，或订阅 <a rel="nofollow" class="external text" href="https://mailman.archlinux.org/mailman/listinfo/arch-announce/">arch-announce 邮件列表</a>，或关注 <a rel="nofollow" class="external text" href="https://twitter.com/archlinux">@archlinux</a>。如果升级需要不寻常的用户操作介入时（无法简单地按照 <i>pacman</i> 的输出信息处理），以上信息总会给出合适的方法。
+<p>建议升级前访问 <a rel="nofollow" class="external text" href="https://archlinux.org/">Arch Linux 主页</a>查看最新消息，或订阅 <a rel="nofollow" class="external text" href="https://archlinux.org/feeds/news/">RSS</a> 或 <a rel="nofollow" class="external text" href="https://mailman.archlinux.org/mailman/listinfo/arch-announce/">arch-announce 邮件列表</a>。如果升级需要不寻常的用户操作介入时（无法简单地按照 <i>pacman</i> 的输出信息处理），以上信息总会给出合适的方法。
 </p>
 <p>在更新<a href="../en/Kernel.html" title="Kernel">kernel</a>, <a href="../en/Xorg.html" title="Xorg">xorg</a>, <a href="../en/Systemd.html" title="Systemd">systemd</a> 和 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span>等重要软件之前, 查看<a rel="nofollow" class="external text" href="https://bbs.archlinux.org/">论坛</a>看是否有被报告的出错等问题.
 </p>
 <p>有时候系统更新会出现问题并需要进行一些手动调整，请不要在重要任务前进行系统更新。
 </p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 可以使用 pacman 钩子如 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/informant/">informant</a></span><sup><small>AUR</small></sup> 来避免在阅读最新 Arch 新闻前全面更新系统。</div>
 <h3>
 <span id=".E9.81.BF.E5.85.8D.E6.9F.90.E4.BA.9B_Pacman_.E5.91.BD.E4.BB.A4"></span><span class="mw-headline" id="避免某些_Pacman_命令">避免某些 Pacman 命令</span>
 </h3>
@@ -190,7 +196,7 @@
 </p>
 <p>也就是说，部分升级是<b>不被支持的</b>。
 </p>
-<p>不要使用 <code>pacman -Sy package</code> 或等价命令如 <code>pacman -Sy</code> 之后再 <code>pacman -S package</code>。在安装软件包前请更新源并升级。同理请特别注意 IgnorePkg/IgnoreGroup 的使用。
+<p>不要使用 <code>pacman -Sy package</code> 或等价命令如 <code>pacman -Sy</code> 之后再 <code>pacman -S package</code>。请注意 <code>pacman -Syuw</code> 和 <code>pacman -Sy</code> 有一样的风险，因为它会更新 pacman 同步数据库而不安装新版本软件包。在安装软件包前请更新源并升级（使用 <code>pacman -Syu</code>）。请注意如果 <code>pacman -Syu</code> 因为某个错误而没有完成升级，最后导致的系统状态和运行 <code>pacman -Sy</code> 是一样的。错误必须被处理，升级更新要尽快完成。同理请特别注意 <code>IgnorePkg</code> 和 <code>IgnoreGroup</code> 的使用。如果系统安装了自行编译的软件包（如从 <a href="../zh-CN/Arch_User_Repository.html" class="mw-redirect" title="AUR (简体中文)">AUR</a> 包），在其依赖出现 <a href="https://en.wikipedia.org/wiki/soname" class="extiw" title="wikipedia:soname">soname</a> 冲突时用户必须重新编译。
 </p>
 <p>如果进行了部分升级，二进制包因为找不到链接库而损坏，<b>不要通过简单的符号链接进行修正</b>。库升级 <a href="https://en.wikipedia.org/wiki/soname" class="extiw" title="wikipedia:soname">soname</a> 是因为它们<b>不再向前兼容</b>。只要 <i>pacman</i> 可以运行，使用更新的源进行 <code>pacman -Syu</code> 就能修复这些问题。
 </p>
@@ -207,6 +213,13 @@
 <p>pacman 可能会创建 <code>.pacnew</code> 和 <code>.pacsave</code> 文件，这是 pacman 会通知用户，而用户需要主动处理这些文件。详细的操作说明请参考：<a href="../en/Pacman/Pacnew_and_Pacsave.html" class="mw-redirect" title="Pacnew and Pacsave files">Pacnew and Pacsave files</a>.
 </p>
 <p>同样，注意所有你可能会复制或创建的配置文件。如果软件包提供了一个空配置文件，这个文件被复制到主目录，请注意查看示例文件是否有更新。
+</p>
+<h3>
+<span id=".E5.9C.A8.E6.9B.B4.E6.96.B0.E5.90.8E.E9.87.8D.E5.90.AF.E7.A8.8B.E5.BA.8F.E5.92.8C.E7.B3.BB.E7.BB.9F"></span><span class="mw-headline" id="在更新后重启程序和系统">在更新后重启程序和系统</span>
+</h3>
+<p>升级通常不立即应用于运行中的程序。 您必须重新启动程序才能完全应用升级。
+</p>
+<p>内核很难在重启前更新。升级内核后重启系统永远是最安全的选择，如果不方便重启可以通过<a href="../zh-CN/Kernel_live_patching.html" class="mw-redirect" title="内核热补丁">内核热补丁</a>在不重启系统的情况下应用更新。
 </p>
 <h3>
 <span id=".E5.9B.9E.E9.80.80.E6.9C.89.E9.97.AE.E9.A2.98.E7.9A.84.E6.9B.B4.E6.96.B0"></span><span class="mw-headline" id="回退有问题的更新">回退有问题的更新</span>
@@ -228,7 +241,7 @@
 </p>
 <p>用 <code>pacman -Qtd</code> 命令查找之前作为依赖安装，现在不再需要的软件包。如果孤立的包还是需要的，可用修改 <a href="../en/Pacman.html#Installation_reason" class="mw-redirect" title="Installation reason">安装原因</a>。如果不再需要，可用将其删除。
 </p>
-<p>除此之外，有些软件包可能已经不再属于远程仓库，但是依然还安装在本地，用 <code>pacman -Qm</code> 命令查找所有这些软件包。注意此命令会包含手动安装的软件，例如 <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> 中的软件。
+<p>除此之外，有些软件包可能已经不再属于远程仓库，但是依然还安装在本地，用 <code>pacman -Qm</code> 命令查找所有这些软件包。注意此命令会包含手动安装的软件，例如 <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> 中的软件。可以使用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ancient-packages/">ancient-packages</a></span><sup><small>AUR</small></sup> 来排除尚存在于 AUR 中的软件包。
 </p>
 <h3>
 <span id=".E4.BD.BF.E7.94.A8.E5.8C.85.E7.AE.A1.E7.90.86.E5.99.A8.E5.AE.89.E8.A3.85.E8.BD.AF.E4.BB.B6"></span><span class="mw-headline" id="使用包管理器安装软件">使用包管理器安装软件</span>
@@ -302,11 +315,11 @@
 <h3>
 <span id=".E7.A0.B4.E6.8D.9F.E7.9A.84.E8.BD.AF.E9.93.BE.E6.8E.A5"></span><span class="mw-headline" id="破损的软链接">破损的软链接</span>
 </h3>
-<p>系统中可能存在老的，损坏的软链接，应该删除它们。方法可以参考 <a rel="nofollow" class="external text" href="https://unix.stackexchange.com/questions/34248/how-can-i-find-broken-symlinks">here</a> 和 <a rel="nofollow" class="external text" href="http://www.commandlinefu.com/commands/view/8260/find-broken-symlinks">here</a>.
+<p>系统中可能存在老的，损坏的软链接，应该删除它们。方法可以参考 <a rel="nofollow" class="external text" href="https://unix.stackexchange.com/questions/34248/how-can-i-find-broken-symlinks">这里</a> 和 <a rel="nofollow" class="external text" href="http://www.commandlinefu.com/commands/view/8260/find-broken-symlinks">这里</a>。但是不应该盲目删除所有损坏的软链接，因为其中一些是有用处的<a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/questions/151763/is-there-a-downside-to-deleting-all-of-the-broken-symbolic-links-in-a-system">[1]</a>。
 </p>
 <p>下面命令可以列出所有有问题的软链接，可以检查并删除列表中的文件。
 </p>
-<pre>  # find -xtype l -print
+<pre>  # find / -xtype l -print
 </pre>
 <h2>
 <span id=".E6.8A.80.E5.B7.A7"></span><span class="mw-headline" id="技巧">技巧</span>
@@ -334,20 +347,16 @@
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:System_administration.html" title="Category:System administration (简体中文)">System administration (简体中文)</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=System_maintenance_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=647063">https://wiki.archlinux.org/index.php?title=System_maintenance_(简体中文)&amp;oldid=647063</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:26.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=System_maintenance_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=652637">https://wiki.archlinux.org/index.php?title=System_maintenance_(简体中文)&amp;oldid=652637</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 07:05.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

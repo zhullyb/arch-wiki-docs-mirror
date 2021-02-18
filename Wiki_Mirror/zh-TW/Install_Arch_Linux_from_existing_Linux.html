@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -111,28 +112,28 @@ etc...
 <p>We will refer to it as /dev/sdxx whenever possible.
 </p>
 <p>如果你在安裝過程中有寬頻連線可用，而且只想作basic install，<a rel="nofollow" class="external text" href="http://unetbootin.sourceforge.net/">UNetBootin</a> 可能會是值得一看的容易解答。
-(還有 <a href="../en/USB_flash_installation_medium.html#UNetBootin" class="mw-redirect" title="Putting installation media on a USB key">discussed here</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.)
+(還有 <a href="../en/USB_flash_installation_medium.html#Using_UNetbootin" title="USB flash installation medium">在這裡談到</a>.)
 </p>
-<p>In this article, "host" refers to the computer which is used to perform the installation, 
-and "target" refers to the computer where you want to install Arch. 
-These may be one and the same computer. 
-The host does not need to be an Arch system -- it can be a Debian or Redhat system. 
-The section entitled "Setup the host system" explains how to install pacman on the host. 
-The following section entitle "Setup the target system" explains how to use pacman from the host system to install Arch on the target system. 
-Therefore if the host system is already running Arch, you can skip to "Setup the target system".
+<p>在這個文章裡，「host」指執行安裝的電腦；
+「target」指被安裝 Arch 的電腦。
+這些可以為同一部電腦。
+host 不需要為一個 Arch 系統，他可以是一個 Debian 或 Redhat 的系統。
+「設定 host 系統」的環節解釋如何安裝 pacman 到 host。
+「設定 target 系統」的環節解釋如何於 host 用 pacman 去安裝 Arch 到 target。
+如果 host 已經是一個 Arch 的系統，你可以跳到「設定 target 系統」的部分。
 </p>
 <h2>
 <span id=".E8.A8.AD.E5.AE.9A_host_.E7.B3.BB.E7.B5.B1"></span><span class="mw-headline" id="設定_host_系統">設定 host 系統</span>
 </h2>
-<p>你需要安裝archlinux軟體包管理程式<a href="../en/Pacman.html" title="Pacman">pacman</a>到你的 host linux 環境。 
+<p>你需要安裝 Arch Linux 軟體包管理程式<a href="../en/Pacman.html" title="Pacman">pacman</a>到你的 host Linux 環境。 
 另外你也會需要一份pacman映像站台清單，用來下載軟體包和它們自己的資料。
 </p>
 <h3>
 <span id=".E5.8F.96.E5.BE.97.E5.BF.85.E8.A6.81.E7.9A.84.E8.BB.9F.E9.AB.94.E5.8C.85"></span><span class="mw-headline" id="取得必要的軟體包">取得必要的軟體包</span>
 </h3>
-<p>You need to get the required packages for your host linux environment. 
-The examples given here assume you are using a i686 environment. 
-<b>If you are running on an 64bit linux instead you should replace each occurance of "i686" with "x86_64".</b>
+<p>你需要取得你的 host linux 環境所需的軟體包。
+以下的例子是給 i686 環境的。
+<b>如果你正在執行 64位的 linux 環境，你應該把所有「i686」取代為「x86_64」。</b>
 </p>
 <p>All version numbers given here may change. Please check the version numbers the packages are at first and note them down. The version numbers can be found <a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/core/i686/pacman/">here for pacman</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-02 ⓘ]</sup> and <a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/core/i686/pacman-mirrorlist/">here for pacman-mirrorlist</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-02 ⓘ]</sup>. Once you are sure of the version numbers download the required packages:
 </p>
@@ -144,7 +145,7 @@ tar xzvf pacman-*.pkg.tar.gz
 <h3>
 <span id=".E5.AE.89.E8.A3.9D.E5.BF.85.E8.A6.81.E6.AA.94.E6.A1.88.E5.88.B0_host_.E7.B3.BB.E7.B5.B1"></span><span class="mw-headline" id="安裝必要檔案到_host_系統">安裝必要檔案到 host 系統</span>
 </h3>
-<p>If you do not mind littering your install host, you can extract all the downloaded tar balls into your root directory by running as root:
+<p>如果你不介意把你的 host 環境弄得凌亂，你可以執行為 root 以提取所有已下載的 tar 檔案﹕
 </p>
 <pre>cd /
 for f in /tmp/archlinux/pacman-*pkg.tar.gz
@@ -152,7 +153,7 @@ for f in /tmp/archlinux/pacman-*pkg.tar.gz
 done
 </pre>
 <ol>
-<li><div>If installing from Ubuntu 9.10's LiveCD (perhaps other versions), you will need more than just the pacman files (shared libs) to use pacman at all.  Use Lucky's script described in <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=759166">this thread</a> to get/install them for you!
+<li><div>如果你在 Ubuntu 9.10's LiveCD (或其他版本)安裝, 你不能只需要那些 pacman 檔案 (shared libs) 去用 pacman。 用 <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=759166">這裡</a>談到的 Lucky 腳本去為你拿或安裝！
 </div></li>
 <li><div>Alternatively, you can instead turn these tarballs into packages for your distribution with the <a rel="nofollow" class="external text" href="http://kitenet.net/~joey/code/alien/">alien</a> tool. See the man page of the tool for instructions. The packages created that way may be installed into your host distribution using the usual package management tools available there. This approach offers the best integration into the host linux environment. For a debian package based system this is done with the following commands:
 <pre>cd /tmp/archlinux
@@ -456,8 +457,8 @@ $ chroot /mnt/arch /bin/bash
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme">Pages or sections flagged with Template:Translateme</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 <li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
+<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 </ul>
 </div>
 </div>
@@ -466,8 +467,8 @@ $ chroot /mnt/arch /bin/bash
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_from_existing_Linux_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)&amp;oldid=638439">https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_from_existing_Linux_(正體中文)&amp;oldid=638439</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:12.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_from_existing_Linux_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)&amp;oldid=652707">https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_from_existing_Linux_(正體中文)&amp;oldid=652707</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 February 2021, at 03:56.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

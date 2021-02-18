@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -149,8 +150,9 @@
 <li class="toclevel-1 tocsection-12"><a href="#Touchpad"><span class="tocnumber">6</span> <span class="toctext">Touchpad</span></a></li>
 <li class="toclevel-1 tocsection-13"><a href="#Fingerprint_reader"><span class="tocnumber">7</span> <span class="toctext">Fingerprint reader</span></a></li>
 <li class="toclevel-1 tocsection-14"><a href="#Power_Saving"><span class="tocnumber">8</span> <span class="toctext">Power Saving</span></a></li>
-<li class="toclevel-1 tocsection-15"><a href="#Secure_Boot"><span class="tocnumber">9</span> <span class="toctext">Secure Boot</span></a></li>
-<li class="toclevel-1 tocsection-16"><a href="#Raw_list(s)_of_hardware_components"><span class="tocnumber">10</span> <span class="toctext">Raw list(s) of hardware components</span></a></li>
+<li class="toclevel-1 tocsection-15"><a href="#Charge_Limit"><span class="tocnumber">9</span> <span class="toctext">Charge Limit</span></a></li>
+<li class="toclevel-1 tocsection-16"><a href="#Secure_Boot"><span class="tocnumber">10</span> <span class="toctext">Secure Boot</span></a></li>
+<li class="toclevel-1 tocsection-17"><a href="#Raw_list(s)_of_hardware_components"><span class="tocnumber">11</span> <span class="toctext">Raw list(s) of hardware components</span></a></li>
 </ul>
 </div>
 
@@ -216,6 +218,8 @@ Flags:                           fpu vme de pse tsc msr pae mce cx8 apic sep mtr
 <p>You need to disable i915 psr in order to prevent screen flicking. Described here: <a href="../en/Intel_graphics.html#Screen_flickering" title="Intel graphics">Intel graphics#Screen flickering</a>.
 </p>
 <h4><span class="mw-headline" id="NVIDIA">NVIDIA</span></h4>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> Hybrid mode in recent kernel (&gt; 5.9) may break the suspend-to-ram, when waking up only with a black screen. Make sure you <i>only</i> enable this before you entered into suspend mode.</div>
 <p>Firstly, follow the instruction <a href="../en/NVIDIA.html" title="NVIDIA">NVIDIA</a> to install proper drivers.
 Then, install <a rel="nofollow" class="external text" href="https://github.com/Askannz/optimus-manager">optimus-manager</a> from the <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/optimus-manager/">AUR</a>. It is used for automatically (and manually if your wish :)) switch video card mode to hybrid mode when the Arch starts up, while the official <a href="../en/NVIDIA.html" title="NVIDIA">NVIDIA</a> driver seems not to be able to trigger that kind of things. 
 Add the following settings to make it works:
@@ -252,7 +256,7 @@ startup_auto_extpower_mode=hybrid</pre>
 Bus 003 Device 005: ID 8087:0aaa Intel Corp. Bluetooth 9460/9560 Jefferson Peak (JfP)
 ...
 </pre>
-<p>Following <a href="../en/Bluetooth_headset.html" title="Bluetooth headset">Bluetooth_headset</a> in order to make A2DP devices work for you. :)
+<p>Following <a href="../en/Bluetooth_headset.html" title="Bluetooth headset">Bluetooth headset</a> in order to make A2DP devices work for you. :)
 </p>
 <h2><span class="mw-headline" id="Audio">Audio</span></h2>
 <p>It should now undergoing if everything goes well after <a href="#Sound">#Sound</a>, see <a href="../en/Sound_system.html" title="Sound system">Sound system</a> for details.
@@ -272,8 +276,13 @@ Bus 003 Device 005: ID 8087:0aaa Intel Corp. Bluetooth 9460/9560 Jefferson Peak 
 </p>
 <p>Disable runtime-pm may helps when the bluetooth controller shutting down unexpectedly. Or adding its device to the blacklist of runtime-pm.
 </p>
+<h2><span class="mw-headline" id="Charge_Limit">Charge Limit</span></h2>
+<p>Unfortuneately, there seems to be no (known) way to set this on Arch Linux.
+</p>
+<p>In W*****s, you may use Lenovo Vantage to limit the charging rate. When you set up this correctly, this limitation will works with Arch too! :)
+</p>
 <h2><span class="mw-headline" id="Secure_Boot">Secure Boot</span></h2>
-<p>It is possible to clear original secure key/db/dbx(s) via BIOS on this laptop, then replace all of them with self-generated one. You are good to go if <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure_Boot</a> has been setup properly.
+<p>It is possible to clear original secure key/db/dbx(s) via BIOS on this laptop, then replace all of them with self-generated one. You are good to go if <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> has been setup properly.
 </p>
 <h2>
 <span id="Raw_list.28s.29_of_hardware_components"></span><span class="mw-headline" id="Raw_list(s)_of_hardware_components">Raw list(s) of hardware components</span>
@@ -319,8 +328,8 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_XiaoXin_14Air_2020&amp;oldid=648567">https://wiki.archlinux.org/index.php?title=Lenovo_XiaoXin_14Air_2020&amp;oldid=648567</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 9 January 2021, at 10:07.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_XiaoXin_14Air_2020&amp;oldid=652546">https://wiki.archlinux.org/index.php?title=Lenovo_XiaoXin_14Air_2020&amp;oldid=652546</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 February 2021, at 02:22.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

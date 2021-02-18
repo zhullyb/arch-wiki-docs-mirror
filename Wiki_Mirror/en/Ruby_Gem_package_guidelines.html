@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -69,14 +70,14 @@
 </div>
 
 <h2><span class="mw-headline" id="Package_naming">Package naming</span></h2>
-<p>For libraries, use <code>ruby-$gemname</code>. For applications, use the program name. In either case, the name should be entirely lowercase.
+<p>For libraries, use <code>ruby-$_gemname</code>. For applications, use the program name. In either case, the name should be entirely lowercase.
 </p>
-<p>Always use <code>ruby-</code> prefix even if <code>$gemname</code> already starts with word <code>ruby</code>. It is needed to avoid future name clashes in case if a gem with shorter name appear. It also makes names more easily parsable by tools (think about PKGBUILD generators/version or dependency checkers, etc...).
+<p>Always append <code>ruby-</code> prefix even if <code>$_gemname</code> already starts with word <code>ruby</code>. It is needed to avoid future name clashes in case a gem with shorter name appear. It also makes names more easily parsable by tools (think about PKGBUILD generators/version or dependency checkers, etc...).
 </p>
 <h3><span class="mw-headline" id="Versioned_packages">Versioned packages</span></h3>
-<p>If you need to add a versioned package then use <code>ruby-$gemname-$version</code>, e.g. <code>ruby-builder-3.2.1</code>. So rubygem dependency <code>builder=3.2.1</code> will turn into <code>ruby-builder-3.2.1</code> Arch package.
+<p>If you need to add a versioned package then use <code>ruby-$_gemname-$version</code>, e.g. <code>ruby-builder-3.2.1</code>. So rubygem dependency <code>builder=3.2.1</code> will turn into <code>ruby-builder-3.2.1</code> Arch package.
 </p>
-<p>In case if you need to resolve "approximately greater" dependency <code>~&gt;</code> then package should use version without the last part, e.g. rubygem dependency <code>builder~&gt;3.2.1</code> will turn into <code>ruby-builder-3.2</code>. An exception for this rule is when "approximately greater" dependency matches the latest version of the gem - in this case avoid introducing a new versioned package and use just <code>ruby-$gemname</code> instead (the HEAD version).
+<p>In case if you need to resolve "approximately greater" dependency <code>~&gt;</code> then package should use version without the last part, e.g. rubygem dependency <code>builder~&gt;3.2.1</code> will turn into <code>ruby-builder-3.2</code>. An exception for this rule is when "approximately greater" dependency matches the latest version of the gem - in this case avoid introducing a new versioned package and use just <code>ruby-$_gemname</code> instead (the HEAD version).
 </p>
 <p>Another problem with versioned packages is that it can conflict with other versions, e.g. because the packages install the same files in <code>/usr/bin</code>. One solution for this problem is that versioned packages should not install such files - only HEAD version package can do this.
 </p>
@@ -111,8 +112,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Ruby_Gem_package_guidelines&amp;oldid=552527">https://wiki.archlinux.org/index.php?title=Ruby_Gem_package_guidelines&amp;oldid=552527</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 2 November 2018, at 02:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Ruby_Gem_package_guidelines&amp;oldid=652626">https://wiki.archlinux.org/index.php?title=Ruby_Gem_package_guidelines&amp;oldid=652626</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 05:32.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
