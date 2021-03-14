@@ -498,7 +498,9 @@ $ virsh autostart <i>domain</i> --disable
 <p><code>virsh</code> has the ability to create networking with numerous options for most users, however, it is easier to create network connectivity with a graphic user interface (like <code>virt-manager</code>), or to do so on <a href="#Create_a_new_domain_using_virt-install">creation with virt-install</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> libvirt handles DHCP and DNS with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span>, launching a separate instance for every virtual network.  It also adds iptables rules for proper routing, and enables the <code>ip_forward</code> kernel parameter. This also means that having dnsmasq running on the host system is not necessary to support libvirt requirements (and could interfere with libvirt dnsmasq instances).</div>
+<strong>Note:</strong> libvirt handles DHCP and DNS with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span>, launching a separate instance for every virtual network. It also adds iptables rules for proper routing, and enables the <code>ip_forward</code> kernel parameter. This also means that having dnsmasq running on the host system is not necessary to support libvirt requirements (and could interfere with libvirt dnsmasq instances).</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> If the default network cannot be started, make sure <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ebtables">ebtables</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> are installed.</div>
 <p>You could get VM ip address via (in case it connected to <code><i>default</i></code> network and receives IP address via dhcp):
 </p>
 <pre>$ virsh net-dhcp-leases default
@@ -725,8 +727,8 @@ for domainID in domains:
 <p>Then add the following section to your domain configuration using <code>virsh edit</code>.
 </p>
 <pre> &lt;qemu:commandline&gt;
-   &lt;qemu:env name='QEMU_AUDIO_DRV' value='pa'/&gt;
-   &lt;qemu:env name='QEMU_PA_SERVER' value='/run/user/1000/pulse/native'/&gt;
+   &lt;qemu:arg value='-audiodev'/&gt;
+   &lt;qemu:arg value='pa,id=pa1,server=/run/user/1000/pulse/native'/&gt;
  &lt;/qemu:commandline&gt;
 </pre>
 <p><code>1000</code> is your user id. Change it if necessary.
@@ -761,8 +763,8 @@ If you plan to run the VM in headless mode, consider removing some of the unnece
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Libvirt&amp;oldid=652726">https://wiki.archlinux.org/index.php?title=Libvirt&amp;oldid=652726</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 February 2021, at 14:33.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Libvirt&amp;oldid=653702">https://wiki.archlinux.org/index.php?title=Libvirt&amp;oldid=653702</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 28 February 2021, at 15:15.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

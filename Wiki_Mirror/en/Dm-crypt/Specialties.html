@@ -439,14 +439,12 @@ Please type uppercase yes to continue:
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmsetup table</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">luks-123abcdef-etc: 0 1234567 crypt aes-xts-plain64 000etc000 0 8:2 4096 1 allow_discards
 </pre>
-<p><br>
-</p>
 <h2>
 <span id="Disable_workqueue_for_increased_solid_state_drive_.28SSD.29_performance"></span><span class="mw-headline" id="Disable_workqueue_for_increased_solid_state_drive_(SSD)_performance">Disable workqueue for increased solid state drive (SSD) performance</span>
 </h2>
 <p><a href="../../en/Solid_state_drive.html" title="Solid state drive">Solid state drive</a> users should be aware that, by default, discarding internal read and write workqueue commands are not enabled by the device-mapper, i.e. block-devices are mounted without the <code>no_read_workqueue</code> and <code>no_write_workqueue</code> option unless you override the default. 
 </p>
-<p>The <code>no_read_workqueue</code> and <code>no_write_workqueue</code> flags where introduced by internal Cloudflare research "<a rel="nofollow" class="external text" href="https://blog.cloudflare.com/speeding-up-linux-disk-encryption/">Speeding up Linux disk encryption</a> made while investigating overall encryption performance. One of the conclusions is that an internal dm-crypt intenal read and write queues decrease performance for SSD drives. While queuing disk operations make sense for spinning drives, bypassing the queue and writing data synchronously doubled the throughput and cut the SSD drives' IO await operations latency in half. The patches were upstreamed and are available since <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> 5.9 and up <a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/drivers/md/dm-crypt.c?id=39d42fa96ba1b7d2544db3f8ed5da8fb0d5cb877">[5]</a>.
+<p>The <code>no_read_workqueue</code> and <code>no_write_workqueue</code> flags were introduced by internal Cloudflare research <a rel="nofollow" class="external text" href="https://blog.cloudflare.com/speeding-up-linux-disk-encryption/">Speeding up Linux disk encryption</a> made while investigating overall encryption performance. One of the conclusions is that internal dm-crypt read and write queues decrease performance for SSD drives. While queuing disk operations makes sense for spinning drives, bypassing the queue and writing data synchronously doubled the throughput and cut the SSD drives' IO await operations latency in half. The patches were upstreamed and are available since <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> 5.9 and up <a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/drivers/md/dm-crypt.c?id=39d42fa96ba1b7d2544db3f8ed5da8fb0d5cb877">[5]</a>.
 </p>
 <p>To disable workqueue for LUKS devices unlocked via <code>/etc/crypttab</code> use one or more of the desired <code>no_read_workqueue</code> or <code>no_write_workqueue</code> options, e.g.:
 </p>
@@ -456,10 +454,9 @@ Please type uppercase yes to continue:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/crypttab</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">luks-123abcdef-etc UUID=123abcdef-etc none no-read-workqueue no-write-workqueue</pre>
-<p><br>
-With LUKS2 you can set <code>--perf-no_read_workqueue</code> and <code>--perf-no_write_workqueue</code> as a default flags for a device by opening it once with the option <code>--persistent</code>. For example:
+<p>With LUKS2 you can set <code>--perf-no_read_workqueue</code> and <code>--perf-no_write_workqueue</code> as default flags for a device by opening it once with the option <code>--persistent</code>. For example:
 </p>
-<pre># cryptsetup --perf-no_read_workqueue --perf-no_write_workqueue --persistent open /dev/sdaX root
+<pre># cryptsetup --perf-no_read_workqueue --perf-no_write_workqueue --persistent open /dev/<i>sdaX</i> root
 </pre>
 <p>When the device is already opened, the <code>open</code> action will raise an error. You can use the <code>refresh</code> option in these cases, e.g.:
 </p>
@@ -470,13 +467,13 @@ With LUKS2 you can set <code>--perf-no_read_workqueue</code> and <code>--perf-no
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># cryptsetup luksDump /dev/sdaX | grep Flags</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Flags:          no_read_workqueue
 </pre>
-<p>In any case, you can verify whether the device actually was opened with discards by inspecting the <code>dmsetup table</code> output:
+<p>In any case, you can verify whether the device actually was opened with these flags by inspecting the <code>dmsetup table</code> output:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmsetup table</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">luks-123abcdef-etc: 0 1234567 crypt aes-xts-plain64 000etc000 0 8:2 4096 1 no_read_workqueue
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Setting new persistent flags via <code>cryptsetup --persistent</code> replaces old Flags with new ones instead of adding a new flag to the already set flags. This means if you want to enable both <code>--perf-no_read_workqueue</code> and <code>--perf-no_write_workqueue</code> (or more) you have to set them all at once</div>
+<strong>Note:</strong> Setting new persistent flags via <code>cryptsetup --persistent</code> replaces old Flags with new ones instead of adding a new flag to the already set flags. This means if you want to enable both <code>--perf-no_read_workqueue</code> and <code>--perf-no_write_workqueue</code> (or more) you have to set them all at once.</div>
 <p>Example for setting both <code>no_read_workqueue</code> and <code>no_write_workqueue</code> with <code>cryptsetup</code>:
 </p>
 <pre># cryptsetup --perf-no_read_workqueue --perf-no_write_workqueue --persistent refresh root
@@ -810,8 +807,8 @@ HOOKS=(base udev autodetect modconf block customencrypthook lvm2 filesystems key
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt/Specialties&amp;oldid=652723">https://wiki.archlinux.org/index.php?title=Dm-crypt/Specialties&amp;oldid=652723</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 February 2021, at 13:20.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt/Specialties&amp;oldid=652807">https://wiki.archlinux.org/index.php?title=Dm-crypt/Specialties&amp;oldid=652807</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 20 February 2021, at 08:56.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

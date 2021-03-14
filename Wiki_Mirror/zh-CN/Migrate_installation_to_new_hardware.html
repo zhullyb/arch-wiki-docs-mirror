@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Migrate installation to new hardware (简体中文) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Migrate_installation_to_new_hardware_简体中文 rootpage-Migrate_installation_to_new_hardware_简体中文 skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">Migrate installation to new hardware (简体中文)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="archwiki-template-meta-related-articles-start">
+<p>Related articles</p>
+<ul>
+<li><a href="../zh-CN/Migrating_between_architectures.html" title="Migrating between architectures (简体中文)">Migrating_between_architectures_(简体中文)</a></li>
+<li><a href="../en/Moving_an_existing_install_into_(or_out_of)_a_virtual_machine.html" title="Moving an existing install into (or out of) a virtual machine">Moving an existing install into (or out of) a virtual machine</a></li>
+</ul>
+</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>翻译状态：</strong>本文是 <a href="../en/Migrate_installation_to_new_hardware.html" title="Migrate installation to new hardware">Migrate installation to new hardware</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-03-02。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Migrate_installation_to_new_hardware&amp;diff=0&amp;oldid=643197">更改</a>，则您可以帮助同步翻译。</div>
+<p>本文讨论将Arch Linux系统迁移到新硬件所需的步骤。
+我们的目标是实现相同的Arch Linux安装过程，对于硬件无关的软件和配置。
+</p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>警告：</strong> 以下某些操作可能有危险：建议您在继续操作之前，先备份旧系统上的所有重要数据。</div>
+<p>移植已安装的系统有两种不同的方法：
+</p>
+<ol>
+<li>“自下而上”：在新硬件上安装全新的Arch Linux系统，然后恢复已安装的软件包和配置文件，如<a href="../en/Dotfiles.html" title="Dotfiles">以点为开头的文件</a>中所述。</li>
+<li>“自上而下”：将旧硬盘克隆到新硬盘，或将旧硬盘放入新系统；在需要的地方修改配置文件。</li>
+</ol>
+<p>“自上而下”的方法比“自下而上”的方法更准确地再现了原始系统。
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1">
+<a href="#%E9%80%82%E9%85%8D%E6%96%B0%E7%A1%AC%E4%BB%B6"><span class="tocnumber">1</span> <span class="toctext">适配新硬件</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#%E6%9C%BA%E6%A2%B0%E7%A1%AC%E7%9B%98%E4%B8%8E%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98"><span class="tocnumber">1.1</span> <span class="toctext">机械硬盘与固态硬盘</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#CPU%E4%BE%9B%E5%BA%94%E5%95%86"><span class="tocnumber">1.2</span> <span class="toctext">CPU供应商</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#GPU%E4%BE%9B%E5%BA%94%E5%95%86"><span class="tocnumber">1.3</span> <span class="toctext">GPU供应商</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#UEFI%E4%B8%8EMBR%E5%BC%95%E5%AF%BC%E4%BB%A3%E7%A0%81%E5%BC%95%E5%AF%BC"><span class="tocnumber">1.4</span> <span class="toctext">UEFI与MBR引导代码引导</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-6">
+<a href="#%E8%87%AA%E4%B8%8B%E8%80%8C%E4%B8%8A"><span class="tocnumber">2</span> <span class="toctext">自下而上</span></a>
+<ul>
+<li class="toclevel-2 tocsection-7">
+<a href="#%E5%9C%A8%E6%97%A7%E7%B3%BB%E7%BB%9F%E4%B8%8A"><span class="tocnumber">2.1</span> <span class="toctext">在旧系统上</span></a>
+<ul>
+<li class="toclevel-3 tocsection-8"><a href="#%E5%88%97%E5%87%BA%E5%B7%B2%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="tocnumber">2.1.1</span> <span class="toctext">列出已安装的软件包</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#pacman_%E7%BC%93%E5%AD%98"><span class="tocnumber">2.1.2</span> <span class="toctext">pacman 缓存</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-10">
+<a href="#%E5%9C%A8%E6%96%B0%E7%B3%BB%E7%BB%9F%E4%B8%8A"><span class="tocnumber">2.2</span> <span class="toctext">在新系统上</span></a>
+<ul>
+<li class="toclevel-3 tocsection-11"><a href="#%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%E7%9A%84%E5%89%8D%E5%8D%8A%E9%83%A8%E5%88%86"><span class="tocnumber">2.2.1</span> <span class="toctext">安装指南的前半部分</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#%E5%A4%8D%E5%88%B6pacman%E7%BC%93%E5%AD%98"><span class="tocnumber">2.2.2</span> <span class="toctext">复制pacman缓存</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%E7%9A%84%E5%90%8E%E5%8D%8A%E9%83%A8%E5%88%86"><span class="tocnumber">2.2.3</span> <span class="toctext">安装指南的后半部分</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#%E5%AE%89%E8%A3%85%E4%BB%A5%E5%89%8D%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6"><span class="tocnumber">2.2.4</span> <span class="toctext">安装以前安装的软件</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-15">
+<a href="#%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B"><span class="tocnumber">3</span> <span class="toctext">自上而下</span></a>
+<ul>
+<li class="toclevel-2 tocsection-16"><a href="#%E6%B8%85%E7%90%86%E6%97%A7%E7%B3%BB%E7%BB%9F"><span class="tocnumber">3.1</span> <span class="toctext">清理旧系统</span></a></li>
+<li class="toclevel-2 tocsection-17">
+<a href="#%E5%B0%86%E7%B3%BB%E7%BB%9F%E5%A4%8D%E5%88%B6%E5%88%B0%E6%96%B0%E9%A9%B1%E5%8A%A8%E5%99%A8"><span class="tocnumber">3.2</span> <span class="toctext">将系统复制到新驱动器</span></a>
+<ul>
+<li class="toclevel-3 tocsection-18"><a href="#%E7%A1%AC%E7%9B%98%E5%85%8B%E9%9A%86"><span class="tocnumber">3.2.1</span> <span class="toctext">硬盘克隆</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="#%E6%96%87%E4%BB%B6%E5%A4%8D%E5%88%B6"><span class="tocnumber">3.2.2</span> <span class="toctext">文件复制</span></a></li>
+<li class="toclevel-3 tocsection-20"><a href="#%E4%BC%A0%E8%BE%93%E6%96%B9%E6%B3%95%E7%9A%84%E9%80%89%E6%8B%A9"><span class="tocnumber">3.2.3</span> <span class="toctext">传输方法的选择</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-21"><a href="#%E6%9B%B4%E6%96%B0fstab"><span class="tocnumber">3.3</span> <span class="toctext">更新fstab</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E5%BC%95%E5%AF%BC%E5%8A%A0%E8%BD%BD%E7%A8%8B%E5%BA%8F"><span class="tocnumber">3.4</span> <span class="toctext">重新安装引导加载程序</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#%E9%87%8D%E6%96%B0%E7%94%9F%E6%88%90%E5%86%85%E6%A0%B8%E6%98%A0%E5%83%8F"><span class="tocnumber">3.5</span> <span class="toctext">重新生成内核映像</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#%E9%87%8D%E6%96%B0%E9%85%8D%E7%BD%AE%E9%9F%B3%E9%A2%91"><span class="tocnumber">3.6</span> <span class="toctext">重新配置音频</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#%E9%87%8D%E6%96%B0%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C"><span class="tocnumber">3.7</span> <span class="toctext">重新配置网络</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-26"><a href="#%E5%8F%A6%E8%A7%81"><span class="tocnumber">4</span> <span class="toctext">另见</span></a></li>
+</ul>
+</div>
+
+<h2>
+<span id=".E9.80.82.E9.85.8D.E6.96.B0.E7.A1.AC.E4.BB.B6"></span><span class="mw-headline" id="适配新硬件">适配新硬件</span>
+</h2>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>警告：</strong> 对于这两种方法，我们必须考虑新旧硬件之间的差异，并相应地修改安装的驱动程序和配置。</div>
+<p>在开始之前，先研究一下新硬件的各个方面，并列出不同之处。一般的区别有
+</p>
+<h3>
+<span id=".E6.9C.BA.E6.A2.B0.E7.A1.AC.E7.9B.98.E4.B8.8E.E5.9B.BA.E6.80.81.E7.A1.AC.E7.9B.98"></span><span class="mw-headline" id="机械硬盘与固态硬盘">机械硬盘与固态硬盘</span>
+</h3>
+<p>参见文章<a href="../zh-CN/Solid_state_drive.html" title="Solid state drive (简体中文)">Solid_state_drive_(简体中文)</a>。
+</p>
+<h3>
+<span id="CPU.E4.BE.9B.E5.BA.94.E5.95.86"></span><span class="mw-headline" id="CPU供应商">CPU供应商</span>
+</h3>
+<p>如果将CPU切换到其他供应商的CPU（例如从Intel更换为AMD），请更改<a href="../zh-CN/Microcode.html" title="Microcode (简体中文)">微码</a>配置。
+</p>
+<h3>
+<span id="GPU.E4.BE.9B.E5.BA.94.E5.95.86"></span><span class="mw-headline" id="GPU供应商">GPU供应商</span>
+</h3>
+<p>如果您将GPU更换为其他供应商（例如，从<a href="../zh-CN/ATI.html" title="ATI (简体中文)">AMD</a>更换为<a href="../zh-CN/NVIDIA.html" title="NVIDIA (简体中文)">NVIDIA_(简体中文)</a>），请更换图形驱动程序。
+</p>
+<h3>
+<span id="UEFI.E4.B8.8EMBR.E5.BC.95.E5.AF.BC.E4.BB.A3.E7.A0.81.E5.BC.95.E5.AF.BC"></span><span class="mw-headline" id="UEFI与MBR引导代码引导">UEFI与MBR引导代码引导</span>
+</h3>
+<p>如果您更换到较新的支持UEFI的主板，则可能更可取或需要从“MBR引导代码”引导切换到<a href="../en/Unified_Extensible_Firmware_Interface.html" class="mw-redirect" title="UEFI">UEFI</a>引导。在这种情况下，需要一个新的<a href="../zh-CN/EFI_system_partition.html" class="mw-redirect" title="EFI System Partition (简体中文)">EFI分区</a>。
+</p>
+<h2>
+<span id=".E8.87.AA.E4.B8.8B.E8.80.8C.E4.B8.8A"></span><span class="mw-headline" id="自下而上">自下而上</span>
+</h2>
+<h3>
+<span id=".E5.9C.A8.E6.97.A7.E7.B3.BB.E7.BB.9F.E4.B8.8A"></span><span class="mw-headline" id="在旧系统上">在旧系统上</span>
+</h3>
+<p>我们在这里定义了从旧系统迁移到新系统的最小配置，这是此方法与安装指南的不同之处。考虑要复制到新系统的<code>/etc</code>中的配置文件和<code>/home</code>中的“.”文件，以及用户数据文件。如果您无法从新系统访问旧系统，则备份要复制的所有文件。
+</p>
+<h4>
+<span id=".E5.88.97.E5.87.BA.E5.B7.B2.E5.AE.89.E8.A3.85.E7.9A.84.E8.BD.AF.E4.BB.B6.E5.8C.85"></span><span class="mw-headline" id="列出已安装的软件包">列出已安装的软件包</span>
+</h4>
+<pre>$ pacman -Qqen &gt; pkglist.txt
+$ pacman -Qqem &gt; pkglist_aur.txt
+</pre>
+<p>为您提供从软件仓库和<a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>显式安装的软件包的列表。如果您创建了备份，请将其包含在备份中。
+</p>
+<p>您还可以使用以下脚本查找pacman感知不到的二进制文件和库（例如，g. 通过Steam、Desura或使用自己的安装方法安装的软件）：
+</p>
+<pre>find / -regextype posix-extended -regex "/(sys|srv|proc)|.*/\.ccache/.*" -prune -o -type f \
+-exec bash -c 'file "{}" | grep -E "(32|64)-bit"' \; | \
+awk -F: '{print $1}' | \
+while read -r bin; \
+do pacman -Qo "$bin" &amp;&gt;/dev/null || echo "$bin"; \
+done
+</pre>
+<h4>
+<span id="pacman_.E7.BC.93.E5.AD.98"></span><span class="mw-headline" id="pacman_缓存">pacman 缓存</span>
+</h4>
+<p>如果不更改体系结构（例如，从x86更改为x86_64），请考虑备份<code>/var/cache/pacman/pkg/</code>。
+</p>
+<h3>
+<span id=".E5.9C.A8.E6.96.B0.E7.B3.BB.E7.BB.9F.E4.B8.8A"></span><span class="mw-headline" id="在新系统上">在新系统上</span>
+</h3>
+<h4>
+<span id=".E5.AE.89.E8.A3.85.E6.8C.87.E5.8D.97.E7.9A.84.E5.89.8D.E5.8D.8A.E9.83.A8.E5.88.86"></span><span class="mw-headline" id="安装指南的前半部分">安装指南的前半部分</span>
+</h4>
+<p>有关安装新系统的基本信息，请参阅<a href="../zh-CN/Installation_guide.html" class="mw-redirect" title="Installation Guide (简体中文)">Installation Guide_(简体中文)</a>。按照安装指南的前半部分操作，但不包括pacstrap命令。
+</p>
+<h4>
+<span id=".E5.A4.8D.E5.88.B6pacman.E7.BC.93.E5.AD.98"></span><span class="mw-headline" id="复制pacman缓存">复制pacman缓存</span>
+</h4>
+<p>将位于<code>/var/cache/pacman/pkg/</code>的pacman缓存从旧系统复制到新系统，或从备份复制到新系统。
+</p>
+<h4>
+<span id=".E5.AE.89.E8.A3.85.E6.8C.87.E5.8D.97.E7.9A.84.E5.90.8E.E5.8D.8A.E9.83.A8.E5.88.86"></span><span class="mw-headline" id="安装指南的后半部分">安装指南的后半部分</span>
+</h4>
+<p>继续执行中的安装指南（包括pacstrap命令），直到最后，但不要重新启动。不要跳过pacstrap命令，因为它除了安装软件包之外还会执行其他工作。
+</p>
+<h4>
+<span id=".E5.AE.89.E8.A3.85.E4.BB.A5.E5.89.8D.E5.AE.89.E8.A3.85.E7.9A.84.E8.BD.AF.E4.BB.B6"></span><span class="mw-headline" id="安装以前安装的软件">安装以前安装的软件</span>
+</h4>
+<p>编辑pkglist.txt(和pkglist_aur.txt)并删除新系统上不需要的驱动程序。然后使用下述命令安装之前安装过的软件
+</p>
+<pre># pacman -S --needed - &lt; pkglist.txt
+</pre>
+<h2>
+<span id=".E8.87.AA.E4.B8.8A.E8.80.8C.E4.B8.8B"></span><span class="mw-headline" id="自上而下">自上而下</span>
+</h2>
+<p>自上而下方法有两个选项，您可以保留已安装系统的驱动器并修改其内容，也可以将系统复制到新驱动器。如果保留驱动器并对其进行修改，然后将其放回旧系统中，则修改可能会导致旧系统无法启动。
+</p>
+<h3>
+<span id=".E6.B8.85.E7.90.86.E6.97.A7.E7.B3.BB.E7.BB.9F"></span><span class="mw-headline" id="清理旧系统">清理旧系统</span>
+</h3>
+<p>在克隆系统之前清理系统也是值得的，如<a href="../zh-CN/System_maintenance.html#%E6%B8%85%E7%90%86%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F" title="System maintenance (简体中文)">System_maintenance_(简体中文)#清理文件系统</a>中所述。在继续之前，请确保旧系统在清理后仍按预期工作。
+</p>
+<h3>
+<span id=".E5.B0.86.E7.B3.BB.E7.BB.9F.E5.A4.8D.E5.88.B6.E5.88.B0.E6.96.B0.E9.A9.B1.E5.8A.A8.E5.99.A8"></span><span class="mw-headline" id="将系统复制到新驱动器">将系统复制到新驱动器</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 如果您计划保留已安装系统的硬盘，则可以跳过此部分。</div>
+<p>将系统复制到新驱动器有两种基本方法：<a href="../en/Disk_cloning.html" title="Disk cloning">硬盘克隆</a>和文件复制。
+</p>
+<h4>
+<span id=".E7.A1.AC.E7.9B.98.E5.85.8B.E9.9A.86"></span><span class="mw-headline" id="硬盘克隆">硬盘克隆</span>
+</h4>
+<p>需要使用Live系统，而不是旧的Arch Linux系统；例如，您可以使用Arch Linux <a href="../zh-CN/USB_flash_installation_medium.html" title="USB flash installation medium (简体中文)">USB_flash_installation_medium_(简体中文)</a>。将复制旧系统的分区布局和文件系统。
+</p>
+<h4>
+<span id=".E6.96.87.E4.BB.B6.E5.A4.8D.E5.88.B6"></span><span class="mw-headline" id="文件复制">文件复制</span>
+</h4>
+<ul>
+<li>在新驱动器上创建新的<a href="../zh-CN/Partitioning.html" title="Partitioning (简体中文)">分区</a>和<a href="../zh-CN/File_systems.html" title="File systems (简体中文)">文件系统</a>。您可以利用此机会选择与以前不同的分区布局和/或文件系统。</li>
+<li>对于每种文件系统，使用<a href="../zh-CN/Rsync.html" title="Rsync (简体中文)">rsync</a>或其他可以保留文件权限、属性等的工具将文件从旧驱动器复制到新驱动器。更多详细信息，参见<a href="../en/Rsync.html#Full_system_backup" title="Rsync">rsync#Full system backup</a>，<a href="../zh-CN/Rsync.html#%E4%BD%9C%E4%B8%BA%E5%A4%87%E4%BB%BD%E5%B7%A5%E5%85%B7" title="Rsync (简体中文)">Rsync_(简体中文)#作为备份工具</a>。</li>
+</ul>
+<h4>
+<span id=".E4.BC.A0.E8.BE.93.E6.96.B9.E6.B3.95.E7.9A.84.E9.80.89.E6.8B.A9"></span><span class="mw-headline" id="传输方法的选择">传输方法的选择</span>
+</h4>
+<p>如何在两个驱动器之间传输数据有许多不同的方法：
+</p>
+<ul>
+<li>将源硬盘和目标硬盘连接到同一台计算机，无论是旧盘还是新盘。数据链路：旧硬盘-&gt;电脑-&gt;新硬盘。</li>
+<li>使用外部硬盘或云备份等临时存储设备。数据链路：旧硬盘-&gt;旧电脑-&gt;存储-&gt;新电脑-&gt;新硬盘。有关概述，请参阅文章<a href="../zh-CN/System_backup.html" title="System backup (简体中文)">系统备份</a>。</li>
+<li>通过网络传输数据，例如使用<a href="../zh-CN/Rsync.html" title="Rsync (简体中文)">rsync_(简体中文)</a>。数据链路：旧硬盘-&gt;旧电脑-&gt;网络-&gt;新电脑-&gt;新硬盘。</li>
+</ul>
+<p>对于前两个选项，请考虑您可能需要适配器来连接硬盘（PATA-&gt;SATA转接、USB移动硬盘盒等），并选择足够快的连接。
+</p>
+<p>后两个选项要求您在新计算机上使用Live系统，因为此时尚无法从新硬盘启动。
+</p>
+<h3>
+<span id=".E6.9B.B4.E6.96.B0fstab"></span><span class="mw-headline" id="更新fstab">更新fstab</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>警告：</strong> 在执行此步骤之前，请确保您不希望在旧系统中使用此驱动器，因为更改<a href="../en/Fstab.html" title="Fstab">fstab</a>文件可能会导致系统无法在旧配置中启动。</div>
+<p>如果您使用的是Arch Linux安装映像，请将新的根分区挂载到<code>/mnt</code>，并挂载好其他需要的分区，就像您在正常安装中所做的那样(请参阅<a href="../zh-CN/Installation_guide.html#%E6%8C%82%E8%BD%BD%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F" title="Installation guide (简体中文)">挂载文件系统</a>)。
+</p>
+<p>在<code>/mnt/etc/fstab</code>的末尾插入任意注释，如<code>#end of old fstab</code>。按照<a href="../en/Installation_guide.html#Fstab" title="Installation guide">安装指南#Fstab</a>中的说明生成一个新的fstab文件，并将其附加到当前的fstab文件中。一定要检查genfstab创建的fstab文件。在这种情况下，请在注释之前检查较旧的fstab条目，删除过期项和重复项；如果旧条目仍然有用，则保留它们。例如，可以保留网络驱动器的挂载条目。一般推荐使用<a href="../zh-CN/Persistent_block_device_naming.html" title="Persistent block device naming (简体中文)">持久化命名</a>。
+</p>
+<h3>
+<span id=".E9.87.8D.E6.96.B0.E5.AE.89.E8.A3.85.E5.BC.95.E5.AF.BC.E5.8A.A0.E8.BD.BD.E7.A8.8B.E5.BA.8F"></span><span class="mw-headline" id="重新安装引导加载程序">重新安装引导加载程序</span>
+</h3>
+<p>出于以下原因，您可能需要重新安装和/或重新配置<a href="../zh-CN/Arch_boot_process.html#%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%99%A8" title="Arch boot process (简体中文)">启动加载器</a>：
+</p>
+<ul>
+<li>不同的磁盘、分区布局或文件系统</li>
+<li>将<a href="../en/Unified_Extensible_Firmware_Interface.html" class="mw-redirect" title="UEFI">UEFI</a>引导条目添加到新的主板NVRAM</li>
+<li>从“MBR引导代码”引导迁移到UEFI引导</li>
+<li>从USB迁移到SATA/NVMe</li>
+<li>更新内核命令行（commandline）
+<ul>
+<li>如果使用不同的GPU，请更新帧缓冲区模式</li>
+<li>更新<a href="../zh-CN/Microcode.html" title="Microcode (简体中文)">微码</a>和initramfs镜像</li>
+</ul>
+</li>
+</ul>
+<p>如果您使用的是Arch Linux live环境，则在重新安装引导加载程序之前，请<a href="../zh-CN/Chroot.html" title="Chroot (简体中文)">更改根路径</a>进入新系统：
+</p>
+<pre># arch-chroot /mnt
+</pre>
+<p>有关如何安装/重新安装引导程序的说明，请参阅<a href="../zh-CN/Arch_boot_process.html#%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%99%A8" title="Arch boot process (简体中文)">启动加载器</a>。
+</p>
+<h3>
+<span id=".E9.87.8D.E6.96.B0.E7.94.9F.E6.88.90.E5.86.85.E6.A0.B8.E6.98.A0.E5.83.8F"></span><span class="mw-headline" id="重新生成内核映像">重新生成内核映像</span>
+</h3>
+<p>建议使用<a href="../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a>重新生成initramfs映像，尽管最初可以使用备用initramfs映像。
+</p>
+<h3>
+<span id=".E9.87.8D.E6.96.B0.E9.85.8D.E7.BD.AE.E9.9F.B3.E9.A2.91"></span><span class="mw-headline" id="重新配置音频">重新配置音频</span>
+</h3>
+<ul><li>alsamixer volume
+<ul><li>保存设置</li></ul>
+</li></ul>
+<h3>
+<span id=".E9.87.8D.E6.96.B0.E9.85.8D.E7.BD.AE.E7.BD.91.E7.BB.9C"></span><span class="mw-headline" id="重新配置网络">重新配置网络</span>
+</h3>
+<p>如果旧系统和迁移后的系统在同一网络中共存，请使用<a href="../en/Network_configuration.html#Set_the_hostname" title="Network configuration">hostnamectl</a>设置新主机名。
+</p>
+<p>另请考虑主机名更改后所需的配置更改：
+</p>
+<ul>
+<li>/etc/hosts</li>
+<li>使用主机名的其他应用程序：synergy，nut（网络 ups 工具）</li>
+<li>
+<code>grep -Ri 'hostname' /etc</code>（以root身份运行）也会对徐要更新的文件提供一些提示</li>
+</ul>
+<p>将<a href="../en/Dhcpcd.html" title="Dhcpcd">dhcpcd</a>配合已命名的网络接口使用时，网络接口名称可能会有变化。
+</p>
+<ul>
+<li>使用命令<code>$ dmesg | grep 'renamed from eth'</code>可帮助查找新接口名称</li>
+<li>删除旧接口：<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Disable">disable</a> <code>dhcpcd@enp<i>X</i>s0.service</code>
+</li>
+<li>激活新接口：<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>dhcpcd@enp<i>X</i>s0.service</code>
+</li>
+</ul>
+<h2>
+<span id=".E5.8F.A6.E8.A7.81"></span><span class="mw-headline" id="另见">另见</span>
+</h2>
+<ul>
+<li><a rel="nofollow" class="external text" href="http://positon.org/clone-a-linux-system-install-to-another-computer">Howto clone a linux system</a></li>
+<li><a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=71038">[1]</a></li>
+<li><a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=543214">[2]</a></li>
+</ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:System_recovery.html" title="Category:System recovery (简体中文)">System recovery (简体中文)</a></li></ul>
+</div></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Migrate_installation_to_new_hardware_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=653834">https://wiki.archlinux.org/index.php?title=Migrate_installation_to_new_hardware_(简体中文)&amp;oldid=653834</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 2 March 2021, at 12:49.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

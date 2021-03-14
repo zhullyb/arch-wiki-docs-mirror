@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -71,15 +72,16 @@ interface displays that data in the form of graphs.
 <ul>
 <li class="toclevel-2 tocsection-9"><a href="#Apache"><span class="tocnumber">3.1</span> <span class="toctext">Apache</span></a></li>
 <li class="toclevel-2 tocsection-10"><a href="#Caddy"><span class="tocnumber">3.2</span> <span class="toctext">Caddy</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#Lighttpd"><span class="tocnumber">3.3</span> <span class="toctext">Lighttpd</span></a></li>
-<li class="toclevel-2 tocsection-12"><a href="#Nginx"><span class="tocnumber">3.4</span> <span class="toctext">Nginx</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Caddy_2"><span class="tocnumber">3.3</span> <span class="toctext">Caddy 2</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Lighttpd"><span class="tocnumber">3.4</span> <span class="toctext">Lighttpd</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Nginx"><span class="tocnumber">3.5</span> <span class="toctext">Nginx</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-13"><a href="#Advanced_Configuration"><span class="tocnumber">4</span> <span class="toctext">Advanced Configuration</span></a></li>
-<li class="toclevel-1 tocsection-14">
+<li class="toclevel-1 tocsection-14"><a href="#Advanced_Configuration"><span class="tocnumber">4</span> <span class="toctext">Advanced Configuration</span></a></li>
+<li class="toclevel-1 tocsection-15">
 <a href="#Notes"><span class="tocnumber">5</span> <span class="toctext">Notes</span></a>
 <ul>
-<li class="toclevel-2 tocsection-15"><a href="#Smoketrace_(Tr.cgi)"><span class="tocnumber">5.1</span> <span class="toctext">Smoketrace (Tr.cgi)</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Smoketrace_(Tr.cgi)"><span class="tocnumber">5.1</span> <span class="toctext">Smoketrace (Tr.cgi)</span></a></li>
 </ul>
 </li>
 </ul>
@@ -412,6 +414,41 @@ smokeping.example.com/cache {
 </pre>
 <p>An updated version of this Caddy conf for smokeping - <a rel="nofollow" class="external free" href="https://gist.github.com/Strykar/4df1eb8aebc4d5f7039f6045301352c7">https://gist.github.com/Strykar/4df1eb8aebc4d5f7039f6045301352c7</a>
 </p>
+<h3><span class="mw-headline" id="Caddy_2">Caddy 2</span></h3>
+<p>Thanks to the <a rel="nofollow" class="external text" href="https://caddy.community/t/having-trouble-migrating-smokeping-caddyfile-to-caddy-2/8640/3">francislavoie and Caddy community</a> and to the <a rel="nofollow" class="external text" href="https://caddyserver.com/docs/caddyfile">Caddy docs</a>.
+Start and enable fcgiwrap.socket!
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/caddy/caddy.conf.d/smokeping.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">smokeping.example.com {
+
+    handle /js/* {
+        root * /srv/http/smokeping/
+        file_server
+    }
+    handle /css/* {
+        root * /srv/http/smokeping/
+        file_server
+    }
+    handle /imgcache/* {
+        root * /srv/http/smokeping/
+        file_server
+    }
+    handle /images/* {
+        root * /srv/http/smokeping/
+        file_server
+    }
+    
+    handle {
+        root * /srv/http/smokeping/
+        reverse_proxy unix//var/run/fcgiwrap.sock {
+            transport fastcgi {
+                env SCRIPT_FILENAME /srv/http/smokeping/smokeping.fcgi
+                split ""
+            }
+        }
+    }
+}
+</pre>
 <h3><span class="mw-headline" id="Lighttpd">Lighttpd</span></h3>
 <p>First install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lighttpd">lighttpd</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fcgi">fcgi</a></span>.
 </p>
@@ -501,8 +538,8 @@ $ systemctl enable lighttpd
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Smokeping&amp;oldid=636499">https://wiki.archlinux.org/index.php?title=Smokeping&amp;oldid=636499</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 25 September 2020, at 12:43.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Smokeping&amp;oldid=653114">https://wiki.archlinux.org/index.php?title=Smokeping&amp;oldid=653114</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 February 2021, at 09:22.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

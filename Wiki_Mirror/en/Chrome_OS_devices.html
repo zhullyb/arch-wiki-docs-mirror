@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -174,8 +175,6 @@
 </p>
 <p>Models with a Core-i based SoC (Haswell, Broadwell, Skylake, KabyLake) mostly ship with a functional Legacy Boot Mode payload; updating to a 3rd party build can provide bug fixes and additional features.  Models with an Atom-based SoC (Baytrail, Braswell, Apollolake) have Legacy Boot Mode capability, but do not ship with a RW_LEGACY/SeaBIOS payload (that part of the firmware is blank).  These models require a 3rd party RW_LEGACY firmware to be loaded for Legacy Boot Mode to be functional.
 </p>
-<p><br>
-</p>
 <h4>
 <span id="Models_without_Legacy_Boot_Mode.2FSeaBIOS"></span><span class="mw-headline" id="Models_without_Legacy_Boot_Mode/SeaBIOS">Models without Legacy Boot Mode/SeaBIOS</span>
 </h4>
@@ -185,7 +184,7 @@
 <ul><li>Flash a full <a href="../en/Chrome_OS_devices/Custom_firmware.html" class="mw-redirect" title="Custom firmware for Chrome OS devices">custom firmware</a> which includes either a SeaBIOS or UEFI payload, and removes all the ChromeOS-specific parts.</li></ul>
 <ul><li>Flash the <code>BOOT_STUB</code> part of the firmware. This method replaces the stock ChromeOS payload (depthcharge) with SeaBIOS. This is theoretically a safer approach than flashing the full firmware but there might be some limitations (e.g. no support in suspend or VMX). This is the <code>Modify ROM to run SeaBIOS exclusively</code> option in John Lewis' <code>flash_chromebook_rom.sh</code> script and <code>Flash BOOT_STUB firmware</code> option in MrChromebox's.</li></ul>
 <ul><li>Take the ChrUbuntu approach which uses the Chrome OS kernel and modules.</li></ul>
-<ul><li>Build and sign your own kernel, see <a rel="nofollow" class="external autonumber" href="https://plus.google.com/+OlofJohansson/posts/34PYU79eUqP">[1]</a> <a rel="nofollow" class="external autonumber" href="https://pomozok.wordpress.com/2014/10/11/building-chromeos-kernel-without-chroot/">[2]</a> <a rel="nofollow" class="external autonumber" href="https://github.com/drsn0w/chromebook_kernel_tools/blob/master/install_linux.md">[3]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-28 ⓘ]</sup>.</li></ul>
+<ul><li>Build and sign your own kernel, see <a rel="nofollow" class="external autonumber" href="https://plus.google.com/+OlofJohansson/posts/34PYU79eUqP">[1]</a> <a rel="nofollow" class="external autonumber" href="https://github.com/drsn0w/chromebook_kernel_tools/blob/master/install_arch_linux.md">[2]</a>.</li></ul>
 <p>The <a href="#Installation">Installation</a> process described on this page tries to cover the method of installing Arch Linux on models without SeaBIOS by flashing a custom firmware.
 </p>
 <h3><span class="mw-headline" id="Firmware_write_protection_intro">Firmware write protection intro</span></h3>
@@ -205,7 +204,7 @@
 </p>
 <h3><span class="mw-headline" id="General_hardware_recommendations_and_remarks">General hardware recommendations and remarks</span></h3>
 <ul>
-<li>MyDigitalSSD M.2 NGFF SSD drives are probably the most popular choice when upgrading the internal SSD of a Chrome OS device. There are multiple accounts of failing MyDigitalSSD SSD drives at the Acer C720 topic on the Arch forums <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1461993#p1461993">[4]</a> <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1474680#p1474680">[5]</a> <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1460460#p1460460">[6]</a> and much more on the web. If the SSD was upgraded to a MyDigitalSSD model then it is highly recommended to backup the system and data frequently. It might be advisable to upgrade the SDD with a different brand. Notice that this might be due to a SSD firmware issue so updating the SSD firmware is highly recommended.</li>
+<li>MyDigitalSSD M.2 NGFF SSD drives are probably the most popular choice when upgrading the internal SSD of a Chrome OS device. There are multiple accounts of failing MyDigitalSSD SSD drives at the Acer C720 topic on the Arch forums <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1461993#p1461993">[3]</a> <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1474680#p1474680">[4]</a> <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1460460#p1460460">[5]</a> and much more on the web. If the SSD was upgraded to a MyDigitalSSD model then it is highly recommended to backup the system and data frequently. It might be advisable to upgrade the SSD with a different brand. Notice that this might be due to a SSD firmware issue so updating the SSD firmware is highly recommended.</li>
 <li>Transcend MTS400 M.2 NGFF SSD drives are failing (at least with stock Coreboot firmware) when ALPM is enabled, ATM there is no SSD firmware update that fixing this bug, so it is highly advisable to disabled ALPM if a power management daemon has been installed (which enabled it), see <a href="../en/Solid_state_drive.html#Resolving_SATA_power_management_related_errors" class="mw-redirect" title="Solid State Drives">Resolving SATA power management related errors</a> and <a rel="nofollow" class="external text" href="https://superuser.com/questions/887916/transcend-mts400-ssd-crashes-my-acer-c720-chromebook-how-to-disable-sata-power">how to disable ALPM in Chrome OS</a>.</li>
 </ul>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
@@ -382,7 +381,7 @@ GBB_FLAG_DEFAULT_DEV_BOOT_LEGACY 0x00000400
 <li>You can also try to find the related commits by yourself and create a proper patch, some hints:
 <ul>
 <li>Dig into your Chrome OS system, look at the obvious suspects like boot log, <code>/proc/bus/input/devices</code> and <code>/sys/devices</code>.</li>
-<li>The Linux kernel sources for Chromium OS are at <a rel="nofollow" class="external autonumber" href="https://chromium.googlesource.com/chromiumos/third_party/kernel">[7]</a>.</li>
+<li>The Linux kernel sources for Chromium OS are at <a rel="nofollow" class="external autonumber" href="https://chromium.googlesource.com/chromiumos/third_party/kernel">[6]</a>.</li>
 <li>Each kernel source for the latest Chromium OS release has its own branch, name convention: <code>release-R*-*-chromeos-KERNELVER</code>, where <code>R*-*</code> is the Chromium OS release and <code>KERNELVER</code> is the kernel version.</li>
 <li>Review the git log of <code>drivers/platform</code>, <code>drivers/i2c/busses</code> and <code>drivers/input/touchscreen</code>.</li>
 </ul>
@@ -394,7 +393,7 @@ GBB_FLAG_DEFAULT_DEV_BOOT_LEGACY 0x00000400
 <p>There are few options how to set the touchpad:
 </p>
 <ul>
-<li>Visit the ArchWiki page for your Chromebook model (see <a href="#Chromebook_Models">Chromebook models</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>) for touchpad xorg.conf.d file.</li>
+<li>Visit the ArchWiki page for your Chromebook model (see <a href="../en/Chrome_OS_devices/Chromebook.html" title="Chrome OS devices/Chromebook">Chromebook models</a>) for touchpad xorg.conf.d file.</li>
 <li>Use a <a href="../en/Touchpad_Synaptics.html#Configuration_on_the_fly" title="Touchpad Synaptics">touchpad configuration tool</a>.</li>
 </ul>
 <h4><span class="mw-headline" id="Chromium_OS_input_drivers">Chromium OS input drivers</span></h4>
@@ -427,7 +426,7 @@ If you are affected by this, you should run:
 Users of a pre-installed SeaBIOS or John Lewis' pre-built SeaBIOS you will need this fix.
 This procedure is not needed with Matt DeVillier's custom firmware since problematic ACPI wake devices (such as <code>TPAD</code>) are firmware-disabled.
 </p>
-<p>There have been a few alternatives discussed and those may work better for some. <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1364376#p1364376">[8]</a> <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1364521#p1364521">[9]</a>
+<p>There have been a few alternatives discussed and those may work better for some. <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1364376#p1364376">[7]</a> <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1364521#p1364521">[8]</a>
 </p>
 <p>To fix suspend, the general idea is to disable the EHCI_PCI module, which interferes with the suspend cycle. There are multiple ways to achieve this.
 </p>
@@ -502,7 +501,7 @@ esac</pre>
 </p>
 <h3><span class="mw-headline" id="Fixing_audio">Fixing audio</span></h3>
 <h4><span class="mw-headline" id="Baytrail_based_models">Baytrail based models</span></h4>
-<p>Audio on most baytrail models should work on <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> since fix merged into 4.19.7 <a rel="nofollow" class="external autonumber" href="https://git.archlinux.org/linux.git/commit/?h=v4.19.7-arch1&amp;id=f35f68c68ce48a8b70a4c3674663513825b7a1bc">[10]</a>, to fix regression in 4.18.15, see bug report <a rel="nofollow" class="external autonumber" href="https://lkml.org/lkml/2018/10/30/676">[11]</a>.
+<p>Audio on most baytrail models should work on <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> since fix merged into 4.19.7 <a rel="nofollow" class="external autonumber" href="https://git.archlinux.org/linux.git/commit/?h=v4.19.7-arch1&amp;id=f35f68c68ce48a8b70a4c3674663513825b7a1bc">[9]</a>, to fix regression in 4.18.15, see bug report <a rel="nofollow" class="external autonumber" href="https://lkml.org/lkml/2018/10/30/676">[10]</a>.
 </p>
 <p>It is likely that you will also need to use <code>alsamixer</code> from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-utils">alsa-utils</a></span> to turn on "Left Speaker Mixer Left DAC" and "Right Speaker Mixer Right DAC". For more information, see <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/48936">FS#48936</a>.
 </p>
@@ -512,9 +511,9 @@ esac</pre>
 <ul><li>Create <code>/etc/modprobe.d/alsa.conf</code>, the option <code>index</code> will make sure the analog output is the default (and not HDMI), the option <code>model</code> will notify the driver our board model which will make the built-in microphone usable (you can try instead <code>model=alc283-sense-combo</code> or <code>model=,alc283-dac-wcaps</code>).</li></ul>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/alsa.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options snd_hda_intel index=1 model=,alc283-chrome</pre>
-<ul><li>Use the <code>~/.asoundrc</code> file from <a rel="nofollow" class="external autonumber" href="https://gist.githubusercontent.com/dhead666/52d6d7d97eff76935713/raw/5b32ee11a2ebbe7a3ee0f928e49b980361a57548/.asoundrc">[12]</a>.</li></ul>
+<ul><li>Use the <code>~/.asoundrc</code> file from <a rel="nofollow" class="external autonumber" href="https://gist.githubusercontent.com/dhead666/52d6d7d97eff76935713/raw/5b32ee11a2ebbe7a3ee0f928e49b980361a57548/.asoundrc">[11]</a>.</li></ul>
 <ul><li>If having problems with headphones (perhaps no audio playing), try <code>alsactl restore</code> (requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-utils">alsa-utils</a></span>) in terminal. Now, ALSA should automatically switch between channels when using headphones/speakers.</li></ul>
-<ul><li>To fix <a href="../en/Browser_plugins.html#Flash_players" class="mw-redirect" title="Flash">Flash</a> audio with PulseAudio, use the <code>~/.asoundrc</code> file from <a rel="nofollow" class="external autonumber" href="https://gist.githubusercontent.com/dhead666/0eebff16cd9578c5e035/raw/d4c974fcd50565bf116c57b1884170ecb47f8bf6/.asoundrc">[13]</a>.</li></ul>
+<ul><li>To fix <a href="../en/Browser_plugins.html#Flash_players" class="mw-redirect" title="Flash">Flash</a> audio with PulseAudio, use the <code>~/.asoundrc</code> file from <a rel="nofollow" class="external autonumber" href="https://gist.githubusercontent.com/dhead666/0eebff16cd9578c5e035/raw/d4c974fcd50565bf116c57b1884170ecb47f8bf6/.asoundrc">[12]</a>.</li></ul>
 <h4><span class="mw-headline" id="Chromebook_Pixel_2015">Chromebook Pixel 2015</span></h4>
 <p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-samus4/">linux-samus4</a></span><sup><small>AUR</small></sup> includes a patch for Broadwell SoC sound devices.  <a rel="nofollow" class="external text" href="https://github.com/raphael/linux-samus">Its GitHub page</a> includes additional instructions for initializing the sound device.
 </p>
@@ -527,27 +526,27 @@ esac</pre>
 <h4><span class="mw-headline" id="Sxhkd_configuration">Sxhkd configuration</span></h4>
 <p>One way to set the hotkeys would be by using the <a href="../en/Sxhkd.html" title="Sxhkd">Sxhkd</a> daemon. Besides <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sxhkd">sxhkd</a></span>, this also requires <a href="../en/Advanced_Linux_Sound_Architecture.html" title="Advanced Linux Sound Architecture">amixer</a>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xbacklight">xorg-xbacklight</a></span>, and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xautomation">xautomation</a></span>.
 </p>
-<ul><li>See <a rel="nofollow" class="external autonumber" href="https://gist.github.com/dhead666/191722ec04842d8d330b">[14]</a> for an example configuration in <code>~/.config/sxhkd/sxhkdrc</code>.</li></ul>
+<ul><li>See <a rel="nofollow" class="external autonumber" href="https://gist.github.com/dhead666/191722ec04842d8d330b">[13]</a> for an example configuration in <code>~/.config/sxhkd/sxhkdrc</code>.</li></ul>
 <h4><span class="mw-headline" id="Xbindkeys_configuration">Xbindkeys configuration</span></h4>
 <p>Another way to configure hotkeys would be by using <a href="../en/Xbindkeys.html" title="Xbindkeys">Xbindkeys</a>. Besides <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xbindkeys">xbindkeys</a></span> this requires <a href="../en/Advanced_Linux_Sound_Architecture.html" title="Advanced Linux Sound Architecture">amixer</a> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xbacklight">xorg-xbacklight</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xvkbd/">xvkbd</a></span><sup><small>AUR</small></sup>.
 </p>
 <ul>
-<li>See <a rel="nofollow" class="external autonumber" href="https://gist.github.com/dhead666/08562a9a760b18b6e758">[15]</a> for an example configuration in <code>~/.xbindkeysrc</code>.</li>
+<li>See <a rel="nofollow" class="external autonumber" href="https://gist.github.com/dhead666/08562a9a760b18b6e758">[14]</a> for an example configuration in <code>~/.xbindkeysrc</code>.</li>
 <li>See <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=173418&amp;p=3">vilefridge's xbindkeys configuration</a> for another example.</li>
 </ul>
 <h5><span class="mw-headline" id="Alternate_xbindkeys_configuration">Alternate xbindkeys configuration</span></h5>
 <p><a rel="nofollow" class="external text" href="http://pastie.org/9550960">Volchange</a><sup title="Last check status: 410">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-05-25 ⓘ]</sup> (originated in the <a rel="nofollow" class="external text" href="http://www.debianuserforums.org/viewtopic.php?f=55&amp;t=1453#p14351">Debian User Forums</a><sup title="Last check status: domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-05-25 ⓘ]</sup>)) can manipulate the volume with PulseAudio instead of using <a href="../en/Advanced_Linux_Sound_Architecture.html" title="Advanced Linux Sound Architecture">amixer</a>. Besides <a rel="nofollow" class="external text" href="http://pastie.org/9550960">Volchange</a><sup title="Last check status: 410">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-05-25 ⓘ]</sup> this requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xbacklight">xorg-xbacklight</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xvkbd/">xvkbd</a></span><sup><small>AUR</small></sup>.
 </p>
 <ul>
-<li>Download the script from <a rel="nofollow" class="external autonumber" href="http://pastie.org/9550960">[16]</a><sup title="Last check status: 410">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-05-25 ⓘ]</sup>.</li>
+<li>Download the script from <a rel="nofollow" class="external autonumber" href="http://pastie.org/9550960">[15]</a><sup title="Last check status: 410">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-05-25 ⓘ]</sup>.</li>
 <li>Make it executable</li>
 </ul>
 <pre>$ chmod u+x ~/.local/bin/volchange
 </pre>
-<p>See <a rel="nofollow" class="external autonumber" href="https://gist.github.com/dhead666/4e23b506441ad424e26e">[17]</a> for a matching <code>~/.xbindkeysrc</code>.
+<p>See <a rel="nofollow" class="external autonumber" href="https://gist.github.com/dhead666/4e23b506441ad424e26e">[16]</a> for a matching <code>~/.xbindkeysrc</code>.
 </p>
 <h4><span class="mw-headline" id="Patch_xkeyboard-config">Patch xkeyboard-config</span></h4>
-<p>Another option is to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xkeyboard-config-chromebook/">xkeyboard-config-chromebook</a></span><sup><small>AUR</small></sup>, for more details visit <a rel="nofollow" class="external autonumber" href="https://github.com/dhead666/archlinux-pkgbuilds/tree/master/xkeyboard-config-chromebook">[18]</a>.
+<p>Another option is to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xkeyboard-config-chromebook/">xkeyboard-config-chromebook</a></span><sup><small>AUR</small></sup>, for more details visit <a rel="nofollow" class="external autonumber" href="https://github.com/dhead666/archlinux-pkgbuilds/tree/master/xkeyboard-config-chromebook">[17]</a>.
 </p>
 <h4><span class="mw-headline" id="Mapping_in_Gnome_with_gsettings_set">Mapping in Gnome with gsettings set</span></h4>
 <p>Some of the function keys can be mapped in Gnome with the advantage of HUD notifications on changes (like volume and brightness changes) which can supplement one of the mapping methods mentioned above. This <a rel="nofollow" class="external text" href="https://gist.github.com/dhead666/0b9c1cc9def939705594">linked example</a> maps the brightness and volume actions. Notice that <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdotool">xdotool</a></span> is required.
@@ -577,7 +576,7 @@ HandleLidSwitch=ignore</pre>
 <li><a rel="nofollow" class="external text" href="http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices">Developer Information for Chrome OS Devices at the Chromium Projects site</a></li>
 <li>
 <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=173418">BBS topic about the Acer C720</a> which include generic information on Haswell Based Chromebooks.</li>
-<li>Re-partitioning in Chrome OS <a rel="nofollow" class="external autonumber" href="http://chromeos-cr48.blogspot.co.uk/2012/04/chrubuntu-1204-now-with-double-bits.html">[19]</a>, <a rel="nofollow" class="external autonumber" href="http://goo.gl/i817v">[20]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-28 ⓘ]</sup>
+<li>Re-partitioning in Chrome OS <a rel="nofollow" class="external autonumber" href="http://chromeos-cr48.blogspot.co.uk/2012/04/chrubuntu-1204-now-with-double-bits.html">[18]</a>, <a rel="nofollow" class="external autonumber" href="http://goo.gl/i817v">[19]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-28 ⓘ]</sup>
 </li>
 <li><a rel="nofollow" class="external text" href="http://bit.ly/NewChromebooks">Brent Sullivan's the always updated list of Chrome OS devices</a></li>
 <li><a rel="nofollow" class="external text" href="http://prodct.info/chromebooks/">Google Chromebook Comparison Chart</a></li>
@@ -590,7 +589,6 @@ HandleLidSwitch=ignore</pre>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
 </ul>
 </div>
@@ -600,8 +598,8 @@ HandleLidSwitch=ignore</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chrome_OS_devices&amp;oldid=646358">https://wiki.archlinux.org/index.php?title=Chrome_OS_devices&amp;oldid=646358</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 December 2020, at 18:47.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chrome_OS_devices&amp;oldid=654672">https://wiki.archlinux.org/index.php?title=Chrome_OS_devices&amp;oldid=654672</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 21:37.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

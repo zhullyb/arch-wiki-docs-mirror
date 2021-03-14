@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -37,15 +38,15 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../zh-CN/Systemd.html" title="Systemd (简体中文)">systemd_(简体中文)</a></li>
-<li><a href="../en/Systemd/User.html" title="Systemd/User">systemd/User</a></li>
-<li><a href="../zh-CN/059bfdbeae50ac50d57704f5575af336.html" class="mw-redirect" title="Systemd FAQ (简体中文)">systemd FAQ_(简体中文)</a></li>
-<li><a href="../zh-CN/Cron.html" title="Cron (简体中文)">cron_(简体中文)</a></li>
+<li><a href="../zh-CN/Systemd.html" title="Systemd (简体中文)">systemd (简体中文)</a></li>
+<li><a href="../zh-CN/a87ea26bff3744e8b00320e027759a76.html" title="Systemd (简体中文)/User (简体中文)">Systemd (简体中文)/User (简体中文)</a></li>
+<li><a href="../zh-CN/059bfdbeae50ac50d57704f5575af336.html" class="mw-redirect" title="Systemd FAQ (简体中文)">systemd FAQ (简体中文)</a></li>
+<li><a href="../zh-CN/Cron.html" title="Cron (简体中文)">cron (简体中文)</a></li>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/Systemd/Timers.html" title="Systemd/Timers">Systemd/Timers</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2014-10-25。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd/Timers&amp;diff=0&amp;oldid=340100">更改</a>，则您可以帮助同步翻译。</div>
-<p>Timers 是以 <code>.timer</code> 为后缀名的 <a href="../en/Systemd.html" title="Systemd">systemd</a> 单元文件，用于控制 <code>.service</code> 文件或事件。Timers 可用来替换 <a href="../en/Cron.html" title="Cron">cron</a>（阅读 <a href="#%E6%9B%BF%E4%BB%A3_cron">#替代 cron</a>）。Timers 内置了日历定时事件和单调定时事件的支持，并可以异步执行这些事件。
+<strong>翻译状态：</strong>本文是 <a href="../en/Systemd/Timers.html" title="Systemd/Timers">Systemd/Timers</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-02-27。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd/Timers&amp;diff=0&amp;oldid=637931">更改</a>，则您可以帮助同步翻译。</div>
+<p>Timers 是以 <code>.timer</code> 为后缀名的 <a href="../en/Systemd.html" title="Systemd">systemd</a> 单元文件，用于控制 <code>.service</code> 文件或事件。Timers 可用来替换 <a href="../zh-CN/Cron.html" title="Cron (简体中文)">cron</a>（阅读 <a href="#%E6%9B%BF%E4%BB%A3_cron">#替代 cron</a>）。Timers 内置了实时定时事件和单调定时事件的支持，并可以异步执行这些事件。
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -63,16 +64,17 @@
 <li class="toclevel-2 tocsection-6"><a href="#%E5%AE%9E%E6%97%B6%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="tocnumber">4.2</span> <span class="toctext">实时定时器</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-7">
-<a href="#%E6%9B%BF%E4%BB%A3_cron"><span class="tocnumber">5</span> <span class="toctext">替代 cron</span></a>
+<li class="toclevel-1 tocsection-7"><a href="#%E7%9E%AC%E6%80%81_.timer_%E5%8D%95%E5%85%83"><span class="tocnumber">5</span> <span class="toctext">瞬态 .timer 单元</span></a></li>
+<li class="toclevel-1 tocsection-8">
+<a href="#%E6%9B%BF%E4%BB%A3_cron"><span class="tocnumber">6</span> <span class="toctext">替代 cron</span></a>
 <ul>
-<li class="toclevel-2 tocsection-8"><a href="#%E4%BC%98%E5%8A%BF"><span class="tocnumber">5.1</span> <span class="toctext">优势</span></a></li>
-<li class="toclevel-2 tocsection-9"><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="tocnumber">5.2</span> <span class="toctext">注意事项</span></a></li>
-<li class="toclevel-2 tocsection-10"><a href="#%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6"><span class="tocnumber">5.3</span> <span class="toctext">发送邮件</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#%E4%BD%BF%E7%94%A8_crontab"><span class="tocnumber">5.4</span> <span class="toctext">使用 crontab</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#%E4%BC%98%E5%8A%BF"><span class="tocnumber">6.1</span> <span class="toctext">优势</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="tocnumber">6.2</span> <span class="toctext">注意事项</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6"><span class="tocnumber">6.3</span> <span class="toctext">发送邮件</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#%E4%BD%BF%E7%94%A8_crontab"><span class="tocnumber">6.4</span> <span class="toctext">使用 crontab</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-12"><a href="#%E5%8F%82%E8%A7%81"><span class="tocnumber">6</span> <span class="toctext">参见</span></a></li>
+<li class="toclevel-1 tocsection-13"><a href="#%E5%8F%82%E8%A7%81"><span class="tocnumber">7</span> <span class="toctext">参见</span></a></li>
 </ul>
 </div>
 
@@ -83,21 +85,22 @@
 </p>
 <ul>
 <li>
-<b>单调定时器</b> 即从一个时间点过一段时间后激活定时任务。所有的单调计时器都遵循如下形式： <code>On<i>Type</i>Sec=</code>。 <code>OnBootSec</code> 和 <code>OnActiveSec</code> 是常用的单调定时器。</li>
+<b>实时定时器</b> (亦称"挂钟定时器") 通过日历事件激活（类似于 cronjobs ）定时任务。使用 <code>OnCalender=</code> 来定义实时定时器。</li>
 <li>
-<b>实时定时器</b> (亦称"挂钟定时器") 通过日历事件激活（类似于 cronjobs ）定时任务。 使用 <code>OnCalender=</code> 来定义实时定时器。</li>
+<b>单调定时器</b> 即在一个时间点经过一段时间后激活定时任务。所有的单调计时器都遵循如下形式： <code>On<i>Type</i>Sec=</code>。 <code>OnBootSec</code> 和 <code>OnActiveSec</code> 是常用的单调定时器。</li>
 </ul>
-<p>要查阅完整的定时器选项，参见 <code>systemd.timer(5)</code> <a href="../en/Man_page.html" title="Man page">man page</a>。 关于日历事件和时间段的定义参见 <code>systemd.time(7)</code> <a href="../en/Man_page.html" title="Man page">man page</a>.
+<p><br>
+要查阅完整的定时器选项，参见 <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.timer"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.timer.5">systemd.timer(5)</a></span>。关于日历事件和时间段的定义参见 <span class="plainlinks archwiki-template-man" title="$ man 7 systemd.time"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.time.7">systemd.time(7)</a></span>。
 </p>
 <h2>
 <span id=".E6.9C.8D.E5.8A.A1.E5.8D.95.E5.85.83"></span><span class="mw-headline" id="服务单元">服务单元</span>
 </h2>
-<p>每个 <code>.timer</code> 文件所在目录都得有一个对应的 <code>.service</code> 文件（如 <code>foo.timer</code> 和 <code>foo.service</code>）。<code>.timer</code> 用于激活并控制 <code>.service</code> 文件。 <code>.service</code> 文件中不需要包含 <code>[Install]</code> 部分，因为这由 <i>timer</i> 单元接管。必要时通过在定时器的 <code>[Timer]</code> 部分指定 <code>Unit=</code> 选项来控制一个与定时器不同名的服务单元。
+<p>每个 <code>.timer</code> 文件所在目录都得有一个对应的 <code>.service</code> 文件（如 <code>foo.timer</code> 和 <code>foo.service</code>）。<code>.timer</code> 文件激活并控制 <code>.service</code> 文件。对应的 <code>.service</code> 文件中不需要包含 <code>[Install]</code> 部分，因为这由 <i>timer</i> 单元接管。必要时可以通过在定时器的 <code>[Timer]</code> 部分指定 <code>Unit=</code> 选项来控制一个与定时器不同名的服务单元。
 </p>
 <h2>
 <span id=".E7.AE.A1.E7.90.86"></span><span class="mw-headline" id="管理">管理</span>
 </h2>
-<p>使用 <i>timer</i> 单元时像其他单元一样 <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> 或 start 即可（别忘了添加 <code>.timer</code> 后缀）。要查看所有已启用的定时器，运行：
+<p>使用 <i>timer</i> 单元只需像其他单元一样 <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> 或 <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> 即可（别忘了添加 <code>.timer</code> 后缀）。要查看所有已启用的定时器，运行：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ systemctl list-timers</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">NEXT                          LEFT        LAST                          PASSED     UNIT                         ACTIVATES
@@ -107,8 +110,8 @@ Fri 2014-07-11 00:00:00 CEST  15h left    Thu 2014-07-10 00:00:13 CEST  8h ago  
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 
 <ul>
-<li>列出所有定时器（包括非活动的），使用下列命令： <code>systemctl list-timers --all</code>.</li>
-<li>一个由定时器启动的服务的状态看上去会是 inactive 的，除非它当前正被触发。</li>
+<li>列出所有定时器（包括非活动的），使用下列命令： <code>systemctl list-timers --all</code>。</li>
+<li>一个由定时器启动的服务的状态，如果不是正好被触发的话，通常是未激活的。</li>
 <li>若一个定时器不再同步，它可能会删除它在 <code>/var/lib/systemd/timers</code> 下的 <code>stamp-*</code> 文件。这些空文件只用于表示每个定时器上次运行的时间。删除后，他们将在下次定时器运行时自动重建。</li>
 </ul>
 </div>
@@ -120,7 +123,7 @@ Fri 2014-07-11 00:00:00 CEST  15h left    Thu 2014-07-10 00:00:13 CEST  8h ago  
 <h3>
 <span id=".E5.8D.95.E8.B0.83.E5.AE.9A.E6.97.B6.E5.99.A8"></span><span class="mw-headline" id="单调定时器">单调定时器</span>
 </h3>
-<p>定义一个在系统启动 15 分钟后执行，且之后每周都执行一次的定时器。
+<p>定义一个在系统启动 15 分钟后执行，且之后每周都执行一次的定时器：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/foo.timer</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
@@ -136,7 +139,7 @@ WantedBy=timers.target
 <h3>
 <span id=".E5.AE.9E.E6.97.B6.E5.AE.9A.E6.97.B6.E5.99.A8"></span><span class="mw-headline" id="实时定时器">实时定时器</span>
 </h3>
-<p>定义一个每周执行一次（明确时间为周一上午十二点）且上次未执行就立即执行的定时器。
+<p>定义一个每周执行一次（具体来讲，指周一凌晨零点）的定时器。如果上次未执行（比如说系统当时没有开机，这个行为由 <code>Persistent=true</code> 定义）就立即执行服务。
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/foo.timer</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
@@ -144,16 +147,62 @@ Description=Run foo weekly
 
 [Timer]
 OnCalendar=weekly
-Persistent=true     
- 
+Persistent=true
+
 [Install]
 WantedBy=timers.target</pre>
+<p>更精确的时间可以通过 <code>OnCalendar</code> 参数以下列方式指定：
+</p>
+<pre><code>星期 年-月-日 时:分:秒</code>
+</pre>
+<p>可以用星号来表示任意值，用逗号分列可能值。以 <code>..</code> 分隔的两个值指两个值间的连续序列。
+</p>
+<p>这是在每个月的前四天晚上中午 12 点，但仅当这一天是周一和周四时运行的例子：
+</p>
+<pre>OnCalendar=Mon,Tue *-*-01..04 12:00:00
+</pre>
+<p>在每个月的第一个星期六运行：
+</p>
+<pre> OnCalendar=Sat *-*-1..7 18:00:00
+</pre>
+<p>如果不需要以星期几来界定，比如说在每天四点运行，请去掉星期项：
+</p>
+<pre> OnCalendar=*-*-* 4:00:00
+</pre>
+<p>在不同的时间运行一个服务可以以多次指定 <code>OnCalendar</code> 的方式表示。在下面的例子中，这个服务在周内的 22:30 和周末的 20:00 运行：
+</p>
+<pre> OnCalendar=Mon..Fri 22:30
+ OnCalendar=Sat,Sun 20:00
+</pre>
+<p>更多信息请参阅 <span class="plainlinks archwiki-template-man" title="$ man 7 systemd.time"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.time.7">systemd.time(7)</a></span>。
+</p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>提示：</strong> 特殊的事件表达式如 <code>daily</code> 和 <code>weekly</code> 表示 <i>特定的启动时间</i>，因此任何共享该日历事件的定时器将同时启动。如果该定时器的服务会计算系统资源，那么定时器共享启动事件可能会引起系统性能下降。可以考虑手动错开该定时器运行特定事件的时间，如 <code>OnCalendar=Wed, 23:15</code>。参见 <a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">#注意事项</a>.</div>
+<strong>提示：</strong> 
+<ul>
+<li>可以用 <i>systemd-analyze</i> 工具检测 <code>OnCalendar</code> 项是否填写正确，并计算下一次这个条件成立的时间。比如说可以用 <code>systemd-analyze calendar weekly</code> 或 <code>systemd-analyze calendar "Mon,Tue *-*-01..04 12:00:00"</code>。</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libfaketime">libfaketime</a></span> 包提供的 <code>faketime</code> 命令在测试各种情况时非常有用。</li>
+<li>特殊的事件表达式如 <code>daily</code> 和 <code>weekly</code> 表示 <i>特定的启动时间</i>，因此任何共享该日历事件的定时器将同时启动。如果该定时器的服务会竞争系统资源，那么共享该日历事件的定时器可能会引起系统性能下降。使用 <code>[Timer]</code> 部分中的 <code>RandomizedDelaySec</code> 选项可以通过随机推迟定时器启动来避免这个问题。参见 <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.timer"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.timer.5">systemd.timer(5)</a></span>。</li>
+<li>向 <code>[Timer]</code> 部分添加 <code>AccuracySec=1us</code> 选项可以避免原有默认的精确值 <i>1 分钟</i>造成的误差。参见 <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.timer"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.timer.5">systemd.timer(5)</a></span>。</li>
+</ul>
+</div>
+<h2>
+<span id=".E7.9E.AC.E6.80.81_.timer_.E5.8D.95.E5.85.83"></span><span class="mw-headline" id="瞬态_.timer_单元">瞬态 .timer 单元</span>
+</h2>
+<p>可以使用 <code>systemd-run</code> 创建一个瞬态 <code>.timer</code> 单元。即可以在不创建服务文件的情况下设置定时运行某个命令。比如说下面的命令可以在 30 秒钟后创建一个文件：
+</p>
+<pre># systemd-run --on-active=30 /bin/touch /tmp/foo
+</pre>
+<p>也可以建立指定一个已经存在但没有定义 timer 的服务文件。比如说，下面的命令会在 12 小时 30 分钟后启动名为 <code><i>someunit</i>.service</code> 的服务：
+</p>
+<pre># systemd-run --on-active="12h 30m" --unit <i>someunit</i>.service
+</pre>
+<p>更多信息和例子参见 <span class="plainlinks archwiki-template-man" title="$ man 1 systemd-run"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-run.1">systemd-run(1)</a></span>。
+</p>
 <h2>
 <span id=".E6.9B.BF.E4.BB.A3_cron"></span><span class="mw-headline" id="替代_cron">替代 cron</span>
 </h2>
-<p>尽管 <a href="../en/Cron.html" title="Cron">cron</a> 毋庸置疑是最有名的计划任务管理器， 但 <i>systemd</i> 定时器仍可以作为一个替代品。
+<p>尽管 <a href="../zh-CN/Cron.html" title="Cron (简体中文)">cron</a> 毋庸置疑是最有名的计划任务管理器，<i>systemd</i> 定时器仍可以作为一个替代品。
 </p>
 <h3>
 <span id=".E4.BC.98.E5.8A.BF"></span><span class="mw-headline" id="优势">优势</span>
@@ -162,28 +211,34 @@ WantedBy=timers.target</pre>
 </p>
 <ul>
 <li>任务可以简单地独立于他们的定时器启动，简化调试。</li>
-<li>每个任务可配置运行于特定的环境中（参见 <code>systemd.exec(5)</code> <a href="../en/Man_page.html" title="Man page">man page</a>）。</li>
+<li>每个任务可配置运行于特定的环境中（参见 <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.exec"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.exec.5">systemd.exec(5)</a></span>）。</li>
 <li>任务可以使用 <a href="../en/Cgroups.html" title="Cgroups">cgroups</a> 特性。</li>
 <li>任务可以配置依赖于其他 <i>systemd</i> 单元。</li>
-<li>任务记录于 <i>systemd</i> 日志，便于调试。</li>
+<li>任务会被记录于 <i>systemd</i> 日志，便于调试。</li>
 </ul>
 <h3>
 <span id=".E6.B3.A8.E6.84.8F.E4.BA.8B.E9.A1.B9"></span><span class="mw-headline" id="注意事项">注意事项</span>
 </h3>
+<p>有些可以用 cron 轻易做到的事情仅仅使用 timer 组件会比较难办：
+</p>
 <ul>
-<li>附注：使用 <i>systemd</i> 配置计划任务相比于在 crontab 中只需添加一行任务来说，你需要创建两个文件并运行几次 <code>systemctl</code> 命令。  <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-crontab-generator/">systemd-crontab-generator</a></span><sup><small>AUR</small></sup> 和 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-cron/">systemd-cron</a></span><sup><small>AUR</small></sup> 可以帮助你使用 crontab 来管理定时器服务。如果你喜欢 crontabs 只是因为它提供了查看所有计划任务的统一视图，<code>systemctl</code> 同样可以。参见 <a href="#%E7%AE%A1%E7%90%86">#管理</a>。</li>
-<li>邮件：目前还没有内置与 cron <code>MAILTO</code> 类似的任务失败时发送邮件的功能。 可以在每个服务文件中配置 <code>OnFailure=</code> 实现同样的功能。</li>
-<li>随机延时：目前没还有内置与 cron 类似的 <code>RANDOM_DELAY</code> 功能来指定一个数字用于定时器延时执行。（参见 <a rel="nofollow" class="external text" href="https://bugs.freedesktop.org/show_bug.cgi?id=82084">bug report</a>）。 你不想同时执行的服务必须手动设置它们的定时器。</li>
+<li>创建过程：相比于在 crontab 中只需添加一行任务，使用 <i>systemd</i> 配置计划任务需要创建两个文件并运行好几次 <code>systemctl</code> 命令。</li>
+<li>邮件：目前还没有内置与 cron <code>MAILTO</code> 类似的任务失败时发送邮件的功能。可以在每个服务文件中配置 <code>OnFailure=</code> 来实现同样的功能。</li>
 </ul>
+<p>另外， <a href="../zh-CN/a87ea26bff3744e8b00320e027759a76.html" title="Systemd (简体中文)/User (简体中文)">用户</a>定时器默认只会在用户登录时进行。但是，<a href="../zh-CN/a87ea26bff3744e8b00320e027759a76.html#%E9%9A%8F%E7%B3%BB%E7%BB%9F%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8_systemd_%E7%94%A8%E6%88%B7%E5%AE%9E%E4%BE%8B" title="Systemd (简体中文)/User (简体中文)">lingering</a> 允许在启动，且用户没有活动登录会话时激活。
+</p>
+<p><br>
+</p>
+<ul><li>随机延时：目前没还有内置与 cron 类似的 <code>RANDOM_DELAY</code> 功能来指定一个数字用于定时器延时执行。（参见 <a rel="nofollow" class="external text" href="https://bugs.freedesktop.org/show_bug.cgi?id=82084">bug report</a>）。 你不想同时执行的服务必须手动设置它们的定时器。</li></ul>
 <dl><dd><div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> <code>AccuracySec</code> 选项对于随机错开定时器执行时间是 <b>没有</b> 作用的，因为它"会在所有本地定时器单元间同步"  (<code>systemd.timer(5)</code>)。换句话说， <code>AccuracySec</code> 会以相同的量改变所有定时器激活时间。例如，所有 <code>OnCalendar=daily</code> 的定时器单元，指定 <code>AccuracySec=15m</code> 将同时在 00:00 到 00:15 触发相关的服务。</div></dd></dl>
 <h3>
 <span id=".E5.8F.91.E9.80.81.E9.82.AE.E4.BB.B6"></span><span class="mw-headline" id="发送邮件">发送邮件</span>
 </h3>
-<p>像 Cron 的 <code>MAILTO</code> 一样，也可以配置 systemd 在单元失效时发送一个电子邮件。首先，这需要两个文件：一个可执行文件用来发送邮件；一个 <i>.service</i> 文件启动这个可执行文件。在本例中，可执行文件只是一个调用 <code>sendmail</code> 的shell 脚本：
+<p>可以配置 systemd 在单元失败时发送电子邮件。Cron 的 <code>MAILTO</code> 会在任务向标准输出或标准错误输出时发送邮件，许多任务只在发生错误时输出。首先需要两个文件：一个用来发送邮件的可执行文件和一个用于启动这个可执行文件的 <i>.service</i> 文件。在本例中，可执行文件只是一个由提供 <code>smtp-forwarder</code> 的包中给出的调用 <code>sendmail</code> 的shell 脚本：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/local/bin/systemd-email</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/bash
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/sh
 
 /usr/bin/sendmail -t &lt;&lt;ERRMAIL
 To: $1
@@ -194,45 +249,49 @@ Content-Type: text/plain; charset=UTF-8
 
 $(systemctl status --full "$2")
 ERRMAIL</pre>
-<p>Whatever executable you use, it should probably take at least two arguments as this shell script does: the address to send to and the unit file to get the status of. The <i>.service</i> we create will pass these arguments:
+<p>不论你用什么可执行文件，应该都会像这个脚本一样接收至少两个参数：目标邮箱地址和用来获取状态的单元文件名。我们创建的 <i>.service</i> 文件会传递这些参数：
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/status-email-user1@.service</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/status_email_<i>user</i>@.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
-Description=status email for %I to user1
+Description=status email for %i to <i>user</i>
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/systemd-email user1@mailhost %i
+ExecStart=/usr/local/bin/systemd-email <i>address</i> %i
 User=nobody
-Group=systemd-journal
-</pre>
-<p>First notice that the unit to send email about is an instance parameter, so this one service can be used to send email for many other units. However the recipient is hard-coded (since unit templates can only take a single parameter) so you will need to create multiple services if you want to send emails to different sets of recipients. At this point you should test the service to verify that you can receive the emails:
+Group=systemd-journal</pre>
+<p>其中，<code><i>user</i></code> 是被通知的用户名，<code><i>address</i></code> 是该用户的邮件地址。尽管这个地址被硬编码在代码里，但是报告的单元文件会在实例参数中指定，因此可以作为许多其他单元的邮件服务端。此时你可以 <a href="../zh-CN/Systemd.html#%E4%BD%BF%E7%94%A8%E5%8D%95%E5%85%83" class="mw-redirect" title="启动">start</a> <code>status_email_<i>user</i>@dbus.service</code> 服务来检查你能否收信。
 </p>
-<pre># systemctl start status-email-user1@dbus.service</pre>
-<p>Then simply add <code>OnFailure=status-email-user1@%n.service</code> to the <code>[Unit]</code> section of any unit you want emails for. <code>%n</code> passes the unit's name to the template.
+<p>成功后，仅需 <a href="../zh-CN/Systemd.html#%E4%BF%AE%E6%94%B9%E7%8E%B0%E5%AD%98%E5%8D%95%E5%85%83%E6%96%87%E4%BB%B6" title="Systemd (简体中文)">编辑</a> 你需要发送失败邮件的服务，向 <code>[Unit]</code> 部分添加 <code>OnFailure=status_email_<i>user</i>@%n.service</code>。<code>%n</code> 会向模板传递单元的名字。
 </p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 
+<ul>
+<li>如果你根据 <a href="../en/SSMTP.html#Security" title="SSMTP">SSMTP#Security</a> 配置了 SSMTP 安全，<code>nobody</code> 用户会没有访问 <code>/etc/ssmtp/ssmtp.conf</code> 文件的权限，<code>systemctl start status_email_<i>user</i>@dbus.service</code> 命令就会失败。一个解决办法是使用 <code>root</code> 作为 <code>status_email_<i>user</i>@.service</code> 单元的执行者。</li>
+<li>如果你希望在你的邮件脚本中使用 <code>mail -s somelogs <i>address</i></code>，<code>mail</code> 会以 fork 的形式启动，systemd 会把在你的脚本退出时一并将这个进程结束掉。可以用 <code>mail -Ssendwait -s somelogs <i>address</i></code> 来让 mail 不以 fork 的形式启动。</li>
+</ul>
+</div>
 <h3>
 <span id=".E4.BD.BF.E7.94.A8_crontab"></span><span class="mw-headline" id="使用_crontab">使用 crontab</span>
 </h3>
-<p>Several of the caveats can be worked around by installing a package that parses a traditional crontab to configure the timers. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-crontab-generator/">systemd-crontab-generator</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-cron/">systemd-cron</a></span><sup><small>AUR</small></sup> from the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> are two such packages. These can provide the missing <code>MAILTO</code> and <code>RANDOM_DELAY</code> features.
+<p>有些注意事项中的部分可以通过安装一些将传统 crontab 项目翻译成 timers 配置的包来完成，例如<a href="../zh-CN/Arch_User_Repository.html" class="mw-redirect" title="AUR (简体中文)">AUR</a> 中的 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-crontab-generator/">systemd-crontab-generator</a></span><sup><small>AUR</small></sup> 和 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-cron/">systemd-cron</a></span><sup><small>AUR</small></sup> 包。他们也可以提供缺失的 <code>MAILTO</code> 特性。
 </p>
-<p>If you like crontabs just because they provide a unified view of all scheduled jobs, <code>systemctl</code> can provide this. See <a href="#Management">#Management</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>.
+<p>同样，与 crontab 一样，可以通过 <code>systemctl</code> 来获取一个统一的计划任务视图。参见 <a href="#%E7%AE%A1%E7%90%86">#管理</a>章节。
 </p>
 <h2>
 <span id=".E5.8F.82.E8.A7.81"></span><span class="mw-headline" id="参见">参见</span>
 </h2>
 <ul>
+<li><span class="plainlinks archwiki-template-man" title="$ man 5 systemd.timer"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.timer.5">systemd.timer(5)</a></span></li>
 <li>
-<a rel="nofollow" class="external text" href="https://www.freedesktop.org/software/systemd/man/systemd.timer.html">systemd.timer man page</a> on freedesktop.org</li>
-<li>
-<a rel="nofollow" class="external text" href="https://fedoraproject.org/wiki/Features/SystemdCalendarTimers">Fedora Project wiki page</a> on <i>systemd</i> calendar timers</li>
+<a rel="nofollow" class="external text" href="https://fedoraproject.org/wiki/Features/SystemdCalendarTimers">Fedora Project wiki page</a> <i>systemd</i> 的实时定时器</li>
 <li>
 <a rel="nofollow" class="external text" href="https://wiki.gentoo.org/wiki/Systemd#Timer_services">Gentoo wiki section</a> on <i>systemd</i> timer services</li>
 <li>
-<b>systemd-crontab-generator</b> — 一个从 crontab 和 anacrontab 文件生成 timers/services 文件的工具</li>
+<b>systemd-cron-next</b> — 一个从 crontab 和 anacrontab 文件生成 timers/services 文件的工具</li>
 </ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="https://github.com/kstep/systemd-crontab-generator">https://github.com/kstep/systemd-crontab-generator</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-crontab-generator/">systemd-crontab-generator</a></span><sup><small>AUR</small></sup>
+<a rel="nofollow" class="external free" href="https://github.com/systemd-cron/systemd-cron-next">https://github.com/systemd-cron/systemd-cron-next</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-cron-next/">systemd-cron-next</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
 <b>systemd-cron</b> — 提供 systemd 单元运行 cron 脚本；使用 <i>systemd-crontab-generator</i> 转换 crontabs</li></ul>
@@ -241,20 +300,16 @@ Group=systemd-journal
 </dd></dl>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:System_administration.html" title="Category:System administration (简体中文)">System administration (简体中文)</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Timers_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=638653">https://wiki.archlinux.org/index.php?title=Systemd_(简体中文)/Timers_(简体中文)&amp;oldid=638653</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Timers_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=653624">https://wiki.archlinux.org/index.php?title=Systemd_(简体中文)/Timers_(简体中文)&amp;oldid=653624</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 27 February 2021, at 10:26.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

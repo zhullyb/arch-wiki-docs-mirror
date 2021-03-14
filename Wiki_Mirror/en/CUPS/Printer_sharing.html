@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -193,7 +194,7 @@ Listen &lt;hostname&gt;:631
 </p>
 <p>If CUPS is started using socket activation, create a <a href="../../en/Systemd.html#Editing_provided_units" class="mw-redirect" title="Drop-in snippet">drop-in snippet</a> for <code>cups.socket</code> so that socket activation also works for remote connections:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/org.cups.cupsd.socket.d/override.conf</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/cups.socket.d/override.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Socket]
 ListenStream=631</pre>
 <h3><span class="mw-headline" id="Sharing_via_Samba">Sharing via Samba</span></h3>
@@ -232,7 +233,7 @@ printing = CUPS
     writable = no
     write list = root @adm @wheel <i>yourusername</i>
     valid users = root @adm @wheel <i>yourusername</i></pre>
-<p>Please note that this assumes configuration was made so that users must have a valid account to access the printer. To have a public printer, set <code>guest ok</code> to <code>yes</code>, and remove the <code>valid users</code> line. To add accounts, set up a regular GNU/Linux account and then set up a Samba password on the server. See <a href="../../en/Samba.html#User_Management" title="Samba">Samba#User Management</a>.
+<p>Please note that this assumes configuration was made so that users must have a valid account to access the printer. To have a public printer, set <code>guest ok</code> to <code>yes</code>, and remove the <code>valid users</code> line. To add accounts, set up a regular GNU/Linux account and then set up a Samba password on the server. See <a href="../../en/Samba.html#User_management" title="Samba">Samba#User management</a>.
 </p>
 <p>After this, <a href="../../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>smb.service</code> and <code>nmb.service</code>.
 </p>
@@ -241,7 +242,7 @@ printing = CUPS
 <h3><span class="mw-headline" id="Sharing_via_Line_Printer_Daemon_protocol">Sharing via Line Printer Daemon protocol</span></h3>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> <i>cups-lpd</i> does not perform any access control based on the settings in <code>/etc/cups/cupsd.conf</code>. Therefore, running <i>cups-lpd</i> on your server will allow any computer on your network (and perhaps the entire Internet) to print to your server.</div>
-<p><a href="../../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">Enable</a> and <a href="../../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>org.cups.cups-lpd.socket</code>.
+<p><a href="../../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">Enable</a> and <a href="../../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>cups-lpd.socket</code>.
 </p>
 <h2><span class="mw-headline" id="Remote_administration">Remote administration</span></h2>
 <p>Once the server is set up as described in <a href="#Printer_sharing">#Printer sharing</a>, it can also be configured so that it can be remotely administered. Add the allowed hosts to the <code>&lt;Location /admin&gt;</code> block in <code>/etc/cups/cupsd.conf</code>, using the same syntax as described in <a href="#Sharing_via_Internet_Printing_Protocol">#Sharing via Internet Printing Protocol</a>. Note that three levels of access can be granted:
@@ -325,8 +326,8 @@ Allow from @LOCAL
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=CUPS/Printer_sharing&amp;oldid=642183">https://wiki.archlinux.org/index.php?title=CUPS/Printer_sharing&amp;oldid=642183</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 23 November 2020, at 08:48.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=CUPS/Printer_sharing&amp;oldid=653371">https://wiki.archlinux.org/index.php?title=CUPS/Printer_sharing&amp;oldid=653371</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 25 February 2021, at 10:11.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

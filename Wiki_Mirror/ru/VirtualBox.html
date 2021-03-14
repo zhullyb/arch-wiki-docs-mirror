@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,14 +36,16 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Ссылки по теме</p>
 <ul>
+<li><a href="../en/VirtualBox/Install_Arch_Linux_as_a_guest.html" title="VirtualBox/Install Arch Linux as a guest">VirtualBox/Install Arch Linux as a guest</a></li>
 <li><a href="../ru/Category:Hypervisors.html" title="Category:Hypervisors (Русский)">Category:Hypervisors (Русский)</a></li>
 <li><a href="../en/PhpVirtualBox.html" title="PhpVirtualBox">PhpVirtualBox</a></li>
+<li><a href="../en/RemoteBox.html" title="RemoteBox">RemoteBox</a></li>
 <li><a href="../en/Moving_an_existing_install_into_(or_out_of)_a_virtual_machine.html" title="Moving an existing install into (or out of) a virtual machine">Moving an existing install into (or out of) a virtual machine</a></li>
 </ul>
 </div>
-<p><a rel="nofollow" class="external text" href="https://www.virtualbox.org">VirtualBox</a> — <a href="https://en.wikipedia.org/wiki/ru:%D0%93%D0%B8%D0%BF%D0%B5%D1%80%D0%B2%D0%B8%D0%B7%D0%BE%D1%80" class="extiw" title="wikipedia:ru:Гипервизор">гипервизор</a>, предназначенный для запуска операционных систем в специальной среде (виртуальной машине), которая работает в существующей операционной системе. VirtualBox постоянно развивается и периодически появляются новые возможности. Для запуска и управления виртуальными машинами может использоваться графический <a href="../ru/Qt.html" title="Qt (Русский)">Qt</a> интерфейс, а также можно не управлять ими или управлять с помощью <a href="https://en.wikipedia.org/wiki/ru:Simple_DirectMedia_Layer" class="extiw" title="wikipedia:ru:Simple DirectMedia Layer">SDL</a> утилит командной строки.
+<p><a rel="nofollow" class="external text" href="https://www.virtualbox.org">VirtualBox</a> — <a href="https://en.wikipedia.org/wiki/ru:%D0%93%D0%B8%D0%BF%D0%B5%D1%80%D0%B2%D0%B8%D0%B7%D0%BE%D1%80" class="extiw" title="wikipedia:ru:Гипервизор">гипервизор</a>, предназначенный для запуска операционных систем в специальной среде, называемой виртуальной машиной, поверх существующей операционной системы. VirtualBox постоянно развивается и внедряет новые возможности. Взаимодействовать с виртуальными машинами можно как через графический интерфейс на базе <a href="../ru/Qt.html" title="Qt (Русский)">Qt</a>, так и с помощью <a href="https://en.wikipedia.org/wiki/Headless_software" class="extiw" title="wikipedia:Headless software">headless</a>- и <a href="https://en.wikipedia.org/wiki/ru:Simple_DirectMedia_Layer" class="extiw" title="wikipedia:ru:Simple DirectMedia Layer">SDL</a>-утилит командной строки.
 </p>
-<p>Чтобы интегрировать в гостевую систему функции хост системы, такие как общие папки и общий буфер обмена, видео ускорение и режим бесшовной интеграции окон, для некоторых гостевых операционных систем предоставляются <i>дополнения гостевой ОС</i>.
+<p>Для некоторых гостевых ОС были разработаны <i>гостевые дополнения</i> (guest additions), которые позволяют частично совмещать функциональность хостовой и гостевой операционных систем — совместный доступ к каталогам и буферу обмена, ускорение видео и бесшовная интеграция окон.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -51,330 +54,245 @@
 </div>
 <ul>
 <li class="toclevel-1 tocsection-1">
-<a href="#%D0%9F%D0%BE%D1%88%D0%B0%D0%B3%D0%BE%D0%B2%D0%B0%D1%8F_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%BD%D0%B0_%D1%85%D0%BE%D1%81%D1%82-%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80_%D0%BF%D0%BE%D0%B4_%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%D0%BC_Arch_Linux"><span class="tocnumber">1</span> <span class="toctext">Пошаговая установка на хост-компьютер под управлением Arch Linux</span></a>
+<a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0"><span class="tocnumber">1</span> <span class="toctext">Установка</span></a>
 <ul>
-<li class="toclevel-2 tocsection-2"><a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B1%D0%B0%D0%B7%D0%BE%D0%B2%D1%8B%D1%85_%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D0%BE%D0%B2"><span class="tocnumber">1.1</span> <span class="toctext">Установка базовых пакетов</span></a></li>
-<li class="toclevel-2 tocsection-3">
-<a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B5%D0%B9_%D1%8F%D0%B4%D1%80%D0%B0_VirtualBox"><span class="tocnumber">1.2</span> <span class="toctext">Установка модулей ядра VirtualBox</span></a>
-<ul>
-<li class="toclevel-3 tocsection-4"><a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%80%D0%B0%D0%B7%D0%BB%D0%B8%D1%87%D0%BD%D1%8B%D1%85_%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D0%B9_%D1%8F%D0%B4%D1%80%D0%B0_Linux_%D0%BD%D0%B0_%D1%85%D0%BE%D1%81%D1%82-%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B5"><span class="tocnumber">1.2.1</span> <span class="toctext">Использование различных версий ядра Linux на хост-машине</span></a></li>
-<li class="toclevel-3 tocsection-5"><a href="#%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D1%8F%D0%B4%D1%80%D0%B0_Linux_%D0%BD%D0%B0_%D1%85%D0%BE%D1%81%D1%82-%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B5"><span class="tocnumber">1.2.2</span> <span class="toctext">Обновление ядра Linux на хост-машине</span></a></li>
-<li class="toclevel-3 tocsection-6"><a href="#%D0%A1%D1%82%D0%BE%D1%80%D0%BE%D0%BD%D0%BD%D0%B5%D0%B5_%D1%8F%D0%B4%D1%80%D0%BE_%D0%BD%D0%B0_%D1%85%D0%BE%D1%81%D1%82-%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B5"><span class="tocnumber">1.2.3</span> <span class="toctext">Стороннее ядро на хост-машине</span></a></li>
+<li class="toclevel-2 tocsection-2"><a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D1%85_%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D0%BE%D0%B2"><span class="tocnumber">1.1</span> <span class="toctext">Установка основных пакетов</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#%D0%9F%D0%BE%D0%B4%D0%BF%D0%B8%D1%81%D1%8B%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B5%D0%B9"><span class="tocnumber">1.2</span> <span class="toctext">Подписывание модулей</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#%D0%97%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B5%D0%B9_%D1%8F%D0%B4%D1%80%D0%B0_%D0%B4%D0%BB%D1%8F_VirtualBox"><span class="tocnumber">1.3</span> <span class="toctext">Загрузка модулей ядра для VirtualBox</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#%D0%94%D0%BE%D1%81%D1%82%D1%83%D0%BF_%D0%BA_USB-%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0%D0%BC_%D1%85%D0%BE%D1%81%D1%82%D0%B0_%D0%B8%D0%B7_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1"><span class="tocnumber">1.4</span> <span class="toctext">Доступ к USB-устройствам хоста из гостевой ОС</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#%D0%94%D0%B8%D1%81%D0%BA_%D1%81_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D1%8B%D0%BC%D0%B8_%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%D0%BC%D0%B8"><span class="tocnumber">1.5</span> <span class="toctext">Диск с гостевыми дополнениями</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#%D0%A0%D0%B0%D1%81%D1%88%D0%B8%D1%80%D0%B5%D0%BD%D0%B8%D1%8F"><span class="tocnumber">1.6</span> <span class="toctext">Расширения</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D1%8B"><span class="tocnumber">1.7</span> <span class="toctext">Интерфейсы</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-7"><a href="#%D0%97%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B5%D0%B9_%D1%8F%D0%B4%D1%80%D0%B0_VirtualBox"><span class="tocnumber">1.3</span> <span class="toctext">Загрузка модулей ядра VirtualBox</span></a></li>
-<li class="toclevel-2 tocsection-8"><a href="#%D0%94%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B8_VirtualBox"><span class="tocnumber">1.4</span> <span class="toctext">Дополнительные модули VirtualBox</span></a></li>
-<li class="toclevel-2 tocsection-9"><a href="#%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D0%B5%D0%B9_%D0%B2_%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%83_vboxusers"><span class="tocnumber">1.5</span> <span class="toctext">Добавление пользователей в группу vboxusers</span></a></li>
-<li class="toclevel-2 tocsection-10"><a href="#%D0%9E%D0%B1%D1%80%D0%B0%D0%B7_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0_%D1%81_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D1%8B%D0%BC%D0%B8_%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%D0%BC%D0%B8"><span class="tocnumber">1.6</span> <span class="toctext">Образ диска с гостевыми дополнениями</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#%D0%9F%D0%B0%D0%BA%D0%B5%D1%82_%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9"><span class="tocnumber">1.7</span> <span class="toctext">Пакет дополнений</span></a></li>
-<li class="toclevel-2 tocsection-12"><a href="#%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B2_%D1%84%D1%80%D0%BE%D0%BD%D1%82-%D1%8D%D0%BD%D0%B4%D0%B5"><span class="tocnumber">1.8</span> <span class="toctext">Правильное использование в фронт-энде</span></a></li>
-</ul>
-</li>
-<li class="toclevel-1 tocsection-13">
+<li class="toclevel-1 tocsection-9">
 <a href="#%D0%9F%D0%BE%D1%88%D0%B0%D0%B3%D0%BE%D0%B2%D0%B0%D1%8F_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_Arch_Linux_%D0%BA%D0%B0%D0%BA_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1"><span class="tocnumber">2</span> <span class="toctext">Пошаговая установка Arch Linux как гостевой ОС</span></a>
 <ul>
-<li class="toclevel-2 tocsection-14">
+<li class="toclevel-2 tocsection-10">
 <a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_Arch_Linux_%D0%B2_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%83%D1%8E_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%83"><span class="tocnumber">2.1</span> <span class="toctext">Установка Arch Linux в виртуальную машину</span></a>
 <ul>
-<li class="toclevel-3 tocsection-15"><a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B2_%D1%80%D0%B5%D0%B6%D0%B8%D0%BC%D0%B5_EFI"><span class="tocnumber">2.1.1</span> <span class="toctext">Установка в режиме EFI</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B2_%D1%80%D0%B5%D0%B6%D0%B8%D0%BC%D0%B5_EFI"><span class="tocnumber">2.1.1</span> <span class="toctext">Установка в режиме EFI</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-16"><a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D1%8B%D1%85_%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9"><span class="tocnumber">2.2</span> <span class="toctext">Установка гостевых дополнений</span></a></li>
-<li class="toclevel-2 tocsection-17">
+<li class="toclevel-2 tocsection-12"><a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D1%8B%D1%85_%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9"><span class="tocnumber">2.2</span> <span class="toctext">Установка гостевых дополнений</span></a></li>
+<li class="toclevel-2 tocsection-13">
 <a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D1%8B%D1%85_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B5%D0%B9_%D1%8F%D0%B4%D1%80%D0%B0_VirtualBox"><span class="tocnumber">2.3</span> <span class="toctext">Установка гостевых модулей ядра VirtualBox</span></a>
 <ul>
-<li class="toclevel-3 tocsection-18"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1_%D1%81_%D0%BE%D1%84%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%BC_%D1%8F%D0%B4%D1%80%D0%BE%D0%BC"><span class="tocnumber">2.3.1</span> <span class="toctext">Запуск гостевой ОС с официальным ядром</span></a></li>
-<li class="toclevel-3 tocsection-19"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1_%D1%81%D0%BE_%D1%81%D1%82%D0%BE%D1%80%D0%BE%D0%BD%D0%BD%D0%B8%D0%BC_%D1%8F%D0%B4%D1%80%D0%BE%D0%BC"><span class="tocnumber">2.3.2</span> <span class="toctext">Запуск гостевой ОС со сторонним ядром</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1_%D1%81_%D0%BE%D1%84%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%BC_%D1%8F%D0%B4%D1%80%D0%BE%D0%BC"><span class="tocnumber">2.3.1</span> <span class="toctext">Запуск гостевой ОС с официальным ядром</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1_%D1%81%D0%BE_%D1%81%D1%82%D0%BE%D1%80%D0%BE%D0%BD%D0%BD%D0%B8%D0%BC_%D1%8F%D0%B4%D1%80%D0%BE%D0%BC"><span class="tocnumber">2.3.2</span> <span class="toctext">Запуск гостевой ОС со сторонним ядром</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-20"><a href="#%D0%97%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B5%D0%B9_%D1%8F%D0%B4%D1%80%D0%B0_VirtualBox_2"><span class="tocnumber">2.4</span> <span class="toctext">Загрузка модулей ядра VirtualBox</span></a></li>
-<li class="toclevel-2 tocsection-21"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D1%8B%D1%85_%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BE%D0%B2_VirtualBox"><span class="tocnumber">2.5</span> <span class="toctext">Запуск гостевых сервисов VirtualBox</span></a></li>
-<li class="toclevel-2 tocsection-22">
+<li class="toclevel-2 tocsection-16"><a href="#%D0%97%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B5%D0%B9_%D1%8F%D0%B4%D1%80%D0%B0_VirtualBox"><span class="tocnumber">2.4</span> <span class="toctext">Загрузка модулей ядра VirtualBox</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D1%8B%D1%85_%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BE%D0%B2_VirtualBox"><span class="tocnumber">2.5</span> <span class="toctext">Запуск гостевых сервисов VirtualBox</span></a></li>
+<li class="toclevel-2 tocsection-18">
 <a href="#%D0%A0%D0%B0%D1%81%D1%88%D0%B0%D1%80%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B4%D0%B8%D1%80%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%B8%D0%B9"><span class="tocnumber">2.6</span> <span class="toctext">Расшаривание директорий</span></a>
 <ul>
-<li class="toclevel-3 tocsection-23"><a href="#%D0%A0%D1%83%D1%87%D0%BD%D0%BE%D0%B5_%D0%BC%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"><span class="tocnumber">2.6.1</span> <span class="toctext">Ручное монтирование</span></a></li>
-<li class="toclevel-3 tocsection-24"><a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"><span class="tocnumber">2.6.2</span> <span class="toctext">Автомонтирование</span></a></li>
-<li class="toclevel-3 tocsection-25"><a href="#%D0%9C%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%B8_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B5"><span class="tocnumber">2.6.3</span> <span class="toctext">Монтирование при загрузке</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="#%D0%A0%D1%83%D1%87%D0%BD%D0%BE%D0%B5_%D0%BC%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"><span class="tocnumber">2.6.1</span> <span class="toctext">Ручное монтирование</span></a></li>
+<li class="toclevel-3 tocsection-20"><a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"><span class="tocnumber">2.6.2</span> <span class="toctext">Автомонтирование</span></a></li>
+<li class="toclevel-3 tocsection-21"><a href="#%D0%9C%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%B8_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B5"><span class="tocnumber">2.6.3</span> <span class="toctext">Монтирование при загрузке</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-26">
+<li class="toclevel-1 tocsection-22">
 <a href="#%D0%98%D0%BC%D0%BF%D0%BE%D1%80%D1%82/%D1%8D%D0%BA%D1%81%D0%BF%D0%BE%D1%80%D1%82_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD_VirtualBox_%D0%B2/%D0%B8%D0%B7_%D0%B4%D1%80%D1%83%D0%B3%D0%B8%D1%85_%D0%B3%D0%B8%D0%BF%D0%B5%D1%80%D0%B2%D0%B8%D0%B7%D0%BE%D1%80%D0%BE%D0%B2"><span class="tocnumber">3</span> <span class="toctext">Импорт/экспорт виртуальных машин VirtualBox в/из других гипервизоров</span></a>
 <ul>
-<li class="toclevel-2 tocsection-27"><a href="#%D0%A3%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1"><span class="tocnumber">3.1</span> <span class="toctext">Удаление дополнений гостевой ОС</span></a></li>
-<li class="toclevel-2 tocsection-28">
+<li class="toclevel-2 tocsection-23"><a href="#%D0%A3%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1"><span class="tocnumber">3.1</span> <span class="toctext">Удаление дополнений гостевой ОС</span></a></li>
+<li class="toclevel-2 tocsection-24">
 <a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE_%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B0_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0"><span class="tocnumber">3.2</span> <span class="toctext">Использование правильного формата виртуального диска</span></a>
 <ul>
-<li class="toclevel-3 tocsection-29"><a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5_%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B"><span class="tocnumber">3.2.1</span> <span class="toctext">Автоматические инструменты</span></a></li>
-<li class="toclevel-3 tocsection-30"><a href="#%D0%A0%D1%83%D1%87%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%B5%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"><span class="tocnumber">3.2.2</span> <span class="toctext">Ручное преобразование</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5_%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B"><span class="tocnumber">3.2.1</span> <span class="toctext">Автоматические инструменты</span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#%D0%A0%D1%83%D1%87%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%B5%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"><span class="tocnumber">3.2.2</span> <span class="toctext">Ручное преобразование</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-31"><a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D0%B8_VM_%D0%B4%D0%BB%D1%8F_%D0%B3%D0%B8%D0%BF%D0%B5%D1%80%D0%B2%D0%B8%D0%B7%D0%BE%D1%80%D0%B0"><span class="tocnumber">3.3</span> <span class="toctext">Создание конфигурации VM для гипервизора</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D0%B8_VM_%D0%B4%D0%BB%D1%8F_%D0%B3%D0%B8%D0%BF%D0%B5%D1%80%D0%B2%D0%B8%D0%B7%D0%BE%D1%80%D0%B0"><span class="tocnumber">3.3</span> <span class="toctext">Создание конфигурации VM для гипервизора</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-32">
+<li class="toclevel-1 tocsection-28">
 <a href="#%D0%A3%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%BC%D0%B8_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0%D0%BC%D0%B8"><span class="tocnumber">4</span> <span class="toctext">Управление виртуальными дисками</span></a>
 <ul>
-<li class="toclevel-2 tocsection-33"><a href="#%D0%A4%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D1%8B,_%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%D1%8B%D0%B5_VirtualBox"><span class="tocnumber">4.1</span> <span class="toctext">Форматы, поддерживаемые VirtualBox</span></a></li>
-<li class="toclevel-2 tocsection-34">
+<li class="toclevel-2 tocsection-29"><a href="#%D0%A4%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D1%8B,_%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%D1%8B%D0%B5_VirtualBox"><span class="tocnumber">4.1</span> <span class="toctext">Форматы, поддерживаемые VirtualBox</span></a></li>
+<li class="toclevel-2 tocsection-30">
 <a href="#%D0%9F%D1%80%D0%B5%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B4%D0%B8%D1%81%D0%BA%D0%BE%D0%B2_%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D1%85_%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%BE%D0%B2"><span class="tocnumber">4.2</span> <span class="toctext">Преобразование виртуальных дисков разных форматов</span></a>
 <ul>
-<li class="toclevel-3 tocsection-35"><a href="#VMDK_%D0%B2_VDI_%D0%B8_VDI_%D0%B2_VMDK"><span class="tocnumber">4.2.1</span> <span class="toctext">VMDK в VDI и VDI в VMDK</span></a></li>
-<li class="toclevel-3 tocsection-36"><a href="#VHD_%D0%B2_VDI_%D0%B8_VDI_%D0%B2_VDH"><span class="tocnumber">4.2.2</span> <span class="toctext">VHD в VDI и VDI в VDH</span></a></li>
-<li class="toclevel-3 tocsection-37"><a href="#QCOW2_%D0%B2_VDI_%D0%B8_VDI_%D0%B2_QCOW2"><span class="tocnumber">4.2.3</span> <span class="toctext">QCOW2 в VDI и VDI в QCOW2</span></a></li>
+<li class="toclevel-3 tocsection-31"><a href="#VMDK_%D0%B2_VDI_%D0%B8_VDI_%D0%B2_VMDK"><span class="tocnumber">4.2.1</span> <span class="toctext">VMDK в VDI и VDI в VMDK</span></a></li>
+<li class="toclevel-3 tocsection-32"><a href="#VHD_%D0%B2_VDI_%D0%B8_VDI_%D0%B2_VDH"><span class="tocnumber">4.2.2</span> <span class="toctext">VHD в VDI и VDI в VDH</span></a></li>
+<li class="toclevel-3 tocsection-33"><a href="#QCOW2_%D0%B2_VDI_%D0%B8_VDI_%D0%B2_QCOW2"><span class="tocnumber">4.2.3</span> <span class="toctext">QCOW2 в VDI и VDI в QCOW2</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-38">
+<li class="toclevel-2 tocsection-34">
 <a href="#%D0%9C%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B4%D0%B8%D1%81%D0%BA%D0%BE%D0%B2"><span class="tocnumber">4.3</span> <span class="toctext">Монтирование виртуальных дисков</span></a>
 <ul>
-<li class="toclevel-3 tocsection-39"><a href="#VDI"><span class="tocnumber">4.3.1</span> <span class="toctext">VDI</span></a></li>
+<li class="toclevel-3 tocsection-35"><a href="#VDI"><span class="tocnumber">4.3.1</span> <span class="toctext">VDI</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-40"><a href="#%D0%A1%D0%B6%D0%B0%D1%82%D0%B8%D0%B5_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B4%D0%B8%D1%81%D0%BA%D0%BE%D0%B2"><span class="tocnumber">4.4</span> <span class="toctext">Сжатие виртуальных дисков</span></a></li>
-<li class="toclevel-2 tocsection-41"><a href="#%D0%A3%D0%B2%D0%B5%D0%BB%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D0%B0_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B4%D0%B8%D1%81%D0%BA%D0%BE%D0%B2"><span class="tocnumber">4.5</span> <span class="toctext">Увеличение размера виртуальных дисков</span></a></li>
-<li class="toclevel-2 tocsection-42"><a href="#%D0%97%D0%B0%D0%BC%D0%B5%D0%BD%D0%B0_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0_%D0%B8%D0%B7_%D1%84%D0%B0%D0%B9%D0%BB%D0%B0_.vbox_%D0%B2%D1%80%D1%83%D1%87%D0%BD%D1%83%D1%8E"><span class="tocnumber">4.6</span> <span class="toctext">Замена виртуального диска из файла .vbox вручную</span></a></li>
-<li class="toclevel-2 tocsection-43"><a href="#%D0%9A%D0%BB%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0_%D0%B8_%D0%BD%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B5%D0%BC%D1%83_%D0%BD%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE_UUID"><span class="tocnumber">4.7</span> <span class="toctext">Клонирование виртуального диска и назначение ему нового UUID</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#%D0%A1%D0%B6%D0%B0%D1%82%D0%B8%D0%B5_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B4%D0%B8%D1%81%D0%BA%D0%BE%D0%B2"><span class="tocnumber">4.4</span> <span class="toctext">Сжатие виртуальных дисков</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#%D0%A3%D0%B2%D0%B5%D0%BB%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D0%B0_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B4%D0%B8%D1%81%D0%BA%D0%BE%D0%B2"><span class="tocnumber">4.5</span> <span class="toctext">Увеличение размера виртуальных дисков</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#%D0%97%D0%B0%D0%BC%D0%B5%D0%BD%D0%B0_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0_%D0%B8%D0%B7_%D1%84%D0%B0%D0%B9%D0%BB%D0%B0_.vbox_%D0%B2%D1%80%D1%83%D1%87%D0%BD%D1%83%D1%8E"><span class="tocnumber">4.6</span> <span class="toctext">Замена виртуального диска из файла .vbox вручную</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#%D0%9A%D0%BB%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0_%D0%B8_%D0%BD%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B5%D0%BC%D1%83_%D0%BD%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE_UUID"><span class="tocnumber">4.7</span> <span class="toctext">Клонирование виртуального диска и назначение ему нового UUID</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-44">
+<li class="toclevel-1 tocsection-40">
 <a href="#%D0%A0%D0%B0%D1%81%D1%88%D0%B8%D1%80%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F_%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0"><span class="tocnumber">5</span> <span class="toctext">Расширенная настройка</span></a>
 <ul>
-<li class="toclevel-2 tocsection-45">
+<li class="toclevel-2 tocsection-41">
 <a href="#%D0%A3%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%D0%BE%D0%BC_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%8B"><span class="tocnumber">5.1</span> <span class="toctext">Управление запуском виртуальной машины</span></a>
 <ul>
-<li class="toclevel-3 tocsection-46"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD_%D0%BA%D0%B0%D0%BA_%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%B0_systemd"><span class="tocnumber">5.1.1</span> <span class="toctext">Запуск виртуальный машин как сервиса systemd</span></a></li>
-<li class="toclevel-3 tocsection-47"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%8B_%D0%BF%D0%BE_%D0%B3%D0%BE%D1%80%D1%8F%D1%87%D0%B5%D0%B9_%D0%BA%D0%BB%D0%B0%D0%B2%D0%B8%D1%88%D0%B5"><span class="tocnumber">5.1.2</span> <span class="toctext">Запуск виртуальной машины по горячей клавише</span></a></li>
+<li class="toclevel-3 tocsection-42"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD_%D0%BA%D0%B0%D0%BA_%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%B0_systemd"><span class="tocnumber">5.1.1</span> <span class="toctext">Запуск виртуальный машин как сервиса systemd</span></a></li>
+<li class="toclevel-3 tocsection-43"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%8B_%D0%BF%D0%BE_%D0%B3%D0%BE%D1%80%D1%8F%D1%87%D0%B5%D0%B9_%D0%BA%D0%BB%D0%B0%D0%B2%D0%B8%D1%88%D0%B5"><span class="tocnumber">5.1.2</span> <span class="toctext">Запуск виртуальной машины по горячей клавише</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-48">
+<li class="toclevel-2 tocsection-44">
 <a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BA%D0%BE%D0%BD%D0%BA%D1%80%D0%B5%D1%82%D0%BD%D1%8B%D1%85_%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2_%D0%B2_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B5"><span class="tocnumber">5.2</span> <span class="toctext">Использование конкретных устройств в виртуальной машине</span></a>
 <ul>
-<li class="toclevel-3 tocsection-49"><a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_USB_%D0%B2%D0%B5%D0%B1-%D0%BA%D0%B0%D0%BC%D0%B5%D1%80%D1%8B/%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%84%D0%BE%D0%BD%D0%B0"><span class="tocnumber">5.2.1</span> <span class="toctext">Использование USB веб-камеры/микрофона</span></a></li>
-<li class="toclevel-3 tocsection-50"><a href="#%D0%9E%D0%B1%D0%BD%D0%B0%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B5%D0%B1-%D0%BA%D0%B0%D0%BC%D0%B5%D1%80_%D0%B8_%D0%BF%D1%80%D0%BE%D1%87%D0%B8%D1%85_USB_%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2"><span class="tocnumber">5.2.2</span> <span class="toctext">Обнаружение веб-камер и прочих USB устройств</span></a></li>
+<li class="toclevel-3 tocsection-45"><a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_USB_%D0%B2%D0%B5%D0%B1-%D0%BA%D0%B0%D0%BC%D0%B5%D1%80%D1%8B/%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%84%D0%BE%D0%BD%D0%B0"><span class="tocnumber">5.2.1</span> <span class="toctext">Использование USB веб-камеры/микрофона</span></a></li>
+<li class="toclevel-3 tocsection-46"><a href="#%D0%9E%D0%B1%D0%BD%D0%B0%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B5%D0%B1-%D0%BA%D0%B0%D0%BC%D0%B5%D1%80_%D0%B8_%D0%BF%D1%80%D0%BE%D1%87%D0%B8%D1%85_USB_%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2"><span class="tocnumber">5.2.2</span> <span class="toctext">Обнаружение веб-камер и прочих USB устройств</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-51"><a href="#%D0%94%D0%BE%D1%81%D1%82%D1%83%D0%BF_%D0%BA_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%BC%D1%83_%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%83"><span class="tocnumber">5.3</span> <span class="toctext">Доступ к гостевому серверу</span></a></li>
-<li class="toclevel-2 tocsection-52"><a href="#D3D_%D1%83%D1%81%D0%BA%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_Windows"><span class="tocnumber">5.4</span> <span class="toctext">D3D ускорение в гостевой Windows</span></a></li>
-<li class="toclevel-2 tocsection-53"><a href="#VirtualBox_c_USB-%D0%BA%D0%BB%D1%8E%D1%87%D0%BE%D0%BC"><span class="tocnumber">5.5</span> <span class="toctext">VirtualBox c USB-ключом</span></a></li>
-<li class="toclevel-2 tocsection-54">
+<li class="toclevel-2 tocsection-47"><a href="#%D0%94%D0%BE%D1%81%D1%82%D1%83%D0%BF_%D0%BA_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%BC%D1%83_%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%83"><span class="tocnumber">5.3</span> <span class="toctext">Доступ к гостевому серверу</span></a></li>
+<li class="toclevel-2 tocsection-48"><a href="#D3D_%D1%83%D1%81%D0%BA%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_Windows"><span class="tocnumber">5.4</span> <span class="toctext">D3D ускорение в гостевой Windows</span></a></li>
+<li class="toclevel-2 tocsection-49"><a href="#VirtualBox_c_USB-%D0%BA%D0%BB%D1%8E%D1%87%D0%BE%D0%BC"><span class="tocnumber">5.5</span> <span class="toctext">VirtualBox c USB-ключом</span></a></li>
+<li class="toclevel-2 tocsection-50">
 <a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_Arch_Linux_%D0%B2%D0%BD%D1%83%D1%82%D1%80%D0%B8_VirtualBox"><span class="tocnumber">5.6</span> <span class="toctext">Запуск установленного Arch Linux внутри VirtualBox</span></a>
 <ul>
-<li class="toclevel-3 tocsection-55"><a href="#%D0%A3%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D1%81%D1%8C,_%D1%87%D1%82%D0%BE_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0_%D0%BD%D0%B0%D0%B8%D0%BC%D0%B5%D0%BD%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F_%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2_%D0%BD%D0%B5_%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D1%8F%D0%B5%D1%82%D1%81%D1%8F"><span class="tocnumber">5.6.1</span> <span class="toctext">Убедитесь, что система наименования разделов не изменяется</span></a></li>
-<li class="toclevel-3 tocsection-56"><a href="#%D0%A3%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D1%81%D1%8C_%D0%B2_%D0%BA%D0%BE%D1%80%D1%80%D0%B5%D0%BA%D1%82%D0%BD%D0%BE%D1%81%D1%82%D0%B8_%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%B0_mkinitcpio"><span class="tocnumber">5.6.2</span> <span class="toctext">Убедитесь в корректности образа mkinitcpio</span></a></li>
-<li class="toclevel-3 tocsection-57">
+<li class="toclevel-3 tocsection-51"><a href="#%D0%A3%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D1%81%D1%8C,_%D1%87%D1%82%D0%BE_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0_%D0%BD%D0%B0%D0%B8%D0%BC%D0%B5%D0%BD%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F_%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2_%D0%BD%D0%B5_%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D1%8F%D0%B5%D1%82%D1%81%D1%8F"><span class="tocnumber">5.6.1</span> <span class="toctext">Убедитесь, что система наименования разделов не изменяется</span></a></li>
+<li class="toclevel-3 tocsection-52"><a href="#%D0%A3%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D1%81%D1%8C_%D0%B2_%D0%BA%D0%BE%D1%80%D1%80%D0%B5%D0%BA%D1%82%D0%BD%D0%BE%D1%81%D1%82%D0%B8_%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%B0_mkinitcpio"><span class="tocnumber">5.6.2</span> <span class="toctext">Убедитесь в корректности образа mkinitcpio</span></a></li>
+<li class="toclevel-3 tocsection-53">
 <a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D0%B8_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%8B_%D0%B4%D0%BB%D1%8F_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8_%D1%81_%D1%84%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%B4%D0%B8%D1%81%D0%BA%D0%B0"><span class="tocnumber">5.6.3</span> <span class="toctext">Создание конфигурации виртуальной машины для загрузки с физического диска</span></a>
 <ul>
-<li class="toclevel-4 tocsection-58"><a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%B9%D1%82%D0%B5_%D0%BF%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9(raw)_%D0%BE%D0%B1%D1%80%D0%B0%D0%B7_.vmdk"><span class="tocnumber">5.6.3.1</span> <span class="toctext">Создайте потоковый(raw) образ .vmdk</span></a></li>
-<li class="toclevel-4 tocsection-59"><a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D0%B0_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D0%B8_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%8B"><span class="tocnumber">5.6.3.2</span> <span class="toctext">Создание файла конфигурации виртуальной машины</span></a></li>
+<li class="toclevel-4 tocsection-54"><a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%B9%D1%82%D0%B5_%D0%BF%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9(raw)_%D0%BE%D0%B1%D1%80%D0%B0%D0%B7_.vmdk"><span class="tocnumber">5.6.3.1</span> <span class="toctext">Создайте потоковый(raw) образ .vmdk</span></a></li>
+<li class="toclevel-4 tocsection-55"><a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D0%B0_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D0%B8_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%8B"><span class="tocnumber">5.6.3.2</span> <span class="toctext">Создание файла конфигурации виртуальной машины</span></a></li>
 </ul>
 </li>
-<li class="toclevel-3 tocsection-60"><a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1"><span class="tocnumber">5.6.4</span> <span class="toctext">Установка дополнений гостевой ОС</span></a></li>
+<li class="toclevel-3 tocsection-56"><a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1"><span class="tocnumber">5.6.4</span> <span class="toctext">Установка дополнений гостевой ОС</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-61"><a href="#%D0%A4%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B_Arch_Linux_%D0%B8%D0%B7_VirtualBox"><span class="tocnumber">5.7</span> <span class="toctext">Физическая установка системы Arch Linux из VirtualBox</span></a></li>
-<li class="toclevel-2 tocsection-62">
+<li class="toclevel-2 tocsection-57"><a href="#%D0%A4%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B_Arch_Linux_%D0%B8%D0%B7_VirtualBox"><span class="tocnumber">5.7</span> <span class="toctext">Физическая установка системы Arch Linux из VirtualBox</span></a></li>
+<li class="toclevel-2 tocsection-58">
 <a href="#%D0%9F%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D0%B5_%D1%84%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_Windows_%D0%B2_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%83%D1%8E_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%83"><span class="tocnumber">5.8</span> <span class="toctext">Перемещение физически установленного Windows в виртуальную машину</span></a>
 <ul>
-<li class="toclevel-3 tocsection-63"><a href="#%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_%D0%B2_Windows"><span class="tocnumber">5.8.1</span> <span class="toctext">Задачи в Windows</span></a></li>
-<li class="toclevel-3 tocsection-64"><a href="#%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_%D0%B2_GNU/Linux"><span class="tocnumber">5.8.2</span> <span class="toctext">Задачи в GNU/Linux</span></a></li>
-<li class="toclevel-3 tocsection-65"><a href="#%D0%98%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_MBR_%D0%B8_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D1%87%D0%B8%D0%BA%D0%B0_Microsoft"><span class="tocnumber">5.8.3</span> <span class="toctext">Исправление MBR и загрузчика Microsoft</span></a></li>
-<li class="toclevel-3 tocsection-66"><a href="#%D0%98%D0%B7%D0%B2%D0%B5%D1%81%D1%82%D0%BD%D1%8B%D0%B5_%D0%BE%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D1%8F"><span class="tocnumber">5.8.4</span> <span class="toctext">Известные ограничения</span></a></li>
+<li class="toclevel-3 tocsection-59"><a href="#%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_%D0%B2_Windows"><span class="tocnumber">5.8.1</span> <span class="toctext">Задачи в Windows</span></a></li>
+<li class="toclevel-3 tocsection-60"><a href="#%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_%D0%B2_GNU/Linux"><span class="tocnumber">5.8.2</span> <span class="toctext">Задачи в GNU/Linux</span></a></li>
+<li class="toclevel-3 tocsection-61"><a href="#%D0%98%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_MBR_%D0%B8_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D1%87%D0%B8%D0%BA%D0%B0_Microsoft"><span class="tocnumber">5.8.3</span> <span class="toctext">Исправление MBR и загрузчика Microsoft</span></a></li>
+<li class="toclevel-3 tocsection-62"><a href="#%D0%98%D0%B7%D0%B2%D0%B5%D1%81%D1%82%D0%BD%D1%8B%D0%B5_%D0%BE%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D1%8F"><span class="tocnumber">5.8.4</span> <span class="toctext">Известные ограничения</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-67">
+<li class="toclevel-1 tocsection-63">
 <a href="#%D0%92%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D1%8B%D0%B5_%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D1%8B"><span class="tocnumber">6</span> <span class="toctext">Возможные проблемы</span></a>
 <ul>
-<li class="toclevel-2 tocsection-68"><a href="#VERR_ACCESS_DENIED"><span class="tocnumber">6.1</span> <span class="toctext">VERR_ACCESS_DENIED</span></a></li>
-<li class="toclevel-2 tocsection-69"><a href="#%D0%9A%D0%BB%D0%B0%D0%B2%D0%B8%D0%B0%D1%82%D1%83%D1%80%D0%B0_%D0%B8_%D0%BC%D1%8B%D1%88%D0%BA%D0%B0_%D0%B7%D0%B0%D0%B1%D0%BB%D0%BE%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D1%8B_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%BE%D0%B9"><span class="tocnumber">6.2</span> <span class="toctext">Клавиатура и мышка заблокированы виртуальной машиной</span></a></li>
-<li class="toclevel-2 tocsection-70"><a href="#%D0%9D%D0%B5_%D0%BC%D0%BE%D0%B3%D1%83_%D0%BE%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C_%D0%BA%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B0%D1%86%D0%B8%D1%8E_CTRL+ALT+Fn_%D0%B2_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%83%D1%8E_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%83"><span class="tocnumber">6.3</span> <span class="toctext">Не могу отправить комбинацию CTRL+ALT+Fn в виртуальную машину</span></a></li>
-<li class="toclevel-2 tocsection-71"><a href="#%D0%98%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC_%D0%B2_ISO-%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%B0%D1%85"><span class="tocnumber">6.4</span> <span class="toctext">Исправление проблем в ISO-образах</span></a></li>
-<li class="toclevel-2 tocsection-72"><a href="#VirtualBox_GUI_%D0%BD%D0%B5_%D0%B2%D0%B8%D0%B4%D0%B8%D1%82_%D0%BC%D0%BE%D1%8E_%D1%82%D0%B5%D0%BC%D1%83_GTK_2x/3x"><span class="tocnumber">6.5</span> <span class="toctext">VirtualBox GUI не видит мою тему GTK 2x/3x</span></a></li>
-<li class="toclevel-2 tocsection-73"><a href="#OpenBSD_%D0%BD%D0%B5_%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%B5%D1%82_%D0%BF%D1%80%D0%B8_%D0%BD%D0%B5%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%BD%D1%8B%D1%85_%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F%D1%85_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8"><span class="tocnumber">6.6</span> <span class="toctext">OpenBSD не работает при недоступных инструкциях виртуализации</span></a></li>
-<li class="toclevel-2 tocsection-74"><a href="#VBOX_E_INVALID_OBJECT_STATE_(0x80BB0007)"><span class="tocnumber">6.7</span> <span class="toctext">VBOX_E_INVALID_OBJECT_STATE (0x80BB0007)</span></a></li>
-<li class="toclevel-2 tocsection-75"><a href="#%D0%9F%D0%BE%D0%B4%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0_USB_%D0%BD%D0%B5_%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%B5%D1%82_%D0%B2_%D1%85%D0%BE%D1%81%D1%82-%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B5_%D0%B8%D0%BB%D0%B8_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1"><span class="tocnumber">6.8</span> <span class="toctext">Подсистема USB не работает в хост-машине или гостевой ОС</span></a></li>
-<li class="toclevel-2 tocsection-76"><a href="#%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0_%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D1%8F_%D1%81%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0_%22host-only%22"><span class="tocnumber">6.9</span> <span class="toctext">Ошибка создания сетевого интерфейса "host-only"</span></a></li>
-<li class="toclevel-2 tocsection-77"><a href="#WinXP:_%D0%B3%D0%BB%D1%83%D0%B1%D0%B8%D0%BD%D0%B0_%D1%86%D0%B2%D0%B5%D1%82%D0%B0_%D0%BD%D0%B5_%D0%BC%D0%BE%D0%B6%D0%B5%D1%82_%D0%BF%D1%80%D0%B5%D0%B2%D1%8B%D1%88%D0%B0%D1%82%D1%8C_16_%D1%86%D0%B2%D0%B5%D1%82%D0%BE%D0%B2"><span class="tocnumber">6.10</span> <span class="toctext">WinXP: глубина цвета не может превышать 16 цветов</span></a></li>
-<li class="toclevel-2 tocsection-78"><a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%BF%D0%BE%D1%80%D1%82%D0%BE%D0%B2_%D0%B2_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1"><span class="tocnumber">6.11</span> <span class="toctext">Использование последовательных портов в гостевой ОС</span></a></li>
-<li class="toclevel-2 tocsection-79"><a href="#Windows_8.x_%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%B0_0x000000C4"><span class="tocnumber">6.12</span> <span class="toctext">Windows 8.x ошибка 0x000000C4</span></a></li>
-<li class="toclevel-2 tocsection-80"><a href="#Windows_8_VM_%D0%B2%D1%8B%D0%BB%D0%B5%D1%82%D0%B0%D0%B5%D1%82_%D0%BF%D1%80%D0%B8_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B5_%D1%81_%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%BE%D0%B9_%22ERR_DISK_FULL%22"><span class="tocnumber">6.13</span> <span class="toctext">Windows 8 VM вылетает при загрузке с ошибкой "ERR_DISK_FULL"</span></a></li>
-<li class="toclevel-2 tocsection-81"><a href="#%D0%93%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%B0%D1%8F_%D0%9E%D0%A1_Linux_%D0%B2%D1%8B%D0%B4%D0%B0%D0%B5%D1%82_%D0%B8%D1%81%D0%BA%D0%B0%D0%B6%D1%91%D0%BD%D0%BD%D1%8B%D0%B9_%D0%B8%D0%BB%D0%B8_%D0%B7%D0%B0%D0%BF%D0%B0%D0%B7%D0%B4%D1%8B%D0%B2%D0%B0%D1%8E%D1%89%D0%B8%D0%B9_%D0%B7%D0%B2%D1%83%D0%BA"><span class="tocnumber">6.14</span> <span class="toctext">Гостевая ОС Linux  выдает искажённый или запаздывающий звук</span></a></li>
-<li class="toclevel-2 tocsection-82"><a href="#%D0%93%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%B0%D1%8F_%D0%9E%D0%A1_%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B0%D0%B5%D1%82_%D0%BF%D0%BE%D1%81%D0%BB%D0%B5_%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%D0%B0_Xorg"><span class="tocnumber">6.15</span> <span class="toctext">Гостевая ОС зависает после запуска Xorg</span></a></li>
-<li class="toclevel-2 tocsection-83"><a href="#%D0%98%D1%81%D1%87%D0%B5%D0%B7%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%83%D0%BD%D0%BA%D1%82%D0%BE%D0%B2_%D0%BC%D0%B5%D0%BD%D1%8E_%D0%B8_%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%B0_%22NS_ERROR_FAILURE%22"><span class="tocnumber">6.16</span> <span class="toctext">Исчезновение пунктов меню и ошибка "NS_ERROR_FAILURE"</span></a></li>
-<li class="toclevel-2 tocsection-84"><a href="#%22%D0%A3%D0%BA%D0%B0%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9_%D0%BF%D1%83%D1%82%D1%8C_%D0%BD%D0%B5_%D1%81%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D1%83%D0%B5%D1%82._%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D1%8C%D1%82%D0%B5_%D0%BF%D1%83%D1%82%D1%8C_%D0%B8_%D0%BF%D0%BE%D0%BF%D1%80%D0%BE%D0%B1%D1%83%D0%B9%D1%82%D0%B5_%D0%B5%D1%89%D0%B5_%D1%80%D0%B0%D0%B7.%22_%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0_%D0%B2_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1_Windows"><span class="tocnumber">6.17</span> <span class="toctext">"Указанный путь не существует. Проверьте путь и попробуйте еще раз." Ошибка в гостевой ОС Windows</span></a></li>
-<li class="toclevel-2 tocsection-85"><a href="#%D0%9D%D0%B5_%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D1%8E%D1%82_64-%D0%B1%D0%B8%D1%82%D0%BD%D1%8B%D0%B5_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D1%8B%D0%B5_%D0%9E%D0%A1"><span class="tocnumber">6.18</span> <span class="toctext">Не работают 64-битные гостевые ОС</span></a></li>
-<li class="toclevel-2 tocsection-86"><a href="#%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0_%22VT-x_is_not_available._(VERR_VMX_NO_VMX)%22_%D0%B8_%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%D0%BE%D1%80_%D0%B1%D0%B5%D0%B7_%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B8_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8"><span class="tocnumber">6.19</span> <span class="toctext">Ошибка "VT-x is not available. (VERR_VMX_NO_VMX)" и процессор без поддержки виртуализации</span></a></li>
+<li class="toclevel-2 tocsection-64"><a href="#VERR_ACCESS_DENIED"><span class="tocnumber">6.1</span> <span class="toctext">VERR_ACCESS_DENIED</span></a></li>
+<li class="toclevel-2 tocsection-65"><a href="#%D0%9A%D0%BB%D0%B0%D0%B2%D0%B8%D0%B0%D1%82%D1%83%D1%80%D0%B0_%D0%B8_%D0%BC%D1%8B%D1%88%D0%BA%D0%B0_%D0%B7%D0%B0%D0%B1%D0%BB%D0%BE%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D1%8B_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%BE%D0%B9"><span class="tocnumber">6.2</span> <span class="toctext">Клавиатура и мышка заблокированы виртуальной машиной</span></a></li>
+<li class="toclevel-2 tocsection-66"><a href="#%D0%9D%D0%B5_%D0%BC%D0%BE%D0%B3%D1%83_%D0%BE%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C_%D0%BA%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B0%D1%86%D0%B8%D1%8E_CTRL+ALT+Fn_%D0%B2_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%83%D1%8E_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D1%83"><span class="tocnumber">6.3</span> <span class="toctext">Не могу отправить комбинацию CTRL+ALT+Fn в виртуальную машину</span></a></li>
+<li class="toclevel-2 tocsection-67"><a href="#%D0%98%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC_%D0%B2_ISO-%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%B0%D1%85"><span class="tocnumber">6.4</span> <span class="toctext">Исправление проблем в ISO-образах</span></a></li>
+<li class="toclevel-2 tocsection-68"><a href="#VirtualBox_GUI_%D0%BD%D0%B5_%D0%B2%D0%B8%D0%B4%D0%B8%D1%82_%D0%BC%D0%BE%D1%8E_%D1%82%D0%B5%D0%BC%D1%83_GTK_2x/3x"><span class="tocnumber">6.5</span> <span class="toctext">VirtualBox GUI не видит мою тему GTK 2x/3x</span></a></li>
+<li class="toclevel-2 tocsection-69"><a href="#OpenBSD_%D0%BD%D0%B5_%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%B5%D1%82_%D0%BF%D1%80%D0%B8_%D0%BD%D0%B5%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%BD%D1%8B%D1%85_%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F%D1%85_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8"><span class="tocnumber">6.6</span> <span class="toctext">OpenBSD не работает при недоступных инструкциях виртуализации</span></a></li>
+<li class="toclevel-2 tocsection-70"><a href="#VBOX_E_INVALID_OBJECT_STATE_(0x80BB0007)"><span class="tocnumber">6.7</span> <span class="toctext">VBOX_E_INVALID_OBJECT_STATE (0x80BB0007)</span></a></li>
+<li class="toclevel-2 tocsection-71"><a href="#%D0%9F%D0%BE%D0%B4%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0_USB_%D0%BD%D0%B5_%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%B5%D1%82_%D0%B2_%D1%85%D0%BE%D1%81%D1%82-%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B5_%D0%B8%D0%BB%D0%B8_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1"><span class="tocnumber">6.8</span> <span class="toctext">Подсистема USB не работает в хост-машине или гостевой ОС</span></a></li>
+<li class="toclevel-2 tocsection-72"><a href="#%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0_%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D1%8F_%D1%81%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0_%22host-only%22"><span class="tocnumber">6.9</span> <span class="toctext">Ошибка создания сетевого интерфейса "host-only"</span></a></li>
+<li class="toclevel-2 tocsection-73"><a href="#WinXP:_%D0%B3%D0%BB%D1%83%D0%B1%D0%B8%D0%BD%D0%B0_%D1%86%D0%B2%D0%B5%D1%82%D0%B0_%D0%BD%D0%B5_%D0%BC%D0%BE%D0%B6%D0%B5%D1%82_%D0%BF%D1%80%D0%B5%D0%B2%D1%8B%D1%88%D0%B0%D1%82%D1%8C_16_%D1%86%D0%B2%D0%B5%D1%82%D0%BE%D0%B2"><span class="tocnumber">6.10</span> <span class="toctext">WinXP: глубина цвета не может превышать 16 цветов</span></a></li>
+<li class="toclevel-2 tocsection-74"><a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%BF%D0%BE%D1%80%D1%82%D0%BE%D0%B2_%D0%B2_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1"><span class="tocnumber">6.11</span> <span class="toctext">Использование последовательных портов в гостевой ОС</span></a></li>
+<li class="toclevel-2 tocsection-75"><a href="#Windows_8.x_%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%B0_0x000000C4"><span class="tocnumber">6.12</span> <span class="toctext">Windows 8.x ошибка 0x000000C4</span></a></li>
+<li class="toclevel-2 tocsection-76"><a href="#Windows_8_VM_%D0%B2%D1%8B%D0%BB%D0%B5%D1%82%D0%B0%D0%B5%D1%82_%D0%BF%D1%80%D0%B8_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B5_%D1%81_%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%BE%D0%B9_%22ERR_DISK_FULL%22"><span class="tocnumber">6.13</span> <span class="toctext">Windows 8 VM вылетает при загрузке с ошибкой "ERR_DISK_FULL"</span></a></li>
+<li class="toclevel-2 tocsection-77"><a href="#%D0%93%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%B0%D1%8F_%D0%9E%D0%A1_Linux_%D0%B2%D1%8B%D0%B4%D0%B0%D0%B5%D1%82_%D0%B8%D1%81%D0%BA%D0%B0%D0%B6%D1%91%D0%BD%D0%BD%D1%8B%D0%B9_%D0%B8%D0%BB%D0%B8_%D0%B7%D0%B0%D0%BF%D0%B0%D0%B7%D0%B4%D1%8B%D0%B2%D0%B0%D1%8E%D1%89%D0%B8%D0%B9_%D0%B7%D0%B2%D1%83%D0%BA"><span class="tocnumber">6.14</span> <span class="toctext">Гостевая ОС Linux  выдает искажённый или запаздывающий звук</span></a></li>
+<li class="toclevel-2 tocsection-78"><a href="#%D0%93%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%B0%D1%8F_%D0%9E%D0%A1_%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B0%D0%B5%D1%82_%D0%BF%D0%BE%D1%81%D0%BB%D0%B5_%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%D0%B0_Xorg"><span class="tocnumber">6.15</span> <span class="toctext">Гостевая ОС зависает после запуска Xorg</span></a></li>
+<li class="toclevel-2 tocsection-79"><a href="#%D0%98%D1%81%D1%87%D0%B5%D0%B7%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%83%D0%BD%D0%BA%D1%82%D0%BE%D0%B2_%D0%BC%D0%B5%D0%BD%D1%8E_%D0%B8_%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%B0_%22NS_ERROR_FAILURE%22"><span class="tocnumber">6.16</span> <span class="toctext">Исчезновение пунктов меню и ошибка "NS_ERROR_FAILURE"</span></a></li>
+<li class="toclevel-2 tocsection-80"><a href="#%22%D0%A3%D0%BA%D0%B0%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9_%D0%BF%D1%83%D1%82%D1%8C_%D0%BD%D0%B5_%D1%81%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D1%83%D0%B5%D1%82._%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D1%8C%D1%82%D0%B5_%D0%BF%D1%83%D1%82%D1%8C_%D0%B8_%D0%BF%D0%BE%D0%BF%D1%80%D0%BE%D0%B1%D1%83%D0%B9%D1%82%D0%B5_%D0%B5%D1%89%D0%B5_%D1%80%D0%B0%D0%B7.%22_%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0_%D0%B2_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9_%D0%9E%D0%A1_Windows"><span class="tocnumber">6.17</span> <span class="toctext">"Указанный путь не существует. Проверьте путь и попробуйте еще раз." Ошибка в гостевой ОС Windows</span></a></li>
+<li class="toclevel-2 tocsection-81"><a href="#%D0%9D%D0%B5_%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D1%8E%D1%82_64-%D0%B1%D0%B8%D1%82%D0%BD%D1%8B%D0%B5_%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D1%8B%D0%B5_%D0%9E%D0%A1"><span class="tocnumber">6.18</span> <span class="toctext">Не работают 64-битные гостевые ОС</span></a></li>
+<li class="toclevel-2 tocsection-82"><a href="#%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0_%22VT-x_is_not_available._(VERR_VMX_NO_VMX)%22_%D0%B8_%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%D0%BE%D1%80_%D0%B1%D0%B5%D0%B7_%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B8_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8"><span class="tocnumber">6.19</span> <span class="toctext">Ошибка "VT-x is not available. (VERR_VMX_NO_VMX)" и процессор без поддержки виртуализации</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-87"><a href="#%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D0%B8%D1%82%D0%B5_%D1%82%D0%B0%D0%BA%D0%B6%D0%B5"><span class="tocnumber">7</span> <span class="toctext">Смотрите также</span></a></li>
+<li class="toclevel-1 tocsection-83"><a href="#%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D0%B8%D1%82%D0%B5_%D1%82%D0%B0%D0%BA%D0%B6%D0%B5"><span class="tocnumber">7</span> <span class="toctext">Смотрите также</span></a></li>
 </ul>
 </div>
 
 <h2>
-<span id=".D0.9F.D0.BE.D1.88.D0.B0.D0.B3.D0.BE.D0.B2.D0.B0.D1.8F_.D1.83.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BA.D0.B0_.D0.BD.D0.B0_.D1.85.D0.BE.D1.81.D1.82-.D0.BA.D0.BE.D0.BC.D0.BF.D1.8C.D1.8E.D1.82.D0.B5.D1.80_.D0.BF.D0.BE.D0.B4_.D1.83.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5.D0.BC_Arch_Linux"></span><span class="mw-headline" id="Пошаговая_установка_на_хост-компьютер_под_управлением_Arch_Linux">Пошаговая установка на хост-компьютер под управлением Arch Linux</span>
+<span id=".D0.A3.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BA.D0.B0"></span><span class="mw-headline" id="Установка">Установка</span>
 </h2>
-<p>Для запуска виртуальной машины под VirtualBox на хост-компьютере под управлением Arch Linux, выполните следующие действия по установке пакетов.
+<p>Установите VirtualBox по указаниям ниже, чтобы создавать и запускать виртуальные машины в Arch Linux.
 </p>
 <h3>
-<span id=".D0.A3.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BA.D0.B0_.D0.B1.D0.B0.D0.B7.D0.BE.D0.B2.D1.8B.D1.85_.D0.BF.D0.B0.D0.BA.D0.B5.D1.82.D0.BE.D0.B2"></span><span class="mw-headline" id="Установка_базовых_пакетов">Установка базовых пакетов</span>
+<span id=".D0.A3.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BA.D0.B0_.D0.BE.D1.81.D0.BD.D0.BE.D0.B2.D0.BD.D1.8B.D1.85_.D0.BF.D0.B0.D0.BA.D0.B5.D1.82.D0.BE.D0.B2"></span><span class="mw-headline" id="Установка_основных_пакетов">Установка основных пакетов</span>
 </h3>
-<p>Установите пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox">virtualbox</a></span>. Также необходимо выбрать пакет с модулями для хост-компьютера:
+<p><a href="../ru/Help:Reading.html#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Установите">Установите</a> пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox">virtualbox</a></span>. Кроме того, необходимо установить host-модули:
 </p>
 <ul>
-<li>для ядра <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> выберите <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-modules-arch">virtualbox-host-modules-arch</a></span>
-</li>
-<li>для других <a href="../ru/Kernel.html" title="Kernel (Русский)">ядер</a> выберите <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span>
-</li>
+<li>для ядра <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> установите <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-modules-arch">virtualbox-host-modules-arch</a></span>.</li>
+<li>для других <a href="../ru/Kernel.html" title="Kernel (Русский)">ядер</a> (включая <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span>) установите <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span>.</li>
 </ul>
-<p>Чтобы скомпилировать модули VirtualBox, предоставляемые <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span>, необходимо также установить соответствующий пакет заголовков для установленного ядра (например, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts-headers">linux-lts-headers</a></span> для <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span>). <a rel="nofollow" class="external autonumber" href="https://lists.archlinux.org/pipermail/arch-dev-public/2016-March/027808.html">[1]</a> При обновлении VirtualBox или ядра модули ядра будут автоматически перекомпилированы с помощью <a href="../en/Dynamic_Kernel_Module_Support.html" class="mw-redirect" title="DKMS">DKMS</a>-хука Pacman.
+<p><a href="../ru/Dynamic_Kernel_Module_Support.html" title="Dynamic Kernel Module Support (Русский)">DKMS</a>-хук Pacman автоматически перекомпилирует модули <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span> при каждом обновлении VirtualBox и/или ядра. При компиляции потребуются пакеты с заголовочными файлами для вашего ядра (например, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts-headers">linux-lts-headers</a></span> для ядра <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span>) <a rel="nofollow" class="external autonumber" href="https://lists.archlinux.org/pipermail/arch-dev-public/2016-March/027808.html">[1]</a>.
 </p>
 <h3>
-<span id=".D0.A3.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BA.D0.B0_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D0.B5.D0.B9_.D1.8F.D0.B4.D1.80.D0.B0_VirtualBox"></span><span class="mw-headline" id="Установка_модулей_ядра_VirtualBox">Установка модулей ядра VirtualBox</span>
+<span id=".D0.9F.D0.BE.D0.B4.D0.BF.D0.B8.D1.81.D1.8B.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D0.B5.D0.B9"></span><span class="mw-headline" id="Подписывание_модулей">Подписывание модулей</span>
 </h3>
-<p>Чтобы полностью виртуализировать гостевую ОС, VirtualBox предоставляет следующие <a href="../ru/Kernel_module.html" class="mw-redirect" title="Kernel modules (Русский)">модули ядра</a>: <code>vboxdrv</code>, <code>vboxnetadp</code>, <code>vboxnetflt</code>, и <code>vboxpci</code>. Они должны быть добавлены к вашему хост ядру. 
+<p>Если вы используете нестандартное ядро с включённой опцией <code>CONFIG_MODULE_SIG_FORCE</code>, то необходимо подписать ваши модули ключом, сгенерированным во время компиляции ядра.
 </p>
-<p>Бинарная совместимость модулей ядра зависит от API ядра, на котором они были собраны.
-API может не совпадать в разных версиях ядра. Чтобы избежать проблем совместимости и багов, каждый раз при обновлении ядра Linux рекомендуется перекомпилировать модули ядра с обновленным ядром. Вместе с обновлением ядра в репозиториях Arch Linux обновляются также и модули Virtualbox, так что достаточно обновиться через пакетный менеджер.
+<p>Перейдите в дерево каталогов вашего ядра и выполните:
 </p>
-<p>Если вы используете ядро из <a href="../ru/Official_repositories.html" title="Official repositories (Русский)">официального репозитория</a> или стороннее (скомпилированное самостоятельно или установленное из <a href="../ru/Arch_User_Repository.html" title="Arch User Repository (Русский)">AUR</a>), то необходимо тем же способом переустановить ядро.
-</p>
-<h4>
-<span id=".D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D1.80.D0.B0.D0.B7.D0.BB.D0.B8.D1.87.D0.BD.D1.8B.D1.85_.D0.B2.D0.B5.D1.80.D1.81.D0.B8.D0.B9_.D1.8F.D0.B4.D1.80.D0.B0_Linux_.D0.BD.D0.B0_.D1.85.D0.BE.D1.81.D1.82-.D0.BC.D0.B0.D1.88.D0.B8.D0.BD.D0.B5"></span><span class="mw-headline" id="Использование_различных_версий_ядра_Linux_на_хост-машине">Использование различных версий ядра Linux на хост-машине</span>
-</h4>
-<ul>
-<li>Если вы используете ядро <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span>, убедитесь, что пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-modules">virtualbox-host-modules</a></span><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-modules-arch">virtualbox-host-modules-arch</a></span>]</sup> установлен. По умолчанию последняя версия этого пакета устанавливается как зависимость <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox">virtualbox</a></span>.</li>
-<li>Если вы используете LTS версию ядра (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span>), тогда вам нужно установить пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/virtualbox-host-modules-lts/">virtualbox-host-modules-lts</a></span><sup><small>AUR</small></sup>. Пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-modules">virtualbox-host-modules</a></span><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-modules-arch">virtualbox-host-modules-arch</a></span>]</sup> после этого можно удалить.</li>
-<li>Если вы используете ядро <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-ck/">linux-ck</a></span><sup><small>AUR</small></sup>, установите пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/virtualbox-ck-host-modules/">virtualbox-ck-host-modules</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup>.</li>
-</ul>
-<p><br>
-</p>
-<h4>
-<span id=".D0.9E.D0.B1.D0.BD.D0.BE.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D1.8F.D0.B4.D1.80.D0.B0_Linux_.D0.BD.D0.B0_.D1.85.D0.BE.D1.81.D1.82-.D0.BC.D0.B0.D1.88.D0.B8.D0.BD.D0.B5"></span><span class="mw-headline" id="Обновление_ядра_Linux_на_хост-машине">Обновление ядра Linux на хост-машине</span>
-</h4>
-<p>После обновления ядра выполните команду 
-</p>
-<pre># sudo /usr/bin/rcvboxdrv
+<pre># for module in `ls /lib/modules/$(uname -r)/kernel/misc/{vboxdrv.ko,vboxnetadp.ko,vboxnetflt.ko}` ; do ./scripts/sign-file sha1 certs/signing_key.pem certs/signing_key.x509 $module ; done
 </pre>
-<p>для рекомпиляции модулей ядра.
-</p>
-<h4>
-<span id=".D0.A1.D1.82.D0.BE.D1.80.D0.BE.D0.BD.D0.BD.D0.B5.D0.B5_.D1.8F.D0.B4.D1.80.D0.BE_.D0.BD.D0.B0_.D1.85.D0.BE.D1.81.D1.82-.D0.BC.D0.B0.D1.88.D0.B8.D0.BD.D0.B5"></span><span class="mw-headline" id="Стороннее_ядро_на_хост-машине">Стороннее ядро на хост-машине</span>
-</h4>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="../File:Tango-preferences-desktop-locale.png" decoding="async" width="48" height="48"></a><b>Эта статья или раздел нуждается в <a href="../ru/ArchWiki:Contributing.html#%D0%9F%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4" title="ArchWiki:Contributing (Русский)">переводе</a></b><a href="../File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="../File:Tango-preferences-desktop-locale.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Примечания:</b> Общие советы по использованию DKMS не принадлежат к этой странице. (обсуждение: <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:VirtualBox_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)">Talk:VirtualBox (Русский)#</a>)</div>
-</div>
-<p>Если вы используете или планируете использовать самостоятельно собранное ядро, вы должны знать, что VirtualBox не требует каких-либо модулей виртуализации (например, virtio, KVM, ...). Модули ядра VirtualBox обеспечивают все необходимое для нормальной работы. Таким образом, вы можете отключить в вашем ядре <i>.config</i>-файл модулей виртуализации, если они не требуются другим гипервизорам (например, Xen, KVM или QEMU).
-</p>
-<p>Пакет <code>virtualbox-host-modules</code> отлично работает с пользовательской конфигурацией стокового ядра Arch Linux, такого как <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-ck/">linux-ck</a></span><sup><small>AUR</small></sup>. <code>virtualbox-host-modules</code> поставляется с официальным ядром Arch Linux (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span>) в зависимостях, и если вы используете иное ядро, необходимо установить <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span>.
-</p>
-<p>Если вы используете самостоятельно собранное ядро, версия которого не совпадает с версией стокового ядра Arch Linux , нужно установить <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span>. Он поставляется в комплекте с исходниками модулей ядра VirtualBox.
-</p>
-<p>Пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span> требует компиляции. Проверьте наличие заголовков ядра, соответствующих вашей версии пользовательского ядра, чтобы избежать  ошибки <code>Your kernel headers for kernel <i>your custom kernel version</i> cannot be found at /usr/lib/modules/<i>your custom kernel version</i>/build or /usr/lib/modules/<i>your custom kernel version</i>/source</code>
-</p>
-<ul>
-<li>Если вы используете самостоятельно собранное ядро и использовали <code>make modules_install</code> для установки модулей, директории <code>/usr/lib/modules/<i>your custom kernel version</i>/build</code> и <code>(...)/source</code>  будут символическими ссылками на исходники ядра. Они могут использоваться в качестве заголовков ядра в случае необходимости.</li>
-<li>Если вы используете ядро из <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> репозитория, убедитесь, что установлен пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-headers">linux-headers</a></span>.</li>
-</ul>
-<p>После того, как <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span> установится, сгенерируйте модули ядра для пользовательского ядра следующей командой:
-</p>
-<pre># dkms install vboxhost/<i>virtualbox-host-source version</i> -k <i>your custom kernel version</i>/<i>your architecture</i>
-</pre>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Совет:</strong>  Используйте эту команду вместо предыдущей, если вы не хотите её адаптировать:
-<pre># dkms install vboxhost/$(pacman -Q virtualbox|awk '{print $2}'|sed 's/\-.\+//') -k $(uname -rm|sed 's/\ /\//')</pre>
-</div>
-<p><br>
-Чтобы автоматически перекомпилировать модули ядра VirtualBox, когда их исходники обновится (т.е. повысится версия пакета <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span>) и чтобы не повторять впоследствии вручную <code>dkms install</code>, включите <code>dkms</code> сервис командой:
-</p>
-<pre># systemctl enable dkms.service
-</pre>
-<p>При включенной службе <code>dkms</code> для обновления модулей можно перезагрузить компьютер. Если же вы не хотите включать эту службу, то нужно выполнять команду <code>dkms install</code> каждый раз при обновлении <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span>. В противном случае модули не обновятся, и есть немалая возможность получить нерабочий VirtualBox.
-</p>
-<p>Однако, если вы не хотите включать этот сервис (например, для оптимизации systemd) можно также использовать <a href="../en/Mkinitcpio.html" title="Mkinitcpio">initramfs hook</a>, который будет автоматически запускать <code>dkms install</code> во время загрузки. Он требует перезагрузки для перекомпиляции модулей VirtualBox. Чтобы включить этот хук, нужно установить пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vboxhost-hook/">vboxhost-hook</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup> из <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> и добавить <code>vboxhost</code> в <code>/etc/mkinitcpio.conf</code>. Опять же, убедитесь, что заголовки Linux доступны для нового ядра: в противном случае компиляция не удастся.
-</p>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Совет:</strong>  Ровно как и команда <code>dkms</code>, <code>vboxhost</code> хук выведет ошибку, если что-то пойдет не так во время перекомпиляции модулей VirtualBox.</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примечание:</strong> Алгоритм хэширования может отличаться от указанного, но он должен быть встроен в ядро.</div>
 <h3>
-<span id=".D0.97.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B0_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D0.B5.D0.B9_.D1.8F.D0.B4.D1.80.D0.B0_VirtualBox"></span><span class="mw-headline" id="Загрузка_модулей_ядра_VirtualBox">Загрузка модулей ядра VirtualBox</span>
+<span id=".D0.97.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B0_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D0.B5.D0.B9_.D1.8F.D0.B4.D1.80.D0.B0_.D0.B4.D0.BB.D1.8F_VirtualBox"></span><span class="mw-headline" id="Загрузка_модулей_ядра_для_VirtualBox">Загрузка модулей ядра для VirtualBox</span>
 </h3>
-<p>Среди используемых <a href="../ru/Kernel_module.html" class="mw-redirect" title="Kernel modules (Русский)">модулей ядра</a> VirtualBox, есть обязательный модуль <code>vboxdrv</code>, который должен быть загружен перед стартом любой виртуальной машины. Он может быть загружен автоматически при старте Arch Linux, или, при необходимости, его можно загрузить вручную.
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-modules-arch">virtualbox-host-modules-arch</a></span> и <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span> используют службу <code>systemd-modules-load.service</code> для загрузки необходимых VirtualBox модулей ядра при запуске системы. Если необходимо загрузить модуль сразу после установки, то либо перезагрузитесь, либо однократно загрузите его вручную. Список модулей можно найти в файлах <code>/usr/lib/modules-load.d/virtualbox-host-modules-arch.conf</code> или <code>/usr/lib/modules-load.d/virtualbox-host-dkms.conf</code>.
 </p>
-<p>Для загрузки модуля вручную выполните следующую команду:
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примечание:</strong> Если автоматическая загрузка модулей VirtualBox при запуске системы нежелательна, замаскируйте файлы <code>/usr/lib/modules-load.d/virtualbox-host-modules-arch.conf</code> и <code>/usr/lib/modules-load.d/virtualbox-host-dkms.conf</code>, создав пустой файл (или символическую ссылку на <code>/dev/null</code>) с таким же именем в каталоге <code>/etc/modules-load.d/</code>.</div>
+<p>Среди используемых VirtualBox <a href="../ru/Kernel_module.html" title="Kernel module (Русский)">модулей ядра</a> обязательным является <code>vboxdrv</code>. Если он не был загружен, то запустить виртуальные машины не получится.
+</p>
+<p>Чтобы загрузить модуль вручную, выполните:
 </p>
 <pre># modprobe vboxdrv
 </pre>
-<p>Для автоматической загрузки модуля VirtualBox при старте, посмотрите <a href="../ru/Kernel_module.html#%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5_%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D1%8F%D0%BC%D0%B8" class="mw-redirect" title="Kernel modules (Русский)">Модули ядра#Автоматическое управление модулями</a> и создайте файл <code>*.conf</code> (например <code>virtualbox.conf</code>) в каталоге <code>/etc/modules-load.d/</code> с записью:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modules-load.d/virtualbox.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">vboxdrv</pre>
-<h3>
-<span id=".D0.94.D0.BE.D0.BF.D0.BE.D0.BB.D0.BD.D0.B8.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D1.8B.D0.B5_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D0.B8_VirtualBox"></span><span class="mw-headline" id="Дополнительные_модули_VirtualBox">Дополнительные модули VirtualBox</span>
-</h3>
-<p>Следующие модули не являются обязательными, но рекомендуются, если вы не хотите проблем с некоторыми конфигурациями (подробнее смотрите ниже): <code>vboxnetadp</code>, <code>vboxnetflt</code> и <code>vboxpci</code>.
+<p>Следующие модули необходимы в некоторых сложных конфигурациях:
 </p>
 <ul><li>
-<code>vboxnetadp</code> и <code>vboxnetflt</code> необходимы, если вы собираетесь использовать <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch06.html#network_hostonly">"Локальную виртуальную сеть"</a>. Точнее, <code>vboxnetadp</code> нужен для создания интерфейса в глобальных настройках VirtualBox, и <code>vboxnetflt</code> нужен для запуска виртуальной машины с использованием этого интерфейса.</li></ul>
-<ul><li>
-<code>vboxpci</code> необходим, когда вашей виртуальной машине нужно получить доступ к PCI устройству на вашей машине.</li></ul>
-<p>Для работы данных модулей выполните команду
-</p>
-<pre># pacman -S net-tools
-</pre>
-<p>И создайте  файл <code>vbox-other-modules.conf</code> в каталоге <code>/etc/modules-load.d/</code> с записью
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modules-load.d/vbox-other-modules.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">vboxnetadp vboxnetflt vboxpci</pre>
+<code>vboxnetadp</code> и <code>vboxnetflt</code> необходимы для сетевых взаимодействий в режимах <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch06.html#network_bridged">bridged</a> и <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch06.html#network_hostonly">host-only</a>. Если точнее, <code>vboxnetadp</code> позволяет через настройки VirtualBox создать в хостовой системе программный сетевой интерфейс, а <code>vboxnetflt</code> даёт виртуальной машине возможность его использовать.</li></ul>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Примечание:</strong> Если модули ядра VirtualBox были загружены в ядро пока вы обновляли модули, то вы должны загрузить их вручную для использования новой, обновленной версии. Что бы это сделать, запустите
-<pre># vboxreload
-</pre>
-</div>
-<p>VirtualBox использует <code>ifconfig</code> и <code>route</code>, чтобы назначить IP и маршрут до интерфейса хоста, настроенного с помощью <code>VBoxManage hostonlyif</code> или с помощью GUI  <i>Settings &gt; Network &gt; Host-only Networks &gt; Edit host-only network (space) &gt; Adapter</i>.
-</p>
-<p><br>
+<strong>Примечание:</strong> Если модули ядра для VirtualBox были загружены, а после этого получили обновления, то необходимо перезагрузить их вручную, чтобы заработала обновлённая версия. Для этого выполните команду <code>vboxreload</code> с правами root.</div>
+<h3>
+<span id=".D0.94.D0.BE.D1.81.D1.82.D1.83.D0.BF_.D0.BA_USB-.D1.83.D1.81.D1.82.D1.80.D0.BE.D0.B9.D1.81.D1.82.D0.B2.D0.B0.D0.BC_.D1.85.D0.BE.D1.81.D1.82.D0.B0_.D0.B8.D0.B7_.D0.B3.D0.BE.D1.81.D1.82.D0.B5.D0.B2.D0.BE.D0.B9_.D0.9E.D0.A1"></span><span class="mw-headline" id="Доступ_к_USB-устройствам_хоста_из_гостевой_ОС">Доступ к USB-устройствам хоста из гостевой ОС</span>
+</h3>
+<p>Добавьте пользователя в <a href="../ru/Users_and_groups.html#%D0%A3%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D0%B0%D0%BC%D0%B8" class="mw-redirect" title="Группы">группу</a> <code>vboxusers</code>, если необходимо предоставить ему доступ к USB-портам хоста из виртуальной машины.
 </p>
 <h3>
-<span id=".D0.94.D0.BE.D0.B1.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D1.82.D0.B5.D0.BB.D0.B5.D0.B9_.D0.B2_.D0.B3.D1.80.D1.83.D0.BF.D0.BF.D1.83_vboxusers"></span><span class="mw-headline" id="Добавление_пользователей_в_группу_vboxusers">Добавление пользователей в группу vboxusers</span>
+<span id=".D0.94.D0.B8.D1.81.D0.BA_.D1.81_.D0.B3.D0.BE.D1.81.D1.82.D0.B5.D0.B2.D1.8B.D0.BC.D0.B8_.D0.B4.D0.BE.D0.BF.D0.BE.D0.BB.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F.D0.BC.D0.B8"></span><span class="mw-headline" id="Диск_с_гостевыми_дополнениями">Диск с гостевыми дополнениями</span>
 </h3>
-<p>Чтобы использовать USB-порты хост-системы в виртуальных машинах, нужно добавить в <a href="../ru/Users_and_groups.html" class="mw-redirect" title="Groups (Русский)">группу</a> <code>vboxusers</code> имена пользователей, которые смогут получить доступ к USB-портам. Новая группа не будет автоматически применяться к существующим сеансам. Пользователь должен перелогиниться или добавить пользователя в новую группу в текущей сессии командой <code>newgrp</code> или <code>sudo -u $USER -s</code>. Для добавления текущего пользователя в группу <code>vboxusers</code> нужно выполнить:
-</p>
-<pre># gpasswd -a $USER vboxusers
-</pre>
-<h3>
-<span id=".D0.9E.D0.B1.D1.80.D0.B0.D0.B7_.D0.B4.D0.B8.D1.81.D0.BA.D0.B0_.D1.81_.D0.B3.D0.BE.D1.81.D1.82.D0.B5.D0.B2.D1.8B.D0.BC.D0.B8_.D0.B4.D0.BE.D0.BF.D0.BE.D0.BB.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F.D0.BC.D0.B8"></span><span class="mw-headline" id="Образ_диска_с_гостевыми_дополнениями">Образ диска с гостевыми дополнениями</span>
-</h3>
-<p>Для корректной работы VirtualBox рекомендуется установить пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-iso">virtualbox-guest-iso</a></span> в хост-системе. Этот пакет создаёт образ диска, который может быть использован для установки гостевых дополнений в гостевых системах, отличных от Arch Linux.<i> .iso </i> образ будет находиться в <code>/usr/lib/virtualbox/additions/VBoxGuestAdditions.iso</code> и может быть установлен вручную после подключения образа в виртуальной машине.
+<p>Если в качестве гостя выступает не Arch Linux, то имеет смысл установить пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-iso">virtualbox-guest-iso</a></span>. Он работает как образ диска, с которого можно установить гостевые дополнения. Файл <i>.iso</i> будет находиться в каталоге <code>/usr/lib/virtualbox/additions/VBoxGuestAdditions.iso</code>. Зайдите в гостевую систему, вручную смонтируйте образ и запустите установщик.
 </p>
 <h3>
-<span id=".D0.9F.D0.B0.D0.BA.D0.B5.D1.82_.D0.B4.D0.BE.D0.BF.D0.BE.D0.BB.D0.BD.D0.B5.D0.BD.D0.B8.D0.B9"></span><span class="mw-headline" id="Пакет_дополнений">Пакет дополнений</span>
+<span id=".D0.A0.D0.B0.D1.81.D1.88.D0.B8.D1.80.D0.B5.D0.BD.D0.B8.D1.8F"></span><span class="mw-headline" id="Расширения">Расширения</span>
 </h3>
-<p>Начиная с версии VirtualBox 4.0, компоненты, не распространяющиеся под лицензией GPL были отделены от основной части приложения. Несмотря на то, что данные компоненты выпущены под несвободной лицензией и <b>доступны только для личного использования</b>, вам может понадобиться установка Oracle Extension Pack, который обеспечивает <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch01.html#intro-installing">дополнительный функционал</a>. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/virtualbox-ext-oracle/">virtualbox-ext-oracle</a></span><sup><small>AUR</small></sup> пакет доступен на <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>, а нестабильная версия может быть найдена в репозитории <a href="../en/Unofficial_user_repositories.html#seblu" title="Unofficial user repositories">seblu</a>.
+<p>Oracle Extension Pack предоставляет <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch01.html#intro-installing">набор дополнительной функциональности</a>. Набор распространяется под несвободной лицензией <b>только для личного пользования</b>. Расширения доступны в виде пакета <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/virtualbox-ext-oracle/">virtualbox-ext-oracle</a></span><sup><small>AUR</small></sup> в AUR или в скомпилированном виде в неофициальном репозитории <a href="../en/Unofficial_user_repositories.html#seblu" title="Unofficial user repositories">seblu</a>.
 </p>
-<p>Если вы предпочитаете использовать ручной способ, можно скачать пакет дополнений вручную и установить его с помощью графического интерфейса (<i>Настройки &gt; Расширения</i>) или с помощью команды <code>VBoxManage extpack install &lt;.vbox-extpack&gt;</code>. Предварительно убедитесь, что у вас установлен инструментарий (например, <a href="../en/Polkit.html" title="Polkit">Polkit</a>, gksu и т.д.) для предоставления привилегированного доступа к VirtualBox, так как установка этого пакета <a rel="nofollow" class="external text" href="https://www.virtualbox.org/ticket/8473">требует прав суперпользователя</a>.
+<p>Более "традиционный" способ — скачать расширения с сайта разработчиков и установить их либо через графический интерфейс (<i>File &gt; Preferences &gt; Extensions</i>), либо командой <code>VBoxManage extpack install &lt;.vbox-extpack&gt;</code>. Предварительно убедитесь, что у вас есть инструмент вроде <a href="../en/Polkit.html" title="Polkit">Polkit</a> для выдачи привилегированного доступа к VirtualBox — установка требует <a rel="nofollow" class="external text" href="https://www.virtualbox.org/ticket/8473">прав root</a>.
 </p>
 <h3>
-<span id=".D0.9F.D1.80.D0.B0.D0.B2.D0.B8.D0.BB.D1.8C.D0.BD.D0.BE.D0.B5_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D0.B2_.D1.84.D1.80.D0.BE.D0.BD.D1.82-.D1.8D.D0.BD.D0.B4.D0.B5"></span><span class="mw-headline" id="Правильное_использование_в_фронт-энде">Правильное использование в фронт-энде</span>
+<span id=".D0.98.D0.BD.D1.82.D0.B5.D1.80.D1.84.D0.B5.D0.B9.D1.81.D1.8B"></span><span class="mw-headline" id="Интерфейсы">Интерфейсы</span>
 </h3>
-<p>Теперь вы готовы использовать VirtualBox. Поздравляем!
-</p>
-<p>Вы можете использовать несколько удобных команд VirtualBox:
+<p>Для VirtualBox разработано три интерфейса:
 </p>
 <ul>
-<li>Если вы хотите использовать VirtualBox в командной строке (только запускать и изменять настройки существующих виртуальных машин), вы можете использовать команду <code>VBoxSDL</code>. VBoxSDL создаёт простое окно, которое содержит только <i>чистую</i> виртуальную машину, без меню или других элементов управления (фрейм-буфер).</li>
-<li>Если вы хотите использовать VirtualBox в командной строке без любого GUI-интерфейса (например, на сервере) для создания, запуска и настройки виртуальных машин, используйте <code>VBoxHeadless</code>, который не производит никакого видимого вывода на хост-машине, а только предоставляет данные VRDP.</li>
+<li>стандартный графический интерфейс, команда <code>VirtualBox</code>.</li>
+<li>интерфейс командной строки, команда <code>VBoxSDL</code>; создаёт окно виртуальной машины без оверлеев.</li>
+<li>интерфейс командной строки без отображения окон (например, для ВМ, находящейся на сервере), команда <code>VBoxHeadless</code>. Расширение VRDP позволяет получить доступ к экрану виртеальной машины.</li>
 </ul>
-<p>Если вы установили <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/qt4/">qt4</a></span><sup><small>AUR</small></sup> из дополнительных зависимостей, у вас будет приятный GUI-интерфейс.
+<p>Настройки безопасности Wayland (в частности, при использовании GDM) не пропускает ввод с клавиатуры в VirtualBox, что мешает, например, использовать в гостевой ОС комбинации клавиш. Чтобы это обойти, добавьте VirtualBox в белый список:
 </p>
-<p>Наконец, вы можете использовать <a href="../en/PhpVirtualBox.html" title="PhpVirtualBox">PhpVirtualBox</a> для управления виртуальными машинами из веб-интерфейса.
+<pre>$ gsettings get org.gnome.mutter.wayland xwayland-grab-access-rules
+$ gsettings set org.gnome.mutter.wayland xwayland-grab-access-rules "['VirtualBox Machine']"
+</pre>
+<p>Первая команда выведет текущий список приложений в белом списке. 'VirtualBox Machine' необходимо добавить к этому списку (вторая команда в примере выше не добавляет, а создаёт список из ровно одного элемента).
 </p>
-<p>Обратитесь к <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual">руководству VirtualBox</a>, чтобы узнать, как создавать виртуальные машины.
+<p>Наконец, можно администрировать виртуальные машины через веб-интерфейс с помощью <a href="../en/PhpVirtualBox.html" title="PhpVirtualBox">phpVirtualBox</a>.
+</p>
+<p>Инструкции по созданиию виртуальных машин можно найти в <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual">руководстве пользователя</a>. 
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Важно:</strong> Если вы собираетесь хранить образы виртуальных дисков в файловой системе <a href="../en/Btrfs.html" title="Btrfs">Btrfs</a> , то перед созданием каких-либо образов вы должны отключить журналирование <a href="../en/Btrfs.html#Copy-on-Write_(CoW)" title="Btrfs">Copy-on-Write</a> для каталога с образами.</div>
+<strong>Важно:</strong> Если вы собираетесь хранить образы виртуальных дисков в файловой системе <a href="../en/Btrfs.html" title="Btrfs">Btrfs</a>, то перед их созданием необходимо отключить <a href="../en/Btrfs.html#Copy-on-Write_(CoW)" title="Btrfs">copy-on-write</a> для целевого каталога.</div>
 <h2>
 <span id=".D0.9F.D0.BE.D1.88.D0.B0.D0.B3.D0.BE.D0.B2.D0.B0.D1.8F_.D1.83.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BA.D0.B0_Arch_Linux_.D0.BA.D0.B0.D0.BA_.D0.B3.D0.BE.D1.81.D1.82.D0.B5.D0.B2.D0.BE.D0.B9_.D0.9E.D0.A1"></span><span class="mw-headline" id="Пошаговая_установка_Arch_Linux_как_гостевой_ОС">Пошаговая установка Arch Linux как гостевой ОС</span>
 </h2>
@@ -407,7 +325,7 @@ API может не совпадать в разных версиях ядра. 
 </h4>
 <ul>
 <li>Если вы используете ядро <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span>, убедитесь, что пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-modules">virtualbox-guest-modules</a></span><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup> установлен. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-modules">virtualbox-guest-modules</a></span><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup> устанавливается как зависимость пакета <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-utils">virtualbox-guest-utils</a></span>.</li>
-<li>Если вы используете LTS ядро (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span>), установите пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/virtualbox-guest-modules-lts/">virtualbox-guest-modules-lts</a></span><sup><small>AUR</small></sup>. Пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-modules">virtualbox-guest-modules</a></span><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup> может быть удалён по вашему желанию.</li>
+<li>Если вы используете LTS ядро (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span>), установите пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/virtualbox-guest-modules-lts/">virtualbox-guest-modules-lts</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-dkms">virtualbox-guest-dkms</a></span>]</sup>. Пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-modules">virtualbox-guest-modules</a></span><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup> может быть удалён по вашему желанию.</li>
 <li>Если вы используете ядро <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-ck/">linux-ck</a></span><sup><small>AUR</small></sup>, скомпилируйте пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/virtualbox-ck-guest-modules/">virtualbox-ck-guest-modules</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup>. Пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-modules">virtualbox-guest-modules</a></span><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup> также может быть удалён.</li>
 </ul>
 <h4>
@@ -416,7 +334,7 @@ API может не совпадать в разных версиях ядра. 
 <p>Этот шаг установки очень похож на настройку модулей ядра в разделе Vitualbox для хоста, описанную выше. Обратитесь к <a href="#Install_the_VirtualBox_kernel_modules">этому разделу</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">ссылка недействительна</a>: раздел не найден]</sup> для получения дополнительной информации и замените все <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-modules">virtualbox-host-modules</a></span><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-modules-arch">virtualbox-host-modules-arch</a></span>]</sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-host-dkms">virtualbox-host-dkms</a></span> и <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vboxhost-hook/">vboxhost-hook</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup> на <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-modules">virtualbox-guest-modules</a></span><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-dkms">virtualbox-guest-dkms</a></span> и <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vboxguest-hook/">vboxguest-hook</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup> соответственно.
 </p>
 <h3>
-<span id=".D0.97.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B0_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D0.B5.D0.B9_.D1.8F.D0.B4.D1.80.D0.B0_VirtualBox_2"></span><span class="mw-headline" id="Загрузка_модулей_ядра_VirtualBox_2">Загрузка модулей ядра VirtualBox</span>
+<span id=".D0.97.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B0_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D0.B5.D0.B9_.D1.8F.D0.B4.D1.80.D0.B0_VirtualBox"></span><span class="mw-headline" id="Загрузка_модулей_ядра_VirtualBox">Загрузка модулей ядра VirtualBox</span>
 </h3>
 <p>Для загрузки модуля вручную выполните:
 </p>
@@ -1374,7 +1292,6 @@ Medium
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../ru/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (Русский)">Pages or sections flagged with Template:Translateme (Русский)</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 </ul>
 </div>
@@ -1384,8 +1301,8 @@ Medium
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=VirtualBox_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=648125">https://wiki.archlinux.org/index.php?title=VirtualBox_(Русский)&amp;oldid=648125</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 3 January 2021, at 12:43.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=VirtualBox_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=653614">https://wiki.archlinux.org/index.php?title=VirtualBox_(Русский)&amp;oldid=653614</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 27 February 2021, at 08:10.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

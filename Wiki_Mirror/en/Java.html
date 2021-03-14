@@ -95,7 +95,7 @@
 <a href="#Tips_and_tricks"><span class="tocnumber">5</span> <span class="toctext">Tips and tricks</span></a>
 <ul>
 <li class="toclevel-2 tocsection-26"><a href="#Better_font_rendering"><span class="tocnumber">5.1</span> <span class="toctext">Better font rendering</span></a></li>
-<li class="toclevel-2 tocsection-27"><a href="#Silence_'Picked_up_JAVA_OPTIONS'_message_on_command_line"><span class="tocnumber">5.2</span> <span class="toctext">Silence 'Picked up _JAVA_OPTIONS' message on command line</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#Silence_'Picked_up_JDK_JAVA_OPTIONS'_message_on_command_line"><span class="tocnumber">5.2</span> <span class="toctext">Silence 'Picked up JDK_JAVA_OPTIONS' message on command line</span></a></li>
 <li class="toclevel-2 tocsection-28">
 <a href="#GTK_LookAndFeel"><span class="tocnumber">5.3</span> <span class="toctext">GTK LookAndFeel</span></a>
 <ul>
@@ -473,28 +473,62 @@ Caused by: MediaException: UNKNOWN : com.sun.media.jfxmedia.MediaException: Cou
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Suggestions in this section are applicable to all applications, using explicitly installed (external) Java runtime. Some applications are bundled with own (private) runtime or use own mechanics for GUI, font rendering, etc., so none of written below is guaranteed to work.</div>
-<p>Behavior of most Java applications can be controlled by supplying predefined variables to Java runtime. From <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=72892">this forum post</a>, a way to do it consists of adding the following line in your <code>~/.bashrc</code> (or <code>/etc/profile.d/jre.sh</code> to affect programs that are not run by sourcing <code>~/.bashrc</code>, e.g., launching a program from Gnome's Applications view):
+<p>Behavior of most Java applications can be controlled by supplying predefined variables to Java runtime. From <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=72892">this forum post</a>, a way to do it consists of adding the following line in your <code>~/.bash_profile</code> (or <code>/etc/profile.d/jre.sh</code> to affect programs that are not run by sourcing <code>~/.bash_profile</code>):
 </p>
-<pre>export _JAVA_OPTIONS="-D<b>&lt;option 1&gt;</b> -D<b>&lt;option 2&gt;</b>..."
+<pre>export JDK_JAVA_OPTIONS="-D<b>&lt;option 1&gt;</b> -D<b>&lt;option 2&gt;</b>..."
 </pre>
 <p>For example, to use system anti-aliased fonts and make swing use the GTK look and feel:
 </p>
-<pre>export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+<pre>export JDK_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 </pre>
+<p>Three such variables exist, the options which are explained later in the table below take priority.
+</p>
+<table class="wikitable">
+
+<tbody>
+<tr>
+<td>JAVA_TOOL_OPTIONS
+</td>
+<td>Affects applications as well as tools like javac or the jshell.
+</td>
+</tr>
+<tr>
+<td>JDK_JAVA_OPTIONS
+</td>
+<td>Affects applications (everything started via the java command). Requires Java 9.
+</td>
+</tr>
+<tr>
+<td>(command line options)
+</td>
+<td>Arguments specified before the "class name" argument are Java options.
+</td>
+</tr>
+<tr>
+<td>_JAVA_OPTIONS
+</td>
+<td>The old way, affects applications and tools.
+</td>
+</tr>
+</tbody>
+</table>
 <h3><span class="mw-headline" id="Better_font_rendering">Better font rendering</span></h3>
 <p>Both closed source and open source implementations of Java are known to have improperly implemented anti-aliasing of fonts. This can be fixed with the following options: <code>-Dawt.useSystemAAFontSettings=on</code>, <code>-Dswing.aatext=true</code>
 </p>
 <p>See <a href="../en/Java_Runtime_Environment_fonts.html" title="Java Runtime Environment fonts">Java Runtime Environment fonts</a> for more detailed information.
 </p>
 <h3>
-<span id="Silence_.27Picked_up_JAVA_OPTIONS.27_message_on_command_line"></span><span class="mw-headline" id="Silence_'Picked_up_JAVA_OPTIONS'_message_on_command_line">Silence 'Picked up _JAVA_OPTIONS' message on command line</span>
+<span id="Silence_.27Picked_up_JDK_JAVA_OPTIONS.27_message_on_command_line"></span><span class="mw-headline" id="Silence_'Picked_up_JDK_JAVA_OPTIONS'_message_on_command_line">Silence 'Picked up JDK_JAVA_OPTIONS' message on command line</span>
 </h3>
-<p>Setting the _JAVA_OPTIONS environment variables makes java (openjdk) write to stderr messages of the form: 'Picked up _JAVA_OPTIONS=...'. To suppress those messages in your terminal you can unset the environment variable in your shell startup files and alias java to pass those same options as command line arguments:
+<p>Setting the JDK_JAVA_OPTIONS environment variables makes java (openjdk) write to stderr messages of the form: 'Picked up JDK_JAVA_OPTIONS=...'. To suppress those messages in your terminal you can unset the environment variable in your <code>~/.bashrc</code> and alias java to pass those same options as command line arguments:
 </p>
-<pre>_SILENT_JAVA_OPTIONS="$_JAVA_OPTIONS"
-unset _JAVA_OPTIONS
-alias java='java "$_SILENT_JAVA_OPTIONS"'
+<pre>SILENT_JAVA_OPTIONS="$JDK_JAVA_OPTIONS"
+unset JDK_JAVA_OPTIONS
+alias java='java "$SILENT_JAVA_OPTIONS"'
 </pre>
+<p>Non interactive shells, like the launcher scripts for Java programs, (usually) don't read the <code>~/.bashrc</code>, but still inherited exported variables from their parent process (which in turn inherited it at some point from the login shell which read the <code>~/.bash_profile</code>).
+As for the cases when they do, one put’s generally a statement at the op of the <code>~/.bashrc</code> to avoid the file being read. That way, the variables are passed to programs launched via the desktop menu and in the case of an interactive shell where the message would disturb aliases are used instead (which in turn cannot be used in scripts).
+</p>
 <h3><span class="mw-headline" id="GTK_LookAndFeel">GTK LookAndFeel</span></h3>
 <p>If your Java programs look ugly, you may want to set up the default look and feel for the swing components:
 </p>
@@ -533,8 +567,8 @@ alias java='java "$_SILENT_JAVA_OPTIONS"'
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Java&amp;oldid=652141">https://wiki.archlinux.org/index.php?title=Java&amp;oldid=652141</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 February 2021, at 00:36.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Java&amp;oldid=653954">https://wiki.archlinux.org/index.php?title=Java&amp;oldid=653954</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 4 March 2021, at 06:15.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -98,18 +99,19 @@
 <li class="toclevel-2 tocsection-31"><a href="#Vim_colorscheme_not_loading"><span class="tocnumber">5.12</span> <span class="toctext">Vim colorscheme not loading</span></a></li>
 <li class="toclevel-2 tocsection-32"><a href="#Vim_friendly_configuration"><span class="tocnumber">5.13</span> <span class="toctext">Vim friendly configuration</span></a></li>
 <li class="toclevel-2 tocsection-33"><a href="#Friendly_pane_splitting"><span class="tocnumber">5.14</span> <span class="toctext">Friendly pane splitting</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#Inhibit_system_suspension"><span class="tocnumber">5.15</span> <span class="toctext">Inhibit system suspension</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-34">
+<li class="toclevel-1 tocsection-35">
 <a href="#Troubleshooting"><span class="tocnumber">6</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-35"><a href="#Scrolling_issues"><span class="tocnumber">6.1</span> <span class="toctext">Scrolling issues</span></a></li>
-<li class="toclevel-2 tocsection-36"><a href="#Mouse_scrolling"><span class="tocnumber">6.2</span> <span class="toctext">Mouse scrolling</span></a></li>
-<li class="toclevel-2 tocsection-37"><a href="#Terminal_emulator_does_not_support_UTF-8_mouse_events"><span class="tocnumber">6.3</span> <span class="toctext">Terminal emulator does not support UTF-8 mouse events</span></a></li>
-<li class="toclevel-2 tocsection-38"><a href="#Shift+F6_not_working_in_Midnight_Commander"><span class="tocnumber">6.4</span> <span class="toctext">Shift+F6 not working in Midnight Commander</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#Scrolling_issues"><span class="tocnumber">6.1</span> <span class="toctext">Scrolling issues</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#Mouse_scrolling"><span class="tocnumber">6.2</span> <span class="toctext">Mouse scrolling</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#Terminal_emulator_does_not_support_UTF-8_mouse_events"><span class="tocnumber">6.3</span> <span class="toctext">Terminal emulator does not support UTF-8 mouse events</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#Shift+F6_not_working_in_Midnight_Commander"><span class="tocnumber">6.4</span> <span class="toctext">Shift+F6 not working in Midnight Commander</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-39"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-40"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -252,7 +254,7 @@ ExecStop=/usr/bin/tmux kill-session -t %u
 WantedBy=multi-user.target
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> You may want to add <code>WorkingDirectory=<i>custom_path</i></code> to customize working directory.</div>
+<strong>Tip:</strong> You may want to add <code>WorkingDirectory=<i>custom_path</i></code> to customize working directory. If set to <code>~</code>, the home directory of the user specified in <code>User=</code> is used.</div>
 <p>Alternatively, you can place this file within your <a href="../en/Systemd/User.html" title="Systemd/User">systemd/User</a> directory (without <code>User=%I</code> and by replacing <code>multi-user.target</code> with <code>default.target</code> in <code>WantedBy</code>), for example <code>~/.config/systemd/user/tmux.service</code>. This way the tmux service will start when you log in, unless you also enable <a href="../en/Systemd/User.html#Automatic_start-up_of_systemd_user_instances" title="Systemd/User">systemd/User#Automatic start-up of systemd user instances</a>.
 </p>
 <h2><span class="mw-headline" id="Session_initialization">Session initialization</span></h2>
@@ -613,6 +615,11 @@ bind-key -n M-n split-window \; select-layout
 bind-key h split-window -h
 bind-key v split-window -v
 </pre>
+<h3><span class="mw-headline" id="Inhibit_system_suspension">Inhibit system suspension</span></h3>
+<p>If tmux hangs when connected from another device because the host goes to sleep, run session's shell command with an inhibition lock:
+</p>
+<pre>tmux new-session -A "systemd-inhibit --what=idle $SHELL"
+</pre>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Scrolling_issues">Scrolling issues</span></h3>
 <p>If you have issues scrolling with Shift-Page Up/Down in your terminal, the following will remove the smcup and rmcup capabilities for any term that reports itself as anything beginning with <code>xterm</code>:
@@ -668,7 +675,7 @@ bind-key v split-window -v
 <p><b>Tutorials</b>
 </p>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://mutelight.org/articles/practical-tmux">Practical Tmux</a></li>
+<li><a rel="nofollow" class="external text" href="http://mutelight.org/practical-tmux">Practical Tmux</a></li>
 <li>manual page <span class="plainlinks archwiki-template-man" title="$ man 1 tmux"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tmux.1">tmux(1)</a></span>
 </li>
 <li>
@@ -692,8 +699,8 @@ bind-key v split-window -v
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tmux&amp;oldid=649117">https://wiki.archlinux.org/index.php?title=Tmux&amp;oldid=649117</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 January 2021, at 09:05.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tmux&amp;oldid=654142">https://wiki.archlinux.org/index.php?title=Tmux&amp;oldid=654142</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 March 2021, at 08:49.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -62,7 +63,7 @@
 </li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-6"><a href="#Suspend_and_Hibernate"><span class="tocnumber">1.2</span> <span class="toctext">Suspend and Hibernate</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Suspend_and_hibernate"><span class="tocnumber">1.2</span> <span class="toctext">Suspend and hibernate</span></a></li>
 <li class="toclevel-2 tocsection-7"><a href="#Hard_drive_spin_down_problem"><span class="tocnumber">1.3</span> <span class="toctext">Hard drive spin down problem</span></a></li>
 <li class="toclevel-2 tocsection-8"><a href="#Modify_wake_events"><span class="tocnumber">1.4</span> <span class="toctext">Modify wake events</span></a></li>
 </ul>
@@ -82,7 +83,7 @@
 </li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-14"><a href="#Fingerprint_Reader"><span class="tocnumber">2.3</span> <span class="toctext">Fingerprint Reader</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Fingerprint_reader"><span class="tocnumber">2.3</span> <span class="toctext">Fingerprint reader</span></a></li>
 <li class="toclevel-2 tocsection-15"><a href="#Webcam"><span class="tocnumber">2.4</span> <span class="toctext">Webcam</span></a></li>
 <li class="toclevel-2 tocsection-16"><a href="#Hard_disk_shock_protection"><span class="tocnumber">2.5</span> <span class="toctext">Hard disk shock protection</span></a></li>
 <li class="toclevel-2 tocsection-17"><a href="#Hybrid_graphics"><span class="tocnumber">2.6</span> <span class="toctext">Hybrid graphics</span></a></li>
@@ -90,7 +91,8 @@
 </ul>
 </li>
 <li class="toclevel-1 tocsection-19"><a href="#Network_time_syncing"><span class="tocnumber">3</span> <span class="toctext">Network time syncing</span></a></li>
-<li class="toclevel-1 tocsection-20"><a href="#See_also"><span class="tocnumber">4</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-20"><a href="#Writing_laptop_pages"><span class="tocnumber">4</span> <span class="toctext">Writing laptop pages</span></a></li>
+<li class="toclevel-1 tocsection-21"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -132,7 +134,7 @@ SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]",
 </p>
 <p>Other rules can be added to perform different actions depending on power supply status and/or capacity.
 </p>
-<p>If your system has no or missing ACPI events, use <a href="../en/Cron.html" title="Cron">cron</a> with the following script which uses <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=acpi">acpi</a></span>:
+<p>If your system has no or missing ACPI events, <a href="../en/Autostarting.html#On_time_events" title="Autostarting">frequently run</a> the following script which uses <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=acpi">acpi</a></span>:
 </p>
 <pre>#!/bin/sh
 acpi -b | awk -F'[,:%]' '{print $2, $3}' | {
@@ -156,7 +158,7 @@ acpi -b | awk -F'[,:%]' '{print $2, $3}' | {
 </pre>
 <p>This creates a file at <code>/home/example/discharging</code> when the laptop charger is unplugged. You can test whether the rule worked by unplugging your laptop and looking for this file. For more advanced udev rule testing, see <a href="../en/Udev.html#Testing_rules_before_loading" title="Udev">Udev#Testing rules before loading</a>.
 </p>
-<h3><span class="mw-headline" id="Suspend_and_Hibernate">Suspend and Hibernate</span></h3>
+<h3><span class="mw-headline" id="Suspend_and_hibernate">Suspend and hibernate</span></h3>
 <p>Manually suspending the operating system, either to memory (standby) or to disk (hibernate) sometimes provides the most efficient way to optimize battery life, depending on the usage pattern of the laptop.
 </p>
 <p>See the main article <a href="../en/Power_management/Suspend_and_hibernate.html" class="mw-redirect" title="Suspend and hibernate">Suspend and hibernate</a>.
@@ -195,15 +197,15 @@ acpi -b | awk -F'[,:%]' '{print $2, $3}' | {
 <pre>i8042.noloop i8042.nomux i8042.nopnp i8042.reset
 </pre>
 <h5><span class="mw-headline" id="Elantech">Elantech</span></h5>
-<p>If it is an Elantech Touchpad not being detected and you are getting the following line in your <code>journalctl -k</code>:
+<p>If an Elantech Touchpad is not being detected and the following line appears in your <a href="../en/Systemd/Journal.html" title="Systemd/Journal">journal</a>:
 </p>
 <pre>elan_i2c 5-0015: 5-0015 supply vcc not found, using dummy regulator
 </pre>
-<p>it is related to an issue with the <code>psmouse</code> module trying to use a secondary bus for the touchpad device, and <code>elan_i2c</code> failing to do so. The fix is to force it to use the primary one. Just create the file below and reload the <code>psmouse</code> module or reboot:
+<p>it is related to an issue with the <code>psmouse</code> module trying to use a secondary bus for the touchpad device, and <code>elan_i2c</code> failing to do so. The fix is to force it to use the primary one. Create the file below and reload the <code>psmouse</code> module or reboot:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/psmouse.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options psmouse elantech_smbus=0</pre>
-<h3><span class="mw-headline" id="Fingerprint_Reader">Fingerprint Reader</span></h3>
+<h3><span class="mw-headline" id="Fingerprint_reader">Fingerprint reader</span></h3>
 <p>See <a href="../en/Fingerprint_GUI.html" class="mw-redirect" title="Fingerprint-gui">Fingerprint-gui</a>, <a href="../en/Fprint.html" title="Fprint">fprint</a> and <a href="../en/ThinkFinger.html" title="ThinkFinger">ThinkFinger</a> (for ThinkPads).
 </p>
 <h3><span class="mw-headline" id="Webcam">Webcam</span></h3>
@@ -236,6 +238,9 @@ acpi -b | awk -F'[,:%]' '{print $2, $3}' | {
 </p>
 <h2><span class="mw-headline" id="Network_time_syncing">Network time syncing</span></h2>
 <p>For a laptop, it may be a good idea to use <a href="../en/Chrony.html" title="Chrony">Chrony</a> as an alternative to <a href="../en/Network_Time_Protocol_daemon.html" class="mw-redirect" title="NTPd">NTPd</a>, <a href="../en/OpenNTPD.html" title="OpenNTPD">OpenNTPD</a> or <a href="../en/Systemd-timesyncd.html" title="Systemd-timesyncd">systemd-timesyncd</a> to sync your clock over the network. Chrony is designed to work well even on systems with no permanent network connection (such as laptops), and is capable of much faster time synchronisation than standard ntp. Chrony has several advantages when used in systems running on virtual machines, such as a larger range for frequency correction to help correct quickly drifting clocks, and better response to rapid changes in the clock frequency. It also has a smaller memory footprint and no unnecessary process wakeups, improving power efficiency.
+</p>
+<h2><span class="mw-headline" id="Writing_laptop_pages">Writing laptop pages</span></h2>
+<p>See <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Help:Laptop page guidelines</a> if you want to create or modify any laptop page.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <dl><dt>General</dt></dl>
@@ -277,8 +282,8 @@ acpi -b | awk -F'[,:%]' '{print $2, $3}' | {
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Laptop&amp;oldid=635788">https://wiki.archlinux.org/index.php?title=Laptop&amp;oldid=635788</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 19 September 2020, at 13:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Laptop&amp;oldid=654249">https://wiki.archlinux.org/index.php?title=Laptop&amp;oldid=654249</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 March 2021, at 18:09.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

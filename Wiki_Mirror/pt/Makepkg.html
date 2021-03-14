@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,7 +34,7 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="../en/Makepkg.html" title="Makepkg">Makepkg</a>. Data da última tradução: 2020-06-17. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Makepkg&amp;diff=0&amp;oldid=618806">alterações</a> na versão em inglês.</div>
+<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="../en/Makepkg.html" title="Makepkg">Makepkg</a>. Data da última tradução: 2021-03-14. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Makepkg&amp;diff=0&amp;oldid=652453">alterações</a> na versão em inglês.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artigos relacionados</p>
 <ul>
@@ -67,38 +68,39 @@
 <li class="toclevel-1 tocsection-6">
 <a href="#Dicas_e_truques"><span class="tocnumber">3</span> <span class="toctext">Dicas e truques</span></a>
 <ul>
-<li class="toclevel-2 tocsection-7"><a href="#Compilando_bin%C3%A1rios_otimizados"><span class="tocnumber">3.1</span> <span class="toctext">Compilando binários otimizados</span></a></li>
-<li class="toclevel-2 tocsection-8">
-<a href="#Melhorando_os_tempos_de_compila%C3%A7%C3%A3o"><span class="tocnumber">3.2</span> <span class="toctext">Melhorando os tempos de compilação</span></a>
+<li class="toclevel-2 tocsection-7"><a href="#Reduzir_tempos_de_download_e_extra%C3%A7%C3%A3o_de_fontes"><span class="tocnumber">3.1</span> <span class="toctext">Reduzir tempos de download e extração de fontes</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Compilando_bin%C3%A1rios_otimizados"><span class="tocnumber">3.2</span> <span class="toctext">Compilando binários otimizados</span></a></li>
+<li class="toclevel-2 tocsection-9">
+<a href="#Melhorando_os_tempos_de_compila%C3%A7%C3%A3o"><span class="tocnumber">3.3</span> <span class="toctext">Melhorando os tempos de compilação</span></a>
 <ul>
-<li class="toclevel-3 tocsection-9"><a href="#Compila%C3%A7%C3%A3o_paralela"><span class="tocnumber">3.2.1</span> <span class="toctext">Compilação paralela</span></a></li>
-<li class="toclevel-3 tocsection-10"><a href="#Compilando_de_arquivos_na_mem%C3%B3ria"><span class="tocnumber">3.2.2</span> <span class="toctext">Compilando de arquivos na memória</span></a></li>
-<li class="toclevel-3 tocsection-11"><a href="#Usando_cache_de_compila%C3%A7%C3%A3o"><span class="tocnumber">3.2.3</span> <span class="toctext">Usando cache de compilação</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#Compila%C3%A7%C3%A3o_paralela"><span class="tocnumber">3.3.1</span> <span class="toctext">Compilação paralela</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#Compilando_de_arquivos_na_mem%C3%B3ria"><span class="tocnumber">3.3.2</span> <span class="toctext">Compilando de arquivos na memória</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#Usando_cache_de_compila%C3%A7%C3%A3o"><span class="tocnumber">3.3.3</span> <span class="toctext">Usando cache de compilação</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-12"><a href="#Gerar_novos_checksums"><span class="tocnumber">3.3</span> <span class="toctext">Gerar novos checksums</span></a></li>
-<li class="toclevel-2 tocsection-13"><a href="#Usar_outros_algoritmos_de_compress%C3%A3o"><span class="tocnumber">3.4</span> <span class="toctext">Usar outros algoritmos de compressão</span></a></li>
-<li class="toclevel-2 tocsection-14"><a href="#Usando_v%C3%A1rios_n%C3%BAcleos_na_compress%C3%A3o"><span class="tocnumber">3.5</span> <span class="toctext">Usando vários núcleos na compressão</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#Mostrar_pacotes_com_um_empacotador_espec%C3%ADfico"><span class="tocnumber">3.6</span> <span class="toctext">Mostrar pacotes com um empacotador específico</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#Compilar_pacotes_32_bits_em_um_sistema_64_bits"><span class="tocnumber">3.7</span> <span class="toctext">Compilar pacotes 32 bits em um sistema 64 bits</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Gerar_novos_checksums"><span class="tocnumber">3.4</span> <span class="toctext">Gerar novos checksums</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Usar_outros_algoritmos_de_compress%C3%A3o"><span class="tocnumber">3.5</span> <span class="toctext">Usar outros algoritmos de compressão</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Usando_v%C3%A1rios_n%C3%BAcleos_na_compress%C3%A3o"><span class="tocnumber">3.6</span> <span class="toctext">Usando vários núcleos na compressão</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Mostrar_pacotes_com_um_empacotador_espec%C3%ADfico"><span class="tocnumber">3.7</span> <span class="toctext">Mostrar pacotes com um empacotador específico</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Compilar_pacotes_32_bits_em_um_sistema_64_bits"><span class="tocnumber">3.8</span> <span class="toctext">Compilar pacotes 32 bits em um sistema 64 bits</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-17">
+<li class="toclevel-1 tocsection-18">
 <a href="#Solu%C3%A7%C3%A3o_de_problemas"><span class="tocnumber">4</span> <span class="toctext">Solução de problemas</span></a>
 <ul>
-<li class="toclevel-2 tocsection-18"><a href="#Especificando_diret%C3%B3rio_de_instala%C3%A7%C3%A3o_para_pacotes_baseados_em_QMAKE"><span class="tocnumber">4.1</span> <span class="toctext">Especificando diretório de instalação para pacotes baseados em QMAKE</span></a></li>
-<li class="toclevel-2 tocsection-19"><a href="#AVISO:_O_pacote_cont%C3%A9m_refer%C3%AAncia_para_%24srcdir"><span class="tocnumber">4.2</span> <span class="toctext">AVISO: O pacote contém referência para $srcdir</span></a></li>
-<li class="toclevel-2 tocsection-20">
+<li class="toclevel-2 tocsection-19"><a href="#Especificando_diret%C3%B3rio_de_instala%C3%A7%C3%A3o_para_pacotes_baseados_em_QMAKE"><span class="tocnumber">4.1</span> <span class="toctext">Especificando diretório de instalação para pacotes baseados em QMAKE</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#AVISO:_O_pacote_cont%C3%A9m_refer%C3%AAncia_para_%24srcdir"><span class="tocnumber">4.2</span> <span class="toctext">AVISO: O pacote contém referência para $srcdir</span></a></li>
+<li class="toclevel-2 tocsection-21">
 <a href="#Makepkg_falha_em_baixar_depend%C3%AAncias_quando_por_tr%C3%A1s_de_um_proxy"><span class="tocnumber">4.3</span> <span class="toctext">Makepkg falha em baixar dependências quando por trás de um proxy</span></a>
 <ul>
-<li class="toclevel-3 tocsection-21"><a href="#Habilitar_proxy_definindo_sua_URL_no_XferCommand"><span class="tocnumber">4.3.1</span> <span class="toctext">Habilitar proxy definindo sua URL no XferCommand</span></a></li>
-<li class="toclevel-3 tocsection-22"><a href="#Habilitar_proxy_via_env_keep_do_sudoers"><span class="tocnumber">4.3.2</span> <span class="toctext">Habilitar proxy via env_keep do sudoers</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#Habilitar_proxy_definindo_sua_URL_no_XferCommand"><span class="tocnumber">4.3.1</span> <span class="toctext">Habilitar proxy definindo sua URL no XferCommand</span></a></li>
+<li class="toclevel-3 tocsection-23"><a href="#Habilitar_proxy_via_env_keep_do_sudoers"><span class="tocnumber">4.3.2</span> <span class="toctext">Habilitar proxy via env_keep do sudoers</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-23"><a href="#Makepkg_falha,_mas_make_obt%C3%A9m_sucesso"><span class="tocnumber">4.4</span> <span class="toctext">Makepkg falha, mas make obtém sucesso</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#Makepkg_falha,_mas_make_obt%C3%A9m_sucesso"><span class="tocnumber">4.4</span> <span class="toctext">Makepkg falha, mas make obtém sucesso</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-24"><a href="#Veja_tamb%C3%A9m"><span class="tocnumber">5</span> <span class="toctext">Veja também</span></a></li>
+<li class="toclevel-1 tocsection-25"><a href="#Veja_tamb%C3%A9m"><span class="tocnumber">5</span> <span class="toctext">Veja também</span></a></li>
 </ul>
 </div>
 
@@ -154,8 +156,11 @@ Empacotador       : John Doe &lt;john@doe.com&gt;
 <p>Antes de continuar, <a href="../pt/Help:Reading.html#Instala%C3%A7%C3%A3o_de_pacotes" class="mw-redirect" title="Instale">instale</a> o grupo <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/groups/x86_64/base-devel/">base-devel</a></span>. Os pacotes que pertencem a este grupo <b>não</b> são exigidos na lista de dependência de compilação (<i>makedepends</i>) nos arquivos <a href="../pt/PKGBUILD.html" title="PKGBUILD (Português)">PKGBUILD</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> * Certifique-se de que o <a href="../pt/Sudo.html" title="Sudo (Português)">sudo</a> está configurado corretamente para comandos passados para o <a href="../pt/Pacman.html" title="Pacman (Português)">pacman</a>.
-<ul><li>Executar <i>makepkg</i> em si como root <a rel="nofollow" class="external text" href="https://lists.archlinux.org/pipermail/pacman-dev/2014-March/018911.html">não é permitido</a>.<a rel="nofollow" class="external autonumber" href="https://projects.archlinux.org/pacman.git/tree/NEWS">[2]</a> Além disso, como um <code>PKGBUILD</code> pode conter comandos arbitrários, compilar como root geralmente é considerado inseguro.<a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=67561">[3]</a> Usuários que não possuem acesso a uma conta de usuário comum devem executar o makepkg como o <a rel="nofollow" class="external text" href="http://allanmcrae.com/2015/01/replacing-makepkg-asroot/">usuário <i>nobody</i></a>.</li></ul>
+<strong>Nota:</strong> 
+<ul>
+<li>Certifique-se de que o <a href="../pt/Sudo.html" title="Sudo (Português)">sudo</a> está configurado corretamente para comandos passados para o <a href="../pt/Pacman.html" title="Pacman (Português)">pacman</a>.</li>
+<li>Executar <i>makepkg</i> em si como root <a rel="nofollow" class="external text" href="https://lists.archlinux.org/pipermail/pacman-dev/2014-March/018911.html">não é permitido</a>.<a rel="nofollow" class="external autonumber" href="https://projects.archlinux.org/pacman.git/tree/NEWS">[2]</a> Além disso, como um <code>PKGBUILD</code> pode conter comandos arbitrários, compilar como root geralmente é considerado inseguro.<a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=67561">[3]</a> Usuários que não possuem acesso a uma conta de usuário comum devem executar o makepkg como o <a rel="nofollow" class="external text" href="http://allanmcrae.com/2015/01/replacing-makepkg-asroot/">usuário <i>nobody</i></a>.</li>
+</ul>
 </div>
 <p>Para compilar um pacote, deve-se primeiro criar um <a href="../pt/PKGBUILD.html" title="PKGBUILD (Português)">PKGBUILD</a>, ou um script de compilação, como descrito em <a href="../pt/Creating_packages.html" class="mw-redirect" title="Criando pacotes">Criando pacotes</a>. Scripts existentes estão disponíveis na árvore do <a href="../pt/Arch_Build_System.html" title="Arch Build System (Português)">Arch Build System</a> <i>(ABS)</i> ou do <a href="../pt/Arch_User_Repository.html" class="mw-redirect" title="AUR (Português)">AUR</a>. Uma vez em posse de um <code>PKGBUILD</code>, altere o diretório no qual está salvo e execute o seguinte comando para compilar o pacote:
 </p>
@@ -174,7 +179,7 @@ Empacotador       : John Doe &lt;john@doe.com&gt;
 <li>Apenas valores globais são usados ao instalar dependências, ou seja, qualquer sobrescrita feita em uma função de empacotamento de pacotes divididos não serão sadas.</li>
 </ul>
 </div>
-<p>Uma vez que todas as dependências estejam satisfeitas e os pacotes compilados com sucesso, um arquivo de pacote (<code><i>pkgname</i>-<i>pkgver</i>.pkg.tar.xz</code>) será criado no diretório. Para instalar, use <code>-i</code>/<code>--install</code> (o mesmo que <code>pacman -U <i>pkgname</i>-<i>pkgver</i>.pkg.tar.xz</code>):
+<p>Uma vez que todas as dependências estejam satisfeitas e os pacotes compilados com sucesso, um arquivo de pacote (<code><i>pkgname</i>-<i>pkgver</i>.pkg.tar.zst</code>) será criado no diretório. Para instalar, use <code>-i</code>/<code>--install</code> (o mesmo que <code>pacman -U <i>pkgname</i>-<i>pkgver</i>.pkg.tar.zst</code>):
 </p>
 <pre># pacman --install
 </pre>
@@ -182,15 +187,20 @@ Empacotador       : John Doe &lt;john@doe.com&gt;
 </p>
 <pre>$ makepkg --clean
 </pre>
-<p>Para mais informações, veja <a rel="nofollow" class="external text" href="https://archlinux.org/pacman/makepkg.8.html">makepkg(8)</a>.
+<p>Para mais informações, veja <span class="plainlinks archwiki-template-man" title="$ man 8 makepkg"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/makepkg.8">makepkg(8)</a></span>.
 </p>
 <h2><span class="mw-headline" id="Dicas_e_truques">Dicas e truques</span></h2>
+<h3>
+<span id="Reduzir_tempos_de_download_e_extra.C3.A7.C3.A3o_de_fontes"></span><span class="mw-headline" id="Reduzir_tempos_de_download_e_extração_de_fontes">Reduzir tempos de download e extração de fontes</span>
+</h3>
+<p>Faça uso de <code>SRCDEST</code>, especialmente ao compilar <a href="../pt/VCS_package_guidelines.html" class="mw-redirect" title="Diretrizes de pacotes VCS">pacotes VCS</a>, para economizar tempo ao adquirir e desempacotar fontes em recompilações subsequentes.
+</p>
 <h3>
 <span id="Compilando_bin.C3.A1rios_otimizados"></span><span class="mw-headline" id="Compilando_binários_otimizados">Compilando binários otimizados</span>
 </h3>
 <p>Uma melhoria de desempenho do software empacotado pode ser conseguida ao habilitar otimizações do compilador para a máquina host. A desvantagem é que os binários compilados para uma arquitetura de processador específica não serão executados corretamente em outras máquinas. Nas máquinas x86_64, raramente existem ganhos de desempenho reais significativos que justificariam investir o tempo para reconstruir pacotes oficiais.
 </p>
-<p>No entanto, é muito fácil reduzir o desempenho usando <i>flags</i> de compilação "não padronizadas". Muitas otimizações de compilação só são úteis em certas situações e não devem ser aplicadas indiscriminadamente em cada pacote. A menos que você possa verificar/avaliar que algo é mais rápido, há uma chance muito boa de não ser! O <a rel="nofollow" class="external text" href="http://www.gentoo.org/doc/en/gcc-optimization.xml">Guia de Otimização de Compilação</a> e artigo wiki <a rel="nofollow" class="external text" href="http://wiki.gentoo.org/wiki/Safe_CFLAGS">CFLAGS Seguras</a> do Gentoo (ambos em inglês) fornecem mais informações detalhadas sobre a otimização do compilador.
+<p>No entanto, é muito fácil reduzir o desempenho usando <i>flags</i> de compilação "não padronizadas". Muitas otimizações de compilação só são úteis em certas situações e não devem ser aplicadas indiscriminadamente em cada pacote. A menos que você possa verificar/avaliar que algo é mais rápido, há uma chance muito boa de não ser! Os artigos wiki <a href="https://wiki.gentoo.org/wiki/GCC_optimization" class="extiw" title="gentoo:GCC optimization">otimização do GCC</a> e <a href="https://wiki.gentoo.org/wiki/Safe_CFLAGS" class="extiw" title="gentoo:Safe CFLAGS">CFLAGS seguras</a> do Gentoo (ambos em inglês) fornecem mais informações detalhadas sobre a otimização do compilador.
 </p>
 <p>As opções passadas para um compilador C/C++ (ex.: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gcc">gcc</a></span> ou <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=clang">clang</a></span>) são controladas pelas variáveis de ambiente <code>CFLAGS</code>, <code>CXXFLAGS</code> e<code>CPPFLAGS</code>. Para usar o sistema de compilação do Arch, o <i>makepkg</i> expõe essas variáveis de ambiente como opções de configuração no <code>makepkg.conf</code>. Os valores padrão são configurados para produzir binários genéricos que podem ser instalados em uma ampla gama de máquinas.
 </p>
@@ -201,14 +211,24 @@ Empacotador       : John Doe &lt;john@doe.com&gt;
 <p>O GCC pode detectar e habilitar automaticamente otimizações seguras específicas para cada arquitetura. Para usar esse recurso, primeiro remova os sinalizadores <code>-march</code> e <code>-mtune</code>, então adicione <code>-march = native</code>. Por exemplo:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/makepkg.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">CFLAGS="<b>-march=native</b> -O2 -pipe -fstack-protector-strong -fno-plt"
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">CFLAGS="<b>-march=native</b> -O2 -pipe -fno-plt"
 CXXFLAGS="${CFLAGS}"</pre>
 <p>Para ver quais sinalizadores isso habilita em sua máquina, execute:
 </p>
 <pre>$ gcc -march=native -v -Q --help=target
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Se você especificar um valor diferente de <code>-march=native</code>, então <code>-Q --help=target</code> <b>não vai</b> funcionar como esperado.<a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1616694#p1616694">[4]</a> Você precisa passar por uma fase de compilação para descobrir quais opções estão realmente habilitadas. Veja <a rel="nofollow" class="external text" href="https://wiki.gentoo.org/wiki/Safe_CFLAGS#Find_CPU-specific_options">Encontre opções específicas da CPU</a> (inglês) no wiki do Gentoo para instruções.</div>
+<strong>Nota:</strong> Se você especificar um valor diferente de <code>-march=native</code>, então <code>-Q --help=target</code> <b>não vai</b> funcionar como esperado.<a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1616694#p1616694">[4]</a> Você precisa passar por uma fase de compilação para descobrir quais opções estão realmente habilitadas. Veja <a href="https://wiki.gentoo.org/wiki/Safe_CFLAGS#Manual" class="extiw" title="gentoo:Safe CFLAGS">Gentoo:Safe CFLAGS#Manual</a> para instruções.</div>
+<p>A partir do <code>pacman</code> versão 5.2.2, <code>makepkg.conf</code> também inclui substituições para a variável de ambiente <code>RUSTFLAGS</code>, para sinalizadores fornecidos ao compilador Rust. O compilador Rust também pode detectar e habilitar otimizações específicas de arquitetura para sua CPU, adicionando <code>-C target-cpu=native</code> ao valor <code>RUSTFLAGS</code> fornecido:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/makepkg.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">RUSTFLAGS="-C opt-level=2 <b>-C target-cpu=native</b>"</pre>
+<p>Para ver quais recursos de CPU isso vai habilitar, execute:
+</p>
+<pre>$ rustc -C target-cpu=native --print cfg
+</pre>
+<p>Executar <code>--print cfg</code> sem <code>-C target-cpu=native</code> irá imprimir a configuração padrão. O parâmetro <code>opt-level</code> pode ser alterado para <code>3</code>, <code>s</code> ou <code>z</code> conforme desejado. Consulte <a rel="nofollow" class="external text" href="https://doc.rust-lang.org/rustc/codegen-options/index.html#opt-level">a documentação do compilador Rust</a> para obter detalhes.
+</p>
 <h3>
 <span id="Melhorando_os_tempos_de_compila.C3.A7.C3.A3o"></span><span class="mw-headline" id="Melhorando_os_tempos_de_compilação">Melhorando os tempos de compilação</span>
 </h3>
@@ -246,16 +266,20 @@ CXXFLAGS="${CFLAGS}"</pre>
 <p>O uso de <a href="../pt/Ccache.html" title="Ccache (Português)">ccache</a> pode melhorar os tempos de compilação ao armazenar em cache os resultados de compilações para uso sucessivo.
 </p>
 <h3><span class="mw-headline" id="Gerar_novos_checksums">Gerar novos checksums</span></h3>
-<p>Instale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pacman-contrib">pacman-contrib</a></span> e execute o seguinte comando no mesmo diretório que o arquivo PKGBUILD para gerar novas somas de verificação (<i>checksums</i>):
+<p>Instale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pacman-contrib">pacman-contrib</a></span> e execute o seguinte comando no mesmo diretório que o arquivo PKGBUILD para gerar novas somas de verificação <i>(checksums)</i>:
 </p>
 <pre>$ updpkgsums
 </pre>
+<p><code>updpkgsums</code> usa <code>makepkg --geninteg</code> para gerar as somas de verificação. Veja <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1933763#p1933763">esta discussão de fórum</a> para obter mais detalhes.
+</p>
 <p>As somas de verificação também podem ser obtidos com, por exemplo, <code>sha256sum</code> e adicionados ao vetor <code>sha256sums</code> manualmente.
 </p>
 <h3>
 <span id="Usar_outros_algoritmos_de_compress.C3.A3o"></span><span class="mw-headline" id="Usar_outros_algoritmos_de_compressão">Usar outros algoritmos de compressão</span>
 </h3>
-<p>Para acelerar o empacotamento e a instalação, com a consequência de ter arquivos de pacotes maiores, você pode alterar <code>PKGEXT</code>. Por exemplo, o seguinte torna o arquivo de pacote descompactado para apenas uma invocação:
+<p>Para acelerar o empacotamento e a instalação, com a consequência de ter arquivos de pacotes maiores, você pode alterar <code>PKGEXT</code>.
+</p>
+<p>Por exemplo, o seguinte pula a compressão do arquivo de pacote, o qual vai, por sua vez, não ter a necessidade de descompressão na <a href="../pt/Help:Reading.html#Instala%C3%A7%C3%A3o_de_pacotes" class="mw-redirect" title="Instala">instala</a>ção:
 </p>
 <pre>$ PKGEXT='.pkg.tar' makepkg
 </pre>
@@ -287,7 +311,7 @@ CXXFLAGS="${CFLAGS}"</pre>
 <h3>
 <span id="Mostrar_pacotes_com_um_empacotador_espec.C3.ADfico"></span><span class="mw-headline" id="Mostrar_pacotes_com_um_empacotador_específico">Mostrar pacotes com um empacotador específico</span>
 </h3>
-<p>Isso mostra todos os pacotes instalados no sistema com o empacotador chamado <i>nome-empacotador</i>:
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=expac">expac</a></span> é um utilitário de extração de base de dados do pacman. Este comando mostra todos os pacotes instalados no sistema com o empacotador chamado <i>nome-empacotador</i>:
 </p>
 <pre>$ expac "%n %p" | grep "<i>nome-empacotador</i>" | column -t
 </pre>
@@ -305,7 +329,7 @@ CXXFLAGS="${CFLAGS}"</pre>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.makepkg.i686.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">CARCH="i686"
 CHOST="i686-unknown-linux-gnu"
-CFLAGS="-m32 -march=i686 -mtune=generic -O2 -pipe -fstack-protector-strong"
+CFLAGS="-m32 -march=i686 -mtune=generic -O2 -pipe"
 CXXFLAGS="${CFLAGS}"
 LDFLAGS="-m32 -Wl,-O1,--sort-common,--as-needed,-z,relro"</pre>
 <p>e chame o makepkg assim
@@ -322,28 +346,22 @@ LDFLAGS="-m32 -Wl,-O1,--sort-common,--as-needed,-z,relro"</pre>
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">PKGBUILD</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
-
 package() {
 	cd "$srcdir/${pkgname%-git}"
 	make INSTALL_ROOT="$pkgdir" install
 }
-
-...
-</pre>
+...</pre>
 <p>Note que o qmake também tem que ser configurado adequadamente. Por exemplo, coloque isso em seu arquivo <i>.pro</i>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">SeuProjeto.pro</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
-
 target.path = /usr/local/bin
 INSTALLS += target
-
-...
-</pre>
+...</pre>
 <h3>
 <span id="AVISO:_O_pacote_cont.C3.A9m_refer.C3.AAncia_para_.24srcdir"></span><span class="mw-headline" id="AVISO:_O_pacote_contém_referência_para_$srcdir">AVISO: O pacote contém referência para $srcdir</span>
 </h3>
-<p>De alguma forma, as strings literais <code>$srcdir</code> ou <code>$pkgdir</code> acabaram em um dos arquivos instalados no seu pacote.
+<p>De alguma forma, as strings literais contidas nas variáveis <code>$srcdir</code> ou <code>$pkgdir</code> acabaram em um dos arquivos instalados no seu pacote.
 </p>
 <p>Para identificar quais arquivos, execute o seguinte do diretório de compilação makepkg:
 </p>
@@ -386,8 +404,8 @@ XferCommand = /usr/bin/curl -x http://usuário:senha@proxy.proxyhost.com:80 -L -
 <span id="Veja_tamb.C3.A9m"></span><span class="mw-headline" id="Veja_também">Veja também</span>
 </h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="https://archlinux.org/pacman/makepkg.8.html">Página de manual makepkg(8)</a></li>
-<li><a rel="nofollow" class="external text" href="https://archlinux.org/pacman/makepkg.conf.5.html">Página de manual makepkg.conf(5)</a></li>
+<li><span class="plainlinks archwiki-template-man" title="$ man 8 makepkg"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/makepkg.8">makepkg(8)</a></span></li>
+<li><span class="plainlinks archwiki-template-man" title="$ man 5 makepkg.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/makepkg.conf.5">makepkg.conf(5)</a></span></li>
 <li><a rel="nofollow" class="external text" href="https://gist.github.com/Earnestly/bebad057f40a662b5cc3">Um breve passeio no processo do makepkg</a></li>
 <li><a rel="nofollow" class="external text" href="https://projects.archlinux.org/pacman.git/tree/scripts/makepkg.sh.in">Código fonte do makepkg</a></li>
 </ul>
@@ -405,8 +423,8 @@ XferCommand = /usr/bin/curl -x http://usuário:senha@proxy.proxyhost.com:80 -L -
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Makepkg_(Portugu%C3%AAs)&amp;oldid=646911">https://wiki.archlinux.org/index.php?title=Makepkg_(Português)&amp;oldid=646911</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:13.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Makepkg_(Portugu%C3%AAs)&amp;oldid=654879">https://wiki.archlinux.org/index.php?title=Makepkg_(Português)&amp;oldid=654879</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 March 2021, at 14:46.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

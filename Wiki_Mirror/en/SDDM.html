@@ -89,6 +89,7 @@
 <li class="toclevel-2 tocsection-24"><a href="#SDDM_loads_only_US_keyboard_layout"><span class="tocnumber">3.7</span> <span class="toctext">SDDM loads only US keyboard layout</span></a></li>
 <li class="toclevel-2 tocsection-25"><a href="#Screen_resolution_is_too_low"><span class="tocnumber">3.8</span> <span class="toctext">Screen resolution is too low</span></a></li>
 <li class="toclevel-2 tocsection-26"><a href="#Long_load_time_on_autofs_home_directory"><span class="tocnumber">3.9</span> <span class="toctext">Long load time on autofs home directory</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#X_authority_(aka_MIT-MAGIC-COOKIE)_file"><span class="tocnumber">3.10</span> <span class="toctext">X authority (aka MIT-MAGIC-COOKIE) file</span></a></li>
 </ul>
 </li>
 </ul>
@@ -301,6 +302,17 @@ EndSection</pre>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/sddm.conf.d/avatar.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Theme]
 EnableAvatars=false</pre>
+<h3>
+<span id="X_authority_.28aka_MIT-MAGIC-COOKIE.29_file"></span><span class="mw-headline" id="X_authority_(aka_MIT-MAGIC-COOKIE)_file">X authority (aka MIT-MAGIC-COOKIE) file</span>
+</h3>
+<p>SDDM uses a random fresh UUID for the auth file as described in details at <a rel="nofollow" class="external autonumber" href="https://github.com/sddm/sddm/issues/622">[7]</a>. So in order to find that file one may use a script:
+</p>
+<pre># find /var/run/sddm/ -type f
+</pre>
+<p>This may be needed if one needs to start <a href="../en/X11vnc.html" title="X11vnc">x11vnc</a> when there's no user logged in. For example:
+</p>
+<pre># x11vnc -display :0 -auth "$( find /var/run/sddm/ -type f )"
+</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
@@ -318,8 +330,8 @@ EnableAvatars=false</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SDDM&amp;oldid=652086">https://wiki.archlinux.org/index.php?title=SDDM&amp;oldid=652086</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 February 2021, at 16:25.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SDDM&amp;oldid=654834">https://wiki.archlinux.org/index.php?title=SDDM&amp;oldid=654834</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 March 2021, at 01:34.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

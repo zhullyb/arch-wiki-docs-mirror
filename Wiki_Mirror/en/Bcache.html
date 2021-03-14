@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -485,11 +486,14 @@ cset.uuid		75ff0598-7624-46f6-bcac-c27a3cf1a09f
 <p>Now, <code>/dev/bcache*</code> should be present, and you can carry on mounting, reformatting, etc. from here.
 </p>
 <h2><span class="mw-headline" id="Configuring">Configuring</span></h2>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> Do not enable the <code>discard</code> option! It can cause unrecoverable corruption. <a rel="nofollow" class="external autonumber" href="https://bugzilla.kernel.org/show_bug.cgi?id=197377">[4]</a><a rel="nofollow" class="external autonumber" href="https://www.spinics.net/lists/linux-bcache/msg05279.html">[5]</a>
+</div>
 <p>There are many options that can be configured (such as cache mode, cache flush interval, sequential write heuristic, etc.) This is currently done by writing to files in <code>/sys</code>. See the <a rel="nofollow" class="external text" href="https://evilpiepirate.org/git/linux-bcache.git/tree/Documentation/bcache.txt">bcache user documentation</a>.
 </p>
-<p>Changing the cache mode is done by echoing one of 'writethrough', 'writeback', 'writearound' or 'none' to /sys/block/bcache[0-9]/bcache/cache_mode.
+<p>Changing the cache mode is done by echoing one of <code>writethrough</code>, <code>writeback</code>, <code>writearound</code> or <code>none</code> to <code>/sys/block/bcache[0-9]/bcache/cache_mode</code>.
 </p>
-<p>Note that some changes to /sys are temporary, and will revert back after a reboot (It seems that at least cache_mode does not need this workaround). To set custom configurations at boot create a .conf file in <code>/etc/tmpfiles.d</code>. To set, in a persistent fashion, the sequential cutoff for bcache0 to 1 MB  and write back you could create a file <code>/etc/tmpfiles.d/my-bcache.conf</code> with the contents
+<p>Note that some changes to <code>/sys</code> are temporary, and will revert back after a reboot (It seems that at least cache_mode does not need this workaround). To set custom configurations at boot create a .conf file in <code>/etc/tmpfiles.d</code>. To set, in a persistent fashion, the sequential cutoff for <code>bcache0</code> to 1 MB  and write back you could create a file <code>/etc/tmpfiles.d/my-bcache.conf</code> with the contents:
 </p>
 <pre>w /sys/block/bcache0/bcache/sequential_cutoff - - - - 1M
 w /sys/block/bcache0/bcache/cache_mode        - - - - writeback
@@ -645,8 +649,8 @@ You are being dropped to a recovery shell
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Bcache&amp;oldid=647263">https://wiki.archlinux.org/index.php?title=Bcache&amp;oldid=647263</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 27 December 2020, at 07:49.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Bcache&amp;oldid=654010">https://wiki.archlinux.org/index.php?title=Bcache&amp;oldid=654010</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 5 March 2021, at 06:52.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

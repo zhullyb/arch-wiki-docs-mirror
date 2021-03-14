@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,6 +34,17 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <p><br>
+</p>
+<div class="archwiki-template-meta-related-articles-start">
+<p>相关文章</p>
+<ul>
+<li><a href="../zh-CN/GTK.html" title="GTK (简体中文)">GTK</a></li>
+<li><a href="../zh-CN/Qt.html" title="Qt (简体中文)">Qt</a></li>
+</ul>
+</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>翻译状态：</strong>本文是 <a href="../en/Uniform_look_for_Qt_and_GTK_applications.html" title="Uniform look for Qt and GTK applications">Uniform look for Qt and GTK applications</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021年3月4日。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Uniform_look_for_Qt_and_GTK_applications&amp;diff=0&amp;oldid=651850">更改</a>，则您可以帮助同步翻译。</div>
+<p>基于 <a href="../zh-CN/Qt.html" title="Qt (简体中文)">Qt</a> 和 <a href="../zh-CN/GTK.html" title="GTK (简体中文)">GTK</a> 的程序使用不同的工具包来渲染图形化用户界面，各自带有不同的主题、风格和图标，所以观感就明显有所不同。这篇文章将帮助你体验让你的 Qt 和 GTK 程序看起来更现代化、集成化的桌面。
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -72,7 +84,8 @@
 <li class="toclevel-2 tocsection-16"><a href="#%E7%B3%BB%E7%BB%9F%E5%8D%87%E7%BA%A7%E5%90%8EGTK%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%8D%E4%BD%BF%E7%94%A8svg%EF%BC%88breeze%EF%BC%89%E5%9B%BE%E6%A0%87"><span class="tocnumber">5.2</span> <span class="toctext">系统升级后GTK应用程序不使用svg（breeze）图标</span></a></li>
 <li class="toclevel-2 tocsection-17"><a href="#Flatpak_Qt%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%8D%E4%BD%BF%E7%94%A8Gnome_Adwaita%E9%BB%91%E6%9A%97%E4%B8%BB%E9%A2%98"><span class="tocnumber">5.3</span> <span class="toctext">Flatpak Qt应用程序不使用Gnome Adwaita黑暗主题</span></a></li>
 <li class="toclevel-2 tocsection-18"><a href="#%E5%8D%B3%E4%BD%BF%E5%9C%A8%E8%AE%BE%E7%BD%AEQt%E4%B8%BB%E9%A2%98%E5%90%8E%EF%BC%8C%E5%9C%A8GNOME_Wayland%E4%B8%8A%E8%BF%90%E8%A1%8C%E7%9A%84Qt%E5%BA%94%E7%94%A8%E4%B9%9F%E6%9C%89%E4%B8%8D%E5%8C%B9%E9%85%8D%E7%9A%84%E7%AA%97%E5%8F%A3%E8%A3%85%E9%A5%B0%E5%A4%96%E8%A7%82"><span class="tocnumber">5.4</span> <span class="toctext">即使在设置Qt主题后，在GNOME Wayland上运行的Qt应用也有不匹配的窗口装饰外观</span></a></li>
-<li class="toclevel-2 tocsection-19"><a href="#%E5%AE%89%E8%A3%85kde-gtk-config%E5%90%8E%EF%BC%8C%E6%B2%A1%E6%9C%89%E2%80%9C%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE&gt;%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%A0%B7%E5%BC%8F&gt;_GTK%E2%80%9D%E8%8F%9C%E5%8D%95"><span class="tocnumber">5.5</span> <span class="toctext">安装kde-gtk-config后，没有“系统设置&gt;应用程序样式&gt; GTK”菜单</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#GTK_%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%8D%E8%83%BD%E5%AE%8C%E5%85%A8%E4%BD%BF%E7%94%A8_KDE_%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE"><span class="tocnumber">5.5</span> <span class="toctext">GTK 应用程序不能完全使用 KDE 系统设置</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#%E5%AE%89%E8%A3%85kde-gtk-config%E5%90%8E%EF%BC%8C%E6%B2%A1%E6%9C%89%E2%80%9C%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE&gt;%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%A0%B7%E5%BC%8F&gt;_GTK%E2%80%9D%E8%8F%9C%E5%8D%95"><span class="tocnumber">5.6</span> <span class="toctext">安装kde-gtk-config后，没有“系统设置&gt;应用程序样式&gt; GTK”菜单</span></a></li>
 </ul>
 </li>
 </ul>
@@ -81,7 +94,7 @@
 <h2>
 <span id=".E4.BB.8B.E7.BB.8D"></span><span class="mw-headline" id="介绍">介绍</span>
 </h2>
-<p>基于<a href="https://en.wikipedia.org/wiki/Qt_(toolkit)" class="extiw" title="wikipedia:Qt (toolkit)">Qt</a> 和 <a href="../en/GTK.html" class="mw-redirect" title="GTK+">GTK+</a>的程序使用不同的工具包来渲染图形化用户界面，各自带有不同的主题、风格和图标，所以观感就明显有所不同。这篇文章将帮助你体验让你的Qt和GTK+程序看起来更现代化、集成化的桌面。
+<p>要想在不同的工具包之间获得相似的外观，你很可能需要修改以下内容：
 </p>
 <ul>
 <li>
@@ -96,8 +109,8 @@
 <p>你可以有多种选择：
 </p>
 <ul>
-<li>使用下面列出的每个工具箱中的工具分别修改<a href="#Styles_for_both_Qt_and_GTK">GTK and Qt styles</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>，以选择外观相似的主题（样式，颜色，图标，光标，字体）。</li>
-<li>使用特殊的<a href="#Theme_engines">theme engine</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>，该引擎将对其他图形工具箱的修改作为中介，以匹配您的主要工具箱。</li>
+<li>使用下面列出的每个工具箱中的工具分别修改 <a href="#Qt%E5%92%8CGTK%E7%9A%84%E6%A0%B7%E5%BC%8F">Qt 和 GTK 的样式</a>，以选择外观相似的主题（样式，颜色，图标，光标，字体）。</li>
+<li>使用特殊的<a href="#%E4%B8%BB%E9%A2%98%E5%BC%95%E6%93%8E">主题引擎</a>，该引擎将对其他图形工具箱的修改作为中介，以匹配您的主要工具箱。</li>
 </ul>
 <h2>
 <span id="Qt.E5.92.8CGTK.E7.9A.84.E6.A0.B7.E5.BC.8F"></span><span class="mw-headline" id="Qt和GTK的样式">Qt和GTK的样式</span>
@@ -159,9 +172,8 @@ style=GTK+
 <p>为了完全统一，请确保配置的<a href="../en/GTK.html#Themes" title="GTK">GTK主题</a>同时支持GTK 2和GTK3。如果将Qt配置为使用GTK2后导致首选主题渲染不一致，请安装<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gtk-theme-switch2/">gtk-theme-switch2</a></span><sup><small>AUR</small></sup>，然后选择一个主题。
 </p>
 <h3><span class="mw-headline" id="QGnomePlatform">QGnomePlatform</span></h3>
-<p>Qt 5平台主题适用于Qt应用程序的GNOME外观设置。它可以与<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/qgnomeplatform/">qgnomeplatform</a></span><sup><small>AUR</small></sup>软件包一起安装，也可以与开发版本的<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/qgnomeplatform-git/">qgnomeplatform-git</a></span><sup><small>AUR</small></sup>软件包一起安装。它本身不提供Qt样式，而是需要<a href="#Styles_for_both_Qt_and_GTK">同时支持Qt and GTK样式</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>。
-</p>
-<p>从3.20版开始，此平台主题已在GNOME中自动启用。对于其他系统，可以通过设置以下<a href="../en/Environment_variables.html#Graphical_environment" title="Environment variables">environment variable</a>来启用它：<code>QT_QPA_PLATFORMTHEME=qgnomeplatform</code>.。
+<p>Qt 5 平台主题适用于 Qt 应用程序的 GNOME 外观设置。它可以与 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/qgnomeplatform/">qgnomeplatform</a></span><sup><small>AUR</small></sup> 软件包一起安装，也可以与开发版本的 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/qgnomeplatform-git/">qgnomeplatform-git</a></span><sup><small>AUR</small></sup> 软件包一起安装。它本身不提供 Qt 样式，而是需要<a href="#Qt%E5%92%8CGTK%E7%9A%84%E6%A0%B7%E5%BC%8F">同时支持 Qt 和 GTK 样式</a>。
+从 3.20 版开始，此平台主题已在 GNOME 中自动启用。对于其他系统，可以通过设置以下<a href="../zh-CN/Environment_variables.html#%E5%9B%BE%E5%BD%A2%E7%A8%8B%E5%BA%8F" title="Environment variables (简体中文)">环境变量</a>来启用它：<code>QT_QPA_PLATFORMTHEME=qgnomeplatform</code>.。
 </p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3>
@@ -245,6 +257,11 @@ style=GTK+
 <p>为了有一个匹配的窗口装饰外观，您必须安装<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/qgnomeplatform/">qgnomeplatform</a></span><sup><small>AUR</small></sup>，并设置以下环境变量<a href="../en/Environment_variables.html#Graphical_environment" title="Environment variables">environment variable</a>:<code>QT_QPA_PLATFORMTHEME='gnome'</code>。
 </p>
 <h3>
+<span id="GTK_.E5.BA.94.E7.94.A8.E7.A8.8B.E5.BA.8F.E4.B8.8D.E8.83.BD.E5.AE.8C.E5.85.A8.E4.BD.BF.E7.94.A8_KDE_.E7.B3.BB.E7.BB.9F.E8.AE.BE.E7.BD.AE"></span><span class="mw-headline" id="GTK_应用程序不能完全使用_KDE_系统设置">GTK 应用程序不能完全使用 KDE 系统设置</span>
+</h3>
+<p>为了进一步整合 GTK 应用程序上的 <a href="../zh-CN/KDE.html" class="mw-redirect" title="Plasma (简体中文)">Plasma</a> 设置，可能需要<a href="../zh-CN/Help:Reading.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" class="mw-redirect" title="安装">安装</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gnome-settings-daemon">gnome-settings-daemon</a></span>、<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gsettings-desktop-schemas">gsettings-desktop-schemas</a></span> 和 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gsettings-qt">gsettings-qt</a></span>，这将为 GTK 提供适当的 Qt 绑定。
+</p>
+<h3>
 <span id=".E5.AE.89.E8.A3.85kde-gtk-config.E5.90.8E.EF.BC.8C.E6.B2.A1.E6.9C.89.E2.80.9C.E7.B3.BB.E7.BB.9F.E8.AE.BE.E7.BD.AE.3E.E5.BA.94.E7.94.A8.E7.A8.8B.E5.BA.8F.E6.A0.B7.E5.BC.8F.3E_GTK.E2.80.9D.E8.8F.9C.E5.8D.95"></span><span class="mw-headline" id="安装kde-gtk-config后，没有“系统设置&gt;应用程序样式&gt;_GTK”菜单">安装kde-gtk-config后，没有“系统设置&gt;应用程序样式&gt; GTK”菜单</span>
 </h3>
 <p>使用<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=kde-gtk-config">kde-gtk-config</a></span>时，可以选择<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxappearance">lxappearance</a></span>之类的<a href="../en/GTK.html#Configuration_tools" title="GTK">GTK configuration tools</a>来配置GTK 2和GTK 3样式。
@@ -253,23 +270,19 @@ style=GTK+
 </p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
 <li><a href="../zh-CN/Category:Widget_toolkits.html" title="Category:Widget toolkits (简体中文)">Widget toolkits (简体中文)</a></li>
 <li><a href="../zh-CN/Category:Eye_candy.html" title="Category:Eye candy (简体中文)">Eye candy (简体中文)</a></li>
 </ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Uniform_look_for_Qt_and_GTK_applications_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=628054">https://wiki.archlinux.org/index.php?title=Uniform_look_for_Qt_and_GTK_applications_(简体中文)&amp;oldid=628054</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 August 2020, at 22:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Uniform_look_for_Qt_and_GTK_applications_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=653981">https://wiki.archlinux.org/index.php?title=Uniform_look_for_Qt_and_GTK_applications_(简体中文)&amp;oldid=653981</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 4 March 2021, at 16:17.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

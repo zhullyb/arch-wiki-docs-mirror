@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -75,9 +76,10 @@
 <ul>
 <li class="toclevel-2 tocsection-11"><a href="#Zsh_Undecodable_Token"><span class="tocnumber">5.1</span> <span class="toctext">Zsh Undecodable Token</span></a></li>
 <li class="toclevel-2 tocsection-12"><a href="#vi_Mode_Undecodable_Token"><span class="tocnumber">5.2</span> <span class="toctext">vi Mode Undecodable Token</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Error_loading_libblas.so.3_in_ARM_with_OpenBLAS_installed"><span class="tocnumber">5.3</span> <span class="toctext">Error loading libblas.so.3 in ARM with OpenBLAS installed</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-13"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-14"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -92,7 +94,7 @@
 <ul><li>
 <b>Cantor</b> — A graphical user interface that delegates its mathematical operations to one of several back ends (Scilab, Maxima, Octave and others).</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="https://edu.kde.org/cantor/">https://edu.kde.org/cantor/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cantor">cantor</a></span>
+<a rel="nofollow" class="external free" href="https://apps.kde.org/en/cantor">https://apps.kde.org/en/cantor</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cantor">cantor</a></span>
 </dd></dl>
 <ul><li>
 <b><a href="../en/Jupyter.html" title="Jupyter">JupyterLab</a></b> — Browser-based interactive environment which supports many programming backends, including Octave.</li></ul>
@@ -110,7 +112,7 @@ B = single(rand(N, N));
 start = clock();
 C = A * B;
 elapsedTime = etime(clock(), start);
-gFlops = 2 * N * N * N / (elapsedTime * 1e9);
+gFlops = 2 * N * N * N / (elapsedTime * 1e9)
 </pre>
 <p>Running the following code on an Intel Core i7-9750H:
 </p>
@@ -254,6 +256,12 @@ Control-a: beginning-of-line
 $endif
 
 $endif</pre>
+<h3><span class="mw-headline" id="Error_loading_libblas.so.3_in_ARM_with_OpenBLAS_installed">Error loading libblas.so.3 in ARM with OpenBLAS installed</span></h3>
+<p>Octave <a rel="nofollow" class="external text" href="https://archlinuxarm.org/forum/viewtopic.php?f=15&amp;t=15054">fails to open</a> due to missing libraries in ARMv7 and ARMv8, after OpenBLAS was updated to version 0.3.13-1. It shows <code>error while loading shared libraries: libblas.so.3: cannot open shared object file</code>.
+A solution is to symlink the OpenBLAS library with BLAS.
+</p>
+<pre> sudo ln -s /usr/lib/libopenblas.so.3 /usr/lib/libblas.so.3
+</pre>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul><li><a href="https://en.wikipedia.org/wiki/GNU_Octave" class="extiw" title="wikipedia:GNU Octave">Wikipedia:GNU Octave</a></li></ul>
 </div>
@@ -270,8 +278,8 @@ $endif</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Octave&amp;oldid=638128">https://wiki.archlinux.org/index.php?title=Octave&amp;oldid=638128</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:04.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Octave&amp;oldid=654893">https://wiki.archlinux.org/index.php?title=Octave&amp;oldid=654893</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 March 2021, at 16:09.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -97,16 +98,16 @@
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
 <p>AppArmor is available in all <a href="../en/Kernel.html#Officially_supported_kernels" title="Kernel">officially supported kernels</a>.
 </p>
-<p>To enable AppArmor as default security model on every boot, set the following <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a>:
+<p>To enable AppArmor as default security model on every boot, set the following <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a>:
 </p>
-<pre>apparmor=1 lsm=lockdown,yama,apparmor
+<pre>lsm=lockdown,yama,apparmor,bpf
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The <code>lsm=</code> kernel parameter sets the initialization order of Linux security modules. The kernel's configured <code>lsm=</code> value can be found with <code>zgrep CONFIG_LSM= /proc/config.gz</code> and the current value with <code>cat /sys/kernel/security/lsm</code>.
 <ul>
 <li>Make sure that <code>apparmor</code> is the first "major" module in the list.<a rel="nofollow" class="external autonumber" href="https://www.kernel.org/doc/html/latest/admin-guide/LSM/index.html">[1]</a> Examples of valid values and their order can be found in <a rel="nofollow" class="external text" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/security/Kconfig">security/Kconfig</a>.</li>
 <li>
-<code>capability</code> can be omitted from <code>lsm=</code> as it will always get included automatically.</li>
+<code>capability</code> should be omitted from <code>lsm=</code> as it will always get included automatically.</li>
 </ul>
 </div>
 <p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=apparmor">apparmor</a></span> for userspace tools and libraries to control AppArmor. To load all AppArmor profiles on startup, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>apparmor.service</code>.
@@ -117,10 +118,9 @@
 <pre>CONFIG_SECURITY_APPARMOR=y
 CONFIG_AUDIT=y
 </pre>
-<p>To use AppArmor as the default Linux security model and omitting the need of setting kernel parameters, also set the following options:
+<p>To enable the AppArmor Linux security model by default and omit the need to set kernel parameters, additionally set the <code>CONFIG_LSM</code> option and specify <code>apparmor</code> as the first "major" module in the list:
 </p>
-<pre>CONFIG_SECURITY_APPARMOR_BOOTPARAM_VALUE=1
-CONFIG_DEFAULT_SECURITY_APPARMOR=y
+<pre>CONFIG_LSM="lockdown,yama,apparmor,bpf"
 </pre>
 <h2><span class="mw-headline" id="Usage">Usage</span></h2>
 <h3><span class="mw-headline" id="Display_current_status">Display current status</span></h3>
@@ -288,8 +288,8 @@ write-cache</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=AppArmor&amp;oldid=620464">https://wiki.archlinux.org/index.php?title=AppArmor&amp;oldid=620464</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 June 2020, at 08:24.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=AppArmor&amp;oldid=653142">https://wiki.archlinux.org/index.php?title=AppArmor&amp;oldid=653142</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 February 2021, at 14:02.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

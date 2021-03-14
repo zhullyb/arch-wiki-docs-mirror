@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -101,7 +102,7 @@
 <ul>
 <li>If you use <a href="../en/Dm-crypt.html" class="mw-redirect" title="System Encryption with LUKS for dm-crypt">hard drive encryption</a> with the <code>encrypt</code> hook, you <b>must</b> replace the <code>encrypt</code> hook with <code>plymouth-encrypt</code> and add it after the <code>plymouth</code> hook in order to get to the TTY password prompts.</li>
 <li>Using <code>PARTUUID</code> or <code>PARTLABEL</code> in <code>cryptdevice=</code> parameter does <b>not</b> work with <code>plymouth-encrypt</code> hook.</li>
-<li>For a <a href="../en/Install_Arch_Linux_on_ZFS.html#Native_encryption" class="mw-redirect" title="Installing Arch Linux on ZFS">ZFS encrypted root</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>, you <b>must</b> install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/plymouth-zfs/">plymouth-zfs</a></span><sup><small>AUR</small></sup> and replace the <code>zfs</code> hook with <code>plymouth-zfs</code>
+<li>For a <a href="../en/Install_Arch_Linux_on_ZFS.html#Compression_and_native_encryption" class="mw-redirect" title="Installing Arch Linux on ZFS">ZFS encrypted root</a>, you <b>must</b> install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/plymouth-zfs/">plymouth-zfs</a></span><sup><small>AUR</small></sup> and replace the <code>zfs</code> hook with <code>plymouth-zfs</code>
 </li>
 </ul>
 </div>
@@ -243,9 +244,7 @@ WatermarkVerticalAlignment=.5
 </pre>
 <p>See the <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/plymouth/plymouth/-/issues/123">upstream issue</a> for more details.
 </p>
-<p>Although a commit fixing the issue <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/plymouth/plymouth/-/commit/b406b0895a95949db2adfedaeda451f36f2b51c3">has been pushed upstream</a>, it lives on a separate feature-branch and <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/plymouth/plymouth/-/merge_requests/122">has not been merged yet</a>. Therefore installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/plymouth-git/">plymouth-git</a></span><sup><small>AUR</small></sup> would not solve the issue, except if you cherry-pick the fix or modify the <a href="../en/PKGBUILD.html" title="PKGBUILD">PKGBUILD</a> to use the <code>kill-mode-change</code> branch.
-</p>
-<p>As of December 2020, the only solution is to <a href="../en/Systemd.html#Replacement_unit_files" title="Systemd">fully replace</a> <code>plymouth-start.service</code> with the fixed version (a <a href="../en/Systemd.html#Drop-in_files" title="Systemd">partial override</a> did not work in this case, the error message kept recurring). However as noted, you must not forget to <a href="../en/Systemd.html#Revert_to_vendor_version" title="Systemd">revert</a> to the upstream vendor version once the next version of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/plymouth/">plymouth</a></span><sup><small>AUR</small></sup> with the fix is released.
+<p>This issue has now been fixed by upstream. However, because a new versioned release with the fix has yet to be released, the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/plymouth/">plymouth</a></span><sup><small>AUR</small></sup> package also still has this issue. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/plymouth-git/">plymouth-git</a></span><sup><small>AUR</small></sup> already incorporates the fix (as of late February, 2021).
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
@@ -258,10 +257,7 @@ WatermarkVerticalAlignment=.5
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Bootsplash.html" title="Category:Bootsplash">Bootsplash</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li></ul>
 </div>
 </div>
 	</div>
@@ -269,8 +265,8 @@ WatermarkVerticalAlignment=.5
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Plymouth&amp;oldid=647379">https://wiki.archlinux.org/index.php?title=Plymouth&amp;oldid=647379</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 28 December 2020, at 01:48.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Plymouth&amp;oldid=653295">https://wiki.archlinux.org/index.php?title=Plymouth&amp;oldid=653295</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 24 February 2021, at 11:47.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

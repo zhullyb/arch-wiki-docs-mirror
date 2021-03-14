@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -62,11 +63,17 @@
 <li class="toclevel-2 tocsection-6"><a href="#Restrict_enrolling"><span class="tocnumber">3.3</span> <span class="toctext">Restrict enrolling</span></a></li>
 </ul>
 </li>
+<li class="toclevel-1 tocsection-7">
+<a href="#Troubleshooting"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a>
+<ul>
+<li class="toclevel-2 tocsection-8"><a href="#No_devices_available"><span class="tocnumber">4.1</span> <span class="toctext">No devices available</span></a></li>
+</ul>
+</li>
 </ul>
 </div>
 
 <h2><span class="mw-headline" id="Prerequisites">Prerequisites</span></h2>
-<p>Make sure you have one of the supported finger scanners. You can check if your device is supported by checking <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/fprint/libfprint/Supported_devices/">list of supported devices</a>. To check which one you have, type:
+<p>Make sure you have one of the supported finger scanners. You can check if your device is supported by checking <a rel="nofollow" class="external text" href="https://fprint.freedesktop.org/supported-devices.html">list of supported devices</a>. To check which one you have, type:
 </p>
 <pre>$ lsusb
 </pre>
@@ -142,6 +149,19 @@ $ for finger in {left,right}-{thumb,{index,middle,ring,little}-finger}; do fprin
     return subject.user == "root" ? polkit.Result.YES : polkit.result.NO
   }
 })</pre>
+<h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
+<h3><span class="mw-headline" id="No_devices_available">No devices available</span></h3>
+<p>If your <a rel="nofollow" class="external text" href="https://fprint.freedesktop.org/supported-devices.html">supported device</a> cannot be found or is claimed to be already open (in use), check <code>fprintd</code> logs with:
+</p>
+<pre>$ journalctl -u fprintd
+</pre>
+<p>You may find log entries like:
+</p>
+<pre>fprintd[2936592]: Corrupted message received
+fprintd[2936592]: Ignoring device due to initialization error: unsupported firmware version
+</pre>
+<p>Ensure your device's firmware is up to date with <a href="../en/Fwupd.html" title="Fwupd">Fwupd</a>.
+</p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
@@ -152,8 +172,8 @@ $ for finger in {left,right}-{thumb,{index,middle,ring,little}-finger}; do fprin
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fprint&amp;oldid=647625">https://wiki.archlinux.org/index.php?title=Fprint&amp;oldid=647625</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 30 December 2020, at 02:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fprint&amp;oldid=653284">https://wiki.archlinux.org/index.php?title=Fprint&amp;oldid=653284</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 24 February 2021, at 05:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

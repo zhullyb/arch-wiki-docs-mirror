@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -41,6 +42,11 @@
 <li><a href="../en/Samba.html" title="Samba">Samba</a></li>
 <li><a href="../en/LPRng.html" title="LPRng">LPRng</a></li>
 </ul>
+</div>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cups">cups</a></span> packages the <a rel="nofollow" class="external text" href="https://openprinting.github.io/cups/">OpenPrinting CUPS fork</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:CUPS">Talk:CUPS#</a>)</div>
 </div>
 <p><a rel="nofollow" class="external text" href="https://www.cups.org/">CUPS</a> is the standards-based, open source printing system currently developed by Apple Inc. for macOS® and other UNIX®-like operating systems.
 </p>
@@ -131,7 +137,7 @@
 <p>Additional steps for printer detection are listed below for various connection interfaces.
 </p>
 <h3><span class="mw-headline" id="USB">USB</span></h3>
-<p>To see if your USB printer is detected:
+<p>To see if your USB printer is detected, make sure you have the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=usbutils">usbutils</a></span> package installed, then:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ lsusb</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">(...)
@@ -145,7 +151,7 @@ Bus 001 Device 007: ID 03f0:1004 Hewlett-Packard DeskJet 970c/970cse
  lp0: using parport0 (polling)
 </pre>
 <h3><span class="mw-headline" id="Network">Network</span></h3>
-<p>To discover or share printers using DNS-SD/mDNS, setup <a href="../en/Avahi.html#Hostname_resolution" title="Avahi">.local hostname resolution</a> with <a href="../en/Avahi.html" title="Avahi">Avahi</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>cups.service</code>.
+<p>To discover, make use of discovered or share printers using DNS-SD/mDNS, setup <a href="../en/Avahi.html#Hostname_resolution" title="Avahi">.local hostname resolution</a> with <a href="../en/Avahi.html" title="Avahi">Avahi</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>cups.service</code>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> DNS-SD is only supported when using <a href="../en/Avahi.html" title="Avahi">Avahi</a>. CUPS does not support using <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a> for DNS-SD, see <a rel="nofollow" class="external text" href="https://github.com/apple/cups/issues/5452">CUPS issue 5452</a>.</div>
@@ -251,20 +257,29 @@ Alternatively, the <a href="#Web_interface">#Web interface</a> or one of several
 <p>See <a rel="nofollow" class="external text" href="http://localhost:631/help/options.html">CUPS local documentation</a> for more tips on the command-line tools.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Command-line switches cannot be grouped</div>
+<strong>Note:</strong> Command-line switches cannot be grouped.</div>
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
 <b>Reason:</b> Nonstandard use of definition lists, comments in command line. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:CUPS">Talk:CUPS#</a>)</div>
 </div>
-<dl><dt>List the devices</dt></dl>
+<dl>
+<dt>List the devices</dt>
+<dd></dd>
+</dl>
 <pre># lpinfo -v
 $ /usr/lib/cups/backend/snmp <i>ip_address</i>  # Use SNMP to find a URI
 </pre>
-<dl><dt>List the models</dt></dl>
+<dl>
+<dt>List the models</dt>
+<dd></dd>
+</dl>
 <pre>$ lpinfo -m
 </pre>
-<dl><dt>Add a new queue</dt></dl>
+<dl>
+<dt>Add a new queue</dt>
+<dd></dd>
+</dl>
 <pre># lpadmin -p <i>queue_name</i> -E -v <i>uri</i> -m <i>model</i>
 </pre>
 <p>The <i>queue_name</i> is up to you.
@@ -276,61 +291,97 @@ Examples:
 # lpadmin -p Test_Printer -E -v "ipp://10.0.1.3/ipp/print" -m pxlmono.ppd    # Specifying a PPD instead of a model
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> When specifying the PPD, use just the file name and not the full path (for instance, <code>pxlmono.ppd</code> instead of <code>/usr/share/ppd/cupsfilters/pxlmono.ppd</code>). Alternatively, the full path can be used with the <code>-P</code> command line switch.</div>
-<dl><dt>Set the default printer</dt></dl>
+<strong>Note:</strong> 
+<ul>
+<li>When specifying the PPD, use just the file name and not the full path (for instance, <code>pxlmono.ppd</code> instead of <code>/usr/share/ppd/cupsfilters/pxlmono.ppd</code>). Alternatively, the full path can be used with the <code>-P</code> command line switch.</li>
+<li>As of 2021, many recent printers support driverless printing setup and when specifying <code>-m everywhere</code>, as in the second example above, the printer will be defined and a <i>.ppd</i> file will be created in <code>/etc/cups/ppd/</code> by querying the printer on the network.</li>
+</ul>
+</div>
+<dl>
+<dt>Set the default printer</dt>
+<dd></dd>
+</dl>
 <pre>$ lpoptions -d <i>queue_name</i>
 </pre>
-<dl><dt>Change the options</dt></dl>
+<dl>
+<dt>Change the options</dt>
+<dd></dd>
+</dl>
 <pre>$ lpoptions -p <i>queue_name</i> -l # List the options
 $ lpoptions -p <i>queue_name</i> -o <i>option</i>=<i>value</i> # Set an option
 </pre>
 <p>Example:
 </p>
 <pre>$ lpoptions -p HP_DESKJET_940C -o PageSize=A4
+$ lpoptions -p HP_DESKJET_940C -o cupsIPPSupplies=true -o Duplex=DuplexNoTumble
 </pre>
-<dl><dt>Check the status</dt></dl>
+<dl>
+<dt>Check the status</dt>
+<dd></dd>
+</dl>
 <pre>$ lpstat -s
 $ lpstat -p <i>queue_name</i>
 </pre>
-<dl><dt>Deactivate a printer</dt></dl>
+<dl>
+<dt>Deactivate a printer</dt>
+<dd></dd>
+</dl>
 <pre># cupsdisable <i>queue_name</i>
 </pre>
-<dl><dt>Activate a printer</dt></dl>
+<dl>
+<dt>Activate a printer</dt>
+<dd></dd>
+</dl>
 <pre># cupsenable <i>queue_name</i>
 </pre>
 <dl><dt>Set the printer to accept jobs</dt></dl>
 <pre># cupsaccept <i>queue_name</i>
 </pre>
-<dl><dt>Remove a printer</dt></dl>
+<dl><dt>Remove a printer.</dt></dl>
 <p>First set it to reject all incoming entries:
 </p>
 <pre># cupsreject <i>queue_name</i>
 </pre>
-<p>Then disable it.
+<p>Then disable it:
 </p>
 <pre># cupsdisable <i>queue_name</i>
 </pre>
-<p>Finally remove it.
+<p>Finally remove it:
 </p>
 <pre># lpadmin -x <i>queue_name</i>
 </pre>
-<dl><dt>Print a test page</dt></dl>
+<dl>
+<dt>Print a test page</dt>
+<dd></dd>
+</dl>
 <pre>$ lpr /usr/share/cups/data/testprint
 </pre>
-<dl><dt>Print a file</dt></dl>
+<dl>
+<dt>Print a file</dt>
+<dd></dd>
+</dl>
 <pre>$ lpr <i>file</i>
 $ lpr -# 17 <i>file</i>            # print the file 17 times
 $ echo 'Hello, world!' | lpr -p # print the result of a command. The -p switch adds a header.
 </pre>
-<dl><dt>Check the queue</dt></dl>
+<dl>
+<dt>Check the queue</dt>
+<dd></dd>
+</dl>
 <pre>$ lpq
 $ lpq -a # on all queues
 </pre>
-<dl><dt>Clear the queue</dt></dl>
+<dl>
+<dt>Clear the queue</dt>
+<dd></dd>
+</dl>
 <pre># lprm   # remove last entry only
 # lprm - # remove all entries
 </pre>
-<dl><dt>View ink levels</dt></dl>
+<dl>
+<dt>View ink levels</dt>
+<dd></dd>
+</dl>
 <p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ink/">ink</a></span><sup><small>AUR</small></sup>. 
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -390,7 +441,7 @@ $ lpq -a # on all queues
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Prior to <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cups">cups</a></span> 2.2.6-2, the <code>lp</code> group <a rel="nofollow" class="external text" href="https://github.com/archlinux/svntogit-packages/commit/a209bf21797a239c7ddb4614f0266ba1e5238622">was used instead</a>. After the upgrade, the files in <code>/etc/cups</code> should be owned by the <code>cups</code> group and <code>User 209</code> and <code>Group 209</code> set in <code>/etc/cups/cups-files.conf</code>.</div>
 <h3><span class="mw-headline" id="Default_paper_size">Default paper size</span></h3>
-<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cups">cups</a></span> is built with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libpaper">libpaper</a></span> support and libpaper defaults to the <b>Letter</b> paper size (called <code>PageSize</code> in <code>lpoptions</code>). To avoid having to change the paper size for each print queue you add, edit <code>/etc/papersize</code> and set your system default paper size. See <span class="plainlinks archwiki-template-man" title="$ man 5 papersize"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/papersize.5">papersize(5)</a></span>.
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cups">cups</a></span> is built with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libpaper">libpaper</a></span> support and libpaper defaults to the <a href="https://en.wikipedia.org/wiki/Letter_(paper_size)" class="extiw" title="wikipedia:Letter (paper size)">Letter</a> paper size (called <code>PageSize</code> in <code>lpoptions</code>). To avoid having to change the paper size for each print queue you add, <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Textedit">edit</a> <code>/etc/papersize</code> and set your system default paper size. See <span class="plainlinks archwiki-template-man" title="$ man 5 papersize"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/papersize.5">papersize(5)</a></span>.
 </p>
 <h3><span class="mw-headline" id="Log_files">Log files</span></h3>
 <p>By default, all logs are sent to files in <code>/var/log/cups/</code>. By changing the values of the <code>AccessLog</code>, <code>ErrorLog</code>, and <code>PageLog</code> directives in <code>/etc/cups/cups-files.conf</code> to <code>syslog</code>, CUPS can be made to log to the <a href="../en/Systemd/Journal.html" class="mw-redirect" title="Systemd journal">systemd journal</a> instead. See <a rel="nofollow" class="external text" href="https://fedoraproject.org/wiki/Changes/CupsJournalLogging">the fedora wiki page</a> for information on the original proposed change.
@@ -478,9 +529,9 @@ $ lpq -a # on all queues
 </ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
 </ul>
 </div>
 </div>
@@ -489,8 +540,8 @@ $ lpq -a # on all queues
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=CUPS&amp;oldid=647814">https://wiki.archlinux.org/index.php?title=CUPS&amp;oldid=647814</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 January 2021, at 11:51.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=CUPS&amp;oldid=654553">https://wiki.archlinux.org/index.php?title=CUPS&amp;oldid=654553</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 07:13.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -200,8 +201,8 @@ HDIO_DRIVE_CMD(setidle) failed: Invalid argument
 </p>
 <ol>
 <li>Western Digital supplies a DOS utility <i>wdidle3.exe</i> for <a rel="nofollow" class="external text" href="https://support.wdc.com/downloads.aspx?p=113">download</a> for tweaking this setting. This utility is designed to upgrade only the firmware of the following hard drives: WD1000FYPS, WD7500AYPS, WD7501AYPS but is known to be able to change the <i>idle3</i> timer of other Green models as well.</li>
-<li>hdparm features a reverse-engineered implementation behind the <code>-J</code> flag, which is not as complete as the original official program, even though it seems to work on at least a few drives. A  setting  of 30 seconds is recommended for Linux use. Specify a value of zero (0) to disable the WD idle3 timer completely (NOT RECOMMENDED!):<pre># hdparm -J 30 --please-destroy-my-drive /dev/sda</pre> See <a href="#Persistent_configuration_using_udev_rule">#Persistent configuration using udev rule</a> to automatically use this parameter on supported hard drives.</li>
-<li>Another unofficial utility is provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=idle3-tools">idle3-tools</a></span> package. A raw <code><i>idle3</i></code> value is passed as a parameter of the <i>idle3ctl</i> command. The correspondence between this value and the timeout in seconds is provided in the bottom table within <span class="plainlinks archwiki-template-man" title="$ man 8 idle3ctl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/idle3ctl.8">idle3ctl(8)</a></span>. The following command sets the timer to 5 min:<pre># idle3ctl -s 138 /dev/sdc</pre> this one completely disables the timer:<pre># idle3ctl -d /dev/sdc</pre>
+<li>hdparm features a reverse-engineered implementation behind the <code>-J</code> flag, which is not as complete as the original official program, even though it seems to work on at least a few drives. A  setting  of 30 seconds is recommended for Linux use. Specify a value of zero (0) to disable the WD idle3 timer completely (<b>not recommended</b>):<pre># hdparm -J 30 --please-destroy-my-drive /dev/sda</pre> See <a href="#Persistent_configuration_using_udev_rule">#Persistent configuration using udev rule</a> to automatically use this parameter on supported hard drives.</li>
+<li>Another unofficial utility is provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=idle3-tools">idle3-tools</a></span> package. A raw <code><i>idle3</i></code> value is passed as a parameter of the <i>idle3ctl</i> command. The correspondence between this value and the timeout in seconds is provided in the bottom table within <span class="plainlinks archwiki-template-man" title="$ man 8 idle3ctl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/idle3ctl.8">idle3ctl(8)</a></span>. The following command sets the timer to 30 seconds:<pre># idle3ctl -s 129 /dev/sdc</pre> The following completely disables the timer (<b>not recommended</b>):<pre># idle3ctl -d /dev/sdc</pre>
 </li>
 </ol>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -251,8 +252,8 @@ WantedBy=sleep.target</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Hdparm&amp;oldid=647292">https://wiki.archlinux.org/index.php?title=Hdparm&amp;oldid=647292</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 27 December 2020, at 10:49.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Hdparm&amp;oldid=654752">https://wiki.archlinux.org/index.php?title=Hdparm&amp;oldid=654752</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 11:09.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

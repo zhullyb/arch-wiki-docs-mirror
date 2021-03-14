@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -99,7 +100,7 @@
 <li class="toclevel-1 tocsection-29">
 <a href="#Multimedia"><span class="tocnumber">6</span> <span class="toctext">Multimedia</span></a>
 <ul>
-<li class="toclevel-2 tocsection-30"><a href="#Sound"><span class="tocnumber">6.1</span> <span class="toctext">Sound</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#Sound_system"><span class="tocnumber">6.1</span> <span class="toctext">Sound system</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-31">
@@ -129,7 +130,7 @@
 </ul>
 </li>
 <li class="toclevel-1 tocsection-45">
-<a href="#System_service"><span class="tocnumber">10</span> <span class="toctext">System service</span></a>
+<a href="#System_services"><span class="tocnumber">10</span> <span class="toctext">System services</span></a>
 <ul>
 <li class="toclevel-2 tocsection-46"><a href="#File_index_and_search"><span class="tocnumber">10.1</span> <span class="toctext">File index and search</span></a></li>
 <li class="toclevel-2 tocsection-47"><a href="#Local_mail_delivery"><span class="tocnumber">10.2</span> <span class="toctext">Local mail delivery</span></a></li>
@@ -162,7 +163,7 @@
 </div>
 
 <h2><span class="mw-headline" id="System_administration">System administration</span></h2>
-<p>This section deals with administrative tasks and system management. For more, please see <a href="../en/Core_utilities.html" title="Core utilities">Core utilities</a> and <a href="../en/Category:System_administration.html" title="Category:System administration">Category:System administration</a>.
+<p>This section deals with administrative tasks and system management. See <a href="../en/Core_utilities.html" title="Core utilities">Core utilities</a> and <a href="../en/Category:System_administration.html" title="Category:System administration">Category:System administration</a> for more.
 </p>
 <h3><span class="mw-headline" id="Users_and_groups">Users and groups</span></h3>
 <p>A new installation leaves you with only the <a href="https://en.wikipedia.org/wiki/Superuser" class="extiw" title="wikipedia:Superuser">superuser</a> account, better known as "root". Logging in as root for prolonged periods of time, possibly even exposing it via <a href="../en/Secure_Shell.html" class="mw-redirect" title="SSH">SSH</a> on a server, <a rel="nofollow" class="external text" href="https://apple.stackexchange.com/questions/192365/is-it-ok-to-use-the-root-user-as-a-normal-user/192422#192422">is insecure</a>. Instead, you should create and use unprivileged user account(s) for most tasks, only using the root account for system administration. See <a href="../en/Users_and_groups.html#User_management" title="Users and groups">Users and groups#User management</a> for details.
@@ -170,13 +171,27 @@
 <p>Users and groups are a mechanism for <i>access control</i>; administrators may fine-tune group membership and ownership to grant or deny users and services access to system resources. Read the <a href="../en/Users_and_groups.html" title="Users and groups">Users and groups</a> article for details and potential security risks.
 </p>
 <h3><span class="mw-headline" id="Privilege_elevation">Privilege elevation</span></h3>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> Only <a href="../en/Su.html" title="Su">su</a> is installed <i>by default</i> (i.e. it is provided by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=util-linux">util-linux</a></span> that is pulled in by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span>), all other tools need to be installed and configured before use. Add <span class="plainlinks archwiki-template-man" title="$ man 1 pkexec"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/pkexec.1">pkexec(1)</a></span>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:General_recommendations">Talk:General recommendations#</a>)</div>
-</div>
-<p>Both the <a href="../en/Su.html" title="Su">su</a> and <a href="../en/Sudo.html" title="Sudo">sudo</a> commands allow you to run commands as another user. <i>su</i> by default starts an interactive shell as the root user, and <i>sudo</i> by default temporarily grants you root privileges for a single command. See their respective articles for differences. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=opendoas">opendoas</a></span> is a smaller, simpler alternative to <i>sudo</i>.
+<p>The following command line utilities allow running commands or starting an interactive shell as another user (e.g. root).
 </p>
+<ul><li>
+<b><a href="../en/Su.html" title="Su">su</a></b> — Allows to assume the identity of another user as long as you know the target user's password. root can assume other identities without needing a password.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://github.com/karelzak/util-linux">https://github.com/karelzak/util-linux</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=util-linux">util-linux</a></span> (a dependency of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span>)</dd></dl>
+<ul><li>
+<b><a href="../en/Sudo.html" title="Sudo">sudo</a></b> — Allows a system administrator to delegate authority to give certain users (or groups of users) the ability to run some (or all) commands as root or another user while providing an audit trail of the commands and their arguments. In default configuration only usable by root .</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://www.sudo.ws/sudo/">https://www.sudo.ws/sudo/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sudo">sudo</a></span>
+</dd></dl>
+<ul><li>
+<b><span class="plainlinks archwiki-template-man" title="$ man 1 pkexec"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/pkexec.1">pkexec(1)</a></span></b> — A <a href="../en/Polkit.html" title="Polkit">Polkit</a> application that allows an authorized user to run commands or an interactive shell as another user. Configured using Polkit rules.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://gitlab.freedesktop.org/polkit/polkit/">https://gitlab.freedesktop.org/polkit/polkit/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=polkit">polkit</a></span>
+</dd></dl>
+<ul><li>
+<b><a href="https://en.wikipedia.org/wiki/doas" class="extiw" title="wikipedia:doas">doas</a></b> — A smaller, simpler alternative to <i>sudo</i>.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://github.com/Duncaen/OpenDoas">https://github.com/Duncaen/OpenDoas</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=opendoas">opendoas</a></span>
+</dd></dl>
 <h3><span class="mw-headline" id="Service_management">Service management</span></h3>
 <p>Arch Linux uses <a href="../en/Systemd.html" title="Systemd">systemd</a> as the <a href="../en/Init.html" title="Init">init</a> process, which is a system and service manager for Linux. For maintaining your Arch Linux installation, it is a good idea to learn the basics about it. Interaction with <i>systemd</i> is done through the <i>systemctl</i> command. Read <a href="../en/Systemd.html#Basic_systemctl_usage" title="Systemd">systemd#Basic systemctl usage</a> for more information.
 </p>
@@ -184,7 +199,7 @@
 <p>Arch is a rolling release system and has rapid package turnover, so users have to take some time to do <a href="../en/System_maintenance.html" title="System maintenance">system maintenance</a>. Read <a href="../en/Security.html" title="Security">Security</a> for recommendations and best practices on hardening the system.
 </p>
 <h2><span class="mw-headline" id="Package_management">Package management</span></h2>
-<p>This section contains helpful information related to package management. For more, please see <a href="../en/Frequently_asked_questions.html#Package_management" class="mw-redirect" title="FAQ">FAQ#Package management</a> and <a href="../en/Category:Package_management.html" title="Category:Package management">Category:Package management</a>.
+<p>This section contains helpful information related to package management. See <a href="../en/Frequently_asked_questions.html#Package_management" class="mw-redirect" title="FAQ">FAQ#Package management</a> and <a href="../en/Category:Package_management.html" title="Category:Package management">Category:Package management</a> for more.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> It is imperative to keep up to date with changes in Arch Linux that require manual intervention <b>before</b> upgrading your system. Subscribe to the <a rel="nofollow" class="external text" href="https://mailman.archlinux.org/mailman/listinfo/arch-announce/">arch-announce mailing list</a> or the <a rel="nofollow" class="external text" href="https://archlinux.org/feeds/news/">recent news RSS feed</a>. Alternatively, check the front page <a rel="nofollow" class="external text" href="https://archlinux.org/">Arch news</a> every time before you update.</div>
@@ -216,7 +231,7 @@
 <p>While the Arch Build System allows the ability of building software available in the official repositories, the <a href="../en/Arch_User_Repository.html" title="Arch User Repository">Arch User Repository</a> (AUR) is the equivalent for user submitted packages. It is an unsupported repository of build scripts accessible through the <a rel="nofollow" class="external text" href="https://aur.archlinux.org/">web interface</a> or through the <a href="../en/Aurweb_RPC_interface.html" title="Aurweb RPC interface">Aurweb RPC interface</a>.
 </p>
 <h2><span class="mw-headline" id="Booting">Booting</span></h2>
-<p>This section contains information pertaining to the boot process. An overview of the Arch boot process can be found at <a href="../en/Arch_boot_process.html" title="Arch boot process">Arch boot process</a>. For more, please see <a href="../en/Category:Boot_process.html" title="Category:Boot process">Category:Boot process</a>.
+<p>This section contains information pertaining to the boot process. An overview of the Arch boot process can be found at <a href="../en/Arch_boot_process.html" title="Arch boot process">Arch boot process</a>. See <a href="../en/Category:Boot_process.html" title="Category:Boot process">Category:Boot process</a> for more.
 </p>
 <h3><span class="mw-headline" id="Hardware_auto-recognition">Hardware auto-recognition</span></h3>
 <p>Hardware should be auto-detected by <a href="../en/Udev.html" title="Udev">udev</a> during the boot process by default. A potential improvement in boot time can be achieved by disabling module auto-loading and specifying required modules manually, as described in <a href="../en/Kernel_module.html" class="mw-redirect" title="Kernel modules">Kernel modules</a>. Additionally, <a href="../en/Xorg.html" title="Xorg">Xorg</a> should be able to auto-detect required drivers using <code>udev</code>, but users have the option to configure the X server manually too.
@@ -239,7 +254,7 @@
 <p><a href="../en/Wayland.html" title="Wayland">Wayland</a> is a newer, alternative display server protocol and the Weston reference implementation is available.
 </p>
 <h3><span class="mw-headline" id="Display_drivers">Display drivers</span></h3>
-<p>The default <i>vesa</i> display driver will work with most video cards, but performance can be significantly improved and additional features harnessed by installing the appropriate driver for <a href="../en/Xorg.html#AMD" title="Xorg">AMD</a>, <a href="../en/Intel_graphics.html" class="mw-redirect" title="Intel">Intel</a>, or <a href="../en/NVIDIA.html" title="NVIDIA">NVIDIA</a> products.
+<p>The default <i>modesetting</i> display driver will work with most video cards, but performance may be improved and additional features harnessed by installing the appropriate driver for <a href="../en/Xorg.html#AMD" title="Xorg">AMD</a> or <a href="../en/NVIDIA.html" title="NVIDIA">NVIDIA</a> products.
 </p>
 <h3><span class="mw-headline" id="Desktop_environments">Desktop environments</span></h3>
 <p>Although Xorg provides the basic framework for building a graphical environment, additional components may be considered necessary for a complete user experience. <a href="../en/Desktop_environment.html" title="Desktop environment">Desktop environments</a> such as <a href="../en/GNOME.html" title="GNOME">GNOME</a>, <a href="../en/KDE.html" title="KDE">KDE</a>, <a href="../en/LXDE.html" title="LXDE">LXDE</a>, and <a href="../en/Xfce.html" title="Xfce">Xfce</a> bundle together a wide range of <i>X clients</i>, such as a window manager, panel, file manager, terminal emulator, text editor, icons, and other utilities. Users with less experience may wish to install a desktop environment for a more familiar environment. See <a href="../en/Category:Desktop_environments.html" title="Category:Desktop environments">Category:Desktop environments</a> for additional resources.
@@ -254,7 +269,7 @@
 <p>Well-known user directories like Downloads or Music are created by the <code>xdg-user-dirs-update.service</code> user service, that is provided by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdg-user-dirs">xdg-user-dirs</a></span> and enabled by default upon install. If your desktop environment or window manager does not pull in the package, you can <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> it and run <code>xdg-user-dirs-update</code> manually as per <a href="../en/XDG_user_directories.html#Creating_default_directories" title="XDG user directories">XDG user directories#Creating default directories</a>.
 </p>
 <h2><span class="mw-headline" id="Power_management">Power management</span></h2>
-<p>This section may be of use to laptop owners or users otherwise seeking power management controls. For more, please see <a href="../en/Category:Power_management.html" title="Category:Power management">Category:Power management</a>.
+<p>This section may be of use to laptop owners or users otherwise seeking power management controls. See <a href="../en/Category:Power_management.html" title="Category:Power management">Category:Power management</a> for more.
 </p>
 <p>See <a href="../en/Power_management.html" title="Power management">Power management</a> for more general overview.
 </p>
@@ -273,17 +288,13 @@
 <h2><span class="mw-headline" id="Multimedia">Multimedia</span></h2>
 <p><a href="../en/Category:Multimedia.html" title="Category:Multimedia">Category:Multimedia</a> includes additional resources.
 </p>
-<h3><span class="mw-headline" id="Sound">Sound</span></h3>
-<p><a href="../en/Sound_system.html" class="mw-redirect" title="Sound">Sound</a> is provided by kernel sound drivers:
+<h3><span class="mw-headline" id="Sound_system">Sound system</span></h3>
+<p><a href="../en/Advanced_Linux_Sound_Architecture.html" class="mw-redirect" title="ALSA">ALSA</a> is a kernel <a href="../en/Sound_system.html" title="Sound system">sound system</a> that should work out the box (it just needs to be <a href="../en/Advanced_Linux_Sound_Architecture.html#Unmuting_the_channels" title="Advanced Linux Sound Architecture">unmuted</a>). <a href="../en/Sound_system.html#Sound_servers" class="mw-redirect" title="Sound server">Sound servers</a> such as <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a> and <a href="../en/PipeWire.html" title="PipeWire">PipeWire</a> can offer additional features and support more complex audio configuration.
 </p>
-<ul><li>
-<a href="../en/Advanced_Linux_Sound_Architecture.html" class="mw-redirect" title="ALSA">ALSA</a> is included with the kernel and is recommended because usually it works out of the box (it just needs to be <a href="../en/Advanced_Linux_Sound_Architecture.html#Unmuting_the_channels" title="Advanced Linux Sound Architecture">unmuted</a>).</li></ul>
-<ul><li>
-<a href="../en/Open_Sound_System.html" class="mw-redirect" title="OSS">OSS</a> is a viable alternative in case ALSA does not work.</li></ul>
-<p>Users may additionally wish to install and configure a <a href="../en/Sound_system.html#Sound_servers" title="Sound system">sound server</a> such as <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a>. For advanced audio requirements, see <a href="../en/Professional_audio.html" title="Professional audio">professional audio</a>.
+<p>See <a href="../en/Professional_audio.html" title="Professional audio">Professional audio</a> for advanced audio requirements.
 </p>
 <h2><span class="mw-headline" id="Networking">Networking</span></h2>
-<p>This section is confined to small networking procedures. Head over to <a href="../en/Network_configuration.html" title="Network configuration">Network configuration</a> for a full guide. For more, please see <a href="../en/Category:Networking.html" title="Category:Networking">Category:Networking</a>.
+<p>This section is confined to small networking procedures. See <a href="../en/Network_configuration.html" title="Network configuration">Network configuration</a> for a full configuration guide and <a href="../en/Category:Networking.html" title="Category:Networking">Category:Networking</a> for related articles.
 </p>
 <h3><span class="mw-headline" id="Clock_synchronization">Clock synchronization</span></h3>
 <p>The <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol" class="extiw" title="wikipedia:Network Time Protocol">Network Time Protocol</a> (NTP) is a protocol for synchronizing the clocks of computer systems over packet-switched, variable-latency data networks. See <a href="../en/System_time.html#Time_synchronization" class="mw-redirect" title="Time synchronization">Time synchronization</a> for implementations of such protocol.
@@ -302,7 +313,7 @@
 <p>See also <a href="../en/Category:Network_sharing.html" title="Category:Network sharing">Category:Network sharing</a>.
 </p>
 <h2><span class="mw-headline" id="Input_devices">Input devices</span></h2>
-<p>This section contains popular input device configuration tips. For more, please see <a href="../en/Category:Input_devices.html" title="Category:Input devices">Category:Input devices</a>.
+<p>This section contains popular input device configuration tips. See <a href="../en/Category:Input_devices.html" title="Category:Input devices">Category:Input devices</a> for more.
 </p>
 <h3><span class="mw-headline" id="Keyboard_layouts">Keyboard layouts</span></h3>
 <p>Non-English or otherwise non-standard keyboards may not function as expected by default. The necessary steps to configure the keymap are different for virtual console and <a href="../en/Xorg.html" title="Xorg">Xorg</a>, they are described in <a href="../en/Linux_console/Keyboard_configuration.html" class="mw-redirect" title="Keyboard configuration in console">Keyboard configuration in console</a> and <a href="../en/Xorg/Keyboard_configuration.html" class="mw-redirect" title="Keyboard configuration in Xorg">Keyboard configuration in Xorg</a> respectively.
@@ -328,22 +339,22 @@
 <h3><span class="mw-headline" id="Solid_state_drives">Solid state drives</span></h3>
 <p>The <a href="../en/Solid_state_drive.html" class="mw-redirect" title="Solid State Drives">Solid State Drives</a> article covers many aspects of solid state drives, including configuring them to maximize their lifetimes.
 </p>
-<h2><span class="mw-headline" id="System_service">System service</span></h2>
+<h2><span class="mw-headline" id="System_services">System services</span></h2>
 <p>This section relates to <a href="../en/Daemons.html" title="Daemons">daemons</a>.
 </p>
 <h3><span class="mw-headline" id="File_index_and_search">File index and search</span></h3>
-<p>Most distributions have a <i>locate</i> command available to be able to quickly search for files. To get this functionality in Arch Linux, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mlocate">mlocate</a></span> is the recommended install. After the install you should run <i>updatedb</i> to index the filesystems.
+<p>Most distributions have a <i>locate</i> command available to be able to quickly search files. Arch Linux provides several alternatives, see <a href="../en/Locate.html" title="Locate">locate</a> for details.
 </p>
 <p><a href="../en/List_of_applications/Utilities.html#File_searching" title="List of applications/Utilities">Desktop search engines</a> provide a similar service, while better integrated into <a href="../en/Desktop_environment.html" title="Desktop environment">desktop environments</a>.
 </p>
 <h3><span class="mw-headline" id="Local_mail_delivery">Local mail delivery</span></h3>
-<p>A default setup does not provide a way to sync mail. A list of mail delivery agents is available in the <a href="../en/Mail_server.html" title="Mail server">Mail server</a> article.
+<p>A default setup does not provide a way to synchronize mail. A list of mail delivery agents is available in the <a href="../en/Mail_server.html" title="Mail server">Mail server</a> article.
 </p>
 <h3><span class="mw-headline" id="Printing">Printing</span></h3>
 <p><a href="../en/CUPS.html" title="CUPS">CUPS</a> is a standards-based, open source printing system developed by Apple. See <a href="../en/Category:Printers.html" title="Category:Printers">Category:Printers</a> for printer-specific articles.
 </p>
 <h2><span class="mw-headline" id="Appearance">Appearance</span></h2>
-<p>This section contains frequently-sought "eye candy" tweaks for an aesthetically pleasing Arch experience. For more, please see <a href="../en/Category:Eye_candy.html" title="Category:Eye candy">Category:Eye candy</a>.
+<p>This section contains frequently-sought "eye candy" tweaks for an aesthetically pleasing Arch experience. See <a href="../en/Category:Eye_candy.html" title="Category:Eye candy">Category:Eye candy</a> for more.
 </p>
 <h3><span class="mw-headline" id="Fonts">Fonts</span></h3>
 <p>You may wish to install a set of TrueType fonts, as only unscalable bitmap fonts are included in a basic Arch system. There are several general-purpose <a href="../en/Fonts.html#Families" title="Fonts">font families</a> providing large <a href="https://en.wikipedia.org/wiki/Unicode" class="extiw" title="wikipedia:Unicode">Unicode</a> coverage and even <a href="../en/Metric-compatible_fonts.html" title="Metric-compatible fonts">metric compatibility</a> with fonts from other operating systems.
@@ -356,7 +367,7 @@
 <p>A big part of the applications with a graphical interface for Linux systems are based on the <a href="../en/GTK.html" title="GTK">GTK</a> or the <a href="../en/Qt.html" title="Qt">Qt</a> toolkits. See those articles and <a href="../en/Uniform_look_for_Qt_and_GTK_applications.html" title="Uniform look for Qt and GTK applications">Uniform look for Qt and GTK applications</a> for ideas to improve the appearance of your installed programs and adapt it to your liking.
 </p>
 <h2><span class="mw-headline" id="Console_improvements">Console improvements</span></h2>
-<p>This section applies to small modifications that improve console programs' practicality. For more, please see <a href="../en/Category:Command-line_shells.html" title="Category:Command-line shells">Category:Command-line shells‎</a>.
+<p>This section applies to small modifications that improve console programs' practicality. See <a href="../en/Category:Command-line_shells.html" title="Category:Command-line shells">Category:Command-line shells</a> for more.
 </p>
 <h3><span class="mw-headline" id="Tab-completion_enhancements">Tab-completion enhancements</span></h3>
 <p>It is recommended to properly set up extended <a href="https://en.wikipedia.org/wiki/Command-line_completion" class="extiw" title="wikipedia:Command-line completion">tab completion</a> right away, as instructed in the article of your chosen shell.
@@ -390,20 +401,16 @@
 </p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:System_administration.html" title="Category:System administration">System administration</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=General_recommendations&amp;oldid=646784">https://wiki.archlinux.org/index.php?title=General_recommendations&amp;oldid=646784</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 11:57.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=General_recommendations&amp;oldid=653781">https://wiki.archlinux.org/index.php?title=General_recommendations&amp;oldid=653781</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 March 2021, at 18:37.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

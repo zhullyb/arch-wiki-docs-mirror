@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -121,14 +122,14 @@
 </pre>
 <p>For convenience, <i>localectl</i> may be used to set console keymap. It will change the <code>KEYMAP</code> variable in <code>/etc/vconsole.conf</code> and also set the keymap for current session:
 </p>
-<pre>$ localectl set-keymap --no-convert <i>keymap</i>
+<pre># localectl set-keymap --no-convert <i>keymap</i>
 </pre>
 <p>The <code>--no-convert</code> option can be used to prevent <code>localectl</code> from automatically changing the <a href="../../en/Xorg/Keyboard_configuration.html" class="mw-redirect" title="Keyboard configuration in Xorg">Xorg keymap</a> to the nearest match. See <span class="plainlinks archwiki-template-man" title="$ man 1 localectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/localectl.1">localectl(1)</a></span> for more information.
 </p>
 <p>If required, the keymap from <code>/etc/vconsole.conf</code> can be loaded during early userspace by the <code>keymap</code> <a href="../../en/Mkinitcpio.html#Common_hooks" title="Mkinitcpio">mkinitcpio hook</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> If you saved your custom keymap somewhere else than <code>/usr/share/kbd/keymaps/</code>, it must be specified by a full path to the file in <code>vconsole.conf</code> or when using the <i>localectl</i> command above.</div>
+<strong>Tip:</strong> If you saved your custom keymap somewhere other than <code>/usr/share/kbd/keymaps/</code>, it must be specified by a full path to the file in <code>vconsole.conf</code> or when using the <i>localectl</i> command above.</div>
 <h3><span class="mw-headline" id="Creating_a_custom_keymap">Creating a custom keymap</span></h3>
 <p>When using the console, you can use hotkeys to print a specific character. Moreover we can also print a sequence of characters and some escape sequences. Thus, if we print the sequence of characters constituting a command and afterwards an escape character for a new line, that command will be executed.
 </p>
@@ -164,9 +165,9 @@
 </p>
 <pre>string F70 = "Hello"
 </pre>
-<p>When key 112 is pressed, it will output the contents of F70. In order to execute a printed command in a terminal, a newline escape character must be appended to the end of the command string. For example, to enter a system into hibernation, the following keymap is added:
+<p>When key 112 is pressed, it will output the contents of F70. In order to execute a printed command in a terminal, a newline escape character must be appended to the end of the command string. For example, to <a href="../../en/Power_management.html#Suspend_and_hibernate" title="Power management">enter a system into hibernation</a>, the following keymap is added:
 </p>
-<pre>string F70 = "sudo /usr/sbin/hibernate\n"
+<pre>string F70 = "sudo systemctl hibernate\n"
 </pre>
 <h4><span class="mw-headline" id="Other_examples">Other examples</span></h4>
 <ul><li>To make the Right Alt key same as Left Alt key (for Emacs), use the following line in your keymap. It will include the file <code>/usr/share/kbd/keymaps/i386/include/linux-with-two-alt-keys.inc</code>, check it for details.</li></ul>
@@ -235,8 +236,8 @@ WantedBy=multi-user.target
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Linux_console/Keyboard_configuration&amp;oldid=649176">https://wiki.archlinux.org/index.php?title=Linux_console/Keyboard_configuration&amp;oldid=649176</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 January 2021, at 07:39.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Linux_console/Keyboard_configuration&amp;oldid=654818">https://wiki.archlinux.org/index.php?title=Linux_console/Keyboard_configuration&amp;oldid=654818</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 22:01.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

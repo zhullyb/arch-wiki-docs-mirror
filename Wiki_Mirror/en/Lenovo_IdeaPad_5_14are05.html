@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -82,7 +83,7 @@
 
 <h2><span class="mw-headline" id="Hardware_Support">Hardware Support</span></h2>
 <h3><span class="mw-headline" id="BIOS">BIOS</span></h3>
-<p>BIOS can be accessed by pressing <code>F2</code> at the Splash screen.
+<p>BIOS can be accessed by pressing <code>F2</code> at the Splash screen. The 15-inch model has BIOS updates that are compatible with DOS, so its BIOS can be flashed without Windows (see <a href="../en/Lenovo_IdeaPad_5_15are05.html#Flashing_the_BIOS_from_Linux" title="Lenovo IdeaPad 5 15are05">Lenovo IdeaPad 5 15are05#Flashing the BIOS from Linux</a>). Unfortunately, the update files for this model require Windows. In theory, Windows can be installed on a USB drive through <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/woeusb/">woeusb</a></span><sup><small>AUR</small></sup>.
 </p>
 <h3><span class="mw-headline" id="Video">Video</span></h3>
 <p>X works natively with a current <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-amdgpu">xf86-video-amdgpu</a></span>.
@@ -93,8 +94,12 @@
 <h3><span class="mw-headline" id="Microphone">Microphone</span></h3>
 <p>The internal microphone is properly recognized and working for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> &gt;=5.8rc3 as long as the <code>snd-acp3x-rn</code> kernel module is loaded.
 </p>
+<p>If the internal microphone is no longer recognized on <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> &gt;=5.10, you may need to add the following to the kernel parameters:
+</p>
+<pre> snd_rn_pci_acp3x.dmic_acpi_check=1
+</pre>
 <h3><span class="mw-headline" id="Wireless">Wireless</span></h3>
-<p>It is available with different wifi chips but they should work out of the box.
+<p>It is available with different wifi chips but they should work out of the box. Bluetooth also works with the <code>btusb</code> module, and remote audio playback with A2DP works through <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseaudio-bluetooth">pulseaudio-bluetooth</a></span> (see <a href="../en/Bluetooth_headset.html" title="Bluetooth headset">Bluetooth headset</a> on setting it up).
 </p>
 <h3><span class="mw-headline" id="Touchpad">Touchpad</span></h3>
 <p>The touchpad works almost as expected starting from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> 5.9-rc1. It's still random whether it will work or not after going out of suspend mode, but in that case it's an easy fix: just add a keyboard shortcut for the touchpad toggle and you should be able to make it work again.
@@ -102,9 +107,21 @@
 <p>For older kernels, it is important to make sure that the BIOS is updated to the latest version (atm 1.06), otherwise it is possible that the touchpad will not even be discovered let alone work.
 If touchpad device is found it's still possible that it will not work (either right after startup or after going out of suspend mode). In this case a new cold start might help (sometimes a reboot might be enough).
 </p>
-<h3><span class="mw-headline" id="Display">Display</span></h3>
-<p>The brightness works for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> &gt;=5.7.6.1 , since the patch to fix brightness has been merged.
+<p>Additionally, while there is no explicit option to disable the touchpad in the BIOS, some option combinations in the BIOS can make the touchpad inaccessible. Thus, if you are running on <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> 5.9 or newer and you still have issues with this module, try checking your BIOS settings first.
 </p>
+<h3><span class="mw-headline" id="Display">Display</span></h3>
+<p>The brightness works for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> &gt;=5.7.6.1 , since the patch to fix brightness has been merged. The xbacklight utility provided with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xbacklight">xorg-xbacklight</a></span> only works with Intel drivers (see <a href="../en/Backlight.html#xbacklight" title="Backlight">Backlight#xbacklight</a>), but you can use its replacement from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=acpilight">acpilight</a></span> to increase and decrease brightness levels. Since the latter requires different permissions for the files in <code>/sys/class/backlight/</code> to control the backlight brightness levels, you should set up a file in <code>/etc/udev/rules.d/90-backlight.rules</code> containing:
+</p>
+<pre> SUBSYSTEM=="backlight", ACTION=="add", \
+   RUN+="/usr/bin/chgrp video /sys/class/backlight/<i>amdgpu_bl0</i>/brightness", \
+   RUN+="/usr/bin/chmod g+w /sys/class/backlight/<i>amdgpu_bl0</i>/brightness"
+</pre>
+<p>You would also need to add your users to the <code>video</code> group.
+</p>
+<p>In order to preserve the brightness level when resuming from suspend, you should add the following kernel parameter to your bootloader's configuration file:
+</p>
+<pre> acpi_backlight=vendor
+</pre>
 <h2><span class="mw-headline" id="Issues">Issues</span></h2>
 <h3>
 <span id="Suspend_issues_.28S3_sleep_fix.29"></span><span class="mw-headline" id="Suspend_issues_(S3_sleep_fix)">Suspend issues (S3 sleep fix)</span>
@@ -149,7 +166,7 @@ $ find kernel | cpio -H newc --create &gt; acpi_override
 <code>GRUB_EARLY_INITRD_LINUX_CUSTOM=acpi_override</code>
 </pre>
 <ul><li>Regenerate the GRUB configuration:</li></ul>
-<pre># update-grub
+<pre># grub-mkconfig -o /boot/grub/grub.cfg
 </pre>
 <p>as a result in the <code>/boot/grub/grub.cfg</code> for the corresponding menu entry(ies) one should be able to find lines that look similar to: <code>initrd /boot/acpi_override</code>
 </p>
@@ -282,8 +299,8 @@ The same is also valid for the <a href="#Rapid_Charge">#Rapid Charge</a>: turnin
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_5_14are05&amp;oldid=639851">https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_5_14are05&amp;oldid=639851</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 October 2020, at 10:04.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_5_14are05&amp;oldid=653967">https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_5_14are05&amp;oldid=653967</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 4 March 2021, at 10:49.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

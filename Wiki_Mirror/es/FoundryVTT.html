@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>FoundryVTT (Español) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-FoundryVTT_Español rootpage-FoundryVTT_Español skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">FoundryVTT (Español)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<p><br>
+<a rel="nofollow" class="external text" href="https://foundryvtt.com">Foundry VTT</a> es un software independiente creada para jugar a juegos de rol de mesa, que usa una aplicación con multitud de funciones, moderna e instalable en un servidor propio, a la que los jugadores se conectan mediante un navegador.
+</p>
+<p><b>Foundry VTT</b> es <a href="https://en.wikipedia.org/wiki/es:Software_propietario" class="extiw" title="wikipedia:es:Software propietario">software privativo</a>. Se debe adquirir una licencia de pago antes de usar el software.
+</p>
+<p>Estas instrucciones explican una de las formas posibles de instalar Foundry VTT en un sistema Archlinux. Al final del proceso, el servicio debería ser accesible desde un navegador usando una <a href="/index.php?title=SSL_(Espa%C3%B1ol)&amp;action=edit&amp;redlink=1" class="new" title="SSL (Español) (page does not exist)">conexión segura</a>.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Requisitos"><span class="tocnumber">1</span> <span class="toctext">Requisitos</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Crear_directorios_para_Foundry_VTT"><span class="tocnumber">2</span> <span class="toctext">Crear directorios para Foundry VTT</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Crear_un_usuario_de_sistema"><span class="tocnumber">3</span> <span class="toctext">Crear un usuario de sistema</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Descargar_Foundry_VTT"><span class="tocnumber">4</span> <span class="toctext">Descargar Foundry VTT</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#Ejecutar_el_software_sin_un_proxy"><span class="tocnumber">5</span> <span class="toctext">Ejecutar el software sin un proxy</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Crear_un_servicio_para_systemd"><span class="tocnumber">6</span> <span class="toctext">Crear un servicio para systemd</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#Configurar_nginx"><span class="tocnumber">7</span> <span class="toctext">Configurar nginx</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Ejecutar_el_servicio"><span class="tocnumber">8</span> <span class="toctext">Ejecutar el servicio</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Requisitos">Requisitos</span></h2>
+<p>Antes de instalar Foundry VTT, deberías tener una instalación que funcione de <a href="/index.php?title=Nginx_(Espa%C3%B1ol)&amp;action=edit&amp;redlink=1" class="new" title="Nginx (Español) (page does not exist)">nginx</a> and <a href="/index.php?title=Node.js_(Espa%C3%B1ol)&amp;action=edit&amp;redlink=1" class="new" title="Node.js (Español) (page does not exist)">Node.js</a>.
+</p>
+<h2><span class="mw-headline" id="Crear_directorios_para_Foundry_VTT">Crear directorios para Foundry VTT</span></h2>
+<p>En primer lugar, crea estos directorios para instalar el software y sus datos. Puedes crear estos directorios en /home, por ejemplo:
+</p>
+<pre># mkdir -p /home/foundry/{foundryvtt,foundrydata}
+</pre>
+<h2><span class="mw-headline" id="Crear_un_usuario_de_sistema">Crear un usuario de sistema</span></h2>
+<p>Foundry VTT será ejecutado por un usuario de sistema. Primero, <a href="../es/Users_and_groups.html#Ejemplo_para_a%C3%B1adir_un_usuario_del_sistema" title="Users and groups (Español)">crea un usuario de sistema</a> con el nombre <b>foundry</b> o cualquier otro nombre.
+</p>
+<pre># useradd -r -s /usr/bin/nologin <i>foundry</i>
+</pre>
+<h2><span class="mw-headline" id="Descargar_Foundry_VTT">Descargar Foundry VTT</span></h2>
+<p>Una vez estés registrado en <a rel="nofollow" class="external text" href="https://foundryvtt.com">foundryvtt.com</a> y hayas comprado una licencia, necesitas ir a la sección "Purchased Software Licenses" de tu perfil de foundryvtt.com. Allí verás diferentes paquetes para el software. Necesitas descargar la versión para Node.js.
+</p>
+<p>Puedes ver un pequeño icono de 'cadena' junto a los enlaces de descarga de la página de descarga. Pulsar en este icono de cadena genera un enlace temporal que se puede usar para descargar Foundry VTT desde un terminal usango wget.
+</p>
+<p>Cuando descargues el enlace usando una utilidad de línea de comandos como wget es importante poner el enlace entre comillas dobles. Esto asegura que el enlace sea leído correctamente por el comando. Por ejemplo:
+</p>
+<pre># wget -O foundryvtt.zip "https://tu-enlace-de-descarga-de-foundry-vtt.com-aqui/"
+</pre>
+<p>El fichero descargado debe ser descomprimido al directorio <i>foundryvtt</i> que has creado antes. Una vez este directorio tenga su contenido, necesitas establecer los permisos apropiados:
+</p>
+<pre># unzip foundryvtt.zip -d /home/foundry/foundryvtt
+# chown -R foundry:foundry /home/foundry/foundryvtt
+</pre>
+<h2><span class="mw-headline" id="Ejecutar_el_software_sin_un_proxy">Ejecutar el software sin un proxy</span></h2>
+<p>Ahora puedes comprobar si el software funciona. Ejecuta el servidor con el usuario <i>foundry</i>:
+</p>
+<pre># su - foundry -s /bin/bash -c "node foundryvtt/resources/app/main.js --dataPath=/home/foundry/foundrydata"
+</pre>
+<p>Mientras esté en ejecución, deberías poder conectarte al servidor desde un navegador, usando el puerto 30000. Si lo deseas, puedes aprovechar para establecer tu contraseña de admin y tu clave de licencia.
+</p>
+<p>Después, detén el servidor usando Ctrl-c.
+</p>
+<h2><span class="mw-headline" id="Crear_un_servicio_para_systemd">Crear un servicio para systemd</span></h2>
+<p>Una de las formas de ejecutar el software como demonio es usar <a href="../es/Systemd.html" title="Systemd (Español)">Systemd</a>. Puedes crear un servicio sencillo para Foundry VTT:
+</p>
+<pre># nano /etc/systemd/system/foundryvtt.service
+</pre>
+<p>Este es un ejemplo de esta unidad de systemd:
+</p>
+<pre>[Unit]
+Description=Foundry VTT
+
+[Service]
+Type=simple
+ExecStart=node /home/foundry/foundryvtt/resources/app/main.js --dataPath=/home/foundry/foundrydata
+Restart=on-failure
+User=foundry
+
+[Install]
+WantedBy=multi-user.target
+</pre>
+<p>Como se sugiere en las <a rel="nofollow" class="external text" href="https://foundryvtt.com/article/nginx/">instrucciones de instalación</a>, edita las opciones del software para prepararlo para que acepte conexiones de un servidor proxy:
+</p>
+<pre># nano /home/foundry/foundrydata/Config/options.json
+</pre>
+<p>Configura las siguientes opciones, dejando las demás como están:
+</p>
+<pre>"hostname": "your.hostname.com",
+"routePrefix": null,
+"sslCert": null,
+"sslKey": null,
+"port": 30000,
+"proxyPort": 443,
+"proxySSL": true
+</pre>
+<h2><span class="mw-headline" id="Configurar_nginx">Configurar nginx</span></h2>
+<p>Para configurar un servidor proxy con nginx para Foundry VTT puedes usar este ejemplo de la documentación oficial:
+</p>
+<pre># This goes in a file within /etc/nginx/sites-available/. By convention,
+# the filename would be either "your.domain.com" or "foundryvtt", but it
+# really does not matter as long as it's unique and descriptive for you.
+
+# Define Server
+server {
+
+    # Enter your fully qualified domain name or leave blank
+    server_name             your.hostname.com;
+
+    # Listen on port 443 using SSL certificates
+    listen                  443 ssl;
+    ssl_certificate         "/etc/letsencrypt/live/your.hostname.com/fullchain.pem";
+    ssl_certificate_key     "/etc/letsencrypt/live/your.hostname.com/privkey.pem";
+
+    # Sets the Max Upload size to 300 MB
+    client_max_body_size 300M;
+
+    # Proxy Requests to Foundry VTT
+    location / {
+
+        # Set proxy headers
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # These are important to support WebSockets
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+
+        # Make sure to set your Foundry VTT port number
+        proxy_pass http://localhost:30000;
+    }
+}
+
+# Optional, but recommend. Redirects all HTTP requests to HTTPS for you
+server {
+    if ($host = your.hostname.com) {
+        return 301 https://$host$request_uri;
+    }
+
+    listen 80;
+    listen [::]:80;
+
+    server_name your.hostname.com;
+    return 404;
+}
+</pre>
+<p>Puedes conseguir tus certificados usando <a href="/index.php?title=Certbot_(Espa%C3%B1ol)&amp;action=edit&amp;redlink=1" class="new" title="Certbot (Español) (page does not exist)">cerbot</a>.
+</p>
+<h2><span class="mw-headline" id="Ejecutar_el_servicio">Ejecutar el servicio</span></h2>
+<p>Ahora puedes <a href="../es/Systemd.html#Utilizar_las_unidades" title="Systemd (Español)">iniciar</a> y <a href="../es/Systemd.html#Utilizar_las_unidades" title="Systemd (Español)">habilitar</a> tanto Foundry VTT como nginx:
+</p>
+<pre># systemctl start foundryvtt
+# systemctl enable foundryvtt
+# systemctl start nginx
+# systemctl enable nginx
+</pre>
+<p>En este punto deberías poder acceder a tu servidor desde un navegador usando https, con el puerto 443 por defecto (ejemplo:https://your.hostname.com).
+</p>
+</div>
+</div>
+<div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=FoundryVTT_(Espa%C3%B1ol)&amp;oldid=653685">https://wiki.archlinux.org/index.php?title=FoundryVTT_(Español)&amp;oldid=653685</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 28 February 2021, at 11:17.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -168,6 +169,8 @@
 </pre>
 <h3><span class="mw-headline" id="less">less</span></h3>
 <h4><span class="mw-headline" id="Environment_variables">Environment variables</span></h4>
+<p>As with the <a href="#man">#man</a> case, we can tell less to emit colors when it is meaning to make bold text and other formatting effects.
+</p>
 <p>Add the following lines to your shell configuration file:
 </p>
 <pre>export LESS=-R
@@ -180,7 +183,7 @@ export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 # and so on
 </pre>
-<p>Change the values (<a href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors" class="extiw" title="wikipedia:ANSI escape code">ANSI escape code</a>) as you like. <a rel="nofollow" class="external text" href="http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized">This blog post</a> and the page <a href="../en/Bash/Prompt_customization.html" title="Bash/Prompt customization">Bash/Prompt customization</a> also help.
+<p>Change the values (<a href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors" class="extiw" title="wikipedia:ANSI escape code">ANSI escape code</a>) as you like. <a rel="nofollow" class="external text" href="http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized">This blog post</a> and the page <a href="../en/Bash/Prompt_customization.html" title="Bash/Prompt customization">Bash/Prompt customization</a> also help. See <span class="plainlinks archwiki-template-man" title="$ man 5 termcap"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/termcap.5">termcap(5)</a></span> for more termcap names.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The <code>LESS_TERMCAP_<i>xx</i></code> variables are currently undocumented in <span class="plainlinks archwiki-template-man" title="$ man 1 less"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/less.1">less(1)</a></span>. For a detailed explanation, see <a rel="nofollow" class="external text" href="https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables/108840#108840">this answer</a>.</div>
@@ -263,7 +266,7 @@ ptyless() {
 <p>See <span class="plainlinks archwiki-template-man" title="$ man 1 ls"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ls.1">ls(1)</a></span> for more information.
 </p>
 <h3><span class="mw-headline" id="man">man</span></h3>
-<p>To enable colored <code>man</code>, two main pagers, <code>less</code> and <code>most</code>, are hacked here.
+<p>There is a real color facility in <span class="plainlinks archwiki-template-man" title="$ man 1 grotty"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/grotty.1">grotty(1)</a></span>, but it is strongly discouraged for man pages. Here we fake a colored <code>man</code> by hacking two main pagers, <code>less</code> and <code>most</code>: we replace the sequences for bold, standout, and underline with spiced ones that contain color.
 </p>
 <h4><span class="mw-headline" id="Using_less">Using less</span></h4>
 <p>See <a href="#less">#less</a> for a more detailed description.
@@ -273,10 +276,10 @@ ptyless() {
 <pre>man() {
     LESS_TERMCAP_md=$'\e[01;31m' \
     LESS_TERMCAP_me=$'\e[0m' \
-    LESS_TERMCAP_se=$'\e[0m' \
     LESS_TERMCAP_so=$'\e[01;44;33m' \
-    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
     LESS_TERMCAP_us=$'\e[01;32m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
     command man "$@"
 }
 </pre>
@@ -285,10 +288,10 @@ ptyless() {
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.config/fish/config.fish</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">set -xU LESS_TERMCAP_md (printf "\e[01;31m")
 set -xU LESS_TERMCAP_me (printf "\e[0m")
-set -xU LESS_TERMCAP_se (printf "\e[0m")
 set -xU LESS_TERMCAP_so (printf "\e[01;44;33m")
-set -xU LESS_TERMCAP_ue (printf "\e[0m")
+set -xU LESS_TERMCAP_se (printf "\e[0m")
 set -xU LESS_TERMCAP_us (printf "\e[01;32m")
+set -xU LESS_TERMCAP_ue (printf "\e[0m")
 </pre>
 <p>Remember to source your config or restart your shell to make the changes take effect.
 </p>
@@ -729,8 +732,8 @@ ech		kcuf1		kIC		rmkx		xon
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Color_output_in_console&amp;oldid=636339">https://wiki.archlinux.org/index.php?title=Color_output_in_console&amp;oldid=636339</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 25 September 2020, at 06:06.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Color_output_in_console&amp;oldid=654212">https://wiki.archlinux.org/index.php?title=Color_output_in_console&amp;oldid=654212</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 March 2021, at 10:25.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

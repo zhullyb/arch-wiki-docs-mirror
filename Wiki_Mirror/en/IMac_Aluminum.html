@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -135,7 +136,7 @@ The only present limitation that GParted has with the HFS+ file system, is that 
 <p>There is also a free software application that is apparently somewhat outdated, but works with Ext2/3 &amp; is working with OS X, 10.5, its name is <b>ext2fsx</b>.  I have not used ext2fsx so I can't speak about it from experience.
 </p>
 <h4><span class="mw-headline" id="The_GPT_partitioning_scheme_that_Apple_uses">The GPT partitioning scheme that Apple uses</span></h4>
-<p><a rel="nofollow" class="external autonumber" href="http://developer.apple.com/technotes/tn2006/tn2166.html">[3]</a><sup title="Last check status: domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-27 ⓘ]</sup> used to limit OS X, to only being able to use 4 partitions from which you could boot a system. If you haven't allowed your older Mactel, Apple machines to upgrade for quite some time then their firmware is still suffering under this limitation (I'm told) &amp; you should be aware of this fact. 
+<p><a rel="nofollow" class="external autonumber" href="https://developer.apple.com/library/content/technotes/tn2166/_index.html">[3]</a> used to limit OS X, to only being able to use 4 partitions from which you could boot a system. If you haven't allowed your older Mactel, Apple machines to upgrade for quite some time then their firmware is still suffering under this limitation (I'm told) &amp; you should be aware of this fact. 
 </p>
 <p>Therefore you need to be sure to install your boot loader i.e. GRUB/Lilo, &amp; any other partition that you may want OS X, to see (like a shared FAT32 data drive) on sda3 &amp; sda4, Windows must also be on sda3 or sda4.
 </p>
@@ -149,7 +150,7 @@ The only present limitation that GParted has with the HFS+ file system, is that 
 </p>
 <p>The above section will be severely modified, when I have confirmed that Apple have indeed made these changes to their firmware.
 </p>
-<p>So just to sum up, if you are using a machine with out of date firmware: &amp; you have need to use sda3 &amp; sda4, be sure to put any swap partitions on a partition number greater than sda4.  Also, it is worth considering not using a swap partition at all, as the only computers running Linux/BSD with 1 gigabyte of RAM that use their swap file are doing intensive specialized work such as video editing, sound recording/editing, 3D modelling...  
+<p>So just to sum up, if you are using a machine with out of date firmware: &amp; you have need to use sda3 &amp; sda4, be sure to put any swap partitions on a partition number greater than sda4.  Also, it is worth considering not using a swap partition at all, as the only computers running Linux/BSD with 1 gigabyte of RAM that use their swap file are doing intensive specialized work such as video editing, sound recording/editing, 3D modelling...
 </p>
 <h2><span class="mw-headline" id="rEFIt_Re-sync">rEFIt Re-sync</span></h2>
 <p>When partitioning is finished you must restart the iMac &amp; re-sync your partitions with rEFIt, which is quick &amp; easy:  You choose to <b>start the partitioning tool</b> in the <i>rEFIt boot-menu</i> &amp; follow the very simple instructions there.  
@@ -325,6 +326,10 @@ int main(int argc, char** argv)
 <p>And you can set the current brightness with:
 </p>
 <pre>tee /sys/class/backlight/radeon_bl1/brightness &lt;&lt;&lt; ''your_value''</pre>
+<p><br>
+<b>EDIT:</b> To enable brightness control by the system on an Imac 27 2011 12,2 I had to add the following to the options part of the <code><i>esp</i>/loader/entries/arch.conf</code> file for the systemd-boot loader. I believe the same can be done for GRUB.
+</p>
+<pre> acpi_backlight=native </pre>
 <h2><span class="mw-headline" id="Getting_sound_to_work_right">Getting sound to work right</span></h2>
 <p>Sound does not always work nice out of the box using Linux on an iMac. For instance, the sound can appear "thin" or tinny with too much treble and too little base due to the built in subwoofer being muted by default or the OS may not detect that the headphones have been plugged in. The fixes are generally to load sound drivers with extra model flags specifying relevent iMac model by manipulating <i>/etc/modprobe.d/sound.conf</i> or <i>/etc/modprobe.d/modprobe.conf</i>, restart the computer or the sound system and use alsamixer to make sure all desired channels are not muted.
 </p>
@@ -368,7 +373,6 @@ int main(int argc, char** argv)
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
 </div>
 </div>
@@ -377,8 +381,8 @@ int main(int argc, char** argv)
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=IMac_Aluminum&amp;oldid=647305">https://wiki.archlinux.org/index.php?title=IMac_Aluminum&amp;oldid=647305</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 27 December 2020, at 12:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=IMac_Aluminum&amp;oldid=654808">https://wiki.archlinux.org/index.php?title=IMac_Aluminum&amp;oldid=654808</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 18:28.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

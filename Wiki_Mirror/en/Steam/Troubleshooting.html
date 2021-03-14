@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -385,18 +386,23 @@ allow-moves=true
 <h3>
 <span id=".22Needs_to_be_online.22_error"></span><span class="mw-headline" id='"Needs_to_be_online"_error'>"Needs to be online" error</span>
 </h3>
+<div class="noprint archwiki-template-message">
+<p><a href="../../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Unclear why enabling nscd can help (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Steam/Troubleshooting#Needs_to_be_online_error:_Enabling_nscd.service">Talk:Steam/Troubleshooting#Needs to be online error: Enabling nscd.service</a>)</div>
+</div>
 <p>If the Steam launcher refuses to start and you get an error saying: "<i>Fatal Error: Steam needs to be online to update</i>" while you are online, then there might be issues with name resolving.  
 </p>
 <p>Try to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lib32-libcurl-compat">lib32-libcurl-compat</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nss-mdns">nss-mdns</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lib32-nss">lib32-nss</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lib32-glu">lib32-glu</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lib32-dbus">lib32-dbus</a></span>.
 </p>
-<p>This may also be as simple as DNS resolution not correctly working and is not always obvious since modern browsers will user their own DNS servers.  A possible fix if you didn't follow all the directions from the resolved wiki article.  Make sure /run/systemd/resolve/resolv.conf contains name servers as expected:
+<p>This may also be as simple as DNS resolution not correctly working and is not always obvious since modern browsers will user their own DNS servers. Follow <a href="../../en/Domain_name_resolution.html" title="Domain name resolution">Domain name resolution</a>.
 </p>
-<pre>cat /run/systemd/resolve/resolv.conf
-</pre>
-<p>Create the symbolic link (the -f option will force overwrite any current file):
+<p>If DNS resolution works but the Steam launcher still shows the same error message, enabling DNS caching e.g. via the "Name Service Caching Daemon" has shown to work around this issue:
 </p>
-<pre>ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+<pre>systemctl enable nscd --now
 </pre>
+<p>It’s unclear what exactly running <code>nscd</code> does to make it work again though. Please check the <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Steam/Troubleshooting#Needs_to_be_online_error:_Enabling_nscd.service">talk page</a> for more info.
+</p>
 <h3><span class="mw-headline" id="Steam_forgets_password">Steam forgets password</span></h3>
 <dl><dd>Related: <a rel="nofollow" class="external text" href="https://github.com/ValveSoftware/steam-for-linux/issues/5030">steam-for-linux#5030</a>
 </dd></dl>
@@ -524,7 +530,9 @@ $ ln -s /home/user/dir/compatdata/ SteamLibrary/steamapps/common/compatdata
 <pre>export LD_LIBRARY_PATH=/usr/lib32/nvidia:/usr/lib/nvidia:$LD_LIBRARY_PATH
 </pre>
 <h3><span class="mw-headline" id="Text_is_corrupt_or_missing">Text is corrupt or missing</span></h3>
-<p>Try <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ttf-liberation">ttf-liberation</a></span> without installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/steam-fonts/">steam-fonts</a></span><sup><small>AUR</small></sup>. Installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/steam-fonts/">steam-fonts</a></span><sup><small>AUR</small></sup> may lead to corrupt font rendering in steam, like chopped letter.
+<p>Before reading following, try install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lib32-fontconfig">lib32-fontconfig</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ttf-liberation">ttf-liberation</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wqy-zenhei">wqy-zenhei</a></span>(for Asian characters), then restart Steam to see whether the problem is solved.
+</p>
+<p>Installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/steam-fonts/">steam-fonts</a></span><sup><small>AUR</small></sup> may work, but it also may lead to corrupt font rendering in steam, like chopped letter.
 </p>
 <p>The Steam Support <a rel="nofollow" class="external text" href="https://support.steampowered.com/kb_article.php?ref=1974-YFKL-4947">instructions</a> for Windows seem to work on Linux also.
 </p>
@@ -667,8 +675,8 @@ In order to disable VSYNC for primusrun default value of option vblank_mode need
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Steam/Troubleshooting&amp;oldid=647256">https://wiki.archlinux.org/index.php?title=Steam/Troubleshooting&amp;oldid=647256</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 27 December 2020, at 06:38.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Steam/Troubleshooting&amp;oldid=653719">https://wiki.archlinux.org/index.php?title=Steam/Troubleshooting&amp;oldid=653719</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 28 February 2021, at 19:56.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

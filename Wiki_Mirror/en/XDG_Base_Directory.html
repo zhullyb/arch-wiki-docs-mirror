@@ -72,7 +72,9 @@
 <h2><span class="mw-headline" id="Specification">Specification</span></h2>
 <p>Please read the <a rel="nofollow" class="external text" href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">full specification</a>. This section will attempt to break down the essence of what it tries to achieve.
 </p>
-<p>Only <code>XDG_RUNTIME_DIR</code> is set by default through <a rel="nofollow" class="external text" href="https://www.freedesktop.org/software/systemd/man/pam_systemd.html">pam_systemd</a>. It is up to the user to explicitly <a href="../en/Environment_variables.html#Defining_variables" class="mw-redirect" title="Define">define</a> the other variables according to the specification.
+<p>Only <code>XDG_RUNTIME_DIR</code> is set by default through <a rel="nofollow" class="external text" href="https://www.freedesktop.org/software/systemd/man/pam_systemd.html">pam_systemd</a>. It is up to the user to explicitly define the other variables according to the specification.
+</p>
+<p>See <a href="../en/Environment_variables.html#Globally" title="Environment variables">Environment variables#Globally</a> for information on defining variables.
 </p>
 <h3><span class="mw-headline" id="User_directories">User directories</span></h3>
 <ul><li>
@@ -108,6 +110,7 @@
 <li>Modified every 6 hours or set sticky bit if persistence is desired.</li>
 <li>Can only exist for the duration of the user's login.</li>
 <li>Should not store large files as it may be mounted as a tmpfs.</li>
+<li>pam_systemd sets this to <code>/run/user/$UID</code>.</li>
 </ul>
 </li></ul>
 <h3><span class="mw-headline" id="System_directories">System directories</span></h3>
@@ -3913,7 +3916,8 @@ $ mv ~/.spacemacs "$SPACEMACSDIR"/init.el</code>
 </td>
 <td>
 <p><code>$ export TASKDATA="$XDG_DATA_HOME"/task<br>
-$ export TASKRC="$XDG_CONFIG_HOME"/task/taskrc</code>
+$ export TASKRC="$XDG_CONFIG_HOME"/task/taskrc</code><br>
+<a rel="nofollow" class="external text" href="https://github.com/GothenburgBitFactory/taskwarrior/pull/2316">Fully supported in version 2.6</a>
 </p>
 </td>
 </tr>
@@ -4305,9 +4309,6 @@ ERRFILE="$XDG_CACHE_HOME/x11/xsession-errors"
 <a rel="nofollow" class="external autonumber" href="https://developer.android.com/studio/command-line/variables.html#android_sdk_root">[162]</a>
 </td>
 <td>
-<code>$ export ANDROID_PREFS_ROOT="$XDG_CONFIG_HOME"/android</code> <code>$ export ADB_KEYS_PATH="$ANDROID_PREFS_ROOT"</code>
-<p><code>$ export ANDROID_EMULATOR_HOME="$XDG_DATA_HOME"/android/emulator</code>
-</p>
 </td>
 </tr>
 <tr>
@@ -5881,8 +5882,8 @@ if !has('nvim') | set viminfofile=$XDG_CACHE_HOME/vim/viminfo | endif
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=XDG_Base_Directory&amp;oldid=652710">https://wiki.archlinux.org/index.php?title=XDG_Base_Directory&amp;oldid=652710</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 February 2021, at 04:26.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=XDG_Base_Directory&amp;oldid=654213">https://wiki.archlinux.org/index.php?title=XDG_Base_Directory&amp;oldid=654213</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 March 2021, at 10:39.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -44,21 +45,22 @@
 <a href="#Installation"><span class="tocnumber">1</span> <span class="toctext">Installation</span></a>
 <ul>
 <li class="toclevel-2 tocsection-2"><a href="#Install_multiple_versions_manually"><span class="tocnumber">1.1</span> <span class="toctext">Install multiple versions manually</span></a></li>
-<li class="toclevel-2 tocsection-3"><a href="#Install_multiple_versions_via_AUR"><span class="tocnumber">1.2</span> <span class="toctext">Install multiple versions via AUR</span></a></li>
-<li class="toclevel-2 tocsection-4"><a href="#Install_PowerShell_Core"><span class="tocnumber">1.3</span> <span class="toctext">Install PowerShell Core</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Uninstall_manually_installed_version"><span class="tocnumber">1.2</span> <span class="toctext">Uninstall manually installed version</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Install_multiple_versions_via_AUR"><span class="tocnumber">1.3</span> <span class="toctext">Install multiple versions via AUR</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Install_PowerShell_Core"><span class="tocnumber">1.4</span> <span class="toctext">Install PowerShell Core</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-5"><a href="#Telemetry"><span class="tocnumber">2</span> <span class="toctext">Telemetry</span></a></li>
-<li class="toclevel-1 tocsection-6"><a href="#Tab-Completion"><span class="tocnumber">3</span> <span class="toctext">Tab-Completion</span></a></li>
-<li class="toclevel-1 tocsection-7">
+<li class="toclevel-1 tocsection-6"><a href="#Telemetry"><span class="tocnumber">2</span> <span class="toctext">Telemetry</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#Tab-Completion"><span class="tocnumber">3</span> <span class="toctext">Tab-Completion</span></a></li>
+<li class="toclevel-1 tocsection-8">
 <a href="#Troubleshooting"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-8"><a href="#It_was_not_possible_to_find_any_compatible_framework_version"><span class="tocnumber">4.1</span> <span class="toctext">It was not possible to find any compatible framework version</span></a></li>
-<li class="toclevel-2 tocsection-9"><a href="#%22the_required_library_libhostfxr.so_could_not_be_found%22_error"><span class="tocnumber">4.2</span> <span class="toctext">"the required library libhostfxr.so could not be found" error</span></a></li>
-<li class="toclevel-2 tocsection-10"><a href="#SDK_specified_could_not_be_found"><span class="tocnumber">4.3</span> <span class="toctext">SDK specified could not be found</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#It_was_not_possible_to_find_any_compatible_framework_version"><span class="tocnumber">4.1</span> <span class="toctext">It was not possible to find any compatible framework version</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#%22the_required_library_libhostfxr.so_could_not_be_found%22_error"><span class="tocnumber">4.2</span> <span class="toctext">"the required library libhostfxr.so could not be found" error</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#SDK_specified_could_not_be_found"><span class="tocnumber">4.3</span> <span class="toctext">SDK specified could not be found</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-11"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -67,7 +69,7 @@
 </p>
 <p>To build apps with .NET Core, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dotnet-sdk">dotnet-sdk</a></span> as well.
 </p>
-<p>Microsoft recommends using <a href="../en/Visual_Studio_Code.html" title="Visual Studio Code">Visual Studio Code</a> , their <a rel="nofollow" class="external text" href="https://electron.atom.io/">Electron</a>-based FOSS IDE, to build &amp; debug .NET Core apps.
+<p>Microsoft recommends using <a href="../en/Visual_Studio_Code.html" title="Visual Studio Code">Visual Studio Code</a> , their <a rel="nofollow" class="external text" href="https://electron.atom.io/">Electron</a>-based IDE, to build &amp; debug .NET Core apps.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> Add <code>~/.dotnet/tools</code> to <code>PATH</code>, otherwise dotnet tools will not work from shell.</div>
@@ -87,6 +89,32 @@
 3.0.103 [/usr/share/dotnet/sdk]
 $ dotnet --version
 3.0.103
+</pre>
+<h3><span class="mw-headline" id="Uninstall_manually_installed_version">Uninstall manually installed version</span></h3>
+<p>You may want to remove outdated versions installed with <code>dotnet-install.sh</code>. The automated <a rel="nofollow" class="external text" href="https://docs.microsoft.com/en-us/dotnet/core/additional-tools/uninstall-tool">.NET Uninstall Tool</a> does still not support linux, so the deinstallation has to be done manually.
+</p>
+<pre>$ dotnet --list-sdks
+5.0.100 [/usr/share/dotnet/sdk]
+5.0.102 [/usr/share/dotnet/sdk]
+</pre>
+<p>Deinstallation of the sdk:
+</p>
+<pre>SDK_VERSION="5.0.100"
+DOTNET_UNINSTALL_PATH="/usr/share/dotnet"
+sudo rm -rf $DOTNET_UNINSTALL_PATH/sdk/$SDK_VERSION
+</pre>
+<p>Using <code>dotnet-install.sh</code> also dotnet host and shared packages are getting installed, which may have to get removed additionally depending on the release.
+</p>
+<p>Complete deinstallation of the .NET Version (sdk, host, shared):
+</p>
+<pre>SDK_VERSION="5.0.100"
+DOTNET_VERSION="5.0.0"
+DOTNET_UNINSTALL_PATH="/usr/share/dotnet"
+sudo rm -rf $DOTNET_UNINSTALL_PATH/sdk/$SDK_VERSION
+sudo rm -rf $DOTNET_UNINSTALL_PATH/shared/Microsoft.NETCore.App/$DOTNET_VERSION
+sudo rm -rf $DOTNET_UNINSTALL_PATH/shared/Microsoft.AspNetCore.All/$DOTNET_VERSION
+sudo rm -rf $DOTNET_UNINSTALL_PATH/shared/Microsoft.AspNetCore.App/$DOTNET_VERSION
+sudo rm -rf $DOTNET_UNINSTALL_PATH/host/fxr/$DOTNET_VERSION
 </pre>
 <h3><span class="mw-headline" id="Install_multiple_versions_via_AUR">Install multiple versions via AUR</span></h3>
 <p>Some of the AUR dotnet packages are made to be installed alongside each other. Only one host package (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dotnet-host-bin/">dotnet-host-bin</a></span><sup><small>AUR</small></sup> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dotnet-host">dotnet-host</a></span>) is needed containing the command-line tool and you can install any of the available SDKs and Runtimes (latest packages of all major versions) next to it. List of compatible packages:
@@ -171,8 +199,8 @@ If this is a framework-dependent application, install the runtime in the default
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=.NET_Core&amp;oldid=648994">https://wiki.archlinux.org/index.php?title=.NET_Core&amp;oldid=648994</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 January 2021, at 20:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=.NET_Core&amp;oldid=652753">https://wiki.archlinux.org/index.php?title=.NET_Core&amp;oldid=652753</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 February 2021, at 06:52.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -481,8 +481,6 @@ See <a rel="nofollow" class="external text" href="http://www.openprinting.org/pr
 <td>brother-hll3230cdw</td>
 <td>See <a rel="nofollow" class="external free" href="https://github.com/splitbrain/archlinux-brother-hll3230cdw">https://github.com/splitbrain/archlinux-brother-hll3230cdw</a>
 </td>
-<td>
-</td>
 </tr>
 <tr>
 <td>HL-L5100DN</td>
@@ -1116,10 +1114,15 @@ ftp&gt; bye
 </td>
 </tr>
 <tr>
-<td>MX490</td>
-<td rowspan="4">
+<td>MB2350</td>
+<td rowspan="5">
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cnijfilter2/">cnijfilter2</a></span><sup><small>AUR</small></sup><br><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cnijfilter2-bin/">cnijfilter2-bin</a></span><sup><small>AUR</small></sup>
 </td>
+<td>
+</td>
+</tr>
+<tr>
+<td>MX490</td>
 <td>
 </td>
 </tr>
@@ -1170,7 +1173,7 @@ There are multiple packages for these printers in AUR, and atleast the imageCLAS
 </p>
 <h3><span class="mw-headline" id="CARPS">CARPS</span></h3>
 <p>Some of Canon's printers use Canon's proprietary CARPS (<i>Canon Advanced Raster Printing System</i>) driver.
-<a rel="nofollow" class="external text" href="http://www.rainbow-software.org/2014/01/23/cups-driver-for-canon-carps-printers/">Rainbow Software</a> have managed to reverse engineer the CARPS data format and have successfully created a CARPS CUPS driver, which is available as <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/carps-cups/">carps-cups</a></span><sup><small>AUR</small></sup><sup>[<a href="../../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>.
+<a rel="nofollow" class="external text" href="http://www.rainbow-software.org/2014/01/23/cups-driver-for-canon-carps-printers/">Rainbow Software</a> have managed to reverse engineer the CARPS data format and have successfully created a CARPS CUPS driver, which is available as <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/carps-cups-git/">carps-cups-git</a></span><sup><small>AUR</small></sup>.
 The project's <a rel="nofollow" class="external text" href="https://github.com/ondrej-zary/carps-cups">GitHub</a> page includes a list of working printers.
 </p>
 <h3>
@@ -1185,11 +1188,16 @@ The project's <a rel="nofollow" class="external text" href="https://github.com/o
 </pre>
 <p>and use the <code>cnijnet:/</code> URI in the output.
 </p>
-<div class="noprint archwiki-template-message">
-<p><a href="../../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> The URI appears to be of the form <code>cnijnet:/</code> followed by the MAC address of the printer. If this is the case it would be good to mention it here. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:CUPS/Printer-specific_problems">Talk:CUPS/Printer-specific problems#</a>)</div>
-</div>
+<p>Other driver versions, as is the case for the current version of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cnijfilter2/">cnijfilter2</a></span><sup><small>AUR</small></sup>, provide the <code>cnijlgmon3</code> binary to search for available printers.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ cnijlgmon3</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">network cnijbe2://Canon/?port=net&amp;serial=60-12-81-A7-7D-34 "Canon MB2300 series" "Canon-MB2300-series_60-12-81-A7-7D-34"</pre>
+<p>The printer can be added to cups using the <code>cnijbe2</code> url and an appropriate <code>.ppd</code> file, which should be shipped with your driver. 
+</p>
+<pre>$ lpadmin -p CustomPrinterNameMB2300 -P /usr/share/cups/model/canonmb2300.ppd -v "cnijbe2://Canon/?port=net&amp;serial=60-12-81-A7-7D-34" -E
+</pre>
+<p>The argument <code>serial</code> in the cnijbe2 url corresponds to the MAC address of the printer.
+</p>
 <h3><span class="mw-headline" id="IPP_Everywhere">IPP Everywhere</span></h3>
 <p>For recent Canon printers, like the G7000 series, it can be hard to find a valid driver. However, it is possible to use a driverless installation using IPP Everywhere.
 </p>
@@ -1247,78 +1255,63 @@ The project's <a rel="nofollow" class="external text" href="https://github.com/o
 </td>
 </tr>
 <tr>
-<td>1130</td>
-<td>
+<td>1130
 </td>
 </tr>
 <tr>
-<td>1133</td>
-<td>
+<td>1133
 </td>
 </tr>
 <tr>
-<td>1135n</td>
-<td>
+<td>1135n
 </td>
 </tr>
 <tr>
-<td>1815</td>
-<td>
+<td>1815
 </td>
 </tr>
 <tr>
-<td>2145cn</td>
-<td>
+<td>2145cn
 </td>
 </tr>
 <tr>
-<td>2335dn</td>
-<td>
+<td>2335dn
 </td>
 </tr>
 <tr>
-<td>2355dn</td>
-<td>
+<td>2355dn
 </td>
 </tr>
 <tr>
-<td>5330</td>
-<td>
+<td>5330
 </td>
 </tr>
 <tr>
-<td>B1160</td>
-<td>
+<td>B1160
 </td>
 </tr>
 <tr>
-<td>B1160w</td>
-<td>
+<td>B1160w
 </td>
 </tr>
 <tr>
-<td>B1165nfw</td>
-<td>
+<td>B1165nfw
 </td>
 </tr>
 <tr>
-<td>B1260dn</td>
-<td>
+<td>B1260dn
 </td>
 </tr>
 <tr>
-<td>B1265dfw</td>
-<td>
+<td>B1265dfw
 </td>
 </tr>
 <tr>
-<td>B1265dnf</td>
-<td>
+<td>B1265dnf
 </td>
 </tr>
 <tr>
-<td>B2365dnf</td>
-<td>
+<td>B2365dnf
 </td>
 </tr>
 
@@ -1803,7 +1796,7 @@ CustomMedia "TUSB/US B(11x17 in) (Borderless)" 792.00 1224.00 0.00 0.00 0.00 0.0
 </td>
 </tr>
 <tr>
-<td>HP LaserJet MFP M43</td>
+<td>HP LaserJet MFP M433</td>
 <td rowspan="7">
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/hpuld/">hpuld</a></span><sup><small>AUR</small></sup>
 </td>
@@ -2204,23 +2197,16 @@ The driver may require older versions of <span class="plainlinks archwiki-templa
 </pre>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../../en/Category:Printers.html" title="Category:Printers">Printers</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
-</ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=CUPS/Printer-specific_problems&amp;oldid=652305">https://wiki.archlinux.org/index.php?title=CUPS/Printer-specific_problems&amp;oldid=652305</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 February 2021, at 13:34.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=CUPS/Printer-specific_problems&amp;oldid=654160">https://wiki.archlinux.org/index.php?title=CUPS/Printer-specific_problems&amp;oldid=654160</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 March 2021, at 13:52.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

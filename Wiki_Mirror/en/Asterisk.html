@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -79,7 +80,7 @@
 </p>
 <p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">Start</a> the server with <code>asterisk.service</code>.
 </p>
-<p>You will also need a SIP <a href="../en/List_of_applications.html#SIP_clients" class="mw-redirect" title="Softphone">softphone</a> and at least two machines. Recommendations for SIP phones are <a rel="nofollow" class="external text" href="http://icanblink.com/">Blink</a> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/blink/">blink</a></span><sup><small>AUR</small></sup>), <a rel="nofollow" class="external text" href="http://www.linphone.org/">Linphone</a> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/liblinphone-git/">liblinphone-git</a></span><sup><small>AUR</small></sup>) or <a rel="nofollow" class="external text" href="http://www.counterpath.com/x-lite/">X-Lite</a> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xlite_bin/">xlite_bin</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> package).
+<p>You will also need a SIP <a href="../en/List_of_applications.html#SIP_clients" class="mw-redirect" title="Softphone">softphone</a> and at least two machines. Recommendations for SIP phones are <a rel="nofollow" class="external text" href="http://icanblink.com/">Blink</a> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/blink/">blink</a></span><sup><small>AUR</small></sup>), <a rel="nofollow" class="external text" href="http://www.linphone.org/">Linphone</a> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/liblinphone-git/">liblinphone-git</a></span><sup><small>AUR</small></sup>) or <a rel="nofollow" class="external text" href="http://www.counterpath.com/x-lite/">X-Lite</a> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xlite-bin/">xlite-bin</a></span><sup><small>AUR</small></sup>).
 </p>
 <p>To enable ilbc codec support add the following to the very beginning of the <code>build</code> section of the PKGBUILD:
 </p>
@@ -87,7 +88,9 @@
 echo | ./get_ilbc_source.sh
 </pre>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
-<p>Note that the following instructions assume that you want to use already obsoleted <code>sip</code> module. In order to do so you must allow it and at the same time assure that newer <code>pjsip</code> module is unloaded. In <code>/etc/asterisk/modules.conf</code> adjust the following:
+<p>Note that the following instructions assume that you want to use already obsoleted <code>sip</code> module. The <code>sip</code> module is no longer maintained, but is easier to configure then the newer <code>pjsip</code> module. There is a summary of configuration changes between two modules, as well as instructions on how to migrate to the newer module, on the  <a rel="nofollow" class="external text" href="https://wiki.asterisk.org/wiki/display/AST/Migrating+from+chan_sip+to+res_pjsip">Asterisk wiki</a>. 
+</p>
+<p>In order to use <code>sip</code>, you need to explicitly load the older module, and ensure that the newer <code>pjsip</code> module is unloaded. In <code>/etc/asterisk/modules.conf</code> adjust the following:
 </p>
 <pre>noload =&gt; chan_pjsip.so
 noload =&gt; res_pjsip.so
@@ -310,23 +313,19 @@ language=en
 </p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
 <li><a href="../en/Category:Telephony.html" title="Category:Telephony">Telephony</a></li>
 <li><a href="../en/Category:Voice_over_IP.html" title="Category:Voice over IP">Voice over IP</a></li>
 </ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Asterisk&amp;oldid=648101">https://wiki.archlinux.org/index.php?title=Asterisk&amp;oldid=648101</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 3 January 2021, at 12:39.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Asterisk&amp;oldid=654833">https://wiki.archlinux.org/index.php?title=Asterisk&amp;oldid=654833</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 March 2021, at 01:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

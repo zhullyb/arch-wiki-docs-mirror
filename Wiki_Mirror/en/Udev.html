@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -91,14 +92,13 @@
 <li class="toclevel-2 tocsection-23"><a href="#Blacklisting_modules"><span class="tocnumber">5.1</span> <span class="toctext">Blacklisting modules</span></a></li>
 <li class="toclevel-2 tocsection-24"><a href="#Debug_output"><span class="tocnumber">5.2</span> <span class="toctext">Debug output</span></a></li>
 <li class="toclevel-2 tocsection-25"><a href="#udevd_hangs_at_boot"><span class="tocnumber">5.3</span> <span class="toctext">udevd hangs at boot</span></a></li>
-<li class="toclevel-2 tocsection-26"><a href="#BusLogic_devices_can_be_broken_and_will_cause_a_freeze_during_startup"><span class="tocnumber">5.4</span> <span class="toctext">BusLogic devices can be broken and will cause a freeze during startup</span></a></li>
-<li class="toclevel-2 tocsection-27"><a href="#Some_devices,_that_should_be_treated_as_removable,_are_not"><span class="tocnumber">5.5</span> <span class="toctext">Some devices, that should be treated as removable, are not</span></a></li>
-<li class="toclevel-2 tocsection-28"><a href="#Sound_problems_with_some_modules_not_loaded_automatically"><span class="tocnumber">5.6</span> <span class="toctext">Sound problems with some modules not loaded automatically</span></a></li>
-<li class="toclevel-2 tocsection-29"><a href="#IDE_CD/DVD-drive_support"><span class="tocnumber">5.7</span> <span class="toctext">IDE CD/DVD-drive support</span></a></li>
-<li class="toclevel-2 tocsection-30"><a href="#Optical_drives_have_group_ID_set_to_%22disk%22"><span class="tocnumber">5.8</span> <span class="toctext">Optical drives have group ID set to "disk"</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#Some_devices,_that_should_be_treated_as_removable,_are_not"><span class="tocnumber">5.4</span> <span class="toctext">Some devices, that should be treated as removable, are not</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#Sound_problems_with_some_modules_not_loaded_automatically"><span class="tocnumber">5.5</span> <span class="toctext">Sound problems with some modules not loaded automatically</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#IDE_CD/DVD-drive_support"><span class="tocnumber">5.6</span> <span class="toctext">IDE CD/DVD-drive support</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#Optical_drives_have_group_ID_set_to_%22disk%22"><span class="tocnumber">5.7</span> <span class="toctext">Optical drives have group ID set to "disk"</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-31"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-30"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -382,7 +382,7 @@ export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/UID_OF_USER_TO_RUN_SCRIPT_A
 <p>In rare cases, <i>udev</i> can make mistakes and load the wrong modules. To prevent it from doing this, you can <a href="../en/Kernel_module.html#Blacklisting" class="mw-redirect" title="Blacklist">blacklist</a> modules. Once blacklisted, <i>udev</i> will never load that module – not at boot-time and not even later on when a hot-plug event is received (e.g., you plug in your USB flash drive).
 </p>
 <h3><span class="mw-headline" id="Debug_output">Debug output</span></h3>
-<p>To get hardware debug info, use the <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> <code>udev.log-priority=debug</code>. Alternatively you can set
+<p>To get hardware <a href="../en/General_troubleshooting.html" title="General troubleshooting">debug</a> info, use the <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> <code>udev.log-priority=debug</code>. Alternatively you can set
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/udev/udev.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">udev_log="debug"</pre>
@@ -420,9 +420,6 @@ storage								storage
 </p>
 <pre>group: files ldap
 </pre>
-<h3><span class="mw-headline" id="BusLogic_devices_can_be_broken_and_will_cause_a_freeze_during_startup">BusLogic devices can be broken and will cause a freeze during startup</span></h3>
-<p>This is a kernel bug and no fix has been provided yet.
-</p>
 <h3>
 <span id="Some_devices.2C_that_should_be_treated_as_removable.2C_are_not"></span><span class="mw-headline" id="Some_devices,_that_should_be_treated_as_removable,_are_not">Some devices, that should be treated as removable, are not</span>
 </h3>
@@ -450,7 +447,7 @@ storage								storage
 <h3>
 <span id="IDE_CD.2FDVD-drive_support"></span><span class="mw-headline" id="IDE_CD/DVD-drive_support">IDE CD/DVD-drive support</span>
 </h3>
-<p>Starting with version 170, <i>udev</i> does not support CD-ROM/DVD-ROM drives that are loaded as traditional IDE drives with the <code>ide_cd_mod</code> module and show up as <code>/dev/hd*</code>. The drive remains usable for tools which access the hardware directly, like <i>cdparanoia</i>, but is invisible for higher userspace programs, like KDE.
+<p>Starting with version 170, <i>udev</i> does not support CD-ROM/DVD-ROM drives that are loaded as traditional IDE drives with the <code>ide_cd_mod</code> module and show up as <code>/dev/hd*</code>. The drive remains usable for tools which access the hardware directly, like <a href="../en/Optical_disc_drive.html#Ripping" title="Optical disc drive">cdparanoia</a>, but is invisible for higher userspace programs, like KDE.
 </p>
 <p>A cause for the loading of the ide_cd_mod module prior to others, like sr_mod, could be e.g. that you have for some reason the module piix loaded with your <a href="../en/Arch_boot_process.html#initramfs" class="mw-redirect" title="Initramfs">initramfs</a>. In that case you can just replace it with ata_piix in your <code>/etc/mkinitcpio.conf</code>.
 </p>
@@ -492,8 +489,8 @@ SUBSYSTEMS=="scsi", KERNEL=="s[rg][0-9]*", ATTRS{type}=="5", GROUP="optical"</pr
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Udev&amp;oldid=627565">https://wiki.archlinux.org/index.php?title=Udev&amp;oldid=627565</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 31 July 2020, at 19:47.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Udev&amp;oldid=653180">https://wiki.archlinux.org/index.php?title=Udev&amp;oldid=653180</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 February 2021, at 18:03.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

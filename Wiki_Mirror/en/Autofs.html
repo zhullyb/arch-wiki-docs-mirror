@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -91,6 +92,13 @@
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> You no longer need to load <code>autofs4</code> module.</div>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Mention <code>auto.master.d</code> to avoid direct edits to <code>/etc/auto.master</code> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Autofs">Talk:Autofs#</a>)</div>
+</div>
+<p>.
+</p>
 <p>AutoFS uses template files for configuration which are located in <code>/etc/autofs</code> The main template is called <code>auto.master</code>, which can point to one or more other templates for specific media types.
 </p>
 <ul><li>Open the file <code>/etc/autofs/auto.master</code> with your favorite editor, you will see something similar to this:</li></ul>
@@ -103,8 +111,8 @@
 /media/net      /etc/autofs/auto.net      --timeout=60</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Make sure there is an empty line on the end of template files (press <code>ENTER</code> after last word). If there is no correct EOF (end of file) line, the AutoFS daemon will not properly load.</div>
-<p>The optional parameter <code>timeout</code> sets the amount of seconds after which to unmount directories.
-</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> The optional parameter <code>timeout</code> sets the amount of seconds after which to unmount directories. Setting this value to <code>0</code> will disable the timeout.</div>
 <p>The base directory will be created if it does not exist on your system. The base directory will be mounted on to load the dynamically loaded media, which means any content in the base directory will not be accessible while autofs is on. This procedure is however non-destructive, so if you accidentally automount into a live directory you can just change the location in <code>auto.master</code> and restart AutoFS to regain the original contents.
 </p>
 <p>If you still want to automount to a target non-empty directory and want to have the original files available even after the dynamically loaded directories are mounted, you can use autofs to mount them to another directory (e.g. /var/autofs/net) and create soft links.
@@ -139,15 +147,8 @@
 <pre> # _ID=$( blkid --output value --match-tag PARTUUID /dev/sd<i>XY</i> )
  # printf "%s %s\n" "black -fstype=auto :PARTUUID=" "${_ID}" &gt;/etc/autofs/auto.mnt
 </pre>
-<p><br>
-</p>
 <h3><span class="mw-headline" id="NFS_network_mounts">NFS network mounts</span></h3>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> "New" compared to what? In what way?; don't show systemctl start; formatting cleanup (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Autofs">Talk:Autofs#</a>)</div>
-</div>
-<p>AutoFS provides a new way of automatically discovering and mounting <a href="../en/NFS.html" title="NFS">NFS</a>-shares on remote servers (the AutoFS network template in <code>/etc/autofs/auto.net</code> has been removed in autofs5). To enable automatic discovery and mounting of network shares from all accessible servers without any further configuration, you will need to add the following to the <code>/etc/autofs/auto.master</code> file:
+<p>AutoFS provides automatically discovering and mounting <a href="../en/NFS.html" title="NFS">NFS</a>-shares on remote servers (the AutoFS network template in <code>/etc/autofs/auto.net</code> has been removed in autofs5). To enable automatic discovery and mounting of network shares from all accessible servers without any further configuration, you will need to add the following to the <code>/etc/autofs/auto.master</code> file:
 </p>
 <pre>/net -hosts --timeout=60
 </pre>
@@ -166,12 +167,12 @@
 <p>Replacing <i>&lt;servername&gt;</i> with the name of your own server.
 </p>
 <h4><span class="mw-headline" id="Manual_NFS_configuration">Manual NFS configuration</span></h4>
-<p>To mount a NFS share on server_name called <code>/srv/shared_dir</code> to another computer named <code>client_pc</code> at location <code>/mnt/foo</code>, edit <code>auto.master</code> and create a configuration file for the share (auto.server_name):
+<p>To mount a NFS share for <i>file_server</i> on <code>/srv/shared_dir</code> at location <code>/mnt/foo</code>, <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Add">add</a> a new configuration, e.g. <code>file_server.autofs</code>:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.master</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/mnt   /etc/autofs/auto.server_name --timeout 60</pre>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.server_name</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">foo  -rw,soft,intr,rsize=8192,wsize=8192 server_name:/srv/shared_dir</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.master.d/file_server.autofs</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/mnt   /etc/autofs/auto.file_server --timeout 60</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.file_server</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">foo  -rw,soft,rsize=8192,wsize=8192 file_server:/srv/shared_dir</pre>
 <h3><span class="mw-headline" id="Samba">Samba</span></h3>
 <h4><span class="mw-headline" id="Single_shares">Single shares</span></h4>
 <p>Add the following to <code>/etc/autofs/auto.master</code>:
@@ -395,7 +396,7 @@ May  7 19:44:16 peterix automount[15218]: failed to mount /media/cifs/petr
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:File_systems.html" title="Category:File systems">File systems</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
@@ -405,8 +406,8 @@ May  7 19:44:16 peterix automount[15218]: failed to mount /media/cifs/petr
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Autofs&amp;oldid=649297">https://wiki.archlinux.org/index.php?title=Autofs&amp;oldid=649297</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 January 2021, at 00:33.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Autofs&amp;oldid=654627">https://wiki.archlinux.org/index.php?title=Autofs&amp;oldid=654627</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 18:04.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

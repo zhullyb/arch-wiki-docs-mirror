@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -44,7 +45,7 @@
 </div>
 <p><b>systemd-boot</b>, previously called <b>gummiboot</b> (German for: 'rubber dinghy'), is a simple UEFI <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot manager">boot manager</a> which executes configured EFI images. The default entry is selected by a configured pattern (glob) or an on-screen menu to be navigated via arrow-keys. It is included with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd">systemd</a></span>, which is installed on an Arch system by default.
 </p>
-<p>It is simple to configure but it can only start EFI executables such as the Linux kernel <a href="../en/EFISTUB.html" title="EFISTUB">EFISTUB</a>, UEFI Shell, GRUB, or the Windows Boot Manager.
+<p>It is simple to configure but it can only start EFI executables such as the Linux kernel <a href="../en/EFISTUB.html" title="EFISTUB">EFISTUB</a>, <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_Shell" class="mw-redirect" title="UEFI shell">UEFI shell</a>, GRUB, or the Windows Boot Manager.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -114,7 +115,7 @@
 </p>
 <pre># bootctl install
 </pre>
-<p>This will copy the <i>systemd-boot</i> boot loader to the EFI partition: on a x64 architecture system the two identical binaries <code><i>esp</i>/EFI/systemd/systemd-bootx64.efi</code> and <code><i>esp</i>/EFI/BOOT/BOOTX64.EFI</code> will be transferred to the ESP. It will then set <i>systemd-boot</i> as the default EFI application (default boot entry) loaded by the EFI Boot Manager.
+<p>This will copy the <i>systemd-boot</i> boot loader to the EFI partition: on a x64 architecture system <code>/usr/lib/systemd/boot/efi/systemd-bootx64.efi</code> will be copied to <code><i>esp</i>/EFI/systemd/systemd-bootx64.efi</code> and <code><i>esp</i>/EFI/BOOT/BOOTX64.EFI</code>. It will then set <i>systemd-boot</i> as the default EFI application (default boot entry) loaded by the EFI Boot Manager.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Installing systemd-boot will overwrite any existing <code>/EFI/BOOT/BOOTX64.EFI</code>, for example Microsoft's version of this file.</div>
@@ -254,7 +255,7 @@ The possible options are:
 <li>
 <code>machine-id</code> – machine identifier from <code>/etc/machine-id</code>, shown only when multiple entries with same title and version exist. Optional.</li>
 <li>
-<code>efi</code> – EFI program to start, relative to your ESP (<code><i>esp</i></code>); e.g. <code>/vmlinuz-linux</code>. <b>Either</b> this parameter or <code>linux</code> (see below) is <b>required</b>.</li>
+<code>efi</code> – EFI program to start, relative to your ESP (<code><i>esp</i></code>); e.g. <code>/vmlinuz-linux</code>. <b>Either</b> this parameter <b>or</b> <code>linux</code> (see below) <b>is required</b>.</li>
 <li>
 <code>options</code> – command line options to pass to the EFI program or <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a>. Optional, but you will need at least <code>root=<i>dev</i></code> if booting Linux. This parameter can be omitted if the root partition is assigned the correct Root Partition Type GUID as defined in <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Discoverable Partitions Specification</a> and if the <code>systemd</code> <a href="../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a> hook is present.</li>
 </ul>
@@ -264,12 +265,7 @@ The possible options are:
 <code>linux</code> and <code>initrd</code> followed by the relative path of the corresponding files in the ESP;  e.g. <code>/vmlinuz-linux</code>; this will be automatically translated into <code>efi <i>path</i></code> and <code>options initrd=<i>path</i></code> – this syntax is only supported for convenience and has no differences in function.</li></ul>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If <code>options</code> is present in a boot entry and <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> is disabled, the value of <code>options</code> will override any <code>.cmdline</code> string embedded in the EFI image that is specified by <code>efi</code> or <code>linux</code> (see <a href="#Preparing_a_unified_kernel_image">#Preparing a unified kernel image</a>). With Secure Boot, however, <code>options</code> (and any edits made to the kernel command line in the bootloader UI) will be ignored, and only the embedded <code>.cmdline</code> will be used. </div>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> Provide an example entry with fallback initramfs. It may not be immediately obvious that you need to create a separate entry file for it, an example would make it clear. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-boot">Talk:Systemd-boot#</a>)</div>
-</div>
-<p>An example of a loader file to launch Arch from a partition with the label <i>arch_os</i> and loading the Intel CPU <a href="../en/Microcode.html" title="Microcode">microcode</a> is:
+<p>An example of loader files launching Arch from a volume <a href="../en/Persistent_block_device_naming.html#by-label" title="Persistent block device naming">labeled</a> <code><i>arch_os</i></code> and loading Intel CPU <a href="../en/Microcode.html" title="Microcode">microcode</a> is:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/loader/entries/arch.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">title   Arch Linux
@@ -277,14 +273,19 @@ linux   /vmlinuz-linux
 initrd  /intel-ucode.img
 initrd  /initramfs-linux.img
 options root="LABEL=<i>arch_os</i>" rw</pre>
-<p><i>systemd-boot</i> will automatically check at boot time for <b>Windows Boot Manager</b> at the location <code>/EFI/Microsoft/Boot/Bootmgfw.efi</code>, <b>EFI Shell</b> <code>/shellx64.efi</code> and <b>EFI Default Loader</b> <code>/EFI/BOOT/bootx64.efi</code>, as well as specially prepared kernel files found in <code>/EFI/Linux/</code>. When detected, corresponding entries with titles <code>auto-windows</code>, <code>auto-efi-shell</code> and <code>auto-efi-default</code>, respectively, will be generated. These entries do not require manual loader configuration. However, it does not auto-detect other EFI applications (unlike <a href="../en/REFInd.html" title="REFInd">rEFInd</a>), so for booting the Linux kernel, manual configuration entries must be created.
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/loader/entries/arch-fallback.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">title   Arch Linux (fallback initramfs)
+linux   /vmlinuz-linux
+initrd  /intel-ucode.img
+initrd  /initramfs-linux-fallback.img
+options root="LABEL=<i>arch_os</i>" rw</pre>
+<p><i>systemd-boot</i> will automatically check at boot time for <b>Windows Boot Manager</b> at the location <code>/EFI/Microsoft/Boot/Bootmgfw.efi</code>, <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_Shell" class="mw-redirect" title="UEFI shell">UEFI shell</a> <code>/shellx64.efi</code> and <b>EFI Default Loader</b> <code>/EFI/BOOT/bootx64.efi</code>, as well as specially prepared kernel files found in <code>/EFI/Linux/</code>. When detected, corresponding entries with titles <code>auto-windows</code>, <code>auto-efi-shell</code> and <code>auto-efi-default</code>, respectively, will be generated. These entries do not require manual loader configuration. However, it does not auto-detect other EFI applications (unlike <a href="../en/REFInd.html" title="REFInd">rEFInd</a>), so for booting the Linux kernel, manual configuration entries must be created.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
 <ul>
 <li>If you dual-boot Windows, it is strongly recommended to disable its default <a href="../en/Dual_boot_with_Windows.html#Fast_Startup_and_hibernation" title="Dual boot with Windows">Fast Startup</a> option.</li>
-<li>If you have an Intel or AMD CPU, load the <i>microcode</i> with <code>initrd</code> before other images, an example is provided in <a href="../en/Microcode.html#systemd-boot" title="Microcode">Microcode#systemd-boot</a>.</li>
-<li>The root partition can be identified with its <code>LABEL</code>, <code>PARTUUID</code> or <code>UUID</code> (see <a href="../en/Persistent_block_device_naming.html" title="Persistent block device naming">Persistent block device naming</a>). This is required only to identify the root partition, not the <code><i>esp</i></code>.</li>
+<li>If you have an Intel or AMD CPU, load the <a href="../en/Microcode.html" title="Microcode">microcode</a> with <code>initrd</code> <i>before</i> other images, an example is provided in <a href="../en/Microcode.html#systemd-boot" title="Microcode">Microcode#systemd-boot</a>.</li>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-tip">
@@ -301,11 +302,11 @@ options root="LABEL=<i>arch_os</i>" rw</pre>
 <div>
 <b>Reason:</b> If the UEFI shell is placed as <code>/shellx64.efi</code> in the ESP, it will be autodetected. Using multiple UEFI shell versions is uncommon, so provide a better example with some other EFI application. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-boot">Talk:Systemd-boot#</a>)</div>
 </div>
-<p>In case you installed <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_Shell" title="Unified Extensible Firmware Interface">EFI shells</a> and <a href="../en/REFInd.html#Tools" title="REFInd">other EFI application</a> into the ESP, you can use the following snippets.
+<p>In case you installed <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_Shell" class="mw-redirect" title="UEFI shell">EFI shells</a> and <a href="../en/REFInd.html#Tools" title="REFInd">other EFI application</a> into the ESP, you can use the following snippets.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The file path parameter for the <code>efi</code> line is relative to your <i>esp</i> mount point. If you are mounted on <code>/boot</code> and your EFI binaries reside at <code>/boot/EFI/xx.efi</code> and <code>/boot/yy.efi</code>, then you would specify the parameters as <code>efi /EFI/xx.efi</code> and <code>efi /yy.efi</code> respectively.</div>
-<p>Examples of loading custom UEFI Shell loaders:
+<p>Examples of loading custom <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_Shell" class="mw-redirect" title="UEFI shell">UEFI shell</a> loaders:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/loader/entries/uefi-shell-v1-x86_64.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">title   UEFI Shell x86_64 v1
@@ -370,11 +371,13 @@ a specific entry:
 <li>
 <code>1-9</code> - number of entry</li>
 </ul>
+<p>See <span class="plainlinks archwiki-template-man" title="$ man 7 systemd-boot"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-boot.7">systemd-boot(7)</a></span>.
+</p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Choosing_next_boot">Choosing next boot</span></h3>
 <p>The boot manager is integrated with the systemctl command, allowing you to choose what option you want to boot after a reboot. For example, suppose you have built a custom kernel and created an entry file <code><i>esp</i>/loader/entries/arch-custom.conf</code> to boot into it, you can just launch
 </p>
-<pre>$ systemctl reboot --boot-loader-entry=arch-custom
+<pre>$ systemctl reboot --boot-loader-entry=arch-custom.conf
 </pre>
 <p>and your system will reboot into that entry maintaining the default option intact for subsequent boots. To see a list of possible entries pass the <code>--boot-loader-entry=help</code> option.
 </p>
@@ -484,8 +487,8 @@ options apm=power-off boot=live live-media-path=/grml/ nomce net.ifnames=0</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;oldid=648528">https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;oldid=648528</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 9 January 2021, at 08:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;oldid=653572">https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;oldid=653572</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 February 2021, at 23:50.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -250,14 +250,12 @@ if [[ $volume == 0 || "$mute" == "off" ]]; then
 else
     # Show the volume notification
     dunstify -a "changeVolume" -u low -i audio-volume-high -r "$msgId" \
-    "Volume: ${volume}%" "$(getProgressString 10 "&lt;b&gt; &lt;/b&gt;" " " $volume)"
+    -h int:value:"$volume" "Volume: ${volume}%"
 fi
 
 # Play the volume changed sound
 canberra-gtk-play -i audio-volume-change -d "changeVolume"
 </pre>
-<p><code>getProgressString</code> needs to be some function assembling the progressbar like string. This script uses <a rel="nofollow" class="external autonumber" href="https://github.com/Fabian-G/dotfiles/blob/master/scripts/bin/getProgressString">[8]</a>.
-</p>
 <p>Now simply bind <code>changeVolume 2dB+ unmute</code> etc. to some hotkey and you are done. You might also want to make dunst ignore these type of notifications in its history. See <a href="#Modifying">#Modifying</a>.
 </p>
 <h3><span class="mw-headline" id="Overwrite_previous_notification">Overwrite previous notification</span></h3>
@@ -265,7 +263,7 @@ canberra-gtk-play -i audio-volume-change -d "changeVolume"
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Dunst_fails_to_start_via_systemd">Dunst fails to start via systemd</span></h3>
-<p>When using dunst without a Display Manager, the <code>DISPLAY</code> environment variable might not be correctly set.<a rel="nofollow" class="external autonumber" href="https://github.com/dunst-project/dunst/issues/347">[9]</a>
+<p>When using dunst without a Display Manager, the <code>DISPLAY</code> environment variable might not be correctly set.<a rel="nofollow" class="external autonumber" href="https://github.com/dunst-project/dunst/issues/347">[8]</a>
 </p>
 <p>To fix this, add the following to your <code>.xinitrc</code>:
 </p>
@@ -292,8 +290,8 @@ canberra-gtk-play -i audio-volume-change -d "changeVolume"
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dunst&amp;oldid=652139">https://wiki.archlinux.org/index.php?title=Dunst&amp;oldid=652139</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 February 2021, at 23:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dunst&amp;oldid=654739">https://wiki.archlinux.org/index.php?title=Dunst&amp;oldid=654739</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 10:02.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

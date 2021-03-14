@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -139,15 +140,16 @@
 <li class="toclevel-2 tocsection-42"><a href="#Freeze_of_package_downloads"><span class="tocnumber">3.16</span> <span class="toctext">Freeze of package downloads</span></a></li>
 <li class="toclevel-2 tocsection-43"><a href="#Failed_retrieving_file_'core.db'_from_mirror"><span class="tocnumber">3.17</span> <span class="toctext">Failed retrieving file 'core.db' from mirror</span></a></li>
 <li class="toclevel-2 tocsection-44"><a href="#error:_'local-package.pkg.tar':_permission_denied"><span class="tocnumber">3.18</span> <span class="toctext">error: 'local-package.pkg.tar': permission denied</span></a></li>
+<li class="toclevel-2 tocsection-45"><a href="#error:_could_not_determine_cachedir_mount_point_/var/cache/pacman/pkg"><span class="tocnumber">3.19</span> <span class="toctext">error: could not determine cachedir mount point /var/cache/pacman/pkg</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-45">
+<li class="toclevel-1 tocsection-46">
 <a href="#Understanding"><span class="tocnumber">4</span> <span class="toctext">Understanding</span></a>
 <ul>
-<li class="toclevel-2 tocsection-46"><a href="#What_happens_during_package_install/upgrade/removal"><span class="tocnumber">4.1</span> <span class="toctext">What happens during package install/upgrade/removal</span></a></li>
+<li class="toclevel-2 tocsection-47"><a href="#What_happens_during_package_install/upgrade/removal"><span class="tocnumber">4.1</span> <span class="toctext">What happens during package install/upgrade/removal</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-47"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-48"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -381,10 +383,6 @@
 <p>Add the <code>-u</code>/<code>--uninstalled</code> switch to limit the action of <i>paccache</i> to uninstalled packages. For example to remove all cached versions of uninstalled packages, use the following:
 </p>
 <pre># paccache -ruk0
-</pre>
-<p>Or you can combine it for both installed and uninstalled packages. For example to keep latest two of installed packages but remove all cached versions of uninstalled packages, use the following:
-</p>
-<pre># paccache -rk2 -ruk0
 </pre>
 <p>See <code>paccache -h</code> for more options.
 </p>
@@ -724,6 +722,16 @@ Errors occured, no packages were upgraded.
 </h3>
 <p>If you want to install a package on an sshfs mount using <code>pacman -U</code> and receive this error, move the package to a local directory and try to install again.
 </p>
+<h3>
+<span id="error:_could_not_determine_cachedir_mount_point_.2Fvar.2Fcache.2Fpacman.2Fpkg"></span><span class="mw-headline" id="error:_could_not_determine_cachedir_mount_point_/var/cache/pacman/pkg">error: could not determine cachedir mount point /var/cache/pacman/pkg</span>
+</h3>
+<p>Upon executing, e.g., <code>pacman -Syu</code> inside a chroot environment an error is encountered:
+</p>
+<pre>error: could not determine cachedir mount point /var/cache/pacman/pkg
+error: failed to commit transaction (not enough free disk space)
+</pre>
+<p>This is frequently caused by the chroot directory not being a mountpoint when the chroot is entered. See the note at <a href="../en/Install_Arch_Linux_from_existing_Linux.html#Downloading_basic_tools" title="Install Arch Linux from existing Linux">Install Arch Linux from existing Linux#Downloading basic tools</a> for a solution, and <span class="plainlinks archwiki-template-man" title="$ man 8 arch-chroot"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/arch-chroot.8">arch-chroot(8)</a></span> for an explanation and an example of using bind mounting to make the chroot directory a mountpoint.
+</p>
 <h2><span class="mw-headline" id="Understanding">Understanding</span></h2>
 <h3>
 <span id="What_happens_during_package_install.2Fupgrade.2Fremoval"></span><span class="mw-headline" id="What_happens_during_package_install/upgrade/removal">What happens during package install/upgrade/removal</span>
@@ -779,8 +787,8 @@ Errors occured, no packages were upgraded.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pacman&amp;oldid=648778">https://wiki.archlinux.org/index.php?title=Pacman&amp;oldid=648778</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 January 2021, at 15:58.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pacman&amp;oldid=652936">https://wiki.archlinux.org/index.php?title=Pacman&amp;oldid=652936</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 20 February 2021, at 20:54.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

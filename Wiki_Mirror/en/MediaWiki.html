@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -85,7 +86,7 @@
 <p>The steps to achieve a working MediaWiki configuration involve editing the PHP settings and adding the MediaWiki configuration snippets.
 </p>
 <h3><span class="mw-headline" id="PHP">PHP</span></h3>
-<p>MediaWiki requires the <code>iconv</code> extension, so you need to uncomment <code>extension=iconv</code> in <code>/etc/php/php.ini</code>.
+<p>MediaWiki requires the <code>iconv</code> extension, so you need to uncomment <code>extension=iconv</code> in <code>/etc/php7/php.ini</code>.
 </p>
 <p>Optional dependencies:
 </p>
@@ -102,7 +103,7 @@
 </ul>
 <p>Second, tweak the session handling or you might get a fatal error (<code>PHP Fatal error: session_start(): Failed to initialize storage module[...]</code>) by finding the <code>session.save_path</code> path. A good choice can be <code>/var/lib/php/sessions</code> or <code>/tmp/</code>.
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/php/php.ini</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/php7/php.ini</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">session.save_path = "/var/lib/php/sessions"</pre>
 <p>You will need to create the directory if it does not exist and then restrict its permissions:
 </p>
@@ -125,7 +126,7 @@
 <p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">Restart</a> the <code>httpd.service</code> daemon.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The default file from <code>/etc/webapps/mediawiki/apache.example.conf</code> will overwrite the PHP open_basedir setting, possibly conflicting with other pages. This behavior can be changed by moving line starting with <code>php_admin_value</code> between the <code>&lt;Directory&gt;</code> tags. Further, if you are running multiple applications that depend on the same server, this value could also be added to the open_basedir value in <code>/etc/php/php.ini</code> instead of <code>/etc/httpd/conf/extra/mediawiki.conf</code>
+<strong>Note:</strong> The default file from <code>/etc/webapps/mediawiki/apache.example.conf</code> will overwrite the PHP open_basedir setting, possibly conflicting with other pages. This behavior can be changed by moving line starting with <code>php_admin_value</code> between the <code>&lt;Directory&gt;</code> tags. Further, if you are running multiple applications that depend on the same server, this value could also be added to the open_basedir value in <code>/etc/php7/php.ini</code> instead of <code>/etc/httpd/conf/extra/mediawiki.conf</code>
 </div>
 <h4><span class="mw-headline" id="Nginx">Nginx</span></h4>
 <p>To get MediaWiki working with <a href="../en/Nginx.html" title="Nginx">Nginx</a>, create the following file:
@@ -181,7 +182,7 @@ location /rest.php {
   index index.php;
   charset utf-8;
 # For correct file uploads
-  client_max_body_size    100m; # Equal or more than upload_max_filesize in /etc/php/php.ini
+  client_max_body_size    100m; # Equal or more than upload_max_filesize in /etc/php7/php.ini
   client_body_timeout     60;
   include mediawiki.conf;
 
@@ -287,8 +288,8 @@ domain: 'localhost'
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MediaWiki&amp;oldid=645798">https://wiki.archlinux.org/index.php?title=MediaWiki&amp;oldid=645798</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 December 2020, at 05:22.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MediaWiki&amp;oldid=653901">https://wiki.archlinux.org/index.php?title=MediaWiki&amp;oldid=653901</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 3 March 2021, at 10:09.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

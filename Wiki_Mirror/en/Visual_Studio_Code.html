@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -88,12 +89,14 @@
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/code-git/">code-git</a></span><sup><small>AUR</small></sup> (in-development open-source version)</li>
 <li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vscodium-bin/">vscodium-bin</a></span><sup><small>AUR</small></sup> (another open-source version with a community-driven default configuration)</li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vscodium-bin/">vscodium-bin</a></span><sup><small>AUR</small></sup> (community-driven fully open-source version of VSCode, with all Microsoft telemetry stripped out - binary package)</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vscodium-git/">vscodium-git</a></span><sup><small>AUR</small></sup> (community-driven fully open-source version of VSCode, with all Microsoft telemetry stripped out - source package)</li>
 </ul>
 <p>The Microsoft <a rel="nofollow" class="external text" href="https://github.com/microsoft/ptvsd">ptvsd</a> (Python Tools for Visual Studio Debug) server/module is available at <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/python-ptvsd/">python-ptvsd</a></span><sup><small>AUR</small></sup>.
 </p>
 <h2><span class="mw-headline" id="Usage">Usage</span></h2>
-<p>Run <code>code</code> to start the application (or if you are using other releases, run <code>code-git</code> for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/code-git/">code-git</a></span><sup><small>AUR</small></sup> or <code>codium</code> for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vscodium-bin/">vscodium-bin</a></span><sup><small>AUR</small></sup>).
+<p>Run <code>code</code> to start the application (or if you are using other releases, run <code>code-git</code> for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/code-git/">code-git</a></span><sup><small>AUR</small></sup> or <code>codium</code> for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vscodium-bin/">vscodium-bin</a></span><sup><small>AUR</small></sup>/<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vscodium-git/">vscodium-git</a></span><sup><small>AUR</small></sup>).
 </p>
 <p>If for any reason you wish to launch multiple instances of Visual Studio Code, the <code>-n</code> flag can be used.
 </p>
@@ -133,11 +136,11 @@ By default, <a href="../en/Bash.html" title="Bash">Bash</a> is used with no addi
 <p>Visual Studio Code uses DBus to pass the menu to Plasma, try installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libdbusmenu-glib">libdbusmenu-glib</a></span>.
 </p>
 <h3><span class="mw-headline" id="Unable_to_move_items_to_trash">Unable to move items to trash</span></h3>
-<p>By default, <a rel="nofollow" class="external text" href="https://electron.atom.io/">Electron</a> apps use <code>gio</code> to delete files. Different trash implementations can be used by setting the <code>ELECTRON_TRASH</code> <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a>.
+<p>By default, <a rel="nofollow" class="external text" href="https://electron.atom.io/">Electron</a> apps use <code>gio</code> to delete files. <code>kioclient5</code> is automatically selected instead if <a href="../en/KDE.html#Plasma" class="mw-redirect" title="Plasma">Plasma</a> is detected. Different trash implementations can be used by setting the <code>ELECTRON_TRASH</code> <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a>.
 </p>
-<p>For example, for deleting files under <a href="../en/KDE.html#Plasma" class="mw-redirect" title="Plasma">Plasma</a>:
+<p>For example, for deleting files using <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=trash-cli">trash-cli</a></span>:
 </p>
-<pre>$ ELECTRON_TRASH=kioclient5 code
+<pre>$ ELECTRON_TRASH=trash-cli code
 </pre>
 <p>At the time of writing, Electron supports <code>kioclient5</code>, <code>kioclient</code>, <code>trash-cli</code>, <code>gio</code> (default) and <code>gvfs-trash</code> (deprecated). More info is available at this <a rel="nofollow" class="external text" href="https://github.com/electron/electron/blob/master/docs/api/environment-variables.md#electron_trash-linux">documentation page</a>.
 </p>
@@ -258,11 +261,11 @@ System.TypeLoadException: Could not load type of field 'OmniSharp.MSBuild.Projec
 <pre># ln /usr/bin/ksshaskpass /usr/lib/ssh/ssh-askpass
 </pre>
 <h3><span class="mw-headline" id="No_extensions_found">No extensions found</span></h3>
-<p>There exist several differences between "vscode" (open-source) and "Visual Studio Code" (Microsoft product based on vscode), see: <a rel="nofollow" class="external text" href="https://github.com/microsoft/vscode/wiki/Differences-between-the-repository-and-Visual-Studio-Code">Differences between the repository and Visual Studio Code</a>. The usage of <a rel="nofollow" class="external text" href="https://marketplace.visualstudio.com/vscode">Microsoft marketplace</a> for extensions is restricted to products of the Visual Studio Code's family. Consequently, it can't be used by vscode (see <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/67780">FS#67780</a>). The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=code">code</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vscodium-bin/">vscodium-bin</a></span><sup><small>AUR</small></sup> packages are configured to use <a rel="nofollow" class="external text" href="https://open-vsx.org/">the Open VSX registry</a> instead of the Microsoft one. This explains why some extensions are missing from the vscode explorer while they appear to be listed online.
+<p>There exist several differences between "vscode" (open-source) and "Visual Studio Code" (Microsoft product based on vscode), see: <a rel="nofollow" class="external text" href="https://github.com/microsoft/vscode/wiki/Differences-between-the-repository-and-Visual-Studio-Code">Differences between the repository and Visual Studio Code</a>. The usage of <a rel="nofollow" class="external text" href="https://marketplace.visualstudio.com/vscode">Microsoft marketplace</a> for extensions is restricted to products of the Visual Studio Code's family. Consequently, it can't be used by vscode (see <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/67780">FS#67780</a>). The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=code">code</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vscodium-bin/">vscodium-bin</a></span><sup><small>AUR</small></sup>/<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vscodium-git/">vscodium-git</a></span><sup><small>AUR</small></sup> packages are configured to use <a rel="nofollow" class="external text" href="https://open-vsx.org/">the Open VSX registry</a> instead of the Microsoft one. This explains why some extensions are missing from the vscode explorer while they appear to be listed online.
 </p>
 <p>The workaround is to either install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/visual-studio-code-bin/">visual-studio-code-bin</a></span><sup><small>AUR</small></sup> package instead, manually download and install the <code>.vsix</code> file from the web marketplace page, or ask the maintainer to upload its extension to OpenVSX.
 </p>
-<p>Technically, one could also edit the <code>product.json</code> as shown in <a rel="nofollow" class="external text" href="https://github.com/VSCodium/vscodium/issues/418#issuecomment-643664182">this Github comment</a>, but that would not comply with the Microsoft Marketplace Terms of Use. Additionally, the changes would be overwritten during package update.
+<p>Technically, one could also edit the <code>product.json</code> as shown in <a rel="nofollow" class="external text" href="https://github.com/VSCodium/vscodium/issues/418#issuecomment-643664182">this Github comment</a>, but that would not comply with the Microsoft Marketplace Terms of Use. Additionally, the changes would be overwritten during package update. This can be overcome by installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/code-marketplace/">code-marketplace</a></span><sup><small>AUR</small></sup> package, which installs a pacman hook that patches the file on every package update.
 </p>
 <h3><span class="mw-headline" id="Cutoff_characters_in_integrated_Terminal">Cutoff characters in integrated Terminal</span></h3>
 <p>Characters that are too wide can end up clipping. For example the italic bold text of Deno stack-traces. 
@@ -279,8 +282,8 @@ System.TypeLoadException: Could not load type of field 'OmniSharp.MSBuild.Projec
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Visual_Studio_Code&amp;oldid=645964">https://wiki.archlinux.org/index.php?title=Visual_Studio_Code&amp;oldid=645964</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 19 December 2020, at 18:09.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Visual_Studio_Code&amp;oldid=653797">https://wiki.archlinux.org/index.php?title=Visual_Studio_Code&amp;oldid=653797</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 March 2021, at 22:04.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

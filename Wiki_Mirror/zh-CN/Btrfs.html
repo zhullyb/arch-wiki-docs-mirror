@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -51,7 +52,7 @@
 <strong>警告：</strong> 
 <ul>
 <li>Btrfs 有一些功能被认为是实验性的特性，可参见内核百科的 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/Main_Page#Stability_status">Btrfs 稳定性状态报告</a>，<a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/FAQ#Is_btrfs_stable.3F">Btrfs 足够稳定了吗？</a> 和 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/Getting_started">开始使用 Btrfs</a>。</li>
-<li>了解当前的 <a href="#%E5%B7%B2%E7%9F%A5%E9%97%AE%E9%A2%98">已知问题</a>.</li>
+<li>了解当前的 <a href="#%E5%B7%B2%E7%9F%A5%E9%97%AE%E9%A2%98">#已知问题</a>.</li>
 </ul>
 </div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -188,25 +189,23 @@
 <span id=".E5.A4.9A.E8.AE.BE.E5.A4.87.E6.96.87.E4.BB.B6.E7.B3.BB.E7.BB.9F"></span><span class="mw-headline" id="多设备文件系统">多设备文件系统</span>
 </h3>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>警告：</strong> Btrfs 的 RAID 5 和 RAID 6 模式存在致命缺陷, 不应当用于任何场景，除非用来做丢失数据的测试。这里有<a rel="nofollow" class="external text" href="https://lore.kernel.org/linux-btrfs/20200627032414.GX10769@hungrycats.org/">已知问题和部分解决方法的列表</a>。 查阅 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/RAID56">Btrfs Wiki 网页上关于 RAID 5 和 RAID 6 的说明</a> 以获取最新动态（似乎没有更新了）。</div>
-<p>多个设备可以用来创建一组 RAID。支持的 RAID 级别有 RAID 0, RAID 1, RAID 10, RAID 5 和 RAID 6。从 5.5 版本内核开始，也有了对 <code>RAID1c3</code> 和 <code>RAID1c4</code> 的支持，它们分别是 3 份冗余和 4 份冗余的 RAID 1。数据和元数据的 RAID 等级可以独立地用 <code>-d</code> 和 <code>-m</code> 参数指定。默认情况下元数据使用镜像 (<code>RAID1</code>)，而数据则会被条带化 (<code>RAID0</code>)。参阅 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices">Btrfs Wiki:在多个设备上使用 btrfs</a> 或查阅 <code>mkfs.btrfs</code> 的手册页获得更多信息.
+<strong>警告：</strong> Btrfs 的 RAID 5 和 RAID 6 模式存在致命缺陷，除非用来做数据丢失测试，否则不应当用于任何场景。这里有<a rel="nofollow" class="external text" href="https://lore.kernel.org/linux-btrfs/20200627032414.GX10769@hungrycats.org/">已知问题和部分解决方法的列表</a>。 查阅 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/RAID56">Btrfs Wiki 网页上关于 RAID 5 和 RAID 6 的说明</a> 以获取最新动态（似乎不更新了）。</div>
+<p>多个设备可以用来创建一组 RAID。支持的 RAID 级别有 RAID 0、RAID 1、RAID 10、RAID 5 和 RAID 6。从 5.5 版本内核开始，新增对 <code>RAID1c3</code> 和 <code>RAID1c4</code> 的支持，分别是 3 份冗余和 4 份冗余的 RAID 1。可以使用 <code>-d</code> 和 <code>-m</code> 参数分别为数据和元数据配置 RAID 等级。默认情况下，数据有一份副本（<code>single</code>），元数据则被镜像（<code>RAID1</code>）。这就像创建一个 <a href="https://en.wikipedia.org/wiki/JBOD" class="extiw" title="w:JBOD">JBOD 配置</a>，多个磁盘会被看做成一个文件系统，但文件不会重复。更多有关如何创建一个 Btrfs RAID 卷的信息请参阅 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices">Btrfs Wiki:在多个设备上使用 Btrfs</a>。
 </p>
-<pre># mkfs.btrfs -d raid0 -m raid1 /dev/<i>part1</i> /dev/<i>part2</i> ...
+<pre># mkfs.btrfs -d single -m raid1 /dev/<i>part1</i> /dev/<i>part2</i> ...
 </pre>
-<p>可以使用 <code>-d single -m raid1</code> 来创建一个 <a href="https://en.wikipedia.org/wiki/JBOD" class="extiw" title="w:JBOD">JBOD 配置</a>，它会将磁盘视为一个文件系统，但是不会复制文件。
-</p>
-<p>要将多个 Btrfs 设备作为一个池使用的话，你需要将 <code>udev</code> 钩子或者 <code>btrfs</code> 钩子加入到 <code>/etc/mkinitcpio.conf</code> 中。查阅 <a href="../zh-CN/Mkinitcpio.html#%E5%B8%B8%E7%94%A8%E9%92%A9%E5%AD%90" title="Mkinitcpio (简体中文)">Mkinitcpio (简体中文)#常用钩子</a>以获取更多信息。
+<p>必须在 <code>/etc/mkinitcpio.conf</code> 中加入 <code>udev</code> 钩子或 <code>btrfs</code> 钩子才能在一个池中使用多个 Btrfs 设备。查阅 <a href="../zh-CN/Mkinitcpio.html#%E5%B8%B8%E7%94%A8%E9%92%A9%E5%AD%90" title="Mkinitcpio (简体中文)">Mkinitcpio (简体中文)#常用钩子</a> 以获取更多信息。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 
 <ul>
 <li>可以稍后再将设备添加到多设备文件系统中。详情请参见 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices">Btrfs wiki 文章</a>。</li>
-<li>多个设备可以大小各异。但是，如果在一个 RAID 配置中一个硬盘的大小比其他的都大，那么它多出的空间将不会被使用。</li>
+<li>多个设备可以大小各异。但是，如果在 RAID 配置中一个硬盘的大小比其他的都大，那么它多出的空间将不会被使用。</li>
 <li>有些 <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot loader">引导加载程序</a> 不支持多设备文件系统，比如 <a href="../en/Syslinux.html" title="Syslinux">Syslinux</a>。</li>
-<li>Btrfs 不会自动从速度最快的设备读取，因此混合使用不同类型的磁盘会导致性能表现不一致。详情请参阅 <a rel="nofollow" class="external text" href="https://stackoverflow.com/a/55408367">Stack Overflow 上的这个回答</a>。</li>
+<li>Btrfs 不会自动从速度最快的设备读取，因此混合使用不同类型的磁盘会导致性能表现不恒定。详情请参阅 <a rel="nofollow" class="external text" href="https://stackoverflow.com/a/55408367">Stack Overflow 上的这个回答</a>。</li>
 </ul>
 </div>
-<p><a href="#RAID">RAID</a> 小节中有关于维护多设备上的 Btrfs 文件系统的一些建议.
+<p><a href="#RAID">#RAID</a> 小节中有关于维护多设备上的 Btrfs 文件系统的一些建议。
 </p>
 <h2>
 <span id=".E9.85.8D.E7.BD.AE.E6.96.87.E4.BB.B6.E7.B3.BB.E7.BB.9F"></span><span class="mw-headline" id="配置文件系统">配置文件系统</span>
@@ -254,13 +253,13 @@ $ rm -rf <i>/path/to/dir</i>_old
 <h3>
 <span id=".E5.8E.8B.E7.BC.A9"></span><span class="mw-headline" id="压缩">压缩</span>
 </h3>
-<p>Btrfs 支持透明和自动压缩。这不单减小了文件的大小，在某些特定的场景下 (比如单线程、重文件 I/O) 还 <a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=btrfs_compress_2635&amp;num=1">提高了性能</a>。尽管在其他的场景下（比如多线程和/或具有大文件 I/O 的 CPU 密集型任务）还是显著地影响了性能。使用更快的压缩算法，比如 <i>zstd</i> 和 <i>lzo</i> ，通常可以获得更好的性能，这个 <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs-zstd-compress">性能测试</a> 提供了详细的对比。
+<p>Btrfs 支持 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/Compression">透明和自动压缩</a>。这就减小了文件的大小，通过减少文件写入增幅来显著延长闪存介质（flash-baesd media）的寿命 <a rel="nofollow" class="external autonumber" href="https://fedoraproject.org/wiki/Changes/BtrfsByDefault#Compression">[1]</a><a rel="nofollow" class="external autonumber" href="https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/NTV77NFF6NDZM3QTPUM2TQZ5PCM6GOO2/">[2]</a><a rel="nofollow" class="external autonumber" href="https://pagure.io/fedora-btrfs/project/issue/36#comment-701551">[3]</a>。在某些特定的场景下（比如单线程、重负荷的文件 I/O)）还 <a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=btrfs_compress_2635&amp;num=1">提高了性能</a>。尽管在其他的场景下（比如多线程和/或大文件 I/O 高强度 CPU 任务）还是明显影响了性能。通常使用更快的压缩算法，比如 <i>zstd</i> 和 <i>lzo</i> 可以获得更好的性能，这个 <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs-zstd-compress">性能测试</a> 提供了详细的对比。
 </p>
-<p>承上文，<code>compress=<i>alg</i></code> 挂载选项可自动考虑评估为每个文件启用压缩，其中的 <code><i>alg</i></code> 处可以选填为 <code>zlib</code>, <code>lzo</code>, <code>zstd</code>, 或者 <code>no</code> (即不压缩)。通过此选项，Btrfs 将检查压缩数据的第一部分是否能将其缩减。如果是，则会压缩该文件的整个写入；否则将不会压缩任何内容。由此，如果数据的第一部分没有被缩减，那么即使数据的其余部分将能大大缩减，写入时也不会被压缩。<a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/Compression#What_happens_to_incompressible_files.3F">[1]</a>  这样做是为了防止让磁盘一直等待着写入 —— 直到所有要写入的数据传递给 Btrfs 并被压缩后为止。
+<p>承上文，<code>compress=<i>alg</i></code> 挂载选项可自动考虑为每个文件启用压缩，其中的 <code><i>alg</i></code> 处可以选填为 <code>zlib</code>, <code>lzo</code>, <code>zstd</code>, 或者 <code>no</code>（即不压缩）。由此，Btrfs 将检查压缩数据的第一部分是否能将其缩减。如果能，则会压缩该文件的整个写入；否则不会压缩任何内容。所以，如果数据的第一部分没有被缩减，那么即使数据的其余部分可以大大缩减，写入时也不会被压缩。<a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/Compression#What_happens_to_incompressible_files.3F">[4]</a>  这样做是为了防止让磁盘一直等待写入，直到所有要写入的数据传递给 Btrfs 并被压缩后为止。
 </p>
-<p>另外可以改用 <code>compress-force=<i>alg</i></code> 挂载选项，这将让 Btrfs 跳过对 压缩是否可缩减数据的第一部分 的检查，并对每个文件启用自动压缩。在最坏的情形下，这可 (稍微) 导致更多的空间被占用，并无故提高 CPU 占用率。不过，对多个混合使用系统的经验测试表明，与仅使用 <code>compress=<i>zstd</i></code> (其也具有 10％ 磁盘压缩率) 相比，使用 <code>compress-force=<i>zstd</i></code> 可以显著提高约 10％ 的磁盘压缩率，从而节省了 20％ 的总的有效磁盘空间。
+<p>另外可以改用 <code>compress-force=<i>alg</i></code> 挂载选项，这会让 Btrfs 跳过对数据第一部分的压缩检查，并尝试对每个文件启用自动压缩。最不济的情况，这会 (稍微) 导致 CPU 占用率无故升高。不过，在多个混合使用系统的经验测试显示，与仅使用 <code>compress=<i>zstd</i></code> (其也有 10％ 的磁盘压缩率) 相比，使用 <code>compress-force=<i>zstd</i></code> 可以显著提高约 10％ 的磁盘压缩率。
 </p>
-<p>还有，只有在加入挂载选项后创建或修改的文件才会被压缩。
+<p>只有在加入挂载选项后创建或修改的文件才会被压缩。
 </p>
 <p>给现存文件启用压缩，可使用 <code>btrfs filesystem defragment -c<i>alg</i></code> 命令，<code><i>alg</i></code> 处可选填为 <code>zlib</code>，<code>lzo</code> 或 <code>zstd</code>。举例来说，要用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=zstd">zstd</a></span> 方式给整个文件系统重新压缩，执行下列命令：
 </p>
@@ -275,21 +274,18 @@ $ rm -rf <i>/path/to/dir</i>_old
 <ul>
 <li>如果使用 <code>zstd</code> 参数，使用较旧版本内核或者尚不支持 <code>zstd</code> 的 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=btrfs-progs">btrfs-progs</a></span> 的系统可能不能读取或修复您的文件系统。</li>
 <li>
-<a href="../en/GRUB.html" title="GRUB">GRUB</a> 在 2.04 版本中引入了对 <i>zstd</i> 的支持。使用此后版本时，请通过手动运行 <code> grub-install</code> (需添加适用于机器 BIOS/UEFI 设置的选项参数) 确保安装在 MBR/ESP 中的引导加载程序已确实升级，因为这些事情不会自动完成。可参阅 <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/63235">FS#63235</a>。</li>
-<li>
-<a href="../en/REFInd.html" title="REFInd">rEFInd</a> 在 0.11.4 以前的版本缺少对 <i>zstd</i> 的支持，可换用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/refind-git/">refind-git</a></span><sup><small>AUR</small></sup>，使用单独的没有启用 <i>zstd</i> 的引导分区；或者使用下例命令将引导文件的压缩方式重置为其它受支持的压缩方式：<pre>$ btrfs filesystem defragment -v -clzo /boot/*</pre>
-</li>
+<a href="../en/GRUB.html" title="GRUB">GRUB</a> 在 2.04 版本中引入了对 <i>zstd</i> 的支持。使用此后版本时，请通过手动运行 <code> grub-install</code>（需添加适用于机器 BIOS/UEFI 设置的选项参数）确保安装在 MBR/ESP 中的引导加载程序已确实升级，因为这些事情不会自动完成。可参阅 <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/63235">FS#63235</a>。</li>
 </ul>
 </div>
 <h4>
 <span id=".E6.9F.A5.E7.9C.8B.E5.8E.8B.E7.BC.A9.E7.B1.BB.E5.9E.8B.E5.92.8C.E5.8E.8B.E7.BC.A9.E6.AF.94"></span><span class="mw-headline" id="查看压缩类型和压缩比">查看压缩类型和压缩比</span>
 </h4>
-<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=compsize">compsize</a></span> 软件包能获取出一个文件列表 (或一整个 Btrfs 文件系统)，并测量出它们使用的压缩类型和其有效压缩比。不过，其给出的未压缩时大小数值不一定能和其他程序 (比如 <code>du</code>) 给出的数值吻合，因为即使一个文件被多次引用；即使文件的一部分不再被任何地方使用 (但其未被垃圾回收)，每一文件所占空间范围也只计数一次。 <code>-x</code> 选项可让程序运行保持在单一个文件系统上，这在 <code>compsize -x /</code> (检查根目录) 之类的情况下很有用，可以避免程序去尝试访问非 Btrfs 子目录从而导致整个程序运行失败。
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=compsize">compsize</a></span> 软件包能获取一个文件列表 (或一整个 Btrfs 文件系统)，并测量出它们使用的压缩类型和其有效压缩比。不过，其给出的未压缩时大小数值不一定能和其他程序 (比如 <code>du</code>) 给出的数值吻合，因为每一文件所占空间范围都会计数一次，即使文件被链接了多次，即使文件的一部分不再被使用 (但其未被垃圾回收)。 <code>-x</code> 选项可让程序运行保持在单一个文件系统上，这在 <code>compsize -x /</code> (检查根目录) 之类的情况下很有用，可以避免程序去尝试访问非 Btrfs 子目录从而导致整个程序运行失败。
 </p>
 <h3>
 <span id=".E5.AD.90.E5.8D.B7"></span><span class="mw-headline" id="子卷">子卷</span>
 </h3>
-<p>"btrfs 子卷不是 (也不能看作) 块设备,一个子卷可以看作 POSIX 文件名字空间.这个名字空间可以通过子卷上层访问,也可以独立挂载."<a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Subvolumes">[2]</a>
+<p>"btrfs 子卷不是 (也不能看作) 块设备,一个子卷可以看作 POSIX 文件名字空间.这个名字空间可以通过子卷上层访问,也可以独立挂载."<a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Subvolumes">[5]</a>
 </p>
 <p>每个 btrfs 文件系统都有一个 ID 为 5 的顶层子卷。它可以挂载为 <code>/</code>（默认情况下），或者可以挂载为另一个子卷。子卷可以在文件系统中移动，它们通过其 ID 而不是路径来标识。
 </p>
@@ -352,7 +348,7 @@ $ rm -rf <i>/path/to/dir</i>_old
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 在安装了 <a href="../en/GRUB.html" title="GRUB">GRUB</a> 的系统上，在改变默认子卷以后不要忘记运行 <code>grub-install</code>。参见 <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1615373">这个论坛帖子</a>。</div>
-<p>通过 <code>btrfs subvolume set-default</code> 修改默认子卷将会导致文件系统的最顶层无法访问，除非使用 <code>subvol=/</code> 或者 <code>subvolid=5</code> 挂载参数。<a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/SysadminGuide">[3]</a>
+<p>通过 <code>btrfs subvolume set-default</code> 修改默认子卷将会导致文件系统的最顶层无法访问，除非使用 <code>subvol=/</code> 或者 <code>subvolid=5</code> 挂载参数。<a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/SysadminGuide">[6]</a>
 </p>
 <h3>
 <span id=".E9.85.8D.E9.A2.9D"></span><span class="mw-headline" id="配额">配额</span>
@@ -401,7 +397,7 @@ $ rm -rf <i>/path/to/dir</i>_old
 <h3>
 <span id=".E4.BA.A4.E6.8D.A2.E6.96.87.E4.BB.B6"></span><span class="mw-headline" id="交换文件">交换文件</span>
 </h3>
-<p>自 Linux 内核版本 5.0 起 Btrfs 提供 <a href="../zh-CN/Swap.html#%E4%BA%A4%E6%8D%A2%E6%96%87%E4%BB%B6" title="Swap (简体中文)">交换文件</a> 支持 <a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ed46ff3d423780fa5173b38a844bf0fdb210a2a7">[4]</a>。 <a href="../zh-CN/Swap.html#%E5%BB%BA%E7%AB%8B%E4%BA%A4%E6%8D%A2%E6%96%87%E4%BB%B6" title="Swap (简体中文)">Swap#建立交换文件</a> 一节中已交代正确初始化交换文件的方法。 <a href="../zh-CN/53505eb61537aef172acc614aa64531b.html#%E4%BC%91%E7%9C%A0%E5%88%B0_Btrfs_%E4%B8%8A%E7%9A%84%E4%BA%A4%E6%8D%A2%E6%96%87%E4%BB%B6%E4%B8%AD" title="Power management (简体中文)/Suspend and hibernate (简体中文)">Power_management/Suspend_and_hibernate#休眠到 Btrfs 上的交换文件中</a> 一节中则已交代了休眠到交换文件的配置方法。
+<p>自 Linux 内核版本 5.0 起 Btrfs 提供 <a href="../zh-CN/Swap.html#%E4%BA%A4%E6%8D%A2%E6%96%87%E4%BB%B6" title="Swap (简体中文)">交换文件</a> 支持 <a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ed46ff3d423780fa5173b38a844bf0fdb210a2a7">[7]</a>。 <a href="../zh-CN/Swap.html#%E5%BB%BA%E7%AB%8B%E4%BA%A4%E6%8D%A2%E6%96%87%E4%BB%B6" title="Swap (简体中文)">Swap#建立交换文件</a> 一节中已交代正确初始化交换文件的方法。 <a href="../zh-CN/53505eb61537aef172acc614aa64531b.html#%E4%BC%91%E7%9C%A0%E5%88%B0_Btrfs_%E4%B8%8A%E7%9A%84%E4%BA%A4%E6%8D%A2%E6%96%87%E4%BB%B6%E4%B8%AD" title="Power management (简体中文)/Suspend and hibernate (简体中文)">Power_management/Suspend_and_hibernate#休眠到 Btrfs 上的交换文件中</a> 一节中则已交代了休眠到交换文件的配置方法。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 对于内核版本 5.0+, Btfrs 有原生但带些许限制的交换文件支持：
@@ -421,7 +417,7 @@ $ rm -rf <i>/path/to/dir</i>_old
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> <code>btrfs filesystem usage</code> 在 <code>RAID5/RAID6</code> 设备上可能无法正常工作。</div>
-<p>请参阅 <a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/FAQ#How_much_free_space_do_I_have.3F">[5]</a> 以获取更多信息。
+<p>请参阅 <a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/FAQ#How_much_free_space_do_I_have.3F">[8]</a> 以获取更多信息。
 </p>
 <h3>
 <span id=".E7.A2.8E.E7.89.87.E6.95.B4.E7.90.86"></span><span class="mw-headline" id="碎片整理">碎片整理</span>
@@ -467,7 +463,7 @@ $ rm -rf <i>/path/to/dir</i>_old
 <h3>
 <span id=".E6.95.B0.E6.8D.AE.E5.B9.B3.E8.A1.A1_.28Balance.29"></span><span class="mw-headline" id="数据平衡_(Balance)">数据平衡 (Balance)</span>
 </h3>
-<p>“Balance 将会通过分配器再次传递文件系统中的所有数据。它主要用于在添加或删除设备时跨设备重新平衡文件系统中的数据。如果设备出现故障，余额将为冗余 RAID 级别重新生成缺失的副本。”<a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/Glossary">[6]</a>。参阅 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/FAQ#What_does_.22balance.22_do.3F">上游的 FAQ</a>.
+<p>“Balance 将会通过分配器再次传递文件系统中的所有数据。它主要用于在添加或删除设备时跨设备重新平衡文件系统中的数据。如果设备出现故障，余额将为冗余 RAID 级别重新生成缺失的副本。”<a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/Glossary">[9]</a>。参阅 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/FAQ#What_does_.22balance.22_do.3F">上游的 FAQ</a>.
 </p>
 <p>在单设备文件系统上，余额对于（临时）减少分配但未使用（元）数据块的数量也是有用的。有时候这对于解决 <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/FAQ#Help.21_Btrfs_claims_I.27m_out_of_space.2C_but_it_looks_like_I_should_have_lots_left.21">"filesystem full" 故障</a> 来说也是必须的。
 </p>
@@ -528,7 +524,7 @@ $ rm -rf <i>/path/to/dir</i>_old
 <p>(如果已经创建了文件系统，可以使用<a href="../en/EncFS.html" title="EncFS">EncFS</a>或<a href="../en/TrueCrypt.html" title="TrueCrypt">TrueCrypt</a>,但是这样会无法使用 btrfs 的一些功能。)
 </p>
 <h3><span class="mw-headline" id="TLP">TLP</span></h3>
-<p>使用 TLP 需要特殊的预防措施，以避免文件系统损坏。有关更多信息，请参阅<a href="../en/TLP.html#Btrfs" title="TLP">TLP#Btrfs</a>。
+<p>使用 TLP 需要特殊的预防措施，以避免文件系统损坏。有关更多信息，请参阅<a href="../en/TLP.html#Btrfs" title="TLP">TLP#Btrfs</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>。
 </p>
 <h3>
 <span id=".E6.A3.80.E6.9F.A5_btrfs_.E6.96.87.E4.BB.B6.E7.B3.BB.E7.BB.9F.E9.97.AE.E9.A2.98"></span><span class="mw-headline" id="检查_btrfs_文件系统问题">检查 btrfs 文件系统问题</span>
@@ -585,7 +581,7 @@ $ rm -rf <i>/path/to/dir</i>_old
 </pre>
 <p>最后通过 <a href="#%E6%95%B0%E6%8D%AE%E5%B9%B3%E8%A1%A1_(Balance)">Balance</a> 回收空间。
 </p>
-<p>请记住，以前安装的一些应用程序必须适配 Btrfs。值得注意的是，<a href="../en/TLP.html#Btrfs" title="TLP">TLP#Btrfs</a> 需要特别小心以避免文件系统损坏，不过其他应用程序也可能从 Btrfs 某些功能中获益。
+<p>请记住，以前安装的一些应用程序必须适配 Btrfs。值得注意的是，<a href="../en/TLP.html#Btrfs" title="TLP">TLP#Btrfs</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 需要特别小心以避免文件系统损坏，不过其他应用程序也可能从 Btrfs 某些功能中获益。
 </p>
 <h3>
 <span id=".E6.A0.A1.E9.AA.8C.E5.92.8C_.28Checksum.29_.E7.A1.AC.E4.BB.B6.E5.8A.A0.E9.80.9F"></span><span class="mw-headline" id="校验和_(Checksum)_硬件加速">校验和 (Checksum) 硬件加速</span>
@@ -742,6 +738,7 @@ You are now being dropped into an emergency shell.
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
+<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
@@ -751,8 +748,8 @@ You are now being dropped into an emergency shell.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Btrfs_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=642067">https://wiki.archlinux.org/index.php?title=Btrfs_(简体中文)&amp;oldid=642067</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 November 2020, at 06:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Btrfs_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=654082">https://wiki.archlinux.org/index.php?title=Btrfs_(简体中文)&amp;oldid=654082</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 6 March 2021, at 12:20.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

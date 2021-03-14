@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -271,7 +272,7 @@ $ eval `pump --startup`
 <p>This section details how to use Arch Linux (x86_64) volunteers to help an Arch ARM device cross-compile.  See <a rel="nofollow" class="external text" href="https://github.com/graysky2/distccd-alarm">these tests</a> for evidence that speed gains on the order of 2-4x can be realized with just a single x86_64 machine helping an ARM device compile.
 </p>
 <h4><span class="mw-headline" id="Volunteers_2">Volunteers</span></h4>
-<p>The Arch ARM developers <i>highly</i> recommend using the official project <a rel="nofollow" class="external text" href="https://archlinuxarm.org/wiki/Distcc_Cross-Compiling">toolchains</a> which should be installed on the x86_64 volunteer(s).  Rather than manually managing these, the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> provides all four toolchains as well as simple systemd service units:
+<p>The Arch ARM developers <i>highly</i> recommend using the official project <a rel="nofollow" class="external text" href="https://archlinuxarm.org/wiki/Distcc_Cross-Compiling">toolchains</a> which should be installed on the x86_64 volunteer(s).  Rather than manually managing these, the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> provides all four toolchains as well as configuration and systemd service units:
 </p>
 <ul>
 <li>
@@ -287,7 +288,7 @@ $ eval `pump --startup`
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/distccd-alarm-armv8/">distccd-alarm-armv8</a></span><sup><small>AUR</small></sup>
 </li>
 </ul>
-<p>Setup on the volunteer containing the toolchain is identical to <a href="#Volunteers">#Volunteers</a> except that the name of the configuration and systemd service file matches that of the respective package.  For example, for armv7h the config file is <code>/etc/conf.d/distccd-armv7h</code> and the systemd service unit is <code>distccd-armv7h.service</code>.
+<p>Setup on the volunteer containing the arm/arm64 toolchains is identical to <a href="#Volunteers">#Volunteers</a> except that the name of the configuration and systemd service file matches that of the respective package.  For example, for <b>armv7h</b> the config file is <code>/etc/conf.d/distccd-<b>armv7h</b></code> and the systemd service unit is <code>distccd-<b>armv7h</b>.service</code>.
 </p>
 <p>Note that each of the toolchains runs on a unique port thus allowing all four of them to co-exist on the volunteer if needed.  Be sure to allow traffic to the port on which distcc runs see <a href="../en/Category:Firewalls.html" title="Category:Firewalls">Category:Firewalls</a> and <span class="plainlinks archwiki-template-man" title="$ man 1 distcc"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/distcc.1">distcc(1)</a></span>.
 </p>
@@ -322,13 +323,15 @@ $ eval `pump --startup`
 </tbody>
 </table>
 <h4><span class="mw-headline" id="Client_2">Client</span></h4>
-<p>The easiest method to setup the Arch ARM client is to use the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/distccd-arch-arm/">distccd-arch-arm</a></span><sup><small>AUR</small></sup> package.  It provides the matched set of distccd configuration and systemd service units.  For example, if the client is an armv7h device, optionally edit <code>/etc/conf.d/distccd-armv7h</code> and change the defaults therein.  When ready to build, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>distccd-armv7h.service</code> and compile.
+<p>The easiest method to setup the Arch ARM client is to use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/distccd-arch-arm/">distccd-arch-arm</a></span><sup><small>AUR</small></sup>.  It provides all four configurations and systemd service units covering all four flavors of Arch ARM.  For example, if the Arch ARM client is running an <b>armv7h</b> image, optionally edit <code>/etc/conf.d/distccd-<b>armv7h</b></code> and change the defaults therein.  When ready to build, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>distccd-<b>armv7h</b>.service</code> and compile.
+</p>
+<p>For a more detailed tutorial, see <a rel="nofollow" class="external text" href="https://github.com/graysky2/distccd-arch-arm#usage-examples">usage-examples</a>.
 </p>
 <p>If one would rather setup the client without using the AUR package mentioned above, manual setup of the client is identical to <a href="#Client">#Client</a> except, one needs to modify the following two files to define the now non-standard port the volunteers are expected to use.  Refer to the table above if using the AUR package.
 </p>
 <ol>
 <li>
-<code>/etc/conf.d/distcc</code>: example on an armv7h machine: <code>DISTCC_ARGS="--allow 127.0.0.1 --allow 192.168.10.0/24 --port 3635</code>
+<code>/etc/conf.d/distcc</code>: example on an armv7h machine: <code>DISTCC_ARGS="--allow-private --log-level info --log-file /tmp/distccd-armv7h.log --port 3635"</code>
 </li>
 <li>
 <code>/etc/makepkg.conf</code>: example on an armv7h machine: <code>DISTCC_HOSTS="192.168.10.2/5:3635 192.168.10.3/5:3635"</code>
@@ -358,23 +361,25 @@ $ eval `pump --startup`
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Quirks_compiling_the_Arch_Linux_kernel_package">Quirks compiling the Arch Linux kernel package</span></h3>
-<p>If building the kernel from the official PKGBUILD (or many from the AUR), distcc will not work due to the fact that the kernel is hard-coded to use GCC plugins which cannot be supported by distccd due to technical reasons.  For more, see <a rel="nofollow" class="external text" href="https://github.com/distcc/distcc/issues/136">Issue #136 </a>.
+<p>If building the kernel from the official PKGBUILD (or many from the AUR), distcc will not work due to the fact that the kernel is hard-coded to use GCC plugins which cannot be supported by distccd due to technical reasons.
 </p>
-<p>One can either edit the PKGBUILD to pass the CC=distcc and CXX=distcc variables as part of the build command:
-</p>
-<pre>make all CC=distcc CXX=distcc
-</pre>
-<p>Or one can edit the kernel source removing the hard-coded requirement of GCC plugins.  This can be accomplished with a sed one liner in the PKGBUILD itself inserted before the make step:
+<p>A workaround is to edit the kernel source removing the hard-coded requirement of GCC plugins.  This can be accomplished with a sed one liner in the PKGBUILD itself inserted before the make step:
 </p>
 <pre>sed -i '/HAVE_GCC_PLUGINS/d' arch/x86/Kconfig
 </pre>
 <p>Failure to do this will result in distcc not working during the build.  See <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/64275">FS#64275</a>.
 </p>
-<h3><span class="mw-headline" id="Quirks_compiling_chromium">Quirks compiling chromium</span></h3>
-<p>Compiling <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=chromium">chromium</a></span> which uses clang is currently affected by <a rel="nofollow" class="external text" href="https://github.com/distcc/distcc/issues/368">issue#386</a>.  In order to circumvent the bug, add the following to the <code>_flags</code> array in the PKGBUILD per <a rel="nofollow" class="external text" href="https://blogs.igalia.com/jaragunde/2018/06/13/chromium-official-release-builds-and-icecc/">this</a> blog:
+<p>Another option is to pass the CC=distcc and CXX=distcc variables as part of the build command:
 </p>
-<pre>'clang_use_default_sample_profile=false'
-'is_cfi=false'
+<pre>make all CC=distcc CXX=distcc
+</pre>
+<h3><span class="mw-headline" id="Quirks_compiling_chromium">Quirks compiling chromium</span></h3>
+<p>Compiling <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=chromium">chromium</a></span> which uses clang is currently affected by <a rel="nofollow" class="external text" href="https://github.com/distcc/distcc/issues/368">issue#386</a>.  In order to circumvent the bug, add the following to the <code>_flags</code> array in the PKGBUILD:
+</p>
+<pre>'is_cfi=false'
+'use_gold=false'
+'clang_use_default_sample_profile=false'
+'chrome_pgo_phase=0'
 </pre>
 <h3><span class="mw-headline" id="Journalctl">Journalctl</span></h3>
 <p>Use <code>journalctl</code> to find out what was going wrong:
@@ -442,8 +447,8 @@ After=distccd.service
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Distcc&amp;oldid=647356">https://wiki.archlinux.org/index.php?title=Distcc&amp;oldid=647356</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 27 December 2020, at 20:53.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Distcc&amp;oldid=654557">https://wiki.archlinux.org/index.php?title=Distcc&amp;oldid=654557</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 08:00.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

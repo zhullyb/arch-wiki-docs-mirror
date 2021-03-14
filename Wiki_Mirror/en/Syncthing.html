@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -156,6 +157,8 @@ If you specify "dynamic" for the address, the syncthing announce server will be 
 </p>
 <ul><li>Activate both local and global discovery on each node. This will allow discovery in all situations, including if some of the nodes are mobile devices like laptops or Android phones, and leave the LAN and connects to the internet from the outside. This way they will still be found with global discovery.</li></ul>
 <ul><li>Use a different <a rel="nofollow" class="external text" href="https://docs.syncthing.net/users/config.html#listen-addresses">listen address port</a> for each machine, like <code>tcp://:22010</code>, <code>tcp://:22011</code>, <code>tcp://:22012</code> and so forth. This will differentiate the nodes on the global discovery servers and avoid the <i>"Connected to myself - should not happen"</i> message on the other local devices whenever they leave the LAN.</li></ul>
+<ul><li>If running multiple instances for different users on the same machine, set a different port for each user's <i>localAnnouncePort</i> (IPv4 broadcasts) as to avoid Syncthing complaints and choose the same <i>localAnnounceMCAddr</i> (IPv6 multicasts) as to find other devices on the LAN without global discovery (see <a rel="nofollow" class="external text" href="https://docs.syncthing.net/users/config.html#options-element">Options Element</a>).</li></ul>
+<ul><li>If two instances on the same machine should find each other without global discovery, add <code>tcp://127.0.0.1:xxxxx</code> as device's second <i>address</i>, e.g., <code>tcp://127.0.0.1:22001</code> and <code>tcp://127.0.0.1:22002</code> (see <a rel="nofollow" class="external text" href="https://docs.syncthing.net/users/config.html#device-element">Device Element</a>).</li></ul>
 <ul><li>Enable if possible <a href="https://en.wikipedia.org/wiki/universal_plug_and_play" class="extiw" title="wikipedia:universal plug and play">UPnP</a> port forwarding or manually forward each port to the right machine on the LAN. When a new node is discovered, Syncthing tries to use its configured listening port, <i>22000</i> by default. If this port happens to be closed, it will seek another port locally: whenever <i>NAT traversal</i> is enabled in Syncthing, it will attempt to use UPnP to map a random external port to the internal listening port chosen, for example <i>22000</i>. If UPnP is not supported or if this is not desirable, each port should be manually forwarded to the right machine on the LAN. Eventually, if no open port can be found on both sides, <a rel="nofollow" class="external text" href="https://docs.syncthing.net/users/relaying.html">relaying</a> will be used.</li></ul>
 <h3><span class="mw-headline" id="Using_inotify">Using inotify</span></h3>
 <p><a href="https://en.wikipedia.org/wiki/inotify" class="extiw" title="wikipedia:inotify">inotify</a> <i>(inode notify)</i> is a Linux kernel subsystem that acts to extend filesystems to notice changes to the filesystem, and report those changes to applications. Syncthing supports inotify and the functionality can be enabled in the configuration menu for individual folders.
@@ -235,7 +238,7 @@ The listening port in the VM can be changed through Syncthing's <a rel="nofollow
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> local discovery in this setup is limited because the discovery listening port 21027 is already used by the host. The guest is therefore not able to build a table of local announcements though it can still broadcast to the local network via the VM NAT and announce itself. The steps described above allow to run a functioning server in the default NAT configuration but bridged networking is recommended for an optimal setup.</div>
 <h3><span class="mw-headline" id="Running_through_a_proxy">Running through a proxy</span></h3>
-<p>Syncthing can be run through a proxy to enable use behind a corporate firewalls or tunneling via SSH. According to the <a rel="nofollow" class="external text" href="https://docs.syncthing.net/users/proxying.html">using proxies</a> documentation it is necessary to set the <code>all_proxy</code> environment variable, and it must indicate a <i>socks5</i> proxy type.
+<p>Syncthing can be run through a proxy to enable use behind a corporate firewall or tunneling via SSH. According to the <a rel="nofollow" class="external text" href="https://docs.syncthing.net/users/proxying.html">using proxies</a> documentation it is necessary to set the <code>all_proxy</code> environment variable, and it must indicate a <i>socks5</i> proxy type.
 </p>
 <ul><li>If the service is run from a script or from the command line, you must set the variables beforehand as follows:</li></ul>
 <pre>export all_proxy="socks5://<i>proxy_address</i>:<i>proxy_port</i>"
@@ -280,8 +283,8 @@ Environment="no_proxy=127.0.0.1"</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Syncthing&amp;oldid=622053">https://wiki.archlinux.org/index.php?title=Syncthing&amp;oldid=622053</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 June 2020, at 01:52.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Syncthing&amp;oldid=654174">https://wiki.archlinux.org/index.php?title=Syncthing&amp;oldid=654174</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 March 2021, at 18:20.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

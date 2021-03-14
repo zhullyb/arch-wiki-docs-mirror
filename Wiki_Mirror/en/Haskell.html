@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -100,26 +101,27 @@
 <a href="#Editors"><span class="tocnumber">5.2</span> <span class="toctext">Editors</span></a>
 <ul>
 <li class="toclevel-3 tocsection-24"><a href="#Emacs"><span class="tocnumber">5.2.1</span> <span class="toctext">Emacs</span></a></li>
-<li class="toclevel-3 tocsection-25"><a href="#Visual_Studio_Code"><span class="tocnumber">5.2.2</span> <span class="toctext">Visual Studio Code</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#Vim"><span class="tocnumber">5.2.2</span> <span class="toctext">Vim</span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#Visual_Studio_Code"><span class="tocnumber">5.2.3</span> <span class="toctext">Visual Studio Code</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-26">
+<li class="toclevel-1 tocsection-27">
 <a href="#Tips_and_tricks"><span class="tocnumber">6</span> <span class="toctext">Tips and tricks</span></a>
 <ul>
-<li class="toclevel-2 tocsection-27">
+<li class="toclevel-2 tocsection-28">
 <a href="#Static_linking"><span class="tocnumber">6.1</span> <span class="toctext">Static linking</span></a>
 <ul>
-<li class="toclevel-3 tocsection-28"><a href="#ghc-pristine"><span class="tocnumber">6.1.1</span> <span class="toctext">ghc-pristine</span></a></li>
-<li class="toclevel-3 tocsection-29"><a href="#cabal-static"><span class="tocnumber">6.1.2</span> <span class="toctext">cabal-static</span></a></li>
-<li class="toclevel-3 tocsection-30"><a href="#stack-static"><span class="tocnumber">6.1.3</span> <span class="toctext">stack-static</span></a></li>
-<li class="toclevel-3 tocsection-31"><a href="#hpack-static-bin"><span class="tocnumber">6.1.4</span> <span class="toctext">hpack-static-bin</span></a></li>
+<li class="toclevel-3 tocsection-29"><a href="#ghc-pristine"><span class="tocnumber">6.1.1</span> <span class="toctext">ghc-pristine</span></a></li>
+<li class="toclevel-3 tocsection-30"><a href="#cabal-static"><span class="tocnumber">6.1.2</span> <span class="toctext">cabal-static</span></a></li>
+<li class="toclevel-3 tocsection-31"><a href="#stack-static"><span class="tocnumber">6.1.3</span> <span class="toctext">stack-static</span></a></li>
+<li class="toclevel-3 tocsection-32"><a href="#hpack-static-bin"><span class="tocnumber">6.1.4</span> <span class="toctext">hpack-static-bin</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-32"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-33"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -298,10 +300,12 @@ In the context of this article, <i>Cabal</i> usually means <code>cabal</code> co
 <h4><span class="mw-headline" id="Removing_packages">Removing packages</span></h4>
 <p>There is no easy way to do it. Cabal does not have support for this functionality but there are external tools like <a rel="nofollow" class="external text" href="https://github.com/phadej/cabal-extras#cabal-store-gc">cabal-store-gc</a>.
 </p>
-<p>If you want to reinstall the entire user-wide Haskell package system, remove <code>~/.cabal</code> and <code>~/.ghc</code> and start from scratch. This is often necessary when GHC is upgraded.
+<p>To reinstall the entire user-wide Haskell package system, remove <code>~/.cabal</code> and <code>~/.ghc</code> and start from scratch. This is often necessary when GHC is upgraded.
+</p>
+<p>For more precision, it's possible to use <code>ghc-pkg unregister <i>package</i></code> or <code>ghc-pkg hide <i>package</i></code>/<code>ghc-pkg expose <i>package</i></code> directly on the <a rel="nofollow" class="external text" href="https://downloads.haskell.org/ghc/8.10.2/docs/html/users_guide/packages.html#package-databases%7C"><i>user package database</i></a> — this makes GHC "forget" about an installed package (or pretend it's not there). However neither of these removes any files.
 </p>
 <h3><span class="mw-headline" id="Stack">Stack</span></h3>
-<p>Stack is another tool to manage Haskell packages. It pursuits slightly different goals than Cabal, with a slightly different philosophy. It uses Cabal library under the hood and integrates with Hackage — but maintains its own repositories of packages (snapshots) on Stackage with the promise that snapshots are curated and include packages which work well together.
+<p>Stack is another tool to manage Haskell packages. It has slightly different goals than Cabal, with a slightly different philosophy. It uses Cabal library under the hood and integrates with Hackage — but maintains its own repositories of packages (snapshots) on Stackage with the promise that snapshots are curated and include packages which work well together.
 </p>
 <h4><span class="mw-headline" id="Installing_packages_2">Installing packages</span></h4>
 <p>In its default configuration, Stack installs compiled executables to <code>~/.local/bin</code>. Add this directory to the <code>$PATH</code> environment variable in your shell configuration file, for instance <code>~/.bashrc</code> for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bash">bash</a></span> or <code>~/.zshrc</code> for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=zsh">zsh</a></span>:
@@ -472,6 +476,9 @@ Hello, Haskell!
 <h4><span class="mw-headline" id="Emacs">Emacs</span></h4>
 <p>Basic <a href="../en/Emacs.html" title="Emacs">Emacs</a> support for Haskell is provided by the official <a rel="nofollow" class="external text" href="https://github.com/haskell/haskell-mode">haskell-mode</a>. For more advanced features, also use <a rel="nofollow" class="external text" href="https://github.com/emacs-lsp/lsp-haskell">lsp-haskell</a> with <a href="#haskell-language-server">#haskell-language-server</a>.
 </p>
+<h4><span class="mw-headline" id="Vim">Vim</span></h4>
+<p>Any <a rel="nofollow" class="external text" href="https://vimawesome.com/?q=LSP">LSP client</a> plugin will work with <a href="#haskell-language-server">#haskell-language-server</a>.
+</p>
 <h4><span class="mw-headline" id="Visual_Studio_Code">Visual Studio Code</span></h4>
 <p><a href="../en/Visual_Studio_Code.html" title="Visual Studio Code">Visual Studio Code</a> support is provided by the official <a rel="nofollow" class="external text" href="https://marketplace.visualstudio.com/items?itemName=haskell.haskell">Haskell plugin</a>.
 </p>
@@ -541,8 +548,8 @@ compiler-check: newer-minor
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Haskell&amp;oldid=648614">https://wiki.archlinux.org/index.php?title=Haskell&amp;oldid=648614</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 10 January 2021, at 04:57.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Haskell&amp;oldid=653239">https://wiki.archlinux.org/index.php?title=Haskell&amp;oldid=653239</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 February 2021, at 16:08.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

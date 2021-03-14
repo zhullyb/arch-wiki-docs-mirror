@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -380,7 +381,7 @@
 <h2><span class="mw-headline" id="initramfs">initramfs</span></h2>
 <p>After the <a href="#Boot_loader">boot loader</a> loads the <a href="../en/Kernel.html" title="Kernel">kernel</a> and possible initramfs files and executes the kernel, the kernel unpacks the initramfs (initial RAM filesystem) archives into the (then empty) rootfs (initial root filesystem, specifically a ramfs or tmpfs). The first extracted initramfs is the one embedded in the kernel binary during the kernel build, then possible external initramfs files are extracted. Thus files in the external initramfs overwrite files with the same name in the embedded initramfs. The kernel then executes <code>/init</code> (in the rootfs) as the first process. The <i>early userspace</i> starts.
 </p>
-<p>Arch Linux uses an empty archive for the builtin initramfs (which is the default when building Linux). See <a href="../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a> for more and Arch-specific info about the external initramfs.
+<p>Arch Linux <a href="../en/Kernel.html#Officially_supported_kernels" title="Kernel">official kernels</a> use an empty archive for the builtin initramfs (which is the default when building Linux). External initramfs images can be generated with <a href="../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a>, <a href="../en/Dracut.html" title="Dracut">dracut</a> or <a href="../en/Booster.html" title="Booster">booster</a>.
 </p>
 <p>The purpose of the initramfs is to bootstrap the system to the point where it can access the root filesystem (see <a href="../en/Frequently_asked_questions.html#Does_Arch_follow_the_Linux_Foundation's_Filesystem_Hierarchy_Standard_(FHS)?" class="mw-redirect" title="FHS">FHS</a> for details). This means that any modules that are required for devices like IDE, SCSI, SATA, USB/FW (if booting from an external drive) must be loadable from the initramfs if not built into the kernel; once the proper modules are loaded (either explicitly via a program or script, or implicitly via <a href="../en/Udev.html" title="Udev">udev</a>), the boot process continues. For this reason, the initramfs only needs to contain the modules necessary to access the root filesystem; it does not need to contain every module one would ever want to use. The majority of modules will be loaded later on by udev, during the init process.
 </p>
@@ -432,8 +433,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Arch_boot_process&amp;oldid=646687">https://wiki.archlinux.org/index.php?title=Arch_boot_process&amp;oldid=646687</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 11:48.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Arch_boot_process&amp;oldid=654084">https://wiki.archlinux.org/index.php?title=Arch_boot_process&amp;oldid=654084</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 6 March 2021, at 12:35.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

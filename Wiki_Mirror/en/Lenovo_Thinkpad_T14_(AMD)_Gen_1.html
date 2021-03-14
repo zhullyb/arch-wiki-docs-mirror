@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,6 +33,11 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Hardware table needs some adjustment. <code>lspci</code>/<code>lsusb</code> dumps should not go into laptop pages. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Lenovo_Thinkpad_T14_(AMD)_Gen_1">Talk:Lenovo Thinkpad T14 (AMD) Gen 1#</a>)</div>
+</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
@@ -43,10 +49,9 @@
 <table class="wikitable" style="float: right; clear: right">
 <tbody>
 <tr>
-<td><b>Device</b></td>
-<td>
-<b>Status</b>
-</td>
+<th>Device</th>
+<th>Working?
+</th>
 </tr>
 <tr>
 <td><a href="../en/AMDGPU.html" title="AMDGPU">AMD graphics</a></td>
@@ -97,13 +102,20 @@
 </div>
 <ul>
 <li class="toclevel-1 tocsection-1"><a href="#Hardware"><span class="tocnumber">1</span> <span class="toctext">Hardware</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#AMD_Graphics"><span class="tocnumber">2</span> <span class="toctext">AMD Graphics</span></a></li>
-<li class="toclevel-1 tocsection-3"><a href="#Fingerprint_Sensor"><span class="tocnumber">3</span> <span class="toctext">Fingerprint Sensor</span></a></li>
-<li class="toclevel-1 tocsection-4"><a href="#Backlight"><span class="tocnumber">4</span> <span class="toctext">Backlight</span></a></li>
-<li class="toclevel-1 tocsection-5"><a href="#Suspend"><span class="tocnumber">5</span> <span class="toctext">Suspend</span></a></li>
-<li class="toclevel-1 tocsection-6"><a href="#Smartcard_Reader"><span class="tocnumber">6</span> <span class="toctext">Smartcard Reader</span></a></li>
-<li class="toclevel-1 tocsection-7"><a href="#WWAN"><span class="tocnumber">7</span> <span class="toctext">WWAN</span></a></li>
-<li class="toclevel-1 tocsection-8"><a href="#WiFi"><span class="tocnumber">8</span> <span class="toctext">WiFi</span></a></li>
+<li class="toclevel-1 tocsection-2">
+<a href="#Firmware"><span class="tocnumber">2</span> <span class="toctext">Firmware</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#Secure_boot"><span class="tocnumber">2.1</span> <span class="toctext">Secure boot</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Battery_issues"><span class="tocnumber">2.2</span> <span class="toctext">Battery issues</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-5"><a href="#AMD_Graphics"><span class="tocnumber">3</span> <span class="toctext">AMD Graphics</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Fingerprint_Sensor"><span class="tocnumber">4</span> <span class="toctext">Fingerprint Sensor</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#Backlight"><span class="tocnumber">5</span> <span class="toctext">Backlight</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Suspend"><span class="tocnumber">6</span> <span class="toctext">Suspend</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Smartcard_Reader"><span class="tocnumber">7</span> <span class="toctext">Smartcard Reader</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#WWAN"><span class="tocnumber">8</span> <span class="toctext">WWAN</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#WiFi"><span class="tocnumber">9</span> <span class="toctext">WiFi</span></a></li>
 </ul>
 </div>
 
@@ -113,7 +125,7 @@
 <p>Using kernel 5.9.14.
 </p>
 <pre>Product Name: Thinkpad T14 (AMD) Gen 1
-SKU: 20UDCTO1WW
+Machine Type: 20UE / 20UD
 BIOS: 1.27 (R1BET58W)
 </pre>
 <p><code>lspci</code> returns something like:
@@ -172,6 +184,15 @@ Bus 002 Device 002: ID 04f2:b6d0 Chicony Electronics Co., Ltd Integrated Camera
 Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 </pre>
+<h2><span class="mw-headline" id="Firmware">Firmware</span></h2>
+<h3><span class="mw-headline" id="Secure_boot">Secure boot</span></h3>
+<p>As of January 2021 deleting SecureBoot keys and installing your own keys (for example by using <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html#Using_KeyTool" title="Unified Extensible Firmware Interface/Secure Boot">KeyTool</a>) will brick the device. This is a problem that is similar to one which <a rel="nofollow" class="external text" href="https://forums.lenovo.com/t5/ThinkPad-X-Series-Laptops/BIOS-BUG-X1C7-quot-Configuration-changed-restart-system-quot-loop-after-enrolled-my-own-secureboot-key/m-p/4607484">has been reported on some other Lenovo laptops</a> and is likely due to a faulty firmware. If the device is stuck in a boot loop after replacing the SecureBoot keys, the only way to repair it is by replacing the mainboard of the device. Hopefully, the issue will get fixed with a firmware update in the future.
+</p>
+<h3><span class="mw-headline" id="Battery_issues">Battery issues</span></h3>
+<p>In an ongoing <a rel="nofollow" class="external text" href="https://forums.lenovo.com/t5/Other-Linux-Discussions/T14-AMD-battery-drain-in-standby-Linux/m-p/5037674?page=1">Lenovo forums thread</a> there has been a discussion regarding battery drain issues in suspend/powered-off states. Presumably laptops with AMD Renoir CPUs and relevant hardware are affected. As of now, BIOS firmware version 1.29 is suggested to use, as version 1.30 introduced significant battery drain, the battery loses up to 50% in 2-3 days while the laptop is in suspend mode.
+</p>
+<p>There is also a suggestion that kernel updates could fix this behavior and that Lenovo and Canonical are working on it.
+</p>
 <h2><span class="mw-headline" id="AMD_Graphics">AMD Graphics</span></h2>
 <p>The opensource <a href="../en/AMDGPU.html" title="AMDGPU">AMDGPU</a> drivers work correctly with no special modification.
 </p>
@@ -234,8 +255,11 @@ Decode vp9 profile0	16x16 to 8192x4352 pixels
 <p>Untested, see <a href="../en/Lenovo_Thinkpad_T14s_(AMD)_Gen_1.html#Smartcard_Reader" title="Lenovo Thinkpad T14s (AMD) Gen 1">Lenovo Thinkpad T14s (AMD) Gen 1#Smartcard Reader</a>
 </p>
 <h2><span class="mw-headline" id="WWAN">WWAN</span></h2>
-<p>Untested. See <a href="../en/Lenovo_Thinkpad_T14s_(AMD)_Gen_1.html#WWAN" title="Lenovo Thinkpad T14s (AMD) Gen 1">Lenovo Thinkpad T14s (AMD) Gen 1#WWAN</a>
+<p>Tested, works with <a rel="nofollow" class="external text" href="https://github.com/xmm7360/xmm7360-pci">xmm7360-pci</a> (see <a href="../en/Xmm7360-pci.html" title="Xmm7360-pci">Xmm7360-pci</a>):
 </p>
+<pre>$ lspci | grep XMM
+05:00.0 Wireless controller [0d40]: Intel Corporation XMM7360 LTE Advanced Modem (rev 01)
+</pre>
 <h2><span class="mw-headline" id="WiFi">WiFi</span></h2>
 <p>The onboard wireless card is Intel AX200, and it may have microcode issues when used as-is. A possible fix for WiFi disconnects is turning on iwlwifi antenna agreggation on by creating a <a href="../en/Kernel_module.html" class="mw-redirect" title="Modprobe">modprobe</a> config
 </p>
@@ -245,16 +269,20 @@ Decode vp9 profile0	16x16 to 8192x4352 pixels
 </p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Lenovo.html" title="Category:Lenovo">Lenovo</a></li></ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_Thinkpad_T14_(AMD)_Gen_1&amp;oldid=647686">https://wiki.archlinux.org/index.php?title=Lenovo_Thinkpad_T14_(AMD)_Gen_1&amp;oldid=647686</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 30 December 2020, at 19:12.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_Thinkpad_T14_(AMD)_Gen_1&amp;oldid=654373">https://wiki.archlinux.org/index.php?title=Lenovo_Thinkpad_T14_(AMD)_Gen_1&amp;oldid=654373</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 10 March 2021, at 07:45.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

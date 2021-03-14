@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -78,7 +79,7 @@
 <p>This is a minimal <code>package</code> function:
 </p>
 <pre>package() {
-    npm install -g --user root --prefix "${pkgdir}/usr" "${srcdir}/${pkgname}-${pkgver}.tgz"
+    npm install -g --prefix "${pkgdir}/usr" "${srcdir}/${pkgname}-${pkgver}.tgz"
 
     # Non-deterministic race in npm gives 777 permissions to random directories.
     # See https://github.com/npm/cli/issues/1103 for details.
@@ -117,7 +118,15 @@ jq '.|=with_entries(select(.key|test("_.+")|not))' "$pkgjson" &gt; "$tmppackage"
 mv "$tmppackage" "$pkgjson"
 chmod 644 "$pkgjson"
 </pre>
-<p>An example of both techniques can be seen in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/bower-away/">bower-away</a></span><sup><small>AUR</small></sup>.
+<p>Another place where you may find references to <code>$pkgdir</code> is the <code>man</code> attributes of packages. If you don't care about man pages (they won't be installed for dependencies anyway), you may delete them like this:
+</p>
+<pre>find "$pkgdir" -type f -name package.json | while read pkgjson; do
+	local tmppackage="$(mktemp)"
+	jq 'del(.man)' "$pkgjson" &gt; "$tmppackage"
+	mv "$tmppackage" "$pkgjson"
+	chmod 644 "$pkgjson"
+done</pre>
+<p>An example of all three of these techniques can be seen in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/readability-cli/">readability-cli</a></span><sup><small>AUR</small></sup>.
 </p>
 <h2><span class="mw-headline" id="Using_nvm">Using nvm</span></h2>
 <p>When a <a href="../en/Node.js.html" title="Node.js">node.js</a> based application requires different version for <b>building</b> or <b>packaging</b>, 
@@ -173,8 +182,8 @@ build() {
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Node.js_package_guidelines&amp;oldid=641019">https://wiki.archlinux.org/index.php?title=Node.js_package_guidelines&amp;oldid=641019</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 9 November 2020, at 04:03.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Node.js_package_guidelines&amp;oldid=654198">https://wiki.archlinux.org/index.php?title=Node.js_package_guidelines&amp;oldid=654198</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 March 2021, at 07:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

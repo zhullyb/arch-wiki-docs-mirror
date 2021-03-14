@@ -39,9 +39,12 @@
 <li><a href="../en/PipeWire/Examples.html" title="PipeWire/Examples">PipeWire/Examples</a></li>
 </ul>
 </div>
-<p><a rel="nofollow" class="external text" href="http://pipewire.org">PipeWire</a> is a new multimedia framework by GNOME. The main developer is Wim Taymans.
+<p><a rel="nofollow" class="external text" href="http://pipewire.org">PipeWire</a> is a new low-level multimedia framework.
+It aims to offer capture and playback for both audio and video with minimal latency and support for PulseAudio-, JACK-, ALSA- and GStreamer-based applications.
 </p>
-<p>PipeWire supports containers like <a href="../en/Flatpak.html" title="Flatpak">Flatpak</a> and does not rely on <a href="../en/Users_and_groups.html#Group_management" class="mw-redirect" title="User group">user groups</a> <i>audio</i> and <i>video</i>, but rather uses a <a href="../en/Polkit.html" title="Polkit">Polkit</a>-like security model asking Flatpak or Wayland for permission to record screen or audio.
+<p>The Daemon based on the framework can be configured to be both an audio server (with PulseAudio and JACK features) and a video capture server.
+</p>
+<p>PipeWire also supports containers like <a href="../en/Flatpak.html" title="Flatpak">Flatpak</a> and does not rely on <i>audio</i> and <i>video</i> <a href="../en/Users_and_groups.html#Group_management" class="mw-redirect" title="User group">user groups</a> but rather it uses a <a href="../en/Polkit.html" title="Polkit">Polkit</a>-like security model asking Flatpak or Wayland for permission to record screen or audio.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -83,9 +86,10 @@
 <li class="toclevel-2 tocsection-18"><a href="#External_sound_card_not_activated_after_reconnect"><span class="tocnumber">4.5</span> <span class="toctext">External sound card not activated after reconnect</span></a></li>
 <li class="toclevel-2 tocsection-19"><a href="#No_Sound_or_pactl_info_shows_Failure:_Connection_refused"><span class="tocnumber">4.6</span> <span class="toctext">No Sound or pactl info shows Failure: Connection refused</span></a></li>
 <li class="toclevel-2 tocsection-20"><a href="#Low_audio_quality_on_Bluetooth"><span class="tocnumber">4.7</span> <span class="toctext">Low audio quality on Bluetooth</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#No_devices_detected_after_PipeWire_update_and_reboot_(git_/_&gt;=0.3.23)"><span class="tocnumber">4.8</span> <span class="toctext">No devices detected after PipeWire update and reboot (git / &gt;=0.3.23)</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-21"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-22"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -108,13 +112,13 @@
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdg-desktop-portal-kde">xdg-desktop-portal-kde</a></span> for KDE.</li>
 <li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdg-desktop-portal-wlr">xdg-desktop-portal-wlr</a></span> for Wlroots-based compositor (e.g. <a href="../en/Sway.html" title="Sway">Sway</a>, dwl)</li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdg-desktop-portal-wlr">xdg-desktop-portal-wlr</a></span> for wlroots-based compositor (e.g. <a href="../en/Sway.html" title="Sway">Sway</a>, <a rel="nofollow" class="external text" href="https://github.com/djpohly/dwl">dwl</a>)</li>
 </ul>
 <p>Firefox (84+) supports this method by default, while on Chromium (73+) one needs to enable <a rel="nofollow" class="external text" href="https://bugs.chromium.org/p/chromium/issues/detail?id=682122">WebRTC PipeWire support</a> by setting the corresponding (experimental) flag at the following URL
 </p>
 <pre>chrome://flags/#enable-webrtc-pipewire-capturer
 </pre>
-<p>For <code>xdg-desktop-portal-wlr</code> to work you need to set <code>XDG_CURRENT_DESKTOP</code><a rel="nofollow" class="external autonumber" href="https://github.com/emersion/xdg-desktop-portal-wlr#running">[1]</a>:
+<p>For <code>xdg-desktop-portal-wlr</code> to work you need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pipewire-media-session">pipewire-media-session</a></span> <a rel="nofollow" class="external autonumber" href="https://github.com/emersion/xdg-desktop-portal-wlr/wiki/FAQ/db63ec1ab6c0170334c1d1f45d1ebe543cc375fa#how-do-i-run-xdpw">[1]</a> and set <code>XDG_CURRENT_DESKTOP</code><a rel="nofollow" class="external autonumber" href="https://github.com/emersion/xdg-desktop-portal-wlr#running">[2]</a>:
 </p>
 <pre>export XDG_CURRENT_DESKTOP=sway
 </pre>
@@ -126,9 +130,9 @@
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Since <a rel="nofollow" class="external text" href="https://github.com/flatpak/xdg-desktop-portal-gtk/pull/225">this pull request</a> was merged, the following note about specific app/window sharing may be not correct anymore for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdg-desktop-portal-gtk">xdg-desktop-portal-gtk</a></span>. Also see the ticket tracking the discussion at <a rel="nofollow" class="external autonumber" href="https://github.com/flatpak/xdg-desktop-portal-gtk/issues/204">[2]</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PipeWire">Talk:PipeWire#</a>)</div>
+<b>Reason:</b> Since <a rel="nofollow" class="external text" href="https://github.com/flatpak/xdg-desktop-portal-gtk/pull/225">this pull request</a> was merged, the following note about specific app/window sharing may be not correct anymore for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdg-desktop-portal-gtk">xdg-desktop-portal-gtk</a></span>. Also see the ticket tracking the discussion at <a rel="nofollow" class="external autonumber" href="https://github.com/flatpak/xdg-desktop-portal-gtk/issues/204">[3]</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PipeWire">Talk:PipeWire#</a>)</div>
 </div>
-<p>Note that the only supported feature is sharing the entire desktop and not a specific app/window <a rel="nofollow" class="external autonumber" href="https://github.com/emersion/xdg-desktop-portal-wlr/wiki/FAQ#will-this-let-me-share-individual-windows">[3]</a><a rel="nofollow" class="external autonumber" href="https://github.com/KDE/xdg-desktop-portal-kde/blob/master/TODO">[4]</a>.
+<p>Note that the only supported feature is sharing the entire desktop and not a specific app/window <a rel="nofollow" class="external autonumber" href="https://github.com/emersion/xdg-desktop-portal-wlr/wiki/FAQ#will-this-let-me-share-individual-windows">[4]</a><a rel="nofollow" class="external autonumber" href="https://github.com/KDE/xdg-desktop-portal-kde/blob/master/TODO">[5]</a>.
 </p>
 <h3><span class="mw-headline" id="Video">Video</span></h3>
 <p>Although the software is not yet production-ready, it is safe to play around with. Most applications that rely on <a href="../en/GStreamer.html" title="GStreamer">GStreamer</a> to handle e.g. video streams should work out-of-the-box thanks to the PipeWire GStreamer plugin. Applications like e.g. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cheese">cheese</a></span> are therefore already able to share video input using it.
@@ -142,7 +146,7 @@
 <p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pipewire-alsa">pipewire-alsa</a></span> to route all application using the ALSA API through PipeWire.
 </p>
 <h4><span class="mw-headline" id="PulseAudio_clients">PulseAudio clients</span></h4>
-<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pipewire-pulse">pipewire-pulse</a></span>. Normally, no further action is needed, as the user service <code>pipewire-pulse.socket</code> should be enabled automatically by the package. If PipeWire does not work correctly on system startup, validate that the user services <code>pipewire-pulse.service</code> and <code>pipewire.service</code> are up and running. See <a href="../en/Systemd/User.html" title="Systemd/User">Systemd/User</a>.
+<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pipewire-pulse">pipewire-pulse</a></span>. It will replace <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseaudio">pulseaudio</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseaudio-bluetooth">pulseaudio-bluetooth</a></span>. Normally, no further action is needed, as the user service <code>pipewire-pulse.socket</code> should be enabled automatically by the package. If PipeWire does not work correctly on system startup, validate that the user services <code>pipewire-pulse.service</code> and <code>pipewire.service</code> are up and running. See <a href="../en/Systemd/User.html" title="Systemd/User">Systemd/User</a>.
 </p>
 <p>Reboot or re-login to see the effect.
 </p>
@@ -180,7 +184,7 @@ Server Name: PulseAudio (on PipeWire 0.3.16)
 <p>In order to use PulseEffects with PipeWire, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseeffects">pulseeffects</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/pulseeffects-git/">pulseeffects-git</a></span><sup><small>AUR</small></sup>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Additionally you have to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gst-plugin-pipewire">gst-plugin-pipewire</a></span> and <a href="#PulseAudio_clients">replace PulseAudio with PipeWire</a> or it fail to launch with the error <code>Failed to get required plugin: pipewiresrc</code>. See <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/69437">FS#69437</a> for details. For the legacy version see <a href="../en/PulseAudio.html#PulseEffects" title="PulseAudio">PulseAudio#PulseEffects</a>.</div>
+<strong>Note:</strong> This will also install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pipewire-pulse">pipewire-pulse</a></span> and <a href="#PulseAudio_clients">replace PulseAudio with PipeWire</a>. See <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/69437">FS#69437</a> for details. For the legacy version see <a href="../en/PulseAudio.html#PulseEffects" title="PulseAudio">PulseAudio#PulseEffects</a>.</div>
 <p>See <a rel="nofollow" class="external text" href="https://github.com/wwmm/pulseeffects/wiki/Community-presets">Community Presets</a> for a collection of preset configurations.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
@@ -200,7 +204,7 @@ update-props = {
 	60: description="Built-in Audio" prio=2000
 *	62: description="Built-in Audio (Loopback PCM)" prio=1984</pre>
 <h3><span class="mw-headline" id="No_sound_after_connecting_to_Bluetooth_device">No sound after connecting to Bluetooth device</span></h3>
-<p>As of 2020-12-07, if there is no sound after connecting a Bluetooth device, you might need to switch the default sink and/or move a sink input to the correct sink. Use <code>pactl set-default-sink</code> to set the sink and <code>pactl list sinks</code> to list the available ones. This can be automated via <a href="../en/Udev.html" title="Udev">udev</a> using a script similar to <a rel="nofollow" class="external text" href="https://gist.github.com/tinywrkb/04e7fd644afa9b92d33a3a99ab07ee9e">this one</a>.
+<p>As of 2020-12-07, if there is no sound after connecting a Bluetooth device, you might need to switch the default sink and/or move a sink input to the correct sink. Use <code>pactl list sinks</code> to list the available sinks and <code>pactl set-default-sink</code> to switch the default sink to the Bluetooth device. This can be automated via <a href="../en/Udev.html" title="Udev">udev</a> using a script similar to <a rel="nofollow" class="external text" href="https://gist.github.com/tinywrkb/04e7fd644afa9b92d33a3a99ab07ee9e">this one</a>.
 </p>
 <p>See this <a rel="nofollow" class="external text" href="https://www.reddit.com/r/archlinux/comments/jydd02/pipewirepulse_03164_in_testing_now_replaces/gd3m7fu/?context=3">Reddit thread</a> for a discussion of the issue. According to author of the script, the headset profile (HSP) might still have problems.
 </p>
@@ -232,14 +236,30 @@ username	hard	memlock	128
 <h3><span class="mw-headline" id="Low_audio_quality_on_Bluetooth">Low audio quality on Bluetooth</span></h3>
 <pre>Feb 17 18:23:01 HOST pipewire[249297]: (bluez_input.18:54:CF:04:00:56.a2dp-sink-60) client too slow! rate:512/48000 pos:370688 status:triggered
 </pre>
-<p>In case Bluetooth playback stutters, check <code>pipewire.service</code> using <code>systemctl --user status pipewire.service</code>. If there are errors like this one, check the currently selected codec using <code>pactl list sinks</code> and try changing it by setting <code>bluez5.codec</code> to one of <code>sbc aac ldac aptx aptx_hd</code> in <code>/etc/pipewire/media-session.d/bluez-monitor.conf</code> and restart PipeWire using <code>systemctl --user restart pipewire.service</code> for the changes to take effect.
+<p>In case Bluetooth playback stutters, check <code>pipewire.service</code> using <code>systemctl --user status pipewire.service</code>. If there are errors like this one, check the currently selected codec using <code>pactl list sinks</code> and try changing it by setting <code>bluez5.codecs</code> to one of <code>sbc aac ldac aptx aptx_hd</code> in <code>/etc/pipewire/media-session.d/bluez-monitor.conf</code> and restart PipeWire using <code>systemctl --user restart pipewire.service</code> for the changes to take effect.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pipewire/media-session.d/bluez-monitor.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
 properties = {
   ...
-  bluez5.codec = sbc
+  bluez5.codecs = [sbc]
 ...</pre>
+<h3>
+<span id="No_devices_detected_after_PipeWire_update_and_reboot_.28git_.2F_.3E.3D0.3.23.29"></span><span class="mw-headline" id="No_devices_detected_after_PipeWire_update_and_reboot_(git_/_&gt;=0.3.23)">No devices detected after PipeWire update and reboot (git / &gt;=0.3.23)</span>
+</h3>
+<p>As of commit 012a68f8<a rel="nofollow" class="external autonumber" href="https://gitlab.freedesktop.org/pipewire/pipewire/-/commit/012a68f8ef33705f1a40ec8ac294b8cce7f6aa88">[6]</a> new systemd service has been added and it's disabled by default which means there's no <code>pipewire-media-session</code> running on the system reboot. To enable service run: <code>systemctl --user enable --now pipewire-media-session.service</code>
+</p>
+<p>If user or package manager haven't sorted out configuration files changes after update then another instance of <code>pipewire-media-session</code> might be running in pipewire.service, to check run: <code>systemctl --user status pipewire.service</code>
+</p>
+<p>If it shows pipewire and pipewire-media-session running thus update your system and/or user configuration:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pipewire/pipewire.conf and/or ~/.config/pipewire/pipewire.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">context.exec = {
+  ...
+  # Line below should be commented out
+  #"/usr/bin/pipewire-media-session" = { args = "" }
+  ...
+}</pre>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li>
@@ -266,8 +286,8 @@ properties = {
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PipeWire&amp;oldid=652724">https://wiki.archlinux.org/index.php?title=PipeWire&amp;oldid=652724</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 February 2021, at 13:52.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PipeWire&amp;oldid=654645">https://wiki.archlinux.org/index.php?title=PipeWire&amp;oldid=654645</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 19:12.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

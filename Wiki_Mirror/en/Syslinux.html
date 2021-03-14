@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -342,14 +343,13 @@ DEFAULT arch
 
 LABEL arch
 	LINUX ../vmlinuz-linux
-	APPEND root=/dev/sda2 rw
+	APPEND root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw
 	INITRD ../initramfs-linux.img
 
 LABEL archfallback
 	LINUX ../vmlinuz-linux
-	APPEND root=/dev/sda2 rw
-	INITRD ../initramfs-linux-fallback.img
-</pre>
+	APPEND root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw
+	INITRD ../initramfs-linux-fallback.img</pre>
 <h4><span class="mw-headline" id="Text_boot_menu">Text boot menu</span></h4>
 <p>Syslinux also allows you to use a boot menu. To use it, copy the <code>menu</code> and <code>libutil</code> modules to your Syslinux directory:
 </p>
@@ -371,15 +371,14 @@ DEFAULT arch
 LABEL arch
 	MENU LABEL Arch Linux
 	LINUX ../vmlinuz-linux
-	APPEND root=/dev/sda2 rw
+	APPEND root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw
 	INITRD ../initramfs-linux.img
 
 LABEL archfallback
 	MENU LABEL Arch Linux Fallback
 	LINUX ../vmlinuz-linux
-	APPEND root=/dev/sda2 rw
-	INITRD ../initramfs-linux-fallback.img
-</pre>
+	APPEND root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw
+	INITRD ../initramfs-linux-fallback.img</pre>
 <p>For more details about the menu system, see <a rel="nofollow" class="external text" href="https://wiki.syslinux.org/wiki/index.php/Menu">the Syslinux wiki</a>.
 </p>
 <h4><span class="mw-headline" id="Graphical_boot_menu">Graphical boot menu</span></h4>
@@ -414,7 +413,7 @@ MENU CMDLINEROW 11
 MENU HELPMSGROW 16
 MENU HELPMSGENDROW 29
 
-# Refer to https://wiki.syslinux.org/wiki/index.php/Comboot/menu.c32
+# Refer to <a rel="nofollow" class="external free" href="https://wiki.syslinux.org/wiki/index.php/Comboot/menu.c32">https://wiki.syslinux.org/wiki/index.php/Comboot/menu.c32</a>
 
 MENU COLOR border       30;44   #40ffffff #a0000000 std
 MENU COLOR title        1;36;44 #9033ccff #a0000000 std
@@ -430,16 +429,15 @@ MENU COLOR tabmsg       31;40   #30ffffff #00000000 std
 LABEL arch
 	MENU LABEL Arch Linux
 	LINUX ../vmlinuz-linux
-	APPEND root=/dev/sda2 rw
+	APPEND root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw
 	INITRD ../initramfs-linux.img
 
 
 LABEL archfallback
 	MENU LABEL Arch Linux Fallback
 	LINUX ../vmlinuz-linux
-	APPEND root=/dev/sda2 rw
-	INITRD ../initramfs-linux-fallback.img
-</pre>
+	APPEND root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw
+	INITRD ../initramfs-linux-fallback.img</pre>
 <p>Since Syslinux 3.84, <code>vesamenu.c32</code> supports the <code>MENU RESOLUTION $WIDTH $HEIGHT</code> directive.
 To use it, insert <code>MENU RESOLUTION 1440 900</code> into your config for a 1440x900 resolution.
 However, the background picture has to have exactly the right resolution, as Syslinux will otherwise refuse to load the menu.
@@ -463,29 +461,19 @@ for each <code>LABEL</code> entry, a maximum of one <a rel="nofollow" class="ext
 </p>
 <p>It is recommended to make the following changes for the "fallback" entry as well.
 </p>
-<p><b>In the simplest case</b>, the partition name in the <code>root</code> parameter needs to be replaced. Change <code>/dev/sda2</code> to point to the correct root partition.
+<p><b>In the simplest case</b>, the value of the <code>root</code> parameter needs to be replaced; see <a href="../en/Persistent_block_device_naming.html" title="Persistent block device naming">Persistent block device naming</a> for supported methods.
 </p>
-<pre>APPEND root=/dev/sda2
+<pre> APPEND root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw
 </pre>
-<p><b>If you want to use <a href="../en/Persistent_block_device_naming.html#by-uuid" class="mw-redirect" title="UUID">UUID</a></b> for <a href="../en/Persistent_block_device_naming.html" title="Persistent block device naming">persistent block device naming</a> change the <code>APPEND</code> line as follows, substituting <code>1234</code> with the <code>UUID</code> of your root partition:
+<p>Change <code>root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i></code> to point to the correct root volume.
 </p>
-<pre>APPEND root=UUID=<i>1234</i> rw
-</pre>
 <p><b>If you use <a href="../en/Dm-crypt.html" title="Dm-crypt">dm-crypt</a> encryption</b> change the <code>APPEND</code> line to use your encrypted volume:
 </p>
-<pre>APPEND root=/dev/mapper/<i>name</i> cryptdevice=/dev/sda2:<i>name</i> rw
+<pre>APPEND root=/dev/mapper/<i>name</i> cryptdevice=UUID=<i>YYYYYYYY-YYYY-YYYY-YYYY-YYYYYYYYYYYY</i>:<i>name</i> rw
 </pre>
-<p><b>If you are using software</b> <a href="https://en.wikipedia.org/wiki/RAID" class="extiw" title="wikipedia:RAID">RAID</a> using <a rel="nofollow" class="external text" href="http://neil.brown.name/blog/mdadm">mdadm</a>, change the <code>APPEND</code> line to accommodate your RAID arrays. As an example the following accommodates three RAID 1 arrays and sets the appropriate one as root:
+<p><b>If booting a <a href="../en/Btrfs.html" title="Btrfs">btrfs</a> subvolume</b>, amend the <code>APPEND</code> line with <code>rootflags=subvol=&lt;root subvolume&gt;</code>. For example, where <code>/dev/disk/by-uuid/<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i></code> has been mounted as a btrfs subvolume called 'ROOT' (e.g. <code>mount -o noatime,subvol=ROOT /dev/disk/by-uuid/<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> /mnt</code>), then the <code>APPEND</code> line would need to be modified as follows:
 </p>
-<pre>APPEND root=/dev/md1 rw md=0,/dev/sda2,/dev/sdb2 md=1,/dev/sda3,/dev/sdb3 md=2,/dev/sda4,/dev/sdb4
-</pre>
-<p>If booting from a software raid partition fails using the kernel device node method above an alternative, a more reliable, way is to use partition labels:
-</p>
-<pre>APPEND root=LABEL=<i>THEROOTPARTITIONLABEL</i> rw
-</pre>
-<p><b>If booting a <a href="../en/Btrfs.html" title="Btrfs">btrfs</a> subvolume</b>, amend the <code>APPEND</code> line with <code>rootflags=subvol=&lt;root subvolume&gt;</code>. For example, where <code>/dev/sda2</code> has been mounted as a btrfs subvolume called 'ROOT' (e.g. <code>mount -o noatime,subvol=ROOT /dev/sda2 /mnt</code>), then the <code>APPEND</code> line would need to be modified as follows:
-</p>
-<pre>APPEND root=/dev/sda2 rw rootflags=subvol=ROOT
+<pre>APPEND root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw rootflags=subvol=ROOT
 </pre>
 <p>A failure to do so will otherwise result in the following error message: <code>ERROR: Root device mounted successfully, but /sbin/init does not exist.</code>
 </p>
@@ -608,12 +596,11 @@ UI menu.c32
 LABEL OtherLinux
 	LINUX /boot/vmlinuz-linux
 	INITRD /boot/initramfs-linux.img
-	APPEND root=/dev/sda3 rw quiet
+	APPEND root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw quiet
 
 LABEL MAIN
 	COM32 chain.c32
-	APPEND hd0 0
-</pre>
+	APPEND hd0 0</pre>
 <p>And then add an entry to your main syslinux.cfg 
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/boot/syslinux/syslinux.cfg</pre>
@@ -757,7 +744,7 @@ One potential reason could be a change in file system tools or in a file system 
 </pre>
 <p>If you get an error that the configuration file could not be loaded, you can pass your needed boot parameters, e.g.:
 </p>
-<pre>boot: ../vmlinuz-linux root=/dev/sda2 rw initrd=../initramfs-linux.img
+<pre>boot: ../vmlinuz-linux root=UUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw initrd=../initramfs-linux.img
 </pre>
 <p>If you do not have access to <code>boot:</code> in <a href="../en/Tmpfs.html" class="mw-redirect" title="Ramdisk">ramfs</a>, and therefore temporarily unable to boot the kernel again,
 </p>
@@ -833,7 +820,7 @@ One potential reason could be a change in file system tools or in a file system 
 </p>
 <p>If you have a custom resolution and a <code>vesamenu</code> with early modesetting, try to append the following in <code>syslinux.cfg</code> to remove the white block and continue in graphics mode:
 </p>
-<pre>APPEND root=/dev/sda6 rw 5 <b>vga=current</b> quiet splash
+<pre>APPEND root=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw 5 <b>vga=current</b> quiet splash
 </pre>
 <h3>
 <span id="Chainloading_Windows_does_not_work.2C_when_it_is_installed_on_another_drive"></span><span class="mw-headline" id="Chainloading_Windows_does_not_work,_when_it_is_installed_on_another_drive">Chainloading Windows does not work, when it is installed on another drive</span>
@@ -899,8 +886,8 @@ extlinux: path /boot/syslinux doesn't match device /dev/sda1
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Syslinux&amp;oldid=637869">https://wiki.archlinux.org/index.php?title=Syslinux&amp;oldid=637869</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 October 2020, at 18:13.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Syslinux&amp;oldid=653492">https://wiki.archlinux.org/index.php?title=Syslinux&amp;oldid=653492</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 February 2021, at 08:55.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

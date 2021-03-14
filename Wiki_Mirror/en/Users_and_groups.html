@@ -41,6 +41,7 @@
 <li><a href="../en/Polkit.html" title="Polkit">Polkit</a></li>
 <li><a href="../en/File_permissions_and_attributes.html" title="File permissions and attributes">File permissions and attributes</a></li>
 <li><a href="../en/Systemd-homed.html" title="Systemd-homed">systemd-homed</a></li>
+<li><a href="../en/Reset_lost_root_password.html" title="Reset lost root password">Reset lost root password</a></li>
 </ul>
 </div>
 <p>Users and groups are used on GNU/Linux for <a href="https://en.wikipedia.org/wiki/access_control#Computer_security" class="extiw" title="wikipedia:access control">access control</a>—that is, to control access to the system's files, directories, and peripherals. Linux offers relatively simple/coarse access control mechanisms by default. For more advanced options, see <a href="../en/Access_Control_Lists.html" class="mw-redirect" title="ACL">ACL</a>, <a href="../en/Capabilities.html" title="Capabilities">Capabilities</a> and <a href="../en/PAM.html#Configuration_How-Tos" title="PAM">PAM#Configuration How-Tos</a>.
@@ -147,11 +148,6 @@ drwxrwx--- 1 root vboxsf 16384 Jan 29 11:02 sf_Shared
 <p>See <span class="plainlinks archwiki-template-man" title="$ man 1 chown"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/chown.1">chown(1)</a></span>, <span class="plainlinks archwiki-template-man" title="$ man 1 chmod"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/chmod.1">chmod(1)</a></span>, and <a rel="nofollow" class="external text" href="http://www.linux.com/tutorials/understanding-linux-file-permissions">Linux file permissions</a> for additional detail.
 </p>
 <h2><span class="mw-headline" id="Shadow">Shadow</span></h2>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> Mention <code>shadow.timer</code> and <code>shadow.service</code>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Users_and_groups">Talk:Users and groups#</a>)</div>
-</div>
 <p>The user, group and password management tools on Arch Linux come from the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=shadow">shadow</a></span> package, which is a dependency of the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span> <a href="../en/Meta_package_and_package_group.html#Difference_between_meta_package_and_package_group" class="mw-redirect" title="Meta package">meta package</a>.
 </p>
 <h2><span class="mw-headline" id="File_list">File list</span></h2>
@@ -354,9 +350,9 @@ drwxrwx--- 1 root vboxsf 16384 Jan 29 11:02 sf_Shared
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> Arch Linux defaults of the files are created as <i>.pacnew</i> files by new releases of the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=filesystem">filesystem</a></span> package. Unless Pacman outputs related messages for action, these <i>.pacnew</i> files can, and should, be disregarded/removed. New required default users and groups are added or re-added as needed by <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-sysusers"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-sysusers.8">systemd-sysusers(8)</a></span> or the package install script.</div>
 <h2><span class="mw-headline" id="Automatic_integrity_checks">Automatic integrity checks</span></h2>
-<p>Instead of running <code>pwck</code> manually, the systemd <code>shadow.timer</code> service, which is part of, and is enabled by, installation of the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=shadow">shadow</a></span> package, will run the <code>pwck</code> check on both groups and users on a daily basis.
+<p>Instead of running <code>pwck</code>/<code>grpck</code> manually, the <a href="../en/Systemd/Timers.html" class="mw-redirect" title="Systemd timer">systemd timer</a> <code>shadow.timer</code>, which is part of, and is enabled by, installation of the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=shadow">shadow</a></span> package, will start <code>shadow.service</code> daily. <code>shadow.service</code> will run <span class="plainlinks archwiki-template-man" title="$ man 8 pwck"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/pwck.8">pwck(8)</a></span> and <span class="plainlinks archwiki-template-man" title="$ man 8 grpck"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/grpck.8">grpck(8)</a></span> to verify the integrity of both password and group files.
 </p>
-<p>If discrepancies are reported, group can be edited with the <code>vigr</code> command and users with <code>vipw</code>. This provides an extra margin of protection in that these commands lock the databases for editing. Note that the default text editor is vi, but an alternative editor will be used if the <code>EDITOR</code> <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a> is set, then that editor will be used instead.
+<p>If discrepancies are reported, group can be edited with the <span class="plainlinks archwiki-template-man" title="$ man 8 vigr"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/vigr.8">vigr(8)</a></span> command and users with <span class="plainlinks archwiki-template-man" title="$ man 8 vipw"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/vipw.8">vipw(8)</a></span>. This provides an extra margin of protection in that these commands lock the databases for editing. Note that the default text editor is vi, but an alternative editor will be used if the <code>EDITOR</code> <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a> is set, then that editor will be used instead.
 </p>
 <h2><span class="mw-headline" id="Group_management">Group management</span></h2>
 <p><code>/etc/group</code> is the file that defines the groups on the system (see <span class="plainlinks archwiki-template-man" title="$ man 5 group"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/group.5">group(5)</a></span> for details). There is also its companion <code>gshadow</code> which is rarely used. Its details are at <span class="plainlinks archwiki-template-man" title="$ man 5 gshadow"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/gshadow.5">gshadow(5)</a></span>.
@@ -743,7 +739,6 @@ drwxrwx--- 1 root vboxsf 16384 Jan 29 11:02 sf_Shared
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Security.html" title="Category:Security">Security</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
@@ -754,8 +749,8 @@ drwxrwx--- 1 root vboxsf 16384 Jan 29 11:02 sf_Shared
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Users_and_groups&amp;oldid=652461">https://wiki.archlinux.org/index.php?title=Users_and_groups&amp;oldid=652461</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 February 2021, at 05:31.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Users_and_groups&amp;oldid=653379">https://wiki.archlinux.org/index.php?title=Users_and_groups&amp;oldid=653379</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 25 February 2021, at 10:36.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

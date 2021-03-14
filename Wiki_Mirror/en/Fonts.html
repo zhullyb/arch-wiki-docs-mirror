@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -185,13 +186,49 @@
 <p>The family name of a font file can be aquired with the use of <code>fc-query</code> for example: <code>fc-query -f '%{family[0]}\n' /path/to/file</code>. The formatting is described in <span class="plainlinks archwiki-template-man" title="$ man 3 FcPatternFormat"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/FcPatternFormat.3">FcPatternFormat(3)</a></span>.
 </p>
 <h3><span class="mw-headline" id="Manual_installation">Manual installation</span></h3>
-<p>The recommended way of adding fonts that are not in the repositories to your system is described in <a href="#Creating_a_package">#Creating a package</a>. This gives pacman the ability to remove or update them at a later time. Fonts can alternately be installed manually as well.
+<p>The recommended way of adding fonts that are not in the repositories to your system is described in <a href="#Creating_a_package">#Creating a package</a>. This gives pacman the ability to remove or update them at a later time.
 </p>
-<p>To install fonts system-wide (available for all users), move the folder to the <code>/usr/share/fonts</code> directory. The files need to be readable by every user, use <a href="../en/File_permissions_and_attributes.html#Changing_permissions" class="mw-redirect" title="Chmod">chmod</a> to set the correct permissions (i.e. at least <code>0444</code> for files and <code>0555</code> for directories). To install fonts for only a single user, use <code>~/.local/share/fonts/</code> (<code>~/.fonts/</code> is now deprecated).
+<p>Alternatively, fonts can be installed manually:
 </p>
-<p>For Xserver to load fonts directly (as opposed to the use of a <i>font server</i>) the directory for your newly added font must be added with a FontPath entry. This entry is located in the <i>Files</i> section <a href="../en/Xorg.html#Configuration" title="Xorg">of your Xorg configuration file</a> (e.g. <code>/etc/X11/xorg.conf</code> or <code>/etc/xorg.conf</code>). See <a href="#Older_applications">#Older applications</a> for more detail.
+<ul>
+<li>For a single user, install fonts to <code>~/.local/share/fonts/</code>.
+<ul>
+<li>In many cases this suffices, unless you run graphical applications as other users.</li>
+<li>In the past <code>~/.fonts/</code> was used, but is now deprecated.</li>
+</ul>
+</li>
+<li>For system-wide (all users) installation, place your fonts under <code>/usr/local/share/fonts/</code>.
+<ul>
+<li>You may need to create the directory first; <code>mkdir -p /usr/local/share/fonts</code>.</li>
+<li>
+<code>/usr/share/fonts/</code> is under the purview of the package manager, and shouldn't be modified manually.</li>
+</ul>
+</li>
+</ul>
+<p>The creation of a subdirectory structure is up to the user, and varies among Linux distributions. For clarity, it's good to keep each font in its own directory. Fontconfig will search its default paths recursively, ensuring nested files get picked up.
 </p>
-<p>Then update the fontconfig font cache: (usually unnecessary as software using the fontconfig library does this)
+<p>An example structure might be:
+</p>
+<pre>/usr/local/share/fonts/
+├── otf
+│   └── SourceCodeVariable
+│       ├── SourceCodeVariable-Italic.otf
+│       └── SourceCodeVariable-Roman.otf
+└── ttf
+    ├── AnonymousPro
+    │   ├── Anonymous-Pro-B.ttf
+    │   ├── Anonymous-Pro-I.ttf
+    │   └── Anonymous-Pro.ttf
+    └── CascadiaCode
+        ├── CascadiaCode-Bold.ttf
+        ├── CascadiaCode-Light.ttf
+        └── CascadiaCode-Regular.ttf
+</pre>
+<p>The font files need to have sufficient read permissions for all users, i.e. at least <a href="../en/File_permissions_and_attributes.html#Changing_permissions" class="mw-redirect" title="Chmod">chmod</a> <code>444</code> for files, and <code>555</code> for directories.
+</p>
+<p>For the Xserver to load fonts directly (as opposed to the use of a <i>font server</i>), the directory for your newly added font must be added with a FontPath entry. This entry is located in the <i>Files</i> section of your <a href="../en/Xorg.html#Configuration" title="Xorg">Xorg configuration file</a> (e.g. <code>/etc/X11/xorg.conf</code> or <code>/etc/xorg.conf</code>). See <a href="#Older_applications">#Older applications</a> for more detail.
+</p>
+<p>Finally, update the fontconfig cache (usually unnecessary as software using the fontconfig library does this):
 </p>
 <pre>$ fc-cache
 </pre>
@@ -674,7 +711,7 @@ fc-cache: succeeded
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=noto-fonts-emoji">noto-fonts-emoji</a></span> — Google's open-source Emoji 13.1.</li>
 <li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ttf-joypixels">ttf-joypixels</a></span> — EmojiOne creator's proprietary Emoji 13.0.</li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ttf-joypixels">ttf-joypixels</a></span> — EmojiOne creator's proprietary Emoji 13.1.</li>
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ttf-twemoji/">ttf-twemoji</a></span><sup><small>AUR</small></sup> — Twitter's open-source Emoji 13.0.</li>
 </ul>
@@ -682,7 +719,7 @@ fc-cache: succeeded
 </p>
 <ul>
 <li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/otf-openmoji/">otf-openmoji</a></span><sup><small>AUR</small></sup> — German University of Design in Schwäbisch Gmünd open-source Emoji 12.1.</li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/otf-openmoji/">otf-openmoji</a></span><sup><small>AUR</small></sup> — German University of Design in Schwäbisch Gmünd open-source Emoji 13.0.</li>
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ttf-twemoji-color/">ttf-twemoji-color</a></span><sup><small>AUR</small></sup> — Twitter's open-source Emoji 13.0.</li>
 </ul>
@@ -809,8 +846,8 @@ If you want a particular Chinese font to be selected after your favorite Serif f
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fonts&amp;oldid=648175">https://wiki.archlinux.org/index.php?title=Fonts&amp;oldid=648175</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 January 2021, at 10:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fonts&amp;oldid=652854">https://wiki.archlinux.org/index.php?title=Fonts&amp;oldid=652854</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 20 February 2021, at 11:30.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -558,12 +558,11 @@ or
 </p>
 <p>You can replace <code>PT Serif</code>/<code>Roboto</code>/<code>Cascadia Code PL</code> to your favorite <code>serif</code>/<code>sans-serif</code>/<code>monospace</code> fonts.
 </p>
-<p>Also, replace every <code>weak</code> binding font to your language, It's will be used when the <code>lang</code> attribute is not given.
-</p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.config/fontconfig/fonts.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">&lt;?xml version="1.0"?&gt;
 &lt;!DOCTYPE fontconfig SYSTEM "fonts.dtd"&gt;
 &lt;fontconfig&gt;
+  &lt;!-- Default serif font --&gt;
   &lt;alias binding="strong"&gt;
     &lt;family&gt;serif&lt;/family&gt;
     &lt;prefer&gt;
@@ -571,6 +570,7 @@ or
     &lt;/prefer&gt;
   &lt;/alias&gt;
 
+  &lt;!-- Default sans-serif font --&gt;
   &lt;alias binding="strong"&gt;
     &lt;family&gt;sans-serif&lt;/family&gt;
     &lt;prefer&gt;
@@ -578,6 +578,7 @@ or
     &lt;/prefer&gt;
   &lt;/alias&gt;
 
+  &lt;!-- Default monospace font --&gt;
   &lt;alias binding="strong"&gt;
     &lt;family&gt;monospace&lt;/family&gt;
     &lt;prefer&gt;
@@ -585,7 +586,29 @@ or
     &lt;/prefer&gt;
   &lt;/alias&gt;
 
+  &lt;!-- Default system-ui font --&gt;
+  &lt;alias binding="strong"&gt;
+    &lt;family&gt;system-ui&lt;/family&gt;
+    &lt;prefer&gt;
+      &lt;family&gt;Roboto&lt;/family&gt;
+    &lt;/prefer&gt;
+  &lt;/alias&gt;
+
   &lt;!-- Serif CJK --&gt;
+
+  &lt;!-- Default serif when the "lang" attribute is not given --&gt;
+  &lt;!-- You can change this font to the language variant you want --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Serif CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;!-- Japanese --&gt;
+  &lt;!-- "lang=ja" or "lang=ja-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;ja&lt;/string&gt;
@@ -598,6 +621,8 @@ or
     &lt;/edit&gt;
   &lt;/match&gt;
 
+  &lt;!-- Korean --&gt;
+  &lt;!-- "lang=ko" or "lang=ko-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;ko&lt;/string&gt;
@@ -610,6 +635,45 @@ or
     &lt;/edit&gt;
   &lt;/match&gt;
 
+  &lt;!-- Chinese --&gt;
+  &lt;!-- "lang=zh" or "lang=zh-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Serif CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-hans" or "lang=zh-hans-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hans&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Serif CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-hant" or "lang=zh-hant-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hant&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Serif CJK TC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- Compatible --&gt;
+  &lt;!-- "lang=zh-cn" or "lang=zh-cn-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-cn&lt;/string&gt;
@@ -621,7 +685,7 @@ or
       &lt;string&gt;Noto Serif CJK SC&lt;/string&gt;
     &lt;/edit&gt;
   &lt;/match&gt;
-
+  &lt;!-- "lang=zh-tw" or "lang=zh-tw-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-tw&lt;/string&gt;
@@ -634,40 +698,21 @@ or
     &lt;/edit&gt;
   &lt;/match&gt;
 
-  &lt;match target="pattern"&gt;
-    &lt;test name="lang" compare="contains"&gt;
-      &lt;string&gt;zh-hans&lt;/string&gt;
-    &lt;/test&gt;
-    &lt;test name="family"&gt;
-      &lt;string&gt;serif&lt;/string&gt;
-    &lt;/test&gt;
-    &lt;edit name="family" mode="append" binding="strong"&gt;
-      &lt;string&gt;Noto Serif CJK SC&lt;/string&gt;
-    &lt;/edit&gt;
-  &lt;/match&gt;
-
-  &lt;match target="pattern"&gt;
-    &lt;test name="lang" compare="contains"&gt;
-      &lt;string&gt;zh-hant&lt;/string&gt;
-    &lt;/test&gt;
-    &lt;test name="family"&gt;
-      &lt;string&gt;serif&lt;/string&gt;
-    &lt;/test&gt;
-    &lt;edit name="family" mode="append" binding="strong"&gt;
-      &lt;string&gt;Noto Serif CJK TC&lt;/string&gt;
-    &lt;/edit&gt;
-  &lt;/match&gt;
-
-  &lt;match target="pattern"&gt;
-    &lt;test name="family"&gt;
-      &lt;string&gt;serif&lt;/string&gt;
-    &lt;/test&gt;
-    &lt;edit name="family" mode="append" binding="weak"&gt;
-      &lt;string&gt;Noto Serif CJK SC&lt;/string&gt;
-    &lt;/edit&gt;
-  &lt;/match&gt;
-
   &lt;!-- Sans CJK --&gt;
+
+  &lt;!-- Default sans-serif when the "lang" attribute is not given --&gt;
+  &lt;!-- You can change this font to the language variant you want --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;!-- Japanese --&gt;
+  &lt;!-- "lang=ja" or "lang=ja-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;ja&lt;/string&gt;
@@ -680,6 +725,8 @@ or
     &lt;/edit&gt;
   &lt;/match&gt;
 
+  &lt;!-- Korean --&gt;
+  &lt;!-- "lang=ko" or "lang=ko-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;ko&lt;/string&gt;
@@ -692,6 +739,57 @@ or
     &lt;/edit&gt;
   &lt;/match&gt;
 
+  &lt;!-- Chinese --&gt;
+  &lt;!-- "lang=zh" or "lang=zh-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-hans" or "lang=zh-hans-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hans&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-hant" or "lang=zh-hant-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hant&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK TC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-hant-hk" or "lang=zh-hant-hk-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hant-hk&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;sans-serif&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK HK&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- Compatible --&gt;
+  &lt;!-- "lang=zh-cn" or "lang=zh-cn-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-cn&lt;/string&gt;
@@ -703,7 +801,7 @@ or
       &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
     &lt;/edit&gt;
   &lt;/match&gt;
-
+  &lt;!-- "lang=zh-tw" or "lang=zh-tw-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-tw&lt;/string&gt;
@@ -715,7 +813,7 @@ or
       &lt;string&gt;Noto Sans CJK TC&lt;/string&gt;
     &lt;/edit&gt;
   &lt;/match&gt;
-
+  &lt;!-- "lang=zh-hk" or "lang=zh-hk-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-hk&lt;/string&gt;
@@ -728,52 +826,21 @@ or
     &lt;/edit&gt;
   &lt;/match&gt;
 
+  &lt;!-- Mono CJK --&gt;
+
+  &lt;!-- Default monospace when the "lang" attribute is not given --&gt;
+  &lt;!-- You can change this font to the language variant you want --&gt;
   &lt;match target="pattern"&gt;
-    &lt;test name="lang" compare="contains"&gt;
-      &lt;string&gt;zh-hans&lt;/string&gt;
-    &lt;/test&gt;
     &lt;test name="family"&gt;
-      &lt;string&gt;sans-serif&lt;/string&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
     &lt;/test&gt;
     &lt;edit name="family" mode="append" binding="strong"&gt;
-      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
+      &lt;string&gt;Noto Sans Mono CJK SC&lt;/string&gt;
     &lt;/edit&gt;
   &lt;/match&gt;
 
-  &lt;match target="pattern"&gt;
-    &lt;test name="lang" compare="contains"&gt;
-      &lt;string&gt;zh-hant&lt;/string&gt;
-    &lt;/test&gt;
-    &lt;test name="family"&gt;
-      &lt;string&gt;sans-serif&lt;/string&gt;
-    &lt;/test&gt;
-    &lt;edit name="family" mode="append" binding="strong"&gt;
-      &lt;string&gt;Noto Sans CJK TC&lt;/string&gt;
-    &lt;/edit&gt;
-  &lt;/match&gt;
-
-  &lt;match target="pattern"&gt;
-    &lt;test name="lang"&gt;
-      &lt;string&gt;zh-hant-hk&lt;/string&gt;
-    &lt;/test&gt;
-    &lt;test name="family"&gt;
-      &lt;string&gt;sans-serif&lt;/string&gt;
-    &lt;/test&gt;
-    &lt;edit name="family" mode="append" binding="strong"&gt;
-      &lt;string&gt;Noto Sans CJK HK&lt;/string&gt;
-    &lt;/edit&gt;
-  &lt;/match&gt;
-
-  &lt;match target="pattern"&gt;
-    &lt;test name="family"&gt;
-      &lt;string&gt;sans-serif&lt;/string&gt;
-    &lt;/test&gt;
-    &lt;edit name="family" mode="append" binding="weak"&gt;
-      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
-    &lt;/edit&gt;
-  &lt;/match&gt;
-
-  &lt;!-- Sans Mono CJK --&gt;
+  &lt;!-- Japanese --&gt;
+  &lt;!-- "lang=ja" or "lang=ja-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;ja&lt;/string&gt;
@@ -786,6 +853,8 @@ or
     &lt;/edit&gt;
   &lt;/match&gt;
 
+  &lt;!-- Korean --&gt;
+  &lt;!-- "lang=ko" or "lang=ko-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;ko&lt;/string&gt;
@@ -798,6 +867,57 @@ or
     &lt;/edit&gt;
   &lt;/match&gt;
 
+  &lt;!-- Chinese --&gt;
+  &lt;!-- "lang=zh" or "lang=zh-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-hans" or "lang=zh-hans-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hans&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-hant" or "lang=zh-hant-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hant&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK TC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-hant-hk" or "lang=zh-hant-hk-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hant-hk&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans Mono CJK HK&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- Compatible --&gt;
+  &lt;!-- "lang=zh-cn" or "lang=zh-cn-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-cn&lt;/string&gt;
@@ -809,7 +929,7 @@ or
       &lt;string&gt;Noto Sans Mono CJK SC&lt;/string&gt;
     &lt;/edit&gt;
   &lt;/match&gt;
-
+  &lt;!-- "lang=zh-tw" or "lang=zh-tw-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-tw&lt;/string&gt;
@@ -821,7 +941,7 @@ or
       &lt;string&gt;Noto Sans Mono CJK TC&lt;/string&gt;
     &lt;/edit&gt;
   &lt;/match&gt;
-
+  &lt;!-- "lang=zh-hk" or "lang=zh-hk-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-hk&lt;/string&gt;
@@ -834,48 +954,131 @@ or
     &lt;/edit&gt;
   &lt;/match&gt;
 
+  &lt;!-- System UI CJK --&gt;
+
+  &lt;!-- Default system-ui when the "lang" attribute is not given --&gt;
+  &lt;!-- You can change this font to the language variant you want --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;system-ui&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;!-- Japanese --&gt;
+  &lt;!-- "lang=ja" or "lang=ja-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;ja&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;system-ui&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK JP&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;!-- Korean --&gt;
+  &lt;!-- "lang=ko" or "lang=ko-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;ko&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;system-ui&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK KR&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+
+  &lt;!-- Chinese --&gt;
+  &lt;!-- "lang=zh" or "lang=zh-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;system-ui&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-hans" or "lang=zh-hans-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-hans&lt;/string&gt;
     &lt;/test&gt;
     &lt;test name="family"&gt;
-      &lt;string&gt;monospace&lt;/string&gt;
+      &lt;string&gt;system-ui&lt;/string&gt;
     &lt;/test&gt;
     &lt;edit name="family" mode="append" binding="strong"&gt;
-      &lt;string&gt;Noto Sans Mono CJK SC&lt;/string&gt;
+      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
     &lt;/edit&gt;
   &lt;/match&gt;
-
+  &lt;!-- "lang=zh-hant" or "lang=zh-hant-*" --&gt;
   &lt;match target="pattern"&gt;
     &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-hant&lt;/string&gt;
     &lt;/test&gt;
     &lt;test name="family"&gt;
-      &lt;string&gt;monospace&lt;/string&gt;
+      &lt;string&gt;system-ui&lt;/string&gt;
     &lt;/test&gt;
     &lt;edit name="family" mode="append" binding="strong"&gt;
-      &lt;string&gt;Noto Sans Mono CJK TC&lt;/string&gt;
+      &lt;string&gt;Noto Sans CJK TC&lt;/string&gt;
     &lt;/edit&gt;
   &lt;/match&gt;
-
+  &lt;!-- "lang=zh-hant-hk" or "lang=zh-hant-hk-*" --&gt;
   &lt;match target="pattern"&gt;
-    &lt;test name="lang"&gt;
+    &lt;test name="lang" compare="contains"&gt;
       &lt;string&gt;zh-hant-hk&lt;/string&gt;
     &lt;/test&gt;
     &lt;test name="family"&gt;
-      &lt;string&gt;monospace&lt;/string&gt;
+      &lt;string&gt;system-ui&lt;/string&gt;
     &lt;/test&gt;
     &lt;edit name="family" mode="append" binding="strong"&gt;
-      &lt;string&gt;Noto Sans Mono CJK HK&lt;/string&gt;
+      &lt;string&gt;Noto Sans CJK HK&lt;/string&gt;
     &lt;/edit&gt;
   &lt;/match&gt;
-
+  &lt;!-- Compatible --&gt;
+  &lt;!-- "lang=zh-cn" or "lang=zh-cn-*" --&gt;
   &lt;match target="pattern"&gt;
-    &lt;test name="family"&gt;
-      &lt;string&gt;monospace&lt;/string&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-cn&lt;/string&gt;
     &lt;/test&gt;
-    &lt;edit name="family" mode="append" binding="weak"&gt;
-      &lt;string&gt;Noto Sans Mono CJK SC&lt;/string&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;system-ui&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK SC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-tw" or "lang=zh-tw-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-tw&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;system-ui&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK TC&lt;/string&gt;
+    &lt;/edit&gt;
+  &lt;/match&gt;
+  &lt;!-- "lang=zh-hk" or "lang=zh-hk-*" --&gt;
+  &lt;match target="pattern"&gt;
+    &lt;test name="lang" compare="contains"&gt;
+      &lt;string&gt;zh-hk&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;test name="family"&gt;
+      &lt;string&gt;system-ui&lt;/string&gt;
+    &lt;/test&gt;
+    &lt;edit name="family" mode="append" binding="strong"&gt;
+      &lt;string&gt;Noto Sans CJK HK&lt;/string&gt;
     &lt;/edit&gt;
   &lt;/match&gt;
 &lt;/fontconfig&gt;
@@ -919,8 +1122,8 @@ This shows how to change the default dotted zero to a slashed zero for the monos
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Font_configuration/Examples&amp;oldid=652515">https://wiki.archlinux.org/index.php?title=Font_configuration/Examples&amp;oldid=652515</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 February 2021, at 19:05.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Font_configuration/Examples&amp;oldid=654173">https://wiki.archlinux.org/index.php?title=Font_configuration/Examples&amp;oldid=654173</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 March 2021, at 17:05.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

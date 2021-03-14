@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -78,32 +79,8 @@
 </td>
 </tr>
 <tr>
-<td>Power management</td>
-<td></td>
-<td data-sort-value="5" style="background: #afa; color: inherit; vertical-align: middle; text-align: center;">Yes
-</td>
-</tr>
-<tr>
-<td>USB Ports</td>
-<td><code>8086:9ded</code></td>
-<td data-sort-value="5" style="background: #afa; color: inherit; vertical-align: middle; text-align: center;">Yes
-</td>
-</tr>
-<tr>
 <td>SD-Card slot</td>
 <td><code>8086:9dc4</code></td>
-<td data-sort-value="5" style="background: #afa; color: inherit; vertical-align: middle; text-align: center;">Yes
-</td>
-</tr>
-<tr>
-<td>HDMI</td>
-<td></td>
-<td data-sort-value="5" style="background: #afa; color: inherit; vertical-align: middle; text-align: center;">Yes
-</td>
-</tr>
-<tr>
-<td>VGA</td>
-<td></td>
 <td data-sort-value="5" style="background: #afa; color: inherit; vertical-align: middle; text-align: center;">Yes
 </td>
 </tr>
@@ -184,7 +161,7 @@
 The service manual also contains shortcuts which are needed to trigger certain features, such as the boot menu and settings (<code>F12</code>).
 </p>
 <h2><span class="mw-headline" id="Firmware">Firmware</span></h2>
-<p>fwupd does not support this device yet.
+<p><a href="../en/Fwupd.html" title="Fwupd">fwupd</a> does not support this device yet.
 </p>
 <h3><span class="mw-headline" id="SecureBoot">SecureBoot</span></h3>
 <p>The BIOS accepts <code>.auth</code> files.
@@ -257,9 +234,8 @@ Those files will be created when an error happened.
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
 ExecStart=
 ExecStart=/usr/lib/bluetooth/bluetoothd --plugin=*</pre>
-<p>After suspending, especially when using <a href="#Unmarked_keybinds">#Unmarked keybinds</a>, Bluetooth may stop working. Restart Bluetooth to fix it.
+<p>After suspending, especially when using <a href="#Unmarked_keybinds">#Unmarked keybinds</a>, Bluetooth may stop working. <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">Restart</a> <code>bluetooth.service</code> to fix it.
 </p>
-<pre># systemctl restart bluetooth</pre>
 <h2><span class="mw-headline" id="Power_management">Power management</span></h2>
 <p>After waking up the device from suspend, input lag will occur for approximately 5-10 seconds. Sometimes it will even repeat a key press for up to 32 times but only within this timespan. There is no known fix for this.
 </p>
@@ -280,10 +256,12 @@ ExecStart=/usr/lib/bluetooth/bluetoothd --plugin=*</pre>
 [...]</pre>
 <p>In this case, <code>LNXPWRBN:00</code> (<code>/dev/input/event3</code>) is the "real", physical power button. You can verify this by inhibiting the handling of the power button
 </p>
-<pre># systemd-inhibit --what=handle-power-key sleep 1h</pre>
+<pre># systemd-inhibit --what=handle-power-key sleep 1h
+</pre>
 <p>and recording the events:
 </p>
-<pre># stdbuf -o0 evemu-record /dev/input/event3 &gt; event3</pre>
+<pre># stdbuf -o0 evemu-record /dev/input/event3 &gt; event3
+</pre>
 <p>Pressing the power button should log an event.
 </p>
 <p>The other detected power button seems to be a virtual, firmware-handled button. This power button will be triggered when your device runs out of battery.
@@ -440,7 +418,7 @@ Use this to inhibit the handling of the suspend key.
 </tbody>
 </table>
 <ol>
-<li>The key is visible via <code>xev</code> and similar tools</li>
+<li>The key is visible to <code>xev</code> and similar tools</li>
 <li>The physical key has a symbol on it, which describes its function</li>
 <li>systemd-logind handles this by default</li>
 </ol>
@@ -491,8 +469,8 @@ Use this to inhibit the handling of the suspend key.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dell_Latitude_3500&amp;oldid=649195">https://wiki.archlinux.org/index.php?title=Dell_Latitude_3500&amp;oldid=649195</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 January 2021, at 13:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dell_Latitude_3500&amp;oldid=654271">https://wiki.archlinux.org/index.php?title=Dell_Latitude_3500&amp;oldid=654271</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 March 2021, at 04:37.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

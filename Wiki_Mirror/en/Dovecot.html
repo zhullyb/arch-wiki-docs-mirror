@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -118,8 +119,12 @@
 changed your certificate.
 </p>
 <h3><span class="mw-headline" id="Dovecot_configuration">Dovecot configuration</span></h3>
-<ul><li>Copy the <code>dovecot.conf</code> and <code>conf.d/*</code> configuration files from <code>/usr/share/doc/dovecot/example-config</code> to <code>/etc/dovecot</code>:</li></ul>
-<pre># cp /usr/share/doc/dovecot/example-config/dovecot.conf /etc/dovecot
+<ul>
+<li>Create the dovecot configuration folder <code>/etc/dovecot</code>.</li>
+<li>Copy the <code>dovecot.conf</code> and <code>conf.d/*</code> configuration files from <code>/usr/share/doc/dovecot/example-config</code> to <code>/etc/dovecot</code>:</li>
+</ul>
+<pre># mkdir /etc/dovecot
+# cp /usr/share/doc/dovecot/example-config/dovecot.conf /etc/dovecot/dovecot.conf
 # cp -r /usr/share/doc/dovecot/example-config/conf.d /etc/dovecot
 </pre>
 <p>The default configuration is ok for most systems, but make sure to read through the configuration files to see what options are available.  See the <a rel="nofollow" class="external text" href="https://doc.dovecot.org/configuration_manual/quick_configuration/">quick configuration guide</a> and <a rel="nofollow" class="external text" href="http://wiki2.dovecot.org/#Dovecot_configuration">dovecot configuration</a> for more instructions.
@@ -247,7 +252,7 @@ protocol sieve {
 <h2><span class="mw-headline" id="Full_Text_Search">Full Text Search</span></h2>
 <p>By default dovecot doesn't index the full message content, which will result in slow response times for IMAP SEARCH queries for bigger mailboxes. There's a number of <a rel="nofollow" class="external text" href="https://doc.dovecot.org/configuration_manual/fts/">FTS backends</a> dovecot can be hooked up to.
 </p>
-<p>Dovecot needs a plugin for the chosen search backend. The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=solr">solr</a></span> plugin is included in the Archlinux dovecot package but solr itself is not the easiest to set up. There are AUR packages for <a href="https://en.wikipedia.org/wiki/Xapian" class="extiw" title="wikipedia:Xapian">Xapian</a> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dovecot-fts-xapian/">dovecot-fts-xapian</a></span><sup><small>AUR</small></sup>) and <a href="https://en.wikipedia.org/wiki/Elasticsearch" class="extiw" title="wikipedia:Elasticsearch">Elasticsearch</a> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dovecot-fts-elastic/">dovecot-fts-elastic</a></span><sup><small>AUR</small></sup>).
+<p>Dovecot needs a plugin for the chosen search backend. The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=solr">solr</a></span> plugin is included in the Archlinux dovecot package but solr itself is not the easiest to set up. There are AUR packages for <a href="https://en.wikipedia.org/wiki/Xapian" class="extiw" title="wikipedia:Xapian">Xapian</a> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dovecot-fts-xapian/">dovecot-fts-xapian</a></span><sup><small>AUR</small></sup>) and <a href="https://en.wikipedia.org/wiki/Elasticsearch" class="extiw" title="wikipedia:Elasticsearch">Elasticsearch</a> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dovecot-fts-elastic">dovecot-fts-elastic</a></span>).
 </p>
 <h2><span class="mw-headline" id="Starting_the_server">Starting the server</span></h2>
 <p>Use the standard <a href="../en/Systemd.html" title="Systemd">systemd</a> syntax to control the <code>dovecot.service</code> <a href="../en/Daemons.html" class="mw-redirect" title="Daemon">daemon</a>.
@@ -277,8 +282,8 @@ protocol sieve {
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dovecot&amp;oldid=648386">https://wiki.archlinux.org/index.php?title=Dovecot&amp;oldid=648386</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 6 January 2021, at 22:57.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dovecot&amp;oldid=654554">https://wiki.archlinux.org/index.php?title=Dovecot&amp;oldid=654554</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 07:24.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

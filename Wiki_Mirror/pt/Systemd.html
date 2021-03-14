@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -50,7 +51,7 @@
 <li><a href="../en/Allow_users_to_shutdown.html" title="Allow users to shutdown">Permitir desligamento por usuários</a></li>
 </ul>
 </div>
-<p>De <a rel="nofollow" class="external text" href="https://freedesktop.org/wiki/Software/systemd/">página web do projeto</a>:
+<p>De <a rel="nofollow" class="external text" href="https://systemd.io/">página web do projeto</a>:
 </p>
 <dl><dd>
 <i>Systemd</i> é um sistema e gerenciador de serviços para Linux, compatível com os scripts de inicializações SysV e LS. <i>Systemd</i> fornece recursos de paralelização agressivos, usa socket e ativação <a href="../en/D-Bus.html" title="D-Bus">D-Bus</a> para iniciar serviços, oferece o início de daemons on-demand, mantém o registro de processos usando <a href="../en/Cgroups.html" title="Cgroups">grupos de controle</a> Linux, suporte snapshotting e restauração do estado do sistema, preserva pontos de montagens e automontagens e implementa uma lógica de controle elaborado transacional baseada em dependência de serviço. O <i>systemd</i> oferece suporte scripts de init SysV e LSB e funciona como um substituto para o sysvinit. Outras partes incluem um daemon de registro, utilitários para controlar a configuração básica do sistema como o nome do host, data, local, manter uma lista de usuários logados e executar contêineres e máquinas virtuais, contas do sistema, diretórios e configurações de tempo de execução e daemons para gerenciar configuração de redes simples, sincronização de tempo de rede, encaminhamento de log e resolução de nomes.</dd></dl>
@@ -66,69 +67,82 @@
 <a href="#Uso_b%C3%A1sico_do_systemctl"><span class="tocnumber">1</span> <span class="toctext">Uso básico do systemctl</span></a>
 <ul>
 <li class="toclevel-2 tocsection-2"><a href="#Analisando_o_estado_do_sistema"><span class="tocnumber">1.1</span> <span class="toctext">Analisando o estado do sistema</span></a></li>
-<li class="toclevel-2 tocsection-3"><a href="#Usando_units"><span class="tocnumber">1.2</span> <span class="toctext">Usando units</span></a></li>
-<li class="toclevel-2 tocsection-4"><a href="#Gerenciamento_de_energia"><span class="tocnumber">1.3</span> <span class="toctext">Gerenciamento de energia</span></a></li>
+<li class="toclevel-2 tocsection-3">
+<a href="#Usando_units"><span class="tocnumber">1.2</span> <span class="toctext">Usando units</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#Verificando_status"><span class="tocnumber">1.2.1</span> <span class="toctext">Verificando status</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#Iniciando,_reiniciando,_recarregando"><span class="tocnumber">1.2.2</span> <span class="toctext">Iniciando, reiniciando, recarregando</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#Habilitando"><span class="tocnumber">1.2.3</span> <span class="toctext">Habilitando</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#Mascarando"><span class="tocnumber">1.2.4</span> <span class="toctext">Mascarando</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-5">
+<li class="toclevel-2 tocsection-8"><a href="#Gerenciamento_de_energia"><span class="tocnumber">1.3</span> <span class="toctext">Gerenciamento de energia</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9">
 <a href="#Escrevendo_arquivos_unit"><span class="tocnumber">2</span> <span class="toctext">Escrevendo arquivos unit</span></a>
 <ul>
-<li class="toclevel-2 tocsection-6"><a href="#Manuseando_depend%C3%AAncias"><span class="tocnumber">2.1</span> <span class="toctext">Manuseando dependências</span></a></li>
-<li class="toclevel-2 tocsection-7"><a href="#Tipos_de_servi%C3%A7os"><span class="tocnumber">2.2</span> <span class="toctext">Tipos de serviços</span></a></li>
-<li class="toclevel-2 tocsection-8">
+<li class="toclevel-2 tocsection-10"><a href="#Manuseando_depend%C3%AAncias"><span class="tocnumber">2.1</span> <span class="toctext">Manuseando dependências</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Tipos_de_servi%C3%A7os"><span class="tocnumber">2.2</span> <span class="toctext">Tipos de serviços</span></a></li>
+<li class="toclevel-2 tocsection-12">
 <a href="#Editando_units_fornecidas"><span class="tocnumber">2.3</span> <span class="toctext">Editando units fornecidas</span></a>
 <ul>
-<li class="toclevel-3 tocsection-9"><a href="#Arquivos_unit_de_substitui%C3%A7%C3%A3o"><span class="tocnumber">2.3.1</span> <span class="toctext">Arquivos unit de substituição</span></a></li>
-<li class="toclevel-3 tocsection-10"><a href="#Arquivos_drop-in"><span class="tocnumber">2.3.2</span> <span class="toctext">Arquivos drop-in</span></a></li>
-<li class="toclevel-3 tocsection-11"><a href="#Reverter_para_vers%C3%A3o_do_vendor"><span class="tocnumber">2.3.3</span> <span class="toctext">Reverter para versão do vendor</span></a></li>
-<li class="toclevel-3 tocsection-12"><a href="#Exemplos"><span class="tocnumber">2.3.4</span> <span class="toctext">Exemplos</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#Arquivos_unit_de_substitui%C3%A7%C3%A3o"><span class="tocnumber">2.3.1</span> <span class="toctext">Arquivos unit de substituição</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#Arquivos_drop-in"><span class="tocnumber">2.3.2</span> <span class="toctext">Arquivos drop-in</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#Reverter_para_vers%C3%A3o_do_vendor"><span class="tocnumber">2.3.3</span> <span class="toctext">Reverter para versão do vendor</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#Exemplos"><span class="tocnumber">2.3.4</span> <span class="toctext">Exemplos</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-13">
+<li class="toclevel-1 tocsection-17">
 <a href="#Targets"><span class="tocnumber">3</span> <span class="toctext">Targets</span></a>
 <ul>
-<li class="toclevel-2 tocsection-14"><a href="#Obter_targets_atuais"><span class="tocnumber">3.1</span> <span class="toctext">Obter targets atuais</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#Criar_target_personalizado"><span class="tocnumber">3.2</span> <span class="toctext">Criar target personalizado</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#Mapeamento_entre_n%C3%ADveis_do_SysV_e_targets_do_systemd"><span class="tocnumber">3.3</span> <span class="toctext">Mapeamento entre níveis do SysV e targets do systemd</span></a></li>
-<li class="toclevel-2 tocsection-17"><a href="#Alterar_target_atual"><span class="tocnumber">3.4</span> <span class="toctext">Alterar target atual</span></a></li>
-<li class="toclevel-2 tocsection-18"><a href="#Alterar_target_padr%C3%A3o_para_inicializar"><span class="tocnumber">3.5</span> <span class="toctext">Alterar target padrão para inicializar</span></a></li>
-<li class="toclevel-2 tocsection-19"><a href="#Ordem_de_target_padr%C3%A3o"><span class="tocnumber">3.6</span> <span class="toctext">Ordem de target padrão</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Obter_targets_atuais"><span class="tocnumber">3.1</span> <span class="toctext">Obter targets atuais</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Criar_target_personalizado"><span class="tocnumber">3.2</span> <span class="toctext">Criar target personalizado</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Mapeamento_entre_n%C3%ADveis_do_SysV_e_targets_do_systemd"><span class="tocnumber">3.3</span> <span class="toctext">Mapeamento entre níveis do SysV e targets do systemd</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#Alterar_target_atual"><span class="tocnumber">3.4</span> <span class="toctext">Alterar target atual</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Alterar_target_padr%C3%A3o_para_inicializar"><span class="tocnumber">3.5</span> <span class="toctext">Alterar target padrão para inicializar</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#Ordem_de_target_padr%C3%A3o"><span class="tocnumber">3.6</span> <span class="toctext">Ordem de target padrão</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-20"><a href="#Arquivos_tempor%C3%A1rios"><span class="tocnumber">4</span> <span class="toctext">Arquivos temporários</span></a></li>
-<li class="toclevel-1 tocsection-21"><a href="#Timers"><span class="tocnumber">5</span> <span class="toctext">Timers</span></a></li>
-<li class="toclevel-1 tocsection-22">
-<a href="#Montagem"><span class="tocnumber">6</span> <span class="toctext">Montagem</span></a>
+<li class="toclevel-1 tocsection-24">
+<a href="#Componentes_do_systemd"><span class="tocnumber">4</span> <span class="toctext">Componentes do systemd</span></a>
 <ul>
-<li class="toclevel-2 tocsection-23"><a href="#Automontagem_de_parti%C3%A7%C3%A3o_GPT"><span class="tocnumber">6.1</span> <span class="toctext">Automontagem de partição GPT</span></a></li>
-</ul>
-</li>
-<li class="toclevel-1 tocsection-24"><a href="#systemd-sysvcompat"><span class="tocnumber">7</span> <span class="toctext">systemd-sysvcompat</span></a></li>
-<li class="toclevel-1 tocsection-25"><a href="#Universos_do_systemd"><span class="tocnumber">8</span> <span class="toctext">Universos do systemd</span></a></li>
-<li class="toclevel-1 tocsection-26">
-<a href="#Dicas_e_truques"><span class="tocnumber">9</span> <span class="toctext">Dicas e truques</span></a>
+<li class="toclevel-2 tocsection-25">
+<a href="#systemd.mount_-_montagem"><span class="tocnumber">4.1</span> <span class="toctext">systemd.mount - montagem</span></a>
 <ul>
-<li class="toclevel-2 tocsection-27"><a href="#Executando_servi%C3%A7os_ap%C3%B3s_a_rede_estar_ativa"><span class="tocnumber">9.1</span> <span class="toctext">Executando serviços após a rede estar ativa</span></a></li>
-<li class="toclevel-2 tocsection-28"><a href="#Habilitar_units_instaladas_por_padr%C3%A3o"><span class="tocnumber">9.2</span> <span class="toctext">Habilitar units instaladas por padrão</span></a></li>
-<li class="toclevel-2 tocsection-29"><a href="#Usando_ambientes_de_aplicativos_em_sandbox"><span class="tocnumber">9.3</span> <span class="toctext">Usando ambientes de aplicativos em <i>sandbox</i></span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#Montagem_autom%C3%A1tica_de_parti%C3%A7%C3%A3o_GPT"><span class="tocnumber">4.1.1</span> <span class="toctext">Montagem automática de partição GPT</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-30">
-<a href="#Solu%C3%A7%C3%A3o_de_problemas"><span class="tocnumber">10</span> <span class="toctext">Solução de problemas</span></a>
+<li class="toclevel-2 tocsection-27"><a href="#systemd-sysvcompat"><span class="tocnumber">4.2</span> <span class="toctext">systemd-sysvcompat</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#systemd-tmpfiles_-_arquivos_tempor%C3%A1rios"><span class="tocnumber">4.3</span> <span class="toctext">systemd-tmpfiles - arquivos temporários</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-29">
+<a href="#Dicas_e_truques"><span class="tocnumber">5</span> <span class="toctext">Dicas e truques</span></a>
 <ul>
-<li class="toclevel-2 tocsection-31"><a href="#Investigar_servi%C3%A7os_que_falharam"><span class="tocnumber">10.1</span> <span class="toctext">Investigar serviços que falharam</span></a></li>
-<li class="toclevel-2 tocsection-32"><a href="#Diagnosticar_problemas_de_inicializa%C3%A7%C3%A3o"><span class="tocnumber">10.2</span> <span class="toctext">Diagnosticar problemas de inicialização</span></a></li>
-<li class="toclevel-2 tocsection-33"><a href="#Diagnosticar_um_servi%C3%A7o"><span class="tocnumber">10.3</span> <span class="toctext">Diagnosticar um serviço</span></a></li>
-<li class="toclevel-2 tocsection-34"><a href="#Desligamento/reinicializa%C3%A7%C3%A3o_demora_demais"><span class="tocnumber">10.4</span> <span class="toctext">Desligamento/reinicialização demora demais</span></a></li>
-<li class="toclevel-2 tocsection-35"><a href="#Processos_de_curta_dura%C3%A7%C3%A3o_n%C3%A3o_parecem_registrar_qualquer_sa%C3%ADda"><span class="tocnumber">10.5</span> <span class="toctext">Processos de curta duração não parecem registrar qualquer saída</span></a></li>
-<li class="toclevel-2 tocsection-36"><a href="#Tempo_de_inicializa%C3%A7%C3%A3o_aumentando_com_o_tempo"><span class="tocnumber">10.6</span> <span class="toctext">Tempo de inicialização aumentando com o tempo</span></a></li>
-<li class="toclevel-2 tocsection-37"><a href="#systemd-tmpfiles-setup.service_n%C3%A3o_inicia_na_inicializa%C3%A7%C3%A3o_do_sistema"><span class="tocnumber">10.7</span> <span class="toctext">systemd-tmpfiles-setup.service não inicia na inicialização do sistema</span></a></li>
-<li class="toclevel-2 tocsection-38"><a href="#Desabilitar_modo_de_emerg%C3%AAncia_em_m%C3%A1quina_remota"><span class="tocnumber">10.8</span> <span class="toctext">Desabilitar modo de emergência em máquina remota</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#Ferramentas_de_configura%C3%A7%C3%A3o_GUI"><span class="tocnumber">5.1</span> <span class="toctext">Ferramentas de configuração GUI</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#Executando_servi%C3%A7os_ap%C3%B3s_a_rede_estar_ativa"><span class="tocnumber">5.2</span> <span class="toctext">Executando serviços após a rede estar ativa</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#Habilitar_units_instaladas_por_padr%C3%A3o"><span class="tocnumber">5.3</span> <span class="toctext">Habilitar units instaladas por padrão</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#Usando_ambientes_de_aplicativos_em_sandbox"><span class="tocnumber">5.4</span> <span class="toctext">Usando ambientes de aplicativos em <i>sandbox</i></span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#Notifica%C3%A7%C3%A3o_sobre_servi%C3%A7os_com_falha"><span class="tocnumber">5.5</span> <span class="toctext">Notificação sobre serviços com falha</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-39"><a href="#Veja_tamb%C3%A9m"><span class="tocnumber">11</span> <span class="toctext">Veja também</span></a></li>
+<li class="toclevel-1 tocsection-35">
+<a href="#Solu%C3%A7%C3%A3o_de_problemas"><span class="tocnumber">6</span> <span class="toctext">Solução de problemas</span></a>
+<ul>
+<li class="toclevel-2 tocsection-36"><a href="#Investigar_servi%C3%A7os_que_falharam"><span class="tocnumber">6.1</span> <span class="toctext">Investigar serviços que falharam</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#Diagnosticar_problemas_de_inicializa%C3%A7%C3%A3o"><span class="tocnumber">6.2</span> <span class="toctext">Diagnosticar problemas de inicialização</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#Diagnosticar_um_servi%C3%A7o"><span class="tocnumber">6.3</span> <span class="toctext">Diagnosticar um serviço</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#Desligamento/reinicializa%C3%A7%C3%A3o_demora_demais"><span class="tocnumber">6.4</span> <span class="toctext">Desligamento/reinicialização demora demais</span></a></li>
+<li class="toclevel-2 tocsection-40"><a href="#Processos_de_curta_dura%C3%A7%C3%A3o_n%C3%A3o_parecem_registrar_qualquer_sa%C3%ADda"><span class="tocnumber">6.5</span> <span class="toctext">Processos de curta duração não parecem registrar qualquer saída</span></a></li>
+<li class="toclevel-2 tocsection-41"><a href="#Tempo_de_inicializa%C3%A7%C3%A3o_aumentando_com_o_tempo"><span class="tocnumber">6.6</span> <span class="toctext">Tempo de inicialização aumentando com o tempo</span></a></li>
+<li class="toclevel-2 tocsection-42"><a href="#systemd-tmpfiles-setup.service_n%C3%A3o_inicia_na_inicializa%C3%A7%C3%A3o_do_sistema"><span class="tocnumber">6.7</span> <span class="toctext">systemd-tmpfiles-setup.service não inicia na inicialização do sistema</span></a></li>
+<li class="toclevel-2 tocsection-43"><a href="#Desabilitar_modo_de_emerg%C3%AAncia_em_m%C3%A1quina_remota"><span class="tocnumber">6.8</span> <span class="toctext">Desabilitar modo de emergência em máquina remota</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-44"><a href="#Veja_tamb%C3%A9m"><span class="tocnumber">7</span> <span class="toctext">Veja também</span></a></li>
 </ul>
 </div>
 
@@ -182,7 +196,7 @@
 <p>Veja <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5">systemd.unit(5)</a></span> para detalhes.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Alguns nomes de unit contêm um sinal <code>@</code> (por exemplo, <code>nome@<i>string</i>.service</code>): isso significa que eles são <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects/instances.html">instâncias</a> de uma unit <i>modelo</i> (em inglês, <i>template</i>), cujo nome real do arquivo não contém a parte <code><i>string</i></code> (por exemplo, <code>nome@.service</code>). <code><i>string</i></code> é chamado de <i>identificador de instância</i> (em inglês, <i>instance identifier</i>) e é semelhante a um argumento que é passado para a unit modelo quando chamado com o comando <i>systemctl</i>: no arquivo unit, ele irá substituir o especificador <code>%i</code>.
+<strong>Nota:</strong> Alguns nomes de unit contêm um sinal <code>@</code> (por exemplo, <code>nome@<i>string</i>.service</code>): isso significa que eles são <a rel="nofollow" class="external text" href="http://0pointer.net/blog/projects/instances.html">instâncias</a> de uma unit <i>modelo</i> (em inglês, <i>template</i>), cujo nome real do arquivo não contém a parte <code><i>string</i></code> (por exemplo, <code>nome@.service</code>). <code><i>string</i></code> é chamado de <i>identificador de instância</i> (em inglês, <i>instance identifier</i>) e é semelhante a um argumento que é passado para a unit modelo quando chamado com o comando <i>systemctl</i>: no arquivo unit, ele irá substituir o especificador <code>%i</code>.
 Para ser mais preciso, <i>antes</i> de tentar instanciar a unit modelo <code>nome@.suffix</code>, o <i>systemd</i> vai, na verdade, procurar por uma unit com o nome de arquivo exato <code>nome@string.sufixo</code>, embora por convenção tal "conflito" ocorra raramente, ou seja, a maioria dos arquivos unit contendo um sinal <code>@</code> são destinados a serem um modelo. Além disso, se uma unit modelo for chamada sem um identificador de instância, ela falhará, pois o especificador <code>%i</code> não conseguirá ser substituído.</div>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Dica:</strong> 
@@ -192,6 +206,22 @@ Para ser mais preciso, <i>antes</i> de tentar instanciar a unit modelo <code>nom
 <li>Um pacote pode oferecer units para diferentes finalidades. Se você acabou de instalar um pacote, <code>pacman -Qql <i>pacote</i> | grep -Fe .service -e .socket</code> pode ser usado para verificar e localizá-las.</li>
 </ul>
 </div>
+<h4><span class="mw-headline" id="Verificando_status">Verificando status</span></h4>
+<p><b>Páginas de manual</b> associadas a uma unit (conforme suportado pela unit):
+</p>
+<pre>$ systemctl help <i>unit</i>
+</pre>
+<p><b>Status</b> de uma unit, incluindo se está em execução ou não:
+</p>
+<pre>$ systemctl status <i>unit</i>
+</pre>
+<p><b>Verifica</b> se uma unit está habilitada ou não:
+</p>
+<pre>$ systemctl is-enabled <i>unit</i>
+</pre>
+<h4>
+<span id="Iniciando.2C_reiniciando.2C_recarregando"></span><span class="mw-headline" id="Iniciando,_reiniciando,_recarregando">Iniciando, reiniciando, recarregando</span>
+</h4>
 <p><b>Inicia</b> uma unit imediatamente:
 </p>
 <pre># systemctl start <i>unit</i>
@@ -204,23 +234,22 @@ Para ser mais preciso, <i>antes</i> de tentar instanciar a unit modelo <code>nom
 </p>
 <pre># systemctl restart <i>unit</i>
 </pre>
-<p>Pede a uma unit para <b>recarregar</b> sua configuração:
+<p><b>Recarrega</b> uma unit e sua configuração:
 </p>
 <pre># systemctl reload <i>unit</i>
 </pre>
-<p>Mostra o <b>status</b> de uma unit, inclusive se estiver em execução ou não:
+<p><b>Recarrega a configuração do gerente do systemd</b>, procurando por units novas ou alteradas:
 </p>
-<pre>$ systemctl status <i>unit</i>
+<pre># systemctl daemon-reload
 </pre>
-<p><b>Verifica</b> se a unit já está habilitada ou não:
-</p>
-<pre>$ systemctl is-enabled <i>unit</i>
-</pre>
-<p><b>Habilita</b> uma unit para ser iniciada na <b>inicialização</b>:
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Isso não pede as units alteradas que recarreguem suas próprias configurações. Veja o exemplo de <b>Recarrega</b> acima.</div>
+<h4><span class="mw-headline" id="Habilitando">Habilitando</span></h4>
+<p><b>Habilita</b> uma unit para iniciar automaticamente na inicialização:
 </p>
 <pre># systemctl enable <i>unit</i>
 </pre>
-<p><b>Habilita</b> uma unit para ser iniciada na <b>inicialização</b> e <b>inicia-a</b> imediatamente:
+<p><b>Habilita</b> uma unit para iniciar automaticamente na inicialização e <b>inicia-a</b> imediatamente:
 </p>
 <pre># systemctl enable --now <i>unit</i>
 </pre>
@@ -228,6 +257,11 @@ Para ser mais preciso, <i>antes</i> de tentar instanciar a unit modelo <code>nom
 </p>
 <pre># systemctl disable <i>unit</i>
 </pre>
+<p><b>Reabilita</b> (ou seja, desabilita e habilita novamente) uma unit; por exemplo, no caso de sua seção <code>[Install]</code> tenha mudado da última vez que foi habilitada:
+</p>
+<pre># systemctl reenable <i>unit</i>
+</pre>
+<h4><span class="mw-headline" id="Mascarando">Mascarando</span></h4>
 <p><b>Mascara</b> uma unit para tornar impossível iniciá-la (Tanto manualmente quanto como uma dependência, o que torna mascaragem perigoso):
 </p>
 <pre># systemctl mask <i>unit</i>
@@ -235,16 +269,6 @@ Para ser mais preciso, <i>antes</i> de tentar instanciar a unit modelo <code>nom
 <p><b>Desmascara</b> uma unit:
 </p>
 <pre># systemctl unmask <i>unit</i>
-</pre>
-<p>Mostra a <b>página de manual</b> associado a uma unit (tem que haver suporte no arquivo da unit):
-</p>
-<pre>$ systemctl help <i>unit</i>
-</pre>
-<p><b>Recarrega gerenciador de configuração do <i>systemd</i> </b>, procurando por <b>units novas e modificadas</b>:
-</p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Isso não solicita que as units alteradas recarreguem suas próprias configurações. Veja o exemplo de <code>reload</code> acima.</div>
-<pre># systemctl daemon-reload
 </pre>
 <h3><span class="mw-headline" id="Gerenciamento_de_energia">Gerenciamento de energia</span></h3>
 <p><a href="../en/Polkit.html" title="Polkit">polkit</a> é necessário para o gerenciamento de energia como um usuário sem privilégios. Se você está em uma sessão de usuário local <i>systemd-logind</i> e nenhuma outra sessão está ativa, os seguintes comandos funcionarão sem privilégios de root. Se não (por exemplo, porque outro usuário está conectado em um tty), <i>systemd</i> vai automaticamente pedir a senha de root.
@@ -270,7 +294,7 @@ Para ser mais preciso, <i>antes</i> de tentar instanciar a unit modelo <code>nom
 <pre>$ systemctl hybrid-sleep
 </pre>
 <h2><span class="mw-headline" id="Escrevendo_arquivos_unit">Escrevendo arquivos unit</span></h2>
-<p>A sintaxe de <a rel="nofollow" class="external text" href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html">arquivos unit</a> do <i>systemd</i> é inspirada nos arquivos <i>.desktop</i> da XDG Desktop Entry Specification, que por sua vez são inspirados nos arquivos <i>.ini</i> do Microsoft Windows. Os arquivos unit são carregados de vários localizações (para ver a lista completa, execute <code>systemctl show --property=UnitPath</code>), mas os principais são (listados da menor para a mais alta precedência):
+<p>A sintaxe de arquivos unit do <i>systemd</i> (<span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5">systemd.unit(5)</a></span>) é inspirada nos <a href="../pt/Desktop_entries.html" title="Desktop entries (Português)">arquivos .desktop da XDG Desktop Entry Specification </a>, que por sua vez são inspirados nos <a href="https://en.wikipedia.org/wiki/pt:INI_(formato_de_arquivo)" class="extiw" title="wikipedia:pt:INI (formato de arquivo)">arquivos .ini do Microsoft Windows</a>. Os arquivos unit são carregados de vários localizações (para ver a lista completa, execute <code>systemctl show --property=UnitPath</code>), mas os principais são (listados da menor para a mais alta precedência):
 </p>
 <ul>
 <li>
@@ -285,7 +309,7 @@ Para ser mais preciso, <i>antes</i> de tentar instanciar a unit modelo <code>nom
 <li>Nomes de unit do systemd só podem conter caracteres alfanuméricos, sublinhados e pontos. Todos outros caracteres devem ser substituídos por escapes no estilo C "\x2d" ou deve-se empregar suas semânticas predefinidas ('@', '-'). Veja <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5">systemd.unit(5)</a></span> e <span class="plainlinks archwiki-template-man" title="$ man 1 systemd-escape"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-escape.1">systemd-escape(1)</a></span> para mais informações.</li>
 </ul>
 </div>
-<p>Veja as units instaladas por seus pacotes para exemplos, bem como a <a rel="nofollow" class="external text" href="https://www.freedesktop.org/software/systemd/man/systemd.service.html#Examples">seção de exemplos comentados</a> de <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.service"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.service.5">systemd.service(5)</a></span>.
+<p>Veja as units instaladas por seus pacotes para exemplos, bem como em <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.service"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.service.5#EXAMPLES">systemd.service(5) § EXAMPLES</a></span>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Dica:</strong> Comentários prefixados com <code>#</code> também podem ser usados em arquivos units, mas apenas em novas linhas. Não use comentários em fim de linha após parâmetros do <i>systemd</i> ou a unidade não conseguirá ativar.</div>
@@ -332,10 +356,8 @@ Para ser mais preciso, <i>antes</i> de tentar instanciar a unit modelo <code>nom
 <h4>
 <span id="Arquivos_unit_de_substitui.C3.A7.C3.A3o"></span><span class="mw-headline" id="Arquivos_unit_de_substituição">Arquivos unit de substituição</span>
 </h4>
-<p>Para substituir o arquivo unit <code>/usr/lib/systemd/system/<i>unit</i></code>, crie o arquivo <code>/etc/systemd/system/<i>unit</i></code> e reabilite o unit para atualizar os links simbólicos:
+<p>Para substituir o arquivo unit <code>/usr/lib/systemd/system/<i>unit</i></code>, crie o arquivo <code>/etc/systemd/system/<i>unit</i></code> e <a href="../pt/Systemd.html#Habilitando" title="Systemd (Português)">reabilite</a> o unit para atualizar os links simbólicos.
 </p>
-<pre># systemctl reenable <i>unit</i>
-</pre>
 <p>Alternativamente, execute:
 </p>
 <pre># systemctl edit --full <i>unit</i>
@@ -384,7 +406,7 @@ ExecStart=<i>novo comando</i></pre>
 Restart=always
 RestartSec=30</pre>
 <h2><span class="mw-headline" id="Targets">Targets</span></h2>
-<p>O <i>systemd</i> usa <i>targets</i> para agrupar units por meio de dependências e como pontos de sincronização padronizada. Eles servem a um propósito semelhante, como <a href="https://en.wikipedia.org/wiki/pt:N%C3%ADvel_de_execu%C3%A7%C3%A3o" class="extiw" title="wikipedia:pt:Nível de execução">níveis de execução</a>, mas agem um pouco diferente. Cada <i>target</i> é nomeado em vez de numerado e destina-se a servir uma finalidade específica com a possibilidade de ter múltiplos ativos ao mesmo tempo. Alguns <i>target</i>s são implementados herdando todos os serviços de outro <i>target</i> e adicionando serviços adicionais a ele. Há <i>target</i>s do <i>systemd</i>  que imitam os níveis de execução SystemVinit comuns para que possa mudar <i>target</i>s usando o comando familiar <code>telinit RUNLEVEL</code>.
+<p>O <i>systemd</i> usa <i>targets</i> para agrupar units por meio de dependências e como pontos de sincronização padronizada. Eles servem a um propósito semelhante, como <a href="https://en.wikipedia.org/wiki/pt:N%C3%ADvel_de_execu%C3%A7%C3%A3o" class="extiw" title="wikipedia:pt:Nível de execução">níveis de execução</a>, mas agem um pouco diferentemente. Cada <i>target</i> é nomeado em vez de numerado e destina-se a servir uma finalidade específica com a possibilidade de ter múltiplos ativos ao mesmo tempo. Alguns <i>target</i>s são implementados herdando todos os serviços de outro <i>target</i> e adicionando serviços adicionais a ele. Há <i>target</i>s do <i>systemd</i>  que imitam os níveis de execução SystemVinit comuns para que possa mudar <i>target</i>s usando o comando familiar <code>telinit RUNLEVEL</code>.
 </p>
 <h3><span class="mw-headline" id="Obter_targets_atuais">Obter targets atuais</span></h3>
 <p>O comando deve ser no <i>systemd</i> em vez de executar <code>runlevel</code>:
@@ -490,84 +512,98 @@ Created symlink /etc/systemd/system/default.target -&gt; /usr/lib/systemd/system
 <li>Link simbólico de <code>/usr/lib/systemd/system/default.target</code>
 </li>
 </ol>
-<h2>
-<span id="Arquivos_tempor.C3.A1rios"></span><span class="mw-headline" id="Arquivos_temporários">Arquivos temporários</span>
-</h2>
-<p>"O <i>systemd-tmpfiles</i> cria, exclui e limpa arquivos e diretórios voláteis e temporários". Ele lê arquivos de configuração em <code>/etc/tmpfiles.d/</code> e <code>/usr/lib/tmpfiles.d/</code> para descobrir que ações devem ser realizadas. Os arquivos de configuração no primeiro diretório têm precedência sobre o segundo.
-</p>
-<p>Os arquivos de configuração são geralmente fornecidos junto com arquivos de serviço e são nomeados no estilo de <code>/usr/lib/tmpfiles.d/<i>programa</i>.conf</code>. Por exemplo, o daemon do <a href="../en/Samba.html" title="Samba">Samba</a> espera que o diretório <code>/run/samba</code> exista e tenha as permissões corretas. Portanto, o pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=samba">samba</a></span> vem com essa configuração:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/lib/tmpfiles.d/samba.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">D /run/samba 0755 root root
-</pre>
-<p>Os arquivos de configuração também podem ser usados para escrever valores em determinados arquivos na inicialização. Por exemplo, se você usa <code>/etc/rc.local</code> para desativar ativação de dispositivos USB com <code>echo USBE &gt; /proc/acpi/wakeup</code>, você pode usar o seguinte <i>tmpfile</i>:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/tmpfiles.d/disable-usb-wake.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#    Path                  Mode UID  GID  Age Argument
-w    /proc/acpi/wakeup     -    -    -    -   USBE
-</pre>
-<p>Veja as páginas man <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-tmpfiles"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-tmpfiles.8">systemd-tmpfiles(8)</a></span> e <span class="plainlinks archwiki-template-man" title="$ man 5 tmpfiles.d"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tmpfiles.d.5">tmpfiles.d(5)</a></span> para detalhes.
-</p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Este método pode não funcionar para definir as opções em <code>/sys</code> uma vez que o serviço <i>systemd-tmpfiles-setup</i> pode ser executado antes dos módulos de dispositivo apropriados serem carregados. Neste caso, você pode verificar se o módulo tem um parâmetro para a opção que pretende definir com <code>modinfo <i>módulo</i></code> e definir essa opção com um <a href="../pt/Kernel_module.html#Op%C3%A7%C3%B5es_de_configura%C3%A7%C3%A3o_de_m%C3%B3dulos" class="mw-redirect" title="Módulos de kernel">arquivo de configuração em /etc/modprobe.d</a>. Caso contrário, você terá que escrever uma <a href="../en/Udev.html#About_udev_rules" title="Udev">regra de udev</a> para defeinir o atributo adequado logo que o dispositivo aparecer.</div>
-<h2><span class="mw-headline" id="Timers">Timers</span></h2>
-<p>Um <i>timer</i> (em português, temporizador) é um arquivo de configuração de unit cujo nome termina com <i>.timer </i> e codifica informações sobre um temporizador controlado e supervisionado por <i>systemd</i>, para ativação baseada em temporizador. Veja <a href="../pt/af7c34017c1457f128a3bb40b9913e94.html" title="Systemd (Português)/Timers (Português)">systemd (Português)/Timers (Português)</a>.
-</p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> <i>Timers</i> podem substitui a funcionalidade do <a href="../en/Cron.html" title="Cron">cron</a> muito bem. Veja <a href="../pt/af7c34017c1457f128a3bb40b9913e94.html#Como_um_substituto_do_cron" title="Systemd (Português)/Timers (Português)">systemd (Português)/Timers (Português)#Como um substituto do cron</a>.</div>
-<h2><span class="mw-headline" id="Montagem">Montagem</span></h2>
-<p>O <i>systemd</i> é responsável pela montagem das partições e sistemas de arquivos especificados em <code>/etc/fstab</code>. O <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-fstab-generator"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-fstab-generator.8">systemd-fstab-generator(8)</a></span> converte todas as entradas do <code>/etc/fstab</code> em units de systemd, isso é executado no momento da inicialização e sempre que a configuração do gerenciador do sistema é recarregada.
-</p>
-<p>O <i> systemd </i> estende os recursos habituais do <a href="../pt/Fstab.html" title="Fstab (Português)">fstab</a> e oferece opções adicionais de montagem. Eles afetam as dependências da unit de montagem, elas podem, por exemplo, garantir que uma montagem seja executada somente quando a rede estiver ativa ou apenas quando outra partição for montada. A lista completa de opções específicas de montagem <i>systemd</i>, tipicamente prefixadas com <code>x-systemd.</code>, é detalhada em <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.mount.5#FSTAB">systemd.mount(5) § FSTAB</a></span>.
-</p>
-<p>Um exemplo dessas opções de montagem no contexto de <i>automontagem</i>, que significa montar somente quando o recurso é necessário, e não automaticamente no momento da inicialização, é fornecido em <a href="../pt/Fstab.html#Automontagem_com_systemd" title="Fstab (Português)">fstab#Automontagem com systemd</a>.
-</p>
-<h3>
-<span id="Automontagem_de_parti.C3.A7.C3.A3o_GPT"></span><span class="mw-headline" id="Automontagem_de_partição_GPT">Automontagem de partição GPT</span>
-</h3>
-<p>Em um disco particionado em <a href="../pt/Partitioning.html#Tabela_de_Parti%C3%A7%C3%A3o_GUID" class="mw-redirect" title="GPT (Português)">GPT</a>, <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-gpt-auto-generator"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-gpt-auto-generator.8">systemd-gpt-auto-generator(8)</a></span> vai montar partições seguindo a <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Discoverable Partitions Specification</a>, de forma que elas podem ser omitidas do <code>fstab</code>.
-</p>
-<p>Automontagem de <a href="../pt/EFI_system_partition.html" class="mw-redirect" title="Partição de sistema EFI">partição de sistema EFI</a> requer que o gerenciador de boot configure a variável EFI <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_INTERFACE/">LoaderDevicePartUUID</a>. Apenas <a href="../pt/Systemd-boot.html" title="Systemd-boot (Português)">systemd-boot</a> é conhecido por fazer isso.
-</p>
-<p>Para que a automontagem de <code>/var</code> e <code>/var/tmp</code> funcione, o PARTUUID deve corresponder ao hash SHA256 HMAC do tipo de partição UUID obtido pelo ID da máquina. O PARTUUID necessário pode ser obtido usando:
-</p>
-<pre>$ systemd-id128 -u --app-specific=<i>UUID-tipo-partição</i> machine-id
-</pre>
-<p>Substitua <code><i>UUID-tipo-partição</i></code> com o valor de UUID do tipo de partição apropriado da <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Discoverable Partitions Specification</a>.
-</p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> <span class="plainlinks archwiki-template-man" title="$ man 1 systemd-id128"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-id128.1">systemd-id128(1)</a></span> lê o ID de máquina de <code>/etc/machine-id</code>, isso torna impossível saber o PARTUUID necessário antes do sistema ser instalado.</div>
-<p>A automontagem de uma partição pode ser desativada alterando o <a href="https://en.wikipedia.org/wiki/pt:Tabela_de_Parti%C3%A7%C3%A3o_GUID#Tipos_de_parti.C3.A7.C3.A3o_GUID" class="extiw" title="wikipedia:pt:Tabela de Partição GUID">tipo da partição GUID</a> ou configurando o bit 63 "do not automount" do atributo da partição, consulte <a href="../en/GPT_fdisk.html#Prevent_GPT_partition_automounting" class="mw-redirect" title="Gdisk">gdisk#Prevent GPT partition automounting</a>.
-</p>
-<h2><span class="mw-headline" id="systemd-sysvcompat">systemd-sysvcompat</span></h2>
-<p>A função principal de <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd-sysvcompat">systemd-sysvcompat</a></span> (necessário para <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span>) é fornecer o executável <a href="../pt/Init.html" title="Init (Português)">init</a> tradicional do Linux. Para os sistemas controlados por systemd, o <code>init</code> é apenas um link simbólico para seu executável <code>systemd</code>.
-</p>
-<p>Além disso, ele também fornece  6 atalhos convenientes que usuários do <a href="../en/SysVinit.html" title="SysVinit">SysVinit</a> podem querer usar. Os atalhos convenientes são <span class="plainlinks archwiki-template-man" title="$ man 8 halt"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/halt.8">halt(8)</a></span>, <span class="plainlinks archwiki-template-man" title="$ man 8 poweroff"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/poweroff.8">poweroff(8)</a></span>, <span class="plainlinks archwiki-template-man" title="$ man 8 reboot"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/reboot.8">reboot(8)</a></span>, <span class="plainlinks archwiki-template-man" title="$ man 8 runlevel"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/runlevel.8">runlevel(8)</a></span><sup>[<a href="https://en.wikipedia.org/wiki/pt:Wikip%C3%A9dia:Liga%C3%A7%C3%A3o_inativa" class="extiw" title="wikipedia:pt:Wikipédia:Ligação inativa">link inativo</a> 2020-09-13]</sup>, <span class="plainlinks archwiki-template-man" title="$ man 8 shutdown"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/shutdown.8">shutdown(8)</a></span> e <span class="plainlinks archwiki-template-man" title="$ man 8 telinit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/telinit.8">telinit(8)</a></span><sup>[<a href="https://en.wikipedia.org/wiki/pt:Wikip%C3%A9dia:Liga%C3%A7%C3%A3o_inativa" class="extiw" title="wikipedia:pt:Wikipédia:Ligação inativa">link inativo</a> 2020-09-13]</sup>. Cada um desses 6 comandos é um link simbólico para <code>systemctl</code> e regulados pelo comportamento do systemd. Então, a discussão em <a href="#Gerenciamento_de_energia">#Gerenciamento de energia</a> se aplica a <code>halt</code>, <code>poweroff</code>, <code>reboot</code> e <code>shutdown</code>. A discussão em <a href="#Mapeamento_entre_n%C3%ADveis_do_SysV_e_targets_do_systemd">#Mapeamento entre níveis do SysV e targets do systemd</a> se aplica a <code>runlevel</code> e <code>telinit</code>.
-</p>
-<h2><span class="mw-headline" id="Universos_do_systemd">Universos do systemd</span></h2>
-<p>Alguns blocos de construção (não exaustivos) do systemd são:
+<h2><span class="mw-headline" id="Componentes_do_systemd">Componentes do systemd</span></h2>
+<p>Alguns componentes (não exaustivos) do systemd são:
 </p>
 <ul>
 <li>
-<a href="../pt/Systemd-boot.html" title="Systemd-boot (Português)">systemd-boot</a> — um <a href="../pt/Arch_boot_process.html#Gerenciador_de_boot" class="mw-redirect" title="Gerenciador de boot">gerenciador de boot</a> UEFI simples;</li>
+<a href="../pt/Systemd-boot.html" title="Systemd-boot (Português)">systemd-boot</a> — simples <a href="../pt/Arch_boot_process.html#Gerenciador_de_boot" class="mw-redirect" title="Gerenciador de boot">gerenciador de boot</a> UEFI;</li>
 <li>
-<a href="../pt/Systemd-homed.html" title="Systemd-homed (Português)">systemd-homed</a> — <a href="../pt/Users_and_groups.html" class="mw-redirect" title="Usuários e grupos">contas</a> de usuários (humanos) portáteis;</li>
+<a href="../en/Systemd-firstboot.html" title="Systemd-firstboot">systemd-firstboot</a> — inicialização da configuração básica do sistema antes da primeira inicialização;</li>
+<li>
+<a href="../pt/Systemd-homed.html" title="Systemd-homed (Português)">systemd-homed</a> — <a href="../pt/Users_and_groups.html" title="Users and groups (Português)">contas</a> portáteis de usuário humano;</li>
 <li>
 <a rel="nofollow" class="external text" href="https://dvdhrm.wordpress.com/2013/08/24/session-management-on-linux/">systemd-logind</a> — gerenciamento de sessão;</li>
 <li>
 <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> — gerenciamento de <a href="../pt/Network_configuration.html" class="mw-redirect" title="Configuração de rede">configuração de rede</a>;</li>
 <li>
-<a href="../en/Systemd-nspawn.html" title="Systemd-nspawn">systemd-nspawn</a> — contêiner de espaço de nomes leves;</li>
+<a href="../en/Systemd-nspawn.html" title="Systemd-nspawn">systemd-nspawn</a> — contêiner de namespace leve;</li>
 <li>
-<a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a> — <a href="/index.php?title=Resolu%C3%A7%C3%A3o_de_nomes_de_dom%C3%ADnio&amp;action=edit&amp;redlink=1" class="new" title="Resolução de nomes de domínio (page does not exist)">resolução de nomes</a> de rede;</li>
+<a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a> — <a href="../pt/Domain_name_resolution.html" title="Domain name resolution (Português)">resolução de nome</a> de rede;</li>
 <li>
-<a href="../en/Systemd-timesyncd.html" title="Systemd-timesyncd">systemd-timesyncd</a> — sincronização de <a href="../en/System_time.html" title="System time">tempo do sistema</a> por toda a rede;</li>
+<span class="plainlinks archwiki-template-man" title="$ man 8 systemd-sysusers"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-sysusers.8">systemd-sysusers(8)</a></span> — cria usuários e grupos do sistema e adiciona usuários a grupos na instalação do pacote ou na inicialização;</li>
 <li>
-<a href="../pt/508d3afdfb62d49d74039238ef71cd04.html" class="mw-redirect" title="Systemd/Journal (Português)">systemd/Journal</a> — regitros log de sistema;</li>
+<a href="../en/Systemd-timesyncd.html" title="Systemd-timesyncd">systemd-timesyncd</a> — sincronização da <a href="../en/System_time.html" title="System time">hora do sistema</a> na rede;</li>
 <li>
-<a href="../pt/af7c34017c1457f128a3bb40b9913e94.html" class="mw-redirect" title="Systemd/Timers (Português)">systemd/Timers</a> — uma alternativa para o <a href="../en/Cron.html" title="Cron">cron</a>.</li>
+<a href="../pt/508d3afdfb62d49d74039238ef71cd04.html" title="Systemd (Português)/Journal (Português)">systemd/Journal</a> — registro do sistema;</li>
+<li>
+<a href="../pt/af7c34017c1457f128a3bb40b9913e94.html" title="Systemd (Português)/Timers (Português)">systemd/Timers</a> — cronômetros monotônicos ou em tempo real para controlar arquivos ou eventos <code>.service</code>,  alternativa razoável ao <a href="../en/Cron.html" title="Cron">cron</a>.</li>
 </ul>
+<h3><span class="mw-headline" id="systemd.mount_-_montagem">systemd.mount - montagem</span></h3>
+<p>O <i>systemd</i> é responsável pela montagem das partições e sistemas de arquivos especificados em <code>/etc/fstab</code>. O <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-fstab-generator"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-fstab-generator.8">systemd-fstab-generator(8)</a></span> converte todas as entradas em <code>/etc/fstab</code> em unidades do systemd, isso é executado no momento da inicialização e sempre que a configuração do gerenciador de sistema é recarregada.
+</p>
+<p>O <i>systemd</i> estende as capacidades usuais do <a href="../pt/Fstab.html" title="Fstab (Português)">fstab</a> e oferece opções adicionais de montagem. Eles afetam as dependências da unidade de montagem, eles podem, por exemplo, garantir que uma montagem seja realizada apenas quando a rede estiver ativa ou apenas quando outra partição for montada. A lista completa de opções de montagem específicas do <i>systemd</i>, normalmente prefixadas com <code>x-systemd.</code>, É detalhada em <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.mount.5#FSTAB">systemd.mount(5) § FSTAB</a></span>.
+</p>
+<p>Um exemplo dessas opções de montagem no contexto de <i>montagem automática</i>, que significa montagem apenas quando o recurso é necessário, em vez de automaticamente no momento da inicialização, é fornecido em <a href="../pt/Fstab.html#Automontagem_com_systemd" title="Fstab (Português)">fstab (Português)#Automontagem com systemd</a>.
+</p>
+<h4>
+<span id="Montagem_autom.C3.A1tica_de_parti.C3.A7.C3.A3o_GPT"></span><span class="mw-headline" id="Montagem_automática_de_partição_GPT">Montagem automática de partição GPT</span>
+</h4>
+<p>Em um disco particionado <a href="../pt/Partitioning.html#Tabela_de_Parti%C3%A7%C3%A3o_GUID" class="mw-redirect" title="GPT (Português)">GPT</a>, o <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-gpt-auto-generator"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-gpt-auto-generator.8">systemd-gpt-auto-generator(8)</a></span> montará partições seguindo a <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Especificação de partições detectáveis</a>, portanto, podem ser omitidas de <code>fstab</code>.
+</p>
+<p>A montagem automática de <a href="../pt/EFI_system_partition.html" title="EFI system partition (Português)">partição do sistema EFI</a> requer que o carregador de inicialização defina a variável EFI <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_INTERFACE/">LoaderDevicePartUUID</a>. Apenas <a href="../pt/Systemd-boot.html" title="Systemd-boot (Português)">systemd-boot</a> é conhecido por fazer isso.
+</p>
+<p>Para que a montagem automática de <code>/var</code> e <code>/var/tmp</code> funcione, o PARTUUID deve corresponder ao hash SHA256 HMAC do tipo de partição UUID codificado pela ID da máquina. O PARTUUID necessário pode ser obtido usando: 
+</p>
+<pre>$ systemd-id128 -u --app-specific=<i>partição-tipo-UUID</i> id-da-máquina
+</pre>
+<p>Substitua <code><i>partição-tipo-UUID</i></code> pelo valor de UUID do tipo de partição apropriado da <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Especificação de Partições Detectáveis</a>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> <span class="plainlinks archwiki-template-man" title="$ man 1 systemd-id128"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-id128.1">systemd-id128(1)</a></span> lê a ID da máquina de <code>/etc/machine-id</code>, isso torna impossível saber o PARTUUID necessário antes que o sistema seja instalado.</div>
+<p>A montagem automática de uma partição pode ser desabilitada alterando o <a href="https://en.wikipedia.org/wiki/pt:Tabela_de_Parti%C3%A7%C3%A3o_GUID#Tipos_de_parti.C3.A7.C3.A3o_GUID" class="extiw" title="wikipedia:pt:Tabela de Partição GUID">tipo GUID</a> da partição ou definindo o atributo de partição bit 63 "não montar automaticamente", consulte <a href="../en/GPT_fdisk.html#Prevent_GPT_partition_automounting" class="mw-redirect" title="Gdisk">gdisk#Prevent GPT partition automounting</a>.
+</p>
+<h3><span class="mw-headline" id="systemd-sysvcompat">systemd-sysvcompat</span></h3>
+<p>A função principal do <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd-sysvcompat">systemd-sysvcompat</a></span> (requerido por <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span>) é fornecer o binário tradicional do linux <a href="../pt/Init.html" title="Init (Português)">init</a>. Para sistemas controlados pelo systemd, <code>init</code> é apenas um link simbólico para seu executável <code>systemd</code>.
+</p>
+<p>Além disso, ele também fornece 4 atalhos de conveniência aos quais os usuários do <a href="../en/SysVinit.html" title="SysVinit">SysVinit</a> podem estar acostumados. Os atalhos de conveniência são <span class="plainlinks archwiki-template-man" title="$ man 8 halt"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/halt.8">halt(8)</a></span>, <span class="plainlinks archwiki-template-man" title="$ man 8 poweroff"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/poweroff.8">poweroff(8)</a></span>, <span class="plainlinks archwiki-template-man" title="$ man 8 reboot"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/reboot.8">reboot(8)</a></span> e <span class="plainlinks archwiki-template-man" title="$ man 8 shutdown"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/shutdown.8">shutdown(8)</a></span>. Cada um desses 4 comandos é um link simbólico para <code>systemctl</code>, e governado pelo comportamento do systemd. Portanto, a discussão em <a href="../pt/Systemd.html#Gerenciamento_de_energia" title="Systemd (Português)">#Gerenciamento de energia</a> se aplica.
+</p>
+<p>Os sistemas baseados em Systemd podem desistir dos métodos de compatibilidade do System V usando o <a href="../pt/Kernel_parameters.html#Lista_de_par%C3%A2metros" title="Kernel parameters (Português)">parâmetro de boot</a> <code>init=</code>  (consulte, por exemplo, <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=233387">[solved] /bin/init is in systemd-sysvcompat ?</a>) e argumentos de comando do <code>systemctl</code>, nativo do systemd .
+</p>
+<h3>
+<span id="systemd-tmpfiles_-_arquivos_tempor.C3.A1rios"></span><span class="mw-headline" id="systemd-tmpfiles_-_arquivos_temporários">systemd-tmpfiles - arquivos temporários</span>
+</h3>
+<p>O "<i>systemd-tmpfiles</i> cria, apaga e limpa arquivos e diretórios temporários e voláteis." Ele lê os arquivos de configuração em <code>/etc/tmpfiles.d/</code> e <code>/usr/lib/tmpfiles.d/</code> para descobrir quais ações executar. Os arquivos de configuração do diretório anterior têm precedência sobre os do diretório anterior.
+</p>
+<p>Os arquivos de configuração geralmente são fornecidos junto com os arquivos de serviço e são nomeados no estilo de <code>/usr/lib/tmpfiles.d/<i>programa</i>.conf</code>. Por exemplo, o daemon <a href="../en/Samba.html" title="Samba">Samba</a> espera que o diretório <code>/run/samba</code> exista e tenha as permissões corretas. Portanto, o pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=samba">samba</a></span> vem com esta configuração:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/lib/tmpfiles.d/samba.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">D /run/samba 0755 root root
+</pre>
+<p>Os arquivos de configuração também podem ser usados para gravar valores em certos arquivos na inicialização. Por exemplo, se você usou <code>/etc/rc.local</code> para desativar a ativação de dispositivos USB com <code>echo USBE &gt; /proc/acpi/wakeup</code>, você pode usar o seguinte arquivo tmp:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/tmpfiles.d/disable-usb-wake.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#    Caminho               Modo UID  GID  Age Argumento
+w    /proc/acpi/wakeup     -    -    -    -   USBE
+</pre>
+<p>Veja as páginas do manual <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-tmpfiles"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-tmpfiles.8">systemd-tmpfiles(8)</a></span> e <span class="plainlinks archwiki-template-man" title="$ man 5 tmpfiles.d"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tmpfiles.d.5">tmpfiles.d(5)</a></span> para detalhes.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Este método pode não funcionar para definir opções em <code>/sys</code> uma vez que o serviço <i>systemd-tmpfiles-setup</i> pode ser executado antes que os módulos de dispositivo apropriados sejam carregados. Neste caso, você pode verificar se o módulo tem um parâmetro para a opção que você deseja definir com <code>modinfo <i>módulo</i></code> e definir esta opção com um <a href="../pt/Kernel_module.html#Op%C3%A7%C3%B5es_de_configura%C3%A7%C3%A3o_de_m%C3%B3dulos" title="Kernel module (Português)">arquivo de configuração em /etc/modprobe.d</a>. Caso contrário, você terá que escrever uma <a href="../en/Udev.html#About_udev_rules" title="Udev">regra do udev</a> para definir o atributo apropriado assim que o dispositivo aparecer.</div>
 <h2><span class="mw-headline" id="Dicas_e_truques">Dicas e truques</span></h2>
+<h3>
+<span id="Ferramentas_de_configura.C3.A7.C3.A3o_GUI"></span><span class="mw-headline" id="Ferramentas_de_configuração_GUI">Ferramentas de configuração GUI</span>
+</h3>
+<ul><li>
+<b>systemadm</b> — Navegador gráfico para as units do systemd. Ele pode mostrar a lista de units, possivelmente filtradas por tipo.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://cgit.freedesktop.org/systemd/systemd-ui/">https://cgit.freedesktop.org/systemd/systemd-ui/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd-ui">systemd-ui</a></span>
+</dd></dl>
+<ul><li>
+<b>SystemdGenie</b> — Utilitário de gerenciamento systemd baseado em tecnologias KDE.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://invent.kde.org/system/systemdgenie">https://invent.kde.org/system/systemdgenie</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemdgenie">systemdgenie</a></span>
+</dd></dl>
 <h3>
 <span id="Executando_servi.C3.A7os_ap.C3.B3s_a_rede_estar_ativa"></span><span class="mw-headline" id="Executando_serviços_após_a_rede_estar_ativa">Executando serviços após a rede estar ativa</span>
 </h3>
@@ -576,18 +612,34 @@ w    /proc/acpi/wakeup     -    -    -    -   USBE
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/<i>foo</i>.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
 ...
-<b>Wants=network-online.target</b>
-<b>After=network-online.target</b>
+Wants=network-online.target
+After=network-online.target
 ...</pre>
 <p>O serviço de espera de rede do aplicativo específico que gerencia a rede também deve ser ativado para que <code>network-online.target</code> reflita adequadamente o status da rede.
 </p>
 <ul>
-<li>Se estiver usando <a href="../pt/NetworkManager.html" title="NetworkManager (Português)">NetworkManager</a>, <code>NetworkManager-wait-online.service</code> está habilitado com <code>NetworkManager.service</code>. Verifque se neste caso com <code>systemctl is-enabled NetworkManager-wait-online.service</code>. Se ele não estiver habilitado, então <a href="../pt/Systemd.html#Usando_units" class="mw-redirect" title="Habilite">habilite novamente</a> <code>NetworkManager.service</code>.</li>
+<li>Se estiver usando <a href="../pt/NetworkManager.html" title="NetworkManager (Português)">NetworkManager</a>, <code>NetworkManager-wait-online.service</code> está habilitado com <code>NetworkManager.service</code>. Verifque se neste caso com <code>systemctl is-enabled NetworkManager-wait-online.service</code>. Se ele não estiver habilitado, então <a href="../pt/Systemd.html#Usando_units" class="mw-redirect" title="Reabilite">reabilite</a> <code>NetworkManager.service</code>.</li>
 <li>No caso de <a href="../en/Netctl.html" title="Netctl">netctl</a>, <a href="../pt/Systemd.html#Usando_units" class="mw-redirect" title="Habilite">habilite</a> o <code>netctl-wait-online.service</code>.</li>
-<li>Se estiver usando <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>, <code>systemd-networkd-wait-online.service</code> é habilitado com <code>systemd-networkd.service</code>. Verifique se este é o caso com <code>systemctl is-enabled systemd-networkd-wait-online.service</code>.</li>
+<li>Se estiver usando <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>, <code>systemd-networkd-wait-online.service</code> é habilitado com <code>systemd-networkd.service</code>. Verifique se este é o caso com <code>systemctl is-enabled systemd-networkd-wait-online.service</code>. Se ele não estiver habilitado, então <a href="../pt/Systemd.html#Usando_units" class="mw-redirect" title="Reabilite">reabilite</a> <code>systemd-networkd.service</code>.</li>
 </ul>
 <p>Para explicações mais detalhadas, veja <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget/">Running services after the network is up</a> no wiki do systemd.
 </p>
+<p>Se um serviço precisar realizar consultas DNS, ele também deve ser solicitado após <code>nss-lookup.target</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/<i>foo</i>.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
+...
+Wants=network-online.target
+After=network-online.target nss-lookup.target
+...</pre>
+<p>Veja <span class="plainlinks archwiki-template-man" title="$ man 7 systemd.special"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.special.7#Special_Passive_System_Units">systemd.special(7) § Special Passive System Units</a></span>.
+</p>
+<p>Para que <code>nss-lookup.target</code> tenha algum efeito, ele precisa de um serviço que o extraia via <code>Wants=nss-lookup.target</code> e se ordena antes dele com <code>Before=nss-lookup.target</code>. Normalmente, isso é feito por <a href="../pt/Domain_name_resolution.html#Servidores_DNS" class="mw-redirect" title="Resolvedor de DNS">Resolvedores de DNS</a> locais.
+</p>
+<p>Verifique qual serviço ativo, se houver, está puxando <code>nss-lookup.target</code> com:
+</p>
+<pre>$ systemctl list-dependencies --reverse nss-lookup.target
+</pre>
 <h3>
 <span id="Habilitar_units_instaladas_por_padr.C3.A3o"></span><span class="mw-headline" id="Habilitar_units_instaladas_por_padrão">Habilitar units instaladas por padrão</span>
 </h3>
@@ -598,19 +650,48 @@ w    /proc/acpi/wakeup     -    -    -    -   USBE
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> Habilitar todas as units por padrão pode causar problemas com pacotes que contêm duas ou mais unidades mutuamente exclusivas. O <i>systemctl preset</i> é projetado para ser usado por distribuições ou administradores de sistema. No caso em que duas units conflitantes seriam habilitadas, você deve especificar explicitamente qual delas deve ser desabilitada em um arquivo de configuração predefinido, conforme especificado em <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.preset"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.preset.5">systemd.preset(5)</a></span>.</div>
 <h3><span class="mw-headline" id="Usando_ambientes_de_aplicativos_em_sandbox">Usando ambientes de aplicativos em <i>sandbox</i></span></h3>
-<p>Um arquivo de unit pode ser criado como uma <i>sandbox</i> para isolar aplicativos e seus processos em um ambiente virtual reforçado. O systemd alavanca <a href="https://en.wikipedia.org/wiki/Linux_namespaces" class="extiw" title="wikipedia:Linux namespaces">espaços de nomes</a>, listas brancas/negras de <a href="../pt/Capabilities.html" class="mw-redirect" title="Capacidades">Capacidades</a> e <a href="../en/Cgroups.html" class="mw-redirect" title="Control groups">grupos de controle</a> ("cgroups") para processos contêineres através de uma extensa <a rel="nofollow" class="external text" href="https://www.freedesktop.org/software/systemd/man/systemd.exec.html">configuração do ambiente de execução</a>.
+<p>Um arquivo de unit pode ser criado como uma <i>sandbox</i> para isolar aplicativos e seus processos em um ambiente virtual reforçado. O systemd alavanca <a href="https://en.wikipedia.org/wiki/Linux_namespaces" class="extiw" title="wikipedia:Linux namespaces">espaços de nomes</a>, lista de permitidos/negados de <a href="../pt/Capabilities.html" class="mw-redirect" title="Capacidades">capacidades</a> e <a href="../en/Cgroups.html" class="mw-redirect" title="Control groups">grupos de controle</a> ("cgroups") para processos contêineres através de uma extensa configuração do ambiente de execução—<span class="plainlinks archwiki-template-man" title="$ man 5 systemd.exec"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.exec.5">systemd.exec(5)</a></span>.
 </p>
-<p>O aprimoramento de um arquivo existente de unit do systemd com um aplicativo de <i>sandboxing</i> normalmente requer testes de tentativa e erro acompanhados pelo uso generoso de <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=strace">strace</a></span>, <a href="https://en.wikipedia.org/wiki/pt:Fluxos_padr%C3%A3o#Erro_padr.C3.A3o_.28stderr.29" class="extiw" title="wikipedia:pt:Fluxos padrão">stderr</a> e facilidades de saída e registro de erro do <a rel="nofollow" class="external text" href="https://www.freedesktop.org/software/systemd/man/journalctl.html">journalctl</a>. Você pode querer pesquisar primeiro a documentação original para testes já feitos para basear os testes. Para obter um ponto de partida para as possível opções de segurança, execute
+<p>O aprimoramento de um arquivo existente de unit do systemd com um aplicativo de <i>sandboxing</i> normalmente requer testes de tentativa e erro acompanhados pelo uso generoso de <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=strace">strace</a></span>, <a href="https://en.wikipedia.org/wiki/pt:Fluxos_padr%C3%A3o#Erro_padr.C3.A3o_.28stderr.29" class="extiw" title="wikipedia:pt:Fluxos padrão">stderr</a> e facilidades de saída e registro de erro do <span class="plainlinks archwiki-template-man" title="$ man 1 journalctl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/journalctl.1">journalctl(1)</a></span>. Você pode querer pesquisar primeiro a documentação original para testes já feitos para basear os testes. Para obter um ponto de partida para as possível opções de segurança, execute
 </p>
 <pre>$ systemd-analyze security <i>unit</i>
 </pre>
-<p>Alguns exemplos sobre como fazer <i>sandboxing</i> como systemd pode ser implementado:
+<p>Alguns exemplos de como o <i>sandboxing</i> com systemd pode ser implementado:
 </p>
 <ul><li>
-<code>CapabilityBoundingSet</code> define uma lista branca definida de capacidades permitidas, mas também pode ser usado para inserir em lista negra uma capacidade específica para uma unit.
+<code>CapabilityBoundingSet</code> define uma lista de capacidades (<span class="plainlinks archwiki-template-man" title="$ man 7 capabilities"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/capabilities.7">capabilities(7)</a></span>) que são permitidas ou negadas para uma unit. Veja <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.exec"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.exec.5#CAPABILITIES">systemd.exec(5) § CAPABILITIES</a></span>.
 <ul><li>A capacidade <code>CAP_SYS_ADM</code>, por exemplo, que deve ser um dos <a rel="nofollow" class="external text" href="https://lwn.net/Articles/486306/">objetivos de um sandbox seguro</a>: <code>CapabilityBoundingSet=~ CAP_SYS_ADM</code>
 </li></ul>
 </li></ul>
+<h3>
+<span id="Notifica.C3.A7.C3.A3o_sobre_servi.C3.A7os_com_falha"></span><span class="mw-headline" id="Notificação_sobre_serviços_com_falha">Notificação sobre serviços com falha</span>
+</h3>
+<p>In order to notify about service failures, a <code>OnFailure=</code> directive needs to be added to the according service file, for example by using a <a href="#Drop-in_files">drop-in configuration file</a>. Adding this directive to every service unit can be achieved with a top-level drop-in configuration file. For details about top-level drop-ins, see <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5">systemd.unit(5)</a></span>.
+</p>
+<p>Create a top-level drop-in for services:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/service.d/toplevel-override.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
+OnFailure=failure-notification@%n</pre>
+<p>This adds <code>OnFailure=failure-notification@%n</code> to every service file. If <i>some_service_unit</i> fails, <code>failure-notification@<i>some_service_unit</i></code> will be started to handle the notification delivery (or whatever task it is configured to perform).
+</p>
+<p>Create the <code>failure-notification@</code> template unit:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/failure-notification@.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
+Description=Send a notification about a failed systemd unit
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/<i>path</i>/<i>to</i>/failure-notification.sh %i</pre>
+<p>You can create the <code>failure-notification.sh</code> script and define what to do or how to notify (mail, gotify, xmpp, etc.). The <code>%i</code> will be the name of the failed service unit and will be passed as argument to the script.
+</p>
+<p>In order to prevent a regression for instances of <code>failure-notification@.service</code>, create an empty drop-in configuration file with the same name as the top-level drop-in (the empty service-level drop-in configuration file takes precedence over the top-level drop-in and overrides the latter one):
+</p>
+<pre># mkdir -p /etc/systemd/system/failure-notification@.service.d
+# touch /etc/systemd/system/failure-notification@.service.d/toplevel-override.conf
+</pre>
 <h2>
 <span id="Solu.C3.A7.C3.A3o_de_problemas"></span><span class="mw-headline" id="Solução_de_problemas">Solução de problemas</span>
 </h2>
@@ -710,20 +791,16 @@ Environment=SYSTEMD_LOG_LEVEL=debug
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../pt/Category:Init.html" title="Category:Init (Português)">Init (Português)</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd_(Portugu%C3%AAs)&amp;oldid=636998">https://wiki.archlinux.org/index.php?title=Systemd_(Português)&amp;oldid=636998</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 2 October 2020, at 12:35.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd_(Portugu%C3%AAs)&amp;oldid=654444">https://wiki.archlinux.org/index.php?title=Systemd_(Português)&amp;oldid=654444</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 10 March 2021, at 18:41.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

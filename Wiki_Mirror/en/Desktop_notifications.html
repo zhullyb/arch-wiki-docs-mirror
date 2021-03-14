@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -98,15 +99,16 @@
 <ul>
 <li class="toclevel-2 tocsection-36"><a href="#Replace_previous_notification"><span class="tocnumber">4.1</span> <span class="toctext">Replace previous notification</span></a></li>
 <li class="toclevel-2 tocsection-37"><a href="#Include_Buttons_or_listen_for_close/on-click_of_the_notification"><span class="tocnumber">4.2</span> <span class="toctext">Include Buttons or listen for close/on-click of the notification</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#Multiple_notification_servers_with_D-Bus_services"><span class="tocnumber">4.3</span> <span class="toctext">Multiple notification servers with D-Bus services</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-38">
+<li class="toclevel-1 tocsection-39">
 <a href="#Troubleshooting"><span class="tocnumber">5</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-39"><a href="#Applications_hanging_for_exactly_one_minute"><span class="tocnumber">5.1</span> <span class="toctext">Applications hanging for exactly one minute</span></a></li>
+<li class="toclevel-2 tocsection-40"><a href="#Applications_hanging_for_exactly_one_minute"><span class="tocnumber">5.1</span> <span class="toctext">Applications hanging for exactly one minute</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-40"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-41"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -120,16 +122,17 @@
 <p><a href="../en/Cinnamon.html" title="Cinnamon">Cinnamon</a>, <a href="../en/Deepin_Desktop_Environment.html" class="mw-redirect" title="Deepin">Deepin</a>, <a href="../en/Enlightenment.html" title="Enlightenment">Enlightenment</a>, <a href="../en/GNOME.html" title="GNOME">GNOME</a>, <a href="../en/GNOME/Flashback.html" class="mw-redirect" title="GNOME Flashback">GNOME Flashback</a> and <a href="../en/KDE.html#Plasma" class="mw-redirect" title="KDE Plasma">KDE Plasma</a>  use their own implementations to display notifications, and it cannot be replaced. Their notification servers are started automatically on login to receive notifications from applications via DBus.
 </p>
 <h3><span class="mw-headline" id="Standalone">Standalone</span></h3>
-<p>In other desktop environments, the notification server needs to be launched using your WM's/DE's "autostart" option.
+<p>In other desktop environments, the notification server needs to be launched using your WM's/DE's "autostart" option or as a <a href="../en/Systemd.html" title="Systemd">systemd</a> service.
 </p>
-<p>After installing the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=notification-daemon">notification-daemon</a></span> package, the notification server can be launched on the first call via <a href="../en/D-Bus.html" title="D-Bus">D-Bus</a>, adding the following configuration to its services directory 
-<code>/usr/share/dbus-1/services</code> respectively <code>$XDG_DATA_HOME/dbus-1/services</code>, e.g.
+<p>Alternatively, making the notification server as a <a href="../en/D-Bus.html" title="D-Bus">D-Bus</a> service, the notification server can be launched automatically on the first call to it. For example, after installing the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=notification-daemon">notification-daemon</a></span> package, add the following configuration to <a href="../en/D-Bus.html" title="D-Bus">D-Bus</a> services directory (<code>/usr/share/dbus-1/services</code> or <code>$XDG_DATA_HOME/dbus-1/services</code>):
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">org.freedesktop.Notifications.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[D-BUS Service]
 Name=org.freedesktop.Notifications
 Exec=/usr/lib/notification-daemon-1.0/notification-daemon</pre>
-<p>You can choose one of the following implementations:
+<p>Whenever an application sends a notification by sending a signal to <code>org.freedesktop.Notifications</code>, D-Bus activates <code>/usr/lib/notification-daemon-1.0/notification-daemon</code> if it has not already been activated.
+</p>
+<p>You can also choose one of the following implementations:
 </p>
 <ul><li>
 <b><a href="../en/Avant_Window_Navigator.html" title="Avant Window Navigator">Avant Window Navigator</a></b> — A notification-daemon applet is available for AWN.</li></ul>
@@ -142,7 +145,7 @@ Exec=/usr/lib/notification-daemon-1.0/notification-daemon</pre>
 <a rel="nofollow" class="external free" href="https://github.com/phuhl/linux_notification_center">https://github.com/phuhl/linux_notification_center</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/deadd-notification-center/">deadd-notification-center</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
-<b><a href="../en/Dunst.html" title="Dunst">Dunst</a></b> — Minimalistic notification daemon for Linux designed to fit nicely into minimalistic windowmanagers like <a href="../en/Dwm.html" title="Dwm">dwm</a>.</li></ul>
+<b><a href="../en/Dunst.html" title="Dunst">Dunst</a></b> — Minimalist notification daemon for Linux designed to fit nicely into minimalist window managers like <a href="../en/Dwm.html" title="Dwm">dwm</a>. Includes Wayland support since 1.6.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://dunst-project.org/">https://dunst-project.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dunst">dunst</a></span>
 </dd></dl>
@@ -216,6 +219,24 @@ notify-send 'Hello world!' 'This is an example notification.' --icon=dialog-info
 <li>An overview on the available icons can be found <a rel="nofollow" class="external text" href="https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html">here</a>.</li>
 <li>To send desktop notification from a background script running as root (replace <code><i>X_user</i></code> and <code><i>X_userid</i></code> with the user and userid running X respectively): <pre># sudo -u <i>X_user</i> DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/<i>X_userid</i>/bus notify-send 'Hello world!' 'This is an example notification.'</pre>
 </li>
+</ul>
+</div>
+<ul><li>Dependency: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glib2">glib2</a></span>
+</li></ul>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">hello_world.sh</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/bash
+gdbus call --session \
+    --dest=org.freedesktop.Notifications \
+    --object-path=/org/freedesktop/Notifications \
+    --method=org.freedesktop.Notifications.Notify \
+    "" 0 "" 'Hello world!' 'This is an example notification.' \
+    '[]' '{"urgency": &lt;1&gt;}' 5000</pre>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> 
+<ul>
+<li>See <a rel="nofollow" class="external text" href="https://developer.gnome.org/notification-spec/#command-notify">org.freedesktop.Notifications.Notify</a> for more details about the D-Bus interface.</li>
+<li>
+<code>dbus-send</code>, though being similar to <code>gdbus</code>, does not work because one of the arguments in the method <code>org.freedesktop.Notifications.Notify</code> requires data type <code>variant</code>, which is not supported by <code>dbus-send</code>.</li>
 </ul>
 </div>
 <h3><span class="mw-headline" id="Boo">Boo</span></h3>
@@ -682,6 +703,19 @@ from gi.repository import Notify
 Notify.init("Hello world")
 Hello = Notify.Notification.new("Hello world", "This is an example notification.", "dialog-information")
 Hello.show()</pre>
+<ul><li>Dependency: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-dbus">python-dbus</a></span>
+</li></ul>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">hello_world.py</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/usr/bin/env python
+import dbus
+
+notify_interface = dbus.Interface(
+    object=dbus.SessionBus().get_object("org.freedesktop.Notifications", "/org/freedesktop/Notifications"),
+    dbus_interface="org.freedesktop.Notifications")
+
+notify_interface.Notify("", 0, "", "Hello world", "This is an example notification.", [], {"urgency": 1}, 10000)</pre>
+<p>For the arguments in the method <code>Notify</code>, please refer to the section of <a rel="nofollow" class="external text" href="https://developer.gnome.org/notification-spec/#command-notify">org.freedesktop.Notifications.Notify</a> at <a rel="nofollow" class="external text" href="https://developer.gnome.org/notification-spec/">Desktop Notifications Specification</a>.
+</p>
 <h3><span class="mw-headline" id="Ruby">Ruby</span></h3>
 <ul><li>Dependencies: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libnotify">libnotify</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ruby-gir_ffi/">ruby-gir_ffi</a></span><sup><small>AUR</small></sup>
 </li></ul>
@@ -823,6 +857,9 @@ done</pre>
 <p>Example with icons on buttons:
 </p>
 <pre>notify-send.py "Buttons" "Do you like em?" --hint boolean:action-icons:true --action yes:face-cool no:face-sick</pre>
+<h3><span class="mw-headline" id="Multiple_notification_servers_with_D-Bus_services">Multiple notification servers with D-Bus services</span></h3>
+<p>As described in the section <a href="../en/Desktop_notifications.html#Standalone" title="Desktop notifications">Standalone</a>, users can create a D-Bus service so that a notification server can be launched automatically. Some implementations already include the D-Bus service files. However, this causes a problem when multiple notification servers are installed and when some of them come with the service files. For example, installing both <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dunst">dunst</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mako">mako</a></span> without explicitly specifying the desired server, D-Bus then chooses one for the users, and the decision is out of users' control. To avoid the situation, it may be better to explicitly launch the desired server either manually, through autostart, or through systemd.
+</p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Applications_hanging_for_exactly_one_minute">Applications hanging for exactly one minute</span></h3>
 <p>If applications hang when attempting to show notifications, it might be because of a notification service falsely advertising its availability through the D-Bus service. 
@@ -871,8 +908,8 @@ Jul 01 09:41:49 laptop dbus-daemon[866]: [session uid=1000 pid=866] Activated se
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Desktop_notifications&amp;oldid=646725">https://wiki.archlinux.org/index.php?title=Desktop_notifications&amp;oldid=646725</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 11:52.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Desktop_notifications&amp;oldid=654753">https://wiki.archlinux.org/index.php?title=Desktop_notifications&amp;oldid=654753</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 11:19.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

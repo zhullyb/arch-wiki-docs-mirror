@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -75,13 +76,35 @@ It uses Xvnc, X11rdp or xorgxrdp as a backend.
 <p>Edit <code>~/.xinitrc</code> or <code>/etc/X11/xinit/xinitrc</code> to launch your DE.
 </p>
 <h4><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h4>
-<p>If you encounter black box around mouse pointer create <code>~/.Xresources-xrdp</code> with line <code>Xcursor.core:1</code> and load it in <code>~/.xinitrc</code> like
-</p>
+<ul><li>If you encounter black box around mouse pointer create <code>~/.Xresources-xrdp</code> with line <code>Xcursor.core:1</code> and load it in <code>~/.xinitrc</code> like</li></ul>
 <pre>xrdb ~/.Xresources-xrdp
 exec startlxde
 </pre>
 <p>You may need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xrdb">xorg-xrdb</a></span>.
 </p>
+<p><br>
+</p>
+<ul><li>You may get a black screen after logging into the session manager if your <code>~/.xinitrc</code> has <code>--exit-with-session</code> set in the <code>dbus_args</code>.</li></ul>
+<p>Try copying <code>~/.xinitrc</code> to <code>~/.xrdpinitrc</code>, removing <code>--exit-with-session</code>, and updating <code>/etc/xrdp/startwm.sh</code> to call <code>~/.xrdpinitrc</code> instead of <code>~/.xinitrc</code>. You might need to append your desktop environment to the call to .xrdpinitrc, as is mentioned in ~/.xinitrc; eg. <code>. ~/.xrdpinitrc xfce</code>.
+</p>
+<p><br>
+</p>
+<ul><li>If you are prompted to login to gnome-keyring when your session starts add the following 2 lines to <code>/etc/pam.d/xrdp-sesman</code>
+</li></ul>
+<pre>auth        optional    pam_gnome_keyring.so
+session     optional    pam_gnome_keyring.so auto_start
+</pre>
+<p><br>
+</p>
+<ul><li>To prevent user defined <code>~/.config/autostart</code> items for a from starting you can set the autostart directory param on the session in the <code>~/.xinitrc</code> to use only the global <code>/etc/xdg/autostart</code> directory.</li></ul>
+<pre>get_session(){
+    local dbus_args=(--sh-syntax)
+    case "$SESSION" in
+        awesome) dbus_args+=(awesome) ;;
+        bspwm) dbus_args+=(bspwm-session) ;;
+        budgie) dbus_args+=(budgie-desktop) ;;
+        cinnamon) dbus_args+=(cinnamon-session -a /etc/xdg/autostart) ;;
+</pre>
 <h3>
 <span id="Running_with_Vino_.28Gnome_VNC-Server_for_root_session.29"></span><span class="mw-headline" id="Running_with_Vino_(Gnome_VNC-Server_for_root_session)">Running with Vino (Gnome VNC-Server for root session)</span>
 </h3>
@@ -134,8 +157,8 @@ It will start a new session if the geometry/resolution doesn't match.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xrdp&amp;oldid=647100">https://wiki.archlinux.org/index.php?title=Xrdp&amp;oldid=647100</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:31.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xrdp&amp;oldid=653813">https://wiki.archlinux.org/index.php?title=Xrdp&amp;oldid=653813</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 2 March 2021, at 02:22.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

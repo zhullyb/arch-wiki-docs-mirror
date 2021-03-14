@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -253,6 +254,10 @@ To be more accurate, <i>before</i> trying to instantiate the <code>name@.suffix<
 </p>
 <pre># systemctl disable <i>unit</i>
 </pre>
+<p><b>Reenable</b> (i.e. disable and enable anew) a unit; for example, in case its <code>[Install]</code> section has changed since last enabling it:
+</p>
+<pre># systemctl reenable <i>unit</i>
+</pre>
 <h4><span class="mw-headline" id="Masking">Masking</span></h4>
 <p><b>Mask</b> a unit to make it impossible to start (both manually and as a dependency, which makes masking dangerous):
 </p>
@@ -347,10 +352,8 @@ To be more accurate, <i>before</i> trying to instantiate the <code>name@.suffix<
 </ul>
 </div>
 <h4><span class="mw-headline" id="Replacement_unit_files">Replacement unit files</span></h4>
-<p>To replace the unit file <code>/usr/lib/systemd/system/<i>unit</i></code>, create the file <code>/etc/systemd/system/<i>unit</i></code> and <i>reenable</i> the unit to update the symlinks:
+<p>To replace the unit file <code>/usr/lib/systemd/system/<i>unit</i></code>, create the file <code>/etc/systemd/system/<i>unit</i></code> and <a href="#Enabling">reenable</a> the unit to update the symlinks.
 </p>
-<pre># systemctl reenable <i>unit</i>
-</pre>
 <p>Alternatively, run:
 </p>
 <pre># systemctl edit --full <i>unit</i>
@@ -539,7 +542,7 @@ Created symlink /etc/systemd/system/default.target -&gt; /usr/lib/systemd/system
 <h4><span class="mw-headline" id="GPT_partition_automounting">GPT partition automounting</span></h4>
 <p>On a <a href="../en/Partitioning.html#GUID_Partition_Table" class="mw-redirect" title="GPT">GPT</a> partitioned disk <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-gpt-auto-generator"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-gpt-auto-generator.8">systemd-gpt-auto-generator(8)</a></span> will mount partitions following the <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Discoverable Partitions Specification</a>, thus they can be omitted from <code>fstab</code>.
 </p>
-<p><a href="../en/EFI_system_partition.html" title="EFI system partition">EFI system partition</a> automounting requires that the boot loader sets the <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_INTERFACE/">LoaderDevicePartUUID</a> EFI variable. Only <a href="../en/Systemd-boot.html" title="Systemd-boot">systemd-boot</a> is known to do this.
+<p><a href="../en/EFI_system_partition.html" title="EFI system partition">EFI system partition</a> automounting requires that the boot loader sets the <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_INTERFACE/">LoaderDevicePartUUID</a> EFI variable. This is supported by <a href="../en/Systemd-boot.html" title="Systemd-boot">systemd-boot</a> and <a href="../en/REFInd.html#LoaderDevicePartUUID" title="REFInd">rEFInd (not enabled by default)</a>.
 </p>
 <p>For <code>/var</code> and <code>/var/tmp</code> automounting to work, the PARTUUID must match the SHA256 HMAC hash of the partition type UUID keyed by the machine ID. The required PARTUUID can be obtained using: 
 </p>
@@ -600,12 +603,28 @@ After=network-online.target
 <p>The network wait service of the particular application that manages the network, must also be enabled so that <code>network-online.target</code> properly reflects the network status.
 </p>
 <ul>
-<li>If using <a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a>, <code>NetworkManager-wait-online.service</code> is enabled together with <code>NetworkManager.service</code>. Check if this is the case with <code>systemctl is-enabled NetworkManager-wait-online.service</code>. If it is not enabled, then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">reenable</a> <code>NetworkManager.service</code>.</li>
+<li>If using <a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a>, <code>NetworkManager-wait-online.service</code> is enabled together with <code>NetworkManager.service</code>. Check if this is the case with <code>systemctl is-enabled NetworkManager-wait-online.service</code>. If it is not enabled, then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Reenable">reenable</a> <code>NetworkManager.service</code>.</li>
 <li>In the case of <a href="../en/Netctl.html" title="Netctl">netctl</a>, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> the <code>netctl-wait-online.service</code>.</li>
-<li>If using <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>, <code>systemd-networkd-wait-online.service</code> is enabled together with <code>systemd-networkd.service</code>. Check if this is the case with <code>systemctl is-enabled systemd-networkd-wait-online.service</code>.</li>
+<li>If using <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>, <code>systemd-networkd-wait-online.service</code> is enabled together with <code>systemd-networkd.service</code>. Check if this is the case with <code>systemctl is-enabled systemd-networkd-wait-online.service</code>. If it is not enabled, then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Reenable">reenable</a> <code>systemd-networkd.service</code>.</li>
 </ul>
 <p>For more detailed explanations see <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget/">Running services after the network is up</a> in the systemd wiki.
 </p>
+<p>If a service needs to perform DNS queries, it should additionally be ordered after <code>nss-lookup.target</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/<i>foo</i>.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
+...
+Wants=network-online.target
+After=network-online.target nss-lookup.target
+...</pre>
+<p>See <span class="plainlinks archwiki-template-man" title="$ man 7 systemd.special"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.special.7#Special_Passive_System_Units">systemd.special(7) § Special Passive System Units</a></span>.
+</p>
+<p>For <code>nss-lookup.target</code> to have any effect it needs a service that pulls it in via <code>Wants=nss-lookup.target</code> and orders itself before it with <code>Before=nss-lookup.target</code>. Typically this is done by local <a href="../en/Domain_name_resolution.html#DNS_servers" class="mw-redirect" title="DNS resolver">DNS resolvers</a>.
+</p>
+<p>Check which active service, if any, is pulling in <code>nss-lookup.target</code> with:
+</p>
+<pre>$ systemctl list-dependencies --reverse nss-lookup.target
+</pre>
 <h3><span class="mw-headline" id="Enable_installed_units_by_default">Enable installed units by default</span></h3>
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
@@ -619,6 +638,11 @@ After=network-online.target
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Enabling all units by default may cause problems with packages that contain two or more mutually exclusive units. <i>systemctl preset</i> is designed to be used by distributions and spins or system administrators. In the case where two conflicting units would be enabled, you should explicitly specify which one is to be disabled in a preset configuration file as specified in the <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.preset"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.preset.5">systemd.preset(5)</a></span> man page.</div>
 <h3><span class="mw-headline" id="Sandboxing_application_environments">Sandboxing application environments</span></h3>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-go-next.png" class="image"><img alt="Tango-go-next.png" src="../File:Tango-go-next.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for moving to <a href="/index.php?title=Systemd/Sandboxing&amp;action=edit&amp;redlink=1" class="new" title="Systemd/Sandboxing (page does not exist)">systemd/Sandboxing</a>.</b><a href="../File:Tango-go-next.png" class="image"><img alt="Tango-go-next.png" src="../File:Tango-go-next.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Notes:</b> The topic is broad enough for a dedicated page. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Security#systemd_unit_hardening_and_system.conf_tweaks">Talk:Security#systemd unit hardening and system.conf tweaks</a>)</div>
+</div>
 <p>A unit file can be created as a sandbox to isolate applications and their processes within a hardened virtual environment. systemd leverages <a href="https://en.wikipedia.org/wiki/Linux_namespaces" class="extiw" title="wikipedia:Linux namespaces">namespaces</a>, a list of allowed/denied <a href="../en/Capabilities.html" title="Capabilities">capabilities</a>, and <a href="../en/Cgroups.html" class="mw-redirect" title="Control groups">control groups</a> to container processes through an extensive execution environment configuration—<span class="plainlinks archwiki-template-man" title="$ man 5 systemd.exec"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.exec.5">systemd.exec(5)</a></span>.
 </p>
 <p>The enhancement of an existing systemd unit file with application sandboxing typically requires trial-and-error tests accompanied by the generous use of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=strace">strace</a></span>, <a href="https://en.wikipedia.org/wiki/Standard_streams#Standard_error_.28stderr.29" class="extiw" title="wikipedia:Standard streams">stderr</a> and <span class="plainlinks archwiki-template-man" title="$ man 1 journalctl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/journalctl.1">journalctl(1)</a></span> error logging and output facilities. You may want to first search upstream documentation for already done tests to base trials on. To get a starting point for possible hardening options, run 
@@ -710,9 +734,8 @@ Environment=SYSTEMD_LOG_LEVEL=debug
 <h3><span class="mw-headline" id="Disable_emergency_mode_on_remote_machine">Disable emergency mode on remote machine</span></h3>
 <p>You may want to disable emergency mode on a remote machine, for example, a virtual machine hosted at Azure or Google Cloud. It is because if emergency mode is triggered, the machine will be blocked from connecting to network.
 </p>
-<pre># systemctl mask emergency.service
-# systemctl mask emergency.target
-</pre>
+<p>To disable it, <a href="#Masking">mask</a> <code>emergency.service</code> and <code>emergency.target</code>.
+</p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/systemd" class="extiw" title="wikipedia:systemd">Wikipedia:systemd</a></li>
@@ -754,6 +777,7 @@ Environment=SYSTEMD_LOG_LEVEL=debug
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Move.html" title="Category:Pages or sections flagged with Template:Move">Pages or sections flagged with Template:Move</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
@@ -763,8 +787,8 @@ Environment=SYSTEMD_LOG_LEVEL=debug
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd&amp;oldid=647371">https://wiki.archlinux.org/index.php?title=Systemd&amp;oldid=647371</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 27 December 2020, at 23:53.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd&amp;oldid=654477">https://wiki.archlinux.org/index.php?title=Systemd&amp;oldid=654477</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 11 March 2021, at 05:20.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

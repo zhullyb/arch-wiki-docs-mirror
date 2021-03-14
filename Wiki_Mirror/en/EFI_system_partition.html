@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -173,6 +174,8 @@
 <a href="../en/File_systems.html#Mount_a_file_system" class="mw-redirect" title="Mount">mount</a> ESP to <code>/efi</code> and use a <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot loader">boot loader</a> which is capable of accessing the kernel(s) and initramfs image(s) that are stored elsewhere (typically <a href="../en/Partitioning.html#/boot" title="Partitioning">/boot</a>). See <a href="../en/Arch_boot_process.html#Boot_loader" title="Arch boot process">Arch boot process#Boot loader</a> for more information on boot loader requirements and capabilities.</li>
 <li>
 <a href="../en/File_systems.html#Mount_a_file_system" class="mw-redirect" title="Mount">mount</a> ESP to <code>/boot</code>. This is the preferred method when directly booting an <a href="../en/EFISTUB.html" title="EFISTUB">EFISTUB</a> kernel from UEFI or booting it via a boot manager like <a href="../en/Systemd-boot.html" title="Systemd-boot">systemd-boot</a>.</li>
+<li>
+<a href="../en/File_systems.html#Mount_a_file_system" class="mw-redirect" title="Mount">mount</a> ESP to <code>/efi</code> and additionally mount an "Extended Boot Loader Partition" (XBOOTLDR) to <code>/boot</code>. This can be useful when a previously created ESP is too small to hold multiple boot loaders and/or kernels but the ESP cannot be easily resized (such as when installing Linux after Windows to <a href="../en/Dual_boot_with_Windows.html" class="mw-redirect" title="Dual boot">dual boot</a>). This method is supported by at least <a href="../en/Systemd-boot.html#Installation_using_XBOOTLDR" title="Systemd-boot">systemd-boot</a>.</li>
 </ul>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> 
@@ -201,7 +204,7 @@
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modules-load.d/vfat.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">vfat
 nls_cp437
-nls_iso8859-1
+nls_ascii
 </pre>
 </div>
 <h4><span class="mw-headline" id="Using_bind_mount">Using bind mount</span></h4>
@@ -316,7 +319,7 @@ PRESETS=('default' 'fallback')
 
 #default_config="/etc/mkinitcpio.conf"
 default_image="${ESP_DIR}/initramfs-linux.img"
-default_options="-A esp-update-linux"
+default_options=""
 
 #fallback_config="/etc/mkinitcpio.conf"
 fallback_image="${ESP_DIR}/initramfs-linux-fallback.img"
@@ -329,20 +332,17 @@ fallback_options="-S autodetect"
 # mkinitcpio -p linux
 </pre>
 <h5><span class="mw-headline" id="Another_example">Another example</span></h5>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.d/0.preset</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.d/linux.preset</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">ESP_DIR="<i>esp</i>/EFI/arch"
-cp -af "/boot/vmlinuz-linux${suffix}" "$ESP_DIR/"
+cp -f "/boot/vmlinuz-linux$suffix" "$ESP_DIR/"
 ALL_config="/etc/mkinitcpio.conf"
-ALL_kver="$ESP_DIR/vmlinuz-linux${suffix}"
+ALL_kver="$ESP_DIR/vmlinuz-linux$suffix"
 PRESETS=('default')
 default_config="/etc/mkinitcpio.conf"
-default_image="$ESP_DIR/initramfs-linux${suffix}.img"</pre>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.d/linux.preset</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">source /etc/mkinitcpio.d/0.preset
-</pre>
+default_image="$ESP_DIR/initramfs-linux$suffix.img"</pre>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.d/linux-zen.preset</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">suffix='-zen'
-source /etc/mkinitcpio.d/0.preset</pre>
+source /etc/mkinitcpio.d/linux.preset</pre>
 <h4><span class="mw-headline" id="Using_pacman_hook">Using pacman hook</span></h4>
 <p>A last option relies on the <a href="../en/Pacman.html#Hooks" class="mw-redirect" title="Pacman hooks">pacman hooks</a> that are run at the end of the transaction.
 </p>
@@ -419,8 +419,8 @@ exit 0
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=EFI_system_partition&amp;oldid=642498">https://wiki.archlinux.org/index.php?title=EFI_system_partition&amp;oldid=642498</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 November 2020, at 19:58.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=EFI_system_partition&amp;oldid=653360">https://wiki.archlinux.org/index.php?title=EFI_system_partition&amp;oldid=653360</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 25 February 2021, at 09:06.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

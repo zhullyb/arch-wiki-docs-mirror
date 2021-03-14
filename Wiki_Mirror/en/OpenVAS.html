@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -60,9 +61,8 @@
 <li class="toclevel-1 tocsection-4"><a href="#Installation"><span class="tocnumber">2</span> <span class="toctext">Installation</span></a></li>
 <li class="toclevel-1 tocsection-5"><a href="#Initial_setup"><span class="tocnumber">3</span> <span class="toctext">Initial setup</span></a></li>
 <li class="toclevel-1 tocsection-6"><a href="#Getting_started"><span class="tocnumber">4</span> <span class="toctext">Getting started</span></a></li>
-<li class="toclevel-1 tocsection-7"><a href="#Systemd"><span class="tocnumber">5</span> <span class="toctext">Systemd</span></a></li>
-<li class="toclevel-1 tocsection-8"><a href="#Migration_to_new_major_versions"><span class="tocnumber">6</span> <span class="toctext">Migration to new major versions</span></a></li>
-<li class="toclevel-1 tocsection-9"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#Migration_to_new_major_versions"><span class="tocnumber">5</span> <span class="toctext">Migration to new major versions</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -96,10 +96,10 @@ save 60 10000
 <p>If running OpenVAS in a virtual machine or any other system having a low entropy, you can optionally <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=haveged">haveged</a></span> to gather more entropy. This is required for the key material used for the encrypted credentials saved within the <code>openvas-manager</code> database.
 </p>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openvas/">openvas</a></span><sup><small>AUR</small></sup> package from the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>.
+<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openvas-scanner/">openvas-scanner</a></span><sup><small>AUR</small></sup> package from the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>.
 </p>
 <p>Alternatively install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/groups/x86_64/greenbone-vulnerability-manager/">greenbone-vulnerability-manager</a></span> which provides <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gvm-libs">gvm-libs</a></span> and Greenbone Security Assistant (gsa) <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=greenbone-security-assistant">greenbone-security-assistant</a></span> OpenVAS web frontend.
-The Vulnerability scanning Daemon (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openvas/">openvas</a></span><sup><small>AUR</small></sup>) and the Greenbone Vulnerability Manager (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gvmd/">gvmd</a></span><sup><small>AUR</small></sup>) were move to <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> and are no longer in the <a href="../en/Official_repositories.html" title="Official repositories">official repositories</a>.
+The Vulnerability scanning Daemon (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openvas-scanner/">openvas-scanner</a></span><sup><small>AUR</small></sup>) and the Greenbone Vulnerability Manager (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gvmd/">gvmd</a></span><sup><small>AUR</small></sup>) were move to <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> and are no longer in the <a href="../en/Official_repositories.html" title="Official repositories">official repositories</a>.
 </p>
 <h2><span class="mw-headline" id="Initial_setup">Initial setup</span></h2>
 <p>Create certificates for the server and clients, default values were used:
@@ -137,9 +137,6 @@ The Vulnerability scanning Daemon (<span class="plainlinks archwiki-template-pkg
 <strong>Note:</strong> By default, <code>gsad</code> will bind to port 80. If you are already running a webserver, this will obviously cause problems. Pass the <code>--port</code> switch to <code>gsad</code> for an alternate port. Read the <code>gsad</code> man page for options like <code>--http-only</code>, <code>--no-redirect</code>, and more.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The <a rel="nofollow" class="external text" href="https://community.greenbone.net/t/about-gvm-architecture/1231">Greenbone Security Assistant</a> WebUI requires the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/groups/x86_64/texlive-most/">texlive-most</a></span> package in order to provide PDF downloads of the reports.</div>
-<h2><span class="mw-headline" id="Systemd">Systemd</span></h2>
-<p>Redhat based systemd units are in an AUR package named <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openvas-systemd/">openvas-systemd</a></span><sup><small>AUR</small></sup>. The contain a few tweaks such as better TLS settings.
-</p>
 <h2><span class="mw-headline" id="Migration_to_new_major_versions">Migration to new major versions</span></h2>
 <p>The database needs to be migrated when moving to a new major version:
 </p>
@@ -171,8 +168,8 @@ The Vulnerability scanning Daemon (<span class="plainlinks archwiki-template-pkg
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenVAS&amp;oldid=647837">https://wiki.archlinux.org/index.php?title=OpenVAS&amp;oldid=647837</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 January 2021, at 13:03.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenVAS&amp;oldid=653731">https://wiki.archlinux.org/index.php?title=OpenVAS&amp;oldid=653731</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 March 2021, at 01:35.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

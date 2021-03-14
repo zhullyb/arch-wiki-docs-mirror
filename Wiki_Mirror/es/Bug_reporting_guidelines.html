@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Bug reporting guidelines (Español) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Bug_reporting_guidelines_Español rootpage-Bug_reporting_guidelines_Español skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">Bug reporting guidelines (Español)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Bug_reporting_guidelines.html" title="Bug reporting guidelines">Bug reporting guidelines</a> fue revisada el <b>2021-03-06</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Bug_reporting_guidelines&amp;diff=0&amp;oldid=642964">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<div class="archwiki-template-meta-related-articles-start">
+<p>Artículos relacionados</p>
+<ul>
+<li><a href="../es/General_troubleshooting.html" title="General troubleshooting (Español)">General troubleshooting (Español)</a></li>
+<li><a href="../en/Debugging.html" class="mw-redirect" title="Step-by-step debugging guide">Step-by-step debugging guide</a></li>
+<li><a href="../en/Debug_-_Getting_Traces.html" title="Debug - Getting Traces">Debug - Getting Traces</a></li>
+</ul>
+</div>
+<p>Iniciar (y cerrar) reportes de fallos en el <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/">Arch Linux Bugtracker</a> es una de las varias maneras posibles de <a href="../es/Getting_involved.html" title="Getting involved (Español)">ayudar a la comunidad</a>. Pero, los reportes mal hechos pueden terminar siendo contraproducentes. Cuando se reportan fallos de manera incorrecta, los desarrolladores gastan tiempo investigando y cerrando reportes inválidos. Este documento va a guiar a cualquiera que quiera ayudar a la comunidad reportando y buscando fallos de manera eficaz.
+</p>
+<p>Vea también: <a rel="nofollow" class="external text" href="https://www.chiark.greenend.org.uk/~sgtatham/bugs.html">Como reportar fallos de manera efectiva</a> por Simon Tatham.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1">
+<a href="#Antes_de_reportar"><span class="tocnumber">1</span> <span class="toctext">Antes de reportar</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Buscar_reportes_duplicados"><span class="tocnumber">1.1</span> <span class="toctext">Buscar reportes duplicados</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#%C2%BFUpstream_o_Arch?"><span class="tocnumber">1.2</span> <span class="toctext">¿<i>Upstream</i> o Arch?</span></a></li>
+<li class="toclevel-2 tocsection-4">
+<a href="#%C2%BFFallo_o_caracter%C3%ADstica?"><span class="tocnumber">1.3</span> <span class="toctext">¿Fallo o característica?</span></a>
+<ul>
+<li class="toclevel-3 tocsection-5"><a href="#Razones_por_las_que_no_es_un_fallo"><span class="tocnumber">1.3.1</span> <span class="toctext">Razones por las que no es un fallo</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#Razones_por_las_que_no_es_una_caracter%C3%ADstica"><span class="tocnumber">1.3.2</span> <span class="toctext">Razones por las que no es una característica</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-7"><a href="#Consiguiendo_informaci%C3%B3n_%C3%BAtil"><span class="tocnumber">1.4</span> <span class="toctext">Consiguiendo información útil</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8">
+<a href="#Abriendo_un_reporte_de_fallos"><span class="tocnumber">2</span> <span class="toctext">Abriendo un reporte de fallos</span></a>
+<ul>
+<li class="toclevel-2 tocsection-9"><a href="#Creando_una_cuenta"><span class="tocnumber">2.1</span> <span class="toctext">Creando una cuenta</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Proyectos"><span class="tocnumber">2.2</span> <span class="toctext">Proyectos</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Sumario"><span class="tocnumber">2.3</span> <span class="toctext">Sumario</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Severidades"><span class="tocnumber">2.4</span> <span class="toctext">Severidades</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#incluyendo_informaci%C3%B3n_relevante"><span class="tocnumber">2.5</span> <span class="toctext">incluyendo información relevante</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-14">
+<a href="#Siguiendo_los_reportes"><span class="tocnumber">3</span> <span class="toctext">Siguiendo los reportes</span></a>
+<ul>
+<li class="toclevel-2 tocsection-15"><a href="#Votando_y_siguiendo"><span class="tocnumber">3.1</span> <span class="toctext">Votando y siguiendo</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Respondiendo_peticiones_de_informaci%C3%B3n_adicional"><span class="tocnumber">3.2</span> <span class="toctext">Respondiendo peticiones de información adicional</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Actualizando_el_reporte_de_fallos_cuando_una_versi%C3%B3n_nueva_del_software_es_lanzada"><span class="tocnumber">3.3</span> <span class="toctext">Actualizando el reporte de fallos cuando una versión nueva del software es lanzada</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Cerrando_el_reporte_cuando_est%C3%A1_solucionado"><span class="tocnumber">3.4</span> <span class="toctext">Cerrando el reporte cuando está solucionado</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#M%C3%A1s_acerca_de_los_estatus_de_un_fallo"><span class="tocnumber">3.5</span> <span class="toctext">Más acerca de los estatus de un fallo</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Antes_de_reportar">Antes de reportar</span></h2>
+<p>No es difícil preparar un reporte de fallos detallado y bien hecho, pero requiere un esfuerzo por parte de la persona que reporta. <b>Podría decirse que el trabajo hecho antes de reportar un fallo es la parte más útil del trabajo.</b> Desafortunadamente, pocos se toman el tiempo para hacerlo correctamente.
+</p>
+<p>Los siguientes pasos lo van a guiar en como preparar su reporte de fallos o su petición de características.
+</p>
+<h3><span class="mw-headline" id="Buscar_reportes_duplicados">Buscar reportes duplicados</span></h3>
+<p>Si encuentra un problema o quiere una nueva característica, es muy probable que alguien ya haya pasado por este problema o se le haya ocurrido esa idea. Si así es, puede que ya exista un reporte apropiado. En este caso, no cree otro reporte; si no, vea <a href="#Siguiendo_fallos">#Siguiendo fallos</a>.
+</p>
+<p>Busque bien por información existente, incluyendo en:
+</p>
+<ul>
+<li>
+<a rel="nofollow" class="external text" href="https://bbs.archlinux.org/">Foros de Arch Linux</a>: Los foros son la primera parada para los usuarios que buscan ayuda y compartir ideas. Mientras que una solución puede no existir aún, la información y discusión adicional puede llevarlo por el camino correcto.</li>
+<li>
+<a rel="nofollow" class="external text" href="https://bugs.archlinux.org/">Arch Linux Bugtracker</a>: Su problema puede ya haber sido reportado a los desarrolladores de Arch Linux. Los reportes de fallos duplicados no son útiles y son cerrados de manera rápida. Busque tanto reportes abiertos como cerrados seleccionando «All Statuses» en <i>Advanced</i>. Recuerde seleccionar «search details» y/o «search comments» en <i>Advanced</i>, puede que el titulo del reporte no tenga el texto que está buscando.</li>
+<li>
+<a rel="nofollow" class="external text" href="https://www.google.com">Google</a> o su motor de búsqueda preferido: Busque ocupando el nombre del programa, versión, y alguna parte relevante del mensaje, si es que tiene.</li>
+<li>Foros, listas de difusión, o registro de fallos <b>de la aplicación</b>: Si Arch Linux no es responsable por el fallo, debe ser reportado por los medios de la aplicación en vez de el Arch Linux Bugtracker. Busque tanto en los reportes cerrados recientemente como en los abiertos. Puede que los fallos estén corregidos en la versión de desarrollo del programa.</li>
+<li>
+<b>Foros de otras distribuciones</b>: La comunidad del software libre es vasta; ¡los «Archers» no son los únicos usuarios con ideas! Considere buscar en los <a rel="nofollow" class="external text" href="https://forums.gentoo.org/">Foros de Gentoo</a>, <a rel="nofollow" class="external text" href="http://forums.fedoraforum.org/">FedoraForum.org</a>, y los <a rel="nofollow" class="external text" href="https://ubuntuforums.org/">Foros de Ubuntu</a>, por ejemplo.</li>
+</ul>
+<h3>
+<span id=".C2.BFUpstream_o_Arch.3F"></span><span class="mw-headline" id="¿Upstream_o_Arch?">¿<i>Upstream</i> o Arch?</span>
+</h3>
+<p>Arch Linux es una <i>distribución</i> de GNU/Linux. Los desarrolladores de Arch Linux y los <i>Trusted Users</i> son responsables de compilar, empaquetar, y distribuir software de una gran cantidad de fuentes. <i>Upstream</i> se refiere a las <i>fuentes</i> – los autores originales o mantenedores del software distribuido en Arch Linux. Por ejemplo, el navegador Firefox es desarrollado por Mozilla Project.
+</p>
+<p><b>Si Arch no es responsable por el fallo, el problema no va a ser solucionado reportandolo a los desarrolladores de Arch.</b> La responsabilidad de un fallo cae en los desarrolladores/mantenedores cuando no es causado por el intento de distribuirlo e integrarlo de la distribución.
+</p>
+<p>Al reportar los fallos a los desarrolladores, no solo ayuda a «Archers» y a los desarrolladores de Arch, si no que también ayuda a más personas en la comunidad del software libre porque la solución va a llegar a todos los distribuidores.
+</p>
+<p>Después de reportar el fallo a los desarrolladores o si encuentra información relevante, puede ser útil publicarlo en el Arch Linux Bugtracker para los desarrolladores de Arch y los usuarios sepan de ello.
+</p>
+<p>Entonces, ¿de que es responsable Arch Linux?:
+</p>
+<ul>
+<li>
+<a rel="nofollow" class="external text" href="https://projects.archlinux.org/">Arch Linux Projects</a>: <a href="../es/Pacman.html" title="Pacman (Español)">pacman</a>, <a href="../es/Arch_User_Repository.html" class="mw-redirect" title="AUR (Español)">AUR</a>, <a href="../es/Mkinitcpio.html" title="Mkinitcpio (Español)">mkinitcpio</a> y los sitios web de Arch. Si tiene dudas con respecto si un proyecto pertenece a Arch Linux o no, vea la información del paquete (<code>pacman -Qi <i>package_name</i></code> o usando la pagina) y vea la fuente.</li>
+<li>
+<b>Empaquetado</b>: El empaquetado básicamente consiste en conseguir el código desde la fuente, compilarlo con las opciones relevantes, asegurarse que va a instalarse correctamente en un sistema Arch, y ver si la funcionalidad básica está presente. Empaquetarlo para Arch no significa agregarle características nuevas o parches para los fallos existentes; ese es el trabajo de los desarrolladores/mantenedores.</li>
+</ul>
+<p>Si un fallo/característica no es parte de la responsabilidad de Arch, reportelo a los desarrolladores. Vea también <a href="#Razones_por_las_que_no_es_un_fallo">#Razones por las que no es un fallo</a>
+</p>
+<h3>
+<span id=".C2.BFFallo_o_caracter.C3.ADstica.3F"></span><span class="mw-headline" id="¿Fallo_o_característica?">¿Fallo o característica?</span>
+</h3>
+<dl>
+<dt>Fallo</dt>
+<dd>Algo que debería funcionar pero no lo hace, de manera contraria a las intenciones del desarrollador.</dd>
+<dt>Característica</dt>
+<dd>Algo que un programa hace o haría si alguien lo programara.</dd>
+</dl>
+<h4><span class="mw-headline" id="Razones_por_las_que_no_es_un_fallo">Razones por las que no es un fallo</span></h4>
+<ul>
+<li>Porque es algo que le gustaría que hiciera un programa, y que no está implementado por los desarrolladores. En resumen: <b>una nueva característica</b>.</li>
+<li>Porque el fallo ya fue reportado a los desarrolladores.</li>
+<li>Porque el fallo que ya está arreglado en el código fuente pero no en Arch porque el paquete está desactualizado.</li>
+<li>Porque es un <b>paquete desactualizado</b>. Use «<b>Flag Package Out-of-Date</b>» en <a rel="nofollow" class="external text" href="https://archlinux.org/packages/">pagina de los paquetes de Arch</a>.</li>
+<li>Porque el paquete que no usa los parches comunitarios de Fedora, Ubuntu, u otros. <b>Los parches deben ser mandados a los <i>desarrolladores</i></b>.</li>
+<li>Porque en el paquete la <b>función no esencial</b> X o la característica Y no están activadas. Esto es una petición de características.</li>
+<li>Porque el paquete que no incluye un archivo <b>.desktop<i> o </i></b><i>iconos'</i> o alguna otra cosa de <a rel="nofollow" class="external text" href="https://www.freedesktop.org">freedesktop</a>. Esto no es una falla si esos archivos no están incluidos con el código fuente, y debe pedir a los desarrolladores que los incluyan. Si los desarrolladores proveen esos archivos pero estos no están en el paquete, entonces sí es un fallo.</li>
+</ul>
+<h4>
+<span id="Razones_por_las_que_no_es_una_caracter.C3.ADstica"></span><span class="mw-headline" id="Razones_por_las_que_no_es_una_característica">Razones por las que no es una característica</span>
+</h4>
+<ul>
+<li>Porque es un fallo...</li>
+<li>Porque no es responsabilidad de Arch implementar la característica, es decir una <b>característica nueva</b>.</li>
+<li>Porque el paquete no está actualizado. Use «<b>Flag Package Out-of-Date</b>» en <a rel="nofollow" class="external text" href="https://archlinux.org/packages/">pagina de los paquetes de Arch</a>.</li>
+<li>Porque el paquete que no usa los parches comunitarios de Fedora, Ubuntu, u otros. <b>Los parches deben ser mandados a los <i>desarrolladores</i></b>.</li>
+</ul>
+<h3>
+<span id="Consiguiendo_informaci.C3.B3n_.C3.BAtil"></span><span class="mw-headline" id="Consiguiendo_información_útil">Consiguiendo información útil</span>
+</h3>
+<p>Aquí hay una lista de información útil que debería ser mencionada en su reporte:
+</p>
+<ul>
+<li>La <b>versión del paquete</b> usada. <b>Siempre especifique la versión del paquete</b>. Poner «la ultima», «la lanzada hoy», o «el paquete en extra» no significa nada. Especialmente cuando el fallo no va ser arreglado justo ahora.</li>
+<li>Las versiones de las librerías principales que usa el paquete (disponible en la variable «depends» en el PKGBUILD), cuando están relacionadas con el fallo. Si no sabe que información exactamente debe incluir, espere que alguien se la pida...</li>
+<li>La versión del kernel que está usando si es que tiene problemas relacionados con el hardware.</li>
+<li>Indique si <b>la característica funciono en algún momento o no</b>. Si eso paso, indique cuando dejó de funcionar.</li>
+<li>Mencione la <b>marca de su hardware</b> si tiene problemas con el hardware.</li>
+<li>Añada la <b>información de registros relevantes</b> si hay disponibles. Puede obtenerla en los siguientes lugares dependiendo de su problema:
+<ul>
+<li>El <a href="../es/9c9ac504efb80051d62a211b0444a532.html" title="Systemd (Español)/Journal (Español)">systemd journal</a>. Si usa <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslog-ng">syslog-ng</a></span>, <code>/var/log/messages</code> debe contener registros relacionados al kernel y problemas con el hardware.</li>
+<li>
+<code>~/.local/share/xorg/Xorg.0.log</code>, <code>/var/log/Xorg.0.log</code>, <code>/var/log/Xorg.2.log</code> o cualquier archivo de registro de Xorg si tiene problemas relacionados con el video (nvidia, ati, xorg...).</li>
+<li>Ejecute el programa en una <b>consola</b> y use algún modo <b>debug (depuración)</b> o <b>verbose (verboso)</b> si está disponible (vea la documentación del programa), y copie la salida en un archivo. Cuando ejecute la aplicación en la consola asegúrese que la información relevante esté en <b>inglés</b> para que mucha gente pueda entenderla. Puede hacer esto ejecutando <code>export LC_ALL="C"</code>. Por ejemplo, si quiere conseguir información relevante sobre la ejecución de un programa llamado <i>foobar</i>, y el programa <i>foobar</i> tiene una opción <code>--verbose</code>:</li>
+</ul>
+</li>
+</ul>
+<pre>$ export LC_ALL="C"
+$ foobar --verbose
+</pre>
+<p>Esto solo va a afectar a la terminal actual y dejará de tener efecto cuando la cierre.
+</p>
+<p>Si tiene que copiar mucho texto, como la salida de dmesg o un registro de Xorg, es preferible que lo guarde como un archivo y lo adjunte a su reporte de fallos. Es más preferible que adjunte un archivo a que use un pastebin para poner información relevante, ya que el contenido en un pastebin puede no estar disponible por un enlace expirado o algún otro problema posible. <b>Al adjuntar un archivo se asegura que la información siempre esté disponible</b>.
+</p>
+<ul>
+<li>
+<b>Indique como reproducir el fallo</b>. Esto es muy importante, ya que puede ayudar a que más personas prueben el fallo y su solución en sus computadores.</li>
+<li>
+<i>Stack trace</i>. Es una lista con las llamadas hechas por el programa durante su ejecución, va a ayudar a encontrar la parte del programa donde se encuentra el fallo, especialmente cuando por el error el programa se <i>crashea</i>. Puede obtener un stack trace usando <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gdb">gdb</a></span> (El depurador de GNU) como se explica en <a href="../en/Debug_-_Getting_Traces.html#Getting_the_trace" title="Debug - Getting Traces">Debug - Getting Traces#Getting the trace</a>.</li>
+</ul>
+<h2><span class="mw-headline" id="Abriendo_un_reporte_de_fallos">Abriendo un reporte de fallos</span></h2>
+<p>Cuando esté seguro si es un fallo o una característica y haya conseguido toda la información útil, entonces ya esta listo para reportar el fallo o pedir una característica.
+</p>
+<h3><span class="mw-headline" id="Creando_una_cuenta">Creando una cuenta</span></h3>
+<p>Tiene que crear una cuenta en el <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/">sistema de gestión de fallos de Arch</a>. Esto es tan fácil como crear una cuenta en una wiki o en un foro y no hay nada en particular que mencionar sobre eso.
+</p>
+<h3><span class="mw-headline" id="Proyectos">Proyectos</span></h3>
+<p>Cuando haya determinado si su característica o fallo está relacionado con Arch y no es un problema de los desarrolladores, tiene que reportarlo en el proyecto correcto. Seleccione el proyecto en el menú desplegable <b>a la izquierda de el botón «Switch»</b>, en la esquina superior izquierda de la pagina de creación de reportes (<b>no</b> a la derecha de «Category»). Hay 5 proyectos:
+</p>
+<ul>
+<li>
+<b>Arch Linux</b> – para paquetes en <i>testing</i>, <i>core</i>, o <i>extra</i>. También es donde está la documentación, sitios web (excepto el AUR), y problemas de seguridad.</li>
+<li>
+<b>AUR web interface</b> – para los problemas con el código de la pagina del AUR y los servidores. Esto no incluye aplicaciones de terceras partes para acceder al AUR o a los paquetes en <i>unsupported</i>.</li>
+<li>
+<b>Community Packages</b> – para los paquetes en <i>community</i>. Ahí no van los paquetes en <i>unsupported</i>.</li>
+<li>
+<b>Pacman</b> – para <a href="../es/Pacman.html" title="Pacman (Español)">pacman</a> y los scripts y herramientas oficiales asociadas con el. Esto incluye cosas como makepkg y abs. No incluye los paquetes desarrollados por la comunidad como los <a href="../es/AUR_helpers.html" title="AUR helpers (Español)">ayudantes de AUR</a>.</li>
+<li>
+<b>Release Engineering</b> – hecho para todos los problemas relacionados con los lanzamientos (isos, instaladores, etc.).</li>
+</ul>
+<p>No hay ningún lugar para reportar los problemas de los paquetes en <i>unsupported</i>. El AUR provee una forma de poner comentarios acerca de los paquetes en <i>unsupported</i>. Usted debe usarlo para reportar fallos al mantenedor del paquete.
+</p>
+<h3><span class="mw-headline" id="Sumario">Sumario</span></h3>
+<p>Escriba un sumario conciso y descriptivo.
+</p>
+<p>Aquí tiene una lista de recomendaciones:
+</p>
+<ul>
+<li>
+<b>No</b> ponga en el nombre «<i>nombre del paquete</i> esta roto después de la ultima actualización» – no es descriptivo, y «después de la ultima actualización» no tiene sentido en Arch.</li>
+<li>Inicie el sumario con el nombre del paquete encerrado en corchetes , p.ej. «<b>[<i>nombre del paquete</i>]</b> 3.0.5-1 rompe la capacidad de copiar y pegar», así puede hacer el trabajo de los desarrolladores más fácil, ya que los reportes se pueden ordenar por el nombre del paquete.</li>
+<li>No escriba demasiado en el sumario. El texto demás no será visible en la lista de reportes.</li>
+</ul>
+<h3><span class="mw-headline" id="Severidades">Severidades</span></h3>
+<p>Poniendo una severidad de <i>critical</i> no va a ayudar a resolver el fallo más rápido. Solo hará que los problemas que realmente son críticos sean menos visibles y hará que el desarrollador asignado a el fallo esté un poco menos dispuesto a arreglarlo.
+</p>
+<p>Aquí hay formas de uso comunes para las severidades:
+</p>
+<ul>
+<li>
+<b>Critical (Critica)</b> – <i>Crasheo</i> del sistema, fallos graves al inicio que probablemente vas a afectar a alguien ademas de usted, o un fallo de seguridad explotable en algún paquete del servicio central o que esté expuesto a la red.</li>
+<li>
+<b>High (Alta)</b> – La funcionalidad principal de la aplicación no funciona, fallos de seguridad menos críticos, etc.</li>
+<li>
+<b>Medium (Media)</b> – Alguna funcionalidad no esencial no funciona, no se respetan los estándares UNIX, etc.</li>
+<li>
+<b>Low (Baja)</b> – Alguna funcionalidad opcional (un complemento o característica activada en la compilación) no funciona.</li>
+<li>
+<b>Very Low (Muy baja)</b> – Un error en la documentación o traducción. Algo que no importa mucho pero debe ser tomado en cuenta en un lanzamiento futuro.</li>
+</ul>
+<h3>
+<span id="incluyendo_informaci.C3.B3n_relevante"></span><span class="mw-headline" id="incluyendo_información_relevante">incluyendo información relevante</span>
+</h3>
+<p>Esta puede ser la parte más difícil de reportar un fallo. Tiene que seleccionar la información que va a añadir a su reporte de la sección <a href="#Consiguiendo_informaci%C3%B3n_%C3%BAtil">#Consiguiendo información útil</a>. Esto depende de cual es el problema que enfrenta. Si no sabe que partes de la información son útiles, no sea tímido: <b>es mejor dar más información de la necesaria a dar muy poca</b>.
+</p>
+<p>Puede encontrar un buen tutorial de como reportar fallos en <a rel="nofollow" class="external autonumber" href="https://www.chiark.greenend.org.uk/~sgtatham/bugs.html">[1]</a>.
+</p>
+<p>Aunque puede que los desarrolladores o la gente encargada de los fallos le pidan más información si es necesario. Afortunadamente, después de algunos cuantos reportes, ya sabrá que información tiene que dar.
+</p>
+<p>Puede poner la información más corta dentro del reporte, pero <b>la información más larga (registros, capturas de pantalla...) debe ser adjuntada</b>.
+</p>
+<h2><span class="mw-headline" id="Siguiendo_los_reportes">Siguiendo los reportes</span></h2>
+<p><b>¡No crea que porque ya reportó el fallo su trabajo está hecho!</b>
+</p>
+<p>Lo más probable es que los desarrolladores u otras personas le pidan más detalles y le den algunas posibles soluciones para que las pruebe. Si no responde de manera continua no se podrá cerrar el reporte, y el resultado final serán desarrolladores y usuarios enojados.
+</p>
+<h3><span class="mw-headline" id="Votando_y_siguiendo">Votando y siguiendo</span></h3>
+<p>Usted puede <i>votar</i> por sus fallos favoritos. La cantidad de votos le indica a los desarrolladores cuanta gente esta siendo impactada por el problema. Pero, no es una manera muy buena de ayudar a que el fallo sea arreglado. Sería mucho más importante publicar cualquier información adicional que sepa acerca del fallo si es que no es el que lo reportó originalmente.
+</p>
+<p><b>Seguir</b> un reporte es importante – va a recibir un correo cada vez que añadan más comentarios o que el estatus del fallo cambie. Si abrió un reporte, verifique que la casilla «Notify me whenever this task changes» esté activada para recibir estos correos.
+</p>
+<h3>
+<span id="Respondiendo_peticiones_de_informaci.C3.B3n_adicional"></span><span class="mw-headline" id="Respondiendo_peticiones_de_información_adicional">Respondiendo peticiones de información adicional</span>
+</h3>
+<p>La gente se va a tomar el tiempo de leer su reporte e intentar ayudarlo. Usted debe continuar ayudándolos a resolver el fallo, si no responde sus preguntas, el fallo seguirá sin arreglarse y probablemente va a matar el entusiasmo por resolverlo.
+</p>
+<p><b>Por favor, tómese el tiempo de dar más información si es que le piden, y pruebe las soluciones propuestas.</b>
+</p>
+<p>Los desarrolladores o los encargados de los fallos van a cerrar su reporte si no responde después de unas semanas o un mes.
+</p>
+<h3>
+<span id="Actualizando_el_reporte_de_fallos_cuando_una_versi.C3.B3n_nueva_del_software_es_lanzada"></span><span class="mw-headline" id="Actualizando_el_reporte_de_fallos_cuando_una_versión_nueva_del_software_es_lanzada">Actualizando el reporte de fallos cuando una versión nueva del software es lanzada</span>
+</h3>
+<p>Algunas veces, el fallo está relacionado a una versión especifica del software y es arreglado cuando lanzan una nueva. Si este es el caso, indíquelo en los comentarios del reporte y pida que lo cierren.
+</p>
+<h3>
+<span id="Cerrando_el_reporte_cuando_est.C3.A1_solucionado"></span><span class="mw-headline" id="Cerrando_el_reporte_cuando_está_solucionado">Cerrando el reporte cuando está solucionado</span>
+</h3>
+<p>Puede pasar que la gente reporta un fallo pero no notifican cuando ya encontraron una solución, dejando al resto buscando una solución ya encontrada. Pida que cierren el reporte si encontró una solución y déjela en los comentarios.
+</p>
+<h3>
+<span id="M.C3.A1s_acerca_de_los_estatus_de_un_fallo"></span><span class="mw-headline" id="Más_acerca_de_los_estatus_de_un_fallo">Más acerca de los estatus de un fallo</span>
+</h3>
+<p>Durante la vida de un fallo, este pasa por varios estados:
+</p>
+<ul>
+<li>
+<b>Unconfirmed (Sin confirmar)</b> – Este es su estado por defecto. Acaba de ser reportado y nadie ha podido reproducirlo o confirmar que actualmente es un fallo.</li>
+<li>
+<b>New (Nuevo)</b> – El fallo fue confirmado pero no ha sido asignado al desarrollador responsable de el software relacionado. Es usualmente el caso cuando una investigación es necesaria para determinar que software responsable por el fallo.</li>
+<li>
+<b>Assigned (Asignado)</b> – El fallo ya fue asignado a el desarrollador responsable de el software involucrado en el fallo. No significa que ese desarrollador va a ser el que arregle el fallo. Ni siquiera significa que él va a trabajar en buscar la solución. Solo significa que el desarrollador va a encargarse del siclo de vida del fallo, incluyendo revisar lo parches si es que salen, soltando una solución y cerrando el reporte. No tiene sentido contactarse con los desarrolladores directamente para que arreglen el fallo más rápido, porque seguramente no les va a gustar...</li>
+<li>
+<b>Researching (Investigando)</b> – Alguien está buscando una solución. Este estado es <b>usado raramente en Arch</b>, y es mejor así. El estado <b>researching</b> puede hacerle creer a la gente que no necesitan interesarse por el reporte. Pero usualmente se necesita más de una persona para resolver un fallo: Tener mucha gente experimentada arreglando un fallo ayuda mucho.</li>
+<li>
+<b>Waiting on Response (Esperando respuesta)</b> y <b>Requires testing (Requiere pruebas)</b> – La persona que reportó el fallo debe proveer más información o tratar de proponer una solución, pero aún no responde. Esos estatus son <b>usados raramente en Arch</b> y deberían ser usados más. Pero es importante que usted <b>siga el reporte</b> (vea la sección <a href="#Votando_y_siguiendo">#Votando y siguiendo</a>) ya que los desarrolladores o la gente encargada de los fallos piden información en los comentarios.</li>
+<li>
+<b>A task closure has been requested (Se solicito una orden de cerrado)</b> – Este no es un estatus exactamente, pero puede encontrar reportes con esta notificación. Esto indica que alguien ha solicitado que se cierre el reporte. Usualmente se añade una razón a la petición. Es cosa de el desarrollador asignado aceptar o no la solicitud.</li>
+<li>
+<b>Closed (Cerrado)</b> – O no es un fallo valido (vea <a href="#Razones_por_las_que_no_es_un_fallo">#Razones por las que no es un fallo</a>) o ya se encontró y soltó una solución.</li>
+</ul>
+<p>Algunas personas (desarrolladores, <i>TUs</i>...) son responsables de enviar los reportes y cambiar sus estatus.
+</p>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../es/Category:Arch_development.html" title="Category:Arch development (Español)">Arch development (Español)</a></li></ul>
+</div></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Bug_reporting_guidelines_(Espa%C3%B1ol)&amp;oldid=654120">https://wiki.archlinux.org/index.php?title=Bug_reporting_guidelines_(Español)&amp;oldid=654120</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 March 2021, at 02:02.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

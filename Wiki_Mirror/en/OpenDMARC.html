@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -98,11 +99,25 @@ smtpd_milters       = unix:/run/opendkim/opendkim.sock, unix:/run/opendmarc/open
 <p>Make sure that the DMARC milter is declared after the DKIM milter.
 </p>
 <h2><span class="mw-headline" id="DMARC_Record">DMARC Record</span></h2>
-<p>To enable DMARC for your website, you have to add a new TXT record to your websites DNS server. An example subdomain record like this:
+<p>To enable DMARC for your domain, you have to add a new TXT record to your DNS zone.Here is an example of a DMARC policy, processed one step after another. 
 </p>
-<pre>_dmarc.example.com TXT v=DMARC1; p=quarantine; pct=20; adkim=s; aspf=r; fo=1; rua=<a rel="nofollow" class="external free" href="mailto:postmaster@example.com">mailto:postmaster@example.com</a>; ruf=<a rel="nofollow" class="external free" href="mailto:forensic@example.com">mailto:forensic@example.com</a>;
+<p>First testing, no harm as (sub)policy is "none", but start to receive aggregated reports and failing reports (SPF and DKIM):
+</p>
+<pre>_dmarc.example.com TXT v=DMARC1; rua=<a rel="nofollow" class="external free" href="mailto:postmaster@example.com">mailto:postmaster@example.com</a>; ruf=<a rel="nofollow" class="external free" href="mailto:forensic@example.com">mailto:forensic@example.com</a>; adkim=s; fo=1
 </pre>
+<p>After a certain time, after analyzing these reports you can enable the policy for let's say 10% of e-mail traffic.
+</p>
+<pre>_dmarc.example.com TXT v=DMARC1; p=quarantine; rua=<a rel="nofollow" class="external free" href="mailto:postmaster@example.com">mailto:postmaster@example.com</a>; ruf=<a rel="nofollow" class="external free" href="mailto:forensic@example.com">mailto:forensic@example.com</a>; adkim=s; fo=1; pct=10
+</pre>
+<p>Then slowly raise the percentage and finalize with policy 100% enabled and only failing reports:
+</p>
+<pre>_dmarc.example.com TXT v=DMARC1; p=quarantine; ruf=<a rel="nofollow" class="external free" href="mailto:forensic@example.com">mailto:forensic@example.com</a>; adkim=s; fo=1
+</pre>
+<p><br>
+</p>
 <h3><span class="mw-headline" id="DMARC_options_in_detail">DMARC options in detail</span></h3>
+<p>All fields are OPTIONAL unless "v" which is RECOMMENDED.
+</p>
 <table class="wikitable">
 <tbody>
 <tr>
@@ -118,15 +133,15 @@ smtpd_milters       = unix:/run/opendkim/opendkim.sock, unix:/run/opendmarc/open
 </td>
 </tr>
 <tr>
-<td>pct</td>
-<td>Percentage of messages subjected to filtering</td>
-<td>pct=20
+<td>p</td>
+<td>Policy for organizational domain (default "none")</td>
+<td>p=quarantine
 </td>
 </tr>
 <tr>
-<td>ruf</td>
-<td>Reporting URI for forensic reports</td>
-<td>ruf=<a rel="nofollow" class="external free" href="mailto:forensic@example.com">mailto:forensic@example.com</a>
+<td>sp</td>
+<td>Policy for subdomains (default value of "p" field)</td>
+<td>sp=reject
 </td>
 </tr>
 <tr>
@@ -136,45 +151,45 @@ smtpd_milters       = unix:/run/opendkim/opendkim.sock, unix:/run/opendmarc/open
 </td>
 </tr>
 <tr>
-<td>p</td>
-<td>Policy for organizational domain</td>
-<td>p=quarantine
-</td>
-</tr>
-<tr>
-<td>sp</td>
-<td>Policy for subdomains of the</td>
-<td>sp=reject
+<td>ruf</td>
+<td>Reporting URI for forensic reports</td>
+<td>ruf=<a rel="nofollow" class="external free" href="mailto:forensic@example.com">mailto:forensic@example.com</a>
 </td>
 </tr>
 <tr>
 <td>adkim</td>
-<td>Alignment mode for DKIM</td>
+<td>Alignment mode for DKIM (default "r")</td>
 <td>adkim=s
 </td>
 </tr>
 <tr>
 <td>aspf</td>
-<td>Alignment mode for SPF</td>
+<td>Alignment mode for SPF (default "r")</td>
 <td>aspf=r
 </td>
 </tr>
 <tr>
+<td>ri</td>
+<td>Reporting interval of aggregate reports (default "86400" ; often disregarded to default value)</td>
+<td>ri=86400
+</td>
+</tr>
+<tr>
 <td>fo</td>
-<td>Forensic report options</td>
+<td>Forensic report options (default "0")</td>
 <td>fo=1
 </td>
 </tr>
 <tr>
 <td>rf</td>
-<td>Reporting format. either afrf or iodef</td>
+<td>Reporting format. (default "afrf")</td>
 <td>rf=afrf
 </td>
 </tr>
 <tr>
-<td>ri</td>
-<td>Reporting interval of aggregate reports. Often disregarded</td>
-<td>ri=86400
+<td>pct</td>
+<td>Percentage of messages subjected to filtering (default 100)</td>
+<td>pct=20
 </td>
 </tr>
 </tbody>
@@ -182,8 +197,8 @@ smtpd_milters       = unix:/run/opendkim/opendkim.sock, unix:/run/opendmarc/open
 <p>The alignment modes for DKIM and SPF can be:
 </p>
 <ul>
-<li>"s" for strict</li>
-<li>"r" for relaxed</li>
+<li>"s" for strict: means a subdomain cannot inherit the organizational domain policy (need to define a self policy)</li>
+<li>"r" for relaxed: means you don't have to define a policy for each domain. Can inherit from the organizational domain.</li>
 </ul>
 <p>where the latter allows a subdomain in the "From" header while the former does not.
 </p>
@@ -197,8 +212,8 @@ smtpd_milters       = unix:/run/opendkim/opendkim.sock, unix:/run/opendmarc/open
 <p>The forensic report options are:
 </p>
 <ul>
-<li>"0" to generate reports if all underlying authentication mechanisms fail to produce a DMARC pass result</li>
-<li>"1" to generate reports if any mechanisms fail</li>
+<li>"0" to generate reports if all underlying authentication mechanisms (SPF and DKIM) fail to produce a DMARC pass result</li>
+<li>"1" to generate reports if any mechanisms (SPF or DKIM) fail</li>
 <li>"d" to generate report if the DKIM signature failed to verify</li>
 <li>"s" if SPF failed.</li>
 </ul>
@@ -217,8 +232,8 @@ smtpd_milters       = unix:/run/opendkim/opendkim.sock, unix:/run/opendmarc/open
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenDMARC&amp;oldid=528429">https://wiki.archlinux.org/index.php?title=OpenDMARC&amp;oldid=528429</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 July 2018, at 12:37.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenDMARC&amp;oldid=654328">https://wiki.archlinux.org/index.php?title=OpenDMARC&amp;oldid=654328</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 March 2021, at 15:49.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -58,82 +59,77 @@
 <a href="#Basic_usage"><span class="tocnumber">1</span> <span class="toctext">Basic usage</span></a>
 <ul>
 <li class="toclevel-2 tocsection-2"><a href="#Required_services_and_setup"><span class="tocnumber">1.1</span> <span class="toctext">Required services and setup</span></a></li>
-<li class="toclevel-2 tocsection-3">
-<a href="#Configuration_examples"><span class="tocnumber">1.2</span> <span class="toctext">Configuration examples</span></a>
+<li class="toclevel-2 tocsection-3"><a href="#systemd-networkd-wait-online"><span class="tocnumber">1.2</span> <span class="toctext">systemd-networkd-wait-online</span></a></li>
+<li class="toclevel-2 tocsection-4">
+<a href="#Configuration_examples"><span class="tocnumber">1.3</span> <span class="toctext">Configuration examples</span></a>
 <ul>
-<li class="toclevel-3 tocsection-4"><a href="#Wired_adapter_using_DHCP"><span class="tocnumber">1.2.1</span> <span class="toctext">Wired adapter using DHCP</span></a></li>
-<li class="toclevel-3 tocsection-5"><a href="#Wired_adapter_using_a_static_IP"><span class="tocnumber">1.2.2</span> <span class="toctext">Wired adapter using a static IP</span></a></li>
-<li class="toclevel-3 tocsection-6"><a href="#Wireless_adapter"><span class="tocnumber">1.2.3</span> <span class="toctext">Wireless adapter</span></a></li>
-<li class="toclevel-3 tocsection-7"><a href="#Wired_and_wireless_adapters_on_the_same_machine"><span class="tocnumber">1.2.4</span> <span class="toctext">Wired and wireless adapters on the same machine</span></a></li>
-<li class="toclevel-3 tocsection-8"><a href="#Renaming_an_interface"><span class="tocnumber">1.2.5</span> <span class="toctext">Renaming an interface</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#Wired_adapter_using_DHCP"><span class="tocnumber">1.3.1</span> <span class="toctext">Wired adapter using DHCP</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#Wired_adapter_using_a_static_IP"><span class="tocnumber">1.3.2</span> <span class="toctext">Wired adapter using a static IP</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#Wireless_adapter"><span class="tocnumber">1.3.3</span> <span class="toctext">Wireless adapter</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#Wired_and_wireless_adapters_on_the_same_machine"><span class="tocnumber">1.3.4</span> <span class="toctext">Wired and wireless adapters on the same machine</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#Renaming_an_interface"><span class="tocnumber">1.3.5</span> <span class="toctext">Renaming an interface</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-9">
+<li class="toclevel-1 tocsection-10">
 <a href="#Configuration_files"><span class="tocnumber">2</span> <span class="toctext">Configuration files</span></a>
 <ul>
-<li class="toclevel-2 tocsection-10">
+<li class="toclevel-2 tocsection-11">
 <a href="#network_files"><span class="tocnumber">2.1</span> <span class="toctext">network files</span></a>
 <ul>
-<li class="toclevel-3 tocsection-11"><a href="#%5BMatch%5D"><span class="tocnumber">2.1.1</span> <span class="toctext">[Match]</span></a></li>
-<li class="toclevel-3 tocsection-12"><a href="#%5BLink%5D"><span class="tocnumber">2.1.2</span> <span class="toctext">[Link]</span></a></li>
-<li class="toclevel-3 tocsection-13"><a href="#%5BNetwork%5D"><span class="tocnumber">2.1.3</span> <span class="toctext">[Network]</span></a></li>
-<li class="toclevel-3 tocsection-14"><a href="#%5BAddress%5D"><span class="tocnumber">2.1.4</span> <span class="toctext">[Address]</span></a></li>
-<li class="toclevel-3 tocsection-15"><a href="#%5BRoute%5D"><span class="tocnumber">2.1.5</span> <span class="toctext">[Route]</span></a></li>
-<li class="toclevel-3 tocsection-16"><a href="#%5BDHCP%5D"><span class="tocnumber">2.1.6</span> <span class="toctext">[DHCP]</span></a></li>
-<li class="toclevel-3 tocsection-17"><a href="#%5BDHCPServer%5D"><span class="tocnumber">2.1.7</span> <span class="toctext">[DHCPServer]</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#%5BMatch%5D"><span class="tocnumber">2.1.1</span> <span class="toctext">[Match]</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#%5BLink%5D"><span class="tocnumber">2.1.2</span> <span class="toctext">[Link]</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#%5BNetwork%5D"><span class="tocnumber">2.1.3</span> <span class="toctext">[Network]</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#%5BAddress%5D"><span class="tocnumber">2.1.4</span> <span class="toctext">[Address]</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#%5BRoute%5D"><span class="tocnumber">2.1.5</span> <span class="toctext">[Route]</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#%5BDHCP%5D"><span class="tocnumber">2.1.6</span> <span class="toctext">[DHCP]</span></a></li>
+<li class="toclevel-3 tocsection-18"><a href="#%5BDHCPServer%5D"><span class="tocnumber">2.1.7</span> <span class="toctext">[DHCPServer]</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-18">
+<li class="toclevel-2 tocsection-19">
 <a href="#netdev_files"><span class="tocnumber">2.2</span> <span class="toctext">netdev files</span></a>
 <ul>
-<li class="toclevel-3 tocsection-19"><a href="#%5BMatch%5D_section"><span class="tocnumber">2.2.1</span> <span class="toctext">[Match] section</span></a></li>
-<li class="toclevel-3 tocsection-20"><a href="#%5BNetDev%5D_section"><span class="tocnumber">2.2.2</span> <span class="toctext">[NetDev] section</span></a></li>
+<li class="toclevel-3 tocsection-20"><a href="#%5BMatch%5D_section"><span class="tocnumber">2.2.1</span> <span class="toctext">[Match] section</span></a></li>
+<li class="toclevel-3 tocsection-21"><a href="#%5BNetDev%5D_section"><span class="tocnumber">2.2.2</span> <span class="toctext">[NetDev] section</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-21">
+<li class="toclevel-2 tocsection-22">
 <a href="#link_files"><span class="tocnumber">2.3</span> <span class="toctext">link files</span></a>
 <ul>
-<li class="toclevel-3 tocsection-22"><a href="#%5BMatch%5D_section_2"><span class="tocnumber">2.3.1</span> <span class="toctext">[Match] section</span></a></li>
-<li class="toclevel-3 tocsection-23"><a href="#%5BLink%5D_section"><span class="tocnumber">2.3.2</span> <span class="toctext">[Link] section</span></a></li>
+<li class="toclevel-3 tocsection-23"><a href="#%5BMatch%5D_section_2"><span class="tocnumber">2.3.1</span> <span class="toctext">[Match] section</span></a></li>
+<li class="toclevel-3 tocsection-24"><a href="#%5BLink%5D_section"><span class="tocnumber">2.3.2</span> <span class="toctext">[Link] section</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-24">
+<li class="toclevel-1 tocsection-25">
 <a href="#Usage_with_containers"><span class="tocnumber">3</span> <span class="toctext">Usage with containers</span></a>
 <ul>
-<li class="toclevel-2 tocsection-25">
+<li class="toclevel-2 tocsection-26">
 <a href="#Network_bridge_with_DHCP"><span class="tocnumber">3.1</span> <span class="toctext">Network bridge with DHCP</span></a>
 <ul>
-<li class="toclevel-3 tocsection-26"><a href="#Bridge_interface"><span class="tocnumber">3.1.1</span> <span class="toctext">Bridge interface</span></a></li>
-<li class="toclevel-3 tocsection-27"><a href="#Bind_ethernet_to_bridge"><span class="tocnumber">3.1.2</span> <span class="toctext">Bind ethernet to bridge</span></a></li>
-<li class="toclevel-3 tocsection-28"><a href="#Bridge_network"><span class="tocnumber">3.1.3</span> <span class="toctext">Bridge network</span></a></li>
-<li class="toclevel-3 tocsection-29"><a href="#Configure_the_container"><span class="tocnumber">3.1.4</span> <span class="toctext">Configure the container</span></a></li>
-<li class="toclevel-3 tocsection-30"><a href="#Result"><span class="tocnumber">3.1.5</span> <span class="toctext">Result</span></a></li>
-<li class="toclevel-3 tocsection-31"><a href="#Notice"><span class="tocnumber">3.1.6</span> <span class="toctext">Notice</span></a></li>
+<li class="toclevel-3 tocsection-27"><a href="#Bridge_interface"><span class="tocnumber">3.1.1</span> <span class="toctext">Bridge interface</span></a></li>
+<li class="toclevel-3 tocsection-28"><a href="#Bind_ethernet_to_bridge"><span class="tocnumber">3.1.2</span> <span class="toctext">Bind ethernet to bridge</span></a></li>
+<li class="toclevel-3 tocsection-29"><a href="#Bridge_network"><span class="tocnumber">3.1.3</span> <span class="toctext">Bridge network</span></a></li>
+<li class="toclevel-3 tocsection-30"><a href="#Configure_the_container"><span class="tocnumber">3.1.4</span> <span class="toctext">Configure the container</span></a></li>
+<li class="toclevel-3 tocsection-31"><a href="#Result"><span class="tocnumber">3.1.5</span> <span class="toctext">Result</span></a></li>
+<li class="toclevel-3 tocsection-32"><a href="#Notice"><span class="tocnumber">3.1.6</span> <span class="toctext">Notice</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-32"><a href="#Network_bridge_with_static_IP_addresses"><span class="tocnumber">3.2</span> <span class="toctext">Network bridge with static IP addresses</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#Network_bridge_with_static_IP_addresses"><span class="tocnumber">3.2</span> <span class="toctext">Network bridge with static IP addresses</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-33">
+<li class="toclevel-1 tocsection-34">
 <a href="#Tips_and_tricks"><span class="tocnumber">4</span> <span class="toctext">Tips and tricks</span></a>
 <ul>
-<li class="toclevel-2 tocsection-34"><a href="#Interface_and_desktop_integration"><span class="tocnumber">4.1</span> <span class="toctext">Interface and desktop integration</span></a></li>
-<li class="toclevel-2 tocsection-35"><a href="#Configuring_static_IP_or_DHCP_based_on_SSID_(location)"><span class="tocnumber">4.2</span> <span class="toctext">Configuring static IP or DHCP based on SSID (location)</span></a></li>
-<li class="toclevel-2 tocsection-36"><a href="#Bonding_a_wired_and_wireless_interface"><span class="tocnumber">4.3</span> <span class="toctext">Bonding a wired and wireless interface</span></a></li>
-<li class="toclevel-2 tocsection-37"><a href="#Speeding_up_TCP_slow-start"><span class="tocnumber">4.4</span> <span class="toctext">Speeding up TCP slow-start</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#Interface_and_desktop_integration"><span class="tocnumber">4.1</span> <span class="toctext">Interface and desktop integration</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#Configuring_static_IP_or_DHCP_based_on_SSID_(location)"><span class="tocnumber">4.2</span> <span class="toctext">Configuring static IP or DHCP based on SSID (location)</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#Bonding_a_wired_and_wireless_interface"><span class="tocnumber">4.3</span> <span class="toctext">Bonding a wired and wireless interface</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#Speeding_up_TCP_slow-start"><span class="tocnumber">4.4</span> <span class="toctext">Speeding up TCP slow-start</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-38">
-<a href="#Troubleshooting"><span class="tocnumber">5</span> <span class="toctext">Troubleshooting</span></a>
-<ul>
-<li class="toclevel-2 tocsection-39"><a href="#Mount_services_at_boot_fail"><span class="tocnumber">5.1</span> <span class="toctext">Mount services at boot fail</span></a></li>
-</ul>
-</li>
-<li class="toclevel-1 tocsection-40"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-39"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -162,6 +158,19 @@
 <i>systemd-resolved</i> is also required if you want to obtain DNS addresses from DHCP servers or IPv6 router advertisements (by setting <code>IPv6AcceptRA=</code> in the <code>[Network]</code> section, and, in their own section, setting <code>UseDNS=yes</code> (the default)).</li>
 <li>Note that <i>systemd-resolved</i> can also be used without <i>systemd-networkd</i>.</li>
 </ul>
+<h3><span class="mw-headline" id="systemd-networkd-wait-online">systemd-networkd-wait-online</span></h3>
+<p>Enabling <code>systemd-networkd.service</code> also enables <code>systemd-networkd-wait-online.service</code>, which is a oneshot system service that waits for the network to be configured. The latter has <code>WantedBy=network-online.target</code>, so it will be started only when <code>network-online.target</code> itself is enabled or pulled in by some other unit. See also <a href="../en/Systemd.html#Running_services_after_the_network_is_up" title="Systemd">systemd#Running services after the network is up</a>.
+</p>
+<p>By default, <code>systemd-networkd-wait-online.service</code> waits for all links it is aware of and which are managed by <i>systemd-networkd</i> to be fully configured or failed, and for at least one link to be online.
+</p>
+<p>If your system has multiple network interfaces, but some are not expected to be connected all the time (e.g. if you have a dual-port Ethernet card, but only one cable plugged in), starting <code>systemd-networkd-wait-online.service</code> will fail after the default timeout of 2 minutes. This may cause an unwanted delay in the startup process. To change the behaviour to wait for <i>any</i> interface rather than <i>all</i> interfaces to become online, <a href="../en/Systemd.html#Editing_provided_units" class="mw-redirect" title="Edit">edit</a> the service and add the <code>--any</code> parameter to the <code>ExecStart</code> line:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/systemd-networkd-wait-online.service.d/wait-for-only-one-interface.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
+ExecStart=
+ExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any</pre>
+<p>Other behaviour such as ignored interfaces or the operational state can be configured as well. See <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-networkd-wait-online"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-networkd-wait-online.8">systemd-networkd-wait-online(8)</a></span> for the available parameters.
+</p>
 <h3><span class="mw-headline" id="Configuration_examples">Configuration examples</span></h3>
 <p>All configurations in this section are stored as <code>foo.network</code> in <code>/etc/systemd/network/</code>. For a full listing of options and processing order, see <a href="#Configuration_files">#Configuration files</a> and <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.network"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.network.5">systemd.network(5)</a></span>.
 </p>
@@ -193,8 +202,7 @@ Name=enp1s0
 [Network]
 Address=10.1.10.9/24
 Gateway=10.1.10.1
-DNS=10.1.10.1
-#DNS=8.8.8.8</pre>
+DNS=10.1.10.1</pre>
 <p><code>Address=</code> can be used more than once to configure multiple IPv4 or IPv6 addresses. See <a href="#network_files">#network files</a> or <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.network"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.network.5">systemd.network(5)</a></span> for more options.
 </p>
 <h4><span class="mw-headline" id="Wireless_adapter">Wireless adapter</span></h4>
@@ -849,9 +857,9 @@ DHCP=ipv4
 <h3><span class="mw-headline" id="Speeding_up_TCP_slow-start">Speeding up TCP slow-start</span></h3>
 <p>On a higher bandwidth link with moderate latency (typically a home Internet connection that is above 10 Mbit/s) the default settings for the TCP Slow Start algorithm are somewhat conservative.  This issue exhibits as downloads starting slowly and taking a number of seconds to speed up before they reach the connection's full bandwidth.  It is particularly noticeable with a pacman upgrade, where each package downloaded starts off slowly and often finishes before it has reached the connection's full speed.
 </p>
-<p>These settings can be adjusted to make TCP connections start with larger window sizes than the defaults, avoiding the time it takes for them to automatically increase on each new TCP connection.  While this will usually decrease performance on slow connections (or if the values are increased too far) due to having to retransmit a larger number of lost packets, they can substantially increase performance on connections with sufficient bandwidth.
+<p>These settings can be adjusted to make TCP connections start with larger window sizes than the defaults, avoiding the time it takes for them to automatically increase on each new TCP connection<a rel="nofollow" class="external autonumber" href="https://www.cdnplanet.com/blog/tune-tcp-initcwnd-for-optimum-performance/">[1]</a>.  While this will usually decrease performance on slow connections (or if the values are increased too far) due to having to retransmit a larger number of lost packets, they can substantially increase performance on connections with sufficient bandwidth.
 </p>
-<p>It is important to benchmark before and after changing these values to ensure it is improving network speed and not reducing it.  If you are not seeing downloads begin slowly and gradually speed up, then there is no need to change these values as they are already optimal for your connection speed.
+<p>It is important to benchmark before and after changing these values to ensure it is improving network speed and not reducing it.  If you are not seeing downloads begin slowly and gradually speed up, then there is no need to change these values as they are already optimal for your connection speed.  When benchmarking, be sure to test against both a high speed and low speed remote server to ensure you are not speeding up access to fast machines at the expense of making access to slow servers even slower.
 </p>
 <p>To adjust these values, edit the <i>.network</i> file for the connection:
 </p>
@@ -870,11 +878,11 @@ Gateway=_dhcp4
 # The defaults for these values is 10.  They are a multiple of the MSS (1460 bytes).
 InitialCongestionWindow=10
 InitialAdvertisedReceiveWindow=10</pre>
-<p>The defaults of <code>10</code> work well for connections slower than 10 Mbit/s.  For a 100 Mbit/s connection, a value of <code>30</code> works well.  The documentation says a value of <code>100</code> is considered excessive.
+<p>The defaults of <code>10</code> work well for connections slower than 10 Mbit/s.  For a 100 Mbit/s connection, a value of <code>30</code> works well.  The manual page <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.network"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.network.5#%5BROUTE%5D_SECTION_OPTIONS">systemd.network(5) § [ROUTE] SECTION OPTIONS</a></span> says a value of <code>100</code> is considered excessive.
 </p>
-<h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
-<h3><span class="mw-headline" id="Mount_services_at_boot_fail">Mount services at boot fail</span></h3>
-<p>If running services like <a href="../en/Samba.html" title="Samba">Samba</a>/<a href="../en/NFS.html" title="NFS">NFS</a> which fail if they are started before the network is up, you may want to <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> the <code>systemd-networkd-wait-online.service</code>. This is, however, rarely necessary because most networked daemons start up okay, even if the network has not been configured yet.
+<p>If the <a href="../en/Sysctl.html" title="Sysctl">sysctl</a> setting <code>net.ipv4.tcp_slow_start_after_idle</code> is enabled then the connection will return to these initial settings after it has been idle for some time (and often a very small amount of time).  If this setting is disabled then the connection will maintain a higher window if a larger one was negotiated during packet transfer.  Regardless of the setting, each new TCP connection will begin with the <code>Initial*</code> settings set above.
+</p>
+<p>The sysctl setting <code>net.ipv4.tcp_congestion_control</code> is not directly related to these values, as it controls how the congestion and receive windows are adjusted while a TCP link is active, and particularly when the path between the two hosts is congested and throughput must be reduced.  The above <code>Initial*</code> values simply set the default window values selected for each new connection, before any congestion algorithm takes over and adjusts them as needed.  Setting higher initial values simply shortcuts some negotiation while the congestion algorithm tries to find the optimum values (or, conversely, setting the wrong initial values adds additional negotiation time while the congestion algorithm works towards correcting them, slowing down each newly established TCP connection for a few seconds extra).
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
@@ -903,8 +911,8 @@ InitialAdvertisedReceiveWindow=10</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-networkd&amp;oldid=649322">https://wiki.archlinux.org/index.php?title=Systemd-networkd&amp;oldid=649322</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 January 2021, at 13:55.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-networkd&amp;oldid=653451">https://wiki.archlinux.org/index.php?title=Systemd-networkd&amp;oldid=653451</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 February 2021, at 01:39.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

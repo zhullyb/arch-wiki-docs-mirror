@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -220,7 +221,7 @@ If you want to start Linux while Windows is hibernated, which is a common use ca
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Windows updates may re-enable Fast Startup, as reported in <a rel="nofollow" class="external autonumber" href="https://tedstechshack.com/2017/07/03/warning-multi-booting-uefi-system-windows-10-fast-startup-doubt-reboot/">[4]</a>.</div>
 <h3><span class="mw-headline" id="Windows_filenames_limitations">Windows filenames limitations</span></h3>
-<p>Windows is limited to filepaths being shorter than <a rel="nofollow" class="external text" href="http://blogs.msdn.com/b/bclteam/archive/2007/02/13/long-paths-in-net-part-1-of-3-kim-hamilton.aspx">260 characters</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-24 ⓘ]</sup>.
+<p>Windows is limited to filepaths being shorter than <a rel="nofollow" class="external text" href="https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#maximum-path-length-limitation">260 characters</a>.
 </p>
 <p>Windows also puts <a rel="nofollow" class="external text" href="https://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx#naming_conventions">certain characters off limits</a> in filenames for reasons that run all the way back to DOS:
 </p>
@@ -246,7 +247,7 @@ If you want to start Linux while Windows is hibernated, which is a common use ca
 </ul>
 <p>These are limitations of Windows and not NTFS: any other OS using the NTFS partition will be fine. Windows will fail to detect these files and running <code>chkdsk</code> will most likely cause them to be deleted. This can lead to potential data-loss.
 </p>
-<p><a href="../en/NTFS-3G.html" title="NTFS-3G">NTFS-3G</a> applies Windows restrictions to new file names through the <a rel="nofollow" class="external text" href="http://www.tuxera.com/community/ntfs-3g-manual/#4">windows_names</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-24 ⓘ]</sup> option (see <a href="../en/Fstab.html" title="Fstab">fstab</a>).
+<p><a href="../en/NTFS-3G.html" title="NTFS-3G">NTFS-3G</a> applies Windows restrictions to new file names through the <code>windows_names</code> option: <span class="plainlinks archwiki-template-man" title="$ man 8 ntfs-3g"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ntfs-3g.8#Windows_Filename_Compatibility">ntfs-3g(8) § Windows_Filename_Compatibility</a></span> (see <a href="../en/Fstab.html" title="Fstab">fstab</a>).
 </p>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
 <p>The recommended way to setup a Linux/Windows dual booting system is to first install Windows, only using part of the disk for its partitions. When you have finished the Windows setup, boot into the Linux install environment where you can create and resize partitions for Linux while leaving the existing Windows partitions untouched. The Windows installation will create the <a href="../en/EFI_system_partition.html" title="EFI system partition">EFI system partition</a> which can be used by your Linux <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot loader">boot loader</a>.
@@ -324,7 +325,7 @@ bcdedit /timeout 30
 <p>Computers that come with newer versions of Windows often have <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> enabled. You will need to take extra steps to either disable Secure Boot or to make your installation media compatible with secure boot (see above and in the linked page).
 </p>
 <h3><span class="mw-headline" id="Linux_before_Windows">Linux before Windows</span></h3>
-<p>Even though the recommended way to setup a Linux/Windows dual booting system is to first install Windows, it can be done the other way around. In contrast to installing Windows before Linux, you will have to set aside a partition for windows, say 40GB or larger, in advance. Or have some unpartitioned disk space, or create and resize partitions for Windows from within the Linux installation, before launching the Windows installation.
+<p>Even though the recommended way to setup a Linux/Windows dual booting system is to first install Windows, it can be done the other way around. In contrast to installing Windows before Linux, you will have to set aside a partition for Windows, say 40GB or larger, in advance. Or have some unpartitioned disk space, or create and resize partitions for Windows from within the Linux installation, before launching the Windows installation.
 </p>
 <h4><span class="mw-headline" id="UEFI_firmware">UEFI firmware</span></h4>
 <p>Windows will use the already existing <a href="../en/EFI_system_partition.html" title="EFI system partition">EFI system partition</a>. In contrast to what was <a href="#UEFI_systems">stated earlier</a>, it is unclear if a single partition for Windows, without the Windows Recovery Environment and without Microsoft Reserved Partition, will not do.
@@ -388,7 +389,6 @@ bcdedit /timeout 30
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
@@ -399,8 +399,8 @@ bcdedit /timeout 30
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows&amp;oldid=646477">https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows&amp;oldid=646477</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 December 2020, at 11:08.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows&amp;oldid=654703">https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows&amp;oldid=654703</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 00:50.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

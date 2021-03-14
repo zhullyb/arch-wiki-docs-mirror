@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -377,19 +378,9 @@ options nvidia NVreg_UsePageAttributeTable=1</pre>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/nvidia.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options nvidia NVreg_RegistryDwords="OverrideMaxPerf=0x1"</pre>
 <h2><span class="mw-headline" id="Preserve_video_memory_after_suspend">Preserve video memory after suspend</span></h2>
-<div class="noprint archwiki-template-message">
-<p><a href="../../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> See <a href="../../en/Help:Style.html" title="Help:Style">Help:Style</a> and <a href="../../en/Help:Style/Formatting_and_punctuation.html" title="Help:Style/Formatting and punctuation">Help:Style/Formatting and punctuation</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:NVIDIA/Tips_and_tricks">Talk:NVIDIA/Tips and tricks#</a>)</div>
-</div>
-<p>By default the NVIDIA Linux drivers save and restore only essential video memory allocations on system suspend and resume. Quoting NVIDIA (<a rel="nofollow" class="external autonumber" href="https://download.nvidia.com/XFree86/Linux-x86_64/450.66/README/powermanagement.html">[7]</a>, also available with the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nvidia-utils">nvidia-utils</a></span> package in <b>/usr/share/doc/nvidia/html/powermanagement.html</b>): <i>The resulting loss of video memory contents is partially compensated for by the user-space NVIDIA drivers, and by some applications, but can lead to failures such as rendering corruption and application crashes upon exit from power management cycles.</i>
+<p>By default the NVIDIA Linux drivers save and restore only essential video memory allocations on system suspend and resume. Quoting NVIDIA (<a rel="nofollow" class="external autonumber" href="https://download.nvidia.com/XFree86/Linux-x86_64/460.56/README/powermanagement.html">[7]</a>, also available with the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nvidia-utils">nvidia-utils</a></span> package in <b>/usr/share/doc/nvidia/html/powermanagement.html</b>): <i>The resulting loss of video memory contents is partially compensated for by the user-space NVIDIA drivers, and by some applications, but can lead to failures such as rendering corruption and application crashes upon exit from power management cycles.</i>
 </p>
-<div class="noprint archwiki-template-message">
-<p><a href="../../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> Why is it "still experimental" and where is it documented? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:NVIDIA/Tips_and_tricks">Talk:NVIDIA/Tips and tricks#</a>)</div>
-</div>
-<p>The new, <b>still experimental</b>, system enables saving all video memory (given enough space on disk or main RAM). The interface is through the <b>/proc/driver/nvidia/suspend</b> file as follows: write "suspend" (or "hibernate") to <b>/proc/driver/nvidia/suspend</b> immediately before writing to the usual Linux <b>/sys/power/state</b> file, write "resume" to <b>/proc/driver/nvidia/suspend</b> immediately after waking up, or after an unsuccessful attempt to suspend or hibernate.
+<p>The <b>still experimental</b> system enables saving all video memory (given enough space on disk or main RAM). The interface is through the <b>/proc/driver/nvidia/suspend</b> file as follows: write "suspend" (or "hibernate") to <b>/proc/driver/nvidia/suspend</b> immediately before writing to the usual Linux <b>/sys/power/state</b> file, write "resume" to <b>/proc/driver/nvidia/suspend</b> immediately after waking up, or after an unsuccessful attempt to suspend or hibernate.
 </p>
 <p>The NVIDIA drivers rely on a user defined file system for storage. The chosen file system needs to support unnamed temporary files (ext4 works) and have sufficient capacity for storing the video memory allocations (e.g., at least <code>(sum of the memory capacities of all NVIDIA GPUs) * 1.2</code>). Use the command <code>nvidia-smi -q -d MEMORY</code> to list the memory capacities of all GPUs in the system.
 </p>
@@ -397,7 +388,7 @@ options nvidia NVreg_UsePageAttributeTable=1</pre>
 </p>
 <pre>options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_TemporaryFilePath=/tmp-nvidia
 </pre>
-<p>Replace "/tmp-nvidia" in the previous line with a path within your desired file system.
+<p>Feel free to replace "/tmp-nvidia" in the previous line with a path within your desired file system.
 </p>
 <p>The interaction with <b>/proc/driver/nvidia/suspend</b> is handled by the simple Unix shell script at <b>/usr/bin/nvidia-sleep.sh</b>, which will itself be called by a tool like <a href="../../en/Systemd.html" title="Systemd">Systemd</a>. The Archlinux <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nvidia-utils">nvidia-utils</a></span> package ships with the following relevant Systemd services (which essentially just call <b>nvidia-sleep.sh</b>): <code>nvidia-suspend</code>, <code>nvidia-hibernate</code>, <code>nvidia-resume</code>. Contrary to NVIDIA's instructions, it is currently not necessary to enable <code>nvidia-resume</code> (and it's in fact probably not a good idea to enable it), because the <b>/usr/lib/systemd/system-sleep/nvidia</b> script does the same thing as the service (but slightly earlier), and it is enabled by default (Systemd calls it after waking up from a suspend). Do enable <code>nvidia-suspend</code> and/or <code>nvidia-hibernate</code>.
 </p>
@@ -419,7 +410,6 @@ options nvidia NVreg_UsePageAttributeTable=1</pre>
 <li><a href="../../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 <li><a href="../../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
-<li><a href="../../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 </ul>
 </div>
 </div>
@@ -428,8 +418,8 @@ options nvidia NVreg_UsePageAttributeTable=1</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NVIDIA/Tips_and_tricks&amp;oldid=641214">https://wiki.archlinux.org/index.php?title=NVIDIA/Tips_and_tricks&amp;oldid=641214</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 10 November 2020, at 20:16.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NVIDIA/Tips_and_tricks&amp;oldid=654003">https://wiki.archlinux.org/index.php?title=NVIDIA/Tips_and_tricks&amp;oldid=654003</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 4 March 2021, at 22:28.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

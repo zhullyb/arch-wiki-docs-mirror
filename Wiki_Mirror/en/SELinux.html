@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -72,33 +73,31 @@
 </ul>
 </li>
 <li class="toclevel-2 tocsection-12">
-<a href="#Changing_boot_loader_configuration"><span class="tocnumber">3.3</span> <span class="toctext">Changing boot loader configuration</span></a>
+<a href="#Enable_SELinux_LSM"><span class="tocnumber">3.3</span> <span class="toctext">Enable SELinux LSM</span></a>
 <ul>
-<li class="toclevel-3 tocsection-13"><a href="#GRUB"><span class="tocnumber">3.3.1</span> <span class="toctext">GRUB</span></a></li>
-<li class="toclevel-3 tocsection-14"><a href="#Syslinux"><span class="tocnumber">3.3.2</span> <span class="toctext">Syslinux</span></a></li>
-<li class="toclevel-3 tocsection-15"><a href="#systemd-boot"><span class="tocnumber">3.3.3</span> <span class="toctext">systemd-boot</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#Custom_kernel"><span class="tocnumber">3.3.1</span> <span class="toctext">Custom kernel</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-16"><a href="#Checking_PAM"><span class="tocnumber">3.4</span> <span class="toctext">Checking PAM</span></a></li>
-<li class="toclevel-2 tocsection-17"><a href="#Installing_a_policy"><span class="tocnumber">3.5</span> <span class="toctext">Installing a policy</span></a></li>
-<li class="toclevel-2 tocsection-18"><a href="#Testing_in_a_Vagrant_virtual_machine"><span class="tocnumber">3.6</span> <span class="toctext">Testing in a Vagrant virtual machine</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Checking_PAM"><span class="tocnumber">3.4</span> <span class="toctext">Checking PAM</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Installing_a_policy"><span class="tocnumber">3.5</span> <span class="toctext">Installing a policy</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Testing_in_a_Vagrant_virtual_machine"><span class="tocnumber">3.6</span> <span class="toctext">Testing in a Vagrant virtual machine</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-19">
+<li class="toclevel-1 tocsection-17">
 <a href="#Post-installation_steps"><span class="tocnumber">4</span> <span class="toctext">Post-installation steps</span></a>
 <ul>
-<li class="toclevel-2 tocsection-20"><a href="#Swapfiles"><span class="tocnumber">4.1</span> <span class="toctext">Swapfiles</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Swapfiles"><span class="tocnumber">4.1</span> <span class="toctext">Swapfiles</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-21"><a href="#Working_with_SELinux"><span class="tocnumber">5</span> <span class="toctext">Working with SELinux</span></a></li>
-<li class="toclevel-1 tocsection-22">
+<li class="toclevel-1 tocsection-19"><a href="#Working_with_SELinux"><span class="tocnumber">5</span> <span class="toctext">Working with SELinux</span></a></li>
+<li class="toclevel-1 tocsection-20">
 <a href="#Troubleshooting"><span class="tocnumber">6</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-23"><a href="#Useful_tools"><span class="tocnumber">6.1</span> <span class="toctext">Useful tools</span></a></li>
-<li class="toclevel-2 tocsection-24"><a href="#Reporting_issues"><span class="tocnumber">6.2</span> <span class="toctext">Reporting issues</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#Useful_tools"><span class="tocnumber">6.1</span> <span class="toctext">Useful tools</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Reporting_issues"><span class="tocnumber">6.2</span> <span class="toctext">Reporting issues</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-25"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-23"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -115,7 +114,7 @@
 </tr>
 <tr>
 <td>SELinux enabled kernel</td>
-<td>Implemented for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-zen">linux-zen</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-hardened">linux-hardened</a></span>
+<td>Implemented for all <a href="../en/Kernel.html#Officially_supported_kernels" title="Kernel">officially supported kernels</a>
 </td>
 <td>Available in official repositories since <a rel="nofollow" class="external text" href="https://github.com/archlinux/svntogit-packages/commit/c46609a4b0325c363455264844091b71de01eddc">4.18.8</a>.
 </td>
@@ -145,13 +144,8 @@
 </th>
 </tr>
 <tr>
-<td>linux</td>
-<td>Need following <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a> at boot: <code>selinux=1 security=selinux</code>
-</td>
-</tr>
-<tr>
-<td>linux-hardened</td>
-<td>Need following <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a> at boot: <code>selinux=1 security=selinux</code>
+<td>linux, linux-lts, linux-zen, linux-hardened</td>
+<td>Need to <a href="#Enable_SELinux_LSM">set the lsm= kernel parameter</a>
 </td>
 </tr>
 <tr>
@@ -446,7 +440,7 @@
 <li>Next you can recompile some core packages by installing: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/coreutils-selinux/">coreutils-selinux</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/findutils-selinux/">findutils-selinux</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/iproute2-selinux/">iproute2-selinux</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/logrotate-selinux/">logrotate-selinux</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/openssh-selinux/">openssh-selinux</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/psmisc-selinux/">psmisc-selinux</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/shadow-selinux/">shadow-selinux</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cronie-selinux/">cronie-selinux</a></span><sup><small>AUR</small></sup>
 </li>
 <li>Next, backup your <code>/etc/sudoers</code> file. Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/sudo-selinux/">sudo-selinux</a></span><sup><small>AUR</small></sup> and restore your <code>/etc/sudoers</code> (it is overridden when this package is installed as a replacement of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sudo">sudo</a></span>).</li>
-<li>Next come util-linux and systemd. Because of a cyclic makedepends between these two packages which will not be fixed (<a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/39767">FS#39767</a>), you need to build the source package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-selinux/">systemd-selinux</a></span><sup><small>AUR</small></sup>, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-libs-selinux/">systemd-libs-selinux</a></span><sup><small>AUR</small></sup>, build and install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/util-linux-selinux/">util-linux-selinux</a></span><sup><small>AUR</small></sup> (with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libutil-linux-selinux/">libutil-linux-selinux</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>) and rebuild and install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-selinux/">systemd-selinux</a></span><sup><small>AUR</small></sup>.</li>
+<li>Next come util-linux and systemd. Because of a cyclic makedepends between these two packages which will not be fixed (<a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/39767">FS#39767</a>), you need to build the source package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-selinux/">systemd-selinux</a></span><sup><small>AUR</small></sup>, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-libs-selinux/">systemd-libs-selinux</a></span><sup><small>AUR</small></sup>, build and install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/util-linux-selinux/">util-linux-selinux</a></span><sup><small>AUR</small></sup> (with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/util-linux-libs-selinux/">util-linux-libs-selinux</a></span><sup><small>AUR</small></sup>) and rebuild and install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-selinux/">systemd-selinux</a></span><sup><small>AUR</small></sup>.</li>
 <li>Next, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dbus-selinux/">dbus-selinux</a></span><sup><small>AUR</small></sup>.</li>
 <li>Next, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/selinux-alpm-hook/">selinux-alpm-hook</a></span><sup><small>AUR</small></sup> in order to run restorecon every time pacman installs a package.</li>
 </ul>
@@ -455,40 +449,36 @@
 <h4><span class="mw-headline" id="Using_the_GitHub_repository">Using the GitHub repository</span></h4>
 <p>All packages are maintained at <a rel="nofollow" class="external free" href="https://github.com/archlinuxhardened/selinux">https://github.com/archlinuxhardened/selinux</a> . This repository also contains a script named <code>build_and_install_all.sh</code> which builds and installs (or updates) all packages in the needed order. Here is an example of a way this script can be used in a user shell to install all packages (with downloading the GPG keys which are used to verify the source tarballs of the package):
 </p>
-<pre> git clone <a rel="nofollow" class="external free" href="https://github.com/archlinuxhardened/selinux">https://github.com/archlinuxhardened/selinux</a>
- cd selinux
- ./recv_gpg_keys.sh
- ./build_and_install_all.sh
+<pre>$ git clone <a rel="nofollow" class="external free" href="https://github.com/archlinuxhardened/selinux">https://github.com/archlinuxhardened/selinux</a>
+$ cd selinux
+$ ./recv_gpg_keys.sh
+$ ./build_and_install_all.sh
 </pre>
 <p>Of course, it is possible to modify the content of <code>build_and_install_all.sh</code> before running it, for example if you already have SELinux support in your kernel.
 </p>
-<h3><span class="mw-headline" id="Changing_boot_loader_configuration">Changing boot loader configuration</span></h3>
-<p>If you have installed a new kernel, make sure that you update your bootloader accordingly to boot on it. Moreover you may need to add <code>security=selinux selinux=1</code> to the kernel command line. More precisely, if the kernel configuration does not set <code>CONFIG_DEFAULT_SECURITY_SELINUX</code>, <code>security=selinux</code> is needed, and if it contains <code>CONFIG_SECURITY_SELINUX_BOOTPARAM=y</code> <code>CONFIG_SECURITY_SELINUX_BOOTPARAM_VALUE=0</code>, <code>selinux=1</code> is needed.
+<h3><span class="mw-headline" id="Enable_SELinux_LSM">Enable SELinux LSM</span></h3>
+<p>To enable SELinux as default security model on every boot, set the following <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a>:
 </p>
-<h4><span class="mw-headline" id="GRUB">GRUB</span></h4>
-<p>Add <code>security=selinux selinux=1</code> to <code>GRUB_CMDLINE_LINUX_DEFAULT</code> variable in <code>/etc/default/grub</code>
-Run the following command:
-</p>
-<pre># grub-mkconfig -o /boot/grub/grub.cfg
+<pre>lsm=lockdown,yama,selinux,bpf
 </pre>
-<h4><span class="mw-headline" id="Syslinux">Syslinux</span></h4>
-<p>Change your syslinux.cfg file by adding:
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> The <code>lsm=</code> kernel parameter sets the initialization order of Linux security modules. The kernel's configured <code>lsm=</code> value can be found with <code>zgrep CONFIG_LSM= /proc/config.gz</code> and the current value with <code>cat /sys/kernel/security/lsm</code>.
+<ul>
+<li>Make sure that <code>selinux</code> is the first "major" module in the list.<a rel="nofollow" class="external autonumber" href="https://www.kernel.org/doc/html/latest/admin-guide/LSM/index.html">[3]</a> Examples of valid values and their order can be found in <a rel="nofollow" class="external text" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/security/Kconfig">security/Kconfig</a>.</li>
+<li>
+<code>capability</code> should be omitted from <code>lsm=</code> as it will always get included automatically.</li>
+</ul>
+</div>
+<h4><span class="mw-headline" id="Custom_kernel">Custom kernel</span></h4>
+<p>When <a href="../en/Kernel.html#Compilation" class="mw-redirect" title="Kernels">compiling the kernel</a>, it is required to set at least the following options:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/boot/syslinux/syslinux.cfg</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">LABEL arch-selinux
-         LINUX ../vmlinuz-linux-selinux
-         APPEND root=/dev/sda2 ro security=selinux selinux=1
-         INITRD ../initramfs-linux-selinux.img</pre>
-<p>at the end. Change "linux-selinux" to whatever kernel you are using.
+<pre>CONFIG_SECURITY_SELINUX=y
+CONFIG_AUDIT=y
+</pre>
+<p>To enable the SELinux Linux security model by default and omit the need to set kernel parameters, additionally set the <code>CONFIG_LSM</code> option and specify <code>selinux</code> as the first "major" module in the list:
 </p>
-<h4><span class="mw-headline" id="systemd-boot">systemd-boot</span></h4>
-<p>Create a new loader entry, for example in <code>/boot/loader/entries/arch-selinux.conf</code>:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/boot/loader/entries/arch-selinux.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">title Arch Linux SELinux
-linux /vmlinuz-linux-selinux
-initrd /initramfs-linux-selinux.img
-options root=/dev/sda2 ro selinux=1 security=selinux</pre>
+<pre>CONFIG_LSM="lockdown,yama,selinux,bpf"
+</pre>
 <h3><span class="mw-headline" id="Checking_PAM">Checking PAM</span></h3>
 <p>A correctly set-up <a href="../en/PAM.html" title="PAM">PAM</a> is important to get the proper security context after login. Check for the presence of the following lines in <code>/etc/pam.d/system-login</code>:
 </p>
@@ -675,24 +665,20 @@ Max kernel policy version:      28</pre>
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
 <li><a href="../en/Category:Access_control.html" title="Category:Access control">Access control</a></li>
 <li><a href="../en/Category:Kernel.html" title="Category:Kernel">Kernel</a></li>
 <li><a href="../en/Category:Red_Hat.html" title="Category:Red Hat">Red Hat</a></li>
 </ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SELinux&amp;oldid=635951">https://wiki.archlinux.org/index.php?title=SELinux&amp;oldid=635951</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 September 2020, at 07:16.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SELinux&amp;oldid=653382">https://wiki.archlinux.org/index.php?title=SELinux&amp;oldid=653382</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 25 February 2021, at 10:57.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

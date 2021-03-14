@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -130,11 +131,17 @@
 <li class="toclevel-2 tocsection-40"><a href="#Configuration_frameworks"><span class="tocnumber">5.1</span> <span class="toctext">Configuration frameworks</span></a></li>
 <li class="toclevel-2 tocsection-41"><a href="#Plugin_managers"><span class="tocnumber">5.2</span> <span class="toctext">Plugin managers</span></a></li>
 <li class="toclevel-2 tocsection-42"><a href="#Fish-like_syntax_highlighting_and_autosuggestions"><span class="tocnumber">5.3</span> <span class="toctext">Fish-like syntax highlighting and autosuggestions</span></a></li>
-<li class="toclevel-2 tocsection-43"><a href="#The_%22command_not_found%22_handler"><span class="tocnumber">5.4</span> <span class="toctext">The "command not found" handler</span></a></li>
+<li class="toclevel-2 tocsection-43">
+<a href="#The_%22command_not_found%22_handler"><span class="tocnumber">5.4</span> <span class="toctext">The "command not found" handler</span></a>
+<ul>
+<li class="toclevel-3 tocsection-44"><a href="#pacman_-F_%22command_not_found%22_handler"><span class="tocnumber">5.4.1</span> <span class="toctext">pacman -F "command not found" handler</span></a></li>
+<li class="toclevel-3 tocsection-45"><a href="#pkgfile_%22command_not_found%22_handler"><span class="tocnumber">5.4.2</span> <span class="toctext">pkgfile "command not found" handler</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-44"><a href="#Uninstallation"><span class="tocnumber">6</span> <span class="toctext">Uninstallation</span></a></li>
-<li class="toclevel-1 tocsection-45"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-46"><a href="#Uninstallation"><span class="tocnumber">6</span> <span class="toctext">Uninstallation</span></a></li>
+<li class="toclevel-1 tocsection-47"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -626,8 +633,9 @@ setopt PUSHD_MINUS
 <p>First load the <code>run-help</code> function and then remove the existing <code>run-help</code> alias. For convenience <code>help</code> can be aliased to <code>run-help</code>. For example, add following to your <code>zshrc</code>:
 </p>
 <pre>autoload -Uz run-help
-unalias run-help
-alias help=run-help</pre>
+(( ${+aliases[run-help]} )) &amp;&amp; unalias run-help
+alias help=run-help
+</pre>
 <p>Assistant functions have to be enabled separately:
 </p>
 <pre>autoload -Uz run-help-git run-help-ip run-help-openssl run-help-p4 run-help-sudo run-help-svk run-help-svn
@@ -854,6 +862,8 @@ bindkey '^D' exit_zsh
 </pre>
 <h2><span class="mw-headline" id="Third-party_extensions">Third-party extensions</span></h2>
 <h3><span class="mw-headline" id="Configuration_frameworks">Configuration frameworks</span></h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> Frameworks introduce a level of abstraction and complexity. They can, and often do, introduce undefined behavior. In case of shell breakage, the <i>first</i> debugging step should be to revert to the plain shell.</div>
 <ul><li>
 <b>oh-my-zsh</b> — A popular, community-driven framework for managing your Zsh configuration. It comes bundled with a ton of helpful functions, helpers, plugins, themes.</li></ul>
 <dl><dd>
@@ -907,6 +917,14 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 <h3>
 <span id="The_.22command_not_found.22_handler"></span><span class="mw-headline" id='The_"command_not_found"_handler'>The "command not found" handler</span>
 </h3>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-go-next.png" class="image"><img alt="Tango-go-next.png" src="../File:Tango-go-next.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for moving to <a href="#Tips_and_tricks">#Tips and tricks</a>.</b><a href="../File:Tango-go-next.png" class="image"><img alt="Tango-go-next.png" src="../File:Tango-go-next.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Notes:</b> The custom function using <code>pacman -F</code> is not a "third-party extension". Only pkgfile stuff belongs in this section. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Zsh">Talk:Zsh#</a>)</div>
+</div>
+<h4>
+<span id="pacman_-F_.22command_not_found.22_handler"></span><span class="mw-headline" id='pacman_-F_"command_not_found"_handler'>pacman -F "command not found" handler</span>
+</h4>
 <p><a href="../en/Pacman.html" title="Pacman">pacman</a> includes functionality to search for packages containing a file. The following command-not-found handler will use pacman directly to search for matching packages when an unknown command is executed.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.zshrc</pre>
@@ -932,7 +950,10 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 }</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The files database of pacman is separate from the normal sync database and it needs to be fetched using <code>pacman -Fy</code>. See <a href="../en/Pacman.html#Search_for_a_package_that_contains_a_specific_file" title="Pacman">pacman#Search for a package that contains a specific file</a> for details.</div>
-<p>Alternatively, <a href="../en/Pkgfile.html" title="Pkgfile">pkgfile</a> includes a Zsh script file that provides a <code>command_not_found_handler</code> function that will automatically search the pkgfile database when entering an unrecognized command.
+<h4>
+<span id="pkgfile_.22command_not_found.22_handler"></span><span class="mw-headline" id='pkgfile_"command_not_found"_handler'>pkgfile "command not found" handler</span>
+</h4>
+<p><a href="../en/Pkgfile.html" title="Pkgfile">pkgfile</a> includes a Zsh script file that provides a <code>command_not_found_handler</code> function that will automatically search the pkgfile database when entering an unrecognized command.
 </p>
 <p>You need to <a href="../en/Help:Reading.html#Source" class="mw-redirect" title="Source">source</a> the script to enable it. For example:
 </p>
@@ -958,7 +979,7 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 <strong>Warning:</strong> It is strongly recommended to use <span class="plainlinks archwiki-template-man" title="$ man 8 vipw"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/vipw.8">vipw(8)</a></span> when editing <code>/etc/passwd</code> as it helps prevent invalid entries and/or syntax errors.</div>
 <p>For example, change the following:
 </p>
-<pre><i>username</i>:x:1000:1000:<i>Full Name</i>,,,:/home/<i>username</i>:/bin/zsh
+<pre><i>username</i>:x:1000:1000:<i>Full Name</i>,,,:/home/<i>username</i>:/usr/bin/zsh
 </pre>
 <p>To this:
 </p>
@@ -984,7 +1005,10 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Command-line_shells.html" title="Category:Command-line shells">Command-line shells</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Move.html" title="Category:Pages or sections flagged with Template:Move">Pages or sections flagged with Template:Move</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -992,8 +1016,8 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Zsh&amp;oldid=647101">https://wiki.archlinux.org/index.php?title=Zsh&amp;oldid=647101</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:31.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Zsh&amp;oldid=654768">https://wiki.archlinux.org/index.php?title=Zsh&amp;oldid=654768</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 14:09.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

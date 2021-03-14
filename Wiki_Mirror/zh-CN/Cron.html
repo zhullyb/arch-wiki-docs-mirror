@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -39,11 +40,11 @@
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/Cron.html" title="Cron">Cron</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2018-06-30。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Cron&amp;diff=0&amp;oldid=517790">更改</a>，则您可以帮助同步翻译。</div>
+<strong>翻译状态：</strong>本文是 <a href="../en/Cron.html" title="Cron">Cron</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-02-27。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Cron&amp;diff=0&amp;oldid=638976">更改</a>，则您可以帮助同步翻译。</div>
 <p>摘自 <a href="https://en.wikipedia.org/wiki/Cron" class="extiw" title="wikipedia:Cron">Wikipedia</a>:
 </p>
 <dl><dd>
-<i>cron</i> 是一个在 Unix 及类似操作系统上执行计划任务的程序。用户可以在指定的时间段周期性地运行命令或 shell 脚本，通常用于系统的自动化维护或者管理。</dd></dl>
+<i>cron</i> 是一个在 Unix 及类似操作系统上执行计划任务的程序。cron 使用户能够安排工作(命令或shell脚本)在特定时间、日期或间隔定期运行，通常用于系统的自动化维护或者管理。</dd></dl>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -58,11 +59,11 @@
 <li class="toclevel-2 tocsection-4">
 <a href="#%E5%A4%84%E7%90%86%E4%BB%BB%E5%8A%A1%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF"><span class="tocnumber">2.2</span> <span class="toctext">处理任务中的错误</span></a>
 <ul>
-<li class="toclevel-3 tocsection-5"><a href="#%E4%BD%BF%E7%94%A8_ssmtp"><span class="tocnumber">2.2.1</span> <span class="toctext">使用 ssmtp</span></a></li>
-<li class="toclevel-3 tocsection-6"><a href="#Example_with_msmtp"><span class="tocnumber">2.2.2</span> <span class="toctext">Example with msmtp</span></a></li>
-<li class="toclevel-3 tocsection-7"><a href="#Example_with_esmtp"><span class="tocnumber">2.2.3</span> <span class="toctext">Example with esmtp</span></a></li>
-<li class="toclevel-3 tocsection-8"><a href="#Example_with_opensmtpd"><span class="tocnumber">2.2.4</span> <span class="toctext">Example with opensmtpd</span></a></li>
-<li class="toclevel-3 tocsection-9"><a href="#Long_cron_job"><span class="tocnumber">2.2.5</span> <span class="toctext">Long cron job</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#%E4%BD%BF%E7%94%A8_ssmtp_%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="tocnumber">2.2.1</span> <span class="toctext">使用 ssmtp 的例子</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#%E4%BD%BF%E7%94%A8_msmtp_%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="tocnumber">2.2.2</span> <span class="toctext">使用 msmtp 的例子</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#%E4%BD%BF%E7%94%A8_esmtp_%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="tocnumber">2.2.3</span> <span class="toctext">使用 esmtp 的例子</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#%E4%BD%BF%E7%94%A8_opensmtpd_%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="tocnumber">2.2.4</span> <span class="toctext">使用 opensmtpd 的例子</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E9%97%B4%E5%BE%88%E9%95%BF%E7%9A%84_cron_%E4%BB%BB%E5%8A%A1"><span class="tocnumber">2.2.5</span> <span class="toctext">运行时间很长的 cron 任务</span></a></li>
 </ul>
 </li>
 </ul>
@@ -70,30 +71,31 @@
 <li class="toclevel-1 tocsection-10"><a href="#Crontab_%E6%A0%BC%E5%BC%8F"><span class="tocnumber">3</span> <span class="toctext">Crontab 格式</span></a></li>
 <li class="toclevel-1 tocsection-11"><a href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="tocnumber">4</span> <span class="toctext">基本命令</span></a></li>
 <li class="toclevel-1 tocsection-12"><a href="#%E8%8C%83%E4%BE%8B"><span class="tocnumber">5</span> <span class="toctext">范例</span></a></li>
-<li class="toclevel-1 tocsection-13"><a href="#Examples"><span class="tocnumber">6</span> <span class="toctext">Examples</span></a></li>
-<li class="toclevel-1 tocsection-14"><a href="#Default_editor"><span class="tocnumber">7</span> <span class="toctext">Default editor</span></a></li>
-<li class="toclevel-1 tocsection-15"><a href="#Running_X.org_server-based_applications"><span class="tocnumber">8</span> <span class="toctext">Running X.org server-based applications</span></a></li>
-<li class="toclevel-1 tocsection-16">
-<a href="#Asynchronous_job_processing"><span class="tocnumber">9</span> <span class="toctext">Asynchronous job processing</span></a>
+<li class="toclevel-1 tocsection-13"><a href="#%E9%BB%98%E8%AE%A4%E7%BC%96%E8%BE%91%E5%99%A8"><span class="tocnumber">6</span> <span class="toctext">默认编辑器</span></a></li>
+<li class="toclevel-1 tocsection-14"><a href="#%E8%BF%90%E8%A1%8C%E5%9F%BA%E4%BA%8E_X.org_%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="tocnumber">7</span> <span class="toctext">运行基于 X.org 的应用程序</span></a></li>
+<li class="toclevel-1 tocsection-15">
+<a href="#%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E5%A4%84%E7%90%86"><span class="tocnumber">8</span> <span class="toctext">异步任务处理</span></a>
 <ul>
-<li class="toclevel-2 tocsection-17"><a href="#Cronie"><span class="tocnumber">9.1</span> <span class="toctext">Cronie</span></a></li>
-<li class="toclevel-2 tocsection-18"><a href="#Dcron"><span class="tocnumber">9.2</span> <span class="toctext">Dcron</span></a></li>
-<li class="toclevel-2 tocsection-19"><a href="#Cronwhip"><span class="tocnumber">9.3</span> <span class="toctext">Cronwhip</span></a></li>
-<li class="toclevel-2 tocsection-20"><a href="#Anacron"><span class="tocnumber">9.4</span> <span class="toctext">Anacron</span></a></li>
-<li class="toclevel-2 tocsection-21"><a href="#Fcron"><span class="tocnumber">9.5</span> <span class="toctext">Fcron</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Cronie"><span class="tocnumber">8.1</span> <span class="toctext">Cronie</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Dcron"><span class="tocnumber">8.2</span> <span class="toctext">Dcron</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Cronwhip"><span class="tocnumber">8.3</span> <span class="toctext">Cronwhip</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Anacron"><span class="tocnumber">8.4</span> <span class="toctext">Anacron</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Fcron"><span class="tocnumber">8.5</span> <span class="toctext">Fcron</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-22"><a href="#Ensuring_exclusivity"><span class="tocnumber">10</span> <span class="toctext">Ensuring exclusivity</span></a></li>
-<li class="toclevel-1 tocsection-23"><a href="#Cronie_2"><span class="tocnumber">11</span> <span class="toctext">Cronie</span></a></li>
-<li class="toclevel-1 tocsection-24"><a href="#Dcron_2"><span class="tocnumber">12</span> <span class="toctext">Dcron</span></a></li>
-<li class="toclevel-1 tocsection-25"><a href="#See_also"><span class="tocnumber">13</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-21"><a href="#%E7%A1%AE%E4%BF%9D%E6%8E%92%E4%BB%96%E6%80%A7"><span class="tocnumber">9</span> <span class="toctext">确保排他性</span></a></li>
+<li class="toclevel-1 tocsection-22"><a href="#Cronie_2"><span class="tocnumber">10</span> <span class="toctext">Cronie</span></a></li>
+<li class="toclevel-1 tocsection-23"><a href="#Dcron_2"><span class="tocnumber">11</span> <span class="toctext">Dcron</span></a></li>
+<li class="toclevel-1 tocsection-24"><a href="#%E5%8F%A6%E8%AF%B7%E5%8F%82%E8%A7%81"><span class="tocnumber">12</span> <span class="toctext">另请参见</span></a></li>
 </ul>
 </div>
 
 <h2>
 <span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
 </h2>
-<p>cron 有多个实现程序，但是基础系统默认使用 <a href="../zh-CN/ac55e32d4dfdaeb996fb6e2ed9ab24e5.html" class="mw-redirect" title="Systemd/Timers (简体中文)">systemd/Timers</a>。下面的实现都没有安装，用户可以选择其一进行安装。<a rel="nofollow" class="external text" href="http://www.gentoo.org/doc/en/cron-guide.xml">Gentoo Linux Cron 指南</a> 提供了一个这些实现之间的比较。软件包:
+<p>cron 有多个实现程序，但是基础系统默认使用 <a href="../zh-CN/ac55e32d4dfdaeb996fb6e2ed9ab24e5.html" class="mw-redirect" title="Systemd/Timers (简体中文)">systemd 的 Timers</a>，下面的实现都不被默认安装。<a rel="nofollow" class="external text" href="http://www.gentoo.org/doc/en/cron-guide.xml">Gentoo Linux Cron 指南</a> 提供了一个这些实现之间的比较。
+</p>
+<p>可用的包:
 </p>
 <ul>
 <li><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cronie">cronie</a></span></li>
@@ -114,58 +116,62 @@
 <h3>
 <span id=".E6.BF.80.E6.B4.BB.E5.8F.8A.E5.BC.80.E6.9C.BA.E5.90.AF.E5.8A.A8"></span><span class="mw-headline" id="激活及开机启动">激活及开机启动</span>
 </h3>
-<p>安装后，默认的守护进程不会启动。安装的软件包都提供了可以用 <a href="../en/Systemd.html#Using_units" title="Systemd">systemctl</a> 控制的服务文件。例如 <i>cronie</i> 使用 <code>cronie.service</code>.
+<p>安装后，默认的守护进程不会启动。安装的软件包通常提供了可以用 <a href="../en/Systemd.html#Using_units" title="Systemd">systemctl</a> 控制的服务文件。例如 <i>cronie</i> 使用 <code>cronie.service</code>。
 </p>
-<p><code>/etc/cron.daily/</code> 目录包含当前的任务，启动 cron 服务时会触发所有当天任务。
+<p><code>/etc/cron.daily/</code> 和类似的目录包含当前的任务，启动 cron 服务时会触发所有这类任务。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> <i>cronie</i> 提供了 <code>0anacron</code>任务，每小时执行一次，可以执行其它因为未开机而延迟的任务。</div>
+<strong>Note:</strong> <i>cronie</i> 提供了 <code>0anacron</code> 任务，每小时执行一次，它允许<a href="#%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E5%A4%84%E7%90%86">延迟运行</a>其他某些任务，比如因为未开机而延迟的任务。</div>
 <h3>
 <span id=".E5.A4.84.E7.90.86.E4.BB.BB.E5.8A.A1.E4.B8.AD.E7.9A.84.E9.94.99.E8.AF.AF"></span><span class="mw-headline" id="处理任务中的错误">处理任务中的错误</span>
 </h3>
-<p>cron 会记录 <i>stdout</i> 和 <i>stderr</i> 的输出并尝试通过 <code>sendmail</code> 命令发送邮件给用户。如果 Cronie 未找到 <code>/usr/bin/sendmail</code>，则会禁用邮件通知。要发送邮件到用户的 spool，需要在系统上运行 smtp 进程，例如 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=opensmtpd">opensmtpd</a></span>。也可以安装提供 sendmail 命令的软件包，然后配置成通过外部邮件服务器发送邮件。或者使用 <code>-m</code> 选项将错误记录到日志并通过定制的脚本进行处理。
+<p>cron 会记录 <i>stdout</i> 和 <i>stderr</i> 的输出并尝试通过 <code>sendmail</code> 命令发送邮件给用户。如果 Cronie 未找到 <code>/usr/bin/sendmail</code>，则会禁用邮件通知。要发送邮件到用户的 spool，需要在系统上运行一个 smtp 守护进程，例如 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=opensmtpd">opensmtpd</a></span>。也可以安装提供 sendmail 命令的软件包，然后配置成通过外部邮件服务器发送邮件。或者使用 <code>-m</code> 选项将错误记录到日志并通过定制的脚本进行处理。
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> 通过 <a href="../en/Postfix.html#Local_mail" title="Postfix">Postfix#Local mail</a> 可以发送邮件到本地系统。</div>
+<strong>Tip:</strong> 通过 <a href="../zh-CN/Postfix.html#%E7%B3%BB%E7%BB%9F%E6%9C%AC%E5%9C%B0%E7%94%A8%E6%88%B7%E9%82%AE%E4%BB%B6(Local_mail)" title="Postfix (简体中文)">Postfix/localmail</a> 可以发送邮件到本地系统。</div>
 <ol>
 <li>
 <a href="../en/Systemd.html#Editing_provided_units" class="mw-redirect" title="Edit">编辑</a> <code>cronie.service</code> 服务。</li>
 <li>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/esmtp/">esmtp</a></span><sup><small>AUR</small></sup>, <a href="../en/Msmtp.html" title="Msmtp">msmtp</a>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=opensmtpd">opensmtpd</a></span>, <a href="../en/SSMTP.html" title="SSMTP">ssmtp</a> 或编写自定义脚本。</li>
 </ol>
 <h4>
-<span id=".E4.BD.BF.E7.94.A8_ssmtp"></span><span class="mw-headline" id="使用_ssmtp">使用 ssmtp</span>
+<span id=".E4.BD.BF.E7.94.A8_ssmtp_.E7.9A.84.E4.BE.8B.E5.AD.90"></span><span class="mw-headline" id="使用_ssmtp_的例子">使用 ssmtp 的例子</span>
 </h4>
-<p>ssmtp 是一个仅包含发送功能的 sendmail 模拟器，可以从本地计算机向 smtp 服务器发送邮件。尽管目前已经没用活跃维护者，这个程序依然是发送邮件的最简单方式。没用需要运行的后台进程，最简单的配置只需要一个包含三行内容的配置文件(发送服务提供商支持未认证转发的时候)。ssmtp 无法收取邮件、展开扩展或管理队列。
+<p>ssmtp 是一个仅包含发送功能的 sendmail 模拟器，可以从本地计算机向 smtp 服务器发送邮件。尽管目前已经没有活跃维护者，这个程序依然是发送邮件的最简单方式。不需要运行守护进程，配置可以简单到只需在一个配置文件中编辑三行即可（如果你的主机是受信任的，可以通过你的邮件服务提供商转发未经认证的邮件）。ssmtp 无法收取邮件、展开别名或管理队列。
 </p>
-<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ssmtp/">ssmtp</a></span><sup><small>AUR</small></sup>，安装时会创建 <code>/usr/bin/sendmail</code> 链接，指向 <code>/usr/bin/ssmtp</code>. 安装后编辑 <code>/etc/ssmtp/ssmtp.conf</code> 配置文件。详情请参考 <a href="../en/SSMTP.html" title="SSMTP">ssmtp</a>，到 <code>/usr/bin/sendmail</code> 的软链接可以确保 <a href="../en/S-nail.html" title="S-nail">S-nail</a> 等提供 <code>/usr/bin/mail</code> 的程序可以无需修改直接使用。
+<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ssmtp/">ssmtp</a></span><sup><small>AUR</small></sup>，安装时会创建链接 <code>/usr/bin/sendmail</code> 指向 <code>/usr/bin/ssmtp</code>。安装后编辑 <code>/etc/ssmtp/ssmtp.conf</code> 配置文件。详情请参考 <a href="../en/SSMTP.html" title="SSMTP">ssmtp</a>，到 <code>/usr/bin/sendmail</code> 的软链接可以确保 <a href="../en/S-nail.html" title="S-nail">S-nail</a> 等提供 <code>/usr/bin/mail</code> 的程序可以无需修改直接使用。
 </p>
-<p>安装配置完成后重启 <code>cronie</code> 以重新确认 <code>/usr/bin/sendmail</code> 已经被安装。
+<p>安装配置完成后重启 <code>cronie</code> 以确保 cronie 能够检测到新配置的 <code>/usr/bin/sendmail</code> 命令。
 </p>
-<h4><span class="mw-headline" id="Example_with_msmtp">Example with msmtp</span></h4>
-<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=msmtp-mta">msmtp-mta</a></span>, which creates a symbolic link from <code>/usr/bin/sendmail</code> to <code>/usr/bin/msmtp</code>. Restart <code>cronie</code> to make sure it detects the new <code>sendmail</code> command. You must then provide a way for <code>msmtp</code> to convert your username into an email address.
+<h4>
+<span id=".E4.BD.BF.E7.94.A8_msmtp_.E7.9A.84.E4.BE.8B.E5.AD.90"></span><span class="mw-headline" id="使用_msmtp_的例子">使用 msmtp 的例子</span>
+</h4>
+<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=msmtp-mta">msmtp-mta</a></span>, 安装时会创建链接 <code>/usr/bin/sendmail</code> 指向 <code>/usr/bin/msmtp</code>。重启 <code>cronie</code> 以确保 cronie 能够检测到新配置的 <code>/usr/bin/sendmail</code> 命令。你必须提供一种方法让 <code>msmtp</code> 能够将你的用户名转换成电子邮件地址。
 </p>
-<p>Then either add <code>MAILTO</code> line to your crontab, like so:
+<p>然后要么在你的 crontab 中添加 <code>MAILTO</code> 行：
 </p>
 <pre>MAILTO=your@email.com
 </pre>
-<p><b>or</b> create <code>/etc/msmtprc</code> and append this line:
+<p><b>要么</b> 创建 <code>/etc/msmtprc</code> 文件，并添加这一行：
 </p>
 <pre>aliases /etc/aliases
 </pre>
-<p>and create <code>/etc/aliases</code>: 
+<p>并创建 <code>/etc/aliases</code> 文件：
 </p>
 <pre>your_username: your@email.com
-# Optional:
+# 可选：
 default: your@email.com
 </pre>
-<p>Then <a href="../en/Systemd.html#Editing_provided_units" title="Systemd">modify the configuration</a> of <i>cronie</i> daemon by replacing the <code>ExecStart</code> command with:
+<p>然后<a href="../en/Systemd.html#Editing_provided_units" title="Systemd">修改</a> <i>cronie</i> 的配置，将<i>cronie</i> 守护进程的 <code>ExecStart</code> 命令替换为
 </p>
 <pre>ExecStart=/usr/bin/crond -n -m '/usr/bin/msmtp -t'
 </pre>
-<h4><span class="mw-headline" id="Example_with_esmtp">Example with esmtp</span></h4>
-<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/esmtp/">esmtp</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=procmail">procmail</a></span>.
+<h4>
+<span id=".E4.BD.BF.E7.94.A8_esmtp_.E7.9A.84.E4.BE.8B.E5.AD.90"></span><span class="mw-headline" id="使用_esmtp_的例子">使用 esmtp 的例子</span>
+</h4>
+<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/esmtp/">esmtp</a></span><sup><small>AUR</small></sup> 和 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=procmail">procmail</a></span>。
 </p>
-<p>After installation configure the routing:
+<p>安装完成后，进行如下配置:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/esmtprc</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">identity <i>myself</i>@myisp.com
@@ -176,104 +182,109 @@ default: your@email.com
        default
 mda "/usr/bin/procmail -d %T"
 </pre>
-<p>Procmail needs root privileges to work in delivery mode but it is not an issue if you are running the cronjobs as root anyway.
+<p>Procmail 需要 root 权限才能在投递模式下工作，但如果你是以 root 身份运行 cronjobs，就不会有这个问题。
 </p>
-<p>To test that everything works correctly, create a file <code>message.txt</code> with <code>"test message"</code> in it. 
+<p>要测试一切是否正常工作，请创建一个内容为 <code>"test message"</code> 的 <code>message.txt</code> 文件。
 </p>
-<p>From the same directory run:
+<p>在同一目录下运行：
 </p>
 <pre>$ sendmail <i>user_name</i> &lt; message.txt 
 </pre>
-<p>then:
+<p>紧接着：
 </p>
 <pre>$ cat /var/spool/mail/<i>user_name</i>
 </pre>
-<p>You should now see the test message and the time and date it was sent.
+<p>现在您应该看到测试信息以及发送的时间和日期。
 </p>
-<p>The error output of all jobs will now be redirected to <code>/var/spool/mail/<i>user_name</i></code>.
+<p>所有作业的错误输出现在会被重定向到 <code>/var/spool/mail/<i>user_name</i></code>。
 </p>
-<p>Due to the privileged issue, it is hard to create and send emails to root (e.g. <code>su -c ""</code>). You can ask <code>esmtp</code> to forward all root's email to an ordinary user with:
+<p>由于权限问题，很难创建和发送邮件给root用户（比如 <code>su -c ""</code>）。你可以要求 <code>esmtp</code> 将 root 的所有邮件转发给普通用户，方法是：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/esmtprc</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">force_mda="<i>user-name</i>"</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If the above test didn't work, you may try creating a local configuration in <code>~/.esmtprc</code> with the same content.
-<p>Run the following command to make sure it has the correct permission: 
+<strong>Note:</strong> 如果上述测试没有成功，您可以尝试在 <code>~/.esmtprc</code> 中创建一个具有相同内容的本地配置。
+<p>运行下面的命令以确保它有正确的权限： 
 </p>
 <pre>$ chmod 710 ~/.esmtprc
 </pre>
-Then repeat the test with <code>message.txt</code> exactly as before.</div>
-<h4><span class="mw-headline" id="Example_with_opensmtpd">Example with opensmtpd</span></h4>
-<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=opensmtpd">opensmtpd</a></span>.
+然后用 <code>message.txt</code> 文件重新运行一遍上面的测试。</div>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8_opensmtpd_.E7.9A.84.E4.BE.8B.E5.AD.90"></span><span class="mw-headline" id="使用_opensmtpd_的例子">使用 opensmtpd 的例子</span>
+</h4>
+<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=opensmtpd">opensmtpd</a></span>。
 </p>
-<p>Edit <code>/etc/smtpd/smtpd.conf</code>. The following configuration allows for local delivery:
+<p>编辑 <code>/etc/smtpd/smtpd.conf</code>。下面的配置允许本地投递：
 </p>
 <pre>listen on localhost
-accept for local deliver to mbox
+action "local" mbox alias &lt;aliases&gt;
+match for local action "local"
 </pre>
-<p>You can proceed to test it. First <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>smtpd.service</code>. Then do:
+<p>您现在可以进行测试。<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">运行</a> <code>smtpd.service</code>，然后执行：
 </p>
 <pre>$ echo test | sendmail user
 </pre>
-<p><i>user</i> can check his/her mail in with any <a href="../en/Category:Email_clients.html" title="Category:Email clients">reader</a> able to handle mbox format, or just have a look at the file <code>/var/spool/mail/<i>user</i></code>. If everything goes as expected, you can <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> opensmtpd for future boots.
+<p><i>user</i> 可以用任何  能够处理 mbox 格式的<a href="../en/Category:Email_clients.html" title="Category:Email clients">邮件阅读器</a>来检查邮件，或者直接查看 <code>/var/spool/mail/<i>user</i></code> 文件。如果一切都符合预期，您可以<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">启用</a> openmtpd 使其开机运行。
 </p>
-<p>This approach has the advantage of not sending local cron notifications to a remote server. On the downside, you need a new daemon running.
+<p>这种方法的好处是不需要向远程服务器发送本地 cron 通知。但缺点是需要运行一个新的守护进程。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
 <ul>
-<li>At the moment of writing the Arch opensmtpd package does not create all needed directories under <code>/var/spool/smtpd</code>, but the daemon will warn about that specifying the required ownerships and permissions. Just create them as suggested.</li>
-<li>Even though the suggested configuration does not accept remote connections, it's a healthy precaution to add an additional layer of security blocking port 25 with <a href="../en/Iptables.html" title="Iptables">iptables</a> or similar.</li>
+<li>在写这篇文章的时候，Arch 的 opensmtpd 包还没有在 <code>/var/spool/smtpd</code> 下创建好所有需要的目录，但是守护进程会在需要指定所有者和权限时发出警告。只需按照警告创建即可。</li>
+<li>尽管上文的配置中程序并不会接受远程连接，但使用<a href="../en/Iptables.html" title="Iptables">iptables</a>或类似的方法来阻止端口 25 也是预防措施。</li>
 </ul>
 </div>
-<h4><span class="mw-headline" id="Long_cron_job">Long cron job</span></h4>
-<p>Suppose this program is invoked by cron :
+<h4>
+<span id=".E8.BF.90.E8.A1.8C.E6.97.B6.E9.97.B4.E5.BE.88.E9.95.BF.E7.9A.84_cron_.E4.BB.BB.E5.8A.A1"></span><span class="mw-headline" id="运行时间很长的_cron_任务">运行时间很长的 cron 任务</span>
+</h4>
+<p>假设 cron 调用了这个脚本：
 </p>
 <pre>#!/bin/sh
-echo "I had a recoverable error!"
+echo "我有一个可恢复错误！"
 sleep 1h
 </pre>
-<p>What happens is this:
+<p>这时会发生以下事件：
 </p>
 <ol>
-<li>cron runs the script</li>
-<li>as soon as cron sees some output, it runs your MTA, and provides it with the headers. It leaves the pipe open, because the job hasn't finished and there might be more output.</li>
-<li>the MTA opens the connection to postfix and leaves that connection open while it waits for the rest of the body.</li>
-<li>postfix closes the idle connection after less than an hour and you get an error like this :</li>
+<li>cron 运行这个脚本</li>
+<li>一旦 cron 检查到脚本有输出，就会启动你的邮件传输程序，并向通过管道其传递一些必要的头部内容。因为脚本还没有结束，还会有更多的输出，管道就没有关闭。</li>
+<li>邮件传输程序打开到邮件服务器的链接，并等待后续的输出。</li>
+<li>邮件服务器会在特定时间后关掉这个空闲的链接，你会受到类似这样的错误postfix closes the idle connection after less than an hour and you get an error like this :</li>
 </ol>
-<pre>smtpmsg='421 … Error: timeout exceeded' errormsg='the server did not accept the mail'
+<pre>smtpmsg='421 ... Error: timeout exceeded' errormsg='the server did not accept the mail' (服务器没有接受邮件)
 </pre>
-<p>To solve this problem you can use the command chronic or sponge from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=moreutils">moreutils</a></span>.
-From their respective man page:
+<p>要解决这个问题，你可以使用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=moreutils">moreutils</a></span> 中的 chronic 或 sponge 命令。
+它们各自的手册页面中写道：
 </p>
 <dl>
-<dt>chronic</dt>
-<dd>chronic runs a command, and arranges for its standard out and standard error to only be displayed if the command fails (exits nonzero or crashes). If the command succeeds, any extraneous output will be hidden.</dd>
-<dt>sponge</dt>
-<dd>sponge reads standard input and writes it out to the specified file. Unlike a shell redirect, sponge soaks up all its input before opening the output file… If no output file is specified, sponge outputs to stdout.</dd>
+<dt>chronic（时序）</dt>
+<dd>chronic 运行一个命令时，会缓存它的标准输出和标准错误输出，并只在命令失败（返回值非零或崩溃）的情况下才会一并输出。如果命令成功执行，任何无关的输出将被隐藏。</dd>
+<dt>sponge（海绵）</dt>
+<dd>sponge 读取标准输入并将其写入指定的文件。不同于 shell 重定向，sponge 在打开输出文件之前会吸收所有的输入……如果没有指定输出文件，sponge 会输出到标准输出。</dd>
 </dl>
-<p>Chronic too buffers the command output before opening its standard output.
+<p>Chronic也会在打开标准输出之前缓冲命令输出。
 </p>
 <h2>
 <span id="Crontab_.E6.A0.BC.E5.BC.8F"></span><span class="mw-headline" id="Crontab_格式">Crontab 格式</span>
 </h2>
 <p>crontab 的基本格式是：
 </p>
-<pre>&lt;分钟&gt; &lt;小时&gt; &lt;日&gt; &lt;月份&gt; &lt;星期&gt; &lt;命令&gt;
+<pre><i>分</i> <i>时</i> <i>日</i> <i>月</i> <i>星期</i> <i>命令</i>
 </pre>
 <ul>
 <li>
-<i>分钟</i> 值从 0 到 59.</li>
+<i>分</i> 值从 0 到 59。</li>
 <li>
-<i>小时</i> 值从 0 到 23.</li>
+<i>时</i> 值从 0 到 23。</li>
 <li>
-<i>日</i> 值从 1 到 31.</li>
+<i>日</i> 值从 1 到 31。</li>
 <li>
-<i>月</i> 值从 1 到 12.</li>
+<i>月</i> 值从 1 到 12。</li>
 <li>
-<i>星期</i> 值从 0 到 6, 0 代表星期日.</li>
+<i>星期</i> 值从 0 到 6, 0 代表星期日。</li>
 </ul>
-<p>空格用来分开字段，可以用下面特殊字符设定范围:
+<p>空格用来分开字段，要微调你的时间表，也可以用下面特殊字符来设定范围:
 </p>
 <table class="wikitable" style="text-align: center">
 <tbody>
@@ -306,33 +317,35 @@ From their respective man page:
 </table>
 <p>例如，下面一行：
 </p>
-<pre>*0,*5 9-16 * 1-5,9-12 1-5 /home/user/bin/i_love_cron.sh
+<pre>*/5 9-16 * 1-5,9-12 1-5 ~/bin/i_love_cron.sh
 </pre>
-<p>会在夏天(六、七、八月)之外的每周周一到周五的上午9点到下午4点之间每5分钟执行一次 <code>i_love_cron.sh</code>。更多范例和高级配置方法见下文。
+<p>将会在周内从早上 9 点到下午 4 点 55 分，每隔 5 分钟执行一次脚本 <code>i_love_cron.sh</code>，夏季除外（6月、7月和8月）。
 </p>
-<p>Besides, crontab has some special keywords:
+<p>此外，crontab 还有一些特殊的关键字。
 </p>
-<pre>@reboot at startup 
-@yearly once a year
-@annually ( == @yearly)
-@monthly once a month
-@weekly once a week
-@daily once a day
-@midnight ( == @daily)
-@hourly once an hour
+<pre>@reboot 启动时
+@yearly 每年一次
+@annually ( 同 @yearly)
+@monthly 每月一次
+@weekly 每周一次
+@daily 每天一次
+@midnight (午夜，同 @daily)
+@hourly 每小时一次
 </pre>
-<p>For example:
+<p>例如：
 </p>
 <pre>@reboot ~/bin/i_love_cron.sh
 </pre>
-<p>Will execute the script <code>i_love_cron.sh</code> at startup.
+<p>将在启动时执行脚本 <code>i_love_cron.sh</code>。
 </p>
-<p>See more at: <a rel="nofollow" class="external free" href="http://www.adminschoice.com/crontab-quick-reference">http://www.adminschoice.com/crontab-quick-reference</a>
+<p>更多信息参见: <a rel="nofollow" class="external free" href="http://www.adminschoice.com/crontab-quick-reference">http://www.adminschoice.com/crontab-quick-reference</a>
+</p>
+<p>更多的例子和高级配置技巧可以在下面找到。
 </p>
 <h2>
 <span id=".E5.9F.BA.E6.9C.AC.E5.91.BD.E4.BB.A4"></span><span class="mw-headline" id="基本命令">基本命令</span>
 </h2>
-<p>Crontabs 不应该直接编辑；用户应该使用 <i>crontab</i> 程序来处理他们的 crontabs。为了能够访问这个命令，用户必须添加到 users 用户组 (见 gpasswd 命令).
+<p>Crontabs 绝不应该被直接编辑；用户应该使用 <i>crontab</i> 程序来处理他们的 crontabs。为了能够访问这个命令，用户必须添加到 users 用户组（见 gpasswd 命令）。
 </p>
 <p>要查看 crontabs，用户应该运行下面的命令：
 </p>
@@ -341,10 +354,13 @@ From their respective man page:
 <p>要编辑 crontabs，可以使用：
 </p>
 <pre>$ crontab -e
+
 </pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 默认情况下，<code>crontab</code> 命令使用 <code>vi</code> 编辑器。可以通过<a href="../en/Environment_variables.html" class="mw-redirect" title="Export">export</a> <code>EDITOR</code> 或 <code>VISUAL</code> 来配置，或通过这样的命令直接指定编辑器：<code>EDITOR=vim crontab -e</code>。</div>
 <p>要移除 crontabs, 可以使用：
 </p>
-<pre>$ crontab -d
+<pre>$ crontab -r
 </pre>
 <p>如果用户有一个保存好的 crontab 想要用它完全覆盖旧的 crontab，可以使用：
 </p>
@@ -358,13 +374,7 @@ From their respective man page:
 </p>
 <pre># crontab -u <i>username</i> -e
 </pre>
-<p>同一个格式 (追加 "-u <i>username</i>" 到命令后) 也可以用来列出或删除 crontabs。
-</p>
-<p>如果想使用 nano 而不是 vi 作为 crontab 编辑器，添加下面的变量到 <code>/etc/bash.bashrc</code>:
-</p>
-<pre>export EDITOR="/usr/bin/nano"
-</pre>
-<p>然后重启终端
+<p>同一个格式（在命令后追加 <code>-u <i>username</i></code>）也可以用来列出或删除 crontabs。
 </p>
 <h2>
 <span id=".E8.8C.83.E4.BE.8B"></span><span class="mw-headline" id="范例">范例</span>
@@ -373,7 +383,7 @@ From their respective man page:
 </p>
 <pre>01 * * * * /bin/echo Hello, world!
 </pre>
-<p>将会在每个月的每一天的每一个小时的第一分钟（例如，在12：01，1：01，2：01等）执行命令 <code>/bin/echo Hello, world!</code> 
+<p>将会在每个月的每一天的每一个小时的第一分钟（例如，在12:01，1:01，2:01等）执行命令 <code>/bin/echo Hello, world!</code> 
 </p>
 <p>类似地,
 </p>
@@ -381,32 +391,13 @@ From their respective man page:
 </pre>
 <p>将会在一月的每个工作日每五分钟（例如，在12：00，12：05，12：10等）执行一次相同的命令。
 </p>
-<p>As noted in the <i>Crontab Format</i> section, the line:
+<p>和前文 <i>Crontab 格式</i>一章相同，这一行
 </p>
 <pre>*0,*5 9-16 * 1-5,9-12 1-5 /home/user/bin/i_love_cron.sh
 </pre>
-<p>Will execute the script <code>i_love_cron.sh</code> at five minute intervals from 9 AM to 5 PM (excluding 5 PM itself) every weekday (Mon-Fri) of every month except during the summer (June, July, and August).
+<p>将会在周内从早上 9 点到下午 4 点 55 分，每隔 5 分钟执行一次脚本 <code>i_love_cron.sh</code>，夏季除外（6月、7月和8月）。
 </p>
-<h2><span class="mw-headline" id="Examples">Examples</span></h2>
-<p>The entry:
-</p>
-<pre>01 * * * * /bin/echo Hello, world!
-</pre>
-<p>runs the command <code>/bin/echo Hello, world!</code> on the first minute of every hour of every day of every month (i.e. at 12:01, 1:01, 2:01, etc.).
-</p>
-<p>Similarly:
-</p>
-<pre>*/5 * * jan mon-fri /bin/echo Hello, world!
-</pre>
-<p>runs the same job every five minutes on weekdays during the month of January (i.e. at 12:00, 12:05, 12:10, etc.).
-</p>
-<p>The line (as noted in "man 5 crontab"):
-</p>
-<pre>*0,*5 9-16 * 1-5,9-12 1-5 /home/user/bin/i_love_cron.sh
-</pre>
-<p>will execute the script <code>i_love_cron.sh</code> at five minute intervals from 9 AM to 5 PM (excluding 5 PM itself) every weekday (Mon-Fri) of every month except during the summer (June, July, and August).
-</p>
-<p>Periodical settings can also be entered as in this crontab template:
+<p>也可以像这样输入周期性设置：
 </p>
 <pre># Chronological table of program loadings                                       
 # Edit with "crontab" for proper functionality, "man 5 crontab" for formatting
@@ -414,82 +405,87 @@ From their respective man page:
 
 # mm  hh  DD  MM  W /path/progam [--option]...  ( W = weekday: 0-6 [Sun=0] )
   21  01  *   *   * /usr/bin/systemctl hibernate
-  @weekly           $HOME/.local/bin/trash-empty
-</pre>
-<p>Here are some self-explanatory crontab syntax examples:
+  @weekly           $HOME/.local/bin/trash-empty</pre>
+<p>下面是一些不言自明的crontab语法例子：
 </p>
-<pre>30 4 echo "It is now 4:30 am."
-0 22 echo "It is now 10 pm."
-30 15 25 12 echo "It is 3:30pm on Christmas Day."
-30 3 * * * echo "Remind me that it's 3:30am every day."
-0 * * * * echo "It is the start of a new hour."
-0 6 1,15 * * echo "At 6am on the 1st and 15th of every month."
-0 6 * * 2,3,5 echo "At 6am on Tuesday, Wednesday and Thursdays."
-59 23 * * 1-5 echo "Just before midnight on weekdays."
-0 */2 * * * echo "Every two hours."
-0 20 * * 4 echo "8pm on a Thursday."
-0 20 * * Thu echo "8pm on a Thursday."
-*/15 9-17 * * 2-5 echo "Every 15 minutes from 9am-5pm on weekdays."
-@yearly echo "Happy New Year!"
+<pre>30 4 echo "四点半了。"
+0 22 echo "晚上十点了。"
+30 15 25 12 echo "现在是圣诞节下午三点半。"
+30 3 * * * echo "每天早上三点半提醒我。"
+0 * * * * echo "新的一个小时到来了。"
+0 6 1,15 * * echo "每月1号和15号的早上六点。"
+0 6 * * 2,3,5 echo "周二三四的早上六点。"
+59 23 * * 1-5 echo "周内每天的最后一分钟。"
+0 */2 * * * echo "每两个小时。"
+0 20 * * 4 echo "周四的晚上八点。"
+0 20 * * Thu echo "周四的晚上八点。"
+*/15 9-17 * * 2-5 echo "周内朝九晚五的每一刻钟。"
+@yearly echo "新年好！"
 </pre>
-<h2><span class="mw-headline" id="Default_editor">Default editor</span></h2>
-<p>To use an alternate default editor, define the <code>EDITOR</code> environment variable in a shell initialization script as described in <a href="../en/Environment_variables.html" title="Environment variables">Environment variables</a>.
+<h2>
+<span id=".E9.BB.98.E8.AE.A4.E7.BC.96.E8.BE.91.E5.99.A8"></span><span class="mw-headline" id="默认编辑器">默认编辑器</span>
+</h2>
+<p>要修改默认编辑器，请在 shell 初始化脚本中定义 <code>EDITOR</code> 环境变量，如<a href="../en/Environment_variables.html" title="Environment variables">环境变量</a>所述。
 </p>
-<p>As a regular user, <code>su</code> will need to be used instead of <code>sudo</code> for the environment variable to be pulled correctly:
+<p>作为普通用户，需要使用 <code>su</code> 代替 <code>sudo</code> 来正确拉取环境变量：
 </p>
 <pre>$ su -c "crontab -e"
 </pre>
-<p>To have an alias to this <code>printf</code> is required to carry the arbitrary string because <code>su</code> launches in a new shell:
+<p>如果希望给这个命令取别名，因为 su 会在一个新启动的子 shell 中启动，为了防止一些以外的发生，需要用 <code>printf</code> 加一个任意字符串，来提醒你仍然在 root 下运行：
 </p>
 <pre>alias scron="su -c $(printf "%q " "crontab -e")"
 </pre>
-<h2><span class="mw-headline" id="Running_X.org_server-based_applications">Running X.org server-based applications</span></h2>
-<p>Cron does not run under the X.org server therefore it cannot know the environmental variable necessary to be able to start an X.org server application so they will have to be defined. One can use a program like <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xuserrun-git/">xuserrun-git</a></span><sup><small>AUR</small></sup> to do it:
+<h2>
+<span id=".E8.BF.90.E8.A1.8C.E5.9F.BA.E4.BA.8E_X.org_.E7.9A.84.E5.BA.94.E7.94.A8.E7.A8.8B.E5.BA.8F"></span><span class="mw-headline" id="运行基于_X.org_的应用程序">运行基于 X.org 的应用程序</span>
+</h2>
+<p>Cron 不在 X.org 下运行，因此它无法知道启动 X.org 应用程序所需的环境变量，因此必须显式定义。我们可以使用类似 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xuserrun-git/">xuserrun-git</a></span><sup><small>AUR</small></sup> 这样的程序来完成：
 </p>
 <pre>17 02 * ... /usr/bin/xuserrun /usr/bin/xclock
 </pre>
-<p>Or they can be defined manually (<code>echo $DISPLAY</code> will give the current DISPLAY value):
+<p>或者可以手动定义它们（<code>echo $DISPLAY</code> 将给出当前的 DISPLAY 环境变量值）：
 </p>
 <pre>17 02 * ... env DISPLAY=:0 /usr/bin/xclock
 </pre>
-<p>If running notify-send for desktop notifications in cron, notify-send is sending values to dbus. So it needs to tell dbus to connect to the right bus. 
-The address can be found by examining DBUS_SESSION_BUS_ADDRESS environment variable and setting it to the same value. Therefore: 
+<p>如果需要在 cron 中运行 notify-send 进行桌面通知，因为 notify-send 通过 dbus 发送值。需要告诉 dbus 连接到正确的总线。
+通过检查 DBUS_SESSION_BUS_ADDRESS 环境变量，并设置为相同的值，就可以找到地址。因此：
 </p>
 <pre>17 02 * ... env DBUS_SESSION_BUS_ADDRESS=your-address notify-send 'Foo bar'
 </pre>
-<p>If done through say SSH, permission will need be given:
+<p>如果是通过SSH完成的，需要给与权限：
 </p>
 <pre># xhost +si:localuser:$(whoami)
 </pre>
-<h2><span class="mw-headline" id="Asynchronous_job_processing">Asynchronous job processing</span></h2>
-<p>If you regularly turn off your computer but do not want to miss jobs, there are some solutions available (easiest to hardest):
+<h2>
+<span id=".E5.BC.82.E6.AD.A5.E4.BB.BB.E5.8A.A1.E5.A4.84.E7.90.86"></span><span class="mw-headline" id="异步任务处理">异步任务处理</span>
+</h2>
+<p>如果你经常关机，但又不想错过任务的执行，这里有一些解决方案（从最简单到最难）：
 </p>
 <h3><span class="mw-headline" id="Cronie">Cronie</span></h3>
-<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cronie">cronie</a></span> comes with anacron included. The project homepage says:
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cronie">cronie</a></span> 内含 anacron。其项目主页介绍道：
 </p>
-<p>Cronie contains the standard UNIX daemon crond that runs specified programs at scheduled times and related tools.
-It is based on the original cron and has security and configuration enhancements like the ability to use pam and SELinux.
+<p>Cronie 包含了标准的 UNIX 守护进程 crond，它可以在预定的时间运行指定的程序和相关工具。
+它基于最初的 cron，并增强了安全性和配置功能，比如可以使用 pam 和 SELinux。
 </p>
 <h3><span class="mw-headline" id="Dcron">Dcron</span></h3>
-<p>Vanilla <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dcron/">dcron</a></span><sup><small>AUR</small></sup> supports asynchronous job processing. Just put it with @hourly, @daily, @weekly or @monthly with a jobname, like this:
+<p>Vanilla <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dcron/">dcron</a></span><sup><small>AUR</small></sup> 支持异步任务处理。只要用@hourly、@daily、@weekly或者@monthly加上任务名就可以了：
 </p>
 <pre>@hourly         ID=greatest_ever_job      echo This job is very useful.
 </pre>
 <h3><span class="mw-headline" id="Cronwhip">Cronwhip</span></h3>
-<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cronwhip/">cronwhip</a></span><sup><small>AUR</small></sup> is a script to automatically run missed cron jobs; it works with the former default cron implementation, <i>dcron</i>.
-See also the <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=57973">forum thread</a>.
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cronwhip/">cronwhip</a></span><sup><small>AUR</small></sup> 是一个自动运行遗漏的 cron 任务的脚本。它与以前的默认 cron 实现 <i>dcron</i> 一起工作。
+另见这个<a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=57973">论坛帖子</a>。
 </p>
 <h3><span class="mw-headline" id="Anacron">Anacron</span></h3>
-<p>Anacron is a full replacement for <i>dcron</i> which processes jobs asynchronously.
+<p>Anacron 是 <i>dcron</i> 的完全替代者，它可以异步处理任务。
 </p>
-<p>It is provided by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cronie">cronie</a></span>. The configuration file is <code>/etc/anacrontab</code>. Information on the format can be found in the <code>anacrontab(5)</code> <a href="../en/Man_page.html" title="Man page">man page</a>. Running <code>anacron -T</code> will test <code>/etc/anacrontab</code> for validity.
+<p>它由 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cronie">cronie</a></span> 提供，通过 <code>/etc/anacrontab</code> 进行配置。关于格式的信息可以在 <code>anacrontab(5)</code> <a href="../en/Man_page.html" title="Man page">man page</a> 中找到。运行 <code>anacron -T</code> 可以测试 <code>/etc/anacrontab</code> 的有效性。
 </p>
 <h3><span class="mw-headline" id="Fcron">Fcron</span></h3>
-<p>Like <i>anacron</i>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fcron">fcron</a></span> assumes the computer is not always running and, unlike <i>anacron</i>, it can schedule events at intervals shorter than a single day which may be useful for systems which suspend/hibernate regularly (such as a laptop). Like cronwhip, fcron can run jobs that should have been run during the computer's downtime.
+<p>和<i>anacron</i>一样，<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fcron">fcron</a></span> 假设计算机并不总是在运行。但与<i>anacron</i>不同的是，它可以在比一天更短的时间内安排这些事件，这对于经常暂停/休眠的系统（例如笔记本电脑）可能很有用。和 cronwhip 一样， fcron 也可以运行那些本应在计算机停机期间运行的作业。
 </p>
-<p>When replacing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cronie">cronie</a></span> with fcron be aware the spool directory is <code>/var/spool/fcron</code> and the <code>fcrontab</code> command is used instead of <i>crontab</i> to edit the user crontabs. These crontabs are stored in a binary format with the text version next to them as <i>foo</i>.orig in the spool directory. Any scripts which manually edit user crontabs may need to be adjusted due to this difference in behavior.
+<p>用 fcron 取代 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cronie">cronie</a></span> 时，spool 目录会变为 <code>/var/spool/fcron</code>，并使用 <code>fcrontab</code> 命令代替 <i>crontab</i> 来编辑用户的 crontabs。这些 crontab 以二进制格式存储，其旁边的文本版本在 spool 目录中为 <i>foo</i>.orig。由于这种行为上的差异，任何手动编辑的用户 crontabs 可能需要进行调整。
 </p>
-<p>A quick scriptlet which may aide in converting traditional user crontabs to fcron format:
+<p>一个快速的脚本小程序，可以帮助您将传统的用户 crontabs 转换为 fcron 格式：
 </p>
 <pre>cd /var/spool/cron &amp;&amp; (
  for ctab in *; do
@@ -497,15 +493,17 @@ See also the <a rel="nofollow" class="external text" href="https://bbs.archlinux
  done
 )
 </pre>
-<p>See also the <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=140497">forum thread</a>.
+<p>另见这个<a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=140497">论坛主题</a>。
 </p>
-<h2><span class="mw-headline" id="Ensuring_exclusivity">Ensuring exclusivity</span></h2>
-<p>If you run potentially long-running jobs (e.g., a backup might all of a sudden run for a long time, because of many changes or a particular slow network connection), then <code>flock</code> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=util-linux">util-linux</a></span>) can ensure that the cron job won't start a second time.
+<h2>
+<span id=".E7.A1.AE.E4.BF.9D.E6.8E.92.E4.BB.96.E6.80.A7"></span><span class="mw-headline" id="确保排他性">确保排他性</span>
+</h2>
+<p>如果您有可能运行很久的任务（比如说变化很多或者网速突然变慢，备份可能会偶尔运行很长时间），那么 <code>flock</code>（<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=util-linux">util-linux</a></span>）可以确保 cron 任务在同一时间点只有一个运行。
 </p>
 <pre>  5,35 * * * * /usr/bin/flock -n /tmp/lock.backup /root/make-backup.sh
 </pre>
 <h2><span class="mw-headline" id="Cronie_2">Cronie</span></h2>
-<p>The relevant file hierarchy for cronie is the following:
+<p>cronie 的相关文件层次结构如下：
 </p>
 <pre>   /etc/
      |----- cron.d/
@@ -520,32 +518,33 @@ See also the <a rel="nofollow" class="external text" href="https://bbs.archlinux
      |----- crontab
      |----- cron.deny
 </pre>
-<p>Cronie provides both <i>cron</i> and <i>anacron</i> functionalities: <i>cron</i> runs jobs at regular time intervals (down to a granularity of one minute) as long as the system is available at the specified time, while <i>anacron</i> executes commands at
-intervals specified in days.  Unlike cron, it does not assume that the system is running continuously. Whenever the system is up, <i>anacron</i> checks if there are any jobs that should have been run and handles them accordingly. 
+<p>Cronie 提供了 <i>cron</i> 和 <i>anacron</i> 两种功能：只要系统在指定的时间可用，<i>cron</i> 以固定的时间间隔（粒度为一分钟）运行工作，，而<i>anacron</i>则在以天为单位指定的时间间隔执行命令。与 cron 不同的是，它并不假设系统连续运行。当系统启动时，<i>anacron</i> 就会检查是否有任何漏掉的任务，并进行相应的处理。
 </p>
-<p>A <i>cron</i> job can be defined in a crontab-like file in the <code>/etc/cron.d</code> directory or added within the <code>/etc/crontab</code> file. Note the latter is not present by default but is used if it exists. As instructed by <code>/etc/cron.d/0hourly</code>, any executable file in <code>/etc/cron.hourly</code> will be run every hour (by default at minute 1 of the hour). Files in <code>/etc/cron.minutely</code> are executed every minute if instructed accordingly in <code>/etc/cron.d/0hourly</code>. The executables are typically shell scripts, symlinks to executable files can also be used. 
-The <code>/etc/cron.deny</code> file includes the list of users not allowed to use crontab, without this file, only users listed in <code>/etc/cron.allow</code> can use it. 
+<p><i>cron</i>任务可以在 <code>/etc/cron.d</code> 目录中类似 crontab 的文件中定义，或者在 <code>/etc/crontab</code> 文件中添加。注意后者在默认情况下并不存在，但如果存在就会被使用。按照 <code>/etc/cron.d/0hourly</code> 的内容，<code>/etc/cron.hourly</code> 中的任何可执行文件将每小时运行一次（默认为每小时的第1分钟），而在 <code>/etc/cron.minutely</code> 中的可执行文件将每分钟执行一次。这些可执行文件通常是 shell 脚本，也可以使用可执行文件的符号链接。
+<code>/etc/cron.deny</code> 文件包括不允许使用 crontab 的用户列表，如果没有这个文件，只有 <code>/etc/cron.allow</code> 中列出的用户才能使用它。
 </p>
-<p><i>Anacron</i> works similarly, by executing the files in the <code>/etc/cron.daily</code>, <code>/etc/cron.weekly</code> and <code>/etc/cron.monthly</code> directories, placed there depending on the desired job frequency. The cron job <code>/etc/cron.hourly/0anacron</code> makes sure that <i>anacron</i> is run once daily to perform its pending tasks.
+<p><i>Anacron</i>的工作原理类似，通过执行根据所需的作业频率放置在 <code>/etc/cron.daily</code>、<code>/etc/cron.weekly</code> 和 <code>/etc/cron.monthly</code>目录下的文件，cron 作业 <code>/etc/cron.hourly/0anacron</code> 确保 <i>anacron</i> 每天运行一次，以执行其待办任务。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
 <ul>
-<li>Cronie uses <code>run-parts</code> to carry out scripts in the different directories. The filenames should not include any dot (.) since <code>run-parts</code> in its default mode will silently ignore them (see <span class="plainlinks archwiki-template-man" title="$ man 8 run-parts"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/run-parts.8">run-parts(8)</a></span>). The names must consist only of upper and lower-case letters, digits, underscores and minus-hyphens.</li>
-<li>The output of <code>systemctl status cronie</code> might show a message such as <code>CAN'T OPEN (/etc/crontab): No such file or directory</code>. However, this can be ignored since cronie does not require one.</li>
-<li>Cronie is particular about the permissions for <code>/etc/cron.d/0hourly</code>. None of the tasks in <code>/etc/cron.d/{hourly,weekly,daily} ... etc</code> will be run (including the anacron launcher) if <code>/etc/cron.d/0hourly</code> is damaged or has improper permissions. <code>pacman -Qkk cronie</code> can show if you have any such issues.</li>
+<li>Cronie 使用 <code>run-parts</code> 来执行不同目录下的脚本。文件名中不应该包含任何点号（.），因为 <code>run-parts</code> 在默认模式下会忽略它们（参见<span class="plainlinks archwiki-template-man" title="$ man 8 run-parts"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/run-parts.8">run-parts(8)</a></span>）。名字必须只由大小写字母、数字、下划线和减号组成。</li>
+<li>
+<code>systemctl status cronie</code> 的输出可能会显示诸如 <code>CAN'T OPEN (/etc/crontab): No such file or directory</code> 的内容。您可以忽略这些内容，因为这个文件 cronie 不是必须的。</li>
+<li>Cronie 对 <code>/etc/cron.d/0hourly</code> 的权限要求很严格。如果 <code>/etc/cron.d/{hourly,weekly,daily}...</code> 中的任务损坏或权限不正确，<code>/etc/cron.d/0hourly</code> 中的所有任务都不会被运行（包括 anacron 启动器）。<code>pacman -Qkk cronie</code> 可以显示是否有这样的问题。</li>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> To prevent the sending of output and stop email alert, add <code>&gt;/dev/null 2&gt;&amp;1</code> at the end of the line for each cron job to redirect output to /dev/null. 
+<strong>Tip:</strong> 如果不需要某些命令的输出和电子邮件提醒，请在该 cron 任务的行末添加 <code>&gt;/dev/null 2&gt;&amp;1</code>，将输出重定向到/dev/null：
 <pre>0 1 5 10 * /path/to/script.sh &gt;/dev/null 2&gt;&amp;1
 </pre>
-You can also set <code>MAILTO=””</code> variable in your crontab file to  disable email alerts.</div>
+您也可以在您的 crontab 文件中设置 <code>MAILTO=""</code> 变量来禁用全部电子邮件提醒。</div>
 <h2><span class="mw-headline" id="Dcron_2">Dcron</span></h2>
+<p>cron守护进程会解析一个名为<code>crontab</code>的配置文件。系统中的每个用户都可以维护一个单独的crontab文件来单独调度命令。root 用户的 crontab 用于调度全系统的任务（用户可以选择使用 <code>/etc/crontab</code> 或 <code>/etc/cron.d</code> 目录，这取决于他们选择的 cron 实现）。
+</p>
 <p>The cron daemon parses a configuration file known as <code>crontab</code>. Each user on the system can maintain a separate crontab file to schedule commands individually. The root user's crontab is used to schedule system-wide tasks (though users may opt to use <code>/etc/crontab</code> or the <code>/etc/cron.d</code> directory, depending on which cron implementation they choose).
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/var/spool/cron/root
-</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/var/spool/cron/root</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># Run command at a scheduled time
 # Edit this 'crontab -e' for error checking, man 1 crontab for acceptable format
 
@@ -558,14 +557,14 @@ You can also set <code>MAILTO=””</code> variable in your crontab file to  di
 # mm  hh  DD  MM  W /path/command (or tags) # W = week: 0-6, Sun=0
   21  01  *   *   * /usr/bin/systemctl suspend
 </pre>
-<p>These lines exemplify one of the formats that crontab entries can have, namely whitespace-separated fields specifying:
+<p>下面几行是 crontab 条目的一种可接受格式，即以空格分隔的字段:
 </p>
 <ol>
 <li>@period</li>
-<li>ID=jobname (this tag is specific to dcron)</li>
+<li>ID=jobname （这个是 dcron 独有的）</li>
 <li>command</li>
 </ol>
-<p>The other standard format for crontab entries is:
+<p>crontab 条目的另一种标准格式是：
 </p>
 <ol>
 <li>minute</li>
@@ -575,15 +574,17 @@ You can also set <code>MAILTO=””</code> variable in your crontab file to  di
 <li>day of week</li>
 <li>command</li>
 </ol>
-<p>The crontab files themselves are usually stored as <code>/var/spool/cron/username</code>. For example, root's crontab is found at <code>/var/spool/cron/root</code>
+<p>crontab文件本身通常存储为 <code>/var/spool/cron/username</code>。例如，root 的 crontab 文件位于 <code>/var/spool/cron/root</code>。
 </p>
-<p>See the crontab <a href="../en/Man_page.html" title="Man page">man page</a> for further information and configuration examples.
+<p>参见 crontab <a href="../en/Man_page.html" title="Man page">man page</a> 获取更多信息和配置示例。
 </p>
-<h2><span class="mw-headline" id="See_also">See also</span></h2>
+<h2>
+<span id=".E5.8F.A6.E8.AF.B7.E5.8F.82.E8.A7.81"></span><span class="mw-headline" id="另请参见">另请参见</span>
+</h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://www.gentoo.org/doc/en/cron-guide.xml">Gentoo Linux Cron Guide</a></li>
+<li><a rel="nofollow" class="external text" href="http://www.gentoo.org/doc/en/cron-guide.xml">Gentoo Linux Cron 指南</a></li>
 <li>
-<a rel="nofollow" class="external text" href="https://crontab.guru/">crontab.guru</a> - online editor for cronjob expressions</li>
+<a rel="nofollow" class="external text" href="https://crontab.guru/">crontab.guru</a> - cronjob 表达式在线编辑器。</li>
 </ul>
 </div>
 </div>
@@ -595,8 +596,8 @@ You can also set <code>MAILTO=””</code> variable in your crontab file to  di
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Cron_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=618332">https://wiki.archlinux.org/index.php?title=Cron_(简体中文)&amp;oldid=618332</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 5 June 2020, at 07:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Cron_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=653633">https://wiki.archlinux.org/index.php?title=Cron_(简体中文)&amp;oldid=653633</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 27 February 2021, at 14:52.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

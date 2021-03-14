@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -59,20 +60,21 @@
 <a href="#Usage"><span class="tocnumber">3</span> <span class="toctext">Usage</span></a>
 <ul>
 <li class="toclevel-2 tocsection-5"><a href="#Generate_a_Curve25519_private_key"><span class="tocnumber">3.1</span> <span class="toctext">Generate a Curve25519 private key</span></a></li>
-<li class="toclevel-2 tocsection-6"><a href="#Generate_an_RSA_private_key"><span class="tocnumber">3.2</span> <span class="toctext">Generate an RSA private key</span></a></li>
-<li class="toclevel-2 tocsection-7"><a href="#Generate_a_certificate_signing_request"><span class="tocnumber">3.3</span> <span class="toctext">Generate a certificate signing request</span></a></li>
-<li class="toclevel-2 tocsection-8"><a href="#Generate_a_self-signed_certificate"><span class="tocnumber">3.4</span> <span class="toctext">Generate a self-signed certificate</span></a></li>
-<li class="toclevel-2 tocsection-9"><a href="#Generate_a_self-signed_certificate_with_private_key_in_a_single_command"><span class="tocnumber">3.5</span> <span class="toctext">Generate a self-signed certificate with private key in a single command</span></a></li>
-<li class="toclevel-2 tocsection-10"><a href="#Generate_Diffie%E2%80%93Hellman_parameters"><span class="tocnumber">3.6</span> <span class="toctext">Generate Diffie–Hellman parameters</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Generate_an_ECDSA_private_key"><span class="tocnumber">3.2</span> <span class="toctext">Generate an ECDSA private key</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Generate_an_RSA_private_key"><span class="tocnumber">3.3</span> <span class="toctext">Generate an RSA private key</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Generate_a_certificate_signing_request"><span class="tocnumber">3.4</span> <span class="toctext">Generate a certificate signing request</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Generate_a_self-signed_certificate"><span class="tocnumber">3.5</span> <span class="toctext">Generate a self-signed certificate</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Generate_a_self-signed_certificate_with_private_key_in_a_single_command"><span class="tocnumber">3.6</span> <span class="toctext">Generate a self-signed certificate with private key in a single command</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Generate_Diffie%E2%80%93Hellman_parameters"><span class="tocnumber">3.7</span> <span class="toctext">Generate Diffie–Hellman parameters</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-11">
+<li class="toclevel-1 tocsection-12">
 <a href="#Troubleshooting"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-12"><a href="#%22bad_decrypt%22_while_decrypting"><span class="tocnumber">4.1</span> <span class="toctext">"bad decrypt" while decrypting</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#%22bad_decrypt%22_while_decrypting"><span class="tocnumber">4.1</span> <span class="toctext">"bad decrypt" while decrypting</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-13"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-14"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -115,6 +117,9 @@
 <h3><span class="mw-headline" id="Generate_a_Curve25519_private_key">Generate a Curve25519 private key</span></h3>
 <pre>$ openssl genpkey -algorithm x25519 -out <i>file</i>
 </pre>
+<h3><span class="mw-headline" id="Generate_an_ECDSA_private_key">Generate an ECDSA private key</span></h3>
+<pre>$ openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:P-256 -out <i>file</i>
+</pre>
 <h3><span class="mw-headline" id="Generate_an_RSA_private_key">Generate an RSA private key</span></h3>
 <p>With <span class="plainlinks archwiki-template-man" title="$ man 1ssl genpkey"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/genpkey.1ssl">genpkey(1ssl)</a></span>, which supersedes <i>genrsa</i> according to <span class="plainlinks archwiki-template-man" title="$ man 1ssl openssl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/openssl.1ssl">openssl(1ssl)</a></span>:
 </p>
@@ -139,6 +144,10 @@
 <span id="Generate_Diffie.E2.80.93Hellman_parameters"></span><span class="mw-headline" id="Generate_Diffie–Hellman_parameters">Generate Diffie–Hellman parameters</span>
 </h3>
 <p>See <a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" class="extiw" title="wikipedia:Diffie–Hellman key exchange">Diffie–Hellman key exchange</a> for more information.
+</p>
+<p>Current <a rel="nofollow" class="external text" href="https://wiki.mozilla.org/Security/Server_Side_TLS">best practice</a> is to use one of the standard DH groups from RFC 7919, eg. <a rel="nofollow" class="external text" href="https://ssl-config.mozilla.org/ffdhe2048.txt">ffdhe2048</a>.
+</p>
+<p>Alternatively you can generate a random group of your own:
 </p>
 <pre>$ openssl dhparam -out <i>filename</i> <i>2048</i>
 </pre>
@@ -185,8 +194,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenSSL&amp;oldid=647540">https://wiki.archlinux.org/index.php?title=OpenSSL&amp;oldid=647540</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 28 December 2020, at 23:59.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenSSL&amp;oldid=654023">https://wiki.archlinux.org/index.php?title=OpenSSL&amp;oldid=654023</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 5 March 2021, at 15:36.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
