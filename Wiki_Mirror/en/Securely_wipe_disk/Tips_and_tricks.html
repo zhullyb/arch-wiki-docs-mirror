@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -66,7 +67,7 @@
 
 <h2><span class="mw-headline" id="Wipe_a_single_file">Wipe a single file</span></h2>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Wiping of single files is less effective, if the partition has been <a href="https://en.wikipedia.org/wiki/File_system_fragmentation" class="extiw" title="wikipedia:File system fragmentation">defragmented</a>, resized or moved, or the files have been <a href="https://en.wikipedia.org/wiki/Temporary_folder" class="extiw" title="wikipedia:Temporary folder">duplicated</a> on the same device before. It is much harder to recovery if the whole <a href="../../en/Security.html#Disk_encryption" title="Security">encrypted data</a><sup>[<a href="../../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> container part was wiped but encryption will lower <a href="https://en.wikipedia.org/wiki/Disk_encryption#Implementations" class="extiw" title="wikipedia:Disk encryption">disk performance</a> much, if it is not <a href="https://en.wikipedia.org/wiki/Disk_encryption_hardware" class="extiw" title="wikipedia:Disk encryption hardware">hardware based</a> encryption that has almost no impact on the performance. See also <a href="../../en/Securely_wipe_disk.html#Data_remanence" title="Securely wipe disk">Securely wipe disk#Data remanence</a>.</div>
+<strong>Warning:</strong> Wiping of single files is less effective, if the partition has been <a href="https://en.wikipedia.org/wiki/File_system_fragmentation" class="extiw" title="wikipedia:File system fragmentation">defragmented</a>, resized or moved, or the files have been <a href="https://en.wikipedia.org/wiki/Temporary_folder" class="extiw" title="wikipedia:Temporary folder">duplicated</a> on the same device before. It is much harder to recover if the whole <a href="../../en/Data-at-rest_encryption.html" title="Data-at-rest encryption">encrypted data</a> container part was wiped but encryption will lower <a href="https://en.wikipedia.org/wiki/Disk_encryption#Implementations" class="extiw" title="wikipedia:Disk encryption">disk performance</a> much, if it is not <a href="https://en.wikipedia.org/wiki/Disk_encryption_hardware" class="extiw" title="wikipedia:Disk encryption hardware">hardware based</a> encryption that has almost no impact on the performance. See also <a href="../../en/Securely_wipe_disk.html#Data_remanence" title="Securely wipe disk">Securely wipe disk#Data remanence</a>.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> To preserve file access and modification time you can use <span class="plainlinks archwiki-template-man" title="$ man 1 touch"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/touch.1">touch(1)</a></span> command to change time and <span class="plainlinks archwiki-template-man" title="$ man 1 stat"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/stat.1">stat(1)</a></span> command to read time information before accessing the file. See also <a href="https://en.wikipedia.org/wiki/Comparison_of_file_systems#Metadata" class="extiw" title="wikipedia:Comparison of file systems">comparison of file systems</a> for support of metadata and timestamps by them.</div>
 <p>Wiping of a single file consists of two basic and one advanced anti-forensic time consumed method that can be done only with specialized tools, the last one method will not be covered in this article.
@@ -119,7 +120,7 @@
 <li>
 <a rel="nofollow" class="external text" href="https://tldp.org/LDP/abs/html/here-docs.html">Advanced Bash-Scripting Guide</a> - describes more advanced ways about how to create files from a bash script</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.computing.net/answers/unix/alternative-for-sed-i/7800.html">sed alternatives</a><sup title="Last check status: 410">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup> - a perl example that works better than sed for replacing content in a file</li>
+<a rel="nofollow" class="external text" href="https://web.archive.org/web/20120516180924/http://www.computing.net/answers/unix/alternative-for-sed-i/7800.html">sed alternatives</a> - a perl example that works better than sed for replacing content in a file</li>
 </ul>
 <h2><span class="mw-headline" id="Overwrite_the_target">Overwrite the target</span></h2>
 <h3><span class="mw-headline" id="Prevent_wiping_mounted_partitions">Prevent wiping mounted partitions</span></h3>
@@ -214,7 +215,7 @@ DestinationFile="$((${RANDOM/0/1}$(date "+%s")/${RANDOM/0/1}))"
 <strong>Note:</strong> 
 <ul>
 <li>It is not necessary to set level of compression, enough to store data for minimizing CPU usage and a faster fill free space up.</li>
-<li>If you are using a single file as a source then you can put it into the <a rel="nofollow" class="external text" href="http://www.vanemery.com/Linux/Ramdisk/ramdisk.html">RAM disk</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup> or the <code>/tmp</code> folder, because it uses <a href="../../en/Tmpfs.html" title="Tmpfs">tmpfs</a> that allocates some amount of RAM because it will speed up reading.</li>
+<li>If you are using a single file as a source then you can put it into the <a rel="nofollow" class="external text" href="https://web.archive.org/web/20191222145936/http://www.vanemery.com/Linux/Ramdisk/ramdisk.html">RAM disk</a> or the <code>/tmp</code> folder, because it uses <a href="../../en/Tmpfs.html" title="Tmpfs">tmpfs</a> that allocates some amount of RAM because it will speed up reading.</li>
 </ul>
 </div>
 <h3><span class="mw-headline" id="Create_multiple_files_with_help_of_the_timeout_command">Create multiple files with help of the <i>timeout</i> command</span></h3>
@@ -235,26 +236,19 @@ timeout $((AA/100)) cat /dev/urandom &gt; filename${RANDOM}.tmp;
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
 <li><a href="../../en/Category:Security.html" title="Category:Security">Security</a></li>
 <li><a href="../../en/Category:File_systems.html" title="Category:File systems">File systems</a></li>
 </ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Securely_wipe_disk/Tips_and_tricks&amp;oldid=640242">https://wiki.archlinux.org/index.php?title=Securely_wipe_disk/Tips_and_tricks&amp;oldid=640242</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 November 2020, at 11:27.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Securely_wipe_disk/Tips_and_tricks&amp;oldid=655072">https://wiki.archlinux.org/index.php?title=Securely_wipe_disk/Tips_and_tricks&amp;oldid=655072</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 March 2021, at 00:07.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

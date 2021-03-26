@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -57,6 +58,7 @@
 <li class="toclevel-2 tocsection-5"><a href="#Separate_NoMachine_X_session_in_parallel_with_existing_X_session"><span class="tocnumber">3.2</span> <span class="toctext">Separate NoMachine X session in parallel with existing X session</span></a></li>
 <li class="toclevel-2 tocsection-6"><a href="#Problems_with_default_keyboard_in_Display_Manager"><span class="tocnumber">3.3</span> <span class="toctext">Problems with default keyboard in Display Manager</span></a></li>
 <li class="toclevel-2 tocsection-7"><a href="#Connecting_via_SSH"><span class="tocnumber">3.4</span> <span class="toctext">Connecting via SSH</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Virtualbox_guest_audio_stream_lost_on_reconnection"><span class="tocnumber">3.5</span> <span class="toctext">Virtualbox guest audio stream lost on reconnection</span></a></li>
 </ul>
 </li>
 </ul>
@@ -128,6 +130,24 @@ $HOME/Documents/NoMachine
 </pre>
 <p>Then, start NoMachine Player and try to connect to <code>localhost</code> with the NX protocol. The connection will be tunneled to the <i>targetmachine</i> and redirected to the server's localhost port <code>4000</code>.
 </p>
+<h3><span class="mw-headline" id="Virtualbox_guest_audio_stream_lost_on_reconnection">Virtualbox guest audio stream lost on reconnection</span></h3>
+<p>If using <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a> audio interface, nxserver will restart pulseaudio on client disconnection, virtualbox guest machine can not connect to the new pulseaudio automatically, thus audio stream lost. A workaround is to provide a dummy pulseaudio in your PATH for nxserver.
+</p>
+<pre>$ ln -s /usr/bin/true /some/path/prior/to/usr/bin/pulseaudio
+$ which -a pulseaudio
+/some/path/prior/to/usr/bin/pulseaudio
+/usr/bin/pulseaudio
+</pre>
+<p>Then reinstall the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nomachine/">nomachine</a></span><sup><small>AUR</small></sup> package to regenerate <code>/usr/NX/etc/node.cfg</code>, and recheck the pulseaudio start command.
+</p>
+<pre>$ grep -i pulse /usr/NX/etc/node.cfg
+AudioInterface pulseaudio
+CommandStartPulseAudio "/some/path/prior/to/usr/bin/pulseaudio --high-priority=no"
+</pre>
+<p>Finally restart nxserver
+</p>
+<pre># systemctl restart nxserver
+</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
@@ -138,8 +158,8 @@ $HOME/Documents/NoMachine
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NoMachine&amp;oldid=613666">https://wiki.archlinux.org/index.php?title=NoMachine&amp;oldid=613666</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 May 2020, at 05:56.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NoMachine&amp;oldid=655695">https://wiki.archlinux.org/index.php?title=NoMachine&amp;oldid=655695</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 21:15.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

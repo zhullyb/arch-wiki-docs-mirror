@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -82,7 +83,12 @@
 <li class="toclevel-3 tocsection-11"><a href="#Using_an_HDMI_output"><span class="tocnumber">3.3.2</span> <span class="toctext">Using an HDMI output</span></a></li>
 <li class="toclevel-3 tocsection-12"><a href="#Using_the_EVDI_driver"><span class="tocnumber">3.3.3</span> <span class="toctext">Using the EVDI driver</span></a></li>
 <li class="toclevel-3 tocsection-13"><a href="#Using_the_xorg_dummy_driver"><span class="tocnumber">3.3.4</span> <span class="toctext">Using the xorg dummy driver</span></a></li>
-<li class="toclevel-3 tocsection-14"><a href="#Sharing_the_screen"><span class="tocnumber">3.3.5</span> <span class="toctext">Sharing the screen</span></a></li>
+<li class="toclevel-3 tocsection-14">
+<a href="#Sharing_the_screen"><span class="tocnumber">3.3.5</span> <span class="toctext">Sharing the screen</span></a>
+<ul>
+<li class="toclevel-4 tocsection-15"><a href="#Usefull_x11vnc_options"><span class="tocnumber">3.3.5.1</span> <span class="toctext">Usefull x11vnc options</span></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -226,7 +232,7 @@ EndSection
 <ol>
 <li>on each system configure and initiate a minimal X session; a minimal twm session is enough</li>
 <li>authorise the master system to access X resources on each remote system (use xhost +)</li>
-<li>install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-server-xdmx">xorg-server-xdmx</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> on the master system</li>
+<li>install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xorg-server-xdmx-dev/">xorg-server-xdmx-dev</a></span><sup><small>AUR</small></sup> on the master system</li>
 <li>initiate a minimal X session on the master system</li>
 <li>configure the desired Xdmx session</li>
 <li>initiate the Xdmx session with an appropriate window manager as a working desktop</li>
@@ -274,7 +280,13 @@ EndSection
 <pre>$ xrandr --output VIRTUAL1 --mode&lt;resolution&gt;   
 </pre>
 <h4><span class="mw-headline" id="Using_an_HDMI_output">Using an HDMI output</span></h4>
-<p>Most drivers these days, including the nVidia proprietary driver and the new Intel recommended "modesetting" driver do not support virtual outputs. In this case it is normally possible to use a free HDMI output (i.e. HDMI-1 or HDMI-2). This will mostly work, you will be able to move windows to the virtual screen and export it with VNC. However, some userspace programs (notably KDE, <a href="/index.php?title=LIbreOffice&amp;action=edit&amp;redlink=1" class="new" title="LIbreOffice (page does not exist)">LIbreOffice</a> Impress, Zoom) will not recognize the screen properly and cause some glitches.
+<p>Most drivers these days, including the nVidia proprietary driver and the new Intel recommended "modesetting" driver do not support virtual outputs. In this case it is normally possible to use a free HDMI output (i.e. HDMI-1 or HDMI-2). This will mostly work, you will be able to move windows to the virtual screen and export it with VNC. 
+</p>
+<p>Some userspace programs (notably KDE, <a href="../en/LibreOffice.html" title="LibreOffice">LibreOffice</a> Impress, Zoom) do not recognize the screen properly and will not work in "dual screen mode" or may cause some glitches. You can work around this problem by forcing the HDMI output to be enabled, via the /sys/debug inteface by running <b>as root</b>:
+</p>
+<pre> echo on &gt; /sys/kernel/debug/dri/0/OUTPUT/force
+</pre>
+<p>whwre OUTPUT can be HDMI-A-1, or HDMI-A-2, or other, depending on which output you are using. Note that the name is different from that used by xrandr. This also may also enable the audio output of the HDMI port. In this case, you may want to revert to the previous audio output.
 </p>
 <h4><span class="mw-headline" id="Using_the_EVDI_driver">Using the EVDI driver</span></h4>
 <p>In the exceptional case where there is no spare HDMI output, one can abuse the <a rel="nofollow" class="external text" href="https://github.com/DisplayLink/evdi">evdi</a> to create more outputs as explained <a rel="nofollow" class="external text" href="https://unix.stackexchange.com/questions/585069/unable-to-add-a-virtual-dispplay-to-xorg">here</a>. Note that at the moment, this method has the same drawbacks as using an HDMI output, i.e. the output will not appear as "connected" and may not be properly recognized and used by some applications.
@@ -285,14 +297,12 @@ EndSection
 <h4><span class="mw-headline" id="Sharing_the_screen">Sharing the screen</span></h4>
 <p>To share the display using X11vnc, one can specify explicitly the screen area to share:
 </p>
-<pre>$ x11vnc -display :0 -clip &lt;resolution&gt;+&lt;offset&gt; -multiptr -forever  
+<pre>$ x11vnc -display :0 -clip &lt;resolution&gt;+&lt;offset&gt;
 </pre>
 <p>or tell x11vnc to share the second (or third..) screen
 </p>
-<pre>$ x11vnc -display :0 -clip xinerama1 -multiptr -forever  
+<pre>$ x11vnc -display :0 -clip xinerama1
 </pre>
-<p>It may be necessary to add the "-repeat" option if x11vnc disables automatic keystroke repetition.
-</p>
 <p>This vnc instance can then be displayed on the remote machine by running  
 </p>
 <pre>$ vncviewer -shared -ViewOnly -Fullscreen &lt;host ip&gt;
@@ -316,16 +326,36 @@ If the external screen is an Android device, one can use a USB cable to get bett
 </pre>
 <p>Then you'll be able to connect to localhost:5900
 </p>
+<h5><span class="mw-headline" id="Usefull_x11vnc_options">Usefull x11vnc options</span></h5>
+<p>Some options x11vnc can be very effective at reducing the perceived lag or fixing small annoyances:
+</p>
+<ul>
+<li>
+<i>-repeat</i>: to prevent x11vnc to disable automatic keystroke repetition.</li>
+<li>
+<i>-forever</i>: by default, x11vnc accepts a single remote connection and quits when the remote client disconnects. This can actually be the desired behavior in a script, but you can use this option to make it stay up</li>
+<li>
+<i>-xdamage -xd_area 1024 -xd_mem 1.5 </i> x11vnc uses the X11 "damage" extension, which alerts it of the part of the screen which have been modified. Unfortunately, most applications do not implement it properly, and may indicate very large areas, or even the entire window, as modified at every keystroke. This option will tell x11vnc to not trust the damage information when it covers an area larger than 1024 pixels (i.e. 32x32)</li>
+<li>
+<i>-nonap</i> when there is no input and no screen change, x11vnc will stop monitoring the screen for longer and longer periods of time, which means that if you take a minute reading a document it will take several seconds before it wakes up. If you find this annoying, you can use this option.</li>
+</ul>
+<p>Mouse pointer options. In order to reduce lag, vnc cients draw the mouse cursor on their own and only transmit the cursor position to the server (this can make the cursor look ugly if it has transparencies). 
+</p>
+<ul>
+<li>
+<i>-nocursorpos</i>: per default, x11vnc keeps the cursor position synchronized on all server and the client. I.e. you can move the mouse on the PC to move the cursor in the virtual screen. If you use this option, it will only be possible to move the cursor on the virtual screen by acting on the vnc client, i.e. by touch if it is a tablet.</li>
+<li>
+<i>-multiptr</i> tell x11vnc that the client will use its own mouse cursor. In practice, you will have two pointers: one that is controlled with the mouse from the main PC, the other that is controlled by touch or a mouse on the client. This can really intuitive or really confusing. I used in conjunction with -nocursorpos, you will only be able to use the local mouse on the local screen and the remote mouse (or touch) on the vnc screen.</li>
+<li>
+<i>-noxfixes</i>: tell x11vnc to not send the cursor image to the client. Useful if it looks very ugly or if you only use touch and would rather have no cursor image at all.</li>
+</ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:X_server.html" title="Category:X server">X server</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li></ul>
 </div>
 </div>
 	</div>
@@ -333,8 +363,8 @@ If the external screen is an Android device, one can use a USB cable to get bett
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Extreme_Multihead&amp;oldid=644308">https://wiki.archlinux.org/index.php?title=Extreme_Multihead&amp;oldid=644308</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 9 December 2020, at 10:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Extreme_Multihead&amp;oldid=655487">https://wiki.archlinux.org/index.php?title=Extreme_Multihead&amp;oldid=655487</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 20 March 2021, at 12:56.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

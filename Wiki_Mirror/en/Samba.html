@@ -380,11 +380,13 @@ is a feature that gives non-root users the capability to add, modify, and delete
 <h4><span class="mw-headline" id="Use_native_SMB_transport_encryption">Use native SMB transport encryption</span></h4>
 <p>Native SMB transport encryption is available in SMB version 3.0 or newer. Clients supporting this type of encryption include Windows 8 and newer, Windows server 2012 and newer, and smbclient of Samba 4.1 and newer.
 </p>
-<p>To use native SMB transport encryption by default, set the <code>smb encrypt</code> parameter globally and/or by share. Possible values are <code>off</code>, <code>enabled</code> (default value), <code>desired</code>, or <code>required</code>:
+<p>To use native SMB transport encryption by default, set the <code>server smb encrypt</code> parameter globally and/or by share. Possible values are <code>off</code>, <code>enabled</code> (default value), <code>desired</code>, or <code>required</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/samba/smb.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[global]
-  smb encrypt = desired</pre>
+  server smb encrypt = desired</pre>
+<p>To configure encryption for on the client side, use the option <code>client smb encrypt</code>.
+</p>
 <p>See <span class="plainlinks archwiki-template-man" title="$ man 5 smb.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/smb.conf.5">smb.conf(5)</a></span> for more information, especially the paragraphs <i>Effects for SMB1</i> and <i>Effects for SMB2</i>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
@@ -616,7 +618,12 @@ TimeoutSec=30
 [Install]
 WantedBy=multi-user.target</pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> In case of an unreachable system, <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Append">append</a> <code>ForceUnmount=true</code> to <code>[Mount]</code>, allowing the share to be (force-)unmounted.</div>
+<strong>Tip:</strong> 
+<ul>
+<li>In case of an unreachable system, <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Append">append</a> <code>ForceUnmount=true</code> to <code>[Mount]</code>, allowing the share to be (force-)unmounted.</li>
+<li>If your share has groups with read-only access, <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Append">append</a> <code>uid=<i>username</i></code> or <code>gid=<i>group</i></code> to <code>Options=</code>, to specify your user / group allowing writing to the share.</li>
+</ul>
+</div>
 <p>To use <code>mnt-myshare.mount</code>, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> the unit and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> it to run on system boot.
 </p>
 <h5><span class="mw-headline" id="automount">automount</span></h5>
@@ -867,7 +874,7 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v "Siz
 </ul>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Googling will reveal another tweak recommending users to add a key modifying the "IRPStackSize" size.  This is incorrect for fixing this issue under Windows 7.  Do not attempt it.</div>
-<p><a rel="nofollow" class="external text" href="http://alan.lamielle.net/2009/09/03/windows-7-nonpaged-pool-srv-error-2017">Original article</a><sup title="Last check status: domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup>.
+<p><a rel="nofollow" class="external text" href="https://web.archive.org/web/20150819153712/http://alan.lamielle.net/2009/09/03/windows-7-nonpaged-pool-srv-error-2017/">Original article</a>.
 </p>
 <h3>
 <span id="Windows_10_1709_and_up_connectivity_problems_-_.22Windows_cannot_access.22_0x80004005"></span><span class="mw-headline" id='Windows_10_1709_and_up_connectivity_problems_-_"Windows_cannot_access"_0x80004005'>Windows 10 1709 and up connectivity problems - "Windows cannot access" 0x80004005</span>
@@ -1115,10 +1122,7 @@ password=pass</pre>
 <li><a href="../en/Category:Servers.html" title="Category:Servers">Servers</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li></ul>
 </div>
 </div>
 	</div>
@@ -1126,8 +1130,8 @@ password=pass</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Samba&amp;oldid=654339">https://wiki.archlinux.org/index.php?title=Samba&amp;oldid=654339</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 9 March 2021, at 20:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Samba&amp;oldid=655252">https://wiki.archlinux.org/index.php?title=Samba&amp;oldid=655252</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 March 2021, at 18:50.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

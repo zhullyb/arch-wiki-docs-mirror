@@ -274,7 +274,7 @@ Host SERVER2
 <li>
 <a href="../en/YubiKey.html#SSH_notes" title="YubiKey">YubiKey#SSH notes</a> 用于 FIDO/U2F keys 的原生 OpenSSH 支持</li>
 <li><a href="../en/YubiKey.html#SSH_keys" title="YubiKey">YubiKey#SSH keys</a></li>
-<li><a href="../en/Trusted_Platform_Module.html#Securing_SSH_Keys" title="Trusted Platform Module">Trusted Platform Module#Securing SSH Keys</a></li>
+<li><a href="../en/Trusted_Platform_Module.html#Securing_SSH_keys" title="Trusted Platform Module">Trusted Platform Module#Securing SSH keys</a></li>
 </ul>
 <h2>
 <span id=".E5.B0.86.E5.85.AC.E9.92.A5.E5.A4.8D.E5.88.B6.E5.88.B0.E8.BF.9C.E7.A8.8B.E6.9C.8D.E5.8A.A1.E5.99.A8.E4.B8.8A"></span><span class="mw-headline" id="将公钥复制到远程服务器上">将公钥复制到远程服务器上</span>
@@ -377,7 +377,7 @@ fi
 <h4>
 <span id=".E7.94.A8_systemd_user_.E5.90.AF.E5.8A.A8_ssh-agent"></span><span class="mw-headline" id="用_systemd_user_启动_ssh-agent">用 systemd user 启动 ssh-agent</span>
 </h4>
-<p>通过 <a href="../zh-CN/a87ea26bff3744e8b00320e027759a76.html" title="Systemd (简体中文)/User (简体中文)">Systemd_(简体中文)/User_(简体中文)</a> 机制来启动 agent 同样可行。如果想要在登录时运行 SSH agent 而不论 X 是否在运行的话，可用此法。
+<p>通过 <a href="../zh-CN/a87ea26bff3744e8b00320e027759a76.html" title="Systemd (简体中文)/User (简体中文)">Systemd (简体中文)/User (简体中文)</a> 机制来启动 agent 同样可行。如果想要在登录时运行 SSH agent 而不论 X 是否在运行的话，可用此法。
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.config/systemd/user/ssh-agent.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
@@ -397,7 +397,7 @@ WantedBy=default.target</pre>
 <p>最后，加上 <code>--user</code> 标志 <a href="../zh-CN/Systemd.html#%E4%BD%BF%E7%94%A8%E5%8D%95%E5%85%83" title="Systemd (简体中文)">enable</a> 或 <a href="../zh-CN/Systemd.html#%E4%BD%BF%E7%94%A8%E5%8D%95%E5%85%83" title="Systemd (简体中文)">start</a> 服务。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> 如果您使用 GNOME，该环境变量默认会被覆盖。见 <a href="../zh-CN/2f866f9b5094337533be6abeab55a352.html#%E7%A6%81%E7%94%A8%E9%92%A5%E5%8C%99%E7%8E%AF%E7%9A%84%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E7%BB%84%E4%BB%B6" title="GNOME (简体中文)/Keyring (简体中文)">GNOME_(简体中文)/Keyring_(简体中文)#禁用钥匙环的守护进程组件</a>。</div>
+<strong>注意：</strong> 如果您使用 GNOME，该环境变量默认会被覆盖。见 <a href="../zh-CN/2f866f9b5094337533be6abeab55a352.html#%E7%A6%81%E7%94%A8%E9%92%A5%E5%8C%99%E7%8E%AF%E7%9A%84%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E7%BB%84%E4%BB%B6" title="GNOME (简体中文)/Keyring (简体中文)">GNOME (简体中文)/Keyring (简体中文)#禁用钥匙环的守护进程组件</a>。</div>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>提示：</strong> 当按上述方法通过 systemd 启动 agent 时，可以自动输入您默认密钥的密码短语并将其添加到 agent。详见 <a rel="nofollow" class="external text" href="https://github.com/capocasa/systemd-user-pam-ssh">systemd-user-pam-ssh</a>。</div>
 <h4>
@@ -415,10 +415,10 @@ WantedBy=default.target</pre>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 作为调用 <code>ssh-agent startx</code> 的替代方案，可以将 <code>eval $(ssh-agent)</code> 添加到 <code>~/.xinitrc</code>。</div>
-<p>见<a href="#Calling_x11-ssh-askpass_with_ssh-add">下文有关协同使用 x11-ssh-askpass 与 ssh-add 的说明</a>了解如何立即将密钥添加到 agent。
+<p>见<a href="#Calling_x11-ssh-askpass_with_ssh-add">下文有关协同使用 x11-ssh-askpass 与 ssh-add 的说明</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>了解如何立即将密钥添加到 agent。
 </p>
 <h3><span class="mw-headline" id="GnuPG_Agent">GnuPG Agent</span></h3>
-<p><a href="../zh-CN/GnuPG.html#gpg-agent" title="GnuPG (简体中文)">gpg-agent</a> 提供对 OpenSSH agent 的模拟。必要配置见 <a href="../zh-CN/GnuPG.html#SSH_agent" title="GnuPG (简体中文)">GnuPG_(简体中文)#SSH_agent</a>。
+<p><a href="../zh-CN/GnuPG.html#gpg-agent" title="GnuPG (简体中文)">gpg-agent</a> 提供对 OpenSSH agent 的模拟。必要配置见 <a href="../zh-CN/GnuPG.html#SSH_agent" title="GnuPG (简体中文)">GnuPG (简体中文)#SSH agent</a>。
 </p>
 <h3><span class="mw-headline" id="Keychain">Keychain</span></h3>
 <p><a rel="nofollow" class="external text" href="http://www.funtoo.org/Keychain">Keychain</a> 是一个用来方便管理 SSH 密钥对的程序，它能尽最大努力去减少对用户的打扰。实际上，它就是一个 shell 脚本，驱动 <code>ssh-agent</code> 或者 <code>gpg-add</code> 来工作。一个值得注意的特性是，keychain 在多个会话中重复使用同一个 <code>ssh-agent</code> 进程。这意味着您只需要在机器启动时输入一次密码短语即可。
@@ -439,7 +439,7 @@ WantedBy=default.target</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">eval $(keychain --eval --quiet id_ed25519 id_rsa ~/.keys/my_custom_key)
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> 之所以使用 <code>~/.bashrc</code> 而非上游建议的 <code>~/.bash_profile</code>，是因为在 Arch 上登录与非登录 shell 都会使用它，因此同样适用于文字与图形环境。关于二者之间差异的更多信息见<a href="../zh-CN/Bash.html#%E8%B0%83%E7%94%A8" title="Bash (简体中文)">Bash_(简体中文)#调用</a>。</div>
+<strong>注意：</strong> 之所以使用 <code>~/.bashrc</code> 而非上游建议的 <code>~/.bash_profile</code>，是因为在 Arch 上登录与非登录 shell 都会使用它，因此同样适用于文字与图形环境。关于二者之间差异的更多信息见<a href="../zh-CN/Bash.html#%E8%B0%83%E7%94%A8" title="Bash (简体中文)">Bash (简体中文)#调用</a>。</div>
 <p>上例当中，
 </p>
 <ul>
@@ -602,6 +602,7 @@ chmod 755 ~/.kde4/env/ssh-agent-startup.sh ~/.kde4/shutdown/ssh-agent-shutdown.s
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 <li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 </ul>
 </div>
@@ -611,8 +612,8 @@ chmod 755 ~/.kde4/env/ssh-agent-startup.sh ~/.kde4/shutdown/ssh-agent-shutdown.s
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SSH_keys_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=652643">https://wiki.archlinux.org/index.php?title=SSH_keys_(简体中文)&amp;oldid=652643</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 08:22.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SSH_keys_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=655712">https://wiki.archlinux.org/index.php?title=SSH_keys_(简体中文)&amp;oldid=655712</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 21:59.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

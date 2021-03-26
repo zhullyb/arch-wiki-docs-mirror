@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>HP Omen-15-ek005na - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-HP_Omen-15-ek005na rootpage-HP_Omen-15-ek005na skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">HP Omen-15-ek005na</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> <code>lspci</code>/<code>lsusb</code> dumps do not belong into laptop pages (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:HP_Omen-15-ek005na">Talk:HP Omen-15-ek005na#</a>)</div>
+</div>
+<p>The Omen 15-ek005na is the intel variant of the Omen 2020 series, mounting an Intel i7-10750H and an Nvidia RTX 2070 maxq. It features an IPS 144hz full-hd panel, a raid controller, 16GB ram (2x8GB @ 3200MHz, capped by the BIOS at a lower frequency) and 1TB of nvme ssd by Koxia (KXG60ZNV1T02).
+</p>
+<p>The 70Wh battery allows to use the laptop about 4 hours on battery. In particular, the CPU TDP is limited to W while on battery, compared to the 45W on AC. On windows there is the possibility of increasing the TDP to 90W/107W (long/short), yet this is managed directly by the embedded controller (EC) and requires patching to allow this on Linux.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1">
+<a href="#Configuration"><span class="tocnumber">1</span> <span class="toctext">Configuration</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#BIOS"><span class="tocnumber">1.1</span> <span class="toctext">BIOS</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Audio"><span class="tocnumber">1.2</span> <span class="toctext">Audio</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#EC/Fan/CPU"><span class="tocnumber">1.3</span> <span class="toctext">EC/Fan/CPU</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-5">
+<a href="#Hardware_Info"><span class="tocnumber">2</span> <span class="toctext">Hardware Info</span></a>
+<ul>
+<li class="toclevel-2 tocsection-6"><a href="#PCI"><span class="tocnumber">2.1</span> <span class="toctext">PCI</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#USB"><span class="tocnumber">2.2</span> <span class="toctext">USB</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
+<h3><span class="mw-headline" id="BIOS">BIOS</span></h3>
+<p>The BIOS interface available is graphic but not many options are present. Secure boot can be disabled as well hyper-threading. The fan is set as always On by default, which can be disabled from here. No Advanced tab is present, so that the RAM frequency cannot be increased (XMP is not enabled by default) and the CPU TPD cannot be tuned.
+Here it is also possible to switch from intel hybrid to Nvidia only (dedicated) graphics card.
+</p>
+<h3><span class="mw-headline" id="Audio">Audio</span></h3>
+<p>To work, the audio requires Kernel 5.10 or later since previous versions of the kernel do not present the required driver. The internal microphone works out of the box, but it is suggested to set up echo reduction since it is a dual-microphone array. To set this up, add the following lines to your pulseaudio configuration as described in <a href="../en/PulseAudio.html#Microphone_echo/noise_cancellation" title="PulseAudio">PulseAudio#Microphone_echo/noise_cancellation</a>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"> /etc/pulse/default.pa</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">.ifexists module-echo-cancel
+.nofail
+load-module module-echo-cancel aec_method=webrtc aec_args="analog_gain_control=0\ digital_gain_control=1\ mic_geom&gt;
+set-default-source echocancel
+update-source-proplist echocancel device.description="Microphone with echo reduction"
+.fail
+.endif
+</pre>
+<h3>
+<span id="EC.2FFan.2FCPU"></span><span class="mw-headline" id="EC/Fan/CPU">EC/Fan/CPU</span>
+</h3>
+<p>The Embedded Controller is usually managed by the omen command center, which is not available in Linux. Further debugging is needed and currently the only known addresses are <code>0x58</code>, which corresponds to the ACPI temperature as found by <code>sensors</code>. By writing a temperature to this address (e.g. 90°C) it is possible to start the fan on demand (by letting the computer believe the ACPI is burning).
+</p>
+<p>Also, the EC manages the CPU TDP, so that it is not possible to exceed 90W by any mean (writing to the intel-rapl driver is completely ineffective). On battery, it sets 25W maximum TDP, which is raised to 45W on AC. To reach ~90W it is necessary to write onto the EC a binary file (extracted from windows under the desired circumstances) as follows:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># cat EC6662.bin &gt; /sys/kernel/debug/ec/ec0/io</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"><div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Template error:</strong> are you trying to use the <span style="display:inline; background-color:#ebf1f5; padding: 0.1em 0.2em; font-family:monospace; color:#222;">=</span> sign? Visit <a href="../en/Help:Template.html#Escape_template-breaking_characters" title="Help:Template">Help:Template#Escape template-breaking characters</a> for workarounds.</div></pre>
+<p>The EC can be written and dumped by using <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/isw/">isw</a></span><sup><small>AUR</small></sup> and setting <code>ec_sys.write_support=1</code> as kernel parameter. An EC dump for 90W can be downloaded from <a rel="nofollow" class="external autonumber" href="https://github.com/effeffe/Misc/blob/master/EC6662-turbo.bin">[1]</a>.
+</p>
+<h2><span class="mw-headline" id="Hardware_Info">Hardware Info</span></h2>
+<h3><span class="mw-headline" id="PCI">PCI</span></h3>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ lspci</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">00:00.0 Host bridge: Intel Corporation 10th Gen Core Processor Host Bridge/DRAM Registers (rev 02)
+00:01.0 PCI bridge: Intel Corporation 6th-9th Gen Core Processor PCIe Controller (x16) (rev 02)
+00:02.0 VGA compatible controller: Intel Corporation UHD Graphics (rev 05)
+00:12.0 Signal processing controller: Intel Corporation Comet Lake PCH Thermal Controller
+00:14.0 USB controller: Intel Corporation Comet Lake USB 3.1 xHCI Host Controller
+00:14.2 RAM memory: Intel Corporation Comet Lake PCH Shared SRAM
+00:14.3 Network controller: Intel Corporation Comet Lake PCH CNVi WiFi
+00:15.0 Serial bus controller [0c80]: Intel Corporation Comet Lake PCH Serial IO I2C Controller #0
+00:15.1 Serial bus controller [0c80]: Intel Corporation Comet Lake PCH Serial IO I2C Controller #1
+00:16.0 Communication controller: Intel Corporation Comet Lake HECI Controller
+00:17.0 RAID bus controller: Intel Corporation 82801 Mobile SATA Controller [RAID mode]
+00:1b.0 PCI bridge: Intel Corporation Comet Lake PCI Express Root Port #17 (rev f0)
+00:1b.4 PCI bridge: Intel Corporation Comet Lake PCI Express Root Port #21 (rev f0)
+00:1d.0 PCI bridge: Intel Corporation Device 06b5 (rev f0)
+00:1d.7 PCI bridge: Intel Corporation Device 06b7 (rev f0)
+00:1f.0 ISA bridge: Intel Corporation Comet Lake LPC Controller
+00:1f.3 Multimedia audio controller: Intel Corporation Comet Lake PCH cAVS
+00:1f.4 SMBus: Intel Corporation Comet Lake PCH SMBus Controller
+00:1f.5 Serial bus controller [0c80]: Intel Corporation Comet Lake PCH SPI Controller
+01:00.0 VGA compatible controller: NVIDIA Corporation TU106M [GeForce RTX 2070 Mobile / Max-Q Refresh] (rev a1)
+01:00.1 Audio device: NVIDIA Corporation TU106 High Definition Audio Controller (rev a1)
+01:00.2 USB controller: NVIDIA Corporation TU106 USB 3.1 Host Controller (rev a1)
+01:00.3 Serial bus controller [0c80]: NVIDIA Corporation TU106 USB Type-C UCSI Controller (rev a1)
+02:00.0 PCI bridge: Intel Corporation JHL7540 Thunderbolt 3 Bridge [Titan Ridge 2C 2018] (rev 06)
+03:00.0 PCI bridge: Intel Corporation JHL7540 Thunderbolt 3 Bridge [Titan Ridge 2C 2018] (rev 06)
+03:01.0 PCI bridge: Intel Corporation JHL7540 Thunderbolt 3 Bridge [Titan Ridge 2C 2018] (rev 06)
+03:02.0 PCI bridge: Intel Corporation JHL7540 Thunderbolt 3 Bridge [Titan Ridge 2C 2018] (rev 06)
+04:00.0 System peripheral: Intel Corporation JHL7540 Thunderbolt 3 NHI [Titan Ridge 2C 2018] (rev 06)
+3a:00.0 USB controller: Intel Corporation JHL7540 Thunderbolt 3 USB Controller [Titan Ridge 2C 2018] (rev 06)
+3b:00.0 Non-Volatile memory controller: Toshiba Corporation XG6 NVMe SSD Controller
+3c:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 16)
+3d:00.0 SD Host controller: Genesys Logic, Inc GL9750 SD Host Controller (rev 01)
+</pre>
+<h3><span class="mw-headline" id="USB">USB</span></h3>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ lsusb</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Bus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 002: ID 04f2:b6bb Chicony Electronics Co., Ltd HP Wide Vision HD Camera
+Bus 001 Device 003: ID 8087:0026 Intel Corp. 
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+</pre>
+</div>
+</div>
+<div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li>
+<li><a href="../en/Category:Pages_with_broken_templates.html" title="Category:Pages with broken templates">Pages with broken templates</a></li>
+</ul>
+</div></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=HP_Omen-15-ek005na&amp;oldid=656021">https://wiki.archlinux.org/index.php?title=HP_Omen-15-ek005na&amp;oldid=656021</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 25 March 2021, at 12:30.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

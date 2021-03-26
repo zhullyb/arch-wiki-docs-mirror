@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -129,23 +130,24 @@
 <ul><li>
 <b>GTK 1.x</b> is available with the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gtk/">gtk</a></span><sup><small>AUR</small></sup> package.</li></ul>
 <h2><span class="mw-headline" id="Themes">Themes</span></h2>
-<p>In GTK 2, the default theme is Raleigh, but Arch Linux has a custom configuration file at <code>/usr/share/gtk-2.0/gtkrc</code>, which sets the default theme to Adwaita. In GTK 3, the default theme is Adwaita, but HighContrast, HighContrastInverse and Raleigh themes are also included.
+<p>In GTK 3 and GTK 4, the default theme is Adwaita, but HighContrast and HighContrastInverse themes are also included.
+In GTK 2, the default theme is Raleigh, but Arch Linux has a custom configuration file at <code>/usr/share/gtk-2.0/gtkrc</code>, which sets the default theme to Adwaita.
 </p>
 <p>To force a specific theme, set the following <a href="../en/Environment_variables.html" title="Environment variables">environment variables</a>:
 </p>
+<ul><li>For GTK 3 and GTK 4, use <code>GTK_THEME</code>. For example to launch GNOME Calculator with the dark variant of Adwaita:</li></ul>
+<pre>$ GTK_THEME=Adwaita:dark gnome-calculator
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> To apply the above to desktop shortcuts (or launchers) see <a href="../en/Desktop_entries.html#Modify_environment_variables" title="Desktop entries">Desktop entries#Modify environment variables</a>.</div>
 <ul><li>For GTK 2, use <code>GTK2_RC_FILES</code>. For example to launch <a href="../en/GIMP.html" title="GIMP">GIMP</a> with the theme Raleigh:</li></ul>
 <pre>$ GTK2_RC_FILES=/usr/share/themes/Raleigh/gtk-2.0/gtkrc gimp
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> <code>gtkrc</code> can also be a custom file in your home directory created by any of the <a href="#Configuration_tools">#Configuration tools</a>. See <a href="#Examples">#Examples</a>.</div>
-<ul><li>For GTK 3, use <code>GTK_THEME</code>. For example to launch GNOME Calculator with the dark variant of Adwaita:</li></ul>
-<pre>$ GTK_THEME=Adwaita:dark gnome-calculator
-</pre>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> To apply the above to desktop shortcuts (or launchers) see <a href="../en/Desktop_entries.html#Modify_environment_variables" title="Desktop entries">Desktop entries#Modify environment variables</a>.</div>
 <p>More themes can be installed from the official repositories or the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>. Manually extracted themes go in <code>~/.themes/</code> or <code>~/.local/share/themes/</code> directory.
 </p>
-<p><b>GTK 2 and GTK 3.20 or newer are supported:</b>
+<p><b>Themes supporting GTK 2 and GTK 3:</b>
 </p>
 <ul><li>
 <b>Adapta</b> —  An adaptive GTK theme based on Material Design Guidelines. Includes: Adapta, Adapta-Eta, Adapta-Nokto, Adapta-Nokto-Eta</li></ul>
@@ -213,7 +215,7 @@
 <p>If you have GTK and Qt (KDE) applications on your desktop then you know that their looks do not blend well. If you wish to make your GTK styles match your Qt styles please read <a href="../en/Uniform_look_for_Qt_and_GTK_applications.html" title="Uniform look for Qt and GTK applications">Uniform look for Qt and GTK applications</a>.
 </p>
 <h2><span class="mw-headline" id="Configuration_tools">Configuration tools</span></h2>
-<p>Most major <a href="../en/Desktop_environment.html" class="mw-redirect" title="Desktop environments">desktop environments</a> provide tools to configure the GTK theme, icons, font and font size, and manage these settings via <a rel="nofollow" class="external text" href="https://specifications.freedesktop.org/xsettings-spec/xsettings-spec-0.5.html">XSettings</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-29 ⓘ]</sup>:
+<p>Most major <a href="../en/Desktop_environment.html" class="mw-redirect" title="Desktop environments">desktop environments</a> provide tools to configure the GTK theme, icons, font and font size, and manage these settings via <a rel="nofollow" class="external text" href="https://specifications.freedesktop.org/xsettings-spec/">XSettings</a>:
 </p>
 <ul>
 <li>If you use <a href="../en/Cinnamon.html" title="Cinnamon">Cinnamon</a>, use Themes tool (<i>cinnamon-settings themes</i>): go to <i>System Settings &gt; Themes</i>.</li>
@@ -354,7 +356,7 @@ gtk-key-theme-name = Emacs</pre>
 </p>
 <pre>gtk-menu-images = 0
 </pre>
-<p>See also <a rel="nofollow" class="external autonumber" href="http://martin.ankerl.com/2008/10/10/how-to-make-a-compact-gnome-theme/">[1]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-29 ⓘ]</sup> and <a rel="nofollow" class="external autonumber" href="http://gnome-look.org/content/show.php/Simple+eGTK?content=119812">[2]</a>.
+<p>See also <a rel="nofollow" class="external autonumber" href="https://martin.ankerl.com/2008/10/11/how-to-make-a-compact-gnome-theme/">[1]</a> and <a rel="nofollow" class="external autonumber" href="http://gnome-look.org/content/show.php/Simple+eGTK?content=119812">[2]</a>.
 </p>
 <h3><span class="mw-headline" id="Hide_CSD_buttons">Hide CSD buttons</span></h3>
 <p>To remove the minimize and maximize buttons from <i>gtk3</i> windows:
@@ -508,7 +510,7 @@ gtk-xft-rgba=rgb
 </ul>
 <pre># lxappearance
 </pre>
-<ul><li>Use a settings daemon (this is what most desktop environments do). A desktop-agnostic variant using <a rel="nofollow" class="external text" href="https://specifications.freedesktop.org/xsettings-spec/xsettings-spec-0.5.html">XSettings</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-29 ⓘ]</sup> is available in the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> under <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xsettingsd-git/">xsettingsd-git</a></span><sup><small>AUR</small></sup>.</li></ul>
+<ul><li>Use a settings daemon (this is what most desktop environments do). A desktop-agnostic variant using <a rel="nofollow" class="external text" href="https://specifications.freedesktop.org/xsettings-spec/">XSettings</a> is available in the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> under <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xsettingsd-git/">xsettingsd-git</a></span><sup><small>AUR</small></sup>.</li></ul>
 <h3><span class="mw-headline" id="Client-side_decorations">Client-side decorations</span></h3>
 <p>GTK 3.12 introduced <a rel="nofollow" class="external text" href="https://blogs.gnome.org/mclasen/2013/12/05/client-side-decorations-in-themes/">client-side decorations</a>, which move the title-bar away from the window manager. This may present issues such as <a rel="nofollow" class="external text" href="http://redmine.audacious-media-player.org/boards/1/topics/1135">double title-bars</a>, no title-bar at all or <a rel="nofollow" class="external text" href="https://github.com/chjj/compton/issues/189">double shadows</a> with compositing enabled.
 </p>
@@ -625,7 +627,6 @@ gtk-menu-images=1</pre>
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Widget_toolkits.html" title="Category:Widget toolkits">Widget toolkits</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
@@ -636,8 +637,8 @@ gtk-menu-images=1</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GTK&amp;oldid=648725">https://wiki.archlinux.org/index.php?title=GTK&amp;oldid=648725</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 11 January 2021, at 17:54.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GTK&amp;oldid=655954">https://wiki.archlinux.org/index.php?title=GTK&amp;oldid=655954</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 24 March 2021, at 21:30.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

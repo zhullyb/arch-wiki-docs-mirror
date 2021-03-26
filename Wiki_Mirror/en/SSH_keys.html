@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -188,7 +189,7 @@ The key's randomart image is:
 </p>
 <p>OpenSSH 7.0 <a rel="nofollow" class="external text" href="https://archlinux.org/news/openssh-70p1-deprecates-ssh-dss-keys/">deprecated and disabled support for DSA keys</a> due to discovered vulnerabilities, therefore the choice of <a href="https://en.wikipedia.org/wiki/cryptosystem" class="extiw" title="wikipedia:cryptosystem">cryptosystem</a> lies within RSA or one of the two types of ECC.
 </p>
-<p><a href="#RSA">#RSA</a> keys will give you the greatest portability, while <a href="#Ed25519">#Ed25519</a> will give you the best security but requires recent versions of client &amp; server<a rel="nofollow" class="external autonumber" href="https://www.gentoo.org/support/news-items/2015-08-13-openssh-weak-keys.html">[2]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-02 ⓘ]</sup>. <a href="#ECDSA">#ECDSA</a> is likely more compatible than Ed25519 (though still less than RSA), but suspicions exist about its security (see below).
+<p><a href="#RSA">#RSA</a> keys will give you the greatest portability, while <a href="#Ed25519">#Ed25519</a> will give you the best security but requires recent versions of client &amp; server<a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20191222003107/https://www.gentoo.org/support/news-items/2015-08-13-openssh-weak-keys.html">[2]</a>. <a href="#ECDSA">#ECDSA</a> is likely more compatible than Ed25519 (though still less than RSA), but suspicions exist about its security (see below).
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> These keys are used only to authenticate you; choosing stronger keys will not increase CPU load when transferring data over SSH.
@@ -204,7 +205,7 @@ The key's randomart image is:
 </pre>
 <p>Be aware though that there are diminishing returns in using longer keys.<a rel="nofollow" class="external autonumber" href="https://security.stackexchange.com/a/25377">[3]</a><a rel="nofollow" class="external autonumber" href="https://www.gnupg.org/faq/gnupg-faq.html#no_default_of_rsa4096">[4]</a> The GnuPG FAQ reads: "<i>If you need more security than RSA-2048 offers, the way to go would be to switch to elliptical curve cryptography — not to continue using RSA</i>."<a rel="nofollow" class="external autonumber" href="https://www.gnupg.org/faq/gnupg-faq.html#please_use_ecc">[5]</a>
 </p>
-<p>On the other hand, the latest iteration of the <a rel="nofollow" class="external text" href="https://www.nsa.gov/ia/programs/suiteb_cryptography/index.shtml">NSA Fact Sheet Suite B Cryptography</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-02 ⓘ]</sup> suggests a minimum 3072-bit modulus for RSA while "<i>[preparing] for the upcoming quantum resistant algorithm transition</i>".<a rel="nofollow" class="external autonumber" href="http://www.keylength.com/en/6/">[6]</a>
+<p>On the other hand, the latest iteration of the <a rel="nofollow" class="external text" href="https://web.archive.org/web/20160305203915/https://www.nsa.gov/ia/programs/suiteb_cryptography/index.shtml">NSA Fact Sheet Suite B Cryptography</a> suggests a minimum 3072-bit modulus for RSA while "<i>[preparing] for the upcoming quantum resistant algorithm transition</i>".<a rel="nofollow" class="external autonumber" href="http://www.keylength.com/en/6/">[6]</a>
 </p>
 <h4><span class="mw-headline" id="ECDSA">ECDSA</span></h4>
 <p>The Elliptic Curve Digital Signature Algorithm (ECDSA) was introduced as the preferred algorithm for authentication <a rel="nofollow" class="external text" href="http://www.openssh.com/txt/release-5.7">in OpenSSH 5.7</a>. Some vendors also disable the required implementations due to potential patent issues.
@@ -271,11 +272,9 @@ Host SERVER2
 </p>
 <ul>
 <li>
-<a href="../en/YubiKey.html#OpenSSH" title="YubiKey">YubiKey#OpenSSH</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> Native OpenSSH support for FIDO/U2F keys</li>
-<li>
-<a href="../en/YubiKey.html#Using_a_YubiKey_with_SSH" title="YubiKey">YubiKey#Using a YubiKey with SSH</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>
-</li>
-<li><a href="../en/Trusted_Platform_Module.html#Securing_SSH_Keys" title="Trusted Platform Module">Trusted Platform Module#Securing SSH Keys</a></li>
+<a href="../en/YubiKey.html#SSH_notes" title="YubiKey">YubiKey#SSH notes</a> Native OpenSSH support for FIDO/U2F keys</li>
+<li><a href="../en/YubiKey.html#SSH_keys" title="YubiKey">YubiKey#SSH keys</a></li>
+<li><a href="../en/Trusted_Platform_Module.html#Securing_SSH_keys" title="Trusted Platform Module">Trusted Platform Module#Securing SSH keys</a></li>
 </ul>
 <h2><span class="mw-headline" id="Copying_the_public_key_to_the_remote_server">Copying the public key to the remote server</span></h2>
 <div class="noprint archwiki-template-message">
@@ -381,7 +380,9 @@ ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
 
 [Install]
 WantedBy=default.target</pre>
-<p>Add <code>SSH_AUTH_SOCK   DEFAULT="${XDG_RUNTIME_DIR}/ssh-agent.socket"</code> to <code>~/.pam_environment</code>. Then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> or <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> the service with the <code>--user</code> flag.
+<p>Then <i>export</i> the <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a> <code>SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"</code> in your login shell initialization file, such as <code>~/.bash_profile</code>.
+</p>
+<p>Finally, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> or <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> the service with the <code>--user</code> flag.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If you use GNOME, this environment variable is overridden by default. See <a href="../en/GNOME/Keyring.html#Disable_keyring_daemon_components" title="GNOME/Keyring">GNOME/Keyring#Disable keyring daemon components</a>.</div>
@@ -610,11 +611,7 @@ $ chmod 600 ~/.ssh/authorized_keys
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Secure_Shell.html" title="Category:Secure Shell">Secure Shell</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
 </div>
 </div>
 	</div>
@@ -622,8 +619,8 @@ $ chmod 600 ~/.ssh/authorized_keys
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SSH_keys&amp;oldid=647769">https://wiki.archlinux.org/index.php?title=SSH_keys&amp;oldid=647769</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 31 December 2020, at 16:37.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SSH_keys&amp;oldid=655711">https://wiki.archlinux.org/index.php?title=SSH_keys&amp;oldid=655711</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 21:58.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

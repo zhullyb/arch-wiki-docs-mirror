@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -128,23 +129,23 @@
 64 bytes from 93.184.216.34: icmp_seq=2 ttl=56 time=10.683 ms
 
 ...</pre>
-<p>Jokaisesta vastauksesta pingaus apuväline printtaa samanlaisen rivin kuin ylhäällä esimerkissä on. Lisätietoa löytyy <span class="plainlinks archwiki-template-man" title="$ man 8 ping"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ping.8">ping(8)</a></span> manuaalista. Huomaa että tietokoneet voivat olla konfiguroituja olemaan vastaamatta ICMP echo pyyntöihin. <a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/questions/412446/how-to-disable-ping-response-icmp-echo-in-linux-all-the-time">[1]</a>
+<p>Jokaisesta vastauksesta pingaus apuväline printtaa samanlaisen rivin kuin ylhäällä esimerkissä on. Lisätietoa löytyy <span class="plainlinks archwiki-template-man" title="$ man 8 ping"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ping.8">ping(8)</a></span> manuaalista. Huomaa, että tietokoneet voivat olla konfiguroituja olemaan vastaamatta ICMP echo pyyntöihin. <a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/questions/412446/how-to-disable-ping-response-icmp-echo-in-linux-all-the-time">[1]</a>
 </p>
-<p>Jos et saa vastausta, oletus yhdyskäytävä tai ISP eli palveluntarjoaja saattaa olla ongelmana. Voit suorittaa <a href="../en/Network_tools.html#Traceroute" class="mw-redirect" title="Traceroute">traceroute</a> työkalun diagnosoidaksesi polku palvelimelle.
+<p>Jos et saa vastausta, oletusyhdyskäytävä tai ISP eli palveluntarjoaja saattaa olla ongelmana. Voit suorittaa <a href="../en/Network_tools.html#Traceroute" class="mw-redirect" title="Traceroute">traceroute</a>-työkalun tarkistellaksesi polkua palvelimelle.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Huomautus:</strong> Jos saat virhe ilmoituksen kuten <code>ping: icmp open socket: Operation not permitted</code> kun suoritat <i>ping</i> työkalua, yritä asentaa uudelleen <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iputils">iputils</a></span> paketti.</div>
+<strong>Huomautus:</strong> Saman tapaisen virheilmoituksen kuin <code>ping: icmp open socket: Operation not permitted</code> ilmetessä, kun <i>ping</i>-työkalua suoritetaan, yritä asentaa <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iputils">iputils</a></span> paketti uudestaan.</div>
 <h2><span class="mw-headline" id="Verkon_hallinnointi">Verkon hallinnointi</span></h2>
-<p>Saavuttaaksesi verkkoyhteyden käy seuraavat askeleet läpi:
+<p>Muodostaaksesi verkkoyhteyden käy seuraavat askeleet läpi:
 </p>
 <ol><li>Varmistu siitä, että <a href="#Verkon_k%C3%A4ytt%C3%B6liittym%C3%A4t">verkon käyttöliittymä</a> on listattuna ja otettuna käyttöön.</li></ol>
-<ol><li>Yhdistä verkkoon.  Kiinnistä Ethernet kaapeli tai <a href="../en/Network_configuration/Wireless.html" title="Network configuration/Wireless">yhdistä langattomaan LAN verkkoon</a>.</li></ol>
+<ol><li>Yhdistä verkkoon.  Kiinnitä Ethernet kaapeli tai <a href="../en/Network_configuration/Wireless.html" title="Network configuration/Wireless">yhdistä langattomaan LAN verkkoon</a>.</li></ol>
 <ol><li>Konfiguroi verkkoyhteys:</li></ol>
 <ol><li><ul><li><a href="#Staattinen_IP_osoite">staattinen IP osoite</a></li></ul></li></ol>
 <ol><li><ul><li>dynaaminen IP osoite: käytä <a href="#DHCP">DHCP:tä</a>
 </li></ul></li></ol>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Huomautus:</strong> Asennus kuva käyttää <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a> sekä <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> taustaprosessia, joka on konfiguroitu DHCP ohjelmaa <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-ethernet.network">langallisille</a> ja <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-wireless.network">langattomille</a> verkko käyttöliittymille.</div>
+<strong>Huomautus:</strong> Asennuskuva käyttää <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a> sekä <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> taustaprosesseja, jotka on konfiguroitu DHCP ohjelmassa <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-ethernet.network">langallisille</a> ja <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-wireless.network">langattomille</a> verkkokäyttöliittymille.</div>
 <h3><span class="mw-headline" id="net-tools">net-tools</span></h3>
 <p>Arch Linux on merkinnyt vanhentuneeksi <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=net-tools">net-tools</a></span> paketin korvatakseen sen <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iproute2">iproute2</a></span> paketilla.<a rel="nofollow" class="external autonumber" href="https://archlinux.org/news/deprecation-of-net-tools/">[2]</a>
 </p>
@@ -187,7 +188,7 @@
 <h3>
 <span id="Verkon_k.C3.A4ytt.C3.B6liittym.C3.A4t"></span><span class="mw-headline" id="Verkon_käyttöliittymät">Verkon käyttöliittymät</span>
 </h3>
-<p>Oletukselta <a href="../en/Udev.html" title="Udev">udev</a> antaa nimiä verkon käyttöliittymille käyttäen <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">Ennalta arvattavia verkko käyttölliittymien nimiä</a>, joka antaa käyttöliittymien nimille etuliitteen <code>en</code> (wired/<a href="https://en.wikipedia.org/wiki/Ethernet" class="extiw" title="wikipedia:Ethernet">Ethernet</a>), <code>wl</code> (wireless/WLAN), tai <code>ww</code> (<a href="https://en.wikipedia.org/wiki/Wireless_WAN" class="extiw" title="wikipedia:Wireless WAN">WWAN</a>).
+<p>Oletukselta <a href="../en/Udev.html" title="Udev">udev</a> antaa nimiä verkon käyttöliittymille käyttäen <a rel="nofollow" class="external text" href="https://systemd.io/PREDICTABLE_INTERFACE_NAMES/">Ennalta arvattavia verkko käyttölliittymien nimiä</a>, joka antaa käyttöliittymien nimille etuliitteen <code>en</code> (wired/<a href="https://en.wikipedia.org/wiki/Ethernet" class="extiw" title="wikipedia:Ethernet">Ethernet</a>), <code>wl</code> (wireless/WLAN), tai <code>ww</code> (<a href="https://en.wikipedia.org/wiki/Wireless_WAN" class="extiw" title="wikipedia:Wireless WAN">WWAN</a>).
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Vinkki:</strong> Jos haluat vaihtaa itse käyttöliittymän nimen, katso <a href="#Vaihda_k%C3%A4ytt%C3%B6liittym%C3%A4n_nime%C3%A4">#Vaihda käyttöliittymän nimeä</a> ja <a href="#Palauta_perinteisiin_k%C3%A4ytt%C3%B6liittym%C3%A4n_nimiin">#Palauta perinteisiin käyttöliittymän nimiin</a>.</div>
@@ -575,11 +576,11 @@ SUBSYSTEM=="net", DEVPATH=="/devices/pci*/*1c.0/*/net/*", NAME="en"</pre>
 <p><a href="../en/Udev.html#Testing_rules_before_loading" title="Udev">Testatakseen</a> sääntöjä, ne voidaan käynnistää suoraan käyttäjätilasta, esimerkiksi  <code>udevadm --debug test /sys/class/net/*</code> avulla. Ensin pitää muistaa ottaa alas käyttöliittymä, jota ollaan nimeämässä (esim. <code>ip link set enp1s0 down</code>).
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Huomautus:</strong> Kun valitaan staattisia nimiä, <b>nimiä jotka vastaavat tyyliä "eth<i>X</i>" ja "wlan<i>X</i>" pitäisi välttää</b>, sillä tämä saattaa johtaa kilpailulliseen tilaan kernelin ja udevin välillä boottauksen aikana. Sen sijaan, on parempi käyttää käyttöliittymän nimiä, joita kerneli ei käytä oletukselta, esim.: <code>net0</code>, <code>net1</code>, <code>wifi0</code>, <code>wifi1</code>. Enemmän tietoa löytyy  <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">systemd:n</a> dokumentaatiosta.</div>
+<strong>Huomautus:</strong> Kun valitaan staattisia nimiä, <b>nimiä jotka vastaavat tyyliä "eth<i>X</i>" ja "wlan<i>X</i>" pitäisi välttää</b>, sillä tämä saattaa johtaa kilpailulliseen tilaan kernelin ja udevin välillä boottauksen aikana. Sen sijaan, on parempi käyttää käyttöliittymän nimiä, joita kerneli ei käytä oletukselta, esim.: <code>net0</code>, <code>net1</code>, <code>wifi0</code>, <code>wifi1</code>. Enemmän tietoa löytyy  <a rel="nofollow" class="external text" href="https://systemd.io/PREDICTABLE_INTERFACE_NAMES/">systemd:n</a> dokumentaatiosta.</div>
 <h3>
 <span id="Palauta_perinteisiin_k.C3.A4ytt.C3.B6liittym.C3.A4n_nimiin"></span><span class="mw-headline" id="Palauta_perinteisiin_käyttöliittymän_nimiin">Palauta perinteisiin käyttöliittymän nimiin</span>
 </h3>
-<p>Jos perinteisemmät käyttöliittymänimet kuten eth0 ovat parempia omaan käyttöön, <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">ennalta arvattavat nimet</a> voidaan poistaa käytöstä peittämällä udev sääntö:
+<p>Jos perinteisemmät käyttöliittymänimet kuten eth0 ovat parempia omaan käyttöön, <a rel="nofollow" class="external text" href="https://systemd.io/PREDICTABLE_INTERFACE_NAMES/">ennalta arvattavat nimet</a> voidaan poistaa käytöstä peittämällä udev sääntö:
 </p>
 <pre># ln -s /dev/null /etc/udev/rules.d/80-net-setup-link.rules
 </pre>
@@ -629,8 +630,8 @@ SUBSYSTEM=="net", DEVPATH=="/devices/pci*/*1c.0/*/net/*", NAME="en"</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Suomi)&amp;oldid=646951">https://wiki.archlinux.org/index.php?title=Network_configuration_(Suomi)&amp;oldid=646951</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Suomi)&amp;oldid=656170">https://wiki.archlinux.org/index.php?title=Network_configuration_(Suomi)&amp;oldid=656170</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 March 2021, at 09:12.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

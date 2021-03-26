@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,154 +33,378 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a><b>La <a href="../es/ArchWiki:Contributing.html#Tareas_avanzadas" title="ArchWiki:Contributing (Español)">traducción</a> de este artículo o sección no refleja el texto original.</b><a href="../File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Motivos:</b> Desactualizada. (Discusión en <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Autofs_(Espa%C3%B1ol)">Talk:Autofs (Español)#</a>)</div>
-</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Autofs.html" title="Autofs">Autofs</a> fue revisada el <b>2021-03-15</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Autofs&amp;diff=0&amp;oldid=654627">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<p>Autofs provee montado automático para medios extraíbles y recursos de red cuando estos son insertados o accedidos.
+</p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1">
-<a href="#AutoFS"><span class="tocnumber">1</span> <span class="toctext">AutoFS</span></a>
+<li class="toclevel-1 tocsection-1"><a href="#Instalaci%C3%B3n"><span class="tocnumber">1</span> <span class="toctext">Instalación</span></a></li>
+<li class="toclevel-1 tocsection-2">
+<a href="#Configuraci%C3%B3n"><span class="tocnumber">2</span> <span class="toctext">Configuración</span></a>
 <ul>
-<li class="toclevel-2 tocsection-2"><a href="#%C2%BFQu%C3%A9_es?"><span class="tocnumber">1.1</span> <span class="toctext">¿Qué es?</span></a></li>
-<li class="toclevel-2 tocsection-3"><a href="#Instalaci%C3%B3n"><span class="tocnumber">1.2</span> <span class="toctext">Instalación</span></a></li>
-<li class="toclevel-2 tocsection-4"><a href="#Notas"><span class="tocnumber">1.3</span> <span class="toctext">Notas</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Medios_extra%C3%ADbles"><span class="tocnumber">2.1</span> <span class="toctext">Medios extraíbles</span></a></li>
+<li class="toclevel-2 tocsection-4">
+<a href="#Montado_de_red_NFS"><span class="tocnumber">2.2</span> <span class="toctext">Montado de red NFS</span></a>
+<ul>
+<li class="toclevel-3 tocsection-5"><a href="#Configuraci%C3%B3n_manual_para_NFS"><span class="tocnumber">2.2.1</span> <span class="toctext">Configuración manual para NFS</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-5">
-<a href="#Gestor_de_medios_de_XFCE"><span class="tocnumber">2</span> <span class="toctext">Gestor de medios de XFCE</span></a>
+<li class="toclevel-2 tocsection-6">
+<a href="#Samba"><span class="tocnumber">2.3</span> <span class="toctext">Samba</span></a>
 <ul>
-<li class="toclevel-2 tocsection-6"><a href="#%C2%BFQu%C3%A9_es?_2"><span class="tocnumber">2.1</span> <span class="toctext">¿Qué es?</span></a></li>
-<li class="toclevel-2 tocsection-7"><a href="#Requisitos_e_instalaci%C3%B3n"><span class="tocnumber">2.2</span> <span class="toctext">Requisitos e instalación</span></a></li>
-<li class="toclevel-2 tocsection-8"><a href="#Notas_2"><span class="tocnumber">2.3</span> <span class="toctext">Notas</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#Un_solo_recurso"><span class="tocnumber">2.3.1</span> <span class="toctext">Un solo recurso</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#M%C3%BAltiples_recursos"><span class="tocnumber">2.3.2</span> <span class="toctext">Múltiples recursos</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#Descubrimiento_autom%C3%A1tico"><span class="tocnumber">2.3.3</span> <span class="toctext">Descubrimiento automático</span></a></li>
 </ul>
 </li>
+<li class="toclevel-2 tocsection-10">
+<a href="#FTP_y_SSH_(con_FUSE)"><span class="tocnumber">2.4</span> <span class="toctext">FTP y SSH (con FUSE)</span></a>
+<ul>
+<li class="toclevel-3 tocsection-11"><a href="#FTP_remoto"><span class="tocnumber">2.4.1</span> <span class="toctext">FTP remoto</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#SSH_remoto"><span class="tocnumber">2.4.2</span> <span class="toctext">SSH remoto</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-13"><a href="#MTP"><span class="tocnumber">3</span> <span class="toctext">MTP</span></a></li>
+<li class="toclevel-1 tocsection-14">
+<a href="#Soluci%C3%B3n_de_problemas_y_ajustes"><span class="tocnumber">4</span> <span class="toctext">Solución de problemas y ajustes</span></a>
+<ul>
+<li class="toclevel-2 tocsection-15"><a href="#Usando_NIS"><span class="tocnumber">4.1</span> <span class="toctext">Usando NIS</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Par%C3%A1metros_opcionales"><span class="tocnumber">4.2</span> <span class="toctext">Parámetros opcionales</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Identificado_m%C3%BAltiples_dispositivos"><span class="tocnumber">4.3</span> <span class="toctext">Identificado múltiples dispositivos</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Permisos_de_AutoFS"><span class="tocnumber">4.4</span> <span class="toctext">Permisos de AutoFS</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Problemas_con_fusermount"><span class="tocnumber">4.5</span> <span class="toctext">Problemas con fusermount</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Depurando_problemas_de_automontado"><span class="tocnumber">4.6</span> <span class="toctext">Depurando problemas de automontado</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-21"><a href="#Alternativas_a_AutoFS"><span class="tocnumber">5</span> <span class="toctext">Alternativas a AutoFS</span></a></li>
+<li class="toclevel-1 tocsection-22"><a href="#V%C3%A9ase_tambi%C3%A9n"><span class="tocnumber">6</span> <span class="toctext">Véase también</span></a></li>
 </ul>
 </div>
 
-<h2><span class="mw-headline" id="AutoFS">AutoFS</span></h2>
-<p>Basado en información encontrada en este hilo: <a rel="nofollow" class="external free" href="https://bbs.archlinux.org/viewtopic.php?t=7630">https://bbs.archlinux.org/viewtopic.php?t=7630</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-02]</sup> <br>
-e información encontrada en esta página: <a rel="nofollow" class="external free" href="http://libranet.com/support/2.8/0381">http://libranet.com/support/2.8/0381</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-02]</sup>
-</p>
-<h3>
-<span id=".C2.BFQu.C3.A9_es.3F"></span><span class="mw-headline" id="¿Qué_es?">¿Qué es?</span>
-</h3>
-<p>Este documento esboza el procedimiento necesario para configurar AutoFS, un paquete utilizado por automount. Proporciona la capacidad de que los CD, los disquetes, y otros medios removibles se monten automáticamente según son insertados.
-</p>
 <h3>
 <span id="Instalaci.C3.B3n"></span><span class="mw-headline" id="Instalación">Instalación</span>
 </h3>
-<ul><li>Instale el paquete autofs:</li></ul>
-<pre>pacman -S autofs
+<p><a href="../es/Help:Reading.html#Instalaci%C3%B3n_de_paquetes" class="mw-redirect" title="Install (Español)">Instale</a> el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=autofs">autofs</a></span>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Ya no es necesario que cargue el modulo <code>autofs4</code>.</div>
+<h2>
+<span id="Configuraci.C3.B3n"></span><span class="mw-headline" id="Configuración">Configuración</span>
+</h2>
+<p>AutoFs ocupa los archivos de plantilla para la configuración que están ubicados en <code>/etc/autofs</code>. La plantilla principal se llama <code>auto.master</code>, y esta puede hacer referencia a una o más plantillas para distintos tipos de dispositivos.
+</p>
+<ul><li>Abra el archivo <code>/etc/autofs/auto.master</code> con su editor de texto favorito, va a ver algo así:</li></ul>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.master</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#/media /etc/autofs/auto.media</pre>
+<p>El primer valor en cada linea determina el directorio base en donde todos los dispositivos en la plantilla van a ser montados, el segundo valor es la plantilla que se va a usar. El directorio base por defecto es <code>/media</code>, pero puede cambiarlo a la dirección que prefiera. Por ejemplo:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.master</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/media/misc     /etc/autofs/auto.misc     --timeout=5
+/media/net      /etc/autofs/auto.net      --timeout=60</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Asegúrese que haya una linea vacía al final de los archivos de plantilla (presione <code>INTRO</code> después de ultima palabra). Si no hay una linea EOF correcta <i>(final de archivo, en inglés: end of file)</i>, el demonio de AutoFS no va a cargar correctamente.</div>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Sugerencia:</strong> El parámetro opcional <code>timeout</code> establece la cantidad de segundos que debe esperar para desmontar los directorios. Puede desactivar esta espera estableciéndolo a <code>0</code>.</div>
+<p>El directorio base va a ser creado sí es que no existe en su sistema. El directorio base va a ser montado para cargar dinámicamente los dispositivos, lo que significa que cualquier contenido en el directorio base no podrá accederse mientras autofs esté activado. Este procedimiento no es destructivo, así que sí se monta automáticamente en un directorio que está ocupando, simplemente puede cambiar la dirección en <code>auto.master</code> y reiniciarlo para acceder a sus archivos.
+</p>
+<p>Si aún así quiere montar automáticamente en un directorio que no esté vacío y tener acceso a los archivos incluso después que los directorios sean cargados dinámicamente, puede hacer que autofs los monte en otro directorio (p.ej /var/autofs/net) y los enlace.
+</p>
+<pre># ln -s /var/autofs/net/nombre_del_dispocitivo /media/nombre_del_dispositivo
 </pre>
-<ul><li>Edite el archivo <code>/etc/autofs/auto.master</code>. Borre su contenido y añada después la siguiente línea:</li></ul>
-<pre>/media /etc/autofs/auto.media
+<p>Alternativamente, puede hacer que autofs monte sus dispositivos en una carpeta especifica, en vez de hacerlo en una carpeta en común.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.master</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/-     /etc/autofs/auto.template</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.template</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/path/to/folder     -options :/device/path
+/home/user/usbstick  -fstype=auto,async,nodev,nosuid,umask=000  :/dev/sdb1</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Esto puede causar problemas sí es que los recursos queden trabados sí se pierde la conexión. Cuando se intente acceder a la carpeta, los programas se va a bloquear mientras esperan una respuesta, y la conexión tiene que ser o restaurada o cortada de manera forzosa para que se pueda desmontar. Para mitigar esto, Solo úselo sí es que puede estar siempre conectado al dispositivo, y no ocupe su carpeta <i>home</i> o alguna otra que sea usada regularmente por su explorador de archivos, para que no lea la carpeta desconectada.</div>
+<ul><li>Abra el archivo <code>/etc/nsswitch.conf</code> y añada una entrada para montarlo automáticamente:</li></ul>
+<pre>automount: files
 </pre>
-<p>Cree ahora una línea adicional al final del archivo (pulse ENTER justo después de la última palabra). Si no hay una línea EOF correcta, el demonio AUTOFS no funcionará correctamente.
-</p>
-<p>Si Autofs no desmonta automáticamente sus dispositivos (justo después de realizar los pasos que aquí se detallan), reemplace la última línea por:
-</p>
-<pre>/media /etc/autofs/auto.media --timeout 3
-</pre>
-<ul><li>Cree el archivo /etc/autofs/auto.media con el siguiente contenido:</li></ul>
-<pre> cdrom -fstype=iso9660,ro,nodev,nosuid :/dev/cdrom
- floppy -fstype=auto,async,nodev,nosuid,umask=000 :/dev/fl
- usbstick -fstype=auto,async,nodev,nosuid,umask=000 :/dev/sda1
-</pre>
-<p>Puede que tenga que cambiar los dispositivos. Puede añadir también dispositivos similares adicionales. Si tiene un DVD-ROM y necesita el sistema de archivos UDF cambie la línea del cdrom anterior añadiendo "-fstype=auto".
-</p>
-<ul><li>Cree el archivo <code>/etc/default/autofs</code> y añádale la siguiente línea:</li></ul>
-<pre>TIMEOUT=1
-</pre>
-<ul><li>Abra el archivo <code>/etc/conf.d/autofs</code> y edite la línea de las daemonoptions:</li></ul>
-<pre>daemonoptions='-g'
-</pre>
-<ul><li>Cree el directorio <code>/media</code>:</li></ul>
-<pre>mkdir /media
-</pre>
-<ul><li>Puede que tenga que cargar el módulo autofs4:</li></ul>
-<pre>modprobe autofs4
-</pre>
-<ul><li>Arranque el demonio autofs usando:</li></ul>
-<pre>/etc/rc.d/autofs start
-</pre>
-<ul><li>Inicie este demonio en cada arranque añadiendo <code>autofs</code> al array DAEMONS en /etc/rc.conf. (Puede que también necesite añadir <code>autofs4</code> al array de módulos.)</li></ul>
-<p>Los dispositivos se montan ahora automáticamente cuando se accede a ellos. Visite los directorios /media/cdrom y /media/floppy para acceder a ellos. Se mantendrán montados tanto tiempo como se esté accediendo a ellos.
-</p>
-<p>Si navega al directorio /media directory en un administrador de archivos, no verá entradas de directorio ni para el cdrom ni para la disquetera. Estas entradas estarán presentes con ningún medio en el dispositivo. Esto significa que en el navegador de archivos podrá ver qué dispositivos son susceptibles de ser montados, pero los directorios estarán vacios si no hay un medio presente. Aparentemente no todos los gestores de archivos pueden manejar el caso en que no exista un directorio.
-</p>
-<h3><span class="mw-headline" id="Notas">Notas</span></h3>
-<p>Si utiliza varios dispositivos usb y quiere diferenciarlos fácilemente, puede usar Autofs para configurar los puntos de montaje y a udev para crear distintos nombres para cada uno de sus dispositivos usb. <a href="../en/Udev.html#Writing_udev_rules" class="mw-redirect" title="Map Custom Device Entries with udev">Map Custom Device Entries with udev (Inglés)</a> tiene instrucciones sobre cómo configurar reglas para udev.
-</p>
-<p>Si autofs no le funciona, asegúrese de que son correctos los permisos de los archivos de autofs, de otro modo autofs no se iniciará. Esto puede suceder si usted hizo una copia de respaldo de sus archivos de configuración de manera que no se conservaran los modos de los archivos. A continuación puede ver como deberían ser los modos de los archivos de configuración:
-</p>
-<p>0644 - /etc/autofs/auto.master
-</p>
-<p>0644 - /etc/autofs/auto.media
-</p>
-<p>0644 - /etc/autofs/auto.misc
-</p>
-<p>0755 - /etc/autofs/auto.net
-</p>
-<p>0644 - /etc/conf.d/autofs
-</p>
-<p><br>
-</p>
-<h2><span class="mw-headline" id="Gestor_de_medios_de_XFCE">Gestor de medios de XFCE</span></h2>
-<p>Aquellos usuarios del entorno de escritorio XFCE, podrían considerar la utilización del gestor de medios propio del entorno en vez de Automount. Sin tan siquiera tener instalado automount, xfce puede automáticamente, detectar, montar y abrir medios, tales como dispositivos usb o CDs.
+<ul><li>Cuando termine de configurar sus plantillas (vea más abajo), inicie el demonio de AutoFS como <i>root</i> <a href="../es/Systemd.html#Utilizar_las_unidades" title="Systemd (Español)">habilitándolos</a> e iniciando el servicio <code>autofs.service</code>.</li></ul>
+<p>Ahora los dispositivos son montados automáticamente cuando son accedidos, y se mantendrán montados mientras los acceda.
 </p>
 <h3>
-<span id=".C2.BFQu.C3.A9_es.3F_2"></span><span class="mw-headline" id="¿Qué_es?_2">¿Qué es?</span>
+<span id="Medios_extra.C3.ADbles"></span><span class="mw-headline" id="Medios_extraíbles">Medios extraíbles</span>
 </h3>
-<p>El gestor de medios es manejado por Thunar, de manera que tendrá que utilizar éste, en contraste con XFFM (a menos que configure ambos para correr juntos, no cubierto aquí). El plugin se llama 'Thunar Volume Manager', se puede obtener más información en <a rel="nofollow" class="external free" href="http://foo-projects.org/~benny/projects/thunar-volman/">http://foo-projects.org/~benny/projects/thunar-volman/</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-02]</sup>.
+<p>A los dispositivos extraíbles se les asigna su ubicación en los dispositivos de bloques según el que esté disponible, p.ej. sí <code>/dev/sd{a,b,c} </code> ya están ocupados, al siguiente dispositivo extraíble se le va a asignar el bloque <code>/dev/sdd</code>. En vez de asignar un punto de montaje a la ubicación de un dispositivo de bloques impredecible, una alternativa más robusta es usar el UUID <i>(Identificación Universalmente Única)</i> o el PARTUUID <i>(Identificación Universalmente Única de la PARTE)</i> del dispositivo extraíble como la ubicación a la que se le asigna el archivo.
+</p>
+<p>Por ejemplo, para montar una unidad USB especifico a la ubicación <code>/mnt/black</code>, configure el archivo de plantilla y el de asignado:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.master</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># master template file
+/mnt     /etc/autofs/auto.mnt   # [ponga aquí las opciones]</pre>
+<p>Use <code>blkid</code> para encontrar el UUID de la partición a montar, y genere el archivo de asignado:
+</p>
+<pre> # _ID=$( blkid --output value --match-tag PARTUUID /dev/sd<i>XY</i> )
+ # printf "%s %s\n" "black -fstype=auto :PARTUUID=" "${_ID}" &gt;/etc/autofs/auto.mnt
+</pre>
+<h3><span class="mw-headline" id="Montado_de_red_NFS">Montado de red NFS</span></h3>
+<p>AutoFS puede descubrir y montar automáticamente recursos <a href="../es/NFS.html" title="NFS (Español)">NFS</a> en servidores remotos (la plantilla de red de AutoFS en <code>/etc/autofs/auto.net</code> fue removida en autofs5). Para habilitar el descubrimiento y montado automático de recursos compartidos en todos los servidores disponibles sin tener que configurar nada mas, tendrá que añadir lo siguiente a el archivo <code>/etc/autofs/auto.master</code>:
+</p>
+<pre>/net -hosts --timeout=60
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Todos los nombres de host deben ser resolvibles, p.ej. el nombre y la dirección IP en <code>/etc/hosts</code> o a través de <a href="https://en.wikipedia.org/wiki/es:Domain_Name_System" class="extiw" title="wikipedia:es:Domain Name System">DNS</a> y asegúrese que tiene <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nfs-utils">nfs-utils</a></span> instalado y configurado. También tiene que <a href="../es/Systemd.html#Utilizar_las_unidades" title="Systemd (Español)">habilitar</a> <code>rpcbind</code> para navegar los directorios compartidos.</div>
+<p>Por ejemplo, sí tiene un servidor remoto llamado <i>servidor</i> (el nombre del directorio es el nombre del servidor) con un dispositivo NFS llamado <code>/home/share</code>, usted puede acceder a esté escribiendo:
+</p>
+<pre># cd /net/servidor/home/share
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Tome en cuenta que el <i>ghosting</i> (es decir: crear automáticamente directorios provisorios antes de montar los recursos) está activado por defecto; Aunque las notas de instalación de AutoFS digan que se debe sacar esa opción de <code>/etc/conf.d/autofs</code> para iniciar el demonio de AutoFS.</div>
+<p>La opción <code>-hosts</code> usa un mecanismo similar al del comando <code>showmount</code> para detectar recursos compartidos. Usted puede ver los recursos exportados escribiendo:
+</p>
+<pre># showmount &lt;servername&gt; -e 
+</pre>
+<p>Reemplazando <i>&lt;servername&gt;</i> con el nombre de su servidor.
+</p>
+<h4>
+<span id="Configuraci.C3.B3n_manual_para_NFS"></span><span class="mw-headline" id="Configuración_manual_para_NFS">Configuración manual para NFS</span>
+</h4>
+<p>Para montar un dispositivo NFS para el <i>servidor_de_archivos</i> en <code>/srv/shared_dir</code> en la ubicación <code>/mnt/foo</code>, <a href="../es/Help:Reading.html#Adjuntar,_a%C3%B1adir,_crear,_editar" title="Help:Reading (Español)">añada</a> un nuevo archivo de configuración, p.ej <code>file_server.autofs</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.master.d/servidor_de_archivos.autofs</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/mnt   /etc/autofs/auto.servidor_de_archivos --timeout 60</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.servidor_de_archivos</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">foo  -rw,soft,rsize=8192,wsize=8192 servidor_de_archivos:/srv/shared_dir</pre>
+<h3><span class="mw-headline" id="Samba">Samba</span></h3>
+<h4><span class="mw-headline" id="Un_solo_recurso">Un solo recurso</span></h4>
+<p>Añada lo siguiente a <code>/etc/autofs/auto.master</code>:
+</p>
+<pre>/media/[servidor] /etc/autofs/auto.[servidor] --timeout 60 --browse
+</pre>
+<p>Donde <code>--timeout</code> define cuantos segundos se tienen que esperar antes de desmontar el sistema de archivos. La opción <code>--browse</code> crea carpetas vacías para cada punto de montaje en el archivo, para prevenir tiempos de espera sí es que no se puede contactar con el recurso compartido.
+</p>
+<p>Después, cree el archivo <code>/etc/autofs/auto.[servidor]</code>
+</p>
+<pre>[nombre] -fstype=cifs,[otras_opciones] ://[servidor_remoto]/[nombre_del_servidor_remoto]
+</pre>
+<p>Usted puede especificar un nombre de usuario y contraseña para ocupar con el recurso en la sección <code>otras_opciones</code>:
+</p>
+<pre>[nombre] -fstype=cifs,username=[nombre_de_usuario],password=[contraseña],[otras_opciones] ://[servidor_remoto]/[nombre_del_servidor_remoto]
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Escape $, y otros caracteres cuando sea necesario.</div>
+<h4>
+<span id="M.C3.BAltiples_recursos"></span><span class="mw-headline" id="Múltiples_recursos">Múltiples recursos</span>
+</h4>
+<p>Puede especificar múltiples recursos en <code>/etc/autofs/auto.[servidor]</code>, por ejemplo:
+</p>
+<pre>[nombre] -fstype=cifs,[otras_opciones] /photos ://[servidor_remoto]/photos /music ://[servidor_remoto]/music /video ://[servidor_remoto]/video
+</pre>
+<h4>
+<span id="Descubrimiento_autom.C3.A1tico"></span><span class="mw-headline" id="Descubrimiento_automático">Descubrimiento automático</span>
+</h4>
+<p>Vea los comentarios en <code>/etc/autofs/auto.smb</code>.
 </p>
 <h3>
-<span id="Requisitos_e_instalaci.C3.B3n"></span><span class="mw-headline" id="Requisitos_e_instalación">Requisitos e instalación</span>
+<span id="FTP_y_SSH_.28con_FUSE.29"></span><span class="mw-headline" id="FTP_y_SSH_(con_FUSE)">FTP y SSH (con FUSE)</span>
 </h3>
-<pre>- XFCE, con Thunar
-- Thunar Volume Manager plugin (obtenido de <a rel="nofollow" class="external free" href="http://foo-projects.org/~benny/projects/thunar-volman/">http://foo-projects.org/~benny/projects/thunar-volman/</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-02]</sup>)
-- Dbus
-- Hal
+<p>Puede acceder servidores FTP y <a href="../es/OpenSSH.html" class="mw-redirect" title="SSH (Español)">SSH</a> sin problemas AutoFS usando <a href="https://en.wikipedia.org/wiki/es:Filesystem_in_Userspace" class="extiw" title="wikipedia:es:Filesystem in Userspace">FUSE</a>, la implementación de un sistema de archivos virtual. 
+</p>
+<h4><span class="mw-headline" id="FTP_remoto">FTP remoto</span></h4>
+<p>Primero, instale el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=curlftpfs">curlftpfs</a></span>.
+</p>
+<p>Cargue el modulo <b>fuse</b>:
+</p>
+<pre># modprobe fuse
 </pre>
-<p>El plugin puede ser instalado manualmente, o a través de pacman con:
+<p>Cree un archivo <code>/etc/modules-load.d/fuse.conf</code> que contenga <code>fuse</code> para que lo cargue en cada inicio.
 </p>
-<pre>sudo pacman -S thunar-volman
+<p>Después, añada una nueva entrada para los servidores FTP en <code>/etc/autofs/auto.master</code>:
+</p>
+<pre>/media/ftp        /etc/autofs/auto.ftp    --timeout=60
 </pre>
-<p>Después de instalar el plugin, abra el gestor de configuración de XFCE, y en él, las preferencias del gestor de archivos.
-Bajo la columna 'Avanzadas', compruebe 'Habilitar gestión de medios'.
-Haga click en "configurar". La configuración es sencilla. Aquí tiene un ejemplo que hace que Amarok reproduzca un CD de audio.
+<p>Cree el archivo <code>/etc/autofs/auto.ftp</code> y añada un servidor usando el formato <code><a rel="nofollow" class="external free" href="ftp://usuario:contrase%C3%B1a@host:puerto/ruta">ftp://usuario:contraseña@host:puerto/ruta</a></code>:
 </p>
-<p>Multimedia - Audio CDs: amarok --cdplay %d
+<pre>nombre_del_servidor -fstype=curl,rw,allow_other,nodev,nonempty,noatime    :ftp\://usuario\:contraseña\@servidor_remoto
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Sus contraseñas serán visibles para cualquiera que ejecute <code>df</code> (solo en los servidores montados) o vea el archivo <code>/etc/autofs/auto.ftp</code>.</div>
+<p>Si quiere una opción ligeramente más segura, cree el archivo <code>~root/.netrc</code> y añada ahí las contraseñas. Las contraseñas siguen en texto plano, pero puede ponerles el modo 600, y el comando <code>df</code> no las va a mostrar (montado o no). Este método también es menos sensible a los caracteres especiales (los que, sí no, deben ser escapados) en las contraseñas. El formato es:
 </p>
-<h3><span class="mw-headline" id="Notas_2">Notas</span></h3>
-<p>Es esencial tener corriendo los demonios Hal y Dbus, de otro modo el gestor de medios no detectará nada. Esto puede parecer obvio, pero ha habido gente quejándose y preguntando por qué no funcionaba y todo el asunto residía en que no estaban corriendo estos dos demonios. Asegúrese también de que pertenece usted a los grupos storage y optical.
+<pre>machine servidor_remoto
+login usuario
+password contraseña
+</pre>
+<p>La linea en <code>/etc/autofs/auto.ftp</code> se ve así sin el usuario ni la contraseña:
 </p>
-<p>Para poner a funcionar Hal y Dbus en el arranque simplementee edita /etc/rc.conf y añade 'hal' y 'dbus' a los <a href="../en/Daemons.html" title="Daemons">daemons</a>: DAEMONS=( ... hal dbus ... ). Obtenga más información sobre <a href="../en/Daemons.html" title="Daemons">Daemons (Inglés)</a>.
+<pre>nombre_del_servidor -fstype=curl,allow_other    :ftp\://servidor_remoto
+</pre>
+<p>Cree el archivo <code>/sbin/mount.curl</code> con este código:
 </p>
-</div>
-</div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../es/Category:File_systems.html" title="Category:File systems (Español)">File systems (Español)</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../es/Category:Pages_or_sections_flagged_with_Template:Bad_translation.html" title="Category:Pages or sections flagged with Template:Bad translation (Español)">Pages or sections flagged with Template:Bad translation (Español)</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/sbin/mount.curl</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"> #! /bin/sh
+ curlftpfs $1 $2 -o $4,disable_eprt
+</pre>
+<p>Cree el archivo <code>/sbin/umount.curl</code> con este código:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/sbin/umount.curl</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"> #! /bin/sh
+ fusermount -u $1
+</pre>
+<p>Establezca los permisos para ambos archivos:
+</p>
+<pre># chmod 755 /sbin/mount.curl
+# chmod 755 /sbin/umount.curl
+</pre>
+<p>Después de un reinicio, su servidor FTP debería ser accesible a través de <code>/media/ftp/nombre_del_servidor</code>.
+</p>
+<h4><span class="mw-headline" id="SSH_remoto">SSH remoto</span></h4>
+<p>Aquí tiene instrucciones básicas de como acceder a un sistema de archivos a través de <a href="../es/OpenSSH.html" class="mw-redirect" title="SSH (Español)">SSH</a> con AutoFS. 
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> La autenticación sin contraseña puede ser conveniente, pero también tiene implicaciones de seguridad. Vea <a href="../es/SSH_keys.html" title="SSH keys (Español)">Llaves SSH</a> para más detalles.</div>
+<p>Instale el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sshfs">sshfs</a></span>.
+</p>
+<p>Cargue el modulo <code>fuse</code>:
+</p>
+<pre># modprobe fuse
+</pre>
+<p>Cree un archivo <code>/etc/modules-load.d/fuse.conf</code> que contenga <code>fuse</code> para que lo cargue en cada inicio sí es que no tiene uno aun.
+</p>
+<p>Instale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openssh">openssh</a></span>.
+</p>
+<p>Genere unas <a href="../es/SSH_keys.html" title="SSH keys (Español)">llaves SSH</a>:
+</p>
+<pre>$ ssh-keygen
+</pre>
+<p>Cuando el generador le pida una contraseña, solo presione <code>INTRO</code>. Usar llaves SSH sin una contraseña es menos seguro, aún así, ejecutar AutoFS con contraseña posee dificultades adicionales que no están cubiertas (aun) en este articulo.
+</p>
+<p>Después, copie la llave publica al servidor SSH:
+</p>
+<pre>$ ssh-copy-id nombre_de_usuario@host_remoto
+</pre>
+<p>Vea sí puede iniciar sección en el servidor remoto <b>como root</b>:
+</p>
+<pre># ssh nombre_de_usuario@host_remoto
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Nota:</strong> Esto va a añadir el servidor remoto a la lista de <code>known_hosts <i>(hosts conocidos)</i></code> del usuario root. Los hosts también pueden ser añadidos manualmente a <code>/etc/ssh/ssh_known_hosts</code>.</div>
+<p>Cree una nueva entrada para los servidores SSH en <code>/etc/autofs/auto.master</code>:
+</p>
+<pre>/media/ssh		/etc/autofs/auto.ssh	--timeout=60
+</pre>
+<p>Cree el archivo <code>/etc/autofs/auto.ssh</code> y añada un servidor SSH:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/autofs/auto.ssh</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">nombre_del_servidor     -fstype=fuse,rw,allow_other,IdentityFile=/home/nombre_de_usuario/.ssh/id_rsa :sshfs\#nombre_de_usuario@host\:/</pre>
+<p>Después de un reinicio, su servidor SSH debería ser accesible a través de <code>/media/ssh/nombre_del_servidor</code>.
+</p>
+<h2><span class="mw-headline" id="MTP">MTP</span></h2>
+<p>El Protocolo de Transmisión de Medios (<a href="../en/Media_Transfer_Protocol.html" class="mw-redirect" title="MTP">MTP</a>) es usado en algunos dispositivos android.
+</p>
+<p>Instale el paquete <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mtpfs">mtpfs</a></span>.
+</p>
+<p>Cree una nueva entrada para el dispositivo MTP en <code>/etc/autofs/auto.misc</code>:
+</p>
+<pre>android -fstype=fuse,allow_other,umask=000     :mtpfs
+</pre>
+<h2>
+<span id="Soluci.C3.B3n_de_problemas_y_ajustes"></span><span class="mw-headline" id="Solución_de_problemas_y_ajustes">Solución de problemas y ajustes</span>
+</h2>
+<p>Esta sección tiene algunas soluciones para problemas comunes de AutoFS.
+</p>
+<h3><span class="mw-headline" id="Usando_NIS">Usando NIS</span></h3>
+<p>La versión 5.0.5 de AutoFS tiene un soporte más avanzado para <a href="../en/NIS.html" title="NIS">NIS</a>. Para usar AutoFS en conjunto con NIS, añada <code>yp:</code> adelante de los nombres de las plantillas en <code>/etc/autofs/auto.master</code>:
+</p>
+<pre>/home   yp:auto_home    --timeout=60 
+/sbtn   yp:auto_sbtn    --timeout=60
++auto.master
+</pre>
+<p>En versiones anteriores de NIS (antes de la 5.0.4), usted debía añadir <code>nis</code> a <code>/etc/nsswitch.conf</code>:
+</p>
+<pre>automount: files nis
+</pre>
+<h3>
+<span id="Par.C3.A1metros_opcionales"></span><span class="mw-headline" id="Parámetros_opcionales">Parámetros opcionales</span>
+</h3>
+<p>Puede establecer parámetros como <code>timeout</code> en el sistema para todos los recursos AutoFS en <code>/etc/default/autofs</code>:
+</p>
+<ul><li>Abra el archivo <code>/etc/default/autofs</code> y edite la linea <code>OPTIONS</code>:</li></ul>
+<pre>OPTIONS='--timeout=5'
+</pre>
+<ul><li>Para activar el registro (por defecto no se registra nada), descomente y añada  <code>--verbose</code> a la linea <code>OPTIONS</code> en <code>/etc/default/autofs</code> p.ej.:</li></ul>
+<pre>OPTIONS='--verbose --timeout=5'
+</pre>
+<p>Después de reiniciar el demonio <code>autofs</code>, la salida detallada va a ser visible con <code>systemctl status</code> o en <code>journalctl</code>.
+</p>
+<h3>
+<span id="Identificado_m.C3.BAltiples_dispositivos"></span><span class="mw-headline" id="Identificado_múltiples_dispositivos">Identificado múltiples dispositivos</span>
+</h3>
+<p>Si utiliza varias unidades USB y quiere poder distinguirlas fácilmente, puede hacer que AutoFS maneje los puntos de montado y que <a href="../es/Udev.html" title="Udev (Español)">Udev</a> cree nombres distintos para sus unidades USB. Vea <a href="../es/Udev.html#Configurar_nombres_est%C3%A1ticos_para_los_dispositivos" title="Udev (Español)">udev (Español)#Configurar nombres estáticos para los dispositivos</a> para obtener instrucciones de como configurar reglas udev.
+</p>
+<h3><span class="mw-headline" id="Permisos_de_AutoFS">Permisos de AutoFS</span></h3>
+<p>Si AutoFS no le está funcionando, asegúrese que los archivos de plantillas tengan los permisos correctos, sí no, AutoFS no va a iniciar. Esto puede suceder sí hizo un respaldo de esos archivos de una manera que no preserva los modos de sus archivos. Aquí salen los modos que deberían tener los archivos de configuración:
+</p>
+<ul>
+<li>0644 - /etc/autofs/auto.master</li>
+<li>0644 - /etc/autofs/auto.media</li>
+<li>0644 - /etc/autofs/auto.misc</li>
+<li>0644 - /etc/conf.d/autofs</li>
+</ul>
+<p>En general, los scripts (como el previo <code>auto.net</code>) deberían tener los bits ejecutables (<code>chmod a+x nombre_de_archivo</code>) puestos y las listas de montados no.
+</p>
+<p>Si tiene errores en <code>/var/log/daemon.log</code> similares a este, tiene un problema con los permisos:
+</p>
+<pre>May  7 19:44:16 peterix automount[15218]: lookup(program): lookup for petr failed
+May  7 19:44:16 peterix automount[15218]: failed to mount /media/cifs/petr
+</pre>
+<h3><span class="mw-headline" id="Problemas_con_fusermount">Problemas con fusermount</span></h3>
+<p>Con algunas versiones de util-linux, puede que no pueda desmontar un sistema de archivos fuse montado por autofs, incluso sí tiene la opción "user=". Vía la discusión aquí: <a rel="nofollow" class="external autonumber" href="http://fuse.996288.n3.nabble.com/Cannot-umount-as-non-root-user-anymore-tp689p697.html">[1]</a>.
+</p>
+<h3><span class="mw-headline" id="Depurando_problemas_de_automontado">Depurando problemas de automontado</span></h3>
+<p>Para una mejor depuración, usted puede intentar montando automáticamente en primer plano:
+</p>
+<pre># systemctl stop autofs.service
+# automount -f -v
+</pre>
+<p>O, sí quiere más información de depuración, use:
+</p>
+<pre># automount -f --debug
+</pre>
+<h2><span class="mw-headline" id="Alternativas_a_AutoFS">Alternativas a AutoFS</span></h2>
+<ul>
+<li>
+<a href="../es/Systemd.html" title="Systemd (Español)">Systemd (Español)</a> puede montar sistemas de archivos automáticamente bajo demanda; vea <a href="../es/Fstab.html#Montaje_autom%C3%A1tico_con_systemd" title="Fstab (Español)">aquí</a> para la descripción y el articulo de <a href="../es/SSHFS.html#Bajo_demanda" title="SSHFS (Español)">sshfs</a> para un ejemplo.</li>
+<li>
+<a href="../es/Thunar.html#Administrador_del_Volumen_Thunar" title="Thunar (Español)">Administrador del Volumen Thunar</a> es un sistema de montado automático para el gestor de archivos <a href="../es/Thunar.html" title="Thunar (Español)">Thunar</a>.</li>
+<li>
+<a href="../en/PCManFM.html" title="PCManFM">PCManFM</a> es un gestor de archivos ligero con soporte incluido para acceder a recursos de red.</li>
+<li>
+<a href="../en/Udisks.html" title="Udisks">Udisks</a> es servicio de montado automático de discos minimalista.</li>
+</ul>
+<h2>
+<span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
+</h2>
+<ul>
+<li>Uso de FTP y SFTP con AutoFS está basado en este articulo de la Wiki de Gentoo: <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20130414074212/http://en.gentoo-wiki.com/wiki/Mounting_SFTP_and_FTP_shares">[2]</a>.</li>
+<li>Mas información de SSH puede ser encontrada en las paginas <a href="../es/OpenSSH.html" class="mw-redirect" title="SSH (Español)">SSH</a> y <a href="../es/SSH_keys.html" title="SSH keys (Español)">SSH Keys</a> de esta wiki.</li>
+<li>La ayuda de AutoFS de Ubuntu esta en <a rel="nofollow" class="external autonumber" href="https://help.ubuntu.com/community/Autofs">[3]</a>.</li>
+<li>Para opciones especificas para el montado de los sistemas de archivos, vea <a rel="nofollow" class="external autonumber" href="http://manpages.ubuntu.com/manpages/focal/man8/mount.8.html#filesystem-specific%20mount%20options">[4]</a>.</li>
+<li>Para opciones de montado especificas para fuse, vea <a rel="nofollow" class="external autonumber" href="http://manpages.ubuntu.com/manpages/precise/man8/mount.fuse.8.html">[5]</a>.</li>
 </ul>
 </div>
 </div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../es/Category:File_systems.html" title="Category:File systems (Español)">File systems (Español)</a></li></ul>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Autofs_(Espa%C3%B1ol)&amp;oldid=644883">https://wiki.archlinux.org/index.php?title=Autofs_(Español)&amp;oldid=644883</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 December 2020, at 21:28.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Autofs_(Espa%C3%B1ol)&amp;oldid=655622">https://wiki.archlinux.org/index.php?title=Autofs_(Español)&amp;oldid=655622</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 14:27.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

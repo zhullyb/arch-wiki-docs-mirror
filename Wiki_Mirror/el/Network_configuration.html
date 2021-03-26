@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -255,7 +256,7 @@ rtt min/avg/max/mdev = 52.975/65.375/72.543/8.803 ms
 </h3>
 <p>Για υπολογιστές με πολλές κάρτες δικτύου, είναι σημαντικό η κάθε μια να έχει το μοναδικό όνομά της. Η αλλαγή όνοματος συσκευής διασύνδεσης δικτύου, δημιουργεί πολλά προβλήματα στην διαμόρφωση τους.
 </p>
-<p>Ο <a href="../en/Udev.html" title="Udev">udev</a> είναι υπεύθυνος για το ποια συσκευή θα πάρει ποιο όνομα. Το <a href="../en/Systemd.html" title="Systemd">systemd</a> από την έκδοση v197 (βρισκόμαστε ήδη στην έκδοση v208 την ώρα που γράφεται το παρόν άρθρο) εισήγαγε το <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">Predictable Network Interface Names</a>, το οποίο αυτόματα δίνει στατικά ονόματα (τα οποία δεν επιδέχονται αλλαγή) στις συσκευές δικτύου. Οι διασυνδέσεις πλέον έχουν το εξής πρόθεμα ανά τύπο διασύνδεσης, <code>en</code> (ethernet), <code>wl</code> (WLAN) ή <code>ww</code> (WWAN) ακολουθούμενο από ένα αυτόματα δημιουργούμενο αναγνωριστικό, δημιουργώντας μια καταχώρηση όπως <code>enp0s25</code>. 
+<p>Ο <a href="../en/Udev.html" title="Udev">udev</a> είναι υπεύθυνος για το ποια συσκευή θα πάρει ποιο όνομα. Το <a href="../en/Systemd.html" title="Systemd">systemd</a> από την έκδοση v197 (βρισκόμαστε ήδη στην έκδοση v208 την ώρα που γράφεται το παρόν άρθρο) εισήγαγε το <a rel="nofollow" class="external text" href="https://systemd.io/PREDICTABLE_INTERFACE_NAMES/">Predictable Network Interface Names</a>, το οποίο αυτόματα δίνει στατικά ονόματα (τα οποία δεν επιδέχονται αλλαγή) στις συσκευές δικτύου. Οι διασυνδέσεις πλέον έχουν το εξής πρόθεμα ανά τύπο διασύνδεσης, <code>en</code> (ethernet), <code>wl</code> (WLAN) ή <code>ww</code> (WWAN) ακολουθούμενο από ένα αυτόματα δημιουργούμενο αναγνωριστικό, δημιουργώντας μια καταχώρηση όπως <code>enp0s25</code>. 
 </p>
 <p>Αυτό μπορεί να παρακαμφθεί, δημιουργώντας έναν συμβολικό σύνδεσμο (symlink):
 </p>
@@ -290,7 +291,7 @@ SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="ff:ee:dd:cc:bb:aa", NAME="net0"
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">SUBSYSTEM=="net", DEVPATH=="/devices/platform/wemac.*", NAME="int"
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Σημείωση:</strong> Όταν επιλέγετε στατικά ονόματα συσκευών <b>πρέπει να αποφεύγετε να χρησιμοποιείτε ονόματα μορφής "eth<i>Χ</i>" και "wlan<i>Χ</i>"</b>, διότι μπορεί να εξελιχθεί σε αγώνα (<a href="https://en.wikipedia.org/wiki/Race_condition" class="extiw" title="wikipedia:Race condition">wikipedia:Race_condition</a>) μεταξύ kernel και udev κατά την διάρκεια της εκκίνησης. Αντ' αυτού είναι καλύτερο να χρησιμοποιείτε ονόματα για τις συσκευές σας που δεν χρησιμοποιούνται από τον πυρήνα από προεπιλογή π.χ. <code>net0</code>, <code>net1</code>, <code>wifi0</code>, <code>wifi1</code>. Για περισσότερες πληροφορίες δείτε την τεκμηρίωση του <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">systemd</a>.</div>
+<strong>Σημείωση:</strong> Όταν επιλέγετε στατικά ονόματα συσκευών <b>πρέπει να αποφεύγετε να χρησιμοποιείτε ονόματα μορφής "eth<i>Χ</i>" και "wlan<i>Χ</i>"</b>, διότι μπορεί να εξελιχθεί σε αγώνα (<a href="https://en.wikipedia.org/wiki/Race_condition" class="extiw" title="wikipedia:Race condition">wikipedia:Race_condition</a>) μεταξύ kernel και udev κατά την διάρκεια της εκκίνησης. Αντ' αυτού είναι καλύτερο να χρησιμοποιείτε ονόματα για τις συσκευές σας που δεν χρησιμοποιούνται από τον πυρήνα από προεπιλογή π.χ. <code>net0</code>, <code>net1</code>, <code>wifi0</code>, <code>wifi1</code>. Για περισσότερες πληροφορίες δείτε την τεκμηρίωση του <a rel="nofollow" class="external text" href="https://systemd.io/PREDICTABLE_INTERFACE_NAMES/">systemd</a>.</div>
 <h3>
 <span id=".CE.9F.CF.81.CE.B9.CF.83.CE.BC.CF.8C.CF.82_.CF.84.CE.B7.CF.82_.CE.BC.CE.BF.CE.BD.CE.AC.CE.B4.CE.B1.CF.82_.CE.BC.CE.AD.CE.B3.CE.B9.CF.83.CF.84.CE.B7.CF.82_.CE.BC.CE.B5.CF.84.CE.AC.CE.B4.CE.BF.CF.83.CE.B7.CF.82_.28MTU.29_.CE.BA.CE.B1.CE.B9_.CE.BC.CE.B5.CE.B3.CE.AD.CE.B8.CE.BF.CF.85.CF.82_.CE.BF.CF.85.CF.81.CE.AC.CF.82_.28queue_Length.29"></span><span class="mw-headline" id="Ορισμός_της_μονάδας_μέγιστης_μετάδοσης_(MTU)_και_μεγέθους_ουράς_(queue_Length)">Ορισμός της μονάδας μέγιστης μετάδοσης (MTU) και μεγέθους ουράς (queue Length)</span>
 </h3>
@@ -850,8 +851,8 @@ $ sudo modprobe alx
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CE%AC)&amp;oldid=640685">https://wiki.archlinux.org/index.php?title=Network_configuration_(Ελληνικά)&amp;oldid=640685</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 5 November 2020, at 06:51.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CE%AC)&amp;oldid=656162">https://wiki.archlinux.org/index.php?title=Network_configuration_(Ελληνικά)&amp;oldid=656162</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 March 2021, at 09:08.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

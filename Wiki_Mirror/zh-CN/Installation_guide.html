@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,12 +34,12 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/Installation_guide.html" title="Installation guide">Installation guide</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2020-11-27。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Installation_guide&amp;diff=0&amp;oldid=640985">更改</a>，则您可以帮助同步翻译。</div>
+<strong>翻译状态：</strong>本文是 <a href="../en/Installation_guide.html" title="Installation guide">Installation guide</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-03-25。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Installation_guide&amp;diff=0&amp;oldid=655872">更改</a>，则您可以帮助同步翻译。</div>
 <p>本文将指导如何用官方安装镜像启动的 Live 系统安装 <a href="../zh-CN/Arch_Linux.html" title="Arch Linux (简体中文)">Arch Linux</a>。安装介质现提供无障碍辅助功能，对此 <a href="../en/Install_Arch_Linux_with_accessibility_options.html" title="Install Arch Linux with accessibility options">使用无障碍辅助选项安装 Arch Linux (英文)</a> 页面有详细描述。关于其它的安装方法, 请参阅 <a href="../en/Category:Installation_process.html" title="Category:Installation process">Category:Installation process</a>。
 </p>
 <p>建议在安装前阅读 <a href="../zh-CN/Frequently_asked_questions.html" class="mw-redirect" title="FAQ (简体中文)">FAQ</a>。对于本文中使用的惯用术语，请参阅 <a href="../zh-CN/Help:Reading.html" title="Help:Reading (简体中文)">Help:Reading</a>。请注意，代码段可能会有占位符（格式是 <code><i>italics</i></code>），您可能需要手动去掉它们。
 </p>
-<p>有关更详细的说明，请阅读本指南内相应的 <a href="../zh-CN/ArchWiki:About.html" title="ArchWiki:About (简体中文)">ArchWiki</a> 文章或各类程序的<a href="../zh-CN/Man_page.html" title="Man page (简体中文)">手册</a>。有关配置的概述，请参阅 <span class="plainlinks archwiki-template-man" title="$ man 7 archlinux"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/archlinux.7">archlinux(7)</a></span>。若需要交互帮助，可以使用 <a href="../en/Arch_IRC_channels.html" class="mw-redirect" title="IRC channel">IRC 频道</a>和<a rel="nofollow" class="external text" href="https://bbs.archlinux.org/">论坛</a>。
+<p>有关更详细的说明，请阅读本指南内相应的 <a href="../zh-CN/ArchWiki:About.html" title="ArchWiki:About (简体中文)">ArchWiki</a> 文章或各类程序的<a href="../zh-CN/Man_page.html" title="Man page (简体中文)">手册</a>。有关配置的概述，请参阅 <span class="plainlinks archwiki-template-man" title="$ man 7 archlinux"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/archlinux.7">archlinux(7)</a></span><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2021-02-08]</sup>。若需要交互帮助，可以使用 <a href="../en/Arch_IRC_channels.html" class="mw-redirect" title="IRC channel">IRC 频道</a>和<a rel="nofollow" class="external text" href="https://bbs.archlinux.org/">论坛</a>。
 </p>
 <p>Arch Linux 能运行在最少 512 MiB 内存的 <a href="https://en.wikipedia.org/wiki/zh:X86-64" class="extiw" title="w:zh:X86-64">x86_64</a> 机器上，但从安装媒介启动系统并成功安装需要更多的内存。<a rel="nofollow" class="external autonumber" href="https://lists.archlinux.org/pipermail/arch-releng/2020-May/003957.html">[1]</a> 基本安装将占用小于 2 GiB 的存储空间。由于安装过程中需要从远程存储库获取软件包，计算机将需要一个有效的互联网连接。
 </p>
@@ -366,7 +367,7 @@
 <h3>
 <span id=".E9.80.89.E6.8B.A9.E9.95.9C.E5.83.8F"></span><span class="mw-headline" id="选择镜像">选择镜像</span>
 </h3>
-<p>文件 <code>/etc/pacman.d/mirrorlist</code> 定义了软件包会从哪个<a href="../en/Mirrors.html" title="Mirrors">镜像源</a>下载。在 LiveCD 启动的系统上，在连接到因特网后，<a href="../en/Reflector.html" title="Reflector">reflector</a> 会通过选择 70 个最新同步的 HTTPS 镜像并按下载速率对其进行排序来更新镜像列表。<a rel="nofollow" class="external autonumber" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/system/reflector.service">[2]</a>
+<p>文件 <code>/etc/pacman.d/mirrorlist</code> 定义了软件包会从哪个<a href="../en/Mirrors.html" title="Mirrors">镜像源</a>下载。在 LiveCD 启动的系统上，在连接到因特网后，<a href="../en/Reflector.html" title="Reflector">reflector</a> 会通过选择 70 个最新同步的 HTTPS 镜像并按下载速率对其进行排序来更新镜像列表。<a rel="nofollow" class="external autonumber" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/xdg/reflector/reflector.conf">[2]</a>
 </p>
 <p>在列表中越前的镜像在下载软件包时有越高的优先权。您或许想检查一下文件，看看是否满意。如果不满意，可以相应的修改 <code>/etc/pacman.d/mirrorlist</code> 文件，并将地理位置最近的镜像源挪到文件的头部，同时也应该考虑一些其他标准。
 </p>
@@ -533,16 +534,20 @@
 </p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Installation_process.html" title="Category:Installation process (简体中文)">Installation process (简体中文)</a></li></ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Installation_guide_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=646860">https://wiki.archlinux.org/index.php?title=Installation_guide_(简体中文)&amp;oldid=646860</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:02.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Installation_guide_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=656002">https://wiki.archlinux.org/index.php?title=Installation_guide_(简体中文)&amp;oldid=656002</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 25 March 2021, at 11:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

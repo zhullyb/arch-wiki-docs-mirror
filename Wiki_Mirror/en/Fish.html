@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -180,7 +181,7 @@ fi</pre>
 </p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Command_substitution">Command substitution</span></h3>
-<p><i>fish</i> does not implement Bash style history substitution (e.g. <code>sudo !!</code>), and the developers recommend in the <a rel="nofollow" class="external text" href="https://fishshell.com/docs/current/faq.html#why-doesn-t-history-substitution-etc-work">fish faq</a> to use the interactive history recall interface instead: the <code>Up</code> arrow recalls whole past lines and <code>Alt+Up</code> (or <code>Alt+.</code>) recalls individual arguments.
+<p><i>fish</i> does not implement Bash style history substitution (e.g. <code>sudo !!</code>), and the developers recommend in the <a rel="nofollow" class="external text" href="https://fishshell.com/docs/current/faq.html#why-doesn-t-history-substitution-etc-work">fish faq</a> to use the interactive history recall interface instead: the <code>Up</code> arrow recalls whole past lines and <code>Alt+Up</code> (or <code>Alt+.</code>) recalls individual arguments, while <code>Alt+s</code> prepends <code>sudo</code> to the existing line.
 </p>
 <p>However some workarounds are described in the <a rel="nofollow" class="external text" href="https://github.com/fish-shell/fish-shell/wiki/Bash-Style-Command-Substitution-and-Chaining-(!!-!%24-&amp;&amp;-%7C%7C)">fish wiki</a>: while not providing complete history substitution, some functions replace <code>!!</code> with the previous command or <code>!$</code> with the previous last argument.
 </p>
@@ -272,8 +273,18 @@ end
 <h3>
 <span id="The_.22command_not_found.22_hook"></span><span class="mw-headline" id='The_"command_not_found"_hook'>The "command not found" hook</span>
 </h3>
-<p><a href="../en/Pkgfile.html" title="Pkgfile">pkgfile</a> includes a "command not found" hook that will automatically search the official repositories, when entering an unrecognized command. This hook will be run by default if <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pkgfile">pkgfile</a></span> is installed.
+<p>Fish includes a "command not found" hook that will automatically search the official repositories, when entering an unrecognized command. This hook will be run using <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pkgfile">pkgfile</a></span>, falling back to <code>pacman -F</code> if it is not installed.
 </p>
+<p>If the delay this behavior introduces is undesirable, this hook can be overridden by redefining <code>fish_command_not_found</code> so that it only prints an error message:
+</p>
+<pre> $ function fish_command_not_found
+       __fish_default_command_not_found_handler $argv[1]
+   end
+</pre>
+<p>To make this change permanent, the <code>funcsave</code> built-in can be used:
+</p>
+<pre> $ funcsave fish_command_not_found
+</pre>
 <h3><span class="mw-headline" id="Remove_a_process_from_the_list_of_jobs">Remove a process from the list of jobs</span></h3>
 <p><i>fish</i> terminates any jobs put into the background when fish terminates. To keep a job running after fish terminates, first use the <code>disown</code> builtin. For example, the following starts <code>firefox</code> in the background and then disowns it:
 </p>
@@ -327,8 +338,8 @@ end
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fish&amp;oldid=649133">https://wiki.archlinux.org/index.php?title=Fish&amp;oldid=649133</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 January 2021, at 10:45.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fish&amp;oldid=656058">https://wiki.archlinux.org/index.php?title=Fish&amp;oldid=656058</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 25 March 2021, at 20:45.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

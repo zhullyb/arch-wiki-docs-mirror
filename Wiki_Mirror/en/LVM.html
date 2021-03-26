@@ -44,11 +44,6 @@
 <li><a href="../en/Create_root_filesystem_snapshots_with_LVM.html" title="Create root filesystem snapshots with LVM">Create root filesystem snapshots with LVM</a></li>
 </ul>
 </div>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> The article doesn't cover <a rel="nofollow" class="external text" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/assembly_thinly-provisioned-logical-volumes_configuring-and-managing-logical-volumes">thin provisioning</a>. A comprehensive guide can meanwhile be found at <a rel="nofollow" class="external autonumber" href="https://wiki.gentoo.org/wiki/LVM#Thin_provisioning">[1]</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:LVM#Logical_volume_types">Talk:LVM#Logical volume types</a>)</div>
-</div>
 <p>From <a href="https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)" class="extiw" title="wikipedia:Logical Volume Manager (Linux)">Wikipedia:Logical Volume Manager (Linux)</a>:
 </p>
 <dl><dd>LVM is a <a href="https://en.wikipedia.org/wiki/logical_volume_management" class="extiw" title="wikipedia:logical volume management">logical volume manager</a> for the <a href="https://en.wikipedia.org/wiki/Linux_kernel" class="extiw" title="wikipedia:Linux kernel">Linux kernel</a>; it manages disk drives and similar mass-storage devices.</dd></dl>
@@ -134,24 +129,36 @@
 </ul>
 </li>
 <li class="toclevel-1 tocsection-36">
-<a href="#Troubleshooting"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a>
+<a href="#Thin_provisioning"><span class="tocnumber">4</span> <span class="toctext">Thin provisioning</span></a>
 <ul>
-<li class="toclevel-2 tocsection-37"><a href="#LVM_commands_do_not_work"><span class="tocnumber">4.1</span> <span class="toctext">LVM commands do not work</span></a></li>
-<li class="toclevel-2 tocsection-38"><a href="#Logical_Volumes_do_not_show_up"><span class="tocnumber">4.2</span> <span class="toctext">Logical Volumes do not show up</span></a></li>
-<li class="toclevel-2 tocsection-39">
-<a href="#LVM_on_removable_media"><span class="tocnumber">4.3</span> <span class="toctext">LVM on removable media</span></a>
+<li class="toclevel-2 tocsection-37">
+<a href="#Example:_implementing_virtual_private_servers"><span class="tocnumber">4.1</span> <span class="toctext">Example: implementing virtual private servers</span></a>
 <ul>
-<li class="toclevel-3 tocsection-40"><a href="#Suspend/resume_with_LVM_and_removable_media"><span class="tocnumber">4.3.1</span> <span class="toctext">Suspend/resume with LVM and removable media</span></a></li>
+<li class="toclevel-3 tocsection-38"><a href="#Use_thin_snapshots_to_save_more_space"><span class="tocnumber">4.1.1</span> <span class="toctext">Use thin snapshots to save more space</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-41"><a href="#Resizing_a_contiguous_logical_volume_fails"><span class="tocnumber">4.4</span> <span class="toctext">Resizing a contiguous logical volume fails</span></a></li>
-<li class="toclevel-2 tocsection-42"><a href="#Command_%22grub-mkconfig%22_reports_%22unknown_filesystem%22_errors"><span class="tocnumber">4.5</span> <span class="toctext">Command "grub-mkconfig" reports "unknown filesystem" errors</span></a></li>
-<li class="toclevel-2 tocsection-43"><a href="#Thinly-provisioned_root_volume_device_times_out"><span class="tocnumber">4.6</span> <span class="toctext">Thinly-provisioned root volume device times out</span></a></li>
-<li class="toclevel-2 tocsection-44"><a href="#Delay_on_shutdown"><span class="tocnumber">4.7</span> <span class="toctext">Delay on shutdown</span></a></li>
-<li class="toclevel-2 tocsection-45"><a href="#Hibernating_into_a_thinly-provisioned_swap_volume"><span class="tocnumber">4.8</span> <span class="toctext">Hibernating into a thinly-provisioned swap volume</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#Example:_zero-downtime_storage_upgrade"><span class="tocnumber">4.2</span> <span class="toctext">Example: zero-downtime storage upgrade</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-46"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-40">
+<a href="#Troubleshooting"><span class="tocnumber">5</span> <span class="toctext">Troubleshooting</span></a>
+<ul>
+<li class="toclevel-2 tocsection-41"><a href="#LVM_commands_do_not_work"><span class="tocnumber">5.1</span> <span class="toctext">LVM commands do not work</span></a></li>
+<li class="toclevel-2 tocsection-42"><a href="#Logical_Volumes_do_not_show_up"><span class="tocnumber">5.2</span> <span class="toctext">Logical Volumes do not show up</span></a></li>
+<li class="toclevel-2 tocsection-43">
+<a href="#LVM_on_removable_media"><span class="tocnumber">5.3</span> <span class="toctext">LVM on removable media</span></a>
+<ul>
+<li class="toclevel-3 tocsection-44"><a href="#Suspend/resume_with_LVM_and_removable_media"><span class="tocnumber">5.3.1</span> <span class="toctext">Suspend/resume with LVM and removable media</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-45"><a href="#Resizing_a_contiguous_logical_volume_fails"><span class="tocnumber">5.4</span> <span class="toctext">Resizing a contiguous logical volume fails</span></a></li>
+<li class="toclevel-2 tocsection-46"><a href="#Command_%22grub-mkconfig%22_reports_%22unknown_filesystem%22_errors"><span class="tocnumber">5.5</span> <span class="toctext">Command "grub-mkconfig" reports "unknown filesystem" errors</span></a></li>
+<li class="toclevel-2 tocsection-47"><a href="#Thinly-provisioned_root_volume_device_times_out"><span class="tocnumber">5.6</span> <span class="toctext">Thinly-provisioned root volume device times out</span></a></li>
+<li class="toclevel-2 tocsection-48"><a href="#Delay_on_shutdown"><span class="tocnumber">5.7</span> <span class="toctext">Delay on shutdown</span></a></li>
+<li class="toclevel-2 tocsection-49"><a href="#Hibernating_into_a_thinly-provisioned_swap_volume"><span class="tocnumber">5.8</span> <span class="toctext">Hibernating into a thinly-provisioned swap volume</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-50"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -626,6 +633,66 @@ To restore just create a snapshot, mount it, and write or extract the backup to 
 </pre>
 <p>will create a 20 GiB mirrored logical volume named "myraid1vol" in VolGroup00 on <code>/dev/sda2</code> and <code>/dev/sdb2</code>.
 </p>
+<h2><span class="mw-headline" id="Thin_provisioning">Thin provisioning</span></h2>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> When mounting a thin LV file system, always remember to use the <code>discard</code> option or to use <a href="../en/Solid_state_drive.html#Periodic_TRIM" class="mw-redirect" title="Fstrim">fstrim</a> regularly, to allow the thin LV to shrink as files are deleted.</div>
+<p>From <span class="plainlinks archwiki-template-man" title="$ man 7 lvmthin"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvmthin.7">lvmthin(7)</a></span>:
+</p>
+<dl><dd>Blocks in a standard lvm(8) Logical Volume (LV) are allocated when the LV is created, but blocks in a thin provisioned LV are allocated as they are written. Because of this, a thin provisioned LV is given a virtual size, and can then be much larger than physically available storage. The amount of physical storage provided for thin provisioned LVs can be increased later as the need arises.</dd></dl>
+<h3><span class="mw-headline" id="Example:_implementing_virtual_private_servers">Example: implementing virtual private servers</span></h3>
+<p>Here is the classic use case. Suppose you want to start your own VPS service, initially hosting about 100 VPSes on a single PC with a 930 GiB hard drive. Hardly any of the VPSes will actually use all of the storage they are allotted, so rather than allocate 9 GiB to each VPS, you could allow each VPS a maximum of 30 GiB and use thin provisioning to only allocate as much hard drive space to each VPS as they are actually using. Suppose the 930 GiB hard drive is <code>/dev/sdb</code>. Here is the setup.
+</p>
+<p>Prepare the volume group, <code>MyVolGroup</code>.
+</p>
+<pre># vgcreate MyVolGroup /dev/sdb
+</pre>
+<p>Create the thin pool LV, <code>MyThinPool</code>. This LV provides the blocks for storage.
+</p>
+<pre># lvcreate --type thin-pool -n MyThinPool -l 95%FREE MyVolGroup
+</pre>
+<p>The thin pool is composed of two sub-volumes, the data LV and the metadata LV. This command creates both automatically. But the thin pool stops working if either fills completely, and LVM currently does not support the shrinking of either of these volumes. This is why the above command allows for 5% of extra space, in case you ever need to expand the data or metadata sub-volumes of the thin pool.
+</p>
+<p>For each VPS, create a thin LV. This is the block device exposed to the user for their root partition.
+</p>
+<pre># lvcreate -n SomeClientsRoot -V 30G --thinpool MyThinPool MyVolGroup
+</pre>
+<p>The block device <code>/dev/mapper/MyVolGroup-SomeClientsRoot</code> may then be used by a <a href="../en/VirtualBox.html" title="VirtualBox">VirtualBox</a> instance as the root partition.
+</p>
+<h4><span class="mw-headline" id="Use_thin_snapshots_to_save_more_space">Use thin snapshots to save more space</span></h4>
+<p>Thin snapshots are much more powerful than regular snapshots, because they are themselves thin LVs. See Redhat's guide <a rel="nofollow" class="external autonumber" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/assembly_thinly-provisioned-logical-volumes_configuring-and-managing-logical-volumes#con_thin-snapshot-volumes_thinly-provisioned-logical-volumes">[1]</a> for a complete list of advantages thin snapshots have.
+</p>
+<p>Instead of installing Linux from scratch every time a VPS is created, it is more space-efficient to start with just one thin LV containing a basic installation of Linux:
+</p>
+<pre># lvcreate -n GenericRoot -V 30G --thinpool MyThinPool MyVolGroup
+*** install Linux at /dev/mapper/MyVolGroup-GenericRoot ***
+</pre>
+<p>Then create snapshots of it for each VPS:
+</p>
+<pre># lvcreate -s MyVolGroup/GenericRoot -n SomeClientsRoot
+</pre>
+<p>This way, in the thin pool there is only one copy the data common to all VPSes, at least initially. As an added bonus, the creation of a new VPS is instantaneous.
+</p>
+<p>Since these are thin snapshots, a write operation to <code>GenericRoot</code> only causes one COW operation in total, instead of one COW operation per snapshot. This allows you to update <code>GenericRoot</code> more efficiently than if each VPS were a regular snapshot.
+</p>
+<h3><span class="mw-headline" id="Example:_zero-downtime_storage_upgrade">Example: zero-downtime storage upgrade</span></h3>
+<p>There are applications of thin provisioning outside of VPS hosting. Here is how you may use it to grow the effective capacity of an already-mounted file system without having to unmount it. Suppose, again, that the server has a single 930 GiB hard drive. The setup is the same as for VPS hosting, only there is only one thin LV and the LV's size is far larger than the thin pool's size.
+</p>
+<pre># lvcreate -n MyThinLV -V 16T --thinpool MyThinPool MyVolGroup
+</pre>
+<p>This extra virtual space can be filled in with actual storage at a later time by extending the thin pool.
+</p>
+<p>Suppose some time later, a storage upgrade is needed, and a new hard drive, <code>/dev/sdc</code>, is plugged into the server. To upgrade the thin pool's capacity, add the new hard drive to the VG:
+</p>
+<pre># vgextend MyVolGroup /dev/sdc
+</pre>
+<p>Now, extend the thin pool:
+</p>
+<pre># lvextend -l +95%FREE MyVolGroup/MyThinLV
+</pre>
+<p>Since this thin LV's size is 16 TiB, you could add another 15.09 TiB of hard drive space before finally having to unmount and resize the file system.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> You will probably want to use a <a href="../en/Disk_quota.html" title="Disk quota">disk quota</a> to prevent applications from attempting to use more physical storage than there actually is.</div>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="LVM_commands_do_not_work">LVM commands do not work</span></h3>
 <ul><li>Load proper module:</li></ul>
@@ -781,8 +848,8 @@ done</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=LVM&amp;oldid=654750">https://wiki.archlinux.org/index.php?title=LVM&amp;oldid=654750</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 10:59.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=LVM&amp;oldid=655246">https://wiki.archlinux.org/index.php?title=LVM&amp;oldid=655246</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 March 2021, at 16:58.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -96,7 +97,7 @@
 <li class="toclevel-2 tocsection-27"><a href="#Failure_on_logout"><span class="tocnumber">4.2</span> <span class="toctext">Failure on logout</span></a></li>
 <li class="toclevel-2 tocsection-28"><a href="#Rootless_Xorg"><span class="tocnumber">4.3</span> <span class="toctext">Rootless Xorg</span></a></li>
 <li class="toclevel-2 tocsection-29"><a href="#Use_Xorg_backend"><span class="tocnumber">4.4</span> <span class="toctext">Use Xorg backend</span></a></li>
-<li class="toclevel-2 tocsection-30"><a href="#GDM_freezes_with_systemd"><span class="tocnumber">4.5</span> <span class="toctext">GDM freezes with systemd</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#GDM_shows_black_screen_with_blinking_white_cursor"><span class="tocnumber">4.5</span> <span class="toctext">GDM shows black screen with blinking white cursor</span></a></li>
 <li class="toclevel-2 tocsection-31"><a href="#GDM_does_not_start_until_input_is_provided"><span class="tocnumber">4.6</span> <span class="toctext">GDM does not start until input is provided</span></a></li>
 <li class="toclevel-2 tocsection-32"><a href="#Incomplete_removal_of_gdm"><span class="tocnumber">4.7</span> <span class="toctext">Incomplete removal of gdm</span></a></li>
 <li class="toclevel-2 tocsection-33"><a href="#GDM_auto-suspend_(GNOME_3.28)"><span class="tocnumber">4.8</span> <span class="toctext">GDM auto-suspend (GNOME 3.28)</span></a></li>
@@ -461,7 +462,7 @@ SystemAccount=true</pre>
 <h3><span class="mw-headline" id="Setup_default_monitor_settings">Setup default monitor settings</span></h3>
 <p>Some <a href="../en/Desktop_environment.html" class="mw-redirect" title="Desktop environments">desktop environments</a> store display settings in <code>~/.config/monitors.xml</code>. <i>xrandr</i> commands are then generated on the base of the file content. GDM has a similar file stored in <code>/var/lib/gdm/.config/monitors.xml</code>.    
 </p>
-<p>If you have your monitors setup as you like (orientation, scaling, primary and so on) in <code>~/.config/monitors.xml</code> and want GDM to honor those settings:
+<p>If you have your monitors setup as you like (resolution, refresh rate, orientation, scaling, primary and so on) in <code>~/.config/monitors.xml</code> and want GDM to honor those settings:
 </p>
 <pre># cp ~/.config/monitors.xml /var/lib/gdm/.config/
 # chown gdm:gdm /var/lib/gdm/.config/monitors.xml
@@ -487,6 +488,8 @@ SystemAccount=true</pre>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If you use GDM under Wayland, you must also use a <code>monitors.xml</code> that was created under Wayland. See <a rel="nofollow" class="external text" href="https://gitlab.gnome.org/GNOME/gdm/issues/224">GDM bug 224</a> for more info. Alternatively, you can force GDM to <a href="#Use_Xorg_backend">#Use Xorg backend</a>, and use a <code>monitors.xml</code> that was created under Xorg.</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> If you use <a href="../en/HiDPI.html#Fractional_scaling" title="HiDPI">fractional scaling</a>, you need to enable it for user <code>gdm</code>.</div>
 <h3><span class="mw-headline" id="Configure_X_server_access_permission">Configure X server access permission</span></h3>
 <p>You can use the <code>xhost</code> command to configure X server access permissions.
 </p>
@@ -522,8 +525,8 @@ SystemAccount=true</pre>
 </p>
 <pre>#WaylandEnable=false
 </pre>
-<h3><span class="mw-headline" id="GDM_freezes_with_systemd">GDM freezes with systemd</span></h3>
-<p>If GDM gets hang-up with <code>systemctl enable gdm</code> and <code>systemctl start gdm</code> works as expected, apply the config with <code>systemctl edit gdm</code> as below:
+<h3><span class="mw-headline" id="GDM_shows_black_screen_with_blinking_white_cursor">GDM shows black screen with blinking white cursor</span></h3>
+<p>After booting, GDM may present you with a black screen with a blinking white cursor in the top left. This may be caused by GDM starting before graphics drivers are fully initialized. One possible workaround is to <a href="../en/Kernel_mode_setting.html#Early_KMS_start" title="Kernel mode setting">start KMS early.</a> Another possible workaround is to <a href="../en/Systemd.html#Editing_provided_units" title="Systemd">edit the systemd service</a> and either set its type to "idle" or add a small delay:
 </p>
 <pre> [Service]
  Type=idle
@@ -531,9 +534,9 @@ SystemAccount=true</pre>
 <p>or
 </p>
 <pre> [Service]
- ExecStartPre=/bin/sleep <i>s</i>
+ ExecStartPre=/bin/sleep 2
 </pre>
-<p>if a longer delay is required; <i>s</i> is the delay time in seconds.
+<p>If a longer delay is required, increase the delay time.
 </p>
 <h3><span class="mw-headline" id="GDM_does_not_start_until_input_is_provided">GDM does not start until input is provided</span></h3>
 <p>If, after booting, the screen stays black and GDM does not start until the mouse is moved or something is typed on the keyboard, it may be due to a lack of entropy required for random number generation. To confirm, check that the following line appears inside <i>systemd-random-seed</i>’s log (which can be read using <code>journalctl --unit systemd-random-seed</code>):
@@ -628,8 +631,8 @@ DRIVER=="nvidia", RUN+="/usr/lib/gdm-disable-wayland"
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GDM&amp;oldid=645719">https://wiki.archlinux.org/index.php?title=GDM&amp;oldid=645719</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 December 2020, at 04:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GDM&amp;oldid=655362">https://wiki.archlinux.org/index.php?title=GDM&amp;oldid=655362</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 March 2021, at 13:34.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

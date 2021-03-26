@@ -33,14 +33,14 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p>Detta är en guide för att installera <a href="../en/Arch_Linux.html" title="Arch Linux">Arch Linux</a> från en upstartbar media file. Före installation påbörjas är det rekommenderat att läsa <a href="../en/Frequently_asked_questions.html" class="mw-redirect" title="FAQ">FAQ</a>. För konversationer i detta dokument, läs <a href="../en/Help:Reading.html" title="Help:Reading">Help:Reading</a>. Speciellt när det gäller kod exemple, för dessa kan inhålla temporära element(formatet är <code><i>italics</i></code>) dess måste ersättas manuellt.
+<p>Detta dokument är en guide för att installera <a href="../en/Arch_Linux.html" title="Arch Linux">Arch Linux</a> med hjälp utav live-systemet startat från installationsmediet från en officiell installationsavbildning. Installationsmediet tillhandahåller tillgänglighetsfunktioner som beskrivs på sidan <a href="../en/Install_Arch_Linux_with_accessibility_options.html" title="Install Arch Linux with accessibility options">Install Arch Linux with accessibility options</a>. För alternativa installationsmetoder, se <a href="../en/Category:Installation_process.html" title="Category:Installation process">Category:Installation process</a>.
 </p>
-<p>För mer detalierad förklaring, läs de respektive <a href="../en/ArchWiki:About.html" class="mw-redirect" title="ArchWiki">ArchWiki</a> artiklarna eller de vardera programmens <a href="../en/Man_page.html" title="Man page">man page</a>. För interaktiv hjäp använd <a href="../en/Arch_IRC_channels.html" class="mw-redirect" title="IRC channel">IRC channel</a> och 
-<a rel="nofollow" class="external text" href="https://bbs.archlinux.org/">forum</a> är också tillgänglig.
+<p>Före installationen rekommenderas det att läsa <a href="../en/Frequently_asked_questions.html" class="mw-redirect" title="FAQ">FAQ</a>'en. För konventioner i detta dokument, se <a href="../en/Help:Reading.html" title="Help:Reading">Help:Reading</a>. I synnerhet kan kodexempel innehålla platshållare (formaterade <code><i>italics</i></code>) som måste bytas ut manuellt.
 </p>
-<p>Arch Linux borde fungera på vilken som helst <a href="https://en.wikipedia.org/wiki/X86-64" class="extiw" title="wikipedia:X86-64">x86_64</a>-kompatibel system, med en minimum mänged av 512MB RAM. En grundläggande installation med all paket från <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span> borde ta mindre än 800MB av hårddisk utrymmet. denna guid anntar en fungerande internet anslutning, för att kunna laddaner paket från internet.
+<p>För mer detaljerade instruktioner, se respektive <a href="../en/ArchWiki:About.html" class="mw-redirect" title="ArchWiki">ArchWiki</a> artiklar eller de olika programmens <a href="../en/Man_page.html" title="Man page">man pages</a>, båda länkade från denna guide.
+För interaktiv hjälp, är <a href="../en/Arch_IRC_channels.html" class="mw-redirect" title="IRC channel">IRC-kanalen</a> och <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/">forumet</a> också tillgängliga.
 </p>
-<p><br>
+<p>Arch Linux bör fungera på alla <a href="https://en.wikipedia.org/wiki/X86-64" class="extiw" title="wikipedia:X86-64">x86_64</a>-kompatibla system med minst 512 MiB RAM, men mer minne krävs för att starta live-systemet för installation.<a rel="nofollow" class="external autonumber" href="https://lists.archlinux.org/pipermail/arch-releng/2020-May/003957.html">[1]</a> En grundläggande installation bör ta mindre än 2 GiB diskutrymme. Eftersom installationsprocessen måste hämta paket från ett fjärrarkiv, antar den här guiden att en fungerande internetanslutning är tillgänglig.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -49,133 +49,217 @@
 </div>
 <ul>
 <li class="toclevel-1 tocsection-1">
-<a href="#F%C3%B6re_Installationen"><span class="tocnumber">1</span> <span class="toctext">Före Installationen</span></a>
+<a href="#F%C3%B6re_installationen"><span class="tocnumber">1</span> <span class="toctext">Före installationen</span></a>
 <ul>
-<li class="toclevel-2 tocsection-2"><a href="#Verifiering_signaturer"><span class="tocnumber">1.1</span> <span class="toctext">Verifiering signaturer</span></a></li>
-<li class="toclevel-2 tocsection-3"><a href="#Startup_fr%C3%A5n_installations_materialet"><span class="tocnumber">1.2</span> <span class="toctext">Startup från installations materialet</span></a></li>
-<li class="toclevel-2 tocsection-4"><a href="#V%C3%A4lj_tangenbords_arrangemang"><span class="tocnumber">1.3</span> <span class="toctext">Välj tangenbords arrangemang</span></a></li>
-<li class="toclevel-2 tocsection-5"><a href="#Bekr%C3%A4fta_uppstartsl%C3%A4ge"><span class="tocnumber">1.4</span> <span class="toctext">Bekräfta uppstartsläge</span></a></li>
-<li class="toclevel-2 tocsection-6"><a href="#Anslut_till_internet"><span class="tocnumber">1.5</span> <span class="toctext">Anslut till internet</span></a></li>
-<li class="toclevel-2 tocsection-7"><a href="#Uppdatera_systemklockan"><span class="tocnumber">1.6</span> <span class="toctext">Uppdatera systemklockan</span></a></li>
-<li class="toclevel-2 tocsection-8">
-<a href="#F%C3%B6rbered_installations_media"><span class="tocnumber">1.7</span> <span class="toctext">Förbered installations media</span></a>
+<li class="toclevel-2 tocsection-2"><a href="#Ladda_ner_en_installationsavbildning"><span class="tocnumber">1.1</span> <span class="toctext">Ladda ner en installationsavbildning</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Verifiera_signaturer"><span class="tocnumber">1.2</span> <span class="toctext">Verifiera signaturer</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#F%C3%B6rbered_ett_installationsmedium"><span class="tocnumber">1.3</span> <span class="toctext">Förbered ett installationsmedium</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Starta_live-milj%C3%B6n"><span class="tocnumber">1.4</span> <span class="toctext">Starta live-miljön</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#St%C3%A4ll_in_tangentbordslayouten"><span class="tocnumber">1.5</span> <span class="toctext">Ställ in tangentbordslayouten</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Verifiera_startl%C3%A4get"><span class="tocnumber">1.6</span> <span class="toctext">Verifiera startläget</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Anslut_till_internet"><span class="tocnumber">1.7</span> <span class="toctext">Anslut till internet</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Uppdatera_systemklockan"><span class="tocnumber">1.8</span> <span class="toctext">Uppdatera systemklockan</span></a></li>
+<li class="toclevel-2 tocsection-10">
+<a href="#Partitionera_diskarna"><span class="tocnumber">1.9</span> <span class="toctext">Partitionera diskarna</span></a>
 <ul>
-<li class="toclevel-3 tocsection-9"><a href="#Example_p%C3%A5_installations_media_arrangemanget"><span class="tocnumber">1.7.1</span> <span class="toctext">Example på installations media arrangemanget</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#Exempel_p%C3%A5_layouter"><span class="tocnumber">1.9.1</span> <span class="toctext">Exempel på layouter</span></a></li>
 </ul>
 </li>
+<li class="toclevel-2 tocsection-12"><a href="#Formatera_partitionerna"><span class="tocnumber">1.10</span> <span class="toctext">Formatera partitionerna</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Montera_filsystemen"><span class="tocnumber">1.11</span> <span class="toctext">Montera filsystemen</span></a></li>
 </ul>
 </li>
+<li class="toclevel-1 tocsection-14">
+<a href="#Installation"><span class="tocnumber">2</span> <span class="toctext">Installation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-15"><a href="#V%C3%A4lj_speglar"><span class="tocnumber">2.1</span> <span class="toctext">Välj speglar</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Installera_viktiga_paket"><span class="tocnumber">2.2</span> <span class="toctext">Installera viktiga paket</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-17">
+<a href="#Konfigurera_systemet"><span class="tocnumber">3</span> <span class="toctext">Konfigurera systemet</span></a>
+<ul>
+<li class="toclevel-2 tocsection-18"><a href="#Fstab"><span class="tocnumber">3.1</span> <span class="toctext">Fstab</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Chroot"><span class="tocnumber">3.2</span> <span class="toctext">Chroot</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Tidszon"><span class="tocnumber">3.3</span> <span class="toctext">Tidszon</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#Lokalisering"><span class="tocnumber">3.4</span> <span class="toctext">Lokalisering</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#N%C3%A4tverkskonfiguration"><span class="tocnumber">3.5</span> <span class="toctext">Nätverkskonfiguration</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#Initramfs"><span class="tocnumber">3.6</span> <span class="toctext">Initramfs</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#Rootl%C3%B6senord"><span class="tocnumber">3.7</span> <span class="toctext">Rootlösenord</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#Bootloader"><span class="tocnumber">3.8</span> <span class="toctext">Bootloader</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-26"><a href="#Starta_om"><span class="tocnumber">4</span> <span class="toctext">Starta om</span></a></li>
+<li class="toclevel-1 tocsection-27"><a href="#Efterinstallation"><span class="tocnumber">5</span> <span class="toctext">Efterinstallation</span></a></li>
 </ul>
 </div>
 
 <h2>
-<span id="F.C3.B6re_Installationen"></span><span class="mw-headline" id="Före_Installationen">Före Installationen</span>
+<span id="F.C3.B6re_installationen"></span><span class="mw-headline" id="Före_installationen">Före installationen</span>
 </h2>
-<p>Installations materialet och deras <a href="../en/GnuPG.html" title="GnuPG">GnuPG</a> verifications signaturer kan hämtas från <a rel="nofollow" class="external text" href="https://archlinux.org/download/">Nerladdnings</a> sidan.
+<h3><span class="mw-headline" id="Ladda_ner_en_installationsavbildning">Ladda ner en installationsavbildning</span></h3>
+<p>Besök <a rel="nofollow" class="external text" href="https://archlinux.org/download/">nerladdningssidan</a> och, beroende på hur du vill starta systemet, ladda ner ISO-filen eller en netboot-avbildning och respektive <a href="../en/GnuPG.html" title="GnuPG">GnuPG</a> signatur.
 </p>
-<h3><span class="mw-headline" id="Verifiering_signaturer">Verifiering signaturer</span></h3>
-<p>Det är rekommenderat att Verifiera installations materialet dess före användning, specielt om nedladdningen skedde via <i>HTTP server</i>, som är mer mottaglig till avlyssning <a rel="nofollow" class="external text" href="https://web.archive.org/web/20161210081439/http://www.cs.arizona.edu/stork/packagemanagersecurity/attacks-on-package-managers.html#explanation">skadliga serverar</a>.
+<h3><span class="mw-headline" id="Verifiera_signaturer">Verifiera signaturer</span></h3>
+<p>Det rekommenderas att verifiera avbildningssignaturen före användning, särskilt när du laddar ner från en  <i>HTTP spegel</i>, där nedladdningar i allmänhet är mer benägna att kapas för att <a rel="nofollow" class="external text" href="https://www2.cs.arizona.edu/stork/packagemanagersecurity/attacks-on-package-managers.html">leverera skadliga avbildningar</a>. 
 </p>
-<p>Ett system med <a href="../en/GnuPG.html" title="GnuPG">GnuPG</a> installerat, gör detta genom att laddaner <i>PGP signature</i> (under <i>Checksums</i>) till Installations materialets <code><i>directoy</i></code>, efter detta är gjort <a href="../en/GnuPG.html#Verify_a_signature" title="GnuPG">verifiera</a> med detta kommando:
+<p>På ett system med <a href="../en/GnuPG.html" title="GnuPG">GnuPG</a> installerat gör du detta genom att ladda ner <i>PGP signatur</i>en (under <i>Checksums</i>) på <a rel="nofollow" class="external text" href="https://archlinux.org/download/">nerladdningssidan</a> till ISO-mappen, och <a href="../en/GnuPG.html#Verify_a_signature" title="GnuPG">verifiera</a> den med:
 </p>
 <pre>$ gpg --keyserver-options auto-key-retrieve --verify archlinux-<i>version</i>-x86_64.iso.sig
 </pre>
-<p><br>
-Du kan också göra detta från en befintlig <a href="../en/Arch_Linux.html" title="Arch Linux">Arch Linux</a> genom att använda:
+<p>Alternativt, från en befintlig Arch Linux-installation:
 </p>
 <pre>$ pacman-key -v archlinux-<i>version</i>-x86_64.iso.sig
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
-<ul><li class="mw-empty-elt"></ul>
+<ul>
+<li>Själva signaturen kan manipuleras om den laddas ner från en spegelsida, istället för från <a rel="nofollow" class="external text" href="https://archlinux.org/download/">archlinux.org</a> som ovan. Se till att den offentliga nyckeln, som används för att avkoda signaturen, är signerad av en annan, pålitlig nyckel. Kommandot <code>gpg</code> matar ut den offentliga nyckelns fingeravtryck</li>
+<li>En annan metod för att verifiera signaturens äkthet är att säkerställa att den offentliga nyckelns fingeravtryck är identiskt med nyckelfingeravtrycket från <a rel="nofollow" class="external text" href="https://archlinux.org/people/developers/">Arch Linux-utvecklaren</a> som signerade ISO-filen. Se <a href="https://en.wikipedia.org/wiki/Asymmetrisk_kryptering" class="extiw" title="wikipedia:Asymmetrisk kryptering">Wikipedia:Asymmetrisk kryptering</a> för mer information om processen för offentlig nyckel för att autentisera nycklar.</li>
+</ul>
 </div>
 <h3>
-<span id="Startup_fr.C3.A5n_installations_materialet"></span><span class="mw-headline" id="Startup_från_installations_materialet">Startup från installations materialet</span>
+<span id="F.C3.B6rbered_ett_installationsmedium"></span><span class="mw-headline" id="Förbered_ett_installationsmedium">Förbered ett installationsmedium</span>
 </h3>
-<p>Installations materialet kan var ett <a href="../en/USB_flash_installation_medium.html" class="mw-redirect" title="USB flash installation media">USB mine</a>, <a href="../en/Optical_disc_drive.html#Burning" title="Optical disc drive">optisk skiva</a> eller via netvärket med <a href="../en/Preboot_Execution_Environment.html" class="mw-redirect" title="PXE">PXE</a>. för andra sätt att installera kolla up <a href="../en/Category:Installation_process.html" title="Category:Installation process">Category:Installation process</a>.
+<p>Installationsavbildningen kan överföras till målsystemet via ett <a href="../en/USB_flash_installation_medium.html" title="USB flash installation medium">USB-minne</a>, en <a href="../en/Optical_disc_drive.html#Burning" title="Optical disc drive">optisk skiva</a>, eller ett nätverk med <a href="../en/Preboot_Execution_Environment.html" class="mw-redirect" title="PXE">PXE</a>: följ lämplig artikel för att förbereda dig för ett installationsmedium från den valda avbildningen.
 </p>
 <h3>
-<span id="V.C3.A4lj_tangenbords_arrangemang"></span><span class="mw-headline" id="Välj_tangenbords_arrangemang">Välj tangenbords arrangemang</span>
+<span id="Starta_live-milj.C3.B6n"></span><span class="mw-headline" id="Starta_live-miljön">Starta live-miljön</span>
 </h3>
-<p>Standard  <a href="../en/Linux_console/Keyboard_configuration.html" class="mw-redirect" title="Console keymap">arrangemanget</a> är <a href="https://en.wikipedia.org/wiki/File:KB_United_States-NoAltGr.svg" class="extiw" title="wikipedia:File:KB United States-NoAltGr.svg">US</a>.
-Andra arrangemanget kan visas genom att använda:
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> Arch Linux-installationsavbildningar stödjer inte Secure Boot. Du måste <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html#Disabling_Secure_Boot" title="Unified Extensible Firmware Interface/Secure Boot">inaktivera Secure Boot</a> för att starta installationsmediet. Om så önskas kan <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> ställas in efter installationen.</div>
+<ol>
+<li>Ställ in den aktuella startenheten till den med Arch Linux-installationsmediet. Normalt uppnås det genom att trycka på en knapp under <a href="https://en.wikipedia.org/wiki/Power-on_self_test" class="extiw" title="wikipedia:Power-on self test">POST</a>-processen. Se moderkortshandboken för mer information.</li>
+<li>När installationsmediets bootloader-meny visas, välj <i>Arch Linux install medium</i> och tryck <code>Enter</code> för att komma in i installationsmiljön. {{Installationsavbildningen använder <a href="../en/Systemd-boot.html" title="Systemd-boot">systemd-boot</a> för att starta i UEFI-läge och <a href="../en/Syslinux.html" title="Syslinux">syslinux</a> för att starta i BIOS-läge. Se <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.bootparams">README.bootparams</a> för en lista över <a href="../en/Kernel_parameters.html#Configuration" title="Kernel parameters">startparametrar</a>}}</li>
+<li>Du kommer vara inloggad på den första <a href="https://en.wikipedia.org/wiki/Virtual_console" class="extiw" title="wikipedia:Virtual console">virtuella konsolen</a> som root och presenteras med en <a href="../en/Zsh.html" title="Zsh">Zsh</a> shell prompt.</li>
+</ol>
+<p>För att växla till en annan konsol—till exempel för att se den här guiden med <a rel="nofollow" class="external text" href="https://lynx.invisible-island.net/lynx_help/Lynx_users_guide.html">Lynx</a> tillsammans med installationen—använd <code>Alt+<i>piltangent</i></code> <a href="../en/Keyboard_shortcuts.html" title="Keyboard shortcuts">genvägen</a>. För att <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Textedit">redigera</a> konfigurationsfiler finns <span class="plainlinks archwiki-template-man" title="$ man 1 mcedit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mcedit.1">mcedit(1)</a></span>, <a href="../en/Nano.html#Usage" title="Nano">nano</a> och <a href="../en/Vim.html#Usage" title="Vim">vim</a> tillgängliga. Se <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/packages.x86_64">packages.x86_64</a> för en lista över paket som ingår i installationsmediet.
+</p>
+<h3>
+<span id="St.C3.A4ll_in_tangentbordslayouten"></span><span class="mw-headline" id="Ställ_in_tangentbordslayouten">Ställ in tangentbordslayouten</span>
+</h3>
+<p>Standard <a href="../en/Linux_console/Keyboard_configuration.html" class="mw-redirect" title="Console keymap">konsollayoten</a> är <a href="https://en.wikipedia.org/wiki/File:KB_United_States-NoAltGr.svg" class="extiw" title="wikipedia:File:KB United States-NoAltGr.svg">US</a>. Tillgängliga layouter kan listas med:
 </p>
 <pre># ls /usr/share/kbd/keymaps/**/*.map.gz
 </pre>
-<p>För att ändra arrangemanget, 
+<p>För att ändra layouten lägg till ett motsvarande filnamn till <span class="plainlinks archwiki-template-man" title="$ man 1 loadkeys"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/loadkeys.1">loadkeys(1)</a></span>, uteslutande sökvägen och filändelsen. Till exempel för att ställa in <a href="https://en.wikipedia.org/wiki/File:KB_Sweden.svg" class="extiw" title="wikipedia:File:KB Sweden.svg">Svenska</a>:
 </p>
 <pre># loadkeys sv-latin1
 </pre>
+<p><a href="../en/Linux_console.html#Fonts" class="mw-redirect" title="Console fonts">Konsolteckensnitt</a> finns i <code>/usr/share/kbd/consolefonts/</code> och kan också ställas in med <span class="plainlinks archwiki-template-man" title="$ man 8 setfont"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/setfont.8">setfont(8)</a></span>.
+</p>
 <h3>
-<span id="Bekr.C3.A4fta_uppstartsl.C3.A4ge"></span><span class="mw-headline" id="Bekräfta_uppstartsläge">Bekräfta uppstartsläge</span>
+<span id="Verifiera_startl.C3.A4get"></span><span class="mw-headline" id="Verifiera_startläget">Verifiera startläget</span>
 </h3>
+<p>För att verifiera startläget, lista <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_variables" class="mw-redirect" title="Efivars">efivars</a>-mappen:
+</p>
+<pre># ls /sys/firmware/efi/efivars
+</pre>
+<p>Om kommandot visar mappen utan fel startas systemet i UEFI-läge. Om mappen inte finns kan systemet startats i <a href="https://en.wikipedia.org/wiki/BIOS" class="extiw" title="wikipedia:BIOS">BIOS</a> (eller <a href="https://en.wikipedia.org/wiki/Compatibility_Support_Module" class="extiw" title="wikipedia:Compatibility Support Module">CSM</a>)-läge. Om systemet inte startade i det läge du önskar, se moderkortets manual. 
+</p>
 <h3><span class="mw-headline" id="Anslut_till_internet">Anslut till internet</span></h3>
+<p>För att sätta upp en nätverksanslutning i livemiljön, gå igenom följande steg:
+</p>
+<ul>
+<li>Se till att ditt <a href="../en/Network_configuration.html#Network_interfaces" class="mw-redirect" title="Network interface">nätverksgränssnitt</a> är listat och aktiverat, till exempel med <span class="plainlinks archwiki-template-man" title="$ man 8 ip-link"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ip-link.8">ip-link(8)</a></span>: <pre># ip link</pre>
+</li>
+<li>För trådlöst, se till att det trådlösa kortet inte är blockerat med <a href="../en/Network_configuration/Wireless.html#Rfkill_caveat" class="mw-redirect" title="Rfkill">rfkill</a>.</li>
+<li>Anslut till nätverket:
+<ul>
+<li>Ethernet—anslut kabeln.</li>
+<li>Wi-Fi—verifiera det trådlösa nätverket med <a href="../en/Iwd.html#iwctl" class="mw-redirect" title="Iwctl">iwctl</a>.</li>
+</ul>
+</li>
+<li>Konfigurera din nätverksanslutning:
+<ul>
+<li>
+<a href="../en/Network_configuration.html#DHCP" class="mw-redirect" title="DHCP">DHCP</a>: dynamisk IP-adress och DNS-servertilldelning (tillhandahålls av <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> och <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a>) bör fungera direkt från start för <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-ethernet.network">trådade</a> och <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-wireless.network">trådlösa</a> nätverksgränssnitt.</li>
+<li>Statisk IP-adress: följ <a href="../en/Network_configuration.html#Static_IP_address" title="Network configuration">Network configuration#Static IP address</a>.</li>
+</ul>
+</li>
+<li>Anslutningen kan verifieras med <a href="https://en.wikipedia.org/wiki/ping_(networking_utility)" class="extiw" title="wikipedia:ping (networking utility)">ping</a>: <pre># ping archlinux.org</pre>
+</li>
+</ul>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> I installationsbilden är <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>, <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a> och <a href="../en/Iwd.html" title="Iwd">iwd</a> förkonfigurerade och aktiverade som standard. Så är inte fallet för det installerade systemet.</div>
 <h3><span class="mw-headline" id="Uppdatera_systemklockan">Uppdatera systemklockan</span></h3>
-<p>Använd <span class="plainlinks archwiki-template-man" title="$ man 1 timedatectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/timedatectl.1">timedatectl(1)</a></span> för att Verifiera att klockan stämmer:
+<p>Använd <span class="plainlinks archwiki-template-man" title="$ man 1 timedatectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/timedatectl.1">timedatectl(1)</a></span> för att säkerställa att systemklockan är korrekt:
 </p>
 <pre># timedatectl set-ntp true
 </pre>
-<p>Bäkrefta tjänsten genom att använda <code>timedatectl status</code>.
+<p>För att kontrollera servicestatusen, använd <code>timedatectl status</code>.
 </p>
-<h3>
-<span id="F.C3.B6rbered_installations_media"></span><span class="mw-headline" id="Förbered_installations_media">Förbered installations media</span>
-</h3>
+<h3><span class="mw-headline" id="Partitionera_diskarna">Partitionera diskarna</span></h3>
+<p>När de igenkänns av live-systemet tilldelas diskar till en <a href="../en/Device_file.html#Block_devices" class="mw-redirect" title="Block device">blockenhet</a> som <code>/dev/sda</code>, <code>/dev/nvme0n1</code> eller <code>/dev/mmcblk0</code>. För att identifiera dessa enheter, använd <a href="../en/Device_file.html#lsblk" class="mw-redirect" title="Lsblk">lsblk</a> eller <i>fdisk</i>. 
+</p>
+<ol><li>fdisk -l</li></ol>
+<p>Resultat som slutar på <code>rom</code>, <code>loop</code> eller <code>airoot</code> kan ignoreras.
+</p>
+<p>Följande <a href="../en/Partitioning.html" class="mw-redirect" title="Partition">partitioner</a> är <b>obligatoriska</b> för en vald enhet:
+</p>
+<ul>
+<li>En partition för <a href="https://en.wikipedia.org/wiki/Root_directory" class="extiw" title="wikipedia:Root directory">rootmappen</a> <code>/</code>.</li>
+<li>För att starta i <a href="../en/Unified_Extensible_Firmware_Interface.html" class="mw-redirect" title="UEFI">UEFI</a>-läge: en <a href="../en/EFI_system_partition.html" title="EFI system partition">EFI-systempartition</a>.</li>
+</ul>
+<p>Om du vill skapa några staplade blockenheter för <a href="../en/LVM.html" title="LVM">LVM</a>, <a href="../en/Dm-crypt.html" title="Dm-crypt">systemkryptering</a> eller <a href="../en/RAID.html" title="RAID">RAID</a>, gör det nu.
+</p>
 <h4>
-<span id="Example_p.C3.A5_installations_media_arrangemanget"></span><span class="mw-headline" id="Example_på_installations_media_arrangemanget">Example på installations media arrangemanget</span>
+<span id="Exempel_p.C3.A5_layouter"></span><span class="mw-headline" id="Exempel_på_layouter">Exempel på layouter</span>
 </h4>
 <table class="wikitable">
+<caption>BIOS med <a href="../en/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="MBR">MBR</a>
+</caption>
 <tbody>
 <tr>
-<th colspan="5">BIOS med <a href="../en/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="MBR">MBR</a>
-</th>
-</tr>
-<tr>
-<th>Mount point
+<th>Monteringspunkt
 </th>
 <th>Partition
 </th>
 <th>
-<a href="https://en.wikipedia.org/wiki/Partition_type" class="extiw" title="w:Partition type">Partitionstyp</a>
+<a href="https://en.wikipedia.org/wiki/Partition_type" class="extiw" title="wikipedia:Partition type">Partitionstyp</a>
 </th>
-<th>Recommenderad Storlek
+<th>Föreslagen storlek
 </th>
+</tr>
+<tr>
+<td>
+<code>[SWAP]</code>
+</td>
+<td>
+<code>/dev/<i>swap_partition</i></code>
+</td>
+<td>Linux swap
+</td>
+<td>Mer än 512 MiB
+</td>
 </tr>
 <tr>
 <td>
 <code>/mnt</code>
 </td>
 <td>
-<code>/dev/sd<i>X</i>1</code>
+<code>/dev/<i>root_partition</i></code>
 </td>
 <td>Linux
 </td>
 <td>Resten av enheten
 </td>
 </tr>
+</tbody>
+</table>
+<table class="wikitable">
+<caption>UEFI med <a href="../en/Partitioning.html#GUID_Partition_Table" class="mw-redirect" title="GPT">GPT</a>
+</caption>
+<tbody>
 <tr>
-<td>[BYTA]
-</td>
-<td>
-<code>/dev/sd<i>X</i>2</code>
-</td>
-<td>Linux byta
-</td>
-<td>Mer än 512 MiB
-</td>
-</tr>
-<tr>
-<th colspan="5">UEFI med <a href="../en/Partitioning.html#GUID_Partition_Table" class="mw-redirect" title="GPT">GPT</a>
-</th>
-</tr>
-<tr>
-<th>Mount point
+<th>Monteringspunkt
 </th>
 <th>Partition
 </th>
 <th>
-<a href="https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs" class="extiw" title="w:GUID Partition Table">Partitionstyp</a>
+<a href="https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs" class="extiw" title="wikipedia:GUID Partition Table">Partitionstyp</a>
 </th>
-<th>Recommenderad Storlek
+<th>Föreslagen storlek
 </th>
 </tr>
 <tr>
@@ -183,12 +267,24 @@ Andra arrangemanget kan visas genom att använda:
 <code>/mnt/boot</code> eller <code>/mnt/efi</code>
 </td>
 <td>
-<code>/dev/sd<i>X</i>1</code>
+<code>/dev/<i>efi_system_partition</i></code>
 </td>
 <td>
-<a href="../en/EFI_system_partition.html" title="EFI system partition">EFI system partition</a>
+<a href="../en/EFI_system_partition.html" title="EFI system partition">EFI-systempartition</a>
 </td>
-<td>256–512 MiB
+<td>Minst 260 MiB
+</td>
+</tr>
+<tr>
+<td>
+<code>[SWAP]</code>
+</td>
+<td>
+<code>/dev/<i>swap_partition</i></code>
+</td>
+<td>Linux swap
+</td>
+<td>Mer än 512 MiB
 </td>
 </tr>
 <tr>
@@ -196,26 +292,171 @@ Andra arrangemanget kan visas genom att använda:
 <code>/mnt</code>
 </td>
 <td>
-<code>/dev/sd<i>X</i>2</code>
+<code>/dev/<i>root_partition</i></code>
 </td>
 <td>Linux x86-64 root (/)
 </td>
 <td>Resten av enheten
 </td>
 </tr>
-<tr>
-<td>[BYTA]
-</td>
-<td>
-<code>/dev/sd<i>X</i>3</code>
-</td>
-<td>Linux byta
-</td>
-<td>Mer än 512 MiB
-</td>
-</tr>
 </tbody>
 </table>
+<p>Se även <a href="../en/Partitioning.html#Example_layouts" title="Partitioning">Partitioning#Example layouts</a>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 
+<ul>
+<li>Använd <a href="../en/Fdisk.html" title="Fdisk">fdisk</a> eller <a href="../en/Parted.html" title="Parted">parted</a> för att ändra partitionstabeller, till exempel <code>fdisk <i>/dev/the_disk_to_be_partitioned</i></code>.</li>
+<li>
+<a href="../en/Swap.html" title="Swap">Swaputrymme</a> kan ställas in till en <a href="../en/Swap.html#Swap_file" class="mw-redirect" title="Swap file">swapfil</a> för filsystem som stödjer det.</li>
+<li>Om disken du vill starta från <a href="../en/EFI_system_partition.html#Check_for_an_existing_partition" title="EFI system partition">redan har en EFI-systempartition</a>, skapa inte en annan, utan använd den befintliga partitionen istället.</li>
+</ul>
+</div>
+<h3><span class="mw-headline" id="Formatera_partitionerna">Formatera partitionerna</span></h3>
+<p>När partitionerna har skapats måste varje nyskapad partition formateras med ett lämpligt <a href="../en/File_systems.html" class="mw-redirect" title="File system">filsystem</a>. För att till exempel skapa ett Ext4-filsystem på <code>/dev/<i>root_partition</i></code>, kör: 
+</p>
+<pre># mkfs.ext4 /dev/<i>root_partition</i>
+</pre>
+<p>Om du skapade en partition för <a href="../en/Swap.html" title="Swap">swap</a>, initialisera den med <span class="plainlinks archwiki-template-man" title="$ man 8 mkswap"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mkswap.8">mkswap(8)</a></span>:
+</p>
+<pre># mkswap /dev/<i>swap_partition</i>
+</pre>
+<p>Se <a href="../en/File_systems.html#Create_a_file_system" title="File systems">File systems#Create a file system</a> för mer information.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> För staplade blockenheter ersätter du <code>/dev/<i>*_partition</i></code> med lämplig blockenhetssökväg.</div>
+<h3><span class="mw-headline" id="Montera_filsystemen">Montera filsystemen</span></h3>
+<p><a href="../en/File_systems.html#Mount_a_file_system" class="mw-redirect" title="Mount">Montera</a> rootvolymen till <code>/mnt</code>. Till exempel, om rootvolymen är <code>/dev/<i>root_partition</i></code>:
+</p>
+<pre># mount /dev/<i>root_partition</i> /mnt
+</pre>
+<p>Skapa eventuella återstående monteringspunkter (som <code>/mnt/efi</code>) med <span class="plainlinks archwiki-template-man" title="$ man 1 mkdir"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mkdir.1">mkdir(1)</a></span> och montera motsvarande volymer.
+</p>
+<p>Om du skapade en <a href="../en/Swap.html" title="Swap">swap</a>-volym, aktivera den med <span class="plainlinks archwiki-template-man" title="$ man 8 swapon"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/swapon.8">swapon(8)</a></span>:
+</p>
+<ol><li>swapon /dev/<i>swap_partition</i>
+</li></ol>
+<p><span class="plainlinks archwiki-template-man" title="$ man 8 genfstab"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/genfstab.8">genfstab(8)</a></span> kommer senare att upptäcka monterade filsystem och swap-utrymme. 
+</p>
+<h2><span class="mw-headline" id="Installation">Installation</span></h2>
+<h3>
+<span id="V.C3.A4lj_speglar"></span><span class="mw-headline" id="Välj_speglar">Välj speglar</span>
+</h3>
+<p>Paket som ska installeras måste laddas ner från <a href="../en/Mirrors.html" title="Mirrors"> spegelservrar</a>, som definieras i <code>/etc/pacman.d/mirrorlist</code>. I live-systemet, efter att ha anslutit till internet, uppdaterar <a href="../en/Reflector.html" title="Reflector">reflector</a> spegellistan genom att välja 70 senast synkroniserade HTTPS-speglar och sortera efter nedladdningshastighet.<a rel="nofollow" class="external autonumber" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/xdg/reflector/reflector.conf">[2]</a> 
+</p>
+<p>Ju högre en spegel placeras i listan, desto mer prioritet ges den när du laddar ner ett paket. Du kanske vill inspektera filen för att se om den är tillfredsställande. Om det inte är det, redigerar du filen i enlighet med detta och flyttar de geografiskt närmaste speglarna till toppen av listan, även om andra kriterier bör beaktas.
+</p>
+<p>Den här filen kommer senare att kopieras till det nya systemet av <i>pacstrap</i>, så det är värt att få rätt.
+</p>
+<h3><span class="mw-headline" id="Installera_viktiga_paket">Installera viktiga paket</span></h3>
+<p>Använd skriptet <span class="plainlinks archwiki-template-man" title="$ man 8 pacstrap"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/pacstrap.8">pacstrap(8)</a></span> för att installera <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span>-paketet, Linux <a href="../en/Kernel.html" title="Kernel">kärna</a> och firmware för vanlig hårdvara: 
+</p>
+<pre># pacstrap /mnt base linux linux-firmware
+</pre>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> 
+<ul>
+<li>Du kan ersätta <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> med ett <a href="../en/Kernel.html" title="Kernel">kärnepaket</a> som du väljer, eller så kan du helt utelämna det när du installerar i en <a href="https://en.wikipedia.org/wiki/Container_(virtualization)" class="extiw" title="wikipedia:Container (virtualization)">container</a>.</li>
+<li>Du kan utelämna installationen av firmwarepaketet när du installerar i en virtuell maskin eller container.</li>
+</ul>
+</div>
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span>-paketet innehåller inte alla verktyg från liveinstallationen, så det kan vara nödvändigt att installera andra paket för ett fullt fungerande bassystem. Överväg särskilt att installera:
+</p>
+<ul>
+<li>userspace-verktyg för hantering av <a href="../en/File_systems.html" class="mw-redirect" title="Filesystem">filsystem</a> som kommer att användas i systemet,</li>
+<li>verktyg för åtkomst till <a href="../en/RAID.html" title="RAID">RAID</a> eller <a href="../en/LVM.html" title="LVM">LVM</a> partitioner,</li>
+<li>specifik firmware för andra enheter som inte ingår i <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-firmware">linux-firmware</a></span>,</li>
+<li>programvara som krävs för <a href="../en/Network_configuration.html" class="mw-redirect" title="Networking">nätverk</a>,</li>
+<li>en <a href="../en/List_of_applications.html#Text_editors" class="mw-redirect" title="Text editor">textredigerare</a>,</li>
+<li>paket för åtkomst till dokumentation på sidorna <a href="../en/Man_page.html" class="mw-redirect" title="Man">man</a> och <a href="../en/GNU.html#Texinfo" class="mw-redirect" title="Info">info</a> sidorna: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=man-db">man-db</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=man-pages">man-pages</a></span> och <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=texinfo">texinfo</a></span>.</li>
+</ul>
+<p>För att <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">installera</a> andra paket eller paketgrupper, lägg till namnen i kommandot <i>pacstrap</i> ovan (mellanslagsavgränsat) eller använd <a href="../en/Pacman.html" title="Pacman">pacman</a> medans <a href="#Chroot">chrootad i det nya systemet</a>. För jämförelse finns paket som finns tillgängliga i live-systemet på <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/packages.x86_64">packages.x86_64</a>. 
+</p>
+<h2><span class="mw-headline" id="Konfigurera_systemet">Konfigurera systemet</span></h2>
+<h3><span class="mw-headline" id="Fstab">Fstab</span></h3>
+<p>Skapa en <a href="../en/Fstab.html" title="Fstab">fstab</a>-fil (använd <code>-U</code> eller <code>-L</code> för att definiera med <a href="../en/Persistent_block_device_naming.html#by-uuid" class="mw-redirect" title="UUID">UUID</a> respektive etiketter):
+</p>
+<pre># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+</pre>
+<p>Kontrollera den resulterande <code>/mnt/etc/fstab</code>-filen och redigera den vid fel.
+</p>
+<h3><span class="mw-headline" id="Chroot">Chroot</span></h3>
+<p><a href="../en/Chroot.html" class="mw-redirect" title="Change root">Ändra root</a> till det nya systemet:
+</p>
+<pre># arch-chroot /mnt
+</pre>
+<h3><span class="mw-headline" id="Tidszon">Tidszon</span></h3>
+<p>Ställ in <a href="../en/System_time.html#Time_zone" class="mw-redirect" title="Time zone">tidszon</a>: 
+</p>
+<pre># ln -sf /usr/share/zoneinfo/<i>Region</i>/<i>City</i> /etc/localtime
+</pre>
+<p>Kör <span class="plainlinks archwiki-template-man" title="$ man 8 hwclock"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/hwclock.8">hwclock(8)</a></span> för att generera <code>/etc/adjtime</code>: 
+</p>
+<pre># hwclock --systohc
+</pre>
+<p>Detta kommando förutsätter att hårdvaruklockan är inställd på <a href="https://en.wikipedia.org/wiki/UTC" class="extiw" title="wikipedia:UTC">UTC</a>. Se <a href="../en/System_time.html#Time_standard" title="System time">System time#Time standard</a> för mer information. 
+</p>
+<h3><span class="mw-headline" id="Lokalisering">Lokalisering</span></h3>
+<p>Redigera <code>/etc/locale.gen</code> och avmarkera <code>en_US.UTF-8 UTF-8</code> och andra <a href="../en/Locale.html" title="Locale">språk</a> som behövs. Generera språken genom att köra:
+</p>
+<pre># locale-gen
+</pre>
+<p>Skapa filen <span class="plainlinks archwiki-template-man" title="$ man 5 locale.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/locale.conf.5">locale.conf(5)</a></span> och <a href="../en/Locale.html#Setting_the_system_locale" title="Locale">ställ in LANG-variabeln</a> i enlighet med detta: 
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/locale.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">LANG=<i>sv_SE.UTF-8</i></pre>
+<p>Om du <a href="#Set_the_keyboard_layout">ställt in tangentbordslayouten</a>, gör ändringarna bestående i <span class="plainlinks archwiki-template-man" title="$ man 5 vconsole.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/vconsole.conf.5">vconsole.conf(5)</a></span>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/vconsole.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">KEYMAP=<i>sv-latin1</i></pre>
+<h3>
+<span id="N.C3.A4tverkskonfiguration"></span><span class="mw-headline" id="Nätverkskonfiguration">Nätverkskonfiguration</span>
+</h3>
+<p>Skapa <a href="../en/Network_configuration.html#Set_the_hostname" class="mw-redirect" title="Hostname">värdnamnsfilen</a>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/hostname</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"><i>myhostname</i>
+</pre>
+<p>Lägg till matchande poster i <span class="plainlinks archwiki-template-man" title="$ man 5 hosts"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/hosts.5">hosts(5)</a></span>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/hosts</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">127.0.0.1	localhost
+::1		localhost
+127.0.1.1	<i>myhostname</i>.localdomain	<i>myhostname</i>
+</pre>
+<p>Om systemet har en permanent IP-adress ska den användas istället för <code>127.0.1.1</code>. 
+</p>
+<p>Slutför <a href="../en/Network_configuration.html" title="Network configuration">nätverkskonfiguration</a> för den nyligen installerade miljön, som kan inkludera installation av lämplig <a href="../en/Network_configuration.html#Network_management" class="mw-redirect" title="Network management">nätverkshanteringsprogramvara</a>. 
+</p>
+<h3><span class="mw-headline" id="Initramfs">Initramfs</span></h3>
+<p>Att skapa ett nytt <i>initramfs</i> krävs vanligtvis inte, eftersom <a href="../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a> kördes vid installation av <a href="../en/Kernel.html" title="Kernel">kärnepaketet</a> med <i>pacstrap</i>. 
+</p>
+<p>För [[[Install Arch Linux on LVM#Adding mkinitcpio hooks|LVM]], <a href="../en/Dm-crypt.html" title="Dm-crypt">system encryption</a> eller <a href="../en/RAID.html#Configure_mkinitcpio" title="RAID">RAID</a>, ändra <span class="plainlinks archwiki-template-man" title="$ man 5 mkinitcpio.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mkinitcpio.conf.5">mkinitcpio.conf(5)</a></span> och återskapa initramfs-avbildningen:
+</p>
+<pre># mkinitcpio -P
+</pre>
+<h3>
+<span id="Rootl.C3.B6senord"></span><span class="mw-headline" id="Rootlösenord">Rootlösenord</span>
+</h3>
+<p>Ställ in root-<a href="../en/Users_and_groups.html#User_database" class="mw-redirect" title="Password">lösenordet</a>:
+</p>
+<pre># passwd
+</pre>
+<h3><span class="mw-headline" id="Bootloader">Bootloader</span></h3>
+<p>Välj och installera en Linux-kompatibel <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot loader">bootloader</a>. Om du har en Intel- eller AMD-CPU, aktivera <a href="../en/Microcode.html" title="Microcode">mikrokod</a>-uppdateringar i tillägg. 
+</p>
+<h2><span class="mw-headline" id="Starta_om">Starta om</span></h2>
+<p>Avsluta chroot-miljön genom att skriva <code>exit</code> eller trycka på <code>Ctrl+d</code>.
+</p>
+<p>Du kan eventuellt avmontera alla partitioner manuellt med <code>umount -R / mnt</code>: detta gör det möjligt att upptäcka alla "upptagna" partitioner och hitta orsaken med <span class="plainlinks archwiki-template-man" title="$ man 1 fuser"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fuser.1">fuser(1)</a></span>.
+</p>
+<p>Slutligen starta om maskinen genom att skriva <code>reboot</code>: alla partitioner som fortfarande är monterade kommer automatiskt att avmonteras av <i>systemd</i>. Kom ihåg att ta bort installationsmediet och logga sedan in i det nya systemet med root-kontot. 
+</p>
+<h2><span class="mw-headline" id="Efterinstallation">Efterinstallation</span></h2>
+<p>Se <a href="../en/General_recommendations.html" title="General recommendations">General recommendations</a> för anvisningar om systemhantering och handledning efter installationen (som att ställa in ett grafiskt användargränssnitt, ljud eller en pekplatta). 
+</p>
+<p>För en lista över applikationer som kan vara av intresse, se <a href="../en/List_of_applications.html" title="List of applications">List of applications</a>.
+</p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
@@ -226,8 +467,8 @@ Andra arrangemanget kan visas genom att använda:
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Installation_guide_(Svenska)&amp;oldid=654809">https://wiki.archlinux.org/index.php?title=Installation_guide_(Svenska)&amp;oldid=654809</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 18:31.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Installation_guide_(Svenska)&amp;oldid=656050">https://wiki.archlinux.org/index.php?title=Installation_guide_(Svenska)&amp;oldid=656050</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 25 March 2021, at 19:02.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -137,20 +137,19 @@
 <li class="toclevel-1 tocsection-9">
 <a href="#Troubleshooting"><span class="tocnumber">2</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-10"><a href="#Headphones_audio_is_too_low"><span class="tocnumber">2.1</span> <span class="toctext">Headphones audio is too low</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#Microcode"><span class="tocnumber">2.2</span> <span class="toctext">Microcode</span></a></li>
-<li class="toclevel-2 tocsection-12"><a href="#Nvidia_issues_with_Bumblebee"><span class="tocnumber">2.3</span> <span class="toctext">Nvidia issues with Bumblebee</span></a></li>
-<li class="toclevel-2 tocsection-13"><a href="#Headset_Microphone"><span class="tocnumber">2.4</span> <span class="toctext">Headset Microphone</span></a></li>
-<li class="toclevel-2 tocsection-14"><a href="#No_sound_(after_Windows)"><span class="tocnumber">2.5</span> <span class="toctext">No sound (after Windows)</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#Suspend"><span class="tocnumber">2.6</span> <span class="toctext">Suspend</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#Fan_always_active"><span class="tocnumber">2.7</span> <span class="toctext">Fan always active</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Microcode"><span class="tocnumber">2.1</span> <span class="toctext">Microcode</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Nvidia_issues_with_Bumblebee"><span class="tocnumber">2.2</span> <span class="toctext">Nvidia issues with Bumblebee</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Headset_Microphone"><span class="tocnumber">2.3</span> <span class="toctext">Headset Microphone</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#No_sound_(after_Windows)"><span class="tocnumber">2.4</span> <span class="toctext">No sound (after Windows)</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Suspend"><span class="tocnumber">2.5</span> <span class="toctext">Suspend</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Fan_always_active"><span class="tocnumber">2.6</span> <span class="toctext">Fan always active</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-17">
+<li class="toclevel-1 tocsection-16">
 <a href="#Tips_and_tricks"><span class="tocnumber">3</span> <span class="toctext">Tips and tricks</span></a>
 <ul>
-<li class="toclevel-2 tocsection-18"><a href="#Power_saving_and_performance"><span class="tocnumber">3.1</span> <span class="toctext">Power saving and performance</span></a></li>
-<li class="toclevel-2 tocsection-19"><a href="#Extract_Windows_10_license_key"><span class="tocnumber">3.2</span> <span class="toctext">Extract Windows 10 license key</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Power_saving_and_performance"><span class="tocnumber">3.1</span> <span class="toctext">Power saving and performance</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Extract_Windows_10_license_key"><span class="tocnumber">3.2</span> <span class="toctext">Extract Windows 10 license key</span></a></li>
 </ul>
 </li>
 </ul>
@@ -185,39 +184,6 @@
 <p>See <a href="../../en/Laptop/ASUS.html#Battery_charge_threshold" title="Laptop/ASUS">Laptop/ASUS#Battery charge threshold</a>.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
-<h3><span class="mw-headline" id="Headphones_audio_is_too_low">Headphones audio is too low</span></h3>
-<p>Linux kernel version 4.14 and earlier has a bug, where you may notice that the audio through the headphones is too low (<a rel="nofollow" class="external text" href="https://bugs.launchpad.net/ubuntu/+source/alsa-driver/+bug/1648183">upstream bug</a>). In kernel version 4.15 you have to pull out and plug in back your headset after resume in order to fix the low audio.
-</p>
-<p>In order to fix it, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-tools">alsa-tools</a></span> and create the file:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/local/bin/fix_headphones_audio.sh</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/bash
-while true; do
-	DEVICE=`ls /dev/snd/hwC[[:print:]]*D0 | head -n 1`
-	if [ ! -z "$DEVICE" ]; then
-		hda-verb "$DEVICE" 0x20 SET_COEF_INDEX 0x67
-		hda-verb "$DEVICE" 0x20 SET_PROC_COEF 0x3000
-		break
-	fi
-	sleep 1
-done
-</pre>
-<p>Then create a <a href="../../en/Systemd.html" title="Systemd">systemd</a> script with the following content:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/fix_headphones_audio.service</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
-Description=Fix headphones audio after boot &amp; resume.
-After=multi-user.target suspend.target hibernate.target
-
-[Service]
-Type=oneshot
-ExecStart=/bin/sh '/usr/local/bin/fix_headphones_audio.sh'
-
-[Install]
-WantedBy=multi-user.target suspend.target hibernate.target
-</pre>
-<p>And finally, <a href="../../en/Systemd.html#Using_units" title="Systemd">start and enable</a> <code>fix_headphones_audio.service</code>.
-</p>
 <h3><span class="mw-headline" id="Microcode">Microcode</span></h3>
 <p>During boot you might get the message <code>[Firmware Bug]: TSC_DEADLINE disabled due to Errata; please update microcode to version: 0x52 (or later)</code>. See <a href="../../en/Microcode.html" title="Microcode">Microcode</a> to resolve it.
 </p>
@@ -247,8 +213,6 @@ options snd-hda-intel model=dell-headset-multi
 </p>
 <h3><span class="mw-headline" id="Suspend">Suspend</span></h3>
 <p>Linux (4.17 at least) default to <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/admin-guide/pm/sleep-states.html#suspend-to-idle">suspend-to-idle</a> which is not very power effective. This is probably due to this change in <a rel="nofollow" class="external text" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e870c6c87cf9484090d28f2a68aa29e008960c93">4.14-rc1</a>. For better power effective you can use <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/admin-guide/pm/sleep-states.html#suspend-to-ram">suspend-to-ram</a> by adding <code>mem_sleep_default=deep</code> to the kernel cmdline.
-</p>
-<p>If you encounter kernel panic when you suspend, issue can be fix using LTS kernel, plus following kernel option <code>i915.enable_dc=0</code>. No additional options need.
 </p>
 <h3><span class="mw-headline" id="Fan_always_active">Fan always active</span></h3>
 <p>See <a href="../../en/Fan_speed_control.html#NBFC" title="Fan speed control">Fan speed control#NBFC</a>.
@@ -291,8 +255,8 @@ ASUS confirmed, that in order to "use" this activation key, you need to bring th
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ASUS_Zenbook_UX430/UX530&amp;oldid=654272">https://wiki.archlinux.org/index.php?title=ASUS_Zenbook_UX430/UX530&amp;oldid=654272</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 9 March 2021, at 04:40.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ASUS_Zenbook_UX430/UX530&amp;oldid=655617">https://wiki.archlinux.org/index.php?title=ASUS_Zenbook_UX430/UX530&amp;oldid=655617</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 14:03.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

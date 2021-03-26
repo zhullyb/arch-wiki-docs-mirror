@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -81,7 +82,13 @@
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-16"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-16">
+<a href="#Multi-distro"><span class="tocnumber">5</span> <span class="toctext">Multi-distro</span></a>
+<ul>
+<li class="toclevel-2 tocsection-17"><a href="#Pacur"><span class="tocnumber">5.1</span> <span class="toctext">Pacur</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-18"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -91,7 +98,7 @@
 <a href="../en/Category:Virtualization.html" class="mw-redirect" title="Virtualization">Virtualization</a> is an obvious way, but requires maintaining additional system(s).</li>
 <li>Use distribution-specific packaging tools. Examples: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dh-make/">dh-make</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dpkg">dpkg</a></span> (Debian), <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=rpm-tools">rpm-tools</a></span> (Fedora). Shortcuts such as <a rel="nofollow" class="external text" href="https://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/">dpkg-deb</a> may be suited for less complex tasks.</li>
 <li>
-<a href="../en/Chroot.html" title="Chroot">Chroot</a> to create a base system inside (yet separate from) Arch. Examples: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=debootstrap">debootstrap</a></span> (Debian), <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dnf/">dnf</a></span><sup><small>AUR</small></sup> (Fedora). This has the added benefit of building in a minimal, clean environment.</li>
+<a href="../en/Chroot.html" title="Chroot">Chroot</a> or <a href="../en/Systemd-nspawn.html" title="Systemd-nspawn">systemd-nspawn</a> to create a base system inside (yet separate from) Arch. Examples: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=debootstrap">debootstrap</a></span> (Debian), <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dnf/">dnf</a></span><sup><small>AUR</small></sup> (Fedora). This has the added benefit of building in a minimal, clean environment.</li>
 <li>Use chroot with packaging tools in an an automated fashion. Examples: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/pbuilder-ubuntu/">pbuilder-ubuntu</a></span><sup><small>AUR</small></sup> (Debian).</li>
 <li>A different way to handle (possibly incompatible) dependencies is <a rel="nofollow" class="external text" href="http://jurjenbokma.com/ApprenticesNotes/getting_statlinked_binaries_on_debian.xhtml">static linking</a>. Please note that most distributions frown on this practice.</li>
 <li>Common practice applies regardless of distribution used. For example, do <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=67561">not build packages as root</a>.</li>
@@ -314,6 +321,12 @@ dpkg-buildpackage: warning: build dependencies/conflicts unsatisfied; aborting
 <li><a rel="nofollow" class="external text" href="http://en.opensuse.org/openSUSE:Packaging_guidelines">openSUSE packaging guidelines</a></li>
 <li><a rel="nofollow" class="external text" href="http://en.opensuse.org/Portal:Packaging">Portal:Packaging from openSUSE wiki</a></li>
 </ul>
+<h2><span class="mw-headline" id="Multi-distro">Multi-distro</span></h2>
+<h3><span class="mw-headline" id="Pacur">Pacur</span></h3>
+<p>Some tools such as <a rel="nofollow" class="external text" href="https://github.com/pacur/pacur">Pacur</a> allow building packages for multiple linux distributions with a consistent package spec format.
+The package format is very similar to <a href="../en/PKGBUILD.html" title="PKGBUILD">PKGBUILD</a> so it's easy to re-use an existing PKGBUILD and add a few distro specific variables to be able to build <code>.deb</code> or <code>.rpm</code> effortlessly.
+By quickly adapting a PKGBUILD one is able to build package for Amazon Linux, Centos, Debian, Oracle Linux, Fedora and Ubuntu.
+</p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=175409">BBS - PKGBUILD equivalents for other distros</a></li>
@@ -336,8 +349,8 @@ dpkg-buildpackage: warning: build dependencies/conflicts unsatisfied; aborting
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Creating_packages_for_other_distributions&amp;oldid=646334">https://wiki.archlinux.org/index.php?title=Creating_packages_for_other_distributions&amp;oldid=646334</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 December 2020, at 12:10.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Creating_packages_for_other_distributions&amp;oldid=655944">https://wiki.archlinux.org/index.php?title=Creating_packages_for_other_distributions&amp;oldid=655944</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 24 March 2021, at 15:55.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

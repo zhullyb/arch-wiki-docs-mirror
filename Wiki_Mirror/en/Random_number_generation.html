@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -64,6 +65,11 @@
 <h3>
 <span id=".2Fdev.2Frandom"></span><span class="mw-headline" id="/dev/random">/dev/random</span>
 </h3>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> <code>/dev/random</code> works similarly to <code>/dev/urandom</code> since v5.6<a rel="nofollow" class="external autonumber" href="https://github.com/torvalds/linux/commit/30c08efec8884fb106b8e57094baa51bb4c44e32">[1]</a><a rel="nofollow" class="external autonumber" href="https://lwn.net/Articles/808575/">[2]</a> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Random_number_generation">Talk:Random number generation#</a>)</div>
+</div>
 <p><code>/dev/random</code> uses an entropy pool of 4096 bits (512 Bytes) to generate random data and stops when the pool is exhausted until it gets (slowly) refilled. <code>/dev/random</code> is designed for generating cryptographic keys (e.g. SSL, SSH, dm-crypt's LUKS), but it is impractical to use for wiping current HDD capacities: what makes disk wiping take so long is waiting for the system to <a href="https://en.wikipedia.org/wiki/Hardware_random_number_generator#Using_observed_events" class="extiw" title="wikipedia:Hardware random number generator">gather enough true entropy</a>. In an entropy-starved situation (e.g. a remote server) this might never end. While doing search operations on large directories or moving the mouse in X can slowly refill the entropy pool, it's designated pool size alone will be indication enough of the inadequacy for wiping a disk. 
 </p>
 <p>You can always compare <code>/proc/sys/kernel/random/entropy_avail</code> against <code>/proc/sys/kernel/random/poolsize</code> to keep an eye on the system's entropy pool.
@@ -83,7 +89,7 @@
 <h3>
 <span id=".2Fdev.2Furandom"></span><span class="mw-headline" id="/dev/urandom">/dev/urandom</span>
 </h3>
-<p>In contrast to <code>/dev/random</code>, <code>/dev/urandom</code> takes (since kernel 4.8) an initial random seed to feed a cryptographic stream cipher.<a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e192be9d9a30555aae2ca1dc3aad37cba484cd4a">[1]</a>
+<p>In contrast to <code>/dev/random</code>, <code>/dev/urandom</code> takes (since kernel 4.8) an initial random seed to feed a cryptographic stream cipher.<a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e192be9d9a30555aae2ca1dc3aad37cba484cd4a">[3]</a>
 </p>
 <p>The stream cipher is used because it can provide a high volume of high quality pseudo-random data suitable for many purposes like, for example, <a href="../en/Securely_wipe_disk.html#Preparations_for_block_device_encryption" title="Securely wipe disk">preparing for block device encryption</a>, wiping LUKS keyslots, etc.
 </p>
@@ -104,7 +110,7 @@
 <ol>
 <li>Use the kernel's <code>getrandom()</code> system call, whenever possible. It is provided to ensure that <code>/dev/urandom</code> has initialized appropriately. See <span class="plainlinks archwiki-template-man" title="$ man 2 getrandom"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/getrandom.2">getrandom(2)</a></span>.</li>
 <li>If you use the <code>/dev/urandom</code> device for generating entropy for any long-term purpose, <b>do ensure</b> it has initialized properly.</li>
-<li>Take care to troubleshoot critical services which rely on <code>/dev/urandom</code> entropy during boot/startup. Even on a modern system the kernel's entropy initialization may take many seconds and some factors (e.g. virtualization) may delay it further. The kernel does warn, but not indefinetely.<a rel="nofollow" class="external autonumber" href="https://patchwork.kernel.org/patch/9173499/">[2]</a>
+<li>Take care to troubleshoot critical services which rely on <code>/dev/urandom</code> entropy during boot/startup. Even on a modern system the kernel's entropy initialization may take many seconds and some factors (e.g. virtualization) may delay it further. The kernel does warn, but not indefinetely.<a rel="nofollow" class="external autonumber" href="https://patchwork.kernel.org/patch/9173499/">[4]</a>
 </li>
 </ol>
 <p>An example output:
@@ -166,7 +172,10 @@
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Cryptography.html" title="Category:Cryptography">Cryptography</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -174,8 +183,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Random_number_generation&amp;oldid=645141">https://wiki.archlinux.org/index.php?title=Random_number_generation&amp;oldid=645141</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 December 2020, at 14:22.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Random_number_generation&amp;oldid=655732">https://wiki.archlinux.org/index.php?title=Random_number_generation&amp;oldid=655732</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 March 2021, at 03:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

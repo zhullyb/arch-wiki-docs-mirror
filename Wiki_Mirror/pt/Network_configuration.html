@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -215,7 +216,7 @@
 <p><a href="https://en.wikipedia.org/wiki/iproute2" class="extiw" title="wikipedia:iproute2">iproute2</a> é uma dependência do <a href="../pt/Meta_package_and_package_group.html#Diferen%C3%A7a_entre_um_metapacote_e_um_grupo_de_pacotes" class="mw-redirect" title="Metapacote">metapacote</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span> e fornece a interface de linha de comando <span class="plainlinks archwiki-template-man" title="$ man 8 ip"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ip.8">ip(8)</a></span>, usado para gerenciar <a href="#Interfaces_de_rede">interfaces de rede</a>, <a href="#Endere%C3%A7os_IP">endereços IP</a> e a <a href="#Tabela_de_roteamento">tabela de roteamento</a>. Esteja ciente de que a configuração feita usando <code>ip</code> será perdida após uma reinicialização. Para uma configuração persistente, você pode usar um <a href="../pt/Network_configuration.html#Gerenciadores_de_rede" class="mw-redirect" title="Gerenciador de rede">gerenciador de rede</a> ou automatizar comandos <i>ip</i> usando scripts e <a href="../pt/Systemd.html#Escrevendo_arquivos_unit" title="Systemd (Português)">units de systemd</a>. Observe também que os comandos <code>ip</code> geralmente podem ser abreviados, para maior clareza eles são descritos neste artigo.
 </p>
 <h3><span class="mw-headline" id="Interfaces_de_rede">Interfaces de rede</span></h3>
-<p>Por padrão, o <a href="../en/Udev.html" title="Udev">udev</a> atribui nomes para suas interfaces de rede usando <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">Predictable Network Interface Names</a>, que prefixam nomes de interfaces com <code>en</code> (cabeada/<a href="https://en.wikipedia.org/wiki/pt:Ethernet" class="extiw" title="wikipedia:pt:Ethernet">Ethernet</a>), <code>wl</code> (sem fio/wireless/WLAN) ou <code>ww</code> (<a href="https://en.wikipedia.org/wiki/pt:Rede_de_longa_dist%C3%A2ncia_sem_fio" class="extiw" title="wikipedia:pt:Rede de longa distância sem fio">WWAN</a>).
+<p>Por padrão, o <a href="../en/Udev.html" title="Udev">udev</a> atribui nomes para suas interfaces de rede usando <a rel="nofollow" class="external text" href="https://systemd.io/PREDICTABLE_INTERFACE_NAMES/">Predictable Network Interface Names</a>, que prefixam nomes de interfaces com <code>en</code> (cabeada/<a href="https://en.wikipedia.org/wiki/pt:Ethernet" class="extiw" title="wikipedia:pt:Ethernet">Ethernet</a>), <code>wl</code> (sem fio/wireless/WLAN) ou <code>ww</code> (<a href="https://en.wikipedia.org/wiki/pt:Rede_de_longa_dist%C3%A2ncia_sem_fio" class="extiw" title="wikipedia:pt:Rede de longa distância sem fio">WWAN</a>).
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Dica:</strong> Para alterar os nomes de dispositivos, veja <a href="#Alterando_o_nome_da_interface">#Alterando o nome da interface</a> e <a href="#Revertendo_para_nomes_tradicionais_de_interfaces">#Revertendo para nomes tradicionais de interfaces</a>.</div>
@@ -595,9 +596,9 @@ SUBSYSTEM=="net", DEVPATH=="/devices/pci*/*1c.0/*/net/*", NAME="en"</pre>
 <p>Para <a href="../en/Udev.html#Testing_rules_before_loading" title="Udev">testar</a> suas regras, elas podem ser acionadas diretamente do espaço de usuário, por exemplo, com <code>udevadm --debug test /sys/class/net/*</code>. Lembre-se de primeiro retirar a interface que você está tentando renomear (ex. <code>ip link set enp1s0 down</code>).
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Ao escolher os nomes estáticos <b>deve-se evitar o uso de nomes no formato de "eth<i>X</i>" e "wlan<i>X</i>"</b>, pois eles podem levar a codiçẽos de corrida entre o kernel e udev durante a inicialização. Em vez disso, é melhor usar nomes de interface que não são usados pelo kernel como padrão, ex.: <code>net0</code>, <code>net1</code>, <code>wifi0</code>, <code>wifi1</code>. Para detalhes adicionais, por favor veja a documentação do <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">systemd</a>.</div>
+<strong>Nota:</strong> Ao escolher os nomes estáticos <b>deve-se evitar o uso de nomes no formato de "eth<i>X</i>" e "wlan<i>X</i>"</b>, pois eles podem levar a codiçẽos de corrida entre o kernel e udev durante a inicialização. Em vez disso, é melhor usar nomes de interface que não são usados pelo kernel como padrão, ex.: <code>net0</code>, <code>net1</code>, <code>wifi0</code>, <code>wifi1</code>. Para detalhes adicionais, por favor veja a documentação do <a rel="nofollow" class="external text" href="https://systemd.io/PREDICTABLE_INTERFACE_NAMES/">systemd</a>.</div>
 <h3><span class="mw-headline" id="Revertendo_para_nomes_tradicionais_de_interfaces">Revertendo para nomes tradicionais de interfaces</span></h3>
-<p>Se você preferir manter os nomes de interface tradicionais, como eth0, <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">Predictable Network Interface Names</a> podem ser desabilitados mascarando a regra de rule:
+<p>Se você preferir manter os nomes de interface tradicionais, como eth0, <a rel="nofollow" class="external text" href="https://systemd.io/PREDICTABLE_INTERFACE_NAMES/">Predictable Network Interface Names</a> podem ser desabilitados mascarando a regra de rule:
 </p>
 <pre># ln -s /dev/null /etc/udev/rules.d/80-net-setup-link.rules
 </pre>
@@ -743,8 +744,8 @@ WantedBy=multi-user.target
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Portugu%C3%AAs)&amp;oldid=646950">https://wiki.archlinux.org/index.php?title=Network_configuration_(Português)&amp;oldid=646950</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Portugu%C3%AAs)&amp;oldid=656161">https://wiki.archlinux.org/index.php?title=Network_configuration_(Português)&amp;oldid=656161</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 March 2021, at 09:08.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

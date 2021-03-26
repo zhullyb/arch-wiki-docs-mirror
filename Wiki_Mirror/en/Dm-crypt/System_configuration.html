@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -111,7 +112,7 @@
 </div>
 
 <h2><span class="mw-headline" id="mkinitcpio">mkinitcpio</span></h2>
-<p>Depending on the particular scenarios, a subset of the following <a href="../../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a> hooks will have to be enabled:
+<p>Depending on the particular scenarios, a subset of the following <a href="../../en/Mkinitcpio.html#HOOKS" title="Mkinitcpio">mkinitcpio hooks</a> will have to be enabled:
 </p>
 <table class="wikitable">
 <tbody>
@@ -145,7 +146,7 @@
 <td rowspan="2" style="text-align: center;white-space:nowrap;">
 <code>sd-vconsole</code>
 </td>
-<td>Provides support for non-US keymaps for typing encryption passwords; it must come <i>before</i> the <code>encrypt</code> hook. Set your keymap in <code>/etc/vconsole.conf</code>, see <a href="../../en/Linux_console/Keyboard_configuration.html#Persistent_configuration" class="mw-redirect" title="Keyboard configuration in console">Keyboard configuration in console#Persistent configuration</a>.
+<td>Provides support for non-US keymaps for typing encryption passwords; it must come <i>before</i> the <code>encrypt</code> hook, otherwise you will need to enter your encryption password using the default US keymap. Set your keymap in <code>/etc/vconsole.conf</code>, see <a href="../../en/Linux_console/Keyboard_configuration.html#Persistent_configuration" class="mw-redirect" title="Keyboard configuration in console">Keyboard configuration in console#Persistent configuration</a>.
 </td>
 </tr>
 <tr>
@@ -172,7 +173,7 @@ HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt lv
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
-HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck)
+HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt lvm2 filesystems fsck)
 ...</pre>
 <h2><span class="mw-headline" id="Boot_loader">Boot loader</span></h2>
 <p>In order to enable booting an encrypted root partition, a subset of the following kernel parameters need to be set. See <a href="../../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a> for instructions specific to your <a href="../../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot loader">boot loader</a>. 
@@ -212,13 +213,15 @@ HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-
 <h4><span class="mw-headline" id="cryptdevice">cryptdevice</span></h4>
 <p>This parameter will make the system prompt for the passphrase to unlock the device containing the encrypted root on a cold boot. It is parsed by the <code>encrypt</code> hook to identify which device contains the encrypted system:
 </p>
-<pre>cryptdevice=<i>device</i>:<i>dmname</i>
+<pre>cryptdevice=<i>device</i>:<i>dmname</i>:<i>options</i>
 </pre>
 <ul>
 <li>
 <code><i>device</i></code> is the path to the device backing the encrypted device. Usage of <a href="../../en/Persistent_block_device_naming.html" title="Persistent block device naming">persistent block device naming</a> is strongly recommended.</li>
 <li>
 <code><i>dmname</i></code> is the <b>d</b>evice-<b>m</b>apper name given to the device after decryption, which will be available as <code>/dev/mapper/<i>dmname</i></code>.</li>
+<li>
+<code><i>options</i></code> (optional) are comma separated options, e.g. for TRIM support. If no options are required, omit this parameter (use <code>cryptdevice=<i>device</i>:<i>dmname</i></code>).</li>
 <li>If a LVM contains the <a href="../../en/Dm-crypt/Encrypting_an_entire_system.html#LUKS_on_LVM" title="Dm-crypt/Encrypting an entire system">encrypted root</a>, the LVM gets activated first and the volume group containing the logical volume of the encrypted root serves as <i>device</i>. It is then followed by the respective volume group to be mapped to root. The parameter follows the form of <code>cryptdevice=<i>/dev/vgname/lvname</i>:<i>dmname</i></code>.</li>
 </ul>
 <div class="archwiki-template-box archwiki-template-box-tip">
@@ -325,11 +328,11 @@ HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-
 </p>
 <p>This is roughly equivalent to the third parameter of <code>encrypt</code>'s <code>cryptdevice</code>.
 </p>
-<p>Follows a similar format to options in crypttab - options are separated by commas, options with values are specified using <code><i>option</i>=<i>value</i></code>.
+<p>Follows a similar format to options in <a href="#crypttab">crypttab</a> - options are separated by commas, options with values are specified using <code><i>option</i>=<i>value</i></code>.
 </p>
 <p>For example:
 </p>
-<pre>rd.luks.options=timeout=10s,swap,cipher=aes-cbc-essiv:sha256,size=256
+<pre>rd.luks.options=timeout=10s,discard,cipher=aes-cbc-essiv:sha256,size=256
 </pre>
 <h4><span class="mw-headline" id="rd.luks.key">rd.luks.key</span></h4>
 <p>Specify the location of a password file used to decrypt the device specified by its UUID. There is no default location like there is with the <code>encrypt</code> hook parameter <code>cryptkey</code>.
@@ -507,8 +510,8 @@ backup /dev/sdb1       /home/alice/backup.key</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt/System_configuration&amp;oldid=645016">https://wiki.archlinux.org/index.php?title=Dm-crypt/System_configuration&amp;oldid=645016</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 December 2020, at 10:43.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt/System_configuration&amp;oldid=655735">https://wiki.archlinux.org/index.php?title=Dm-crypt/System_configuration&amp;oldid=655735</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 March 2021, at 07:55.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

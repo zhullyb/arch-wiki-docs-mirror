@@ -152,13 +152,20 @@
 <li class="toclevel-1 tocsection-4">
 <a href="#Hardware"><span class="tocnumber">3</span> <span class="toctext">Hardware</span></a>
 <ul>
-<li class="toclevel-2 tocsection-5"><a href="#Audio"><span class="tocnumber">3.1</span> <span class="toctext">Audio</span></a></li>
+<li class="toclevel-2 tocsection-5">
+<a href="#Video"><span class="tocnumber">3.1</span> <span class="toctext">Video</span></a>
+<ul>
+<li class="toclevel-3 tocsection-6"><a href="#Lightdm"><span class="tocnumber">3.1.1</span> <span class="toctext">Lightdm</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#Brightness_control"><span class="tocnumber">3.1.2</span> <span class="toctext">Brightness control</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-6"><a href="#Firmware"><span class="tocnumber">4</span> <span class="toctext">Firmware</span></a></li>
-<li class="toclevel-1 tocsection-7"><a href="#Power_Management"><span class="tocnumber">5</span> <span class="toctext">Power Management</span></a></li>
-<li class="toclevel-1 tocsection-8"><a href="#Function_keys"><span class="tocnumber">6</span> <span class="toctext">Function keys</span></a></li>
-<li class="toclevel-1 tocsection-9"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Audio"><span class="tocnumber">3.2</span> <span class="toctext">Audio</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="#Firmware"><span class="tocnumber">4</span> <span class="toctext">Firmware</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#Power_Management"><span class="tocnumber">5</span> <span class="toctext">Power Management</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#Function_keys"><span class="tocnumber">6</span> <span class="toctext">Function keys</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -194,6 +201,27 @@
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Blind users may want to request the help of a sighted person to change BIOS settings</div>
 <h2><span class="mw-headline" id="Hardware">Hardware</span></h2>
+<h3><span class="mw-headline" id="Video">Video</span></h3>
+<h4><span class="mw-headline" id="Lightdm">Lightdm</span></h4>
+<p>Lightdm seems to have an issue with amdgpu loading too late. Use KMS to load the video driver into initramfs
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">MODULES=(amdgpu)</pre>
+<p>Rebuild the initramfs
+</p>
+<pre># mkinitcpio -P
+</pre>
+<h4><span class="mw-headline" id="Brightness_control">Brightness control</span></h4>
+<p>As of kernel 5.9 use the native brightness controller
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/default/grub</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">GRUB_CMDLINE_LINUX_DEFAULT=".... acpi_backlight=native ...."</pre>
+<p>Rebuild grub configuration
+</p>
+<pre># grub-mkconfig -o /boot/grub/grub.cfg 
+</pre>
+<p><br>
+</p>
 <h3><span class="mw-headline" id="Audio">Audio</span></h3>
 <p>PulseAudio seems to work fine without manual intervention, but the ALSA audio device chosen by default may not be correct. You may need to change the default device.
 </p>
@@ -433,8 +461,8 @@ defaults.ctl.card 2
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_X13_Gen_1_(AMD)&amp;oldid=654364">https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_X13_Gen_1_(AMD)&amp;oldid=654364</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 10 March 2021, at 05:40.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_X13_Gen_1_(AMD)&amp;oldid=656130">https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_X13_Gen_1_(AMD)&amp;oldid=656130</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 March 2021, at 06:45.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

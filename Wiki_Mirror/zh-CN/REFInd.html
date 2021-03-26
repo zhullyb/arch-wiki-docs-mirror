@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -39,13 +40,17 @@
 <ul>
 <li><a href="../zh-CN/Arch_boot_process.html" title="Arch boot process (简体中文)">Arch boot process (简体中文)</a></li>
 <li><a href="../zh-CN/Arch_boot_process.html#%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%99%A8" class="mw-redirect" title="Boot loaders (简体中文)">Boot loaders (简体中文)</a></li>
+<li><a href="../en/EFISTUB.html" title="EFISTUB">EFISTUB</a></li>
+<li><a href="../en/Booster.html" title="Booster">booster</a></li>
 <li><a href="../zh-CN/Unified_Extensible_Firmware_Interface.html" title="Unified Extensible Firmware Interface (简体中文)">Unified Extensible Firmware Interface (简体中文)</a></li>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/REFInd.html" title="REFInd">rEFInd</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2014-06-01。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=REFInd&amp;diff=0&amp;oldid=315512">更改</a>，则您可以帮助同步翻译。</div>
-<p><a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/">rEFInd</a> 是一个 <a href="../zh-CN/Unified_Extensible_Firmware_Interface.html" title="Unified Extensible Firmware Interface (简体中文)">UEFI</a> 启动管理器。它是 <a rel="nofollow" class="external text" href="http://refit.sourceforge.net/">rEFIt</a> （不再维护）的一个分支并且针对非 Mac 硬件修复了若干问题。它被设计为平台无关，可启动多个操作系统。
+<strong>翻译状态：</strong>本文是 <a href="../en/REFInd.html" title="REFInd">rEFInd</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-03-19。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=REFInd&amp;diff=0&amp;oldid=653879">更改</a>，则您可以帮助同步翻译。</div>
+<p><a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/">rEFInd</a> 是一个 <a href="../zh-CN/Unified_Extensible_Firmware_Interface.html" title="Unified Extensible Firmware Interface (简体中文)">UEFI</a> 能够启动 <a href="../en/EFISTUB.html" title="EFISTUB">EFISTUB</a> 内核的启动管理器。它是 <a rel="nofollow" class="external text" href="http://refit.sourceforge.net/">rEFIt</a> （不再维护）的一个分支并且针对非 Mac 硬件修复了若干问题。它被设计为平台无关，可启动多个操作系统。
 </p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 整篇文章中 <code><i>esp</i></code> 代表  <a href="../zh-CN/EFI_system_partition.html" title="EFI system partition (简体中文)">EFI system partition (简体中文)</a> 的挂载点。</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -54,198 +59,569 @@
 <ul>
 <li class="toclevel-1 tocsection-1"><a href="#%E5%AE%89%E8%A3%85"><span class="tocnumber">1</span> <span class="toctext">安装</span></a></li>
 <li class="toclevel-1 tocsection-2">
-<a href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="tocnumber">2</span> <span class="toctext">手动安装</span></a>
+<a href="#%E5%AE%89%E8%A3%85_rEFInd_%E5%90%AF%E5%8A%A8%E7%AE%A1%E7%90%86%E5%99%A8"><span class="tocnumber">2</span> <span class="toctext">安装 rEFInd 启动管理器</span></a>
 <ul>
-<li class="toclevel-2 tocsection-3"><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95%E9%A1%B9"><span class="tocnumber">2.1</span> <span class="toctext">自定义菜单项</span></a></li>
+<li class="toclevel-2 tocsection-3">
+<a href="#%E4%BB%A5_rEFInd_%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%E5%AE%89%E8%A3%85"><span class="tocnumber">2.1</span> <span class="toctext">以 rEFInd 安装脚本安装</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4">
+<a href="#Secure_Boot"><span class="tocnumber">2.1.1</span> <span class="toctext">Secure Boot</span></a>
+<ul>
+<li class="toclevel-4 tocsection-5"><a href="#%E4%BD%BF%E7%94%A8_PreLoader"><span class="tocnumber">2.1.1.1</span> <span class="toctext">使用 PreLoader</span></a></li>
+<li class="toclevel-4 tocsection-6">
+<a href="#%E4%BD%BF%E7%94%A8_shim"><span class="tocnumber">2.1.1.2</span> <span class="toctext">使用 shim</span></a>
+<ul>
+<li class="toclevel-5 tocsection-7"><a href="#%E4%BD%BF%E7%94%A8_hash"><span class="tocnumber">2.1.1.2.1</span> <span class="toctext">使用 hash</span></a></li>
+<li class="toclevel-5 tocsection-8"><a href="#%E4%BD%BF%E7%94%A8%E6%9C%BA%E5%99%A8%E6%89%80%E6%9C%89%E8%80%85%E5%AF%86%E9%92%A5%EF%BC%88Machine_Owner_Key%EF%BC%89"><span class="tocnumber">2.1.1.2.2</span> <span class="toctext">使用机器所有者密钥（Machine Owner Key）</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-4"><a href="#%E5%9C%A8%E5%B7%B2%E6%9C%89%E7%9A%84_Windows_UEFI_%E5%AE%89%E8%A3%85%E4%B8%AD%E4%BD%BF%E7%94%A8_rEFIND"><span class="tocnumber">3</span> <span class="toctext">在已有的 Windows UEFI 安装中使用 rEFIND</span></a></li>
-<li class="toclevel-1 tocsection-5">
-<a href="#%E6%9B%B4%E6%96%B0_rEFInd"><span class="tocnumber">4</span> <span class="toctext">更新 rEFInd</span></a>
-<ul>
-<li class="toclevel-2 tocsection-6"><a href="#Systemd_%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="tocnumber">4.1</span> <span class="toctext">Systemd 自动化</span></a></li>
+<li class="toclevel-4 tocsection-9"><a href="#%E4%BD%BF%E7%94%A8%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AF%86%E9%92%A5"><span class="tocnumber">2.1.1.3</span> <span class="toctext">使用你自己的密钥</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-7"><a href="#Apple_Macs"><span class="tocnumber">5</span> <span class="toctext">Apple Macs</span></a></li>
-<li class="toclevel-1 tocsection-8"><a href="#VirtualBox"><span class="tocnumber">6</span> <span class="toctext">VirtualBox</span></a></li>
-<li class="toclevel-1 tocsection-9"><a href="#%E5%8F%82%E8%A7%81"><span class="tocnumber">7</span> <span class="toctext">参见</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-10"><a href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="tocnumber">2.2</span> <span class="toctext">手动安装</span></a></li>
+<li class="toclevel-2 tocsection-11">
+<a href="#%E6%9B%B4%E6%96%B0_rEFInd"><span class="tocnumber">2.3</span> <span class="toctext">更新 rEFInd</span></a>
+<ul>
+<li class="toclevel-3 tocsection-12"><a href="#Pacman_%E9%92%A9%E5%AD%90"><span class="tocnumber">2.3.1</span> <span class="toctext">Pacman 钩子</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-13">
+<a href="#%E9%85%8D%E7%BD%AE"><span class="tocnumber">3</span> <span class="toctext">配置</span></a>
+<ul>
+<li class="toclevel-2 tocsection-14">
+<a href="#%E4%BC%A0%E9%80%92%E5%86%85%E6%A0%B8%E5%8F%82%E6%95%B0"><span class="tocnumber">3.1</span> <span class="toctext">传递内核参数</span></a>
+<ul>
+<li class="toclevel-3 tocsection-15">
+<a href="#%E5%AF%B9%E4%BA%8E_rEFInd_%E8%87%AA%E5%8A%A8%E6%A3%80%E6%B5%8B%E5%88%B0%E7%9A%84%E5%86%85%E6%A0%B8"><span class="tocnumber">3.1.1</span> <span class="toctext">对于 rEFInd 自动检测到的内核</span></a>
+<ul>
+<li class="toclevel-4 tocsection-16"><a href="#refind_linux.conf"><span class="tocnumber">3.1.1.1</span> <span class="toctext">refind_linux.conf</span></a></li>
+<li class="toclevel-4 tocsection-17"><a href="#%E6%97%A0%E9%9C%80%E9%85%8D%E7%BD%AE%E7%9A%84%E6%83%85%E5%86%B5"><span class="tocnumber">3.1.1.2</span> <span class="toctext">无需配置的情况</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3 tocsection-18"><a href="#%E6%89%8B%E5%8A%A8%E5%90%AF%E5%8A%A8%E9%A1%B9"><span class="tocnumber">3.1.2</span> <span class="toctext">手动启动项</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-19"><a href="#%E5%9C%A8%E5%B7%B2%E6%9C%89%E7%9A%84_Windows_UEFI_%E5%AE%89%E8%A3%85%E4%B8%AD%E4%BD%BF%E7%94%A8_rEFInd"><span class="tocnumber">4</span> <span class="toctext">在已有的 Windows UEFI 安装中使用 rEFInd</span></a></li>
+<li class="toclevel-1 tocsection-20">
+<a href="#%E5%B7%A5%E5%85%B7"><span class="tocnumber">5</span> <span class="toctext">工具</span></a>
+<ul>
+<li class="toclevel-2 tocsection-21"><a href="#UEFI_shell"><span class="tocnumber">5.1</span> <span class="toctext">UEFI shell</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Memtest86"><span class="tocnumber">5.2</span> <span class="toctext">Memtest86</span></a></li>
+<li class="toclevel-2 tocsection-23">
+<a href="#%E5%AF%86%E9%92%A5%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="tocnumber">5.3</span> <span class="toctext">密钥管理工具</span></a>
+<ul>
+<li class="toclevel-3 tocsection-24"><a href="#HashTool"><span class="tocnumber">5.3.1</span> <span class="toctext">HashTool</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#MokManager"><span class="tocnumber">5.3.2</span> <span class="toctext">MokManager</span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#KeyTool"><span class="tocnumber">5.3.3</span> <span class="toctext">KeyTool</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-27"><a href="#GPT_fdisk_(gdisk)"><span class="tocnumber">5.4</span> <span class="toctext">GPT fdisk (gdisk)</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#fwupdate"><span class="tocnumber">5.5</span> <span class="toctext">fwupdate</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#%E5%85%B3%E6%9C%BA%E6%88%96%E9%87%8D%E5%90%AF"><span class="tocnumber">5.6</span> <span class="toctext">关机或重启</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-30">
+<a href="#%E6%8F%90%E7%A4%BA%E4%B8%8E%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="tocnumber">6</span> <span class="toctext">提示与小技巧</span></a>
+<ul>
+<li class="toclevel-2 tocsection-31"><a href="#%E5%9C%A8_UEFI_shell_%E4%B8%AD%E4%BD%BF%E7%94%A8%E9%A9%B1%E5%8A%A8"><span class="tocnumber">6.1</span> <span class="toctext">在 UEFI shell 中使用驱动</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#%E8%AE%BE%E7%BD%AE_efifb_%E5%88%86%E8%BE%A8%E7%8E%87"><span class="tocnumber">6.2</span> <span class="toctext">设置 efifb 分辨率</span></a></li>
+<li class="toclevel-2 tocsection-33">
+<a href="#Btrfs_%E5%AD%90%E5%8D%B7%E6%94%AF%E6%8C%81"><span class="tocnumber">6.3</span> <span class="toctext">Btrfs 子卷支持</span></a>
+<ul>
+<li class="toclevel-3 tocsection-34"><a href="#%E8%87%AA%E5%8A%A8%E6%A3%80%E6%B5%8B"><span class="tocnumber">6.3.1</span> <span class="toctext">自动检测</span></a></li>
+<li class="toclevel-3 tocsection-35"><a href="#%E6%89%8B%E5%8A%A8%E5%90%AF%E5%8A%A8%E9%A1%B9_2"><span class="tocnumber">6.3.2</span> <span class="toctext">手动启动项</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-36"><a href="#LoaderDevicePartUUID"><span class="tocnumber">6.4</span> <span class="toctext">LoaderDevicePartUUID</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-37">
+<a href="#%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94"><span class="tocnumber">7</span> <span class="toctext">疑难解答</span></a>
+<ul>
+<li class="toclevel-2 tocsection-38"><a href="#Apple_Macs"><span class="tocnumber">7.1</span> <span class="toctext">Apple Macs</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#VirtualBox"><span class="tocnumber">7.2</span> <span class="toctext">VirtualBox</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-40"><a href="#%E5%8F%82%E8%A7%81"><span class="tocnumber">8</span> <span class="toctext">参见</span></a></li>
 </ul>
 </div>
 
 <h2>
 <span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
 </h2>
-<p>从<a href="../en/Official_repositories.html" title="Official repositories">官方软件源</a>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=refind">refind</a></span>。然后运行
+<p><a href="../zh-CN/Help:Reading.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" class="mw-redirect" title="Install (简体中文)">安装</a>  <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=refind">refind</a></span> 包。
+</p>
+<h2>
+<span id=".E5.AE.89.E8.A3.85_rEFInd_.E5.90.AF.E5.8A.A8.E7.AE.A1.E7.90.86.E5.99.A8"></span><span class="mw-headline" id="安装_rEFInd_启动管理器">安装 rEFInd 启动管理器</span>
+</h2>
+<p>rEFInd 附带了实现了对 ReiserFS, Ext2, Ext4, Btrfs, ISO-9660 and HFS+ <b>只读</b>支持的 <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_drivers" title="Unified Extensible Firmware Interface">UEFI drivers</a>。而且 rEFInd 能够访问任何 UEFI 本身能够存取的文件系统，包括 FAT (由 UEFI 规范强制要求), 在 Mac 上的 HFS+ 和一些系统上的 ISO-9660。
+</p>
+<p>额外的驱动可以参考 <a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/drivers.html#finding">The rEFInd Boot Manager: Using EFI Drivers: Finding Additional EFI Drivers</a>。
+</p>
+<p>为了使用 rEFInd, 务必将它安装到 EFI 分区， 使用 <a href="#%E4%BB%A5_rEFInd_%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%E5%AE%89%E8%A3%85">rEFInd 安装脚本</a>或者<a href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85">手动复制文件并设置启动入口</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>警告：</strong> 你的内核和 initramfs 必须在一个 rEFInd 能够读取的文件系统上。</div>
+<h3>
+<span id=".E4.BB.A5_rEFInd_.E5.AE.89.E8.A3.85.E8.84.9A.E6.9C.AC.E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="以_rEFInd_安装脚本安装">以 rEFInd 安装脚本安装</span>
+</h3>
+<p>rEFInd 包含有一个 <i>refind-install</i> 脚本来简化将你的 rEFInd 设置为默认 EFI 启动项的过程。这个脚本有几个选项用于处理不同的设置和 UEFI 实现。想要了解不同选项的含义，请参见 <span class="plainlinks archwiki-template-man" title="$ man 8 refind-install"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/refind-install.8">refind-install(8)</a></span> 或者读安装脚本里面的注释。
+</p>
+<p>对于许多系统来说，运行下面的命令就足够了：
 </p>
 <pre># refind-install
 </pre>
-<p>此操作会检测您的内核和 <a href="../zh-CN/EFI_system_partition.html" title="EFI system partition (简体中文)">EFI system partition (简体中文)</a> 分区，复制需要的文件，创建默认配置文件并将 rEFInd 设置为默认的 UEFI 启动项
+<p>此操作会尝试找到并挂载您的 <a href="../zh-CN/EFI_system_partition.html" title="EFI system partition (简体中文)">ESP</a>，将 rEFInd 的文件复制到 <code><i>esp</i>/EFI/refind/</code>，并使用 <a href="../zh-CN/Unified_Extensible_Firmware_Interface.html#efibootmgr" title="Unified Extensible Firmware Interface (简体中文)">efibootmgr</a> 将 rEFInd 设置为默认的 UEFI 启动项。
+</p>
+<p>或者您可以将 rEFInd 安装到默认/回退（fallback）启动路径 <code><i>esp</i>/EFI/BOOT/bootx64.efi</code>。这对于可启动的 USB 驱动器或者在那些 <i>efibootmgr</i> 做的 NVRAM 更改有问题的系统上会有帮助：
+</p>
+<pre># refind-install --usedefault <i>/dev/sdXY</i>
+</pre>
+<p>其中 <code><i>/dev/sdXY</i></code> 是你的 EFI 分区 (块设备, 不是挂载点).
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 默认情况下 <code>refind-install</code> 只会为内核所在的文件系统安装驱动。 其他的文件系统需要手动安装，通过将 <code>/usr/share/refind/drivers_x64/</code> 复制到 <code><i>esp</i>/EFI/refind/drivers_x64/</code>, 或者你可以以 <code>--alldrivers</code> 选项安装。 这对于可启动的 USB 驱动器有帮助。</div>
+<p>将 rEFInd 的文件安装到 ESP 之后， 验证 rEFInd 已经在你的内核所在文件夹创建了包含<a href="../zh-CN/Kernel_parameters.html" title="Kernel parameters (简体中文)">内核参数</a>的 <code>refind_linux.conf</code> 文件。如果你用了  <code>--usedefault</code> 选项，该文件不会被创建，请以 root 身份运行 <code>mkrlconf</code> 来创建它。
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>警告：</strong> 当 <code>refind-install</code> 运行在chroot环境下 (例如：安装Arch Linux时的live环境) <code>/boot/refind_linux.conf</code> 内将会添加live系统的内核选项，而不是安装它的系统。 
 <p>编辑 <code>/boot/refind_linux.conf</code> 并确保其中的 <a href="../zh-CN/Kernel_parameters.html" title="Kernel parameters (简体中文)">kernel parameters (简体中文)</a> 对于你的系统是正确的，否则下次启动可能会出现内核错误。
 </p>
 查看示例：<a href="../en/REFInd.html#refind_linux.conf" title="REFInd">rEFInd#refind_linux.conf</a>。</div>
-<h2>
-<span id=".E6.89.8B.E5.8A.A8.E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="手动安装">手动安装</span>
-</h2>
+<p>默认情况下，rEFInd 会扫描你的所有的驱动器（它有驱动的那些）并为它找到的每一个 EFI bootloader 添加一个启动入口，其中就包含你的内核（因为 Arch 默认启用了 <a href="../en/EFISTUB.html" title="EFISTUB">EFISTUB</a> ）。因此你在这时候就可能有一个可以启动的系统。
+</p>
+<h4><span class="mw-headline" id="Secure_Boot">Secure Boot</span></h4>
+<p>要在 rEFInd 中使用 <a href="../zh-CN/47408a363dd5b8e3070bbe7dff5a7552.html" title="Unified Extensible Firmware Interface (简体中文)/Secure Boot (简体中文)">Secure Boot</a>，请参考 <a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/secureboot.html">Managing Secure Boot</a>。
+</p>
+<h5>
+<span id=".E4.BD.BF.E7.94.A8_PreLoader"></span><span class="mw-headline" id="使用_PreLoader">使用 PreLoader</span>
+</h5>
+<p>要获取经过签名的 <code>PreLoader.efi</code> 和 <code>HashTool.efi</code> 二进制文件，请参考 <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html#Set_up_PreLoader" class="mw-redirect" title="Secure Boot">Secure Boot#Set up PreLoader</a>。
+</p>
+<p>以 <code>--preloader <i>/path/to/preloader</i></code> 选项执行 <code>refind-install</code>。
+</p>
+<pre># refind-install --preloader /usr/share/preloader-signed/PreLoader.efi
+</pre>
+<p>当你下次以 Secure Boot 开启状态启动时，HashTool 会启动并让你注册 rEFInd (<code>loader.efi</code>) 、rEFInd 的驱动器 (如 <code>ext4_x64.efi</code>)和内核 (如 <code>vmlinuz-linux</code>) 的 hash。
+</p>
+<p>更多信息参见 <span class="plainlinks archwiki-template-man" title="$ man 8 refind-install"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/refind-install.8">refind-install(8)</a></span>。
+</p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong>  rEFInd 能够以多种方式启动 Linux。参见 <a rel="nofollow" class="external text" href="http://www.rodsbooks.com/refind/linux.html">The rEFInd Boot Manager: Methods of Booting Linux</a>。本节将阐述使用 <a href="../en/EFISTUB.html" title="EFISTUB">EFISTUB</a> 的过程。</div>
+<strong>提示：</strong> 经过签名的 HashTool 只能够访问启动它的分区。 这意味着如果你的内核不在 EPS 上, 你就不能从 HashTool 注册它的 hash. 你可以使用 <a href="#KeyTool">#KeyTool</a> 来替代这种情况, 因为它可以将一个 hash 注册到 MokList 并且不被限制在一个分区。在使用之前，请记住要先注册 KeyTool 的 hash。</div>
+<h5>
+<span id=".E4.BD.BF.E7.94.A8_shim"></span><span class="mw-headline" id="使用_shim">使用 shim</span>
+</h5>
+<p><a href="../zh-CN/Help:Reading.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" class="mw-redirect" title="Install (简体中文)">安装</a>  <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/shim-signed/">shim-signed</a></span><sup><small>AUR</small></sup>。阅读 <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html#shim" class="mw-redirect" title="Secure Boot">Secure Boot#shim</a>，但是跳过所有的文件复制。
+</p>
+<h6>
+<span id=".E4.BD.BF.E7.94.A8_hash"></span><span class="mw-headline" id="使用_hash">使用 hash</span>
+</h6>
+<p>要只使用带有 hash 的 shim，请以 <code>--shim <i>/path/to/shim</i></code> 参数执行 <code>refind-install</code>：
+</p>
+<pre># refind-install --shim /usr/share/shim-signed/shimx64.efi
+</pre>
+<p>当你下次以 Secure Boot 开启状态启动时, MokManager 会启动并让你注册 rEFInd (<code>loader.efi</code>) 、rEFInd 的驱动器 (如 <code>ext4_x64.efi</code>)和内核 (如 <code>vmlinuz-linux</code>) 的 hash。
+</p>
+<h6>
+<span id=".E4.BD.BF.E7.94.A8.E6.9C.BA.E5.99.A8.E6.89.80.E6.9C.89.E8.80.85.E5.AF.86.E9.92.A5.EF.BC.88Machine_Owner_Key.EF.BC.89"></span><span class="mw-headline" id="使用机器所有者密钥（Machine_Owner_Key）">使用机器所有者密钥（Machine Owner Key）</span>
+</h6>
+<p>要使用计算机所有者密钥（MOK）对 rEFInd 进行签名，请安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sbsigntools">sbsigntools</a></span>。
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 如果您已经<a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html#shim_with_key" class="mw-redirect" title="Secure Boot">创建了一个计算机所有者密钥</a>，则将文件命名为 <code>refind_local.key</code>（PEM 格式私钥）、<code>refind_local.crt</code> （PEM 格式证书）和 <code>refind_local.cer</code> （DER 格式证书），并放置在<code>/etc/refind.d/keys</code>目录中。</div>
+<p>以 <code>--shim <i>/path/to/shim</i></code> 和 <code>--localkeys</code> 选项执行 <code>refind-install</code>：
+</p>
+<pre># refind-install --shim /usr/share/shim-signed/shimx64.efi --localkeys
+</pre>
+<p>refind-install 会为你创建密钥并为它和它的驱动器签名。你需要用同一个密钥为内核签名，如：
+</p>
+<pre># sbsign --key /etc/refind.d/keys/refind_local.key --cert /etc/refind.d/keys/refind_local.crt --output /boot/vmlinuz-linux /boot/vmlinuz-linux
+</pre>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 内核签名可以由  <a href="../zh-CN/Pacman.html#Hooks" title="Pacman (简体中文)">pacman hook</a> 自动化, 参见 <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html#Signing_the_kernel_with_a_pacman_hook" class="mw-redirect" title="Secure Boot">Secure Boot#Signing the kernel with a pacman hook</a>。</div>
+<p>进入 MokManager 之后，将 <code>refind_local.cer</code> 添加到 MoKList。在 rEFInd 的安装目录下，如 <code><i>esp</i>/EFI/refind/keys/refind_local.cer</code>，一个叫做 <code>keys</code> 的文件夹里面可以找到  <code>refind_local.cer</code>。
+</p>
+<p>更多信息参见 <span class="plainlinks archwiki-template-man" title="$ man 8 refind-install"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/refind-install.8">refind-install(8)</a></span>。
+</p>
+<h5>
+<span id=".E4.BD.BF.E7.94.A8.E4.BD.A0.E8.87.AA.E5.B7.B1.E7.9A.84.E5.AF.86.E9.92.A5"></span><span class="mw-headline" id="使用你自己的密钥">使用你自己的密钥</span>
+</h5>
+<p>跟随 <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html#Using_your_own_keys" class="mw-redirect" title="Secure Boot">Secure Boot#Using your own keys</a> 来创建密钥。
+</p>
+<p>创建目录 <code>/etc/refind.d/keys</code> 并将 Signature Database (<b>db</b>) 密钥和证书放在其中。 将文件命名为： <code>refind_local.key</code> (PEM 格式私钥), <code>refind_local.crt</code> (PEM 格式证书) 和 <code>refind_local.cer</code> (DER 格式证书)。
+</p>
+<p>在运行安装脚本时添加 <code>--localkeys</code> 选项，如：
+</p>
+<pre># refind-install --localkeys
+</pre>
+<p>rEFInd EFI 二进制文件将会被用提供的密钥和证书签名。
+</p>
+<h3>
+<span id=".E6.89.8B.E5.8A.A8.E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="手动安装">手动安装</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong>  rEFInd 能够以多种方式启动 Linux。参见 <a rel="nofollow" class="external text" href="http://www.rodsbooks.com/refind/linux.html">The rEFInd Boot Manager: Methods of Booting Linux</a>。本节将阐述使用 <a href="../en/EFISTUB.html" title="EFISTUB">EFISTUB</a> 的过程。</div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> 对于 32 位 EFI，请将 <b>x64</b> 替换为 <b>ia32</b>。</div>
+<strong>注意：</strong> 对于 32 位 EFI，请将 <b>x64</b> 替换为 <b>ia32</b>。</div>
 <p>如果 <code>refind-install</code> 脚本没有正常工作，您可以手动设置 rEFInd。
 </p>
-<ol>
-<li>在 ESP 中创建一个目录来存放 rEFInd 的文件。此处假定您的 ESP 分区被挂载到 <code>/boot/efi</code> 并且您希望将 rEFInd 存放在 <code>/boot/efi/EFI/refind</code>。</li>
-<li>将可执行文件、配置文件和资源文件复制到 ESP<pre># cp /usr/share/refind/refind_x64.efi /boot/efi/EFI/refind/refind_x64.efi
-# cp /usr/share/refind/refind.conf-sample /boot/efi/EFI/refind/refind.conf
-# cp -r /usr/share/refind/{icons,fonts,drivers_x64} /boot/efi/EFI/refind/
-</pre>
-</li>
-<li>编辑刚才复制的配置文件。该文件有详细的注释。默认情况下，rEFInd 会在您的驱动器中寻找 EFISTUB 内核，所以您可能不需要做任何更改就能启动。</li>
-<li>如果需要定制内核引导选项，复制示例配置文件到你的内核的目录。编辑该文件并为您的根分区输入正确的 <code>PARTUUID</code> 和 <code>rootfstype</code> （可以使用 <code>blkid</code> 和 <code>lsblk -f</code>）. <pre># cp /usr/share/refind/refind_linux.conf-sample /boot/refind_linux.conf
-</pre> <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> <code>refind_linux.conf</code> 的每一行都会被显示为一个子菜单项。按下 + 、 Insert 或 F2 来展开子菜单.</div>
-</li>
-<li>使用 <code>efibootmgr</code> 创建一条 UEFI 启动项（更改 X 、Y 使其指向您的 ESP 分区）。 参见 <code>efibootmgr</code> 的 man 手册. <pre># efibootmgr -c -d /dev/sdX -p Y -l /EFI/refind/refind_x64.efi -L "rEFInd"
-</pre>
-</li>
-</ol>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> 在 rEFInd 中按下 F10 将会保存屏幕截图到 ESP 分区的根目录</div>
-<h3>
-<span id=".E8.87.AA.E5.AE.9A.E4.B9.89.E8.8F.9C.E5.8D.95.E9.A1.B9"></span><span class="mw-headline" id="自定义菜单项">自定义菜单项</span>
-</h3>
-<p>您可以使用 <code>refind.conf</code> 中的小节手动创建启动条目。 确保 <code>scanfor</code> 包括 <code>manual</code> 否则条目将不会出现。
+<p>首先，将可执行文件复制到 EPS:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">refind.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">menuentry "Arch Linux" {
-        icon     /EFI/refind/icons/os_arch.icns
-        volume   1:
-        loader   /boot/vmlinuz-linux
-        initrd   /boot/initramfs-linux.img
-        options  "root=PARTUUID=3518bb68-d01e-45c9-b973-0b5d918aae96 rw rootfstype=ext4"
-}
+<pre># mkdir -p <i>esp</i>/EFI/refind
+# cp /usr/share/refind/refind_x64.efi <i>esp</i>/EFI/refind/
 </pre>
+<p>如果想要将 rEFInd 安装到默认/回退（fallback) 启动路径，请在下面将 <code><i>esp</i>/EFI/refind/</code> 替换为 <code><i>esp</i>/EFI/BOOT/</code>，并将 rEFInd EFI 可执行文件复制到  <code><i>esp</i>/EFI/BOOT/bootx64.efi</code>:
+</p>
+<pre># mkdir -p <i>esp</i>/EFI/BOOT
+# cp /usr/share/refind/refind_x64.efi <i>esp</i>/EFI/BOOT/bootx64.efi
+</pre>
+<p>然后使用  <a href="../en/Unified_Extensible_Firmware_Interface.html#efibootmgr" class="mw-redirect" title="Efibootmgr">efibootmgr</a> 来在 UEFI NVRAM 中创建一个启动入口，其中 <code><i>/dev/sdX</i></code> 和 <code><i>Y</i></code> 是你的 EFI 分区的设备和分区号。如果你要将 rEFI 安装到默认/回退（fallback) 启动路径 <code><i>esp</i>/EFI/BOOT/bootx64.efi</code>，你可以跳过这一步。
+</p>
+<pre># efibootmgr --create --disk <i>/dev/sdX</i> --part <i>Y</i> --loader /EFI/refind/refind_x64.efi --label "rEFInd Boot Manager" --verbose
+</pre>
+<p>此时，你应该能重启到 rEFInd，但是它无法引导你的内核。如果你的内核不在你的 ESP 上，那么 rEFInd 可以挂载你的分区来查找它，只要它具有正确的驱动程序即可。
+</p>
+<p>rEFInd 会从其安装目录中的子目录 <code>drivers</code> 和 <code>drivers_<i>arch</i></code>（例如 <code>drivers_x64</code>）自动加载所有驱动程序。
+</p>
+<pre># mkdir <i>esp</i>/EFI/refind/drivers_x64
+# cp /usr/share/refind/drivers_x64/<b>drivername</b>_x64.efi <i>esp</i>/EFI/refind/drivers_x64/
+</pre>
+<p>现在，rEFInd应该为你的内核提供了一个启动项，但是不会传递正确的内核参数。设置<a href="#%E4%BC%A0%E9%80%92%E5%86%85%E6%A0%B8%E5%8F%82%E6%95%B0">#传递内核参数</a>。现在，你应该可以使用 rEFInd 引导内核了。如果仍然无法启动或想要调整 rEFInd 的设置，则可以使用配置文件来更改许多选项：
+</p>
+<pre># cp /usr/share/refind/refind.conf-sample <i>esp</i>/EFI/refind/refind.conf
+</pre>
+<p>该示例配置文件具有很好的注释并且不言自明。
+</p>
+<p>除非你在配置文件中设置了<code>textonly</code>，否则你应该复制 rEFInd 的图标以摆脱难看的占位符：
+</p>
+<pre># cp -r /usr/share/refind/icons <i>esp</i>/EFI/refind/
+</pre>
+<p>你可以尝试通过复制不同的字体并更改 <code>refind.conf</code> 中的 <code>font</code> 设置来进行尝试：
+</p>
+<pre># cp -r /usr/share/refind/fonts <i>esp</i>/EFI/refind/
+</pre>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 在 rEFInd 中按 <code>F10</code>将会保存屏幕截图到 ESP 分区的根目录。</div>
+<h3>
+<span id=".E6.9B.B4.E6.96.B0_rEFInd"></span><span class="mw-headline" id="更新_rEFInd">更新 rEFInd</span>
+</h3>
+<p>Pacman 只更新在 <code>/usr/share/refind</code> 中的文件，不会将新文件复制到 ESP。
+如果最初 <code>refind-install</code> 成功安装了 rEFInd，则可以再次运行以更新文件。 新的配置文件会被复制为 <code>refind.conf-sample</code> ，你可以使用一个 <a href="../zh-CN/Core_utilities.html#diff" title="Core utilities (简体中文)">diff</a> 工具选择、改变合并到你的配置文件。如果你的 rEFInd 需要<a href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85">#手动安装</a>，你需要自己找出需要复制哪些文件。
+</p>
+<h4>
+<span id="Pacman_.E9.92.A9.E5.AD.90"></span><span class="mw-headline" id="Pacman_钩子">Pacman 钩子</span>
+</h4>
+<p>你可以使用一个 <a href="../zh-CN/Pacman.html#Hooks" title="Pacman (简体中文)">pacman 钩子</a>来自动化更新过程:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pacman.d/hooks/refind.hook</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Trigger]
+Operation=Upgrade
+Type=Package
+Target=refind
+
+[Action]
+Description = Updating rEFInd on ESP
+When=PostTransaction
+Exec=/usr/bin/refind-install</pre>
+<p>你可能需要为你的设置将 <code>Exec=</code>更改为正确的更新命令。如果您进行了<a href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85">#手动安装</a>，则可以创建自己的更新脚本以使用钩子进行调用。
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 如果你使用 <a href="#Secure_Boot">#Secure Boot</a> 设置 rEFInd，则可能需要在 <code>refind-install</code> 命令中额外添加选项 <code>--yes</code>。如果在禁用 Secure Boot 后执行该命令，它将防止该命令失败。更多信息参见 <span class="plainlinks archwiki-template-man" title="$ man 8 refind-install"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/refind-install.8">refind-install(8)</a></span>。</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 如果 ESP 未挂载到 <code>/boot</code>，而你依靠自动挂载来挂载它，请确保按照 <a href="../en/EFI_system_partition.html#Alternative_mount_points" title="EFI system partition">EFI system partition#Alternative mount points</a> 来预加载 <code>vfat</code> 模块。否则，如果 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=refind">refind</a></span>与内核一起升级，ESP 将变得不可访问。</div>
 <h2>
-<span id=".E5.9C.A8.E5.B7.B2.E6.9C.89.E7.9A.84_Windows_UEFI_.E5.AE.89.E8.A3.85.E4.B8.AD.E4.BD.BF.E7.94.A8_rEFIND"></span><span class="mw-headline" id="在已有的_Windows_UEFI_安装中使用_rEFIND">在已有的 Windows UEFI 安装中使用 rEFIND</span>
+<span id=".E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="配置">配置</span>
+</h2>
+<p>rEFInd 的配置文件 <code>refind.conf</code> 存放在 rEFInd EFI 应用的同一目录下（通常为 <code><i>esp</i>/EFI/refind</code> 或 <code><i>esp</i>/EFI/BOOT</code>）。默认的配置文件包含了解释了所有选项的扩展注释，更详细的解释参考 <a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/configfile.html">Configuring the Boot Manager</a>。
+</p>
+<h3>
+<span id=".E4.BC.A0.E9.80.92.E5.86.85.E6.A0.B8.E5.8F.82.E6.95.B0"></span><span class="mw-headline" id="传递内核参数">传递内核参数</span>
+</h3>
+<p>有两种方法可以设置 rEFInd 传递给内核的<a href="../zh-CN/Kernel_parameters.html" title="Kernel parameters (简体中文)">内核参数</a>。
+</p>
+<h4>
+<span id=".E5.AF.B9.E4.BA.8E_rEFInd_.E8.87.AA.E5.8A.A8.E6.A3.80.E6.B5.8B.E5.88.B0.E7.9A.84.E5.86.85.E6.A0.B8"></span><span class="mw-headline" id="对于_rEFInd_自动检测到的内核">对于 rEFInd 自动检测到的内核</span>
+</h4>
+<p>对于自动检测到的内核，你可以在 <code>/boot/refind_linux.conf</code> 中显式指定内核参数，也可以依靠 rEFInd 识别 root 分区和内核参数的能力。更多信息参见<a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/linux.html#easiest">Methods of Booting Linux: For Those With Foresight or Luck: The Easiest Method</a>。
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 
+<ul>
+<li>当 <code>/etc/os-release</code> 与内核位于同一分区时，rEFInd 会自动为启动项选择 Arch Linux图标 (<code>os_arch.png</code>)。如果你的 <code>/boot</code> 是一个单独的分区，参考 <a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/configfile.html#icons">Configuring the Boot Manager: Setting OS Icons</a>。</li>
+<li>rEFInd <a rel="nofollow" class="external text" href="https://sourceforge.net/p/refind/discussion/general/thread/c3865a4e3a/">不支持检测统一内核映像的分布</a>。要为<a href="../en/Systemd-boot.html#Preparing_a_unified_kernel_image" class="mw-redirect" title="Unified kernel image">统一内核映像</a>提供图标，请将 <code>/usr/share/refind/icons/os_arch.png</code> 复制到 <code><i>esp</i>/EFI/Linux/</code> 并确保文件名匹配。例如，如果你有 <code><i>esp</i>/EFI/Linux/Arch-linux.efi</code>，则将对应的图标命名为 <code><i>esp</i>/EFI/Linux/Arch-linux.png</code>。</li>
+</ul>
+</div>
+<p>为了使 rEFInd 支持 Arch Linux <a href="../zh-CN/Kernel.html" title="Kernel (简体中文)">内核</a>的命名方案并因此使其与各自的 initramfs 镜像相匹配，必须取消注释并编辑 <code>refind.conf</code> 中的 <code>extra_kernel_version_strings</code>选项。例如：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/EFI/refind/refind.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
+extra_kernel_version_strings linux-hardened,linux-zen,linux-lts,linux
+...
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 
+<ul>
+<li>rEFInd 仅支持为每个内核检测一个 initramfs 镜像，这意味着它将不检测 fallback initramfs 或<a href="../zh-CN/Microcode.html" title="Microcode (简体中文)">微码</a>镜像，必须手动指定它们。</li>
+<li>如果没有上述 <code>extra_kernel_version_strings</code> 行，<code>refind_linux.conf</code> 中的 <code>%v</code> 变量将不适用于 Arch Linux <a href="../zh-CN/Kernel.html" title="Kernel (简体中文)">内核</a>。</li>
+</ul>
+</div>
+<h5><span class="mw-headline" id="refind_linux.conf">refind_linux.conf</span></h5>
+<p>如果 rEFInd 自动检测到你的内核，你可以将包含内核参数的 <code>refind_linux.conf</code> 文件放置在与内核相同的目录中。你可以使用 <code>/usr/share/refind/refind_linux.conf-sample</code> 作为起点。 <code>refind_linux.conf</code> 未注释的第一行将是内核的默认参数。随后的行将在子菜单中创建可使用 <code>+</code>, <code>F2</code>, 或 <code>Insert</code> 访问的条目。
+</p>
+<p>或者，尝试以 root 身份运行 <code>mkrlconf</code>。它将会尝试在 <code>/boot</code> 中找到你的内核，并自动生成 <code>refind_linux.conf</code>。该脚本只会设置最基本的内核参数，因此请确保检查其创建的文件的正确性。
+</p>
+<p>如果未指定 <code>initrd=</code> 参数，rEFInd 将通过在与内核相同的目录中搜索常用RAM磁盘文件名来自动添加它。如果需要多个 <code>initrd=</code> 参数，则必须在 <code>refind_linux.conf</code> 中手动指定它们。例如，一个在 initramfs 之前传递的<a href="../zh-CN/Microcode.html" title="Microcode (简体中文)">微码</a>：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/boot/refind_linux.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">"Boot using default options"     "root=PARTUUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw add_efi_memmap initrd=boot\intel-ucode.img initrd=boot\amd-ucode.img initrd=boot\initramfs-%v.img"
+"Boot using fallback initramfs"  "root=PARTUUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw add_efi_memmap initrd=boot\intel-ucode.img initrd=boot\amd-ucode.img initrd=boot\initramfs-%v-fallback.img"
+"Boot to terminal"               "root=PARTUUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw add_efi_memmap initrd=boot\intel-ucode.img initrd=boot\amd-ucode.img initrd=boot\initramfs-%v.img systemd.unit=multi-user.target"</pre>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>警告：</strong> 
+<ul>
+<li>
+<code>initrd</code> 路径是相对于内核所在文件系统的根目录。这可能是 <code>initrd=\boot\initramfs-%v.img</code> 或者 <code>initrd = initramfs-％v.img</code>（如果 <code>/boot</code> 是一个单独的分区，例如 ESP）。</li>
+<li>在参数 <code>initrd</code> 中使用反斜杠 (<code>\</code>) 作为路径分隔符，否则内核可能无法找到 initramfs 镜像：<code>EFI stub: ERROR: Failed to open file: /boot/intel-ucode.img</code>。</li>
+</ul>
+</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong>  rEFInd用内核的版本替换 <code> refind_linux.conf</code> 中的 <code>％v</code>}（通过从文件名中提取if）。为了使 rEFInd 支持Arch Linux内核，必须按照 <a href="#%E5%AF%B9%E4%BA%8E_rEFInd_%E8%87%AA%E5%8A%A8%E6%A3%80%E6%B5%8B%E5%88%B0%E7%9A%84%E5%86%85%E6%A0%B8">#对于 rEFInd 自动检测到的内核</a>中的说明编辑  <code>esp/EFI/refind/refind.conf</code> 中的 <code>extra_kernel_version_strings</code>。 </div>
+<h5>
+<span id=".E6.97.A0.E9.9C.80.E9.85.8D.E7.BD.AE.E7.9A.84.E6.83.85.E5.86.B5"></span><span class="mw-headline" id="无需配置的情况">无需配置的情况</span>
+</h5>
+<p>如果你仅将 rEFInd 安装到 ESP 上并毫不费力地启动它（例如通过 UEFI Shell 或 KeyTool，或直接从固件），您仍然可以通过自动检测从启动菜单，而无需进行任何配置。
+</p>
+<p>这之所以可行，是因为 rEFInd 具有回退机制，可以：
+</p>
+<ul>
+<li>通过 <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Discoverable Partitions Specification</a> 或者 <code>/etc/fstab</code> 分辨 root 分区（对于 <code>root=</code> 参数）。</li>
+<li>从  <a href="https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_entries_.28LBA_2-33.29" class="extiw" title="wikipedia:GUID Partition Table">GPT partition attributes</a> 检测内核选项 (<code>ro</code> 或者 <code>rw</code>)。 （使用属性 <code>60</code> "read-only") 或者 <code>/etc/fstab</code>。</li>
+</ul>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> rEFInd 不支持转义码 (如 <code>/etc/fstab</code> 中的 <a href="../zh-CN/Fstab.html#%E8%B7%AF%E5%BE%84%E5%90%8D%E6%9C%89%E7%A9%BA%E6%A0%BC" title="Fstab (简体中文)">路径名空格</a>)。</div>
+<h4>
+<span id=".E6.89.8B.E5.8A.A8.E5.90.AF.E5.8A.A8.E9.A1.B9"></span><span class="mw-headline" id="手动启动项">手动启动项</span>
+</h4>
+<p>如果未自动检测到内核，或者你只想对菜单项的选项进行更多控制，则可以使用 <code>refind.conf</code> 中的 stanzas 来手动创建引导项。确保 <code>scanfor</code> 包含 <code>manual</code>，否则这些条目将不会出现在 rEFInd 的菜单中。内核参数使用 <code>options</code> 关键字设置。 rEFInd 将使用 stanza 中的 <code>initrd</code> 关键字指定的文件附加 <code>initrd=</code> 参数。如果你需要其他 initrd（例如<a href="../zh-CN/Microcode.html" title="Microcode (简体中文)">微码</a>），则可以在 <code>options</code> 中指定它们（并且 <code>initrd</code> 关键字指定的会添加到末尾）。
+</p>
+<p>手动启动项在 <a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/configfile.html#stanzas">Creating Manual Boot Stanzas</a> 中有详细解释。
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/EFI/refind/refind.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
+
+menuentry "Arch Linux" {
+	icon     /EFI/refind/icons/os_arch.png
+	volume   "Arch Linux"
+	loader   /boot/vmlinuz-linux
+	initrd   /boot/initramfs-linux.img
+	options  "root=PARTUUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw add_efi_memmap initrd=boot\intel-ucode.img initrd=boot\amd-ucode.img"
+	submenuentry "Boot using fallback initramfs" {
+		initrd /boot/initramfs-linux-fallback.img
+	}
+	submenuentry "Boot to terminal" {
+		add_options "systemd.unit=multi-user.target"
+	}
+}</pre>
+<p>您可能需要更改 <code>volume</code>以匹配文件系统的标签、PARTLABEL 或内核镜像所在分区的 PARTUUID。PARTUUID 必须大写的。有关分配卷标的示例，请参见 <a href="../zh-CN/Persistent_block_device_naming.html#by-label" title="Persistent block device naming (简体中文)">Persistent block device naming (简体中文)#by-label</a>。如果未指定 <code>volume</code>，则默认为启动 rEFInd 的卷（通常是EFI系统分区）。
+</p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>警告：</strong> 
+<ul>
+<li>
+<code>loader</code> 和 <code>initrd</code> 的路径是相对于 <code>volume</code> 的根目录的相对路径。如果 <code>/boot</code> 是一个单独的分区（例如 ESP ），那么加载程序和 initrd 路径分别是 <code>/vmlinuz-linux</code> 和 <code>/initramfs-linux.img</code>。</li>
+<li>在所有引用的 <code>initrd</code> 参数中使用反斜杠 (<code>\</code>) 作为路径分隔符，否则内核可能无法找到 initramfs 镜像：<code>EFI stub: ERROR: Failed to open file: /boot/initramfs-linux.img</code>。</li>
+</ul>
+</div>
+<h2>
+<span id=".E5.9C.A8.E5.B7.B2.E6.9C.89.E7.9A.84_Windows_UEFI_.E5.AE.89.E8.A3.85.E4.B8.AD.E4.BD.BF.E7.94.A8_rEFInd"></span><span class="mw-headline" id="在已有的_Windows_UEFI_安装中使用_rEFInd">在已有的 Windows UEFI 安装中使用 rEFInd</span>
 </h2>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> 在页面 <a href="../zh-CN/Dual_boot_with_Windows.html" class="mw-redirect" title="Windows and Arch Dual Boot (简体中文)">Windows and Arch Dual Boot (简体中文)</a> 中查看通常的注意事项。</div>
+<strong>注意：</strong> 在页面 <a href="../zh-CN/Dual_boot_with_Windows.html" class="mw-redirect" title="Windows and Arch Dual Boot (简体中文)">Windows and Arch Dual Boot (简体中文)</a> 中查看通常的注意事项。</div>
 <p>rEFInd 兼容 UEFI Windows 安装时创建的 EFI 系统分区，因此没有必要创建或格式化另一个 FAT32 分区。只需挂载 Windows 的 ESP 并像往常一样安装 rEFInd。默认情况下，rEFInd 的自动检测功能应该识别任何现有的 Windows 引导程序。
 </p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 在某些情况下，Windows 的行为不同（低分辨率启动屏幕、OEM logo 被 Windows logo 替换、启动屏幕后出现黑屏、伪影）。如果您遇到这样的问题，请尝试在 <code><i>esp</i>/EFI/refind/refind.conf</code> 中设置 <code>use_graphics_for +,windows</code> 或者将 <code>graphics on</code> 添加到Windows 引导项。
+</div>
 <h2>
-<span id=".E6.9B.B4.E6.96.B0_rEFInd"></span><span class="mw-headline" id="更新_rEFInd">更新 rEFInd</span>
+<span id=".E5.B7.A5.E5.85.B7"></span><span class="mw-headline" id="工具">工具</span>
 </h2>
-<p>Pacman 只更新在 <code>/usr/share/refind</code> 中的文件，不会将新文件复制到 ESP。
-如果 <code>refind-install</code> 成功安装了 rEFInd，则可以再次运行以更新文件。 新的配置文件会被复制为 <code>refind.conf-sample</code> ——就像 <code>.pacdiff</code> —— 你可以选择改变合并到你的配置文件。
-否则，您可以重复上文的步骤，复制新的文件。
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-go-next.png" class="image"><img alt="Tango-go-next.png" src="../File:Tango-go-next.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for moving to <a href="../en/Unified_Extensible_Firmware_Interface.html" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface</a>.</b><a href="../File:Tango-go-next.png" class="image"><img alt="Tango-go-next.png" src="../File:Tango-go-next.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Notes:</b> 尽管 rEFInd 为这些常用工具提供了一个特殊的接口，但它们不是 rEFInd 的特性。 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:REFInd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#template:move_at_refind#tools:_to_uefi">Talk:REFInd (简体中文)#template:move at refind#tools: to uefi</a>)</div>
+</div>
+<p>rEFInd支持运行各种<a rel="nofollow" class="external autonumber" href="https://www.rodsbooks.com/refind/installing.html#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%B7%A5%E5%85%B7%E5%92%8C%E5%8A%A0%E8%BD%BD%E9%A1%B9">[1]</a>。工具需要单独安装。在 <code>refind.conf</code> 中编辑 <code>showtools</code> 文件选择要显示的内容。
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/EFI/refind/refind.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
+showtools <a href="#UEFI_shell">shell</a>, <a href="#Memtest86">memtest</a>, <a href="#%E5%AF%86%E9%92%A5%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7">mok_tool</a>, <a href="#GPT_fdisk_(gdisk)">gdisk</a>, <a href="#fwupdate">fwupdate</a> ...
+...
+</pre>
+<h3><span class="mw-headline" id="UEFI_shell">UEFI shell</span></h3>
+<p>参见 <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_Shell" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface#UEFI Shell</a>。
+</p>
+<p>复制 <code>shellx64.efi</code> 到 <a href="../en/EFI_system_partition.html" title="EFI system partition">EFI 分区</a> 的根目录。
+</p>
+<h3><span class="mw-headline" id="Memtest86">Memtest86</span></h3>
+<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/memtest86-efi/">memtest86-efi</a></span><sup><small>AUR</small></sup> 并将它复制到 <code><i>esp</i>/EFI/tools/</code>。
+</p>
+<pre># cp /usr/share/memtest86-efi/bootx64.efi <i>esp</i>/EFI/tools/memtest86.efi
+</pre>
+<h3>
+<span id=".E5.AF.86.E9.92.A5.E7.AE.A1.E7.90.86.E5.B7.A5.E5.85.B7"></span><span class="mw-headline" id="密钥管理工具">密钥管理工具</span>
+</h3>
+<p>rEFInd 能够检测 Secure Boot 密钥管理工具，如果他们被放在 EPS 上的 rEFInd 的文件夹内，如 <code><i>esp</i>/</code> 或 <code><i>esp</i>/EFI/tools/</code>。
+</p>
+<h4><span class="mw-headline" id="HashTool">HashTool</span></h4>
+<p>参照 <a href="#%E4%BD%BF%E7%94%A8_PreLoader">#使用 PreLoader</a>， <code>HashTool.efi</code> 将被放在 rEFInd 的文件夹内。
+</p>
+<h4><span class="mw-headline" id="MokManager">MokManager</span></h4>
+<p>参照 <a href="#%E4%BD%BF%E7%94%A8_shim">#使用 shim</a>，MokManager 将被放在 rEFInd 的文件夹内。
+</p>
+<h4><span class="mw-headline" id="KeyTool">KeyTool</span></h4>
+<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=efitools">efitools</a></span>。
+</p>
+<p>将 KeyTool EFI 二进制文件放在 <code><i>esp</i>/</code> 或者 <code><i>esp</i>/EFI/tools/</code> 中，并命名为 <code>KeyTool.efi</code> 或 <code>KeyTool-signed.efi</code>。
+</p>
+<p>关于签名 <code>KeyTool.efi</code> 的指导，请参考 <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html#Using_KeyTool" class="mw-redirect" title="Secure Boot">Secure Boot#Using KeyTool</a>。
 </p>
 <h3>
-<span id="Systemd_.E8.87.AA.E5.8A.A8.E5.8C.96"></span><span class="mw-headline" id="Systemd_自动化">Systemd 自动化</span>
+<span id="GPT_fdisk_.28gdisk.29"></span><span class="mw-headline" id="GPT_fdisk_(gdisk)">GPT fdisk (gdisk)</span>
 </h3>
-<p>如果需要自动复制 rEFInd 文件和更新 NVRAM（如果需要），可以使用下面的脚本。
+<p>下载 <a href="../en/GPT_fdisk.html#gdisk_EFI_application" class="mw-redirect" title="Gdisk">gdisk EFI 应用</a> 并将 <code>gdisk_x64.efi</code> 复制到 <code><i>esp</i>/EFI/tools/</code>。
 </p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> 如果您想更改 rEFInd 的安装目录，在脚本中修改 $refind_dir。</div>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/lib/systemd/scripts/refind_name_patchv2</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/usr/bin/env bash
-## COPYRIGHT 2013 : MARK E. LEE (BLUERIDER) : mlee24@binghamton.edu; mark@markelee.com
-
-## LOG
-## 1/17/2013 : Version 2 of refind_name_patch is released
-##           : Supports long subdirectory location for refind
-##           : Updates nvram when needed
-##           : 10% speed boost
-## 7/15/2013 : Changed arch to match 32-bit (ia32) and 64-bit (x64) naming scheme
-##           : Changed directory copying in update-efi-dir to copy tools and drivers directories explicitly
-##           : Changed efibootmgr writing code to be more concise and added (-w) to write the entry as per dusktreader's excellent guide : https://docs.google.com/document/d/1pvgm3BprpXoadsQi38FxqMOCUZhcSqFhZ26FZBkmn9I/edit
-##           : Function to check if NVRAM boot entry was already listed was fixed to use awk and an if then clause
-##           : ref_bin_escape was modified from : ref_bin_escape=${ref_bin//\//\\\\} to remove extra backslashes (error does not show up when using cmdline)
-## 7/29/2013 : Changed location of tools,drivers, and binary directory to match capricious upstream move to /usr/share/refind
-
-function main () {  ## main insertion function
-  declare -r refind_dir="/boot/efi/EFI/refind"; ## set the refind directory
-  arch=$(uname -m | awk -F'_' '{if ($1 == "x86") {print "x"$2} else if ($1 == "i686") {print "ia32"}}') &amp;&amp;  ## get bit architecture
-  update-efi-dir;  ## updates or creates the refind directory
-  update-efi-nvram;  ## updates nvram if needed
-}
-
-function update-efi-dir () {  ## setup the refind directory
-  if [ ! -d $refind_dir ]; then  ## check if refind directory exists
-    echo "Couldn't find $refind_dir";
-    mkdir $refind_dir &amp;&amp;  ## make the refind directory if needed
-    echo "Made $refind_dir";
-  fi;
-  if [ "$arch" ]; then  ## check if anything was stored in $arch
-    cp -r /usr/share/refind/{refind_$arch.efi,keys,images,icons,fonts,docs,{tools,drivers}_$arch} $refind_dir/  &amp;&amp; ## update the bins and dirs
-    echo "Updated binaries and directory files for refind at $refind_dir";
-   else
-    echo "Failed to detect an x86 architecture";
-    exit;
-  fi;
-}
-
-function update-efi-nvram () { ## update the nvram with efibootmgr
-  declare -r ref_bin=${refind_dir/\/boot\/efi}/refind_$arch.efi;  ## get path of refind binary (without /boot/efi)
-  declare -r ref_bin_escape=${ref_bin//\//\\};  ## insert escape characters into $ref_bin
-  [ "$(efibootmgr -v | awk "/${ref_bin_escape//\\/\\\\}/")" ] &amp;&amp; ( ## check if boot entry is in nvram \
-    echo "Found boot entry, no need to update nvram";
-    ) || ( ## if boot entry is not in nvram; add it
-    declare -r esp=$(mount -l | awk '/ESP/ {print $1}') &amp;&amp;  ## get ESP partition
-    efibootmgr -cgw -d ${esp:0:8} -p ${esp:8} -L "rEFInd" -l $ref_bin_escape &amp;&amp; ## update nvram
-    echo "
-    Updated nvram with entry rEFInd to boot $ref_bin
-    Did not copy configuration files, please move refind.conf to $refind_dir/";
-    )
-}
-main;  ## run the main insertion function
-</pre>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/lib/systemd/system/refind_update.path</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
-Description=Update rEFInd bootloader files
-
-[Path]
-PathChanged=/usr/share/refind/refind_&lt;arch&gt;.efi
-Unit=refind_update.service
-
-[Install]
-WantedBy=multi-user.target
-</pre>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/lib/systemd/system/refind_update.service</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
-Description=Update rEFInd directories, binaries, and nvram
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/bash /usr/lib/systemd/scripts/refind_name_patchv2
-RemainAfterExit=no
-</pre>
-<p>运行以下命令以激活这个 systemd path 单元：
+<h3><span class="mw-headline" id="fwupdate">fwupdate</span></h3>
+<p>安装并设置好 <a href="../en/Fwupd.html" title="Fwupd">fwupd</a>。
 </p>
-<pre># systemctl enable refind_update.path
+<p>将 <code>fwupx64.efi</code> 和固件复制到 <code><i>esp</i>/EFI/tools/</code>：
+</p>
+<pre># cp /usr/lib/fwupd/efi/fwupdx64.efi <i>esp</i>/EFI/tools/
 </pre>
-<h2><span class="mw-headline" id="Apple_Macs">Apple Macs</span></h2>
+<h3>
+<span id=".E5.85.B3.E6.9C.BA.E6.88.96.E9.87.8D.E5.90.AF"></span><span class="mw-headline" id="关机或重启">关机或重启</span>
+</h3>
+<p>据报道，rEFInd 内置了关机和重启菜单项。由于这个工具列表是这个 wiki 中的同类工具中最广泛的，因此 UEFI shell 或其他 UEFI 引导管理器（如 <a href="../zh-CN/Systemd-boot.html" title="Systemd-boot (简体中文)">systemd-boot</a> ）的用户可能会对 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/powerofforreboot.efi/">powerofforreboot.efi</a></span><sup><small>AUR</small></sup> 感兴趣。
+</p>
+<h2>
+<span id=".E6.8F.90.E7.A4.BA.E4.B8.8E.E5.B0.8F.E6.8A.80.E5.B7.A7"></span><span class="mw-headline" id="提示与小技巧">提示与小技巧</span>
+</h2>
+<h3>
+<span id=".E5.9C.A8_UEFI_shell_.E4.B8.AD.E4.BD.BF.E7.94.A8.E9.A9.B1.E5.8A.A8"></span><span class="mw-headline" id="在_UEFI_shell_中使用驱动">在 UEFI shell 中使用驱动</span>
+</h3>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-go-next.png" class="image"><img alt="Tango-go-next.png" src="../File:Tango-go-next.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for moving to <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_drivers" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface#UEFI drivers</a>.</b><a href="../File:Tango-go-next.png" class="image"><img alt="Tango-go-next.png" src="../File:Tango-go-next.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Notes:</b> 不是只有 rEFInd 的驱动能被加载，已将所有与 UEFI 通用驱动的信息移动到一篇文章。 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:REFInd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:REFInd (简体中文)#</a>)</div>
+</div>
+<p>要在 UEFI shell 中使用 rEFInd 的驱动，请使用<code>load</code> 命令来加载它们，并使用 <code>map -r</code> 来刷新驱动器映射。
+</p>
+<pre>Shell&gt; load FS0:\EFI\refind\drivers\ext4_x64.efi
+Shell&gt; map -r
+</pre>
+<p>现在你可以从 UEFI shell 访问你的文件系统了。
+</p>
+<h3>
+<span id=".E8.AE.BE.E7.BD.AE_efifb_.E5.88.86.E8.BE.A8.E7.8E.87"></span><span class="mw-headline" id="设置_efifb_分辨率">设置 efifb 分辨率</span>
+</h3>
+<p>如果 <code>refind.conf</code> 中的分辨率被设置为一个不正确的值，在除了 Apple <a href="../zh-CN/Mac.html" title="Mac (简体中文)">Mac</a> 的所有系统中， rEFInd 都会展示一个支持的分辨率列表。对于 Apple Mac, 它会静默使用默认分辨率。
+</p>
+<p>要确定 <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/fb/efifb.html">efifb</a> 支持的帧缓冲区分辨率，请 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gnu-efi">gnu-efi</a></span> 将 <code>/usr/share/gnu-efi/apps/x86_64/modelist.efi</code> 复制到 <a href="../zh-CN/EFI_system_partition.html" title="EFI system partition (简体中文)">ESP</a> 的根目录。进入 <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_Shell" class="mw-redirect" title="UEFI shell">UEFI shell</a> 并运行 <code>modelist.efi</code>。
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">Shell&gt; FS0:\modelist.efi</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">GOP reports MaxMode 3
+ 0: 640x480 BGRR pitch 640
+*1: 800x600 BGRR pitch 800
+ 2: 1024x768 BGRR pitch 1024
+</pre>
+<p>在 <code>refind.conf</code> 中设置一个。重启并用 <code>dmesg | grep efifb</code> 来检查设置是否已被应用。
+</p>
+<h3>
+<span id="Btrfs_.E5.AD.90.E5.8D.B7.E6.94.AF.E6.8C.81"></span><span class="mw-headline" id="Btrfs_子卷支持">Btrfs 子卷支持</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>提示：</strong> 确保安装了 <code>btrfs_x64.efi</code> 驱动程序, 可以将 <code>/usr/share/refind/drivers_x64/btrfs_x64.efi</code> 复制到 <code><i>esp</i>/EFI/refind/drivers_x64/btrfs_x64.efi</code>来手动安装, 或者你也可以以 <code>refind-install /dev/sdx --alldrivers</code> 选项安装所有驱动程序。</div>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>警告：</strong> <code>btrfs_x64.efi</code> 不支持 <code>raid1c3/4</code>。</div>
+<h4>
+<span id=".E8.87.AA.E5.8A.A8.E6.A3.80.E6.B5.8B"></span><span class="mw-headline" id="自动检测">自动检测</span>
+</h4>
+<p>要允许在 Btrfs 子卷上进行内核自动检测，请取消注释并编辑 <code>refind.conf</code> 中的 <code>also_scan_dirs</code>。
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/EFI/refind/refind.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
+also_scan_dirs +,<i>subvolume</i>/boot
+...
+</pre>
+<p>然后在 <code>refind_linux.conf</code> 中将 <code>subvol=<i>subvolume</i></code> 添加到 <code>rootflags</code>，之后将 <code><i>subvolume</i></code> 添加到 initrd 路径之前。
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/boot/refind_linux.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">"Boot using standard options"  "root=PARTUUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw <b>rootflags=subvol=<i>subvolume</i></b> initrd=<i><b>subvolume</b></i>\boot\initramfs-%v.img"</pre>
+<h4>
+<span id=".E6.89.8B.E5.8A.A8.E5.90.AF.E5.8A.A8.E9.A1.B9_2"></span><span class="mw-headline" id="手动启动项_2">手动启动项</span>
+</h4>
+<p>如果将一个 <a href="../zh-CN/Btrfs.html" title="Btrfs (简体中文)">btrfs</a> 子卷作为根目录引导，请将子卷的路径预先添加到 loader 和 initrd 路径之前，并用 <code>rootflags=subvol=<i>root_subvolume</i></code> 修改 <code>options</code> 行。在下面的示例中，root 已作为名为“ROOT”的btrfs子卷挂载（例如  <code>mount -o subvol=ROOT /dev/sdxY /mnt</code>）：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/EFI/refind/refind.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
+menuentry "Arch Linux" {
+        icon     /EFI/refind/icons/os_arch.png
+        volume   "[bootdevice]"
+        loader   <b>/ROOT</b>/boot/vmlinuz-linux
+        initrd   <b>/ROOT</b>/boot/initramfs-linux.img
+        options  "root=PARTUUID=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i> rw <b>rootflags=subvol=ROOT</b>"
+...
+}</pre>
+<p>如果失败将导致以下错误信息：<code>ERROR: Root device mounted successfully, but /sbin/init does not exist.</code>
+</p>
+<h3><span class="mw-headline" id="LoaderDevicePartUUID">LoaderDevicePartUUID</span></h3>
+<p>从 0.13.1 版本开始，rEFInd 支持设置 UEFI 变量 <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_INTERFACE/">LoaderDevicePartUUID</a>。启用此选项允许 <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-gpt-auto-generator"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-gpt-auto-generator.8">systemd-gpt-auto-generator(8)</a></span> 自动挂载 EFI 系统分区，而无需在 <code>/etc/fstab</code> 中指定它。请参阅 <a href="../en/Systemd.html#GPT_partition_automounting" title="Systemd">systemd#GPT partition automounting</a>。
+</p>
+<p>对于 rEFInd， 要设置 <code>LoaderDevicePartUUID</code>, 请编辑 <code>refind.conf</code> 并取消注释 <code>write_systemd_vars true</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/EFI/refind/refind.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
+write_systemd_vars true
+...</pre>
+<p>您可以通过使用 <code>cat /sys/firmware/efi/efivars/LoaderDevicePartUUID-4a67b082-0a4c-41cf-b6c7-440b29bb8c4f</code> 检查它的值，或者通过查看 <code>bootclt</code> 输出中 “Boot loader sets ESP partition information” 的状态来验证它是否已设置。
+</p>
+<h2>
+<span id=".E7.96.91.E9.9A.BE.E8.A7.A3.E7.AD.94"></span><span class="mw-headline" id="疑难解答">疑难解答</span>
+</h2>
+<h3><span class="mw-headline" id="Apple_Macs">Apple Macs</span></h3>
 <p><a href="../zh-CN/Arch_User_Repository.html" title="Arch User Repository (简体中文)">AUR</a> 上的 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mactel-boot/">mactel-boot</a></span><sup><small>AUR</small></sup> 是 "bless" 工具的实验性替代品。如果它不能正常工作，
-在 OS X 中使用 "bless" 来将 rEFInd 设置为默认启动项。假设您的 UEFISYS 分区挂载到 <code>/mnt/efi</code>。
+在 OS X 中使用 "bless" 来将 rEFInd 设置为默认启动项。
 </p>
-<pre>$ sudo bless --setBoot --folder /mnt/efi/EFI/refind --file /mnt/efi/EFI/refind/refind_x64.efi
+<pre> # bless --setBoot --folder <i>esp</i>/EFI/refind --file <i>esp</i>/EFI/refind/refind_x64.efi
 </pre>
-<h2><span class="mw-headline" id="VirtualBox">VirtualBox</span></h2>
-<p>参见 <a href="../en/VirtualBox.html#Using_Arch_under_Virtualbox_EFI_mode" title="VirtualBox">VirtualBox#Using Arch under Virtualbox EFI mode</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>.
+<h3><span class="mw-headline" id="VirtualBox">VirtualBox</span></h3>
+<p>6.1 版本之前的 VirtualBox 将只引导默认的 <code><i>esp</i>/EFI/BOOT/bootx64.efi</code> 路径，因此 <code>refind-install</code> 至少需要与 <code>--usedefault</code> 选项一起使用。有关详细信息，请参阅 <a href="../en/VirtualBox/Install_Arch_Linux_as_a_guest.html#Installation_in_EFI_mode_on_VirtualBox_&lt;_6.1" title="VirtualBox/Install Arch Linux as a guest">VirtualBox/Install Arch Linux as a guest#Installation in EFI mode on VirtualBox &lt; 6.1</a>。
 </p>
 <h2>
 <span id=".E5.8F.82.E8.A7.81"></span><span class="mw-headline" id="参见">参见</span>
 </h2>
-<ul><li>
-<a rel="nofollow" class="external text" href="http://www.rodsbooks.com/refind/">The rEFInd Boot Manager</a> by Roderick W. Smith.</li></ul>
+<ul>
+<li>
+<a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/">The rEFInd Boot Manager</a> by Roderick W. Smith.</li>
+<li><a href="https://en.wikipedia.org/wiki/rEFInd" class="extiw" title="wikipedia:rEFInd">Wikipedia:rEFInd</a></li>
+<li><code>/usr/share/refind/docs/README.txt</code></li>
+<li><a rel="nofollow" class="external text" href="https://sourceforge.net/p/refind/discussion/">rEFInd discussion forum on Sourceforge</a></li>
+</ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Boot_loaders.html" title="Category:Boot loaders (简体中文)">Boot loaders (简体中文)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Move.html" title="Category:Pages or sections flagged with Template:Move">Pages or sections flagged with Template:Move</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -253,8 +629,8 @@ RemainAfterExit=no
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=REFInd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=640564">https://wiki.archlinux.org/index.php?title=REFInd_(简体中文)&amp;oldid=640564</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 November 2020, at 08:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=REFInd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=656030">https://wiki.archlinux.org/index.php?title=REFInd_(简体中文)&amp;oldid=656030</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 25 March 2021, at 14:46.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

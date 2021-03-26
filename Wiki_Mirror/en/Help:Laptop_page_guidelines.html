@@ -56,10 +56,11 @@
 <li class="toclevel-1 tocsection-9">
 <a href="#%22Function_keys%22_section"><span class="tocnumber">6</span> <span class="toctext">"Function keys" section</span></a>
 <ul>
-<li class="toclevel-2 tocsection-10"><a href="#Example_table_2"><span class="tocnumber">6.1</span> <span class="toctext">Example table</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Capturing_function_keys"><span class="tocnumber">6.1</span> <span class="toctext">Capturing function keys</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Example_table_2"><span class="tocnumber">6.2</span> <span class="toctext">Example table</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-11"><a href="#%22See_also%22_section"><span class="tocnumber">7</span> <span class="toctext">"See also" section</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#%22See_also%22_section"><span class="tocnumber">7</span> <span class="toctext">"See also" section</span></a></li>
 </ul>
 </div>
 
@@ -75,6 +76,8 @@
 <p>Do not duplicate content from the general <a href="../en/Laptop.html" title="Laptop">Laptop</a> guidelines. A section just containing e.g "The webcam of this device works fine" will not help anyone, so do not add a section if there are no special instructions for it. Also avoid mentioning desktop environment or window manager specific content. This also applies to other things that are documented in the ArchWiki, e.g do not include instructions on how to flash the archiso to a USB-stick, just link to the page containing the instructions. This will result in less maintenance required.
 </p>
 <h2><span class="mw-headline" id="Adding_hardware_information">Adding hardware information</span></h2>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> Keep all of the lines as short as possible because a wide table is hard to read and makes the page look disorganized.</div>
 <p>Add a table with <code>style="float: right;"</code> at the very beginning of the page with the following columns:
 </p>
 <ol>
@@ -85,11 +88,15 @@
 </ol>
 </li>
 <li>PCI/USB ID
-<ol><li>It should contain the PCI or USB ID of the part, if available. This is important because some laptops may have varying hardware.</li></ol>
+<ol>
+<li>It should contain the PCI or USB ID of the part, if available. This is important because some laptops may have varying hardware.</li>
+<li>
+<code>lsusb</code> shows the USB ID by default, but <code>lspci</code> must be run with <code>-nn</code> in order to obtain the PCI ID of devices.</li>
+</ol>
 </li>
 <li>Working?
 <ol>
-<li>It should contain <a href="../en/Template:Yes.html" title="Template:Yes">Template:Yes</a> or <a href="../en/Template:No.html" title="Template:No">Template:No</a>. If these are not applicable, use <a href="../en/Template:Y.html" title="Template:Y">Template:Y</a> and a fitting, <b>short</b> description of its status, like "Untested".</li>
+<li>It should contain <a href="../en/Template:Yes.html" title="Template:Yes">Template:Yes</a> or <a href="../en/Template:No.html" title="Template:No">Template:No</a>. If these are not applicable, use <a href="../en/Template:Y.html" title="Template:Y">Template:Y</a> and a fitting, <b>short</b> description of its status, like "Untested" or "Partial".</li>
 <li>Use <a href="../en/Template:Yes.html" title="Template:Yes">Template:Yes</a> even if you need to install an external driver.</li>
 </ol>
 </li>
@@ -249,6 +256,17 @@
 </ol>
 </li>
 </ol>
+<h3><span class="mw-headline" id="Capturing_function_keys">Capturing function keys</span></h3>
+<p>It is possible to capture function keys using <code>xev</code> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xev">xorg-xev</a></span>) or <code>wev</code> (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/wev/">wev</a></span><sup><small>AUR</small></sup>). There is also <code>libinput debug-events</code> but since many wayland compositors use <code>xkbcommon</code>, the Xorg-specific names are preferred.
+</p>
+<p>Some function keys (such as <code>XF86Sleep</code>) may be bound to <code>systemd-logind</code>, which means they can not be captured with any tool by default. Use <code>systemd-inhibit</code> to temporarily suspend the handling of certain keys:
+</p>
+<pre># systemd-inhibit --what=handle-suspend-key sleep 1h
+</pre>
+<p>As long as this command is running, <code>systemd-logind</code> will ignore these button presses and properly capturing the button press is possible.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> If the key is still invisible it might be firmware-bound or a kernel module is handling it.</div>
 <h3><span class="mw-headline" id="Example_table_2">Example table</span></h3>
 <table class="wikitable">
 
@@ -334,8 +352,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Help:Laptop_page_guidelines&amp;oldid=654273">https://wiki.archlinux.org/index.php?title=Help:Laptop_page_guidelines&amp;oldid=654273</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 9 March 2021, at 04:42.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Help:Laptop_page_guidelines&amp;oldid=656110">https://wiki.archlinux.org/index.php?title=Help:Laptop_page_guidelines&amp;oldid=656110</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 March 2021, at 00:31.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

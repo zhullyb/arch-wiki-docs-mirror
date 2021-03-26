@@ -78,20 +78,21 @@
 <li class="toclevel-2 tocsection-9">
 <a href="#Automated"><span class="tocnumber">3.2</span> <span class="toctext">Automated</span></a>
 <ul>
-<li class="toclevel-3 tocsection-10"><a href="#systemd-swap"><span class="tocnumber">3.2.1</span> <span class="toctext">systemd-swap</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#zram-generator"><span class="tocnumber">3.2.1</span> <span class="toctext">zram-generator</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#systemd-swap"><span class="tocnumber">3.2.2</span> <span class="toctext">systemd-swap</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-11"><a href="#Swap_encryption"><span class="tocnumber">4</span> <span class="toctext">Swap encryption</span></a></li>
-<li class="toclevel-1 tocsection-12">
+<li class="toclevel-1 tocsection-12"><a href="#Swap_encryption"><span class="tocnumber">4</span> <span class="toctext">Swap encryption</span></a></li>
+<li class="toclevel-1 tocsection-13">
 <a href="#Performance"><span class="tocnumber">5</span> <span class="toctext">Performance</span></a>
 <ul>
-<li class="toclevel-2 tocsection-13"><a href="#Swappiness"><span class="tocnumber">5.1</span> <span class="toctext">Swappiness</span></a></li>
-<li class="toclevel-2 tocsection-14"><a href="#VFS_cache_pressure"><span class="tocnumber">5.2</span> <span class="toctext">VFS cache pressure</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#Priority"><span class="tocnumber">5.3</span> <span class="toctext">Priority</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#Using_zswap_or_zram"><span class="tocnumber">5.4</span> <span class="toctext">Using zswap or zram</span></a></li>
-<li class="toclevel-2 tocsection-17"><a href="#Striping"><span class="tocnumber">5.5</span> <span class="toctext">Striping</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Swappiness"><span class="tocnumber">5.1</span> <span class="toctext">Swappiness</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#VFS_cache_pressure"><span class="tocnumber">5.2</span> <span class="toctext">VFS cache pressure</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Priority"><span class="tocnumber">5.3</span> <span class="toctext">Priority</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Using_zswap_or_zram"><span class="tocnumber">5.4</span> <span class="toctext">Using zswap or zram</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Striping"><span class="tocnumber">5.5</span> <span class="toctext">Striping</span></a></li>
 </ul>
 </li>
 </ul>
@@ -169,7 +170,7 @@
 <h3><span class="mw-headline" id="Manually">Manually</span></h3>
 <h4><span class="mw-headline" id="Swap_file_creation">Swap file creation</span></h4>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If you use Btrfs, use the procedure described in <a href="../en/Btrfs.html#Swap_file" title="Btrfs">Btrfs#Swap file</a> instead of the following <i>dd</i> command to initialize the swap file.</div>
+<strong>Note:</strong> If you use Btrfs, first follow the procedure described in <a href="../en/Btrfs.html#Swap_file" title="Btrfs">Btrfs#Swap file</a> to initialize the swap file.</div>
 <p>Use <a href="../en/Dd.html" title="Dd">dd</a> to create a swap file the size of your choosing. For example, creating a 512 MiB swap file:
 </p>
 <pre># dd if=/dev/zero of=/swapfile bs=1M count=512 status=progress
@@ -211,7 +212,13 @@
 <p>Finally remove the relevant entry from <code>/etc/fstab</code>.
 </p>
 <h3><span class="mw-headline" id="Automated">Automated</span></h3>
+<h4><span class="mw-headline" id="zram-generator">zram-generator</span></h4>
+<p>The aim of this tool is the creation of zram devices. It's written in Rust and resides in <a rel="nofollow" class="external text" href="https://github.com/systemd/zram-generator">systemd's GitHub</a>. It can be installed with the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/zram-generator/">zram-generator</a></span><sup><small>AUR</small></sup> package.
+Configuration is straightforward and explained in the <a rel="nofollow" class="external text" href="https://github.com/systemd/zram-generator/blob/main/README.md">README</a>.
+</p>
 <h4><span class="mw-headline" id="systemd-swap">systemd-swap</span></h4>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> The author now <a rel="nofollow" class="external text" href="https://github.com/Nefelim4ag/systemd-swap#%EF%B8%8F-current-code-quality-and-commit-frequency-is-low-%EF%B8%8F">recommends using zram-generator instead</a>, due to low commit frequency and zram covering the needs of most users.</div>
 <p>systemd-swap is a script for creating hybrid swap space from zram swaps, swap files and swap partitions. It is not affiliated with the systemd project.
 </p>
 <p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd-swap">systemd-swap</a></span> package. Uncomment and set <code>swapfc_enabled=1</code> in the <i>Swap File Chunked</i> section of <code>/etc/systemd/swap.conf</code>. <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">Start/enable</a> the <code>systemd-swap</code> service.
@@ -234,7 +241,7 @@
 <p>Swap values can be adjusted to help performance:
 </p>
 <h3><span class="mw-headline" id="Swappiness">Swappiness</span></h3>
-<p>The <i>swappiness</i> <a href="../en/Sysctl.html" title="Sysctl">sysctl</a> parameter represents the kernel's preference (or avoidance) of swap space. Swappiness can have a value between 0 and 100, the default value is 60. A low value causes the kernel to avoid swapping, a high value causes the kernel to try to use swap space, and a value of 100 means IO cost is assumed to be equal. Using a low value on sufficient memory is known to improve responsiveness on many systems.
+<p>The <i>swappiness</i> <a href="../en/Sysctl.html" title="Sysctl">sysctl</a> parameter represents the kernel's preference (or avoidance) of swap space. Swappiness can have a value between 0 and 200 (max 100 if Linux &lt; 5.8), the default value is 60. A low value causes the kernel to avoid swapping, a high value causes the kernel to try to use swap space, and a value of 100 means IO cost is assumed to be equal. Using a low value on sufficient memory is known to improve responsiveness on many systems.
 </p>
 <p>To check the current swappiness value:
 </p>
@@ -255,7 +262,7 @@
 <p>To test and more on why this may work, take a look at <a rel="nofollow" class="external text" href="http://rudd-o.com/en/linux-and-free-software/tales-from-responsivenessland-why-linux-feels-slow-and-how-to-fix-that">this article</a>.
 </p>
 <h3><span class="mw-headline" id="VFS_cache_pressure">VFS cache pressure</span></h3>
-<p>Another <i>sysctl</i> parameter that affects swap performance is <code>vm.vfs_cache_pressure</code>, which controls the tendency of the kernel to reclaim the memory which is used for caching of VFS caches, versus pagecache and swap. Increasing this value increases the rate at which VFS caches are reclaimed<a rel="nofollow" class="external autonumber" href="http://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.memory.html#cha.tuning.memory.vm.reclaim">[1]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup>. For more information, see the <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/admin-guide/sysctl/vm.html">Linux kernel documentation</a>.
+<p>Another <i>sysctl</i> parameter that affects swap performance is <code>vm.vfs_cache_pressure</code>, which controls the tendency of the kernel to reclaim the memory which is used for caching of VFS caches, versus pagecache and swap. Increasing this value increases the rate at which VFS caches are reclaimed<a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20171004100853/http://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.memory.html#cha.tuning.memory.vm.reclaim">[1]</a>. For more information, see the <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/admin-guide/sysctl/vm.html">Linux kernel documentation</a>.
 </p>
 <h3><span class="mw-headline" id="Priority">Priority</span></h3>
 <p>If you have more than one swap file or swap partition you should consider assigning a priority value (0 to 32767) for each swap area. The system will use swap areas of higher priority before using swap areas of lower priority. For example, if you have a faster disk (<code>/dev/sda</code>) and a slower disk (<code>/dev/sdb</code>), assign a higher priority to the swap area located on the fastest device. Priorities can be assigned in <a href="../en/Fstab.html" title="Fstab">fstab</a> via the <code>pri</code> parameter:
@@ -281,10 +288,7 @@
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:File_systems.html" title="Category:File systems">File systems</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li></ul>
 </div>
 </div>
 	</div>
@@ -292,8 +296,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Swap&amp;oldid=653480">https://wiki.archlinux.org/index.php?title=Swap&amp;oldid=653480</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 February 2021, at 07:47.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Swap&amp;oldid=655961">https://wiki.archlinux.org/index.php?title=Swap&amp;oldid=655961</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 24 March 2021, at 22:37.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

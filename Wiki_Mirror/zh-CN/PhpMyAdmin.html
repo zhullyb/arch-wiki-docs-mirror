@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,7 +34,7 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/PhpMyAdmin.html" title="PhpMyAdmin">PhpMyAdmin</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2018-06-22。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=PhpMyAdmin&amp;diff=0&amp;oldid=526922">更改</a>，则您可以帮助同步翻译。</div>
+<strong>翻译状态：</strong>本文是 <a href="../en/PhpMyAdmin.html" title="PhpMyAdmin">PhpMyAdmin</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-03-18。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=PhpMyAdmin&amp;diff=0&amp;oldid=655234">更改</a>，则您可以帮助同步翻译。</div>
 <p><a rel="nofollow" class="external text" href="http://www.phpmyadmin.net/">phpMyAdmin</a>是一个基于网页的，帮助管理MySQL数据库的Apache/PHP前端。
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -61,19 +62,22 @@
 <li class="toclevel-1 tocsection-9">
 <a href="#%E9%85%8D%E7%BD%AE"><span class="tocnumber">3</span> <span class="toctext">配置</span></a>
 <ul>
-<li class="toclevel-2 tocsection-10"><a href="#%E4%BD%BF%E7%94%A8%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC"><span class="tocnumber">3.1</span> <span class="toctext">使用安装脚本</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#%E6%B7%BB%E5%8A%A0blowfish_secret_passphrase"><span class="tocnumber">3.2</span> <span class="toctext">添加blowfish_secret passphrase</span></a></li>
-<li class="toclevel-2 tocsection-12">
-<a href="#%E5%90%AF%E7%94%A8%E9%85%8D%E7%BD%AE%E5%AD%98%E5%82%A8"><span class="tocnumber">3.3</span> <span class="toctext">启用配置存储</span></a>
+<li class="toclevel-2 tocsection-10"><a href="#%E5%AE%9A%E4%B9%89%E8%BF%9C%E7%A8%8B_MySQL_%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="tocnumber">3.1</span> <span class="toctext">定义远程 MySQL 服务器</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#%E4%BD%BF%E7%94%A8%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC"><span class="tocnumber">3.2</span> <span class="toctext">使用安装脚本</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#%E6%B7%BB%E5%8A%A0blowfish_secret_passphrase"><span class="tocnumber">3.3</span> <span class="toctext">添加blowfish_secret passphrase</span></a></li>
+<li class="toclevel-2 tocsection-13">
+<a href="#%E5%90%AF%E7%94%A8%E9%85%8D%E7%BD%AE%E5%AD%98%E5%82%A8"><span class="tocnumber">3.4</span> <span class="toctext">启用配置存储</span></a>
 <ul>
-<li class="toclevel-3 tocsection-13"><a href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="tocnumber">3.3.1</span> <span class="toctext">创建数据库</span></a></li>
-<li class="toclevel-3 tocsection-14"><a href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E6%88%B7"><span class="tocnumber">3.3.2</span> <span class="toctext">创建数据库用户</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="tocnumber">3.4.1</span> <span class="toctext">创建数据库</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E6%88%B7"><span class="tocnumber">3.4.2</span> <span class="toctext">创建数据库用户</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-15"><a href="#%E5%90%AF%E7%94%A8templates_catching"><span class="tocnumber">3.4</span> <span class="toctext">启用templates catching</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#%E5%90%AF%E7%94%A8templates_catching"><span class="tocnumber">3.5</span> <span class="toctext">启用templates catching</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#%E7%A7%BB%E9%99%A4%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95"><span class="tocnumber">3.6</span> <span class="toctext">移除配置目录</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98"><span class="tocnumber">3.7</span> <span class="toctext">安装主题</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-16"><a href="#%E5%8F%82%E8%A7%81"><span class="tocnumber">4</span> <span class="toctext">参见</span></a></li>
+<li class="toclevel-1 tocsection-19"><a href="#%E5%8F%82%E8%A7%81"><span class="tocnumber">4</span> <span class="toctext">参见</span></a></li>
 </ul>
 </div>
 
@@ -88,10 +92,10 @@
 <h3><span class="mw-headline" id="PHP">PHP</span></h3>
 <p>确保PHP的<a href="../zh-CN/PHP.html#MySQL/MariaDB" title="PHP (简体中文)">MySQL</a>扩展已经被启用。
 </p>
-<p>你也可以启用<code>bz2</code>和<code>zip</code>扩展以支持压缩。
+<p>你也可以启用 <code>extension=bz2</code> 和 <code>extension=zip</code> 扩展以支持压缩。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> 如果在<code>php.ini</code>中设置了<code>open_basedir</code>，<code>/etc/weppapps/</code>必须加入<code>open_basedir</code>。</div>
+<strong>注意：</strong> 如果设置了<code>open_basedir</code>，<code>/usr/share/webapps</code> 和 <code>/etc/weppapps/</code> 必须加入到<code>/etc/php/php.ini</code> 中的<code>open_basedir</code>。参考 <a href="../zh-CN/PHP.html#%E9%85%8D%E7%BD%AE" title="PHP (简体中文)">PHP (简体中文)#配置</a>。</div>
 <h3><span class="mw-headline" id="Apache">Apache</span></h3>
 <p>按照<a href="../zh-CN/Apache_HTTP_Server.html#PHP" title="Apache HTTP Server (简体中文)">Apache HTTP Server (简体中文)#PHP</a>设置PHP。
 创建Apache配置文件：
@@ -111,6 +115,8 @@ Include conf/extra/phpmyadmin.conf
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 默认情况下，每个可以访问Web服务器的人都可以通过这个URL访问phpMyAdmin登录页面。要改变此设置，编辑<code>/etc/httpd/conf/extra/phpmyadmin.conf</code>。例如，你只想从本地访问phpMyAdmin，将<code>Require all granted</code>改为<code>Require local</code>。注意，这将禁止远程访问phpMyAdmin，如果你想安全地远程访问phpMyAdmin，你可以设置一个<a href="../zh-CN/Secure_Shell.html#%E5%8A%A0%E5%AF%86_Socks_%E9%80%9A%E9%81%93" title="Secure Shell (简体中文)">加密的SOCKS通道</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>。</div>
+<p>修改了 Apache 配置文件之后，<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>httpd.service</code>。
+</p>
 <h3><span class="mw-headline" id="Lighttpd">Lighttpd</span></h3>
 <p>配置<a href="../en/Lighttpd.html" title="Lighttpd">Lighttpd</a>，确保能正常使用PHP，并且启用<code>mod_alias</code>。
 </p>
@@ -119,43 +125,80 @@ Include conf/extra/phpmyadmin.conf
 <pre> alias.url = ( "/phpmyadmin" =&gt; "/usr/share/webapps/phpMyAdmin/")
 </pre>
 <h3><span class="mw-headline" id="Nginx">Nginx</span></h3>
-<p>确保正确配置<a href="../en/Nginx.html#FastCGI" title="Nginx">FastCGI</a>.
+<p>确保正确配置<a href="../en/Nginx.html#FastCGI" title="Nginx">FastCGI</a>，并使用 <a href="../en/Nginx.html#Server_blocks" title="Nginx">nginx#Server blocks</a> 来使得管理更简单。
 </p>
 <h4>
 <span id=".E5.AD.90.E5.9F.9F.E5.90.8D"></span><span class="mw-headline" id="子域名">子域名</span>
 </h4>
-<p>参考<a href="../en/Nginx.html#PHP_configuration_file" title="Nginx">nginx#PHP configuration file</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>，为php创建一个单独的配置文件，并使用一个服务器块，例如：
+<p>根据个人喜好，通过子域名访问 phpMyAdmin, 如 <code>https://<i>pma.domain.tld</i></code>：
 </p>
-<pre>server {
-    server_name     phpmyadmin.&lt;domain.tld&gt;;
-    root    /usr/share/webapps/phpMyAdmin;
-    index   index.php;
-    include php.conf;
-}
-</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/nginx/sites-available/<i>pma.domain.tld</i></pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">server {
+    server_name <i>pma.domain.tld</i>;
+    ; listen 80; # also listen on http
+    ; listen [::]:80;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    index index.php;
+    access_log /var/log/nginx/pma.access.log;
+    error_log /var/log/nginx/pma.error.log;
+
+    # Allows limiting access to certain client addresses.
+    ; allow 192.168.1.0/24;
+    ; allow <i>my-ip</i>;
+    ; deny all;
+
+    root /usr/share/webapps/phpMyAdmin;
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        try_files $uri $document_root$fastcgi_script_name =404;
+
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+
+        fastcgi_param HTTP_PROXY "";
+        fastcgi_param HTTPS on;
+        fastcgi_request_buffering off;
+   }
+}</pre>
 <h4>
 <span id=".E5.AD.90.E7.9B.AE.E5.BD.95"></span><span class="mw-headline" id="子目录">子目录</span>
 </h4>
-<p>这可以通过<code>https://domain.tld/phpMyAdmin</code>访问phpMyAdmin：
+<p>或者使用子目录，如 <code>https://<i>domain.tld</i>/phpMyAdmin</code>：
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/nginx/sites-available/domain.tld</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">location /phpMyAdmin {
-   server_name domain.tld;
-   listen 443 ssl http2;
-   root /srv/http/domain.tld;
-   index index.php;  
-  
-   location / {
-      try_files $uri $uri/ =404;
-   }
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/nginx/sites-available/<i>domain.tld</i></pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">server {
+    server_name <i>domain.tld</i>;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    index index.php;
+    access_log /var/log/nginx/domain.tld.access.log;
+    error_log /var/log/nginx/domain.tld.error.log;
 
-   # Deny static files
-   location ~ ^/phpMyAdmin/(README|LICENSE|ChangeLog|DCO)$ {
-      deny all;
-   }
+    root /srv/http/domain.tld;
+    location / {
+        try_files $uri $uri/ =404;
+    }
 
-   # Deny .md files
-   location ~ ^/phpMyAdmin/(.+\.md)$ {
+    location /phpMyAdmin {
+        root /usr/share/webapps/phpMyAdmin;
+    }
+
+    # Deny static files
+    location ~ ^/phpMyAdmin/(README|LICENSE|ChangeLog|DCO)$ {
+       deny all;
+    }
+
+    # Deny .md files
+    location ~ ^/phpMyAdmin/(.+\.md)$ {
       deny all;
    }
 
@@ -166,26 +209,36 @@ Include conf/extra/phpmyadmin.conf
 
    #FastCGI config for phpMyAdmin
    location ~ /phpMyAdmin/(.+\.php)$ {
+      try_files $uri $document_root$fastcgi_script_name =404;
+
+      fastcgi_split_path_info ^(.+\.php)(/.*)$;
+      fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+      fastcgi_index index.php;
       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-      fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;
-      fastcgi_index  index.php;
-      include        fastcgi.conf;
+      include fastcgi_params;
+
+      fastcgi_param HTTP_PROXY "";
+      fastcgi_param HTTPS on;
+      fastcgi_request_buffering off;
    }
 }
 </pre>
 <h2>
 <span id=".E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="配置">配置</span>
 </h2>
-<p>主配置文件位于<code>/etc/webapps/phpmyadmin/config.inc.php</code>。
+<p>主配置文件位于 <code>/usr/share/webapps/phpMyAdmin/config.inc.php</code>。
 </p>
-<p>如果<a href="../en/MySQL.html" title="MySQL">MySQL</a>服务器不在本机上，添加如下行:
+<h3>
+<span id=".E5.AE.9A.E4.B9.89.E8.BF.9C.E7.A8.8B_MySQL_.E6.9C.8D.E5.8A.A1.E5.99.A8"></span><span class="mw-headline" id="定义远程_MySQL_服务器">定义远程 MySQL 服务器</span>
+</h3>
+<p>如果<a href="../en/MySQL.html" title="MySQL">MySQL</a>服务器不在本机上，添加如下行到配置文件:
 </p>
-<pre>$cfg['Servers'][$i]['host'] = 'localhost';
+<pre>$cfg['Servers'][$i]['host'] =  'example.com';
 </pre>
 <h3>
 <span id=".E4.BD.BF.E7.94.A8.E5.AE.89.E8.A3.85.E8.84.9A.E6.9C.AC"></span><span class="mw-headline" id="使用安装脚本">使用安装脚本</span>
 </h3>
-<p>要使用phpMyAdmin安装脚本（例如http://localhost/phpmyadmin/setup），确保<code>http</code>用户可以写入<code>/usr/share/webapps/phpMyAdmin</code>。
+<p>要使用phpMyAdmin安装脚本（例如 <a rel="nofollow" class="external free" href="http://localhost/phpmyadmin/setup">http://localhost/phpmyadmin/setup</a> ），确保<code>http</code>用户可以写入<code>/usr/share/webapps/phpMyAdmin</code>。
 </p>
 <pre># mkdir /usr/share/webapps/phpMyAdmin/config
 # chown http:http /usr/share/webapps/phpMyAdmin/config
@@ -194,11 +247,11 @@ Include conf/extra/phpmyadmin.conf
 <h3>
 <span id=".E6.B7.BB.E5.8A.A0blowfish_secret_passphrase"></span><span class="mw-headline" id="添加blowfish_secret_passphrase">添加blowfish_secret passphrase</span>
 </h3>
-<p>需要设置一个32位的字符串从而充分地使用blowfish算法，从而避免……（配置文件现在需要一个短语密码）的错误。
+<p>需要设置一个唯一的32位的字符串从而充分地使用blowfish算法，从而避免……（配置文件现在需要一个短语密码）的错误。
 </p>
 <p>(blowfish_secret)<i>:</i>
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/webapps/phpmyadmin/config.inc.php</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/share/webapps/phpMyAdmin/config.inc.php</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">$cfg['blowfish_secret'] = '...';</pre>
 <h3>
 <span id=".E5.90.AF.E7.94.A8.E9.85.8D.E7.BD.AE.E5.AD.98.E5.82.A8"></span><span class="mw-headline" id="启用配置存储">启用配置存储</span>
@@ -206,10 +259,10 @@ Include conf/extra/phpmyadmin.conf
 <p>例如table linking,change tracking,PDF creation,bookmarking queries的附加功能默认是被禁用的，并且会提示The phpMyAdmin configuration storage is not completely configured, some extended features have been deactivated.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> 下面的例子将<code>controluser</code>假设为<b>pma</b>，controlpass假设为<b>pmapass</b>。</div>
-<p>在<code>/etc/webapps/phpmyadmin/config.inc.php</code>取消注释(移除开头的//)，并按需更改为所需的凭据：
+<strong>注意：</strong> 下面的例子将<code>controluser</code>假设为<b>pma</b>，<code>controlpass</code> 假设为<b>pmapass</b>。</div>
+<p>在<code>/usr/share/webapps/phpMyAdmin/config.inc.php</code>取消注释(移除开头的//)，并按需更改为所需的凭据：
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/webapps/phpmyadmin/config.inc.php</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/share/webapps/phpMyAdmin/config.inc.php</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">/* User used to manipulate with storage */
 // $cfg['Servers'][$i]['controlhost'] = 'my-host';
 // $cfg['Servers'][$i]['controlport'] = '3306';
@@ -266,23 +319,40 @@ GRANT SELECT ON mysql.host TO 'pma'@'localhost';
 GRANT SELECT (Host, Db, User, Table_name, Table_priv, Column_priv)
     ON mysql.tables_priv TO 'pma'@'localhost';
 </pre>
-<p>In order use the bookmark and relation features, set the following permissions:
+<p>为了使用书签和关系特性，设置如下的权限：
 </p>
 <pre>GRANT SELECT, INSERT, UPDATE, DELETE ON phpmyadmin.* TO 'pma'@'localhost';
 </pre>
-<p>重新登录以启用新功能。
+<p>重新登录以启用新特性。
 </p>
 <h3>
 <span id=".E5.90.AF.E7.94.A8templates_catching"></span><span class="mw-headline" id="启用templates_catching">启用templates catching</span>
 </h3>
-<p>在<code>/etc/webapps/phpmyadmin/config.inc.php</code>添加如下行：
+<p>在<code>/usr/share/webapps/phpMyAdmin/config.inc.php</code>添加如下行：
 </p>
 <pre> $cfg['TempDir'] = '/tmp/phpmyadmin'
 </pre>
+<h3>
+<span id=".E7.A7.BB.E9.99.A4.E9.85.8D.E7.BD.AE.E7.9B.AE.E5.BD.95"></span><span class="mw-headline" id="移除配置目录">移除配置目录</span>
+</h3>
+<p>当配置完成之后，可以移除临时配置目录，这也会抑制来自网页交互的警告：
+</p>
+<pre># rm -r /usr/share/webapps/phpMyAdmin/config
+</pre>
+<h3>
+<span id=".E5.AE.89.E8.A3.85.E4.B8.BB.E9.A2.98"></span><span class="mw-headline" id="安装主题">安装主题</span>
+</h3>
+<p>主题的位置在 <code>/usr/share/webapps/phpMyAdmin/themes</code>。你可以在 <a rel="nofollow" class="external free" href="https://www.phpmyadmin.net/themes/">https://www.phpmyadmin.net/themes/</a> 找到新主题。
+</p>
+<p>直接下载并将主题提取到相应位置，在 phpmyadmin 刷新之后它将正常工作。然而，你下载的主题必须与 phpmyadmin 的版本相对应，适用于老版本的主题无法使用。
+</p>
 <h2>
 <span id=".E5.8F.82.E8.A7.81"></span><span class="mw-headline" id="参见">参见</span>
 </h2>
-<ul><li><a href="https://en.wikipedia.org/wiki/phpMyAdmin" class="extiw" title="wikipedia:phpMyAdmin">Wikipedia</a></li></ul>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/phpMyAdmin" class="extiw" title="wikipedia:phpMyAdmin">Wikipedia</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phpmyadmin.net/">Official website</a></li>
+</ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
@@ -297,8 +367,8 @@ GRANT SELECT (Host, Db, User, Table_name, Table_priv, Column_priv)
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PhpMyAdmin_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=638570">https://wiki.archlinux.org/index.php?title=PhpMyAdmin_(简体中文)&amp;oldid=638570</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:16.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PhpMyAdmin_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=655705">https://wiki.archlinux.org/index.php?title=PhpMyAdmin_(简体中文)&amp;oldid=655705</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 21:39.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

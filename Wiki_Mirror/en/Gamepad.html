@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -389,16 +390,6 @@ EndSection</pre>
 <h3><span class="mw-headline" id="Nintendo_Gamecube_Controller">Nintendo Gamecube Controller</span></h3>
 <p>Dolphin Emulator has a <a rel="nofollow" class="external text" href="https://wiki.dolphin-emu.org/index.php?title=How_to_use_the_Official_GameCube_Controller_Adapter_for_Wii_U_in_Dolphin">page on their wiki</a> that explains how to use the official Nintendo USB adapter with a Gamecube controller. This configuration also works with the Mayflash Controller Adapter if the switch is set to "Wii U".
 </p>
-<p>By default, the controller will register with <a href="../en/Udev.html" title="Udev">udev</a>, but will only be readable by the root user. You can fix this by adding a udev device rule, like the below. 
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/udev/rules.d/51-gcadapter.rules</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="0337", MODE="0666"</pre>
-<p>This only matches the USB device with the specified vendor and product IDs, which match those of the official USB adapter. It sets the permissions of the device file to 0666 so that programs that aren't running as root can read the device's input. 
-</p>
-<p>udev can be reloaded with the new configuration by executing
-</p>
-<pre> # udevadm control --reload-rules
-</pre>
 <h3><span class="mw-headline" id="Nintendo_Switch_Pro_Controller_and_Joy-Cons">Nintendo Switch Pro Controller and Joy-Cons</span></h3>
 <h4><span class="mw-headline" id="Kernel_Nintendo_HID_Driver">Kernel Nintendo HID Driver</span></h4>
 <p>The hid-nintendo kernel HID driver is currently in review on the linux-input mailing list. The most recent version of the changeset is currently being maintained in this<a rel="nofollow" class="external autonumber" href="https://github.com/DanielOgorchock/linux">[1]</a> git repository, or its staging branch<a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/hid/hid.git/log/?h=for-5.10/nintendo">[2]</a> for kernel 5.10. It's also available as a dkms module named <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/hid-nintendo-dkms/">hid-nintendo-dkms</a></span><sup><small>AUR</small></sup>. The driver provides support for rumble, battery level, and control of the player and home LEDs. It supports the Nintendo Switch Pro Controller over both USB and bluetooth in addition to the joy-cons.
@@ -783,8 +774,8 @@ else:
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/xbox_bt.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options bluetooth disable_ertm=1</pre>
 <h5><span class="mw-headline" id="xpadneo">xpadneo</span></h5>
-<p>A relatively new driver which does (yet) support only the Xbox One S controller via Bluetooth is called <a rel="nofollow" class="external text" href="https://github.com/atar-axis/xpadneo/">xpadneo</a>.
-In exchange for supporting just one controller so far, it enables one to read out the correct battery level, supports rumble (even the one on the trigger buttons - L2/R2), corrects the (sometimes wrong) button mapping and more.
+<p>A relatively new driver which does support the Xbox One S and Xbox Series X|S controller via Bluetooth is called <a rel="nofollow" class="external text" href="https://github.com/atar-axis/xpadneo/">xpadneo</a>. At the moment it only has basic support for the Xbox Elite Series 2 Wireless controller.
+In exchange for fully supporting just two controllers so far, it enables one to read out the correct battery level, supports rumble (even the one on the trigger buttons - L2/R2), corrects the (sometimes wrong) button mapping and more.
 </p>
 <p>Installation is done using DKMS: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xpadneo-dkms-git/">xpadneo-dkms-git</a></span><sup><small>AUR</small></sup>
 </p>
@@ -815,7 +806,10 @@ In exchange for supporting just one controller so far, it enables one to read ou
 <p>If you own a PS3 controller and can connect with USB, plug it to your computer and press the PS button. The controller will power up and one of the four LEDs should light up indicating the controller's number.
 </p>
 <h4><span class="mw-headline" id="Pairing_via_Bluetooth">Pairing via Bluetooth</span></h4>
-<p>To connect your PS3 controller to your computer using Bluetooth, you first need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez">bluez</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez-plugins">bluez-plugins</a></span> then connect your controller via USB. A pop-up should appear asking for pairing. Click on Trust &amp; Authorize. You can now unplug your controller and press the PS button. The controller will connect and a LED will remain solid. You can now use it to play games. Connecting using the USB cable is only needed after the controller has been connected to another system.
+<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez">bluez</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez-utils">bluez-utils</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez-plugins">bluez-plugins</a></span>. Make sure bluetooth is working by following the first five steps of <a href="../en/Bluetooth.html#Pairing" title="Bluetooth">Bluetooth#Pairing</a> and leave the bluetoothctl command running, then turn on the controller by pressing the middle 'PS' button(all 4 leds should be blinking quickly ~4 hz) and connect to your computer using usb. Lastly, type yes in the bluetoothctl prompt when asked '<code>Authorize service 00001124-0000-1000-8000-00805f9b34fb (yes/no)</code>'.
+</p>
+<p>Alternative instructions:
+To connect your PS3 controller to your computer using Bluetooth, you first need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez">bluez</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez-plugins">bluez-plugins</a></span> then connect your controller via USB. A pop-up should appear asking for pairing. Click on Trust &amp; Authorize. You can now unplug your controller and press the PS button. The controller will connect and a LED will remain solid. You can now use it to play games. Connecting using the USB cable is only needed after the controller has been connected to another system.
 </p>
 <h3><span class="mw-headline" id="PlayStation_4_controller">PlayStation 4 controller</span></h3>
 <h4><span class="mw-headline" id="Pairing_via_USB_2">Pairing via USB</span></h4>
@@ -939,8 +933,8 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", MODE="0666"
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Gamepad&amp;oldid=648513">https://wiki.archlinux.org/index.php?title=Gamepad&amp;oldid=648513</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 9 January 2021, at 03:49.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Gamepad&amp;oldid=655653">https://wiki.archlinux.org/index.php?title=Gamepad&amp;oldid=655653</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 17:03.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -42,7 +42,7 @@
 <li><a href="../../en/Open-iSCSI.html" class="mw-redirect" title="ISCSI Initiator">iSCSI Initiator</a></li>
 </ul>
 </div>
-<p>Arch Linux can be installed on an <a href="../../en/ISCSI.html" title="ISCSI">iSCSI</a> target. This allows the machine to only contain enough mass storage to contain a <a href="../../en/Arch_boot_process.html#Boot_loader" title="Arch boot process">bootloader</a>, such as an USB drive, while its root partition is accessed over the network with iSCSI. Any subsequent partitions can also be accessed with iSCSI, or with some other network storage protocol, such as <a href="../../en/NFS.html" title="NFS">NFS</a>. When combined with <a href="../../en/Preboot_Execution_Environment.html" title="Preboot Execution Environment">PXE</a>, iBFT, or some other method of network booting, it allows the machine to not contain any mass storage.
+<p>Arch Linux can be installed on an <a href="../../en/ISCSI.html" title="ISCSI">iSCSI</a> target. This allows the machine to only contain enough mass storage to contain a <a href="../../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Bootloader">bootloader</a>, such as an USB drive, while its root partition is accessed over the network with iSCSI. Any subsequent partitions can also be accessed with iSCSI, or with some other network storage protocol, such as <a href="../../en/NFS.html" title="NFS">NFS</a>. When combined with <a href="../../en/Preboot_Execution_Environment.html" class="mw-redirect" title="PXE">PXE</a>, iBFT, or some other method of network booting, it allows the machine to not contain any mass storage.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -105,7 +105,7 @@
 <p>Follow the procedure outlined in <a href="../../en/ISCSI.html" title="ISCSI">iSCSI</a> to setup an iSCSI target on a remote machine.
 </p>
 <h3><span class="mw-headline" id="Pre-installation">Pre-installation</span></h3>
-<p>Boot into the Arch Linux installer using the latest official installation media from the <a rel="nofollow" class="external text" href="https://archlinux.org/download/">download page</a>. Follow the <a href="../../en/Installation_guide.html" title="Installation guide">installation guide</a> up until <a href="../../en/Installation_guide.html#Partition" title="Installation guide">the disk partitioning</a>.
+<p>Boot into the Arch Linux installer using the latest official installation media from the <a rel="nofollow" class="external text" href="https://archlinux.org/download/">download page</a>. Follow the <a href="../../en/Installation_guide.html" title="Installation guide">installation guide</a> up until <a href="../../en/Installation_guide.html#Partition_the_disks" title="Installation guide">partitioning</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> It is desirable to have a <a href="../../en/Network_configuration.html#Static_IP_address" title="Network configuration">static IP address</a> in the network when using iSCSI. This can be achieved either by setting the address manually, or by using a static reservation in the network's DHCP server.</div>
@@ -145,7 +145,7 @@
 <p>This guide outlines a method which uses a busybox-based init, as opposed to a <a href="../../en/Systemd.html" title="Systemd">systemd</a>-based init. The procedure will be different for a systemd-based init.
 </p>
 <h4><span class="mw-headline" id="Connect_to_the_network_automatically">Connect to the network automatically</span></h4>
-<p>The initcpio has to connect to the network before opening a connection to the iSCSI target. This can be achieved in various ways, but a simple way is to use the <a href="../../en/Mkinitcpio.html#Using_net" title="Mkinitcpio">net-hook</a> with the <code>ip=</code> <a href="../../en/Kernel_parameters.html" title="Kernel parameters">kernel parameter</a>. This hook is designed to be used with an NFS-based root, but omitting the NFS-specific parameters lets it only configure the network adapter.
+<p>The initcpio has to connect to the network before opening a connection to the iSCSI target. This can be achieved in various ways, but a simple way is to use the <a href="../../en/Mkinitcpio.html#Using_net" title="Mkinitcpio">net-hook</a> with the <code>ip=</code> <a href="../../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a>. This hook is designed to be used with an NFS-based root, but omitting the NFS-specific parameters lets it only configure the network adapter.
 </p>
 <p><a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mkinitcpio-nfs-utils">mkinitcpio-nfs-utils</a></span> in the new system.
 </p>
@@ -262,7 +262,7 @@ scsi0 Channel 00 Id 0 Lun: 0
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The default timeout is 30 seconds.</div>
 <h3><span class="mw-headline" id="Improving_performance">Improving performance</span></h3>
-<p>Since low-level I/O-commands will go through the IO scheduler on the remote system, and are subsequently queued there, it is possible to disable any queuing algorithm on the initiator system by using the <code>none</code> setting for the queuing algorithm for the iSCSI device. See <a href="../../en/Improving_performance.html#Input/output_schedulers" title="Improving performance">Improving_performance#Input/output_schedulers</a> for details and configuration.
+<p>Since low-level I/O-commands will go through the IO scheduler on the remote system, and are subsequently queued there, it is possible to disable any queuing algorithm on the initiator system by using the <code>none</code> setting for the queuing algorithm for the iSCSI device. See <a href="../../en/Improving_performance.html#Input/output_schedulers" title="Improving performance">Improving performance#Input/output schedulers</a> for details and configuration.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3>
@@ -296,8 +296,8 @@ scsi0 Channel 00 Id 0 Lun: 0
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ISCSI/Boot&amp;oldid=654445">https://wiki.archlinux.org/index.php?title=ISCSI/Boot&amp;oldid=654445</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 10 March 2021, at 18:47.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ISCSI/Boot&amp;oldid=655733">https://wiki.archlinux.org/index.php?title=ISCSI/Boot&amp;oldid=655733</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 March 2021, at 06:48.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

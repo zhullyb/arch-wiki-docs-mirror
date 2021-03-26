@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -53,7 +54,7 @@
 <li>Generate <a href="https://en.wikipedia.org/wiki/One-time_password" class="extiw" title="wikipedia:One-time password">One-time passwords</a> (OTP) - <a rel="nofollow" class="external text" href="https://developers.yubico.com/OTP/">Yubico's AES based standard</a>.</li>
 <li>"Type" a static password up to 63 characters.</li>
 </ul>
-<p>While offering many features, newer versions of the YubiKey are <a rel="nofollow" class="external text" href="https://www.yubico.com/2016/05/secure-hardware-vs-open-source/">not released as open source</a>. An alternative is the <a href="../en/Solo.html" title="Solo">Solo</a>.
+<p>While offering many features, newer versions of the YubiKey are <a rel="nofollow" class="external text" href="https://www.yubico.com/blog/secure-hardware-vs-open-source/">not released as open source</a>. An alternative is the <a href="../en/Solo.html" title="Solo">Solo</a>.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -624,7 +625,7 @@ trust level. Factory generated Yubico OTP credentials begin with a <code>CC</cod
 <p><a href="../en/KeePass.html" title="KeePass">KeePass</a> can be configured for YubiKey support; see the <a href="../en/KeePass.html#Yubikey" title="KeePass">YubiKey section</a> for instructions.
 </p>
 <h3><span class="mw-headline" id="SSH_keys">SSH keys</span></h3>
-<p>If your yubikey supports CCID smartcards, you can use it as a hardware-backed <a href="../en/SSH_keys.html" class="mw-redirect" title="SSH key">SSH key</a>, either based on GPG or PIV keys. Yubico offers good documentation:
+<p>If your YubiKey supports CCID smartcards, you can use it as a hardware-backed <a href="../en/SSH_keys.html" class="mw-redirect" title="SSH key">SSH key</a>, either based on GPG or PIV keys. Yubico offers good documentation:
 </p>
 <ul>
 <li>An <a rel="nofollow" class="external text" href="https://developers.yubico.com/PIV/Guides/Securing_SSH_with_OpenPGP_or_PIV.html">overview of both</a> possibilities, giving their advantages and disadvantages</li>
@@ -637,6 +638,8 @@ trust level. Factory generated Yubico OTP credentials begin with a <code>CC</cod
 </ul>
 <dl><dd><div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The default PIN code of the PIV application on the YubiKey is  <code>123456</code>; you may want to change it, as well as the default management key. See the <a rel="nofollow" class="external text" href="https://developers.yubico.com/PIV/Guides/Device_setup.html">device setup instructions</a> for more.</div></dd></dl>
+<p>You may also use the U2F feature of the YubiKey to create hardware-backed SSH keys.  See <a href="../en/Universal_2nd_Factor.html#OpenSSH" class="mw-redirect" title="U2F">U2F#OpenSSH</a> for instructions.
+</p>
 <h3><span class="mw-headline" id="Linux_user_authentication_with_PAM">Linux user authentication with PAM</span></h3>
 <p><a href="../en/PAM.html" title="PAM">PAM</a>, and therefore anything which uses PAM for user authentication, can be configured to use a YubiKey as a factor of its user authentication process. This includes sudo, su, ssh, screen lockers, display managers, and nearly every other instance where a Linux system needs to authenticate a user. Its flexible configuration allows you to set whichever authentication requirements fit your needs, for the entire system, a specific application, or for groups of applications. For example, you could accept the YubiKey as an alternative to a password for local sessions, while requiring both for remote sessions. In addition to the Arch Wiki, You are encouraged to read <span class="plainlinks archwiki-template-man" title="$ man 8 pam"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/pam.8">pam(8)</a></span> and <span class="plainlinks archwiki-template-man" title="$ man 5 pam.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/pam.conf.5">pam.conf(5)</a></span> to understand how it works and how to configure it.
 </p>
@@ -769,8 +772,6 @@ release_context</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0664", GROUP="users", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="f1d0"</pre>
 <p>Run <code>udevadm trigger</code> afterwards.
 </p>
-<p>You may also need to <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libu2f-host">libu2f-host</a></span> if you want support in chrome.
-</p>
 <h3><span class="mw-headline" id="ykman_fails_to_connect_to_the_YubiKey">ykman fails to connect to the YubiKey</span></h3>
 <p>If the manager fails to connect to the YubiKey, make sure you have started <code>pcscd.service</code> or <code>pcscd.socket</code>.
 </p>
@@ -825,8 +826,8 @@ release_context</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=YubiKey&amp;oldid=646546">https://wiki.archlinux.org/index.php?title=YubiKey&amp;oldid=646546</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 25 December 2020, at 07:33.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=YubiKey&amp;oldid=655833">https://wiki.archlinux.org/index.php?title=YubiKey&amp;oldid=655833</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 March 2021, at 02:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

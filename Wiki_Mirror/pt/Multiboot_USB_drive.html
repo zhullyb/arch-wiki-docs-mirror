@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Multiboot USB drive (Português) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Multiboot_USB_drive_Português rootpage-Multiboot_USB_drive_Português skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">Multiboot USB drive (Português)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="archwiki-template-meta-related-articles-start">
+<p>Related articles</p>
+<ul>
+<li><a href="../en/GRUB.html" title="GRUB">GRUB</a></li>
+<li><a href="../en/Syslinux.html" title="Syslinux">Syslinux</a></li>
+<li><a href="../en/Archiso.html" title="Archiso">Archiso</a></li>
+</ul>
+</div>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-go-next.png" class="image"><img alt="Tango-go-next.png" src="../File:Tango-go-next.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for moving to <a href="/index.php?title=Multiboot_disk_images&amp;action=edit&amp;redlink=1" class="new" title="Multiboot disk images (page does not exist)">Multiboot disk images</a>.</b><a href="../File:Tango-go-next.png" class="image"><img alt="Tango-go-next.png" src="../File:Tango-go-next.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Notes:</b> Ver discussão (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Multiboot_USB_drive_(Portugu%C3%AAs)#Scope_and_title">Talk:Multiboot USB drive (Português)#Scope and title</a>)</div>
+</div>
+<p>Uma unidade flash de múltipla inicialização USB permite inicializar múltiplos arquivos ISO a partir de um único dispositivo. Os arquivos ISO podem ser copiados para o dispositivo e inicializados diretamente sem a necessidade de extraí-los. Existem vários métodos disponíveis, mas eles podem não funcionar para todos arquivos ISO.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1">
+<a href="#Usando_GRUB_e_dispositivos_de_loopback"><span class="tocnumber">1</span> <span class="toctext">Usando GRUB e dispositivos de loopback</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Vantagens:"><span class="tocnumber">1.1</span> <span class="toctext">Vantagens:</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Desvantagens:"><span class="tocnumber">1.2</span> <span class="toctext">Desvantagens:</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Prepara%C3%A7%C3%A3o"><span class="tocnumber">1.3</span> <span class="toctext">Preparação</span></a></li>
+<li class="toclevel-2 tocsection-5">
+<a href="#Instalando_o_GRUB"><span class="tocnumber">1.4</span> <span class="toctext">Instalando o GRUB</span></a>
+<ul>
+<li class="toclevel-3 tocsection-6"><a href="#Instala%C3%A7%C3%A3o_%C3%BAnica"><span class="tocnumber">1.4.1</span> <span class="toctext">Instalação única</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#inicializa%C3%A7%C3%A3o_h%C3%ADbrida_com_UEFI_GPT_+_BIOS_GPT/MBR"><span class="tocnumber">1.4.2</span> <span class="toctext">inicialização híbrida com UEFI GPT + BIOS GPT/MBR</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-8">
+<a href="#Configurando_GRUB"><span class="tocnumber">1.5</span> <span class="toctext">Configurando GRUB</span></a>
+<ul>
+<li class="toclevel-3 tocsection-9"><a href="#Usando_um_modelo"><span class="tocnumber">1.5.1</span> <span class="toctext">Usando um modelo</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#Configura%C3%A7%C3%A3o_manual"><span class="tocnumber">1.5.2</span> <span class="toctext">Configuração manual</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-11">
+<a href="#Entradas_de_inicializa%C3%A7%C3%A3o"><span class="tocnumber">1.6</span> <span class="toctext">Entradas de inicialização</span></a>
+<ul>
+<li class="toclevel-3 tocsection-12"><a href="#Lan%C3%A7amento_mensal_do_Arch_Linux"><span class="tocnumber">1.6.1</span> <span class="toctext">Lançamento mensal do Arch Linux</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#Memtest86+"><span class="tocnumber">1.6.2</span> <span class="toctext">Memtest86+</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#archboot"><span class="tocnumber">1.6.3</span> <span class="toctext">archboot</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-15">
+<a href="#Usando_Syslinux_e_memdisk"><span class="tocnumber">2</span> <span class="toctext">Usando Syslinux e memdisk</span></a>
+<ul>
+<li class="toclevel-2 tocsection-16"><a href="#Prepara%C3%A7%C3%A3o_2"><span class="tocnumber">2.1</span> <span class="toctext">Preparação</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Instala%C3%A7%C3%A3o_do_m%C3%B3dulo_memdisk"><span class="tocnumber">2.2</span> <span class="toctext">Instalação do módulo memdisk</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Configura%C3%A7%C3%A3o"><span class="tocnumber">2.3</span> <span class="toctext">Configuração</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Caveat_para_sistemas_32-bit"><span class="tocnumber">2.4</span> <span class="toctext">Caveat para sistemas 32-bit</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-20"><a href="#Ferramentas_automatizadas"><span class="tocnumber">3</span> <span class="toctext">Ferramentas automatizadas</span></a></li>
+<li class="toclevel-1 tocsection-21"><a href="#Veja_tamb%C3%A9m"><span class="tocnumber">4</span> <span class="toctext">Veja também</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Usando_GRUB_e_dispositivos_de_loopback">Usando GRUB e dispositivos de loopback</span></h2>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> multiple <a href="../en/Help:Style.html" title="Help:Style">style</a> issues (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Multiboot_USB_drive_(Portugu%C3%AAs)">Talk:Multiboot USB drive (Português)#</a>)</div>
+</div>
+<h4><span class="mw-headline" id="Vantagens:">Vantagens:</span></h4>
+<ul>
+<li>a necessidade de uma única partição;</li>
+<li>todos arquivos ISO podem ser localizados no mesmo diretório;</li>
+<li>adicionar arquivos ISO é muito simples.</li>
+</ul>
+<h4><span class="mw-headline" id="Desvantagens:">Desvantagens:</span></h4>
+<ul>
+<li>nem todas as imagens ISO são compatíveis;</li>
+<li>o menu de inicialização original para o arquivo ISO não será exibido;</li>
+<li>pode ser difícil encontrar uma entrada de inicialização funcional.</li>
+</ul>
+<h3>
+<span id="Prepara.C3.A7.C3.A3o"></span><span class="mw-headline" id="Preparação">Preparação</span>
+</h3>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Quanto espaço adicional é necessário para o bootloader? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Multiboot_USB_drive_(Portugu%C3%AAs)">Talk:Multiboot USB drive (Português)#</a>)</div>
+</div>
+<p>Crie pelo menos uma partição e um sistema de arquivos suportado pelo <a href="../pt/GRUB.html" title="GRUB (Português)">GRUB</a> na unidade USB. Veja <a href="../pt/Partitioning.html" title="Partitioning (Português)">Partitioning</a> e <a href="../pt/File_systems.html" title="File systems (Português)">File systems#Create a file system</a>. Escolha o tamanho baseado no tamanho total dos arquivos ISO que desejar armazenar na unidade, mais um espaço adicional para o bootloader.
+</p>
+<h3><span class="mw-headline" id="Instalando_o_GRUB">Instalando o GRUB</span></h3>
+<h4>
+<span id="Instala.C3.A7.C3.A3o_.C3.BAnica"></span><span class="mw-headline" id="Instalação_única">Instalação única</span>
+</h4>
+<p>Monte o sistema de arquivos localizado na unidade USB:
+</p>
+<pre># mount /dev/sdXY /mnt
+</pre>
+<p>Crie o diretório /boot:
+</p>
+<pre># mkdir /mnt/boot
+</pre>
+<p>Instale GRUB na unidade USB:
+</p>
+<pre># grub-install --target=i386-pc --recheck --boot-directory=/mnt/boot /dev/sdX
+</pre>
+<p>No caso de você desejar inicializar ISOs em modo UEFI, terá de instalar grub para o alvo UEFI:
+</p>
+<pre># grub-install --target=x86_64-efi --removable --boot-directory=/mnt/boot --efi-directory=/mnt
+</pre>
+<p>Para UEFI, a partição deverá ser a primeira da tabela de partições MBR e deverá ser formatada com FAT32.
+</p>
+<h4>
+<span id="inicializa.C3.A7.C3.A3o_h.C3.ADbrida_com_UEFI_GPT_.2B_BIOS_GPT.2FMBR"></span><span class="mw-headline" id="inicialização_híbrida_com_UEFI_GPT_+_BIOS_GPT/MBR">inicialização híbrida com UEFI GPT + BIOS GPT/MBR</span>
+</h4>
+<p>Esta configuração é útil para criar uma unidade USB universal, teoricamente inicializável em qualquer computador.
+Em primeiro lugar, você deverá criar uma tabela de partições <a href="../pt/Partitioning.html#Tabela_de_Parti%C3%A7%C3%A3o_GUID" class="mw-redirect" title="GPT (Português)">GPT</a> em seu dispositivo. Serão necessárias, pelo menos, 3 partições:
+</p>
+<ol>
+<li>Uma partição do tipo <i>BIOS boot</i> (código do gdisk <code>EF02</code>). Esta partição deverá ter 1 MiB de tamanho</li>
+<li>Uma partição do tipo <i>EFI System partition</i> (código do gdisk <code>EF00</code> com uma <a href="../pt/EFI_system_partition.html" title="EFI system partition (Português)">EFI system partition#Formatar a partição|FAT32 filesystem</a>). Esta partição poderá ser pequena, como 50 MiB.</li>
+<li>Sua partição de dados (use um sistema de arquivos suportado pelo <a href="../pt/GRUB.html" title="GRUB (Português)">GRUB</a>). Esta partição poderá ocupar o espaço restante da unidade USB.</li>
+</ol>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> <i>Must create</i> because something <i>might not be enough</i>? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Multiboot_USB_drive_(Portugu%C3%AAs)">Talk:Multiboot USB drive (Português)#</a>)</div>
+</div>
+<p>A seguir você deverá criar uma tabela de partições MBR híbrida, pois definir uma boot flag no setor protetivo da MBR poderá não ser suficiente em alguns casos.
+</p>
+<p>Exemplo de criação de uma tabela de partições MBR híbrida usando <a href="../en/GPT_fdisk.html" class="mw-redirect" title="Gdisk">gdisk</a>:
+</p>
+<pre># gdisk /dev/sdX
+
+Command (? for help): r
+Recovery/transformation command (? for help): h
+
+WARNING! Hybrid MBRs are flaky and dangerous! If you decide not to use one,
+just hit the Enter key at the below prompt and your MBR partition table will
+be untouched.
+
+Type from one to three GPT partition numbers, separated by spaces, to be added to the hybrid MBR, in sequence: 1 2 3
+Place EFI GPT (0xEE) partition first in MBR (good for GRUB)? (Y/N): N
+
+Creating entry for GPT partition #1 (MBR partition #1)
+Enter an MBR hex code (default EF): 
+Set the bootable flag? (Y/N): N
+
+Creating entry for GPT partition #2 (MBR partition #2)
+Enter an MBR hex code (default EF): 
+Set the bootable flag? (Y/N): N
+
+Creating entry for GPT partition #3 (MBR partition #3)
+Enter an MBR hex code (default 83): 
+Set the bootable flag? (Y/N): Y
+
+Recovery/transformation command (? for help): x
+Expert command (? for help): h
+Expert command (? for help): w
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? (Y/N): Y
+</pre>
+<p>Não se esqueça de formatar as partições:
+</p>
+<pre># mkfs.fat -F32 /dev/sdX2
+# mkfs.ext4 /dev/sdX3
+</pre>
+<p>Agora será possível instalar GRUB para suportar ambos EFI + GPT e BIOS + GPT/MBR. A configuração do grub (--boot-directory) poderá ser mantida no mesmo lugar.
+</p>
+<p>Primeiro, você deverá montar a partição do tipo 'EFI system' e a partição de dados da unidade USB. 
+</p>
+<p>Um exemplo disso poderia ser como a seguir:
+</p>
+<pre># mount /dev/sdX3 /mnt
+# mkdir -p /mnt/boot/EFI
+# mount /dev/sdX2 /mnt/boot/EFI
+</pre>
+<p>Então, você poderá instalar GRUB para UEFI com:
+</p>
+<p>Nota: na maioria dos casos <code>EFI_MOUNTPOINT</code> corresponde ao subdiretório <code>/mnt/boot/EFI</code> na unidade USB montada.
+</p>
+<pre># grub-install --target=x86_64-efi --recheck --removable --efi-directory=/<i>EFI_MOUNTPOINT</i> --boot-directory=/<i>DATA_MOUNTPOINT</i>/boot
+</pre>
+<p>E para BIOS com:
+</p>
+<pre># grub-install --target=i386-pc --recheck --boot-directory=/<i>DATA_MOUNTPOINT</i>/boot /dev/sd<i>X</i>
+</pre>
+<p>Como opção de reserva, você poderá também instalar o GRUB na sua partição MBR inicializável:
+</p>
+<pre># grub-install --target=i386-pc --recheck --boot-directory=/<i>DATA_MOUNTPOINT</i>/boot /dev/<i>sdX3</i>
+</pre>
+<h3><span class="mw-headline" id="Configurando_GRUB">Configurando GRUB</span></h3>
+<h4><span class="mw-headline" id="Usando_um_modelo">Usando um modelo</span></h4>
+<p>Existem alguns projetos no git que fornecem alguns arquivos de configuração do GRUB preexistentes, e um  <code>grub.cfg</code> genérico que poderá ser usado para carregar outras entradas de inicialização sob demanda, exibindo-as somente caso os arquivos ISO especificados - ou pastas que contenham-nos - estiverem presentes na unidade.
+</p>
+<p>Multiboot USB: <a rel="nofollow" class="external free" href="https://github.com/hackerncoder/multibootusb">https://github.com/hackerncoder/multibootusb</a>
+</p>
+<p>GLIM (GRUB2 Live ISO Multiboot): <a rel="nofollow" class="external free" href="https://github.com/thias/glim">https://github.com/thias/glim</a>
+</p>
+<h4>
+<span id="Configura.C3.A7.C3.A3o_manual"></span><span class="mw-headline" id="Configuração_manual">Configuração manual</span>
+</h4>
+<p>Para a proposta de uma unidade USB inicializável, é mais fácil editar o arquivo <code>grub.cfg</code> manualmente do que gerá-lo. Alternativamente, faça as seguintes alterações em <code>/etc/grub.d/40_custom</code> ou <code>/mnt/boot/grub/custom.cfg</code> e gere o <code>/mnt/boot/grub/grub.cfg</code> usando <a href="../pt/GRUB.html" title="GRUB (Português)">GRUB#Gerar o arquivo de configuração principal|grub-mkconfig</a>.
+</p>
+<p>Como é recomendado usar um <a href="../en/Persistent_block_device_naming.html" title="Persistent block device naming">nome persistente</a> ao invés de <code>/dev/sd<i>xY</i></code> para identificar a partição na unidade USB onde estarão as imagens, defina uma variável conveniente para manter o valor. Se as imagens ISO estiverem na mesma partição do GRUB, use o seguinte para ler o UUID na inicialização:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/mnt/boot/grub/grub.cfg</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># caminho para a partição onde estão as imagens ISO (usando UUID)
+probe -u $root --set=rootuuid
+set imgdevpath="/dev/disk/by-uuid/$rootuuid"</pre>
+<p>Ou especifique explicitamente a UUID:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/mnt/boot/grub/grub.cfg</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># caminho para a partição onde estão as imagens ISO (usando UUID)
+set imgdevpath="/dev/disk/by-uuid/<i>UUID_value</i>"</pre>
+<p>Alternativamente, use a LABEL do dispositivo ao invés da UUID:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/mnt/boot/grub/grub.cfg</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># caminho para a partição onde estão as imagens ISO (usando LABEL)
+set imgdevpath="/dev/disk/by-label/<i>label_value</i>"</pre>
+<p>A UUID ou LABEL necessária poderá ser encontrada usando <code>lsblk -f</code>. Não use a mesma LABEL do Arch ISO para a unidade USB, caso contrário o processo de inicialização falhará.
+</p>
+<p>Para finalizar a configuração, uma entrada de inicialização para cada imagem ISO deverá ser adicionada abaixo deste cabeçalho, veja exemplos na próxima seção.
+</p>
+<h3>
+<span id="Entradas_de_inicializa.C3.A7.C3.A3o"></span><span class="mw-headline" id="Entradas_de_inicialização">Entradas de inicialização</span>
+</h3>
+<p>Assume-se que as imagens ISO estão armazenadas no diretório <code>boot/iso/</code> e no mesmo sistema de arquivos onde o GRUB está instalado. Do contrário, será necessário prefixar o caminho para o arquivo ISO com a identificação do dispositivo ao usar o comando <code>loopback</code>, por exemplo <code>loopback loop <b>(hd1,2)</b>$isofile</code>. Como esta identificação de dispositivos não é <a href="../en/Persistent_block_device_naming.html" title="Persistent block device naming">persistente</a>, não será usada em exemplos nesta seção.
+</p>
+<p>Pode-se usar a nomenclatura de dispositivo de bloco persistente dessa forma. Substitua a UUID de acordo com a UUID do seu sistema de arquivos ISO.
+</p>
+<pre># define globalmente (isto é, fora de qualquer menu de entrada)
+insmod search_fs_uuid
+search --no-floppy --set=<b>isopart</b> --fs-uuid <i>123-456</i>
+# depois, usa dentro de cada menu de entrada
+loopback loop <b>($isopart)</b>$isofile</pre>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong>  For a list of kernel parameters, see <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html">the kernel's command-line parameter documentation</a>. For more examples of boot entries, see the <a rel="nofollow" class="external text" href="https://www.gnu.org/software/grub/manual/grub.html#Multi_002dboot-manual-config">GRUB upstream documentation</a> or the documentation for the distribution you wish to boot.</div>
+<h4>
+<span id="Lan.C3.A7amento_mensal_do_Arch_Linux"></span><span class="mw-headline" id="Lançamento_mensal_do_Arch_Linux">Lançamento mensal do Arch Linux</span>
+</h4>
+<p>Veja também <a href="../en/Archiso.html" title="Archiso">archiso</a>.
+</p>
+<pre>menuentry '[loopback]archlinux-2020.10.01-x86_64.iso' {
+	set isofile='/boot/iso/archlinux-2020.10.01-x86_64.iso'
+	loopback loop $isofile
+	linux (loop)/arch/boot/x86_64/vmlinuz-linux img_dev=$imgdevpath img_loop=$isofile earlymodules=loop
+	initrd (loop)/arch/boot/intel-ucode.img (loop)/arch/boot/amd-ucode.img (loop)/arch/boot/x86_64/initramfs-linux.img
+}</pre>
+<p>Veja <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.bootparams">README.bootparams</a> para opções de archiso suportados pela linha de comando do kernel.
+</p>
+<h4>
+<span id="Memtest86.2B"></span><span class="mw-headline" id="Memtest86+">Memtest86+</span>
+</h4>
+<p><a href="../en/Stress_testing.html#Stressing_memory" title="Stress testing">Memtest86+</a> está incluido na ISO mensal.
+</p>
+<pre>menuentry '[loopback]archlinux-2020.10.01-x86_64.iso' {
+	set isofile='/boot/iso/archlinux-2020.10.01-x86_64.iso'
+	loopback loop $isofile
+	linux16 (loop)/arch/boot/memtest
+}</pre>
+<h4><span class="mw-headline" id="archboot">archboot</span></h4>
+<p>Veja também <a href="../en/Archboot.html" title="Archboot">archboot</a>.
+</p>
+<pre>menuentry '[loopback]archlinux-2014.11-1-archboot' {
+	set isofile='/boot/iso/archlinux-2014.11-1-archboot.iso'
+	loopback loop $isofile
+	linux (loop)/boot/vmlinuz_<b>x86_64</b> iso_loop_dev=$imgdevpath iso_loop_path=$isofile
+	initrd (loop)/boot/initramfs_<b>x86_64</b>.img
+}</pre>
+<h2><span class="mw-headline" id="Usando_Syslinux_e_memdisk">Usando Syslinux e memdisk</span></h2>
+<p>Usando o módulo <a rel="nofollow" class="external text" href="https://wiki.syslinux.org/wiki/index.php/MEMDISK">memdisk</a>, a imagem ISO é carregada na memória, e seu bootloader é carregado. Certifique-se de que o sistema que irá inicializar esta unidade USB tem uma quantidade de memória suficiente para o arquivo de imagem e para executá-la como um sistema operacional.
+</p>
+<h3>
+<span id="Prepara.C3.A7.C3.A3o_2"></span><span class="mw-headline" id="Preparação_2">Preparação</span>
+</h3>
+<p>Certifique-se de que a unidade USB está adequadamente <a href="../pt/Partitioning.html" title="Partitioning (Português)">Partitioning#particionada</a> e que é uma partição com um sistema de arquivos suportado pelo Syslinux, como por exemplo FAT32 ou ext4. Então, instale o Syslinux nesta partição, veja <a href="../en/Syslinux.html#Installation_on_BIOS" title="Syslinux">Syslinux#Installation on BIOS</a>.
+</p>
+<h3>
+<span id="Instala.C3.A7.C3.A3o_do_m.C3.B3dulo_memdisk"></span><span class="mw-headline" id="Instalação_do_módulo_memdisk">Instalação do módulo memdisk</span>
+</h3>
+<p>O módulo memdisk não foi instalado no ato da instalação do Syslinux, portanto deverá ser instalado manualmente. Monte a partição onde o Syslinux está instalado para <code>/mnt/</code> e copie o módulo do memdisk para o mesmo diretório onde o Syslinux estiver instalado:
+</p>
+<pre># cp /usr/lib/syslinux/bios/memdisk /mnt/boot/syslinux/
+</pre>
+<h3>
+<span id="Configura.C3.A7.C3.A3o"></span><span class="mw-headline" id="Configuração">Configuração</span>
+</h3>
+<p>Após copiar os arquivos ISO para a unidade USB, edite o <a href="../en/Syslinux.html#Configuration" title="Syslinux">Arquivo de configuração do Syslinux</a> e crie as entradas de menu para as imagens ISO. Uma entrada básica corresponde a algo como:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">boot/syslinux/syslinux.cfg</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">LABEL <i>some_label</i>
+    LINUX memdisk
+    INITRD <i>/path/to/image.iso</i>
+    APPEND iso
+</pre>
+<p>Veja <a rel="nofollow" class="external text" href="https://wiki.syslinux.org/wiki/index.php/MEMDISK">memdisk on Syslinux wiki</a> para mais opções de configuração.
+</p>
+<h3><span class="mw-headline" id="Caveat_para_sistemas_32-bit">Caveat para sistemas 32-bit</span></h3>
+<p>Ao inicializar um sistema 32-bit a partir de uma imagem maior do que 128MiB, é necessário aumentar o uso máximo de memória de vmalloc. Isto é feito adicionando <code>vmalloc=<i>valor</i>M</code> aos parâmetros do kernel, onde <code><i>valor</i></code> é maior do que o tamanho da imagem ISO, em MiB. <a rel="nofollow" class="external autonumber" href="https://wiki.syslinux.org/wiki/index.php/MEMDISK#-_memdiskfind_in_combination_with_phram_and_mtdblock">[1]</a>
+</p>
+<p>Por exemplo, ao inicializar um sistema 32-bit a partir da <a rel="nofollow" class="external text" href="https://archlinux.org/download/">Arch installation ISO</a>, pressione a tecla <code>Tab</code> sobre a entrada <code>Boot Arch Linux (i686)</code> no menu e adicione  <code>vmalloc=768M</code> ao final. Pular este passo resultará no seguinte erro durante a inicialização:
+</p>
+<pre>modprobe: ERROR: could not insert 'phram': Input/output error
+</pre>
+<h2><span class="mw-headline" id="Ferramentas_automatizadas">Ferramentas automatizadas</span></h2>
+<ul><li>
+<b>GRUB2 Live ISO Multiboot (GLIM)</b> — Um conjunto de arquivos de configuração do GRUB para transformar uma unidade USB formatada em VFAT com imagens ISO de distribuições GNU/Linux em uma unidade USB de inicialização múltipla.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://github.com/thias/glim">https://github.com/thias/glim</a> || <small>not packaged? <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/">search in AUR</a></small>
+</dd></dl>
+<ul><li>
+<b>liveusb-builder</b> — Um conjunto de scripts para criar uma unidade USB de inicialização múltipla para distribuições GNU/Linux.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://github.com/mytbk/liveusb-builder">https://github.com/mytbk/liveusb-builder</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/liveusb-builder-git/">liveusb-builder-git</a></span><sup><small>AUR</small></sup>
+</dd></dl>
+<ul><li>
+<b>MultiBootUSB</b> — Um software Python cross-platform com interfaces CLI e GUI interfaces que permitem instalar e remover múltiplas imagens live do Linux em uma unidade USB.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://github.com/mbusb/multibootusb">https://github.com/mbusb/multibootusb</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/multibootusb/">multibootusb</a></span><sup><small>AUR</small></sup>
+</dd></dl>
+<ul><li>
+<b>MultiSystem</b> — Ferramente gráfica que permite installar, gerenciar e remover múltiplas imagens ISO em uma unidade USB.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="http://liveusb.info/dotclear/">http://liveusb.info/dotclear/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/multisystem/">multisystem</a></span><sup><small>AUR</small></sup>
+</dd></dl>
+<ul><li>
+<b>Ventoy</b> — Uma ferramenta de código aberto para criar uma unidade USB inicializávelpara arquivos ISO/WIM/IMG/VHD(x)/EFI. Não é necessário formatar o disco várias vezes, apenas copiar os arquivos para a unidade USB e inicialize-a diretamente.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://www.ventoy.net">https://www.ventoy.net</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ventoy-bin/">ventoy-bin</a></span><sup><small>AUR</small></sup>
+</dd></dl>
+<h2>
+<span id="Veja_tamb.C3.A9m"></span><span class="mw-headline" id="Veja_também">Veja também</span>
+</h2>
+<ul>
+<li>GRUB:
+<ul>
+<li><a rel="nofollow" class="external free" href="https://help.ubuntu.com/community/Grub2/ISOBoot/Examples">https://help.ubuntu.com/community/Grub2/ISOBoot/Examples</a></li>
+<li><a rel="nofollow" class="external free" href="https://help.ubuntu.com/community/Grub2/ISOBoot">https://help.ubuntu.com/community/Grub2/ISOBoot</a></li>
+<li>
+<a rel="nofollow" class="external text" href="https://github.com/thias/glim">GRUB Live ISO Multiboot</a> - GRUB configurations for booting ISO images</li>
+</ul>
+</li>
+<li>Syslinux:
+<ul><li><a rel="nofollow" class="external text" href="https://wiki.syslinux.org/wiki/index.php?title=Boot_an_Iso_image">Boot an ISO image</a></li></ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Boot_process.html" title="Category:Boot process">Boot process</a></li></ul>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Move.html" title="Category:Pages or sections flagged with Template:Move">Pages or sections flagged with Template:Move</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
+<li><a href="../en/Category:Pages_with_missing_package_links.html" title="Category:Pages with missing package links">Pages with missing package links</a></li>
+</ul>
+</div>
+</div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Multiboot_USB_drive_(Portugu%C3%AAs)&amp;oldid=656115">https://wiki.archlinux.org/index.php?title=Multiboot_USB_drive_(Português)&amp;oldid=656115</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 March 2021, at 02:00.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

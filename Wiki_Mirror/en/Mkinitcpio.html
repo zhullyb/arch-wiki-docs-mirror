@@ -40,7 +40,7 @@
 <ul>
 <li><a href="../en/Systemd.html" title="Systemd">systemd</a></li>
 <li><a href="../en/Kernel_module.html" class="mw-redirect" title="Kernel modules">Kernel modules</a></li>
-<li><a href="../en/Minimal_initramfs.html" title="Minimal initramfs">Minimal initramfs</a></li>
+<li><a href="../en/Mkinitcpio/Minimal_initramfs.html" title="Mkinitcpio/Minimal initramfs">mkinitcpio/Minimal initramfs</a></li>
 <li><a href="../en/General_troubleshooting.html#Boot_problems" class="mw-redirect" title="Boot debugging">Boot debugging</a></li>
 <li><a href="../en/Dracut.html" title="Dracut">dracut</a></li>
 <li><a href="../en/Booster.html" title="Booster">Booster</a></li>
@@ -379,12 +379,12 @@ By default, it contains the instructions to create two images:
 </tbody>
 </table>
 <h3><span class="mw-headline" id="COMPRESSION">COMPRESSION</span></h3>
-<p>The kernel supports several formats for compression of the initramfs: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gzip">gzip</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bzip2">bzip2</a></span>, lzma, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xz">xz</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lzo">lzo</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lz4">lz4</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=zstd">zstd</a></span>. The provided <code>mkinitcpio.conf</code> has the various <code>COMPRESSION</code> options commented out. Uncomment one to choose which compression format you desire. Make sure you have the correct file compression utility installed for the method you wish to use.
+<p>The kernel supports several formats for compression of the initramfs: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gzip">gzip</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bzip2">bzip2</a></span>, lzma, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xz">xz</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lzo">lzo</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lz4">lz4</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=zstd">zstd</a></span>. mkinitcpio uses zstd compressed images by default, note that the zstd compression runs in multi-threading mode (with the <code>-T0</code> option which spawns as many threads as detected cores).
 </p>
-<p>Specifying no <code>COMPRESSION</code> will result in a zstd-compressed initramfs file, with <code>-T0</code> as the default compression option. To create an uncompressed image, specify <code>COMPRESSION=cat</code> in the configuration file or use <code>-z cat</code> on the command line.
+<p>The provided <code>mkinitcpio.conf</code> has the various <code>COMPRESSION</code> options commented out. Uncomment one if you wish to switch to another compression method and make sure you have the corresponding compression utility installed. If none is specified, the zstd default method is used. If you wish to create an uncompressed image, specify <code>COMPRESSION=<b>cat</b></code> in the config file or use <code>-z cat</code> on the command line.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> With a compression ratio typically around 2.5 on the image in its high compression mode (<code>-9</code>) and a very fast decompression speed, lz4 is a safe choice. For a slightly better compression, lzo is still fast to decompress. If further size reduction is needed, zstd provides a good balance of compressed image size and decompression speed. xz will achieve the smallest size with a reduction factor around 5 in its high compression preset (<code>-9</code>), at the cost of a much slower decompression speed.</div>
+<strong>Tip:</strong> With a compression ratio typically around 2.5 on the image in its high compression mode (<code>-9</code>), lz4 achieves the fastest decompression speed at the cost of a slower single-threaded compression. For a slightly better compression, lzo is still fast to decompress. zstd offers a versatile solution, with multi-threaded compression and a wide range of compression levels through its options — see <span class="plainlinks archwiki-template-man" title="$ man 1 zstd"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/zstd.1#Operation_modifiers">zstd(1) § Operation modifiers</a></span>. xz achieves the smallest size with a reduction factor around 5 in its high compression preset (<code>-9</code>), at the cost of a much slower decompression speed.</div>
 <h3><span class="mw-headline" id="COMPRESSION_OPTIONS">COMPRESSION_OPTIONS</span></h3>
 <p>These are additional flags passed to the program specified by <code>COMPRESSION</code>, such as:
 </p>
@@ -593,8 +593,8 @@ MKINITCPIO_PROCESS_PRESET=1 /usr/bin/bash -x "$0" "${preset_cmd[@]}"
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Mkinitcpio&amp;oldid=653705">https://wiki.archlinux.org/index.php?title=Mkinitcpio&amp;oldid=653705</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 28 February 2021, at 15:33.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Mkinitcpio&amp;oldid=655942">https://wiki.archlinux.org/index.php?title=Mkinitcpio&amp;oldid=655942</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 24 March 2021, at 15:39.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -70,16 +71,17 @@
 <li class="toclevel-2 tocsection-15"><a href="#Native_notifications"><span class="tocnumber">4.9</span> <span class="toctext">Native notifications</span></a></li>
 <li class="toclevel-2 tocsection-16"><a href="#Theming_tweaks"><span class="tocnumber">4.10</span> <span class="toctext">Theming tweaks</span></a></li>
 <li class="toclevel-2 tocsection-17"><a href="#Keyboard_bindings"><span class="tocnumber">4.11</span> <span class="toctext">Keyboard bindings</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Use_OpenPGP_with_external_GnuPG"><span class="tocnumber">4.12</span> <span class="toctext">Use OpenPGP with external GnuPG</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-18">
+<li class="toclevel-1 tocsection-19">
 <a href="#Troubleshooting"><span class="tocnumber">5</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-19"><a href="#LDAP_Segfault"><span class="tocnumber">5.1</span> <span class="toctext">LDAP Segfault</span></a></li>
-<li class="toclevel-2 tocsection-20"><a href="#Error:_Incoming_server_already_exists"><span class="tocnumber">5.2</span> <span class="toctext">Error: Incoming server already exists</span></a></li>
-<li class="toclevel-2 tocsection-21"><a href="#Thunderbird_UI_freezes_when_receiving_a_new_message"><span class="tocnumber">5.3</span> <span class="toctext">Thunderbird UI freezes when receiving a new message</span></a></li>
-<li class="toclevel-2 tocsection-22"><a href="#LC_TIME_environment_variable_not_respected"><span class="tocnumber">5.4</span> <span class="toctext">LC_TIME environment variable not respected</span></a></li>
-<li class="toclevel-2 tocsection-23"><a href="#Authentication_failure_while_connecting_to_server_imap.gmail.com_error_when_using_OAuth2_with_G_Suite_account"><span class="tocnumber">5.5</span> <span class="toctext"><i>Authentication failure while connecting to server imap.gmail.com</i> error when using OAuth2 with G Suite account</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#LDAP_Segfault"><span class="tocnumber">5.1</span> <span class="toctext">LDAP Segfault</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#Error:_Incoming_server_already_exists"><span class="tocnumber">5.2</span> <span class="toctext">Error: Incoming server already exists</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Thunderbird_UI_freezes_when_receiving_a_new_message"><span class="tocnumber">5.3</span> <span class="toctext">Thunderbird UI freezes when receiving a new message</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#LC_TIME_environment_variable_not_respected"><span class="tocnumber">5.4</span> <span class="toctext">LC_TIME environment variable not respected</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#Authentication_failure_while_connecting_to_server_imap.gmail.com_error_when_using_OAuth2_with_G_Suite_account"><span class="tocnumber">5.5</span> <span class="toctext"><i>Authentication failure while connecting to server imap.gmail.com</i> error when using OAuth2 with G Suite account</span></a></li>
 </ul>
 </li>
 </ul>
@@ -116,7 +118,7 @@
 <ul><li>
 <b>SysTray-X</b> — system tray extension. Similar to FireTray but works with Thunderbird 68+.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="https://github.com/Ximi1970/systray-x">https://github.com/Ximi1970/systray-x</a> || <small>not packaged? <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/">search in AUR</a></small>
+<a rel="nofollow" class="external free" href="https://github.com/Ximi1970/systray-x">https://github.com/Ximi1970/systray-x</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systray-x-git/">systray-x-git</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
 <b>SOGo Connector</b> —  Lets you sync address books via CardDAV</li></ul>
@@ -209,7 +211,7 @@ mailnews.default_view_flags = 1 (Threaded view)
 </p>
 <pre>mail.serverDefaultStoreContractID = @mozilla.org/msgstore/maildirstore;1
 </pre>
-<p>Some limitations up to at least 31.4.0-1: only the "tmp" and "cur" directories are supported. The "new" directory is completely ignored. The read state of mails are stored in a separate ".msf" file, so initially all local mail using Maildir will be marked as unread even when located in the "cur" directory.
+<p>Some limitations up to at least 31.4.0-1: only the "tmp" and "cur" directories are supported. The "new" directory is completely ignored. The read state of mails are stored in a separate ".msf" file, so initially all local mail using Maildir will be marked as unread even when located in the "cur" directory. It is also possible to change this setting in the regular user interface now: Go to <i>Menu &gt; Preferences &gt; General &gt; Indexing &gt; Message Store Type for new accounts</i> and choose <i>File per message (maildir)</i>.
 </p>
 <h3><span class="mw-headline" id="Spell_checking">Spell checking</span></h3>
 <p>Install <a href="../en/Language_checking.html#Spell_checkers" class="mw-redirect" title="Hunspell">hunspell</a> and a hunspell language dictionary and restart Thunderbird.
@@ -250,7 +252,33 @@ mailnews.default_view_flags = 1 (Threaded view)
 <p>Further customization can be attained by creating and editing a <code>userchrome.css</code>.  See <a href="../en/Firefox/Tweaks.html#General_user_interface_CSS_settings" title="Firefox/Tweaks">Firefox/Tweaks#General user interface CSS settings</a> and <a rel="nofollow" class="external text" href="http://kb.mozillazine.org/UserChrome.css">Mozillazine's userchrome page</a>.
 </p>
 <h3><span class="mw-headline" id="Keyboard_bindings">Keyboard bindings</span></h3>
-<p>Thunderbird <a rel="nofollow" class="external text" href="https://bugzilla.mozilla.org/show_bug.cgi?id=615957">unfortunately lacks</a> an easy way to disable single-key bindings, such that pressing e.g. "a" on the keyboard will not archive a message. The <a rel="nofollow" class="external text" href="https://addons.thunderbird.net/en-GB/thunderbird/addon/tbkeys-lite/">tbkeys-lite</a> extension provides a means of editing and deleting such bindings and is available for Thunderbird 68.0 onwards.
+<p>Thunderbird <a rel="nofollow" class="external text" href="https://bugzilla.mozilla.org/show_bug.cgi?id=615957">unfortunately lacks</a> an easy way to disable single-key bindings, such that pressing e.g. "a" on the keyboard will not archive a message. The <a rel="nofollow" class="external text" href="https://addons.thunderbird.net/thunderbird/addon/tbkeys-lite/">tbkeys-lite</a> extension provides a means of editing and deleting such bindings and is available for Thunderbird 68.0 onwards.
+</p>
+<h3><span class="mw-headline" id="Use_OpenPGP_with_external_GnuPG">Use OpenPGP with external GnuPG</span></h3>
+<p>Starting with v78.1, Thunderbird now ships with integrated OpenPGP support previously provided by Add-Ons like Enigmail. It will offer you to migrate your existing Enigmail keys into Thunderbird upon the first start after the update. If you don't want to store your private keys inside Thunderbird, it is possible to use Thunderbird with an external GnuPG installation in order to keep your keys safe or use a Smartcard.
+</p>
+<ol>
+<li>To view any OpenPGP keys stored inside Thunderbird:
+<ol>
+<li>Go to <i>Menu &gt; Tools &gt; OpenPGP Key Manager</i>
+</li>
+<li>Disable <i>View &gt; Display Keys from other people</i> for better visibility of your own keys. Private keys are displayed in bold.</li>
+<li>Review present keys and possibly delete them.</li>
+<li>Import public keys of any external private keys you want to use using <i>File &gt; Import public key(s) from file</i>. See <a href="../en/GnuPG.html#Export_your_public_key" title="GnuPG">GnuPG#Export your public key</a>.</li>
+</ol>
+</li>
+<li>To enable external GnuPG support in Thunderbird:
+<ol>
+<li>Make sure you have <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gnupg">gnupg</a></span> and the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gpgme">gpgme</a></span> C library installed and <a href="../en/GnuPG.html#List_keys" title="GnuPG">relevant keys available</a> or <a href="../en/GnuPG.html#Create_a_key_pair" title="GnuPG">created</a>.</li>
+<li>Open the <a href="#Config_editor">#Config editor</a>
+</li>
+<li>Search for <code>mail.openpgp.allow_external_gnupg</code> and set it's value to <code>true</code>
+</li>
+<li>Go to <i>Menu &gt; Account Settings</i> and select the account you want to use. Then click <i>Manage Identities</i> and select the Identity you want to edit. Click <i>Edit &gt; End-To-End Encryption &gt; Add Key</i>. Select <i>Use your external key through GnuPG</i> and paste your key ID from GnuPG.</li>
+</ol>
+</li>
+</ol>
+<p>Refer to <a href="https://wiki.mozilla.org/Thunderbird:OpenPGP:Smartcards" class="extiw" title="mozillawiki:Thunderbird:OpenPGP:Smartcards">MozillaWiki:Thunderbird:OpenPGP:Smartcards</a> for further instructions and specialized configurations.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="LDAP_Segfault">LDAP Segfault</span></h3>
@@ -290,23 +318,19 @@ mailnews.default_view_flags = 1 (Threaded view)
 </p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
 <li><a href="../en/Category:Email_clients.html" title="Category:Email clients">Email clients</a></li>
 <li><a href="../en/Category:Mozilla.html" title="Category:Mozilla">Mozilla</a></li>
 </ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_missing_package_links.html" title="Category:Pages with missing package links">Pages with missing package links</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Thunderbird&amp;oldid=648882">https://wiki.archlinux.org/index.php?title=Thunderbird&amp;oldid=648882</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 January 2021, at 21:09.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Thunderbird&amp;oldid=655258">https://wiki.archlinux.org/index.php?title=Thunderbird&amp;oldid=655258</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 March 2021, at 21:19.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
