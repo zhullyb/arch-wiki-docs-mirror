@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -65,25 +66,27 @@ Different types of clients connect to the IceCast server, either to provide a "m
 <li class="toclevel-2 tocsection-6"><a href="#Oggfwd_and_ffmpeg2theora"><span class="tocnumber">4.2</span> <span class="toctext">Oggfwd and ffmpeg2theora</span></a></li>
 <li class="toclevel-2 tocsection-7"><a href="#ezstream"><span class="tocnumber">4.3</span> <span class="toctext">ezstream</span></a></li>
 <li class="toclevel-2 tocsection-8"><a href="#XMMS2"><span class="tocnumber">4.4</span> <span class="toctext">XMMS2</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#VLC"><span class="tocnumber">4.5</span> <span class="toctext">VLC</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-9">
+<li class="toclevel-1 tocsection-10">
 <a href="#Playback"><span class="tocnumber">5</span> <span class="toctext">Playback</span></a>
 <ul>
-<li class="toclevel-2 tocsection-10"><a href="#MPD_2"><span class="tocnumber">5.1</span> <span class="toctext">MPD</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#MPlayer"><span class="tocnumber">5.2</span> <span class="toctext">MPlayer</span></a></li>
-<li class="toclevel-2 tocsection-12"><a href="#Mpv"><span class="tocnumber">5.3</span> <span class="toctext">Mpv</span></a></li>
-<li class="toclevel-2 tocsection-13"><a href="#Sonata"><span class="tocnumber">5.4</span> <span class="toctext">Sonata</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#MPD_2"><span class="tocnumber">5.1</span> <span class="toctext">MPD</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#MPlayer"><span class="tocnumber">5.2</span> <span class="toctext">MPlayer</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Mpv"><span class="tocnumber">5.3</span> <span class="toctext">Mpv</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#Sonata"><span class="tocnumber">5.4</span> <span class="toctext">Sonata</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#VLC_2"><span class="tocnumber">5.5</span> <span class="toctext">VLC</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-14">
+<li class="toclevel-1 tocsection-16">
 <a href="#Tips_and_tricks"><span class="tocnumber">6</span> <span class="toctext">Tips and tricks</span></a>
 <ul>
-<li class="toclevel-2 tocsection-15"><a href="#Running_Icecast_in_a_chroot_environment"><span class="tocnumber">6.1</span> <span class="toctext">Running Icecast in a chroot environment</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#Local_user"><span class="tocnumber">6.2</span> <span class="toctext">Local user</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Running_Icecast_in_a_chroot_environment"><span class="tocnumber">6.1</span> <span class="toctext">Running Icecast in a chroot environment</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Local_user"><span class="tocnumber">6.2</span> <span class="toctext">Local user</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-17"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-19"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -247,6 +250,13 @@ $ xmms2 server config ices.public 1
 </p>
 <p>Alternatively, XMMS2 can be controlled with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxmusic">lxmusic</a></span> which provides a simple GUI.
 </p>
+<h3><span class="mw-headline" id="VLC">VLC</span></h3>
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=vlc">vlc</a></span> is a full-featured media player and transcoder with built-in support for Icecast streaming. It can be controlled via GUI or command line, and can act as an Icecast source for  media files or real-time audio captured from <a href="../en/JACK_Audio_Connection_Kit.html" class="mw-redirect" title="JACK">JACK</a> output ports and other sources. For example, this command connects VLC to the first JACK audio output ports it finds, encodes the audio as Ogg Vorbis, and streams it to an Icecast mount point at <code><a rel="nofollow" class="external free" href="http://localhost:8000/stream.ogg">http://localhost:8000/stream.ogg</a></code>:
+</p>
+<pre>$ cvlc 'jack://channels=2:ports=.*' ':sout=#transcode{vcodec=none,acodec=vorb,ab=192,channels=2,samplerate=44100,scodec=none}:std{access=shout,mux=ogg,dst=//source:hackme@localhost:8000/stream.ogg}' :no-sout-all :sout-keep
+</pre>
+<p>Alternatively, VLC offers a guided GUI to stream to an Icecast server. When opening any media source, choose <b>Stream</b> and then add <b>Icecast</b> as a destination. You will be prompted for the network <b>Address</b>, <b>Port</b>, <b>Mount Point</b>, and <b>Login:pass</b>. Use <code>source:&lt;password&gt;</code> as the format for the latter. Select the desired transcoding options on the next screen and you're ready to go.
+</p>
 <h2><span class="mw-headline" id="Playback">Playback</span></h2>
 <p>Streams can be listened to via a <a href="../en/List_of_applications/Internet.html#Web_browsers" class="mw-redirect" title="Web browser">web browser</a> when visiting <a rel="nofollow" class="external free" href="http://localhost:8000">http://localhost:8000</a>.
 </p>
@@ -288,6 +298,9 @@ $ xmms2 server config ices.public 1
 <li>Right-click-&gt;'Connections' and select your local computer. Then click the 'Streams' tab. Right-click and click 'New'. Make 'Stream Name' the name from your servers /etc/mpd.conf file's audio_output { } section and make the URL IP.of.server:8000/example.ogg.m3u. Double-click on this stream.</li>
 <li>Click on the 'Current' tab and you will see the URL of the stream as your only item. Double-click on it and after a delay you should hear whatever song you had chosen on the server.</li>
 </ul>
+<h3><span class="mw-headline" id="VLC_2">VLC</span></h3>
+<p>In addition to acting as an Icecast source, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=vlc">vlc</a></span> can play back streams from Icecast and other network audio sources. Choose <b>Open Network Stream...</b> and provide the URL when prompted.
+</p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Running_Icecast_in_a_chroot_environment">Running Icecast in a chroot environment</span></h3>
 <div class="noprint archwiki-template-message">
@@ -356,8 +369,8 @@ $ xmms2 server config ices.public 1
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Icecast&amp;oldid=635654">https://wiki.archlinux.org/index.php?title=Icecast&amp;oldid=635654</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 September 2020, at 09:43.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Icecast&amp;oldid=657482">https://wiki.archlinux.org/index.php?title=Icecast&amp;oldid=657482</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 3 April 2021, at 16:02.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

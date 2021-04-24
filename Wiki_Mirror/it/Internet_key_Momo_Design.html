@@ -73,7 +73,7 @@
 </ul>
 </div>
 
-<h1><span class="mw-headline" id="Hardware">Hardware</span></h1>
+<h2><span class="mw-headline" id="Hardware">Hardware</span></h2>
 <p>Nel momento della connessione al pc dovremmo vedere con <i>dmesg</i> quanto segue:
 </p>
 <pre>cdc_acm 2-1:1.0: ttyACM0: USB ACM device
@@ -82,7 +82,7 @@ cdc_acm: v0.26:USB Abstract Control Model driver for USB modems and ISDN adapter
 </pre>
 <p>Questo significa che il nostro modem sta lavorando su <b>ttyACM0</b>, una porta virtuale, ed è qui che dovremo configuarlo.
 </p>
-<h1><span class="mw-headline" id="Prima_di_tutto">Prima di tutto</span></h1>
+<h2><span class="mw-headline" id="Prima_di_tutto">Prima di tutto</span></h2>
 <p>Accertarsi di avere installato <b>pppd</b>
 </p>
 <pre># pacman -Qs ppp
@@ -102,13 +102,13 @@ nameserver 208.67.220.220
 </p>
 <pre>chattr +i /etc/resolv.conf
 </pre>
-<h1><span class="mw-headline" id="Connessione_con_wvdial">Connessione con wvdial</span></h1>
-<h2><span class="mw-headline" id="Packages">Packages</span></h2>
+<h2><span class="mw-headline" id="Connessione_con_wvdial">Connessione con wvdial</span></h2>
+<h3><span class="mw-headline" id="Packages">Packages</span></h3>
 <p>Installiamo il pacchetto wvdial se non è già presente
 </p>
 <pre># pacman -S wvdial
 </pre>
-<h2><span class="mw-headline" id="Scripting">Scripting</span></h2>
+<h3><span class="mw-headline" id="Scripting">Scripting</span></h3>
 <p>Andiamo a creare o modificare se esiste già il file /etc/wvdial.conf con il nostro editor preferito
 </p>
 <pre>[Dialer Defaults]
@@ -141,7 +141,7 @@ Phone = *99#
 Password = tre
 Username = tre
 </pre>
-<h2><span class="mw-headline" id="Connessione">Connessione</span></h2>
+<h3><span class="mw-headline" id="Connessione">Connessione</span></h3>
 <p>Ora lanciando da root il comando wvdial dovremo effettuare la connessione.
 </p>
 <pre># wvdial
@@ -150,8 +150,8 @@ Username = tre
 </p>
 <pre># ip route add default dev ppp0
 </pre>
-<h1><span class="mw-headline" id="Connessione_con_ppp">Connessione con ppp</span></h1>
-<h2><span class="mw-headline" id="Configurazione">Configurazione</span></h2>
+<h2><span class="mw-headline" id="Connessione_con_ppp">Connessione con ppp</span></h2>
+<h3><span class="mw-headline" id="Configurazione">Configurazione</span></h3>
 <p>Creiamo uno script che chiameremo /etc/ppp/peers/conn3 con questi dati all'interno
 </p>
 <pre>#!/bin/bash                                                                                                              
@@ -239,7 +239,7 @@ SAY             "\nSending break to the modem\n"        \
 ""              "\d\d+++\d\dATH"        \
 SAY             "\nPDP context detached\n"
 </pre>
-<h2><span class="mw-headline" id="Connessione_2">Connessione</span></h2>
+<h3><span class="mw-headline" id="Connessione_2">Connessione</span></h3>
 <p>Ora con il comando 
 </p>
 <pre># pon conn3
@@ -258,8 +258,8 @@ SAY             "\nPDP context detached\n"
 </p>
 <pre># ip route add default dev ppp0
 </pre>
-<h1><span class="mw-headline" id="Regolazione_dei_dettagli">Regolazione dei dettagli</span></h1>
-<h2><span class="mw-headline" id="Verifica_dello_stato_della_connessione">Verifica dello stato della connessione</span></h2>
+<h2><span class="mw-headline" id="Regolazione_dei_dettagli">Regolazione dei dettagli</span></h2>
+<h3><span class="mw-headline" id="Verifica_dello_stato_della_connessione">Verifica dello stato della connessione</span></h3>
 <p>Per verificare lo stato della connessione suggerisco questo escamotage:
 Creare un file dove salvare la risposta che da <i>pppd</i> al comando in /etc/ppp/peers/connect-chat
 OK-AT-OK 'AT+COPS?'
@@ -287,7 +287,7 @@ aggiungere al file /etc/rc.sysinit la seguente riga
 </p>
 <pre>${color lightgrey}Network ppp0: ${exec cat "/var/log/monitorconn.log" | head --lines=1}
 </pre>
-<h1><span class="mw-headline" id="Links">Links</span></h1>
+<h2><span class="mw-headline" id="Links">Links</span></h2>
 <ul>
 <li><a href="../en/Huawei_E220.html" title="Huawei E220">Huawei E220</a></li>
 <li><a href="../en/Ppp.html" class="mw-redirect" title="PPPoE Setup with pppd">PPPoE Setup with pppd</a></li>
@@ -315,8 +315,8 @@ aggiungere al file /etc/rc.sysinit la seguente riga
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Internet_key_Momo_Design_(Italiano)&amp;oldid=652897">https://wiki.archlinux.org/index.php?title=Internet_key_Momo_Design_(Italiano)&amp;oldid=652897</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 February 2021, at 17:38.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Internet_key_Momo_Design_(Italiano)&amp;oldid=659914">https://wiki.archlinux.org/index.php?title=Internet_key_Momo_Design_(Italiano)&amp;oldid=659914</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 14:17.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

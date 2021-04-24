@@ -146,8 +146,7 @@ thunar ~/bluetooth
 </h3>
 <p>Samozřejmě, že můžete používat předchozí aplikace, i když jako svoje grafické nepoužíváte GNOME, Xfce nebo KDE.
 </p>
-<p><br>
-Tento seznam by vám měl pomoci porozumět tomu, co jaká aplikace dělá:
+<p>Tento seznam by vám měl pomoci porozumět tomu, co jaká aplikace dělá:
 </p>
 <ul>
 <li>bluetooth-applet -- tray ikona s možností nastavení bluetooth, párováním nových zařízení a správou zařízení zpárovaných</li>
@@ -155,7 +154,7 @@ Tento seznam by vám měl pomoci porozumět tomu, co jaká aplikace dělá:
 </ul>
 <p>pokud se v průběhu přenosu ukazuje chyba nebo pokud se žádný soubor nakonec nepřenese, přidejte následující kus kódu do souboru
 </p>
-<p><tt>/etc/dbus-1/system.d/bluetooth.conf</tt>
+<p><code>/etc/dbus-1/system.d/bluetooth.conf</code>
 </p>
 <pre> &lt;policy user="vase_uzivatelske_id"&gt;
    &lt;allow own="org.bluez"/&gt;
@@ -163,8 +162,6 @@ Tento seznam by vám měl pomoci porozumět tomu, co jaká aplikace dělá:
    &lt;allow send_interface="org.bluez.Agent"/&gt;
  &lt;/policy&gt;
 </pre>
-<p><br>
-</p>
 <ul>
 <li>bluetooth-wizard -- užívá se pro párování nových zařízení</li>
 <li>bluetooth-properties -- je přístupný i přes ikonu bluetooth-appletu</li>
@@ -174,7 +171,7 @@ Tento seznam by vám měl pomoci porozumět tomu, co jaká aplikace dělá:
 <h2>
 <span id="Manu.C3.A1ln.C3.AD_konfigurace"></span><span class="mw-headline" id="Manuální_konfigurace">Manuální konfigurace</span>
 </h2>
-<p>Pro manuální konfiguraci bluetooth (<tt>bluez</tt>), budete potřebovat upravit konfigurační soubory v <tt>/etc/bluetooth</tt>. Jedná se o soubory:
+<p>Pro manuální konfiguraci bluetooth (<code>bluez</code>), budete potřebovat upravit konfigurační soubory v <code>/etc/bluetooth</code>. Jedná se o soubory:
 </p>
 <pre>audio.conf
 input.conf
@@ -182,9 +179,7 @@ main.conf
 network.conf
 rfcomm.conf
 </pre>
-<p>Defaultní konfigurace by měla fungovat bez problémů. Většina výše zmíněných konfiguračních souborů je velice dobře zdokumentovaná, proto by poupravení parametrů neměl být problém. Hlavní nastavení bluetooth je v souboru <tt>main.conf</tt> - tím začněte.
-</p>
-<p><br>
+<p>Defaultní konfigurace by měla fungovat bez problémů. Většina výše zmíněných konfiguračních souborů je velice dobře zdokumentovaná, proto by poupravení parametrů neměl být problém. Hlavní nastavení bluetooth je v souboru <code>main.conf</code> - tím začněte.
 </p>
 <h2>
 <span id="P.C3.A1rov.C3.A1n.C3.AD"></span><span class="mw-headline" id="Párování">Párování</span>
@@ -208,7 +203,7 @@ Způsob párování počítače s mobilním telefonem:
 </p>
 <pre> $ bluez-simple-agent
 </pre>
-<p>Pokud se vše zdařilo, měla by se vám v konzoli zobrazit hlaška "Agent registered". Následně můžete začít párování ze svého mobilního telefonu. Skript se vás v konzoli zeptá na tzv. passcode, vložte ho a potvrďte enterem - voalá, povedlo se. Teď už můžete ukončit agenta použitím klávesy <i>Ctrl+C</i> (^C-c). Agenta jsme použili pouze pro párování, nebudeme ho potřebovat při každém připojení zařízení. Pokud váš telefon nemuže naleznout počítač, pokračujte do <a href="#Nelze_nal.C3.A9zt_po.C4.8D.C3.ADta.C4.8D">řešení problémů</a>.
+<p>Pokud se vše zdařilo, měla by se vám v konzoli zobrazit hlaška "Agent registered". Následně můžete začít párování ze svého mobilního telefonu. Skript se vás v konzoli zeptá na tzv. passcode, vložte ho a potvrďte enterem - voalá, povedlo se. Teď už můžete ukončit agenta použitím klávesy <i>Ctrl+C</i> (^C-c). Agenta jsme použili pouze pro párování, nebudeme ho potřebovat při každém připojení zařízení. Pokud váš telefon nemuže naleznout počítač, pokračujte do <a href="#Nelze_nal%C3%A9zt_po%C4%8D%C3%ADta%C4%8D">řešení problémů</a>.
 </p>
 <p>Pro příklad spárování přejděte do sekce <i>příklady</i>.
 </p>
@@ -366,8 +361,7 @@ Requesting information ...
                 &lt;HV3 packets&gt; &lt;A-law log&gt; &lt;CVSD&gt; &lt;power control&gt;
                 &lt;transparent SCO&gt; &lt;AFH cap. slave&gt; &lt;AFH cap. master&gt;
 </pre>
-<p><br>
-<b>Upravte si konfigurační soubor main.conf a vložte novou položku pro váš telefon ( Class = 0x100100 ):</b>
+<p><b>Upravte si konfigurační soubor main.conf a vložte novou položku pro váš telefon ( Class = 0x100100 ):</b>
 </p>
 <pre>&gt; vim /etc/bluetooth/main.conf
 </pre>
@@ -385,8 +379,7 @@ Requesting information ...
 [DONE]
 :: Starting bluetooth subsystem:  bluetoothd
 </pre>
-<p><br>
-<b>Párování se dělá pouze jednou programem bluez-simple-agent. Jakmile se vaše motorola zeptá na pin, zadejte 0000.</b>
+<p><b>Párování se dělá pouze jednou programem bluez-simple-agent. Jakmile se vaše motorola zeptá na pin, zadejte 0000.</b>
 </p>
 <pre>&gt; /usr/bin/bluez-simple-agent hci0 00:1A:1B:82:9B:6D
 RequestPinCode (/org/bluez/10768/hci0/dev_00_1A_1B_82_9B_6D)
@@ -443,12 +436,12 @@ drwxr-xr-x 1 root root    0 10. Okt 2010  video
 Can't register passkey agent
 The name org.bluez was not provided by any .service files
 </pre>
-<p>Pravděpodobně jste spustili <tt>/etc/rc.d/bluetooth</tt> dříve než <tt>/etc/rc.d/dbus</tt>
+<p>Pravděpodobně jste spustili <code>/etc/rc.d/bluetooth</code> dříve než <code>/etc/rc.d/dbus</code>
 </p>
 <pre>$&gt; hciconfig dev
 # (no listing)
 </pre>
-<p>Zkuste spustit <tt>hciconfig hc0 up</tt>
+<p>Zkuste spustit <code>hciconfig hc0 up</code>
 </p>
 <h3><span class="mw-headline" id="Blueman_2">Blueman</span></h3>
 <p>Jeslitliže blueman-applet skončí s chybou, zkuste odstranit veškerý obsah adresáře <i>/var/lib/bluetooth</i> a restartovat systém (nebo pouze daemony hal, dbus a bluetooth).
@@ -552,8 +545,7 @@ hci0:   Type: USB
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong>  Zkontrolujte volbu DiscoverableTimeout a PairableTimeout v souboru /etc/bluetooth/main.conf</div>
-<p><br>
-Nebo můžete zkusit změnit nastavení <i>Class</i> v souboru <code>/etc/bluetooth/main.conf</code> následovně
+<p>Nebo můžete zkusit změnit nastavení <i>Class</i> v souboru <code>/etc/bluetooth/main.conf</code> následovně
 </p>
 <pre># Default device class. Only the major and minor device class bits are
 # considered.
@@ -577,7 +569,7 @@ Class = 0x100100
 <li>
 <a rel="nofollow" class="external text" href="http://en.opensuse.org/HCL/Bluetooth_Adapters">openSUSE Bluetooth Hardware Compatibility List (HCL)</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-20 ⓘ]</sup>
 </li>
-<li><a rel="nofollow" class="external text" href="http://www.gentoo.org/doc/en/bluetooth-guide.xml">Gentoo wiki is usually good</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.gentoo.org/doc/en/bluetooth-guide.xml">Gentoo wiki is usually good</a></li>
 <li><a rel="nofollow" class="external text" href="http://linuxgazette.net/109/oregan3.html">Accessing a Bluetooth phone on Linux Gazette</a></li>
 <li><a rel="nofollow" class="external text" href="http://www.adamish.com/blog/#a000361">Bluetooth computer visibility</a></li>
 </ul>
@@ -599,8 +591,8 @@ Class = 0x100100
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Bluetooth_(%C4%8Cesky)&amp;oldid=655436">https://wiki.archlinux.org/index.php?title=Bluetooth_(Česky)&amp;oldid=655436</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 March 2021, at 07:50.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Bluetooth_(%C4%8Cesky)&amp;oldid=660559">https://wiki.archlinux.org/index.php?title=Bluetooth_(Česky)&amp;oldid=660559</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 06:59.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

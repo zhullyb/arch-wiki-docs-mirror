@@ -223,9 +223,15 @@
 <li class="toclevel-3 tocsection-82"><a href="#Early_2008_%E2%80%94_version_1,1"><span class="tocnumber">8.3.7</span> <span class="toctext">Early 2008 — version 1,1</span></a></li>
 </ul>
 </li>
+<li class="toclevel-2 tocsection-83">
+<a href="#Mac_Mini"><span class="tocnumber">8.4</span> <span class="toctext">Mac Mini</span></a>
+<ul>
+<li class="toclevel-3 tocsection-84"><a href="#2018"><span class="tocnumber">8.4.1</span> <span class="toctext">2018</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-83"><a href="#See_also"><span class="tocnumber">9</span> <span class="toctext">See also</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-85"><a href="#See_also"><span class="tocnumber">9</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -322,7 +328,7 @@ In OS X, open the App Store and check for updates. If your mac finds and install
 <ul>
 <li>The swap partition is optional on machines with 4GB of RAM or more. A <b><a href="../en/Swap.html#Swap_file" class="mw-redirect" title="Swap file">swap file</a></b> can be created later.</li>
 <li>The easiest dual-boot option is to install rEFInd from inside OS X, to its root directory (default for <code>install.sh</code>). Following that, copy the driver folder from the installation tarball into the new rEFInd location, and uncomment the lines <i>"scan_all_linux_kernels"</i> and <i>"also_scan_dirs"</i> options in <code>refind.conf</code>. Configuration of boot options can then be done from a <code>refind_linux.conf</code> in Arch's <code>/boot</code> directory.</li>
-<li>If you want to be able to boot GRUB from the Apple boot loader, you can create a small hfs+ partition (for convenience, use OS X to format it in <i>Disk Utility.app</i> afterwards). Follow the GRUB EFI install procedure, and mount your <code>/boot/efi</code> directory to the hfs+ partition you created. Finally, finish up again in OS X by blessing the partition. This will set GRUB as the default boot option (holding alt at startup goes to the mac boot options screen still. See <a rel="nofollow" class="external free" href="http://mjg59.dreamwidth.org/7468.html">http://mjg59.dreamwidth.org/7468.html</a>).,</li>
+<li>If you want to be able to boot GRUB from the Apple boot loader, you can create a small hfs+ partition (for convenience, use OS X to format it in <i>Disk Utility.app</i> afterwards). Follow the GRUB EFI install procedure, and mount your <code>/boot/efi</code> directory to the hfs+ partition you created. Finally, finish up again in OS X by blessing the partition. This will set GRUB as the default boot option (holding alt at startup goes to the mac boot options screen still. See <a rel="nofollow" class="external free" href="https://mjg59.dreamwidth.org/7468.html">https://mjg59.dreamwidth.org/7468.html</a>).,</li>
 <li>OS X's EFI partition can be shared with Arch Linux, making the creation of an additional EFI partition dedicated to Arch completely optional.</li>
 </ul>
 </div>
@@ -628,7 +634,7 @@ To see which graphics card you have type:
 <h5><span class="mw-headline" id="NVIDIA_note">NVIDIA note</span></h5>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> If you have installed OS in EFI mode and NVIDIA binary drivers are working only in BIOS mode (e.g. you get black screen on EFI boot), try this approach: <a rel="nofollow" class="external free" href="https://askubuntu.com/a/613573">https://askubuntu.com/a/613573</a> </div>
-<p>For MacBooks with NVIDIA graphics, for the backlight to work properly you may need the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvidia-bl/">nvidia-bl</a></span><sup><small>AUR</small></sup> package.
+<p>For MacBooks with NVIDIA graphics, for the backlight to work properly you may need the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvidia-bl/">nvidia-bl</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> package.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> 
@@ -720,7 +726,7 @@ To see which graphics card you have type:
 <p>Alternatively you might want to check out the <a href="../en/Keyboard_backlight.html" title="Keyboard backlight">Keyboard backlight</a> wiki page.
 </p>
 <h6><span class="mw-headline" id="NVIDIA_note_2">NVIDIA note</span></h6>
-<p>If the brightness does not function correctly through pommed, make sure you have installed the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvidia-bl/">nvidia-bl</a></span><sup><small>AUR</small></sup> package and insert
+<p>If the brightness does not function correctly through pommed, make sure you have installed the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvidia-bl/">nvidia-bl</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> package and insert
 </p>
 <pre>find . -name "*" -exec sed -i 's/mbp_backlight/nvidia_backlight/' '{}' \;
 </pre>
@@ -1075,7 +1081,7 @@ end remote
 <span id="HFS.2B_Partitions"></span><span class="mw-headline" id="HFS+_Partitions">HFS+ Partitions</span>
 </h3>
 <h4><span class="mw-headline" id="Journaling">Journaling</span></h4>
-<p>HFS+ partitions, now the default in OS X, are not fully supported by Linux and are mounted as read-only by default. In order to write to an HFS+ partition, the safe way is to disable journaling. This can be accomplished using the OS X Disk Utility. Refer to this <a rel="nofollow" class="external text" href="http://support.apple.com/kb/ht2355">Apple support page</a> for more information or try to do it from the command line:
+<p>HFS+ partitions, now the default in OS X, are not fully supported by Linux and are mounted as read-only by default. In order to write to an HFS+ partition, the safe way is to disable journaling. This can be accomplished using the OS X Disk Utility. Refer to this <a rel="nofollow" class="external text" href="https://support.apple.com/kb/ht2355">Apple support page</a> for more information or try to do it from the command line:
 </p>
 <p>Find your partition:
 </p>
@@ -1135,7 +1141,7 @@ To fix this you need to specify <code>sizelimit=X</code> when mounting.
 </p>
 <pre> TestDisk 7.0, Data Recovery Utility, April 2015
  Christophe GRENIER &lt;grenier@cgsecurity.org&gt;
- <a rel="nofollow" class="external free" href="http://www.cgsecurity.org">http://www.cgsecurity.org</a>
+ <a rel="nofollow" class="external free" href="https://www.cgsecurity.org">https://www.cgsecurity.org</a>
  
  Disk /dev/sdX  - 320 GB / 298 GiB - CHS 38913 255 63
      Partition     Start      End        Size in sectors
@@ -1247,7 +1253,7 @@ It is therefore recommended that you do this as soon as you install Arch Linux.
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
 <ul>
-<li>You probably want to have a look at <a rel="nofollow" class="external text" href="http://www.rodsbooks.com/refind/">rEFInd</a>, which is some type of successor of rEFIt.</li>
+<li>You probably want to have a look at <a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/">rEFInd</a>, which is some type of successor of rEFIt.</li>
 <li>This is not a requirement.  It only gives you a menu to choose between OS X and Arch Linux upon every boot.</li>
 </ul>
 </div>
@@ -1315,7 +1321,7 @@ It is therefore recommended that you do this as soon as you install Arch Linux.
 <h4>
 <span id="April_2016_12.22_-_Version_9.2C1"></span><span class="mw-headline" id='April_2016_12"_-_Version_9,1'>April 2016 12" - Version 9,1</span>
 </h4>
-<ul><li>Booting from USB via EFI works fine, when giving the <code>intremap=nosid</code> kernel option. Remember to hold the Alt key on booting to enter the boot menu. In order to allow Linux boot directly from your system disk, you'll first need to install <a rel="nofollow" class="external free" href="http://www.rodsbooks.com/refind/">http://www.rodsbooks.com/refind/</a> from within OSX recovery mode (hold cmd+r during boot, then open terminal, then run refind-install script).</li></ul>
+<ul><li>Booting from USB via EFI works fine, when giving the <code>intremap=nosid</code> kernel option. Remember to hold the Alt key on booting to enter the boot menu. In order to allow Linux boot directly from your system disk, you'll first need to install <a rel="nofollow" class="external free" href="https://www.rodsbooks.com/refind/">https://www.rodsbooks.com/refind/</a> from within OSX recovery mode (hold cmd+r during boot, then open terminal, then run refind-install script).</li></ul>
 <ul><li>The wireless card works out of the box with <code>brcmfmac</code>.</li></ul>
 <ul><li>Suspend / hibernate does not work. The problem seems to be the NVMe that does not wake up. When booting from an external drive, suspend / hibernate works out of the box.</li></ul>
 <ul><li>Audio recording works out of the box. Audio playback works out of the box for headphones, not for built-in speakers. Cirrus driver patch needed for making the speakers work: <a rel="nofollow" class="external free" href="https://github.com/leifliddy/macbook12-audio-driver">https://github.com/leifliddy/macbook12-audio-driver</a>
@@ -1344,7 +1350,7 @@ It is therefore recommended that you do this as soon as you install Arch Linux.
 <pre>/dev/sda2 -&gt; /
 /dev/sda1 -&gt; /boot
 </pre>
-<p>The bootloader in use was <a rel="nofollow" class="external text" href="http://www.rodsbooks.com/refind/index.html">rEFInd</a> instead of rEFIt. To install it, the rEFInd homepage provides a good guide. Usually it is simply done by copying rEFInd:
+<p>The bootloader in use was <a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/index.html">rEFInd</a> instead of rEFIt. To install it, the rEFInd homepage provides a good guide. Usually it is simply done by copying rEFInd:
 </p>
 <pre>mkdir /boot/EFI
 cp -vr /usr/share/refind/drivers_ia32 /boot/EFI/refind/
@@ -1375,7 +1381,7 @@ cp -v /usr/share/refind/refind_linux.conf-sample /boot/refind_linux.conf
 </pre>
 <p>The bootloader rEFInd can scan kernels even out of the '/boot/...' directory and assumes an efi kernel even without the extension '.efi'. If you do not want to try out special kernels, this should work without the hassle to copy each kernel after building to some spot special.
 </p>
-<p>If you happen to get multiple entries for one boot image, it often results of a previous installation of a bootloader within the MBR. To remove that, try the following - taken from the <a rel="nofollow" class="external text" href="http://ubuntuforums.org/showpost.php?p=7828260&amp;postcount=4">original post</a>. This is valid for GPT partitioned discs, so please check your environment and save your MBR first.
+<p>If you happen to get multiple entries for one boot image, it often results of a previous installation of a bootloader within the MBR. To remove that, try the following - taken from the <a rel="nofollow" class="external text" href="https://ubuntuforums.org/showpost.php?p=7828260&amp;postcount=4">original post</a>. This is valid for GPT partitioned discs, so please check your environment and save your MBR first.
 </p>
 <pre># dd if=/dev/zero of=/dev/sda bs=440 count=1
 </pre>
@@ -1480,12 +1486,12 @@ Bluetooth, which has been reported not working for some people with the 2013 ver
 </p>
 <p>I was able to boot by first installing Arch Linux following the MacBook guide at the wiki (having a separate FAT32 /boot partition). Skip the bootloader installation. 
 </p>
-<p>Installing <a rel="nofollow" class="external text" href="http://www.rodsbooks.com/refind/getting.html">rEFInd</a> from OS X (important!) and installing the EFI stub loader made me able to boot fine.
+<p>Installing <a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/getting.html">rEFInd</a> from OS X (important!) and installing the EFI stub loader made me able to boot fine.
 </p>
 <p><a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=165710">Dedicated thread</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong>  Installing <a rel="nofollow" class="external text" href="http://www.rodsbooks.com/refind/getting.html">rEFInd</a> from Linux (or from OS X, but to the esp) also works fine</div>
+<strong>Note:</strong>  Installing <a rel="nofollow" class="external text" href="https://www.rodsbooks.com/refind/getting.html">rEFInd</a> from Linux (or from OS X, but to the esp) also works fine</div>
 <h5><span class="mw-headline" id="Arch_Only_Installation">Arch Only Installation</span></h5>
 <p>This method works without rEFInd and uses grub to boot EFI.  Partition as follows:
 </p>
@@ -1648,6 +1654,29 @@ ata1: EH complete
 </p>
 <p>I tested this for a 13' MacBookAir1,1 with a BCM4321 chipset, and it works.
 </p>
+<h3><span class="mw-headline" id="Mac_Mini">Mac Mini</span></h3>
+<h4><span class="mw-headline" id="2018">2018</span></h4>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> 
+<p>Attempting to modify UEFI boot parameters with efibootmgr is likely to crash in the kernel. Including GRUB install phase
+</p>
+</div>
+<p>Luckily firmware on this model can function without it, using following adaptation of the <a href="#Using_the_native_Apple_bootloader_with_GRUB">#Using the native Apple bootloader with GRUB</a>
+</p>
+<ul>
+<li>Instead of creating HFS+ partition create a fat32 partition for the bootloader</li>
+<li>Instead of using grub-install create grub image and installation manually OR boot with efi=noruntime parameter</li>
+<li>Manual installation:</li>
+</ul>
+<pre> # mkdir -p /boot/grub/fonts
+ # grub-mkimage -O x86_64-efi -o /boot/System/Library/CoreServices/boot.efi  \
+ #	    -p /boot/grub \
+ #	    part_gpt hfsplus fat ext2 btrfs normal chain boot configfile linux appleldr \
+ #	    minicmd loadbios reboot halt search font gfxterm png all_video
+ # cp -r /usr/lib/grub/x86_64-efi /boot/grub/
+ # cp /usr/share/grub/unicode.pf2 /boot/grub/fonts/
+</pre>
+<ul><li>Touching /boot/mach_kernel is not necessary anymore</li></ul>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul><li>
 <b>MacBook Air</b>
@@ -1672,6 +1701,7 @@ ata1: EH complete
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
+<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 </ul>
 </div>
 </div>
@@ -1680,8 +1710,8 @@ ata1: EH complete
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Mac&amp;oldid=655927">https://wiki.archlinux.org/index.php?title=Mac&amp;oldid=655927</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 March 2021, at 10:33.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Mac&amp;oldid=661822">https://wiki.archlinux.org/index.php?title=Mac&amp;oldid=661822</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 13:57.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -78,6 +79,8 @@ When <i>pacman</i> removes a package that has a configuration file, it normally 
 </p>
 <pre>backup=(etc/pulse/{daemon.conf,default.pa,system.pa})
 </pre>
+<p>After installation, this list can be queried from the pacman database using <code>pacman -Qii <i>package_name</i></code>.
+</p>
 <p>To prevent any package from overwriting a certain file, see <a href="../../en/Pacman.html#Skip_file_from_being_upgraded" title="Pacman">Pacman#Skip file from being upgraded</a>.
 </p>
 <h2><span class="mw-headline" id="Types_explained">Types explained</span></h2>
@@ -111,7 +114,7 @@ When <i>pacman</i> removes a package that has a configuration file, it normally 
 </dt>
 <dd>All three versions are different, so leave the current version in place, install the new version with a <i>.pacnew</i> extension and warn the user about the new version. The user will be expected to manually merge any changes necessary from the new version into the current version.</dd>
 </dl>
-<p>Rarely, when an upgraded package includes a backup file the previous version didn't, the situation is correctly handled as X/Y/Y or X/Y/Z, with X being a non-existant value.
+<p>Rarely, when an upgraded package includes a backup file the previous version did not, the situation is correctly handled as X/Y/Y or X/Y/Z, with X being a non-existant value.
 </p>
 <h3><span class="mw-headline" id=".pacsave">.pacsave</span></h3>
 <p>If the user has modified one of the files specified in <code>backup</code> then that file will be renamed with a <i>.pacsave</i> extension and will remain in the filesystem after the rest of the package is removed.
@@ -140,6 +143,11 @@ When <i>pacman</i> removes a package that has a configuration file, it normally 
 </p>
 <p>You can use one of the following tools:
 </p>
+<ul><li>
+<b>checkservices</b> — Part of archlinux-contrib, it is a script that can merge pacnew files using pacdiff, and also it checks for processes running with outdated libraries and prompts the user if they want them to be restarted.</li></ul>
+<dl><dd>
+<a rel="nofollow" class="external free" href="https://github.com/archlinux/contrib/blob/master/admin/checkservices">https://github.com/archlinux/contrib/blob/master/admin/checkservices</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=archlinux-contrib">archlinux-contrib</a></span>
+</dd></dl>
 <ul><li>
 <b>dotpac</b> — Basic interactive script with ncurses-based text interface and helpful walkthrough. No merging or auto-merging features.</li></ul>
 <dl><dd>
@@ -182,8 +190,8 @@ When <i>pacman</i> removes a package that has a configuration file, it normally 
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pacman/Pacnew_and_Pacsave&amp;oldid=637398">https://wiki.archlinux.org/index.php?title=Pacman/Pacnew_and_Pacsave&amp;oldid=637398</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 6 October 2020, at 15:53.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pacman/Pacnew_and_Pacsave&amp;oldid=659980">https://wiki.archlinux.org/index.php?title=Pacman/Pacnew_and_Pacsave&amp;oldid=659980</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 15:10.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

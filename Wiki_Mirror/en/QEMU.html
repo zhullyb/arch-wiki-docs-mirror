@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -41,7 +42,7 @@
 <li><a href="../en/PCI_passthrough_via_OVMF.html" title="PCI passthrough via OVMF">PCI passthrough via OVMF</a></li>
 </ul>
 </div>
-<p>According to the <a rel="nofollow" class="external text" href="http://wiki.qemu.org/Main_Page">QEMU about page</a>, "QEMU is a generic and open source machine emulator and virtualizer."
+<p>According to the <a rel="nofollow" class="external text" href="https://wiki.qemu.org/Main_Page">QEMU about page</a>, "QEMU is a generic and open source machine emulator and virtualizer."
 </p>
 <p>When used as a machine emulator, QEMU can run OSes and programs made for one machine (e.g. an ARM board) on a different machine (e.g. your x86 PC). By using dynamic translation, it achieves very good performance.
 </p>
@@ -90,226 +91,230 @@
 <li class="toclevel-2 tocsection-17"><a href="#QEMU's_port_forwarding"><span class="tocnumber">5.2</span> <span class="toctext">QEMU's port forwarding</span></a></li>
 <li class="toclevel-2 tocsection-18"><a href="#QEMU's_built-in_SMB_server"><span class="tocnumber">5.3</span> <span class="toctext">QEMU's built-in SMB server</span></a></li>
 <li class="toclevel-2 tocsection-19"><a href="#Using_filesystem_passthrough_and_VirtFS"><span class="tocnumber">5.4</span> <span class="toctext">Using filesystem passthrough and VirtFS</span></a></li>
-<li class="toclevel-2 tocsection-20">
-<a href="#Mounting_a_partition_of_the_guest_on_the_host"><span class="tocnumber">5.5</span> <span class="toctext">Mounting a partition of the guest on the host</span></a>
+<li class="toclevel-2 tocsection-20"><a href="#Host_file_sharing_with_virtiofsd"><span class="tocnumber">5.5</span> <span class="toctext">Host file sharing with virtiofsd</span></a></li>
+<li class="toclevel-2 tocsection-21">
+<a href="#Mounting_a_partition_of_the_guest_on_the_host"><span class="tocnumber">5.6</span> <span class="toctext">Mounting a partition of the guest on the host</span></a>
 <ul>
-<li class="toclevel-3 tocsection-21">
-<a href="#Mounting_a_partition_from_a_raw_image"><span class="tocnumber">5.5.1</span> <span class="toctext">Mounting a partition from a raw image</span></a>
+<li class="toclevel-3 tocsection-22">
+<a href="#Mounting_a_partition_from_a_raw_image"><span class="tocnumber">5.6.1</span> <span class="toctext">Mounting a partition from a raw image</span></a>
 <ul>
-<li class="toclevel-4 tocsection-22"><a href="#With_manually_specifying_byte_offset"><span class="tocnumber">5.5.1.1</span> <span class="toctext">With manually specifying byte offset</span></a></li>
-<li class="toclevel-4 tocsection-23"><a href="#With_loop_module_autodetecting_partitions"><span class="tocnumber">5.5.1.2</span> <span class="toctext">With loop module autodetecting partitions</span></a></li>
-<li class="toclevel-4 tocsection-24"><a href="#With_kpartx"><span class="tocnumber">5.5.1.3</span> <span class="toctext">With kpartx</span></a></li>
+<li class="toclevel-4 tocsection-23"><a href="#With_manually_specifying_byte_offset"><span class="tocnumber">5.6.1.1</span> <span class="toctext">With manually specifying byte offset</span></a></li>
+<li class="toclevel-4 tocsection-24"><a href="#With_loop_module_autodetecting_partitions"><span class="tocnumber">5.6.1.2</span> <span class="toctext">With loop module autodetecting partitions</span></a></li>
+<li class="toclevel-4 tocsection-25"><a href="#With_kpartx"><span class="tocnumber">5.6.1.3</span> <span class="toctext">With kpartx</span></a></li>
 </ul>
 </li>
-<li class="toclevel-3 tocsection-25"><a href="#Mounting_a_partition_from_a_qcow2_image"><span class="tocnumber">5.5.2</span> <span class="toctext">Mounting a partition from a qcow2 image</span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#Mounting_a_partition_from_a_qcow2_image"><span class="tocnumber">5.6.2</span> <span class="toctext">Mounting a partition from a qcow2 image</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-26">
-<a href="#Using_any_real_partition_as_the_single_primary_partition_of_a_hard_disk_image"><span class="tocnumber">5.6</span> <span class="toctext">Using any real partition as the single primary partition of a hard disk image</span></a>
+<li class="toclevel-2 tocsection-27">
+<a href="#Using_any_real_partition_as_the_single_primary_partition_of_a_hard_disk_image"><span class="tocnumber">5.7</span> <span class="toctext">Using any real partition as the single primary partition of a hard disk image</span></a>
 <ul>
-<li class="toclevel-3 tocsection-27"><a href="#Specifying_kernel_and_initrd_manually"><span class="tocnumber">5.6.1</span> <span class="toctext">Specifying kernel and initrd manually</span></a></li>
-<li class="toclevel-3 tocsection-28">
-<a href="#Simulating_a_virtual_disk_with_MBR"><span class="tocnumber">5.6.2</span> <span class="toctext">Simulating a virtual disk with MBR</span></a>
+<li class="toclevel-3 tocsection-28"><a href="#Specifying_kernel_and_initrd_manually"><span class="tocnumber">5.7.1</span> <span class="toctext">Specifying kernel and initrd manually</span></a></li>
+<li class="toclevel-3 tocsection-29">
+<a href="#Simulating_a_virtual_disk_with_MBR"><span class="tocnumber">5.7.2</span> <span class="toctext">Simulating a virtual disk with MBR</span></a>
 <ul>
-<li class="toclevel-4 tocsection-29"><a href="#Using_the_device-mapper"><span class="tocnumber">5.6.2.1</span> <span class="toctext">Using the device-mapper</span></a></li>
-<li class="toclevel-4 tocsection-30"><a href="#Using_a_linear_RAID"><span class="tocnumber">5.6.2.2</span> <span class="toctext">Using a linear RAID</span></a></li>
-<li class="toclevel-4 tocsection-31"><a href="#Using_a_Network_Block_Device"><span class="tocnumber">5.6.2.3</span> <span class="toctext">Using a Network Block Device</span></a></li>
+<li class="toclevel-4 tocsection-30"><a href="#Using_the_device-mapper"><span class="tocnumber">5.7.2.1</span> <span class="toctext">Using the device-mapper</span></a></li>
+<li class="toclevel-4 tocsection-31"><a href="#Using_a_linear_RAID"><span class="tocnumber">5.7.2.2</span> <span class="toctext">Using a linear RAID</span></a></li>
+<li class="toclevel-4 tocsection-32"><a href="#Using_a_Network_Block_Device"><span class="tocnumber">5.7.2.3</span> <span class="toctext">Using a Network Block Device</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-32">
+<li class="toclevel-1 tocsection-33">
 <a href="#Networking"><span class="tocnumber">6</span> <span class="toctext">Networking</span></a>
 <ul>
-<li class="toclevel-2 tocsection-33"><a href="#Link-level_address_caveat"><span class="tocnumber">6.1</span> <span class="toctext">Link-level address caveat</span></a></li>
-<li class="toclevel-2 tocsection-34"><a href="#User-mode_networking"><span class="tocnumber">6.2</span> <span class="toctext">User-mode networking</span></a></li>
-<li class="toclevel-2 tocsection-35">
-<a href="#Tap_networking_with_QEMU"><span class="tocnumber">6.3</span> <span class="toctext">Tap networking with QEMU</span></a>
+<li class="toclevel-2 tocsection-34"><a href="#Link-level_address_caveat"><span class="tocnumber">6.1</span> <span class="toctext">Link-level address caveat</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#User-mode_networking"><span class="tocnumber">6.2</span> <span class="toctext">User-mode networking</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#User-mode_networking_with_virtio"><span class="tocnumber">6.3</span> <span class="toctext">User-mode networking with virtio</span></a></li>
+<li class="toclevel-2 tocsection-37">
+<a href="#Tap_networking_with_QEMU"><span class="tocnumber">6.4</span> <span class="toctext">Tap networking with QEMU</span></a>
 <ul>
-<li class="toclevel-3 tocsection-36"><a href="#Host-only_networking"><span class="tocnumber">6.3.1</span> <span class="toctext">Host-only networking</span></a></li>
-<li class="toclevel-3 tocsection-37"><a href="#Internal_networking"><span class="tocnumber">6.3.2</span> <span class="toctext">Internal networking</span></a></li>
-<li class="toclevel-3 tocsection-38"><a href="#Bridged_networking_using_qemu-bridge-helper"><span class="tocnumber">6.3.3</span> <span class="toctext">Bridged networking using qemu-bridge-helper</span></a></li>
-<li class="toclevel-3 tocsection-39"><a href="#Creating_bridge_manually"><span class="tocnumber">6.3.4</span> <span class="toctext">Creating bridge manually</span></a></li>
-<li class="toclevel-3 tocsection-40"><a href="#Network_sharing_between_physical_device_and_a_Tap_device_through_iptables"><span class="tocnumber">6.3.5</span> <span class="toctext">Network sharing between physical device and a Tap device through iptables</span></a></li>
+<li class="toclevel-3 tocsection-38"><a href="#Host-only_networking"><span class="tocnumber">6.4.1</span> <span class="toctext">Host-only networking</span></a></li>
+<li class="toclevel-3 tocsection-39"><a href="#Internal_networking"><span class="tocnumber">6.4.2</span> <span class="toctext">Internal networking</span></a></li>
+<li class="toclevel-3 tocsection-40"><a href="#Bridged_networking_using_qemu-bridge-helper"><span class="tocnumber">6.4.3</span> <span class="toctext">Bridged networking using qemu-bridge-helper</span></a></li>
+<li class="toclevel-3 tocsection-41"><a href="#Creating_bridge_manually"><span class="tocnumber">6.4.4</span> <span class="toctext">Creating bridge manually</span></a></li>
+<li class="toclevel-3 tocsection-42"><a href="#Network_sharing_between_physical_device_and_a_Tap_device_through_iptables"><span class="tocnumber">6.4.5</span> <span class="toctext">Network sharing between physical device and a Tap device through iptables</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-41">
-<a href="#Networking_with_VDE2"><span class="tocnumber">6.4</span> <span class="toctext">Networking with VDE2</span></a>
+<li class="toclevel-2 tocsection-43">
+<a href="#Networking_with_VDE2"><span class="tocnumber">6.5</span> <span class="toctext">Networking with VDE2</span></a>
 <ul>
-<li class="toclevel-3 tocsection-42"><a href="#What_is_VDE?"><span class="tocnumber">6.4.1</span> <span class="toctext">What is VDE?</span></a></li>
-<li class="toclevel-3 tocsection-43"><a href="#Basics"><span class="tocnumber">6.4.2</span> <span class="toctext">Basics</span></a></li>
-<li class="toclevel-3 tocsection-44"><a href="#Startup_scripts"><span class="tocnumber">6.4.3</span> <span class="toctext">Startup scripts</span></a></li>
-<li class="toclevel-3 tocsection-45"><a href="#Alternative_method"><span class="tocnumber">6.4.4</span> <span class="toctext">Alternative method</span></a></li>
+<li class="toclevel-3 tocsection-44"><a href="#What_is_VDE?"><span class="tocnumber">6.5.1</span> <span class="toctext">What is VDE?</span></a></li>
+<li class="toclevel-3 tocsection-45"><a href="#Basics"><span class="tocnumber">6.5.2</span> <span class="toctext">Basics</span></a></li>
+<li class="toclevel-3 tocsection-46"><a href="#Startup_scripts"><span class="tocnumber">6.5.3</span> <span class="toctext">Startup scripts</span></a></li>
+<li class="toclevel-3 tocsection-47"><a href="#Alternative_method"><span class="tocnumber">6.5.4</span> <span class="toctext">Alternative method</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-46">
-<a href="#VDE2_Bridge"><span class="tocnumber">6.5</span> <span class="toctext">VDE2 Bridge</span></a>
+<li class="toclevel-2 tocsection-48">
+<a href="#VDE2_Bridge"><span class="tocnumber">6.6</span> <span class="toctext">VDE2 Bridge</span></a>
 <ul>
-<li class="toclevel-3 tocsection-47"><a href="#Basics_2"><span class="tocnumber">6.5.1</span> <span class="toctext">Basics</span></a></li>
-<li class="toclevel-3 tocsection-48"><a href="#Startup_scripts_2"><span class="tocnumber">6.5.2</span> <span class="toctext">Startup scripts</span></a></li>
+<li class="toclevel-3 tocsection-49"><a href="#Basics_2"><span class="tocnumber">6.6.1</span> <span class="toctext">Basics</span></a></li>
+<li class="toclevel-3 tocsection-50"><a href="#Startup_scripts_2"><span class="tocnumber">6.6.2</span> <span class="toctext">Startup scripts</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-49"><a href="#Shorthand_configuration"><span class="tocnumber">6.6</span> <span class="toctext">Shorthand configuration</span></a></li>
+<li class="toclevel-2 tocsection-51"><a href="#Shorthand_configuration"><span class="tocnumber">6.7</span> <span class="toctext">Shorthand configuration</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-50">
+<li class="toclevel-1 tocsection-52">
 <a href="#Graphic_card"><span class="tocnumber">7</span> <span class="toctext">Graphic card</span></a>
 <ul>
-<li class="toclevel-2 tocsection-51"><a href="#std"><span class="tocnumber">7.1</span> <span class="toctext">std</span></a></li>
-<li class="toclevel-2 tocsection-52"><a href="#qxl"><span class="tocnumber">7.2</span> <span class="toctext">qxl</span></a></li>
-<li class="toclevel-2 tocsection-53"><a href="#vmware"><span class="tocnumber">7.3</span> <span class="toctext">vmware</span></a></li>
-<li class="toclevel-2 tocsection-54"><a href="#virtio"><span class="tocnumber">7.4</span> <span class="toctext">virtio</span></a></li>
-<li class="toclevel-2 tocsection-55"><a href="#cirrus"><span class="tocnumber">7.5</span> <span class="toctext">cirrus</span></a></li>
-<li class="toclevel-2 tocsection-56"><a href="#none"><span class="tocnumber">7.6</span> <span class="toctext">none</span></a></li>
+<li class="toclevel-2 tocsection-53"><a href="#std"><span class="tocnumber">7.1</span> <span class="toctext">std</span></a></li>
+<li class="toclevel-2 tocsection-54"><a href="#qxl"><span class="tocnumber">7.2</span> <span class="toctext">qxl</span></a></li>
+<li class="toclevel-2 tocsection-55"><a href="#vmware"><span class="tocnumber">7.3</span> <span class="toctext">vmware</span></a></li>
+<li class="toclevel-2 tocsection-56"><a href="#virtio"><span class="tocnumber">7.4</span> <span class="toctext">virtio</span></a></li>
+<li class="toclevel-2 tocsection-57"><a href="#cirrus"><span class="tocnumber">7.5</span> <span class="toctext">cirrus</span></a></li>
+<li class="toclevel-2 tocsection-58"><a href="#none"><span class="tocnumber">7.6</span> <span class="toctext">none</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-57">
+<li class="toclevel-1 tocsection-59">
 <a href="#SPICE"><span class="tocnumber">8</span> <span class="toctext">SPICE</span></a>
 <ul>
-<li class="toclevel-2 tocsection-58"><a href="#Enabling_SPICE_support_on_the_host"><span class="tocnumber">8.1</span> <span class="toctext">Enabling SPICE support on the host</span></a></li>
-<li class="toclevel-2 tocsection-59">
+<li class="toclevel-2 tocsection-60"><a href="#Enabling_SPICE_support_on_the_host"><span class="tocnumber">8.1</span> <span class="toctext">Enabling SPICE support on the host</span></a></li>
+<li class="toclevel-2 tocsection-61">
 <a href="#Connecting_to_the_guest_with_a_SPICE_client"><span class="tocnumber">8.2</span> <span class="toctext">Connecting to the guest with a SPICE client</span></a>
 <ul>
-<li class="toclevel-3 tocsection-60"><a href="#Manually_running_a_SPICE_client"><span class="tocnumber">8.2.1</span> <span class="toctext">Manually running a SPICE client</span></a></li>
-<li class="toclevel-3 tocsection-61"><a href="#Running_a_SPICE_client_with_QEMU"><span class="tocnumber">8.2.2</span> <span class="toctext">Running a SPICE client with QEMU</span></a></li>
+<li class="toclevel-3 tocsection-62"><a href="#Manually_running_a_SPICE_client"><span class="tocnumber">8.2.1</span> <span class="toctext">Manually running a SPICE client</span></a></li>
+<li class="toclevel-3 tocsection-63"><a href="#Running_a_SPICE_client_with_QEMU"><span class="tocnumber">8.2.2</span> <span class="toctext">Running a SPICE client with QEMU</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-62"><a href="#Enabling_SPICE_support_on_the_guest"><span class="tocnumber">8.3</span> <span class="toctext">Enabling SPICE support on the guest</span></a></li>
-<li class="toclevel-2 tocsection-63"><a href="#Password_authentication_with_SPICE"><span class="tocnumber">8.4</span> <span class="toctext">Password authentication with SPICE</span></a></li>
-<li class="toclevel-2 tocsection-64"><a href="#TLS_encrypted_communication_with_SPICE"><span class="tocnumber">8.5</span> <span class="toctext">TLS encrypted communication with SPICE</span></a></li>
-</ul>
-</li>
-<li class="toclevel-1 tocsection-65">
-<a href="#VNC"><span class="tocnumber">9</span> <span class="toctext">VNC</span></a>
-<ul>
-<li class="toclevel-2 tocsection-66"><a href="#Basic_password_authentication"><span class="tocnumber">9.1</span> <span class="toctext">Basic password authentication</span></a></li>
+<li class="toclevel-2 tocsection-64"><a href="#Enabling_SPICE_support_on_the_guest"><span class="tocnumber">8.3</span> <span class="toctext">Enabling SPICE support on the guest</span></a></li>
+<li class="toclevel-2 tocsection-65"><a href="#Password_authentication_with_SPICE"><span class="tocnumber">8.4</span> <span class="toctext">Password authentication with SPICE</span></a></li>
+<li class="toclevel-2 tocsection-66"><a href="#TLS_encrypted_communication_with_SPICE"><span class="tocnumber">8.5</span> <span class="toctext">TLS encrypted communication with SPICE</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-67">
+<a href="#VNC"><span class="tocnumber">9</span> <span class="toctext">VNC</span></a>
+<ul>
+<li class="toclevel-2 tocsection-68"><a href="#Basic_password_authentication"><span class="tocnumber">9.1</span> <span class="toctext">Basic password authentication</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-69">
 <a href="#Audio"><span class="tocnumber">10</span> <span class="toctext">Audio</span></a>
 <ul>
-<li class="toclevel-2 tocsection-68"><a href="#Host"><span class="tocnumber">10.1</span> <span class="toctext">Host</span></a></li>
-<li class="toclevel-2 tocsection-69">
+<li class="toclevel-2 tocsection-70"><a href="#Host"><span class="tocnumber">10.1</span> <span class="toctext">Host</span></a></li>
+<li class="toclevel-2 tocsection-71">
 <a href="#Guest"><span class="tocnumber">10.2</span> <span class="toctext">Guest</span></a>
 <ul>
-<li class="toclevel-3 tocsection-70">
+<li class="toclevel-3 tocsection-72">
 <a href="#With_audiodev"><span class="tocnumber">10.2.1</span> <span class="toctext">With audiodev</span></a>
 <ul>
-<li class="toclevel-4 tocsection-71"><a href="#Intel_HD_Audio"><span class="tocnumber">10.2.1.1</span> <span class="toctext">Intel HD Audio</span></a></li>
-<li class="toclevel-4 tocsection-72"><a href="#Intel_82801AA_AC97"><span class="tocnumber">10.2.1.2</span> <span class="toctext">Intel 82801AA AC97</span></a></li>
+<li class="toclevel-4 tocsection-73"><a href="#Intel_HD_Audio"><span class="tocnumber">10.2.1.1</span> <span class="toctext">Intel HD Audio</span></a></li>
+<li class="toclevel-4 tocsection-74"><a href="#Intel_82801AA_AC97"><span class="tocnumber">10.2.1.2</span> <span class="toctext">Intel 82801AA AC97</span></a></li>
 </ul>
 </li>
-<li class="toclevel-3 tocsection-73"><a href="#Without_audiodev"><span class="tocnumber">10.2.2</span> <span class="toctext">Without audiodev</span></a></li>
+<li class="toclevel-3 tocsection-75"><a href="#Without_audiodev"><span class="tocnumber">10.2.2</span> <span class="toctext">Without audiodev</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-74">
+<li class="toclevel-1 tocsection-76">
 <a href="#Installing_virtio_drivers"><span class="tocnumber">11</span> <span class="toctext">Installing virtio drivers</span></a>
 <ul>
-<li class="toclevel-2 tocsection-75"><a href="#Preparing_an_(Arch)_Linux_guest"><span class="tocnumber">11.1</span> <span class="toctext">Preparing an (Arch) Linux guest</span></a></li>
-<li class="toclevel-2 tocsection-76">
+<li class="toclevel-2 tocsection-77"><a href="#Preparing_an_(Arch)_Linux_guest"><span class="tocnumber">11.1</span> <span class="toctext">Preparing an (Arch) Linux guest</span></a></li>
+<li class="toclevel-2 tocsection-78">
 <a href="#Preparing_a_Windows_guest"><span class="tocnumber">11.2</span> <span class="toctext">Preparing a Windows guest</span></a>
 <ul>
-<li class="toclevel-3 tocsection-77">
+<li class="toclevel-3 tocsection-79">
 <a href="#Block_device_drivers"><span class="tocnumber">11.2.1</span> <span class="toctext">Block device drivers</span></a>
 <ul>
-<li class="toclevel-4 tocsection-78"><a href="#New_Install_of_Windows"><span class="tocnumber">11.2.1.1</span> <span class="toctext">New Install of Windows</span></a></li>
-<li class="toclevel-4 tocsection-79"><a href="#Change_Existing_Windows_VM_to_use_virtio"><span class="tocnumber">11.2.1.2</span> <span class="toctext">Change Existing Windows VM to use virtio</span></a></li>
+<li class="toclevel-4 tocsection-80"><a href="#New_Install_of_Windows"><span class="tocnumber">11.2.1.1</span> <span class="toctext">New Install of Windows</span></a></li>
+<li class="toclevel-4 tocsection-81"><a href="#Change_Existing_Windows_VM_to_use_virtio"><span class="tocnumber">11.2.1.2</span> <span class="toctext">Change Existing Windows VM to use virtio</span></a></li>
 </ul>
 </li>
-<li class="toclevel-3 tocsection-80"><a href="#Network_drivers"><span class="tocnumber">11.2.2</span> <span class="toctext">Network drivers</span></a></li>
-<li class="toclevel-3 tocsection-81"><a href="#Balloon_driver"><span class="tocnumber">11.2.3</span> <span class="toctext">Balloon driver</span></a></li>
+<li class="toclevel-3 tocsection-82"><a href="#Network_drivers"><span class="tocnumber">11.2.2</span> <span class="toctext">Network drivers</span></a></li>
+<li class="toclevel-3 tocsection-83"><a href="#Balloon_driver"><span class="tocnumber">11.2.3</span> <span class="toctext">Balloon driver</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-82"><a href="#Preparing_a_FreeBSD_guest"><span class="tocnumber">11.3</span> <span class="toctext">Preparing a FreeBSD guest</span></a></li>
+<li class="toclevel-2 tocsection-84"><a href="#Preparing_a_FreeBSD_guest"><span class="tocnumber">11.3</span> <span class="toctext">Preparing a FreeBSD guest</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-83">
+<li class="toclevel-1 tocsection-85">
 <a href="#QEMU_monitor"><span class="tocnumber">12</span> <span class="toctext">QEMU monitor</span></a>
 <ul>
-<li class="toclevel-2 tocsection-84">
+<li class="toclevel-2 tocsection-86">
 <a href="#Accessing_the_monitor_console"><span class="tocnumber">12.1</span> <span class="toctext">Accessing the monitor console</span></a>
 <ul>
-<li class="toclevel-3 tocsection-85"><a href="#Graphical_view"><span class="tocnumber">12.1.1</span> <span class="toctext">Graphical view</span></a></li>
-<li class="toclevel-3 tocsection-86"><a href="#Telnet"><span class="tocnumber">12.1.2</span> <span class="toctext">Telnet</span></a></li>
-<li class="toclevel-3 tocsection-87"><a href="#UNIX_socket"><span class="tocnumber">12.1.3</span> <span class="toctext">UNIX socket</span></a></li>
-<li class="toclevel-3 tocsection-88"><a href="#TCP"><span class="tocnumber">12.1.4</span> <span class="toctext">TCP</span></a></li>
-<li class="toclevel-3 tocsection-89"><a href="#Standard_I/O"><span class="tocnumber">12.1.5</span> <span class="toctext">Standard I/O</span></a></li>
+<li class="toclevel-3 tocsection-87"><a href="#Graphical_view"><span class="tocnumber">12.1.1</span> <span class="toctext">Graphical view</span></a></li>
+<li class="toclevel-3 tocsection-88"><a href="#Telnet"><span class="tocnumber">12.1.2</span> <span class="toctext">Telnet</span></a></li>
+<li class="toclevel-3 tocsection-89"><a href="#UNIX_socket"><span class="tocnumber">12.1.3</span> <span class="toctext">UNIX socket</span></a></li>
+<li class="toclevel-3 tocsection-90"><a href="#TCP"><span class="tocnumber">12.1.4</span> <span class="toctext">TCP</span></a></li>
+<li class="toclevel-3 tocsection-91"><a href="#Standard_I/O"><span class="tocnumber">12.1.5</span> <span class="toctext">Standard I/O</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-90"><a href="#Sending_keyboard_presses_to_the_virtual_machine_using_the_monitor_console"><span class="tocnumber">12.2</span> <span class="toctext">Sending keyboard presses to the virtual machine using the monitor console</span></a></li>
-<li class="toclevel-2 tocsection-91"><a href="#Creating_and_managing_snapshots_via_the_monitor_console"><span class="tocnumber">12.3</span> <span class="toctext">Creating and managing snapshots via the monitor console</span></a></li>
-<li class="toclevel-2 tocsection-92"><a href="#Running_the_virtual_machine_in_immutable_mode"><span class="tocnumber">12.4</span> <span class="toctext">Running the virtual machine in immutable mode</span></a></li>
-<li class="toclevel-2 tocsection-93"><a href="#Pause_and_power_options_via_the_monitor_console"><span class="tocnumber">12.5</span> <span class="toctext">Pause and power options via the monitor console</span></a></li>
-<li class="toclevel-2 tocsection-94"><a href="#Taking_screenshots_of_the_virtual_machine"><span class="tocnumber">12.6</span> <span class="toctext">Taking screenshots of the virtual machine</span></a></li>
+<li class="toclevel-2 tocsection-92"><a href="#Sending_keyboard_presses_to_the_virtual_machine_using_the_monitor_console"><span class="tocnumber">12.2</span> <span class="toctext">Sending keyboard presses to the virtual machine using the monitor console</span></a></li>
+<li class="toclevel-2 tocsection-93"><a href="#Creating_and_managing_snapshots_via_the_monitor_console"><span class="tocnumber">12.3</span> <span class="toctext">Creating and managing snapshots via the monitor console</span></a></li>
+<li class="toclevel-2 tocsection-94"><a href="#Running_the_virtual_machine_in_immutable_mode"><span class="tocnumber">12.4</span> <span class="toctext">Running the virtual machine in immutable mode</span></a></li>
+<li class="toclevel-2 tocsection-95"><a href="#Pause_and_power_options_via_the_monitor_console"><span class="tocnumber">12.5</span> <span class="toctext">Pause and power options via the monitor console</span></a></li>
+<li class="toclevel-2 tocsection-96"><a href="#Taking_screenshots_of_the_virtual_machine"><span class="tocnumber">12.6</span> <span class="toctext">Taking screenshots of the virtual machine</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-95">
+<li class="toclevel-1 tocsection-97">
 <a href="#QEMU_machine_protocol"><span class="tocnumber">13</span> <span class="toctext">QEMU machine protocol</span></a>
 <ul>
-<li class="toclevel-2 tocsection-96"><a href="#Start_QMP"><span class="tocnumber">13.1</span> <span class="toctext">Start QMP</span></a></li>
-<li class="toclevel-2 tocsection-97"><a href="#Live_merging_of_child_image_into_parent_image"><span class="tocnumber">13.2</span> <span class="toctext">Live merging of child image into parent image</span></a></li>
-<li class="toclevel-2 tocsection-98"><a href="#Live_creation_of_a_new_snapshot"><span class="tocnumber">13.3</span> <span class="toctext">Live creation of a new snapshot</span></a></li>
+<li class="toclevel-2 tocsection-98"><a href="#Start_QMP"><span class="tocnumber">13.1</span> <span class="toctext">Start QMP</span></a></li>
+<li class="toclevel-2 tocsection-99"><a href="#Live_merging_of_child_image_into_parent_image"><span class="tocnumber">13.2</span> <span class="toctext">Live merging of child image into parent image</span></a></li>
+<li class="toclevel-2 tocsection-100"><a href="#Live_creation_of_a_new_snapshot"><span class="tocnumber">13.3</span> <span class="toctext">Live creation of a new snapshot</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-99">
+<li class="toclevel-1 tocsection-101">
 <a href="#Tips_and_tricks"><span class="tocnumber">14</span> <span class="toctext">Tips and tricks</span></a>
 <ul>
-<li class="toclevel-2 tocsection-100"><a href="#Improve_virtual_machine_performance"><span class="tocnumber">14.1</span> <span class="toctext">Improve virtual machine performance</span></a></li>
-<li class="toclevel-2 tocsection-101">
+<li class="toclevel-2 tocsection-102"><a href="#Improve_virtual_machine_performance"><span class="tocnumber">14.1</span> <span class="toctext">Improve virtual machine performance</span></a></li>
+<li class="toclevel-2 tocsection-103">
 <a href="#Starting_QEMU_virtual_machines_on_boot"><span class="tocnumber">14.2</span> <span class="toctext">Starting QEMU virtual machines on boot</span></a>
 <ul>
-<li class="toclevel-3 tocsection-102"><a href="#With_libvirt"><span class="tocnumber">14.2.1</span> <span class="toctext">With libvirt</span></a></li>
-<li class="toclevel-3 tocsection-103"><a href="#With_systemd_service"><span class="tocnumber">14.2.2</span> <span class="toctext">With systemd service</span></a></li>
+<li class="toclevel-3 tocsection-104"><a href="#With_libvirt"><span class="tocnumber">14.2.1</span> <span class="toctext">With libvirt</span></a></li>
+<li class="toclevel-3 tocsection-105"><a href="#With_systemd_service"><span class="tocnumber">14.2.2</span> <span class="toctext">With systemd service</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-104"><a href="#Mouse_integration"><span class="tocnumber">14.3</span> <span class="toctext">Mouse integration</span></a></li>
-<li class="toclevel-2 tocsection-105"><a href="#Pass-through_host_USB_device"><span class="tocnumber">14.4</span> <span class="toctext">Pass-through host USB device</span></a></li>
-<li class="toclevel-2 tocsection-106"><a href="#USB_redirection_with_SPICE"><span class="tocnumber">14.5</span> <span class="toctext">USB redirection with SPICE</span></a></li>
-<li class="toclevel-2 tocsection-107"><a href="#Enabling_KSM"><span class="tocnumber">14.6</span> <span class="toctext">Enabling KSM</span></a></li>
-<li class="toclevel-2 tocsection-108"><a href="#Multi-monitor_support"><span class="tocnumber">14.7</span> <span class="toctext">Multi-monitor support</span></a></li>
-<li class="toclevel-2 tocsection-109"><a href="#Custom_display_resolution"><span class="tocnumber">14.8</span> <span class="toctext">Custom display resolution</span></a></li>
-<li class="toclevel-2 tocsection-110"><a href="#Copy_and_paste"><span class="tocnumber">14.9</span> <span class="toctext">Copy and paste</span></a></li>
-<li class="toclevel-2 tocsection-111">
+<li class="toclevel-2 tocsection-106"><a href="#Mouse_integration"><span class="tocnumber">14.3</span> <span class="toctext">Mouse integration</span></a></li>
+<li class="toclevel-2 tocsection-107"><a href="#Pass-through_host_USB_device"><span class="tocnumber">14.4</span> <span class="toctext">Pass-through host USB device</span></a></li>
+<li class="toclevel-2 tocsection-108"><a href="#USB_redirection_with_SPICE"><span class="tocnumber">14.5</span> <span class="toctext">USB redirection with SPICE</span></a></li>
+<li class="toclevel-2 tocsection-109"><a href="#Enabling_KSM"><span class="tocnumber">14.6</span> <span class="toctext">Enabling KSM</span></a></li>
+<li class="toclevel-2 tocsection-110"><a href="#Multi-monitor_support"><span class="tocnumber">14.7</span> <span class="toctext">Multi-monitor support</span></a></li>
+<li class="toclevel-2 tocsection-111"><a href="#Custom_display_resolution"><span class="tocnumber">14.8</span> <span class="toctext">Custom display resolution</span></a></li>
+<li class="toclevel-2 tocsection-112"><a href="#Copy_and_paste"><span class="tocnumber">14.9</span> <span class="toctext">Copy and paste</span></a></li>
+<li class="toclevel-2 tocsection-113">
 <a href="#Windows-specific_notes"><span class="tocnumber">14.10</span> <span class="toctext">Windows-specific notes</span></a>
 <ul>
-<li class="toclevel-3 tocsection-112"><a href="#Fast_startup"><span class="tocnumber">14.10.1</span> <span class="toctext">Fast startup</span></a></li>
-<li class="toclevel-3 tocsection-113"><a href="#Remote_Desktop_Protocol"><span class="tocnumber">14.10.2</span> <span class="toctext">Remote Desktop Protocol</span></a></li>
+<li class="toclevel-3 tocsection-114"><a href="#Fast_startup"><span class="tocnumber">14.10.1</span> <span class="toctext">Fast startup</span></a></li>
+<li class="toclevel-3 tocsection-115"><a href="#Complete_Windows_10_Example"><span class="tocnumber">14.10.2</span> <span class="toctext">Complete Windows 10 Example</span></a></li>
+<li class="toclevel-3 tocsection-116"><a href="#Remote_Desktop_Protocol"><span class="tocnumber">14.10.3</span> <span class="toctext">Remote Desktop Protocol</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-114"><a href="#Clone_Linux_system_installed_on_physical_equipment"><span class="tocnumber">14.11</span> <span class="toctext">Clone Linux system installed on physical equipment</span></a></li>
-<li class="toclevel-2 tocsection-115"><a href="#Chrooting_into_arm/arm64_environment_from_x86_64"><span class="tocnumber">14.12</span> <span class="toctext">Chrooting into arm/arm64 environment from x86_64</span></a></li>
+<li class="toclevel-2 tocsection-117"><a href="#Clone_Linux_system_installed_on_physical_equipment"><span class="tocnumber">14.11</span> <span class="toctext">Clone Linux system installed on physical equipment</span></a></li>
+<li class="toclevel-2 tocsection-118"><a href="#Chrooting_into_arm/arm64_environment_from_x86_64"><span class="tocnumber">14.12</span> <span class="toctext">Chrooting into arm/arm64 environment from x86_64</span></a></li>
+<li class="toclevel-2 tocsection-119"><a href="#Not_grabbing_mouse_input"><span class="tocnumber">14.13</span> <span class="toctext">Not grabbing mouse input</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-116">
+<li class="toclevel-1 tocsection-120">
 <a href="#Troubleshooting"><span class="tocnumber">15</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-117"><a href="#Mouse_cursor_is_jittery_or_erratic"><span class="tocnumber">15.1</span> <span class="toctext">Mouse cursor is jittery or erratic</span></a></li>
-<li class="toclevel-2 tocsection-118"><a href="#No_visible_Cursor"><span class="tocnumber">15.2</span> <span class="toctext">No visible Cursor</span></a></li>
-<li class="toclevel-2 tocsection-119"><a href="#Two_different_mouse_cursors_are_visible"><span class="tocnumber">15.3</span> <span class="toctext">Two different mouse cursors are visible</span></a></li>
-<li class="toclevel-2 tocsection-120"><a href="#Keyboard_issues_when_using_VNC"><span class="tocnumber">15.4</span> <span class="toctext">Keyboard issues when using VNC</span></a></li>
-<li class="toclevel-2 tocsection-121"><a href="#Keyboard_seems_broken_or_the_arrow_keys_do_not_work"><span class="tocnumber">15.5</span> <span class="toctext">Keyboard seems broken or the arrow keys do not work</span></a></li>
-<li class="toclevel-2 tocsection-122"><a href="#Could_not_read_keymap_file"><span class="tocnumber">15.6</span> <span class="toctext">Could not read keymap file</span></a></li>
-<li class="toclevel-2 tocsection-123"><a href="#Guest_display_stretches_on_window_resize"><span class="tocnumber">15.7</span> <span class="toctext">Guest display stretches on window resize</span></a></li>
-<li class="toclevel-2 tocsection-124"><a href="#ioctl(KVM_CREATE_VM)_failed:_16_Device_or_resource_busy"><span class="tocnumber">15.8</span> <span class="toctext">ioctl(KVM_CREATE_VM) failed: 16 Device or resource busy</span></a></li>
-<li class="toclevel-2 tocsection-125"><a href="#libgfapi_error_message"><span class="tocnumber">15.9</span> <span class="toctext">libgfapi error message</span></a></li>
-<li class="toclevel-2 tocsection-126"><a href="#Kernel_panic_on_LIVE-environments"><span class="tocnumber">15.10</span> <span class="toctext">Kernel panic on LIVE-environments</span></a></li>
-<li class="toclevel-2 tocsection-127"><a href="#Windows_7_guest_suffers_low-quality_sound"><span class="tocnumber">15.11</span> <span class="toctext">Windows 7 guest suffers low-quality sound</span></a></li>
-<li class="toclevel-2 tocsection-128"><a href="#Could_not_access_KVM_kernel_module:_Permission_denied"><span class="tocnumber">15.12</span> <span class="toctext">Could not access KVM kernel module: Permission denied</span></a></li>
-<li class="toclevel-2 tocsection-129"><a href="#%22System_Thread_Exception_Not_Handled%22_when_booting_a_Windows_VM"><span class="tocnumber">15.13</span> <span class="toctext">"System Thread Exception Not Handled" when booting a Windows VM</span></a></li>
-<li class="toclevel-2 tocsection-130"><a href="#Certain_Windows_games/applications_crashing/causing_a_bluescreen"><span class="tocnumber">15.14</span> <span class="toctext">Certain Windows games/applications crashing/causing a bluescreen</span></a></li>
-<li class="toclevel-2 tocsection-131"><a href="#Applications_in_the_VM_experience_long_delays_or_take_a_long_time_to_start"><span class="tocnumber">15.15</span> <span class="toctext">Applications in the VM experience long delays or take a long time to start</span></a></li>
-<li class="toclevel-2 tocsection-132"><a href="#High_interrupt_latency_and_microstuttering"><span class="tocnumber">15.16</span> <span class="toctext">High interrupt latency and microstuttering</span></a></li>
-<li class="toclevel-2 tocsection-133"><a href="#QXL_video_causes_low_resolution"><span class="tocnumber">15.17</span> <span class="toctext">QXL video causes low resolution</span></a></li>
-<li class="toclevel-2 tocsection-134"><a href="#Hang_during_VM_initramfs"><span class="tocnumber">15.18</span> <span class="toctext">Hang during VM initramfs</span></a></li>
-<li class="toclevel-2 tocsection-135"><a href="#VM_does_not_boot_when_using_a_Secure_Boot_enabled_OVMF"><span class="tocnumber">15.19</span> <span class="toctext">VM does not boot when using a Secure Boot enabled OVMF</span></a></li>
-<li class="toclevel-2 tocsection-136"><a href="#Guest_CPU_interrupts_are_not_firing"><span class="tocnumber">15.20</span> <span class="toctext">Guest CPU interrupts are not firing</span></a></li>
+<li class="toclevel-2 tocsection-121"><a href="#Mouse_cursor_is_jittery_or_erratic"><span class="tocnumber">15.1</span> <span class="toctext">Mouse cursor is jittery or erratic</span></a></li>
+<li class="toclevel-2 tocsection-122"><a href="#No_visible_Cursor"><span class="tocnumber">15.2</span> <span class="toctext">No visible Cursor</span></a></li>
+<li class="toclevel-2 tocsection-123"><a href="#Two_different_mouse_cursors_are_visible"><span class="tocnumber">15.3</span> <span class="toctext">Two different mouse cursors are visible</span></a></li>
+<li class="toclevel-2 tocsection-124"><a href="#Keyboard_issues_when_using_VNC"><span class="tocnumber">15.4</span> <span class="toctext">Keyboard issues when using VNC</span></a></li>
+<li class="toclevel-2 tocsection-125"><a href="#Keyboard_seems_broken_or_the_arrow_keys_do_not_work"><span class="tocnumber">15.5</span> <span class="toctext">Keyboard seems broken or the arrow keys do not work</span></a></li>
+<li class="toclevel-2 tocsection-126"><a href="#Could_not_read_keymap_file"><span class="tocnumber">15.6</span> <span class="toctext">Could not read keymap file</span></a></li>
+<li class="toclevel-2 tocsection-127"><a href="#Guest_display_stretches_on_window_resize"><span class="tocnumber">15.7</span> <span class="toctext">Guest display stretches on window resize</span></a></li>
+<li class="toclevel-2 tocsection-128"><a href="#ioctl(KVM_CREATE_VM)_failed:_16_Device_or_resource_busy"><span class="tocnumber">15.8</span> <span class="toctext">ioctl(KVM_CREATE_VM) failed: 16 Device or resource busy</span></a></li>
+<li class="toclevel-2 tocsection-129"><a href="#libgfapi_error_message"><span class="tocnumber">15.9</span> <span class="toctext">libgfapi error message</span></a></li>
+<li class="toclevel-2 tocsection-130"><a href="#Kernel_panic_on_LIVE-environments"><span class="tocnumber">15.10</span> <span class="toctext">Kernel panic on LIVE-environments</span></a></li>
+<li class="toclevel-2 tocsection-131"><a href="#Windows_7_guest_suffers_low-quality_sound"><span class="tocnumber">15.11</span> <span class="toctext">Windows 7 guest suffers low-quality sound</span></a></li>
+<li class="toclevel-2 tocsection-132"><a href="#Could_not_access_KVM_kernel_module:_Permission_denied"><span class="tocnumber">15.12</span> <span class="toctext">Could not access KVM kernel module: Permission denied</span></a></li>
+<li class="toclevel-2 tocsection-133"><a href="#%22System_Thread_Exception_Not_Handled%22_when_booting_a_Windows_VM"><span class="tocnumber">15.13</span> <span class="toctext">"System Thread Exception Not Handled" when booting a Windows VM</span></a></li>
+<li class="toclevel-2 tocsection-134"><a href="#Certain_Windows_games/applications_crashing/causing_a_bluescreen"><span class="tocnumber">15.14</span> <span class="toctext">Certain Windows games/applications crashing/causing a bluescreen</span></a></li>
+<li class="toclevel-2 tocsection-135"><a href="#Applications_in_the_VM_experience_long_delays_or_take_a_long_time_to_start"><span class="tocnumber">15.15</span> <span class="toctext">Applications in the VM experience long delays or take a long time to start</span></a></li>
+<li class="toclevel-2 tocsection-136"><a href="#High_interrupt_latency_and_microstuttering"><span class="tocnumber">15.16</span> <span class="toctext">High interrupt latency and microstuttering</span></a></li>
+<li class="toclevel-2 tocsection-137"><a href="#QXL_video_causes_low_resolution"><span class="tocnumber">15.17</span> <span class="toctext">QXL video causes low resolution</span></a></li>
+<li class="toclevel-2 tocsection-138"><a href="#Hang_during_VM_initramfs"><span class="tocnumber">15.18</span> <span class="toctext">Hang during VM initramfs</span></a></li>
+<li class="toclevel-2 tocsection-139"><a href="#VM_does_not_boot_when_using_a_Secure_Boot_enabled_OVMF"><span class="tocnumber">15.19</span> <span class="toctext">VM does not boot when using a Secure Boot enabled OVMF</span></a></li>
+<li class="toclevel-2 tocsection-140"><a href="#Guest_CPU_interrupts_are_not_firing"><span class="tocnumber">15.20</span> <span class="toctext">Guest CPU interrupts are not firing</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-137"><a href="#See_also"><span class="tocnumber">16</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-141"><a href="#See_also"><span class="tocnumber">16</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -528,21 +533,24 @@ It will not be possible for the host OS to access servers running on the guest O
 <h3>
 <span id="QEMU.27s_port_forwarding"></span><span class="mw-headline" id="QEMU's_port_forwarding">QEMU's port forwarding</span>
 </h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> QEMU's port forwarding is IPv4-only. IPv6 port forwarding is not implemented and the last patches were proposed in 2018.<a rel="nofollow" class="external autonumber" href="https://lore.kernel.org/qemu-devel/1540512223-21199-1-git-send-email-max7255@yandex-team.ru/T/#u">[1]</a>
+</div>
 <p>QEMU can forward ports from the host to the guest to enable e.g. connecting from the host to an SSH server running on the guest.
 </p>
-<p>For example, to bind port 10022 on the host with port 22 (SSH) on the guest, start QEMU with a command like:
+<p>For example, to bind port 60022 on the host with port 22 (SSH) on the guest, start QEMU with a command like:
 </p>
-<pre>$ qemu-system-x86_64 <i>disk_image</i> -nic user,hostfwd=tcp::10022-:22
+<pre>$ qemu-system-x86_64 <i>disk_image</i> -nic user,hostfwd=tcp::60022-:22
 </pre>
 <p>Make sure the sshd is running on the guest and connect with:
 </p>
-<pre>$ ssh <i>guest-user</i>@localhost -p 10022
+<pre>$ ssh <i>guest-user</i>@127.0.0.1 -p 60022
 </pre>
 <p>You can use <a href="../en/SSHFS.html" title="SSHFS">SSHFS</a> to mount the guest's file system at the host for shared read and write access.
 </p>
 <p>To forward several ports, you just repeat the <code>hostfwd</code> in the <code>-nic</code> argument, e.g. for VNC's port:
 </p>
-<pre>$ qemu-system-x86_64 <i>disk_image</i> -nic user,hostfwd=tcp::10022-:22,hostfwd=tcp::5900-:5900
+<pre>$ qemu-system-x86_64 <i>disk_image</i> -nic user,hostfwd=tcp::60022-:22,hostfwd=tcp::5900-:5900
 </pre>
 <h3>
 <span id="QEMU.27s_built-in_SMB_server"></span><span class="mw-headline" id="QEMU's_built-in_SMB_server">QEMU's built-in SMB server</span>
@@ -592,6 +600,49 @@ force user=<i>username</i>" &gt;&gt; $conf
 </p>
 <h3><span class="mw-headline" id="Using_filesystem_passthrough_and_VirtFS">Using filesystem passthrough and VirtFS</span></h3>
 <p>See the <a rel="nofollow" class="external text" href="https://wiki.qemu.org/Documentation/9psetup">QEMU documentation</a>.
+</p>
+<h3><span class="mw-headline" id="Host_file_sharing_with_virtiofsd">Host file sharing with virtiofsd</span></h3>
+<p>virtiofsd is shipped with QEMU package.  Documentation is available <a rel="nofollow" class="external text" href="https://qemu-stsquad.readthedocs.io/en/docs-next/tools/virtiofsd.html">online</a> or "/usr/share/doc/qemu/tools/virtiofsd.html" on local file system with QEMU installed.
+</p>
+<p>Add user that runs qemu to 'kvm' group, because it needs to access virtiofsd socket.  You might have to logout for change to take effect.
+</p>
+<p>Start as virtiofsd as root:
+</p>
+<pre># /usr/lib/qemu/virtiofsd --socket-path=/var/run/qemu-vm-001.sock -o source=/tmp/vm-001 -o cache=always
+</pre>
+<p>where
+</p>
+<ul>
+<li>/var/run/qemu-vm-001.sock is a socket file,</li>
+<li>/tmp/vm-001 is a shared directory between host and guest vm.</li>
+</ul>
+<p>The created socket file has root only access permission. Give group kvm access to it with:
+</p>
+<pre># chgrp kvm qemu-vm-001.sock; chmod g+rxw qemu-vm-001.sock
+</pre>
+<p>Add the following configuration options when starting VM:
+</p>
+<pre>-object memory-backend-memfd,id=mem,size=4G,share=on \
+-numa node,memdev=mem \
+-chardev socket,id=char0,path=/var/run/qemu-vm-001.sock \
+-device vhost-user-fs-pci,chardev=char0,tag=myfs
+</pre>
+<p>where
+</p>
+<ul>
+<li>size=4G shall match size specified with '-m 4G' option,</li>
+<li>/var/run/qemu-vm-001.sock points to socket file started earlier,</li>
+</ul>
+<p>Remember, that guest must be configured to enable sharing.  For windows there are <a rel="nofollow" class="external text" href="https://virtio-fs.gitlab.io/howto-windows.html">instructions</a>. Once configured, windows will have Z: drive mapped automatically with shared directory content.  
+</p>
+<p>Your Windows 10 guest system is properly configured if it has:
+</p>
+<ul>
+<li>VirtioFSSService windows service,</li>
+<li>WinFsp.Launcher windows service,</li>
+<li>VirtIO FS Device driver under "System devices" in Windows "Device Manager".</li>
+</ul>
+<p>If the above installed and Z: drive is still not listed, try repairing "Virtio-win-guest-tools" in Windows add/remove programs.
 </p>
 <h3><span class="mw-headline" id="Mounting_a_partition_of_the_guest_on_the_host">Mounting a partition of the guest on the host</span></h3>
 <p>It can be useful to mount a drive image under the host system, it can be a way to transfer files in and out of the guest. This should be done when the virtual machine is not running.
@@ -690,7 +741,7 @@ Device      Boot   Start      End  Sectors  Size Id Type
 </div>
 <p>After doing so, you can attach the partition to a QEMU virtual machine as a virtual disk.
 </p>
-<p>However, things are a little more complicated if you want to have the <i>entire</i> virtual machine contained in a partition. In that case, there would be no disk image file to actually boot the virtual machine since you cannot install a bootloader to a partition that is itself formatted as a file system and not as a partitioned device with an MBR. Such a virtual machine can be booted either by: <a href="#Specifying_the_kernel_and_initrd_manually">#Specifying the kernel and initrd manually</a>, <a href="#Simulating_a_virtual_disk_with_MBR">#Simulating a virtual disk with MBR</a>, <a href="#Using_the_device-mapper">#Using the device-mapper</a>, <a href="#Using_a_linear_RAID">#Using a linear RAID</a> or <a href="#Using_a_Network_Block_Device">#Using a Network Block Device</a>.
+<p>However, things are a little more complicated if you want to have the <i>entire</i> virtual machine contained in a partition. In that case, there would be no disk image file to actually boot the virtual machine since you cannot install a bootloader to a partition that is itself formatted as a file system and not as a partitioned device with an MBR. Such a virtual machine can be booted either by: <a href="#Specifying_kernel_and_initrd_manually">#Specifying kernel and initrd manually</a>, <a href="#Simulating_a_virtual_disk_with_MBR">#Simulating a virtual disk with MBR</a>, <a href="#Using_the_device-mapper">#Using the device-mapper</a>, <a href="#Using_a_linear_RAID">#Using a linear RAID</a> or <a href="#Using_a_Network_Block_Device">#Using a Network Block Device</a>.
 </p>
 <h4><span class="mw-headline" id="Specifying_kernel_and_initrd_manually">Specifying kernel and initrd manually</span></h4>
 <p>QEMU supports loading <a href="../en/Kernel.html" class="mw-redirect" title="Kernels">Linux kernels</a> and <a href="../en/Arch_boot_process.html#initramfs" class="mw-redirect" title="Initramfs">init ramdisks</a> directly, thereby circumventing bootloaders such as <a href="../en/GRUB.html" title="GRUB">GRUB</a>. It then can be launched with the physical partition containing the root file system as the virtual disk, which will not appear to be partitioned. This is done by issuing a command similar to the following:
@@ -860,7 +911,7 @@ qemu-system-x86_64 -name "$vm_name" -net nic,macaddr=$(qemu-mac-hasher.py "$vm_n
 <p>By default, without any <code>-netdev</code> arguments, QEMU will use user-mode networking with a built-in DHCP server. Your virtual machines will be assigned an IP address when they run their DHCP client, and they will be able to access the physical host's network through IP masquerading done by QEMU.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> This only works with the TCP and UDP protocols, so ICMP, including <code>ping</code>, will not work. Do not use <code>ping</code> to test network connectivity. To make ping work in the guest see <a href="../en/Sysctl.html#Allow_unprivileged_users_to_create_IPPROTO_ICMP_sockets" title="Sysctl">Sysctl#Allow unprivileged users to create IPPROTO_ICMP sockets</a>.</div>
+<strong>Note:</strong> ICMPv6 will not work, as support for it is not implemented: <code>Slirp: external icmpv6 not supported yet</code>. <a href="../en/Network_configuration.html#Ping" class="mw-redirect" title="Ping">Pinging</a> an IPv6 address will not work.</div>
 <p>This default configuration allows your virtual machines to easily access the Internet, provided that the host is connected to it, but the virtual machines will not be directly visible on the external network, nor will virtual machines be able to talk to each other if you start up more than one concurrently.
 </p>
 <p>QEMU's user-mode networking can offer more capabilities such as built-in TFTP or SMB servers, redirecting host ports to the guest (for example to allow SSH connections to the guest) or attaching guests to VLANs so that they can talk to each other. See the QEMU documentation on the <code>-net user</code> flag for more details.
@@ -869,6 +920,11 @@ qemu-system-x86_64 -name "$vm_name" -net nic,macaddr=$(qemu-mac-hasher.py "$vm_n
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If the host system uses <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>, make sure to symlink the <code>/etc/resolv.conf</code> file as described in <a href="../en/Systemd-networkd.html#Required_services_and_setup" title="Systemd-networkd">systemd-networkd#Required services and setup</a>, otherwise the DNS lookup in the guest system will not work.</div>
+<h3><span class="mw-headline" id="User-mode_networking_with_virtio">User-mode networking with virtio</span></h3>
+<p>Example to configure Windows 10 guest:
+</p>
+<pre>-netdev user,id=n1 -device virtio-net-pci,netdev=n1
+</pre>
 <h3><span class="mw-headline" id="Tap_networking_with_QEMU">Tap networking with QEMU</span></h3>
 <p><a href="https://en.wikipedia.org/wiki/TUN/TAP" class="extiw" title="wikipedia:TUN/TAP">Tap devices</a> are a Linux kernel feature that allows you to create virtual network interfaces that appear as real network interfaces. Packets sent to a tap interface are delivered to a userspace program, such as QEMU, that has bound itself to the interface.
 </p>
@@ -886,7 +942,7 @@ qemu-system-x86_64 -name "$vm_name" -net nic,macaddr=$(qemu-mac-hasher.py "$vm_n
 </p>
 <pre>-device virtio-net,netdev=network0 -netdev tap,id=network0,ifname=tap0,script=no,downscript=no,vhost=on
 </pre>
-<p>See <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20160222161955/http://www.linux-kvm.com:80/content/how-maximize-virtio-net-performance-vhost-net">[1]</a> for more information.
+<p>See <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20160222161955/http://www.linux-kvm.com:80/content/how-maximize-virtio-net-performance-vhost-net">[2]</a> for more information.
 </p>
 <h4><span class="mw-headline" id="Host-only_networking">Host-only networking</span></h4>
 <p>If the bridge is given an IP address and traffic destined for it is allowed, but no real interface (e.g. <code>eth0</code>) is connected to the bridge, then the virtual machines will be able to talk to each other and the host system. However, they will not be able to talk to anything on the external network, provided that you do not set up IP masquerading on the physical host. This configuration is called <i>host-only networking</i> by other virtualization software such as <a href="../en/VirtualBox.html" title="VirtualBox">VirtualBox</a>.
@@ -911,7 +967,7 @@ qemu-system-x86_64 -name "$vm_name" -net nic,macaddr=$(qemu-mac-hasher.py "$vm_n
 </pre>
 <h4><span class="mw-headline" id="Bridged_networking_using_qemu-bridge-helper">Bridged networking using qemu-bridge-helper</span></h4>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> This method is available since QEMU 1.1, see <a rel="nofollow" class="external free" href="http://wiki.qemu.org/Features/HelperNetworking">http://wiki.qemu.org/Features/HelperNetworking</a>.</div>
+<strong>Note:</strong> This method is available since QEMU 1.1, see <a rel="nofollow" class="external free" href="https://wiki.qemu.org/Features/HelperNetworking">https://wiki.qemu.org/Features/HelperNetworking</a>.</div>
 <p>This method does not require a start-up script and readily accommodates multiple taps and multiple bridges. It uses <code>/usr/lib/qemu/qemu-bridge-helper</code> binary, which allows creating tap devices on an existing bridge.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
@@ -937,7 +993,7 @@ allow <i>bridge1</i>
 <b>Reason:</b> This section needs serious cleanup and may contain out-of-date information. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:QEMU">Talk:QEMU#</a>)</div>
 </div>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> Since QEMU 1.1, the <a rel="nofollow" class="external text" href="http://wiki.qemu.org/Features/HelperNetworking">network bridge helper</a> can set tun/tap up for you without the need for additional scripting. See <a href="#Bridged_networking_using_qemu-bridge-helper">#Bridged networking using qemu-bridge-helper</a>.</div>
+<strong>Tip:</strong> Since QEMU 1.1, the <a rel="nofollow" class="external text" href="https://wiki.qemu.org/Features/HelperNetworking">network bridge helper</a> can set tun/tap up for you without the need for additional scripting. See <a href="#Bridged_networking_using_qemu-bridge-helper">#Bridged networking using qemu-bridge-helper</a>.</div>
 <p>The following describes how to bridge a virtual machine to a host interface such as <code>eth0</code>, which is probably the most common configuration. This configuration makes it appear that the virtual machine is located directly on the external network, on the same Ethernet segment as the physical host machine.
 </p>
 <p>We will replace the normal Ethernet adapter with a bridge adapter and bind the normal Ethernet adapter to it.
@@ -1259,7 +1315,7 @@ WantedBy=multi-user.target</pre>
 <p>See <a rel="nofollow" class="external text" href="https://qemu.weilnetz.de/doc/qemu-doc.html#Network-options">QEMU networking documentation</a> for more information on parameters you can use.
 </p>
 <h2><span class="mw-headline" id="Graphic_card">Graphic card</span></h2>
-<p>QEMU can emulate a standard graphic card text mode using <code>-curses</code> command line option. This allows to type text and see text output directly inside a text terminal.
+<p>QEMU can emulate a standard graphic card text mode using <code>-curses</code> command line option. This allows to type text and see text output directly inside a text terminal. Alternatively, <code>-nographic</code> serves a similar purpose.
 </p>
 <p>QEMU can emulate several types of VGA card. The card type is passed in the <code>-vga <i>type</i></code> command line option and can be <code>std</code>, <code>qxl</code>, <code>vmware</code>, <code>virtio</code>, <code>cirrus</code> or <code>none</code>.
 </p>
@@ -1281,18 +1337,18 @@ WantedBy=multi-user.target</pre>
 </p>
 <p>To enable 3D acceleration on the guest system select this vga with <code>-vga virtio</code> and enable the opengl context in the display device with <code>-display sdl,gl=on</code> or <code>-display gtk,gl=on</code> for the sdl and gtk display output respectively. Successful configuration can be confirmed looking at the kernel log in the guest:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep drm </pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep drm </pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[drm] pci: virtio-vga detected
 [drm] virgl 3d acceleration enabled
 </pre>
 <h3><span class="mw-headline" id="cirrus">cirrus</span></h3>
-<p>The cirrus graphical adapter was the default <a rel="nofollow" class="external text" href="http://wiki.qemu.org/ChangeLog/2.2#VGA">before 2.2</a>. It <a rel="nofollow" class="external text" href="https://www.kraxel.org/blog/2014/10/qemu-using-cirrus-considered-harmful/">should not</a> be used on modern systems.
+<p>The cirrus graphical adapter was the default <a rel="nofollow" class="external text" href="https://wiki.qemu.org/ChangeLog/2.2#VGA">before 2.2</a>. It <a rel="nofollow" class="external text" href="https://www.kraxel.org/blog/2014/10/qemu-using-cirrus-considered-harmful/">should not</a> be used on modern systems.
 </p>
 <h3><span class="mw-headline" id="none">none</span></h3>
 <p>This is like a PC that has no VGA card at all. You would not even be able to access it with the <code>-vnc</code> option. Also, this is different from the <code>-nographic</code> option which lets QEMU emulate a VGA card, but disables the SDL display.
 </p>
 <h2><span class="mw-headline" id="SPICE">SPICE</span></h2>
-<p>The <a rel="nofollow" class="external text" href="http://spice-space.org/">SPICE project</a> aims to provide a complete open source solution for remote access to virtual machines in a seamless way.
+<p>The <a rel="nofollow" class="external text" href="https://www.spice-space.org/">SPICE project</a> aims to provide a complete open source solution for remote access to virtual machines in a seamless way.
 </p>
 <h3><span class="mw-headline" id="Enabling_SPICE_support_on_the_host">Enabling SPICE support on the host</span></h3>
 <p>The following is an example of booting with SPICE as the remote desktop protocol, including the support for copy and paste from host:
@@ -1326,7 +1382,7 @@ WantedBy=multi-user.target</pre>
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://www.spice-space.org/">https://www.spice-space.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=spice-gtk">spice-gtk</a></span>
 </dd></dl>
-<p>For clients that run on smartphone or on other platforms, refer to the <i>Other clients</i> section in <a rel="nofollow" class="external text" href="http://www.spice-space.org/download.html">spice-space download</a>.
+<p>For clients that run on smartphone or on other platforms, refer to the <i>Other clients</i> section in <a rel="nofollow" class="external text" href="https://www.spice-space.org/download.html">spice-space download</a>.
 </p>
 <h4><span class="mw-headline" id="Manually_running_a_SPICE_client">Manually running a SPICE client</span></h4>
 <p>One way of connecting to a guest listening on Unix socket <code>/tmp/vm_spice.socket</code> is to manually run the SPICE client using <code>$ remote-viewer spice+unix:///tmp/vm_spice.socket</code> or <code>$ spicy --uri="spice+unix:///tmp/vm_spice.socket"</code>, depending on the desired client. Since QEMU in SPICE mode acts similarly to a remote desktop server, it may be more convenient to run QEMU in daemon mode with the <code>-daemonize</code> parameter.
@@ -1349,7 +1405,7 @@ Note the <code>-f</code> option that requests ssh to execute the command <code>s
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-qxl">xf86-video-qxl</a></span>: Xorg X11 qxl video driver</li>
 </ul>
-<p>For guests under <b>other operating systems</b>, refer to the <i>Guest</i> section in <a rel="nofollow" class="external text" href="http://www.spice-space.org/download.html">spice-space download</a>.
+<p>For guests under <b>other operating systems</b>, refer to the <i>Guest</i> section in <a rel="nofollow" class="external text" href="https://www.spice-space.org/download.html">spice-space download</a>.
 </p>
 <h3><span class="mw-headline" id="Password_authentication_with_SPICE">Password authentication with SPICE</span></h3>
 <p>If you want to enable password authentication with SPICE you need to remove <code>disable-ticketing</code> from the <code>-spice</code> argument and instead add <code>password=<i>yourpassword</i></code>. For example:
@@ -1431,6 +1487,19 @@ Note the <code>-f</code> option that requests ssh to execute the command <code>s
 </p>
 <pre>-device hda-output,audiodev=snd0
 </pre>
+<p>Complete Windows 10 guest example to enable audio:
+</p>
+<pre>-audiodev pa,id=snd0 \
+-device ich9-intel-hda -device hda-output,audiodev=snd0
+</pre>
+<p>where 
+</p>
+<ul>
+<li>"-audiodev pa,id=snd0" is host's audio backend.  pa represents PulseAudio,</li>
+<li>\ above is line continuation in bash,</li>
+<li>"-device ich9-intel-hda" makes device available to guest OS,</li>
+<li>"-device hda-output,audiodev=snd0" connects hda device "-device ich9-intel-hda" output to audio backend.</li>
+</ul>
 <h5><span class="mw-headline" id="Intel_82801AA_AC97">Intel 82801AA AC97</span></h5>
 <p>For AC97 emulation just add the audio card device and map it to a host audio backend id
 </p>
@@ -1469,7 +1538,7 @@ Note the <code>-f</code> option that requests ssh to execute the command <code>s
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> When referencing disks by <a href="../en/Persistent_block_device_naming.html#by-uuid" class="mw-redirect" title="UUID">UUID</a> in both <code>/etc/fstab</code> and bootloader, nothing has to be done.</div>
-<p>Further information on paravirtualization with KVM can be found <a rel="nofollow" class="external text" href="http://www.linux-kvm.org/page/Boot_from_virtio_block_device">here</a>.
+<p>Further information on paravirtualization with KVM can be found <a rel="nofollow" class="external text" href="https://www.linux-kvm.org/page/Boot_from_virtio_block_device">here</a>.
 </p>
 <p>You might also want to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=qemu-guest-agent">qemu-guest-agent</a></span> to implement support for QMP commands that will enhance the hypervisor management capabilities. After installing the package you can enable and start the <code>qemu-guest-agent.service</code>.
 </p>
@@ -1714,7 +1783,7 @@ After successful completion, the base image remains in read write mode and becom
 </ul>
 <pre>$ qemu-system-x86_64 -drive id=disk,file=<i>disk_image</i>,if=none -device ich9-ahci,id=ahci -device ide-drive,drive=disk,bus=ahci.0
 </pre>
-<p>See <a rel="nofollow" class="external free" href="http://www.linux-kvm.org/page/Tuning_KVM">http://www.linux-kvm.org/page/Tuning_KVM</a> for more information.
+<p>See <a rel="nofollow" class="external free" href="https://www.linux-kvm.org/page/Tuning_KVM">https://www.linux-kvm.org/page/Tuning_KVM</a> for more information.
 </p>
 <h3><span class="mw-headline" id="Starting_QEMU_virtual_machines_on_boot">Starting QEMU virtual machines on boot</span></h3>
 <h4><span class="mw-headline" id="With_libvirt">With libvirt</span></h4>
@@ -1848,6 +1917,29 @@ One needs to follow the steps described in <a href="#SPICE">#SPICE</a>. A guest 
 </p>
 <p>Fast Startup may also need to be disabled for changes to the <code>-smp</code> option to be properly applied.
 </p>
+<h4><span class="mw-headline" id="Complete_Windows_10_Example">Complete Windows 10 Example</span></h4>
+<p><b>Prerequisites:</b> The following example relies on `kvm` and `virtio` to improve performance. It uses `/qemu/` directory for Windows installation ISO, virtio drivers ISO from RedHat and VM image itself.  
+</p>
+<p>During 1st time installation it is recommended to omit file sharing configuration on last 4 lines starting with "-object memory-backend-memfd,id=mem,size=8G,share=on".
+</p>
+<pre>$ qemu-system-x86_64 -m 8G \
+-machine type=pc,accel=kvm \
+-cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
+-enable-kvm \
+-smp $(nproc) \
+-drive format=raw,file=/qemu/windows-10-home.raw,if=virtio \
+-drive file=/qemu/iso/Win10_20H2_v2_English_x64.iso,media=cdrom \
+-drive file=/qemu/iso/virtio-win-0.1.185.iso,media=cdrom \
+-netdev user,id=n1 -device virtio-net-pci,netdev=n1 \
+-vga virtio \
+-audiodev pa,id=snd0 \
+-device ich9-intel-hda -device hda-output,audiodev=snd0 \
+-usb -device usb-tablet \
+-object memory-backend-memfd,id=mem,size=8G,share=on \
+-numa node,memdev=mem \
+-chardev socket,id=char0,path=/var/run/qemu-vm-win-10.sock \
+-device vhost-user-fs-pci,chardev=char0,tag=myfs
+</pre>
 <h4><span class="mw-headline" id="Remote_Desktop_Protocol">Remote Desktop Protocol</span></h4>
 <p>If you use a MS Windows guest, you might want to use RDP to connect to your guest VM. If you are using a VLAN or are not in the same network as the guest, use:
 </p>
@@ -1865,7 +1957,7 @@ One needs to follow the steps described in <a href="#SPICE">#SPICE</a>. A guest 
 </h3>
 <p>Sometimes it is easier to work directly on a disk image instead of the real ARM based device. This can be achieved by mounting an SD card/storage containing the <i>root</i> partition and chrooting into it.
 </p>
-<p>Another use case for an ARM chroot is building ARM packages on an x86_64 machine - <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/armutils-git/">armutils-git</a></span><sup><small>AUR</small></sup> can be used for that. Here, the chroot environment can be created from an image tarball from <a rel="nofollow" class="external text" href="https://archlinuxarm.org">Arch Linux ARM</a> - see <a rel="nofollow" class="external autonumber" href="https://nerdstuff.org/posts/2020/2020-003_simplest_way_to_create_an_arm_chroot/">[2]</a> for a detailed description of this approach.
+<p>Another use case for an ARM chroot is building ARM packages on an x86_64 machine - <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/armutils-git/">armutils-git</a></span><sup><small>AUR</small></sup> can be used for that. Here, the chroot environment can be created from an image tarball from <a rel="nofollow" class="external text" href="https://archlinuxarm.org">Arch Linux ARM</a> - see <a rel="nofollow" class="external autonumber" href="https://nerdstuff.org/posts/2020/2020-003_simplest_way_to_create_an_arm_chroot/">[3]</a> for a detailed description of this approach.
 </p>
 <p>Either way, from the chroot it should be possible to run <i>pacman</i> and install more packages, compile large libraries etc. Since the executables are for the ARM architecture, the translation to x86 needs to be performed by <a class="mw-selflink selflink">QEMU</a>.
 </p>
@@ -1915,6 +2007,13 @@ qemu-alpha    qemu-armeb  qemu-m68k  qemu-mips	      qemu-ppc	   qemu-ppc64abi32
 </pre>
 <p><code>--bind-ro=/etc/resolv.conf</code> is optional and gives a working network DNS inside the chroot
 </p>
+<h3><span class="mw-headline" id="Not_grabbing_mouse_input">Not grabbing mouse input</span></h3>
+<p>Tablet mode has side effect of not grabbing mouse input in QEMU window:
+</p>
+<pre>-usb -device usb-tablet
+</pre>
+<p>It works with several -vga backends one of which is virtio.
+</p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Mouse_cursor_is_jittery_or_erratic">Mouse cursor is jittery or erratic</span></h3>
 <p>If the cursor jumps around the screen uncontrollably, entering this on the terminal before starting QEMU might help:
@@ -1934,7 +2033,7 @@ qemu-alpha    qemu-armeb  qemu-m68k  qemu-mips	      qemu-ppc	   qemu-ppc64abi32
 <p>Apply the tip <a href="#Mouse_integration">#Mouse integration</a>.
 </p>
 <h3><span class="mw-headline" id="Keyboard_issues_when_using_VNC">Keyboard issues when using VNC</span></h3>
-<p>When using VNC, you might experience keyboard problems described (in gory details) <a rel="nofollow" class="external text" href="https://www.berrange.com/posts/2010/07/04/more-than-you-or-i-ever-wanted-to-know-about-virtual-keyboard-handling/">here</a>. The solution is <i>not</i> to use the <code>-k</code> option on QEMU, and to use <code>gvncviewer</code> from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gtk-vnc">gtk-vnc</a></span>. See also <a rel="nofollow" class="external text" href="http://www.mail-archive.com/libvir-list@redhat.com/msg13340.html">this</a> message posted on libvirt's mailing list.
+<p>When using VNC, you might experience keyboard problems described (in gory details) <a rel="nofollow" class="external text" href="https://www.berrange.com/posts/2010/07/04/more-than-you-or-i-ever-wanted-to-know-about-virtual-keyboard-handling/">here</a>. The solution is <i>not</i> to use the <code>-k</code> option on QEMU, and to use <code>gvncviewer</code> from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gtk-vnc">gtk-vnc</a></span>. See also <a rel="nofollow" class="external text" href="https://www.mail-archive.com/libvir-list@redhat.com/msg13340.html">this</a> message posted on libvirt's mailing list.
 </p>
 <h3><span class="mw-headline" id="Keyboard_seems_broken_or_the_arrow_keys_do_not_work">Keyboard seems broken or the arrow keys do not work</span></h3>
 <p>Should you find that some of your keys do not work or "press" the wrong key (in particular, the arrow keys), you likely need to specify your keyboard layout as an option. The keyboard layouts can be found in <code>/usr/share/qemu/keymaps/</code>.
@@ -2019,14 +2118,14 @@ options kvm ignore_msrs=1
 <li>Another possible cause is PS/2 inputs. Switch from PS/2 to Virtio inputs, see <a href="../en/PCI_passthrough_via_OVMF.html#Passing_keyboard/mouse_via_Evdev" title="PCI passthrough via OVMF">PCI passthrough via OVMF#Passing keyboard/mouse via Evdev</a>.</li>
 </ul>
 <h3><span class="mw-headline" id="QXL_video_causes_low_resolution">QXL video causes low resolution</span></h3>
-<p>QEMU 4.1.0 introduced a regression where QXL video can fall back to low resolutions, when being displayed through spice.  <a rel="nofollow" class="external autonumber" href="https://bugs.launchpad.net/qemu/+bug/1843151">[3]</a>  For example, when KMS starts, text resolution may become as low as 4x10 characters.  When trying to increase GUI resolution, it may go to the lowest supported resolution.
+<p>QEMU 4.1.0 introduced a regression where QXL video can fall back to low resolutions, when being displayed through spice.  <a rel="nofollow" class="external autonumber" href="https://bugs.launchpad.net/qemu/+bug/1843151">[4]</a>  For example, when KMS starts, text resolution may become as low as 4x10 characters.  When trying to increase GUI resolution, it may go to the lowest supported resolution.
 </p>
 <p>As a workaround, create your device in this form:
 </p>
 <pre>-device qxl-vga,max_outputs=1...
 </pre>
 <h3><span class="mw-headline" id="Hang_during_VM_initramfs">Hang during VM initramfs</span></h3>
-<p>Linux 5.2.11 introduced a KVM regression where under some circumstances a VM may permanently hang during the early boot phase, when the initramfs is being loaded or ran.  <a rel="nofollow" class="external autonumber" href="https://www.spinics.net/lists/kvm/msg195171.html">[4]</a>  Linux 5.3 fixed the regression.  The host shows qemu using 100% CPU * number of virtual CPUs.  Reported case is with a host using hyperthreading, and a VM being given more than host's <code>nproc</code>/2 virtual CPUs.  It is unknown what exact circumstances trigger one of the threads to delete a memory region to cause this.  The workarounds are:
+<p>Linux 5.2.11 introduced a KVM regression where under some circumstances a VM may permanently hang during the early boot phase, when the initramfs is being loaded or ran.  <a rel="nofollow" class="external autonumber" href="https://www.spinics.net/lists/kvm/msg195171.html">[5]</a>  Linux 5.3 fixed the regression.  The host shows qemu using 100% CPU * number of virtual CPUs.  Reported case is with a host using hyperthreading, and a VM being given more than host's <code>nproc</code>/2 virtual CPUs.  It is unknown what exact circumstances trigger one of the threads to delete a memory region to cause this.  The workarounds are:
 </p>
 <ul>
 <li>Upgrade to Linux 5.3.</li>
@@ -2056,15 +2155,15 @@ options kvm ignore_msrs=1
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://qemu.org">Official QEMU website</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.linux-kvm.org">Official KVM website</a></li>
+<li><a rel="nofollow" class="external text" href="https://qemu.org">Official QEMU website</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.linux-kvm.org">Official KVM website</a></li>
 <li><a rel="nofollow" class="external text" href="http://qemu.weilnetz.de/qemu-doc.html">QEMU Emulator User Documentation</a></li>
 <li><a href="https://en.wikibooks.org/wiki/QEMU" class="extiw" title="wikibooks:QEMU">QEMU Wikibook</a></li>
 <li>
 <a rel="nofollow" class="external text" href="http://alien.slackbook.org/dokuwiki/doku.php?id=slackware:qemu">Hardware virtualization with QEMU</a> by AlienBOB (last updated in 2008)</li>
 <li>
 <a rel="nofollow" class="external text" href="http://blog.falconindy.com/articles/build-a-virtual-army.html">Building a Virtual Army</a> by Falconindy</li>
-<li><a rel="nofollow" class="external text" href="http://git.qemu.org/?p=qemu.git;a=tree;f=docs">Lastest docs</a></li>
+<li><a rel="nofollow" class="external text" href="https://git.qemu.org/?p=qemu.git;a=tree;f=docs">Lastest docs</a></li>
 <li><a rel="nofollow" class="external text" href="http://qemu.weilnetz.de/">QEMU on Windows</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Qemu" class="extiw" title="wikipedia:Qemu">Wikipedia</a></li>
 <li><a href="https://wiki.debian.org/QEMU" class="extiw" title="debian:QEMU">Debian Wiki - QEMU</a></li>
@@ -2097,8 +2196,8 @@ options kvm ignore_msrs=1
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=QEMU&amp;oldid=649327">https://wiki.archlinux.org/index.php?title=QEMU&amp;oldid=649327</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 January 2021, at 14:16.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=QEMU&amp;oldid=663608">https://wiki.archlinux.org/index.php?title=QEMU&amp;oldid=663608</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 April 2021, at 12:10.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

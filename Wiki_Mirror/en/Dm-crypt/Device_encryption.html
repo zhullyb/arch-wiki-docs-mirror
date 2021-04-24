@@ -34,7 +34,7 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <p><span></span>
-This section covers how to manually utilize <i>dm-crypt</i> from the command line to encrypt a system. 
+This section covers how to manually utilize <i>dm-crypt</i> from the command line to encrypt a system.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -216,7 +216,7 @@ Since different parameters are required or optional, depending on encryption mod
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> If the list is short, execute <code>$ cryptsetup benchmark</code> which will trigger loading available modules.</div>
-<p>The following introduces encryption options for the <code>luks</code>, <code>luks1</code>, <code>luks2</code> and <code>plain</code> modes. Note that the tables list options used in the respective examples in this article and not all available ones. 
+<p>The following introduces encryption options for the <code>luks</code>, <code>luks1</code>, <code>luks2</code> and <code>plain</code> modes. Note that the tables list options used in the respective examples in this article and not all available ones.
 </p>
 <h3><span class="mw-headline" id="Encryption_options_for_LUKS_mode">Encryption options for LUKS mode</span></h3>
 <p>The <i>cryptsetup</i> action to set up a new dm-crypt device in LUKS encryption mode is <i>luksFormat</i>. Unlike what the name implies, it does not format the device, but sets up the LUKS device header and encrypts the master-key with the desired cryptographic options. 
@@ -298,7 +298,7 @@ Since different parameters are required or optional, depending on encryption mod
 </td>
 </tr>
 <tr>
-<th style="text-align:right;white-space:nowrap;">--use-{u,}random
+<th style="text-align:right;white-space:nowrap;">--use-urandom
 </th>
 <td>
 <code>--use-urandom</code>
@@ -306,7 +306,7 @@ Since different parameters are required or optional, depending on encryption mod
 <td>
 <code>--use-random</code>
 </td>
-<td>Selects which <a href="../../en/Random_number_generation.html" class="mw-redirect" title="Random number generator">random number generator</a> to use. Quoting the cryptsetup manual page: "In a low-entropy situation (e.g. in an embedded system), both  selections are problematic. Using /dev/urandom can lead to weak keys. Using /dev/random can block a long time, potentially forever, if not enough entropy can be harvested  by the kernel."
+<td>Selects which <a href="../../en/Random_number_generation.html" class="mw-redirect" title="Random number generator">random number generator</a> to use. Note that <a rel="nofollow" class="external text" href="https://lwn.net/Articles/808575/">/dev/random blocking pool has been removed</a>. Therefore, --use-random flag is now equivalent to --use-urandom.
 </td>
 </tr>
 <tr>
@@ -672,7 +672,7 @@ dev/sdaX
 </p>
 <pre># cryptsetup luksDump /dev/&lt;device&gt;
 </pre>
-<p>Where &lt;device&gt; is the volume containing the LUKS header. This and all the following commands in this section work on header backup files as well. 
+<p>Where &lt;device&gt; is the volume containing the LUKS header. This and all the following commands in this section work on header backup files as well.
 </p>
 <h4><span class="mw-headline" id="Adding_LUKS_keys">Adding LUKS keys</span></h4>
 <p>Adding new keyslots is accomplished using cryptsetup with the <code>luksAddKey</code> action. For safety it will always, i.e. also for already unlocked devices, ask for a valid existing key ("any passphrase") before a new one may be entered:
@@ -833,7 +833,7 @@ Command successful.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> Always make sure a <b>reliable backup</b> is available and double-check options you specify before using the tool!</div>
-<p>The following shows an example to encrypt an unencrypted filesystem partition and a re-encryption of an existing LUKS device. 
+<p>The following shows an example to encrypt an unencrypted filesystem partition and a re-encryption of an existing LUKS device.
 </p>
 <h4><span class="mw-headline" id="Encrypt_an_existing_unencrypted_filesystem">Encrypt an existing unencrypted filesystem</span></h4>
 <p>A LUKS encryption header is always stored at the beginning of the device. Since an existing filesystem will usually be allocated all partition sectors, the first step is to shrink it to make space for the LUKS header.
@@ -843,7 +843,7 @@ Command successful.
 <div>
 <b>Reason:</b> cryptsetup man pages suggest using twice the LUKS2 header size. That implies 32MiB and using <code>--reduce-device-size 32M</code> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Dm-crypt/Device_encryption">Talk:Dm-crypt/Device encryption#</a>)</div>
 </div>
-<p>The <a href="#Encryption_options_for_LUKS_mode">default</a> LUKS2 header requires 16 MiB. If the current filesystem occupies all the available space, we'll have to shrink it at least that much.
+<p>The <a href="#Encryption_options_for_LUKS_mode">default</a> LUKS2 header requires 16 MiB. If the current filesystem occupies all the available space, we will have to shrink it at least that much.
 To shrink an existing <code>ext4</code> filesystem on <code>/dev/sdaX</code> to its current possible minimum:
 </p>
 <pre># umount /mnt
@@ -867,7 +867,9 @@ The filesystem on /dev/sdaX is now 26347 (4k) blocks long.
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">
 
 WARNING!
+
 ========
+
 This will overwrite data on LUKS2-temp-12345678-9012-3456-7890-123456789012.new irrevocably.
 
 Are you sure? (Type 'yes' in capital letters): YES
@@ -898,7 +900,7 @@ The filesystem on /dev/mapper/recrypt is now 664807 (4k) blocks long.
 </p>
 <pre># cryptsetup reencrypt /dev/sdaX</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> For LUKS1 we'll need to use the legacy tool:<pre># cryptsetup-reencrypt /dev/sdaX</pre>
+<strong>Note:</strong> For LUKS1 we will need to use the legacy tool:<pre># cryptsetup-reencrypt /dev/sdaX</pre>
 </div>
 <p>Existing keys are retained when re-encrypting a device with a different cipher and/or hash. Another use case is to re-encrypt LUKS devices which have non-current encryption options. Apart from above warning on specifying options correctly, the ability to change the LUKS header may also be limited by its size. For example, if the device was initially encrypted using a CBC mode cipher and 128 bit key-size, the LUKS header will be half the size of above mentioned <code>4096</code> sectors: 
 </p>
@@ -1130,8 +1132,8 @@ Command successful.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt/Device_encryption&amp;oldid=652105">https://wiki.archlinux.org/index.php?title=Dm-crypt/Device_encryption&amp;oldid=652105</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 February 2021, at 21:02.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt/Device_encryption&amp;oldid=663913">https://wiki.archlinux.org/index.php?title=Dm-crypt/Device_encryption&amp;oldid=663913</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 24 April 2021, at 06:41.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

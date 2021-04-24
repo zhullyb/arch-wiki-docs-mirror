@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -90,7 +91,7 @@
 <li class="toclevel-2 tocsection-22"><a href="#Resetting_the_keyring"><span class="tocnumber">6.2</span> <span class="toctext">Resetting the keyring</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-23"><a href="#gkr-pam:_gnome-keyring-daemon_didn't_start_properly"><span class="tocnumber">7</span> <span class="toctext">gkr-pam: gnome-keyring-daemon didn't start properly</span></a></li>
+<li class="toclevel-1 tocsection-23"><a href="#gkr-pam:_gnome-keyring-daemon_did_not_start_properly"><span class="tocnumber">7</span> <span class="toctext">gkr-pam: gnome-keyring-daemon did not start properly</span></a></li>
 <li class="toclevel-1 tocsection-24"><a href="#See_also"><span class="tocnumber">8</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
@@ -180,10 +181,22 @@ export SSH_AUTH_SOCK
 <li><a href="../../en/LXDM.html" title="LXDM">LXDM</a></li>
 <li><a href="../../en/SDDM.html" title="SDDM">SDDM</a></li>
 </ul>
+<p>One notable exception is SDDM in combination with the <a href="../../en/KDE.html#Plasma" title="KDE">KDE Plasma desktop environment</a>, which in its default configuration on many systems automatically unlocks <a href="../../en/KDE_Wallet.html" class="mw-redirect" title="KWallet">KWallet</a> but not the GNOME keyring. To fix this, edit <code>/etc/pam.d/sddm</code> and add
+</p>
+<pre>auth      optional    pam_gnome_keyring.so
+</pre>
+<p>to the very end of the auth section and
+</p>
+<pre>session   optional    pam_gnome_keyring.so auto_start
+</pre>
+<p>to the end of the session section.
+</p>
+<p>Should the same issue arise with another display manager, it can be fixed by doing the above in the corresponding file under <code>/etc/pam.d/</code>.
+</p>
 <h4><span class="mw-headline" id="Automatic_login_2">Automatic login</span></h4>
 <p>For GDM, the keyring <a rel="nofollow" class="external text" href="https://wiki.gnome.org/Projects/GnomeKeyring/Pam">must be</a> named <i>Login</i> (or its equivalent in your locale) to be automatically unlocked. GNOME will automatically create one with the correct name upon login.
 </p>
-<p>GDM can unlock your keyring if it matches your LUKS password. For this to work, you need to use the <a href="../../en/Mkinitcpio.html#Common_hooks" title="Mkinitcpio">systemd init in your mkinitcpio.conf</a> as well as the <a href="../../en/Dm-crypt/System_configuration.html#Using_sd-encrypt_hook/" title="Dm-crypt/System configuration">appropriate kernel parameters</a><sup>[<a href="../../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>. See this Reddit thread<a rel="nofollow" class="external autonumber" href="https://www.reddit.com/r/Fedora/comments/jwnqq5/how_does_fedora_grab_the_luks_password_at_boot_to">[1]</a>.
+<p>GDM can unlock your keyring if it matches your LUKS password. For this to work, you need to use the <a href="../../en/Mkinitcpio.html#Common_hooks" title="Mkinitcpio">systemd init in your mkinitcpio.conf</a> as well as the <a href="../../en/Dm-crypt/System_configuration.html#Using_sd-encrypt_hook" title="Dm-crypt/System configuration">appropriate kernel parameters</a>. See this Reddit thread<a rel="nofollow" class="external autonumber" href="https://www.reddit.com/r/Fedora/comments/jwnqq5/how_does_fedora_grab_the_luks_password_at_boot_to">[1]</a>.
 </p>
 <h4><span class="mw-headline" id="Terminal_applications">Terminal applications</span></h4>
 <p>To enable the keyring for applications run through the terminal, such as SSH, add the following to your <code>~/.bash_profile</code>, <code>~/.zshenv</code>, or similar:
@@ -237,7 +250,7 @@ To do so in an account-local way, copy <code>/etc/xdg/autostart/gnome-keyring-ss
 <strong>Note:</strong> In case you use <a href="../../en/GNOME.html" title="GNOME">GNOME</a> 3.24 or older on <a href="../../en/Wayland.html" title="Wayland">Wayland</a>, gnome-shell will overwrite <code>SSH_AUTH_SOCK</code> to point to gnome-keyring regardless if it is running or not. To prevent this, you need to set the environment variable GSM_SKIP_SSH_AGENT_WORKAROUND before gnome-shell is started. One way to do this is to add the line <code>GSM_SKIP_SSH_AGENT_WORKAROUND	DEFAULT=1</code> to <code>~/.pam_environment</code>.</div>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Integration_with_applications">Integration with applications</span></h3>
-<ul><li><a href="../../en/Firefox.html#KDE.2FGNOME_integration" title="Firefox">Firefox</a></li></ul>
+<ul><li><a href="../../en/Firefox.html#KDE_integration" title="Firefox">Firefox</a></li></ul>
 <h3><span class="mw-headline" id="Flushing_passphrases">Flushing passphrases</span></h3>
 <pre>gnome-keyring-daemon -r -d
 </pre>
@@ -270,33 +283,27 @@ To do so in an account-local way, copy <code>/etc/xdg/autostart/gnome-keyring-ss
 If there is no keyring in the left column (it will be marked with a lock icon), go to <i>File</i> &gt; <i>New</i> &gt; <i>Password Keyring</i> and give it a name. You will be asked to enter a password. If you do not give the keyring a password it will be unlocked automatically, even when using autologin, but passwords will not be stored securely. Finally, right-click on the keyring you just created and select "Set as default".
 </p>
 <h3><span class="mw-headline" id="Resetting_the_keyring">Resetting the keyring</span></h3>
-<p>If you get the error "The password you use to login to your computer no longer matches that of your login keyring", you'll need to change the keyring password. You can do this using seahorse, by right-clicking on "default keyring", and selecting "Change Password".
+<p>If you get the error "The password you use to login to your computer no longer matches that of your login keyring", you will need to change the keyring password. You can do this using seahorse, by right-clicking on "default keyring", and selecting "Change Password".
 </p>
 <p>Alternatively, you can remove "login.keyring" and "user.keystore" from <i>/home/{username}/.local/share/keyrings/</i>. Be warned that this will permanently delete all saved keys. After removing the files, simply log out and log in again.
 </p>
-<h2>
-<span id="gkr-pam:_gnome-keyring-daemon_didn.27t_start_properly"></span><span class="mw-headline" id="gkr-pam:_gnome-keyring-daemon_didn't_start_properly">gkr-pam: gnome-keyring-daemon didn't start properly</span>
-</h2>
+<h2><span class="mw-headline" id="gkr-pam:_gnome-keyring-daemon_did_not_start_properly">gkr-pam: gnome-keyring-daemon did not start properly</span></h2>
 <p>As of 9 Dec 2020, libcap-ng 0.8.2-1 appears to be causing this error. Gnome Online Accounts will complain of expired credentials and be unable to store new credentials. Downgrade to a previous version.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul><li><a rel="nofollow" class="external text" href="https://wiki.gnome.org/action/show/Projects/GnomeKeyring">GNOME wiki</a></li></ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../../en/Category:GNOME.html" title="Category:GNOME">GNOME</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GNOME/Keyring&amp;oldid=645022">https://wiki.archlinux.org/index.php?title=GNOME/Keyring&amp;oldid=645022</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 December 2020, at 10:50.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GNOME/Keyring&amp;oldid=662629">https://wiki.archlinux.org/index.php?title=GNOME/Keyring&amp;oldid=662629</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:36.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

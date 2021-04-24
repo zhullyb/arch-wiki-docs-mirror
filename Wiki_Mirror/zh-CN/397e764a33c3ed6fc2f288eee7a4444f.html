@@ -95,7 +95,7 @@
 </pre>
 <p>接下来，用 <code>dmesg | grep <i>module_name</i></code> 来检查是否已经加载了驱动。例如：
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep atl1</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep atl1</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
 atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 </pre>
@@ -207,7 +207,7 @@ atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 # modprobe tg3
 </pre>
 <ul><li>插回网线，检查模块是否成功：</li></ul>
-<pre>$ dmesg | grep tg3
+<pre># dmesg | grep tg3
 </pre>
 <ul><li>如果现在你的故障解决了，你可以把 <code>broadcom</code> 和 <code>tg3</code> （以此顺序）加入到 <code>/etc/mkinitcpio.conf</code> 的 <code>MODULES</code> 一行，使得更改持久化：</li></ul>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
@@ -226,14 +226,14 @@ atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># lspci | grep Ethernet</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">03:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168B PCI Express Gigabit Ethernet controller (rev 02)
 </pre>
-<p>The adapter should be recognized by the <code>r8169</code> module. However, with some chip revisions the connection may go off and on all the time. The alternative <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=r8168">r8168</a></span> can be found in the <a href="../en/Official_repositories.html" title="Official repositories">official repositories</a> and should be used for a reliable connection in this case. <a href="../en/Kernel_module.html#Blacklisting" class="mw-redirect" title="Kernel modules">Blacklist</a> <code>r8169</code>, if <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=r8168">r8168</a></span> is not automatically loaded by <a href="../en/Udev.html" title="Udev">udev</a>，see <a href="../en/Kernel_module.html#Automatic_module_handling" class="mw-redirect" title="Kernel modules">Kernel modules#Automatic module handling</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>。
+<p>这个网络适配器应被内核的<code>r8169</code>模块识别。 但是，对于某些芯片版本，网络连接可能一直是断开状态。 可以在 <a href="../en/Official_repositories.html" title="Official repositories">official repositories</a>中找到<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=r8168">r8168</a></span> 作为<code>r8169</code>的替代品，在这种情况下，其应该可以实现稳定可靠的连接。 将<code>r8169</code>列入黑名单<a href="../en/Kernel_module.html#Blacklisting" class="mw-redirect" title="Kernel modules">Blacklist</a>，如果 <a href="../en/Udev.html" title="Udev">udev</a>没有自动加载<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=r8168">r8168</a></span> ，请参见内核模块 <a href="../zh-CN/Kernel_module.html#%E4%BD%BF%E7%94%A8systemd%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97" title="Kernel module (简体中文)">Kernel_module_(简体中文)#使用systemd自动加载模块</a>
 </p>
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> "some revisions", no proof the driver is the cause, and not e.g poorly configured DNS servers (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Network_configuration_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Ethernet_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Network configuration (简体中文)/Ethernet (简体中文)#</a>)</div>
+<b>Reason:</b> "某些修订版本：",  不是驱动程序导致的问题，而是DNS服务器没有正确配置  (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Network_configuration_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Ethernet_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Network configuration (简体中文)/Ethernet (简体中文)#</a>)</div>
 </div>
-<p>Another fault in the drivers for some revisions of this adapter is poor IPv6 support. <a href="../en/IPv6.html#Disable_functionality" title="IPv6">IPv6#Disable functionality</a> can be helpful if you encounter issues such as hanging webpages and slow speeds.
+<p>对于此网络适配器的某些修订版，驱动程序中的另一个故障是IPv6支持不佳。 如果遇到诸如网页挂起和速度慢之类的问题，禁用IPv6功能 <a href="../en/IPv6.html#Disable_functionality" title="IPv6">IPv6#Disable functionality</a>可能会有所帮助。
 </p>
 <h3>
 <span id=".E9.85.8D.E6.9C.89_Realtek_8111.2F8168.2F8411_.E7.9A.84_Gigabyte_.E4.B8.BB.E6.9D.BF"></span><span class="mw-headline" id="配有_Realtek_8111/8168/8411_的_Gigabyte_主板">配有 Realtek 8111/8168/8411 的 Gigabyte 主板</span>
@@ -246,10 +246,7 @@ atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Network_configuration.html" title="Category:Network configuration (简体中文)">Network configuration (简体中文)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li></ul>
 </div>
 </div>
 	</div>
@@ -257,8 +254,8 @@ atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Ethernet_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=650688">https://wiki.archlinux.org/index.php?title=Network_configuration_(简体中文)/Ethernet_(简体中文)&amp;oldid=650688</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 3 February 2021, at 18:02.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Ethernet_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663732">https://wiki.archlinux.org/index.php?title=Network_configuration_(简体中文)/Ethernet_(简体中文)&amp;oldid=663732</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 06:03.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

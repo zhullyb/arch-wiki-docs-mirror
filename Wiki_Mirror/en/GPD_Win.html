@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,11 +34,16 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Stub (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:GPD_Win">Talk:GPD Win#</a>)</div>
+</div>
+<div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
 <div>
 <b>Reason:</b> As of today (early 2021) everything works out of the box (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:GPD_Win#Out_of_date">Talk:GPD Win#Out of date</a>)</div>
 </div>
-<p><a rel="nofollow" class="external text" href="https://www.indiegogo.com/projects/gpd-win-intel-z8700-win-10-os-game-console-laptop#/">GPD Win</a> is a small (5.5 inch screen) handheld device. More information about the GPD Win can be found here: <a rel="nofollow" class="external free" href="http://hansdegoede.livejournal.com/17445.html">http://hansdegoede.livejournal.com/17445.html</a>
+<p><a rel="nofollow" class="external text" href="https://www.indiegogo.com/projects/gpd-win-intel-z8700-win-10-os-game-console-laptop#/">GPD Win</a> is a small (5.5 inch screen) handheld device. More information about the GPD Win can be found here: <a rel="nofollow" class="external free" href="https://hansdegoede.livejournal.com/17445.html">https://hansdegoede.livejournal.com/17445.html</a>
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -75,7 +81,7 @@
 <h2><span class="mw-headline" id="Fixes">Fixes</span></h2>
 <p><b>Things not mentioned below should work out-of-the-box.</b>
 </p>
-<h4><span class="mw-headline" id="Built-in_Wi-Fi">Built-in Wi-Fi</span></h4>
+<h3><span class="mw-headline" id="Built-in_Wi-Fi">Built-in Wi-Fi</span></h3>
 <p>Before <a rel="nofollow" class="external text" href="https://bugzilla.kernel.org/show_bug.cgi?id=185661">Linux Bug 185661</a> is resolved, a fix is needed to get built-in Wi-Fi working. Current solution is to grab <b>brcmfmac4356-pcie.txt</b> from <a rel="nofollow" class="external text" href="https://chromium.googlesource.com/chromiumos/third_party/linux-firmware/+/f151f016b4fe656399f199e28cabf8d658bcb52b/brcm/brcmfmac4356-pcie.txt">here</a> and drop it into <b>/lib/firmware/brcm</b> and reload the <b>brcmfmac</b> module.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -102,12 +108,12 @@ modprobe brcmfmac
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If the Wi-Fi seems to fail, there may be an extra setting required to be set in the BIOS.  Reboot, and hold the Del key while the device is starting up, and in the BIOS screen, go under the Chipset tab, and select South Bridge, then LPSS &amp; SCC Configuration, then change SCC SDIO Support to PCI Mode.   Save the BIOS changes then get back to the Copy the File step and retry.</div>
-<h4><span class="mw-headline" id="Battery_monitoring">Battery monitoring</span></h4>
+<h3><span class="mw-headline" id="Battery_monitoring">Battery monitoring</span></h3>
 <p>Works out of the box since kernel 4.12.
-Earlier kernels require <a rel="nofollow" class="external text" href="http://hansdegoede.livejournal.com/17445.html">Hans de Goede's patched kernel</a>.
+Earlier kernels require <a rel="nofollow" class="external text" href="https://hansdegoede.livejournal.com/17445.html">Hans de Goede's patched kernel</a>.
 His kernel will also fix "Not charging when the power cable gets plugged in after boot" and "Only drawing max 0.5A from the charger, charging slowly if at all".
 </p>
-<h4><span class="mw-headline" id="Rotating_X_Session">Rotating X Session</span></h4>
+<h3><span class="mw-headline" id="Rotating_X_Session">Rotating X Session</span></h3>
 <p>Because the device uses a phone screen, the display has to be rotated to function properly.
 Since kernel 4.9.2, rotating X session (manually with <a href="../en/Xrandr.html" title="Xrandr">xrandr</a> or within settings of a desktop environment) works out-of-the-box. (NB: before investing too much time (or buying the device) it is worth noting there may be idiosyncrasies in the gpdwin batches. Running 4.9.11-1 (March 7, 2017) did not fix the screen rotation issue on my gpdwin.).
 </p>
@@ -115,14 +121,12 @@ Since kernel 4.9.2, rotating X session (manually with <a href="../en/Xrandr.html
 </p>
 <pre>$ gsettings set org.gnome.desktop.interface scaling-factor 1
 </pre>
-<h4><span class="mw-headline" id="Rotating_touch_screen">Rotating touch screen</span></h4>
+<h3><span class="mw-headline" id="Rotating_touch_screen">Rotating touch screen</span></h3>
 <p>Since kernel 4.9.2, rotating X session will automatically rotate touch screen (so far, only tested with gnome-control-center).  
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Gnome will apply the rotation properly, even when using a third party application to change orientation of the display, such as arandr.  XFCE, as it stands on 2018-02-16, does not auto-rotate the touch coordinates.</div> 
 <p>If your configuration does not auto-rotate touch, make sure you are running <a href="../en/Xorg.html" class="mw-redirect" title="Evdev">evdev</a> drivers (the default. see <a href="../en/Touchscreen.html" title="Touchscreen">Touchscreen</a> for more info). Edit <code>/usr/share/X11/xorg.conf.d/10-evdev.conf</code>, and add <code>Option TransformationMatrix "0 1 0 -1 0 1 0 0 1"</code> to the touchscreen section. Yours should look similar to this:
-</p>
-<p><br>
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/share/X11/xorg.conf.d/10-evdev.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">
@@ -149,36 +153,41 @@ EndSection
 </p>
 <p>270° = Option "TransformationMatrix" "0 1 0 -1 0 1 0 0 1"
 </p>
-<h4><span class="mw-headline" id="Fixing_occasional_crash_when_using_all_cores">Fixing occasional crash when using all cores</span></h4>
+<h3><span class="mw-headline" id="Fixing_occasional_crash_when_using_all_cores">Fixing occasional crash when using all cores</span></h3>
 <p>Turbo Boost on this CPU is software-controlled and the Linux kernel (4.4) is not throttling down the CPU enough, running at or close to 2.4Ghz the whole time even with 4 cores active which crashes the CPU eventually. Disabling the Turbo Boost feature ("Turbo Mode" in the BIOS) fixed those crashes. More info <a rel="nofollow" class="external text" href="https://www.reddit.com/r/gpdwin/comments/5o2m1v/solved_linux_44_crashing_when_using_all_4_cores/">here</a>.
 </p>
-<h4><span class="mw-headline" id="Sound">Sound</span></h4>
+<h3><span class="mw-headline" id="Sound">Sound</span></h3>
 <p>Works out of the box with latest and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span> kernel.
-Headphone jack works but currently requires <a rel="nofollow" class="external text" href="http://hansdegoede.livejournal.com/17445.html">Hans de Goede's patched kernel</a>.
+Headphone jack works but currently requires <a rel="nofollow" class="external text" href="https://hansdegoede.livejournal.com/17445.html">Hans de Goede's patched kernel</a>.
 </p>
-<h4><span class="mw-headline" id="Memory_card_reader">Memory card reader</span></h4>
+<h3><span class="mw-headline" id="Memory_card_reader">Memory card reader</span></h3>
 <p>Works out of the box with latest and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span> kernel.
 </p>
-<h4><span class="mw-headline" id="Physical_power_and_volume_buttons">Physical power and volume buttons</span></h4>
-<p>Works but currently requires <a rel="nofollow" class="external text" href="http://hansdegoede.livejournal.com/17445.html">Hans de Goede's patched kernel</a>.
+<h3><span class="mw-headline" id="Physical_power_and_volume_buttons">Physical power and volume buttons</span></h3>
+<p>Works but currently requires <a rel="nofollow" class="external text" href="https://hansdegoede.livejournal.com/17445.html">Hans de Goede's patched kernel</a>.
 </p>
-<h4><span class="mw-headline" id="Adjusting_screen_brightness">Adjusting screen brightness</span></h4>
+<h3><span class="mw-headline" id="Adjusting_screen_brightness">Adjusting screen brightness</span></h3>
 <p>Works out of the box since kernel 4.14.
-Earlier kernels require <a rel="nofollow" class="external text" href="http://hansdegoede.livejournal.com/17445.html">Hans de Goede's patched kernel</a>.
+Earlier kernels require <a rel="nofollow" class="external text" href="https://hansdegoede.livejournal.com/17445.html">Hans de Goede's patched kernel</a>.
 </p>
-<h4>
+<h3>
 <span id="Suspend.2Fresume.2Fwaking_up_when_opening_the_lid"></span><span class="mw-headline" id="Suspend/resume/waking_up_when_opening_the_lid">Suspend/resume/waking up when opening the lid</span>
-</h4>
+</h3>
 <p>Works out of the box since kernel 4.14.
-Earlier kernels require <a rel="nofollow" class="external text" href="http://hansdegoede.livejournal.com/17445.html">Hans de Goede's patched kernel</a>.
+Earlier kernels require <a rel="nofollow" class="external text" href="https://hansdegoede.livejournal.com/17445.html">Hans de Goede's patched kernel</a>.
 </p>
 <h2><span class="mw-headline" id="Installation_guide">Installation guide</span></h2>
-<h4><span class="mw-headline" id="Boot_the_installer">Boot the installer</span></h4>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="../en/Installation_guide.html" title="Installation guide">Installation guide</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Notes:</b> This is partially duplicating the installation guide. Everything that is not device-specific should be removed (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:GPD_Win">Talk:GPD Win#</a>)</div>
+</div>
+<h3><span class="mw-headline" id="Boot_the_installer">Boot the installer</span></h3>
 <p>Reboot holding either <b>"Del"</b> or <b>"Esc"</b> to enter BIOS. From the BIOS screen, either change the boot options to prioritize your usb drive or boot from it once.
 </p>
 <p>On the Arch Linux boot option screen, with the first option highlighted, click <b>"e"</b> to edit boot options and add <b>"fbcon=rotate:1"</b> for screen to be rotated correctly.
 </p>
-<h4><span class="mw-headline" id="Formating_and_mounting_partitions_for_dual_booting_with_Windows_10">Formating and mounting partitions for dual booting with Windows 10</span></h4>
+<h3><span class="mw-headline" id="Formating_and_mounting_partitions_for_dual_booting_with_Windows_10">Formating and mounting partitions for dual booting with Windows 10</span></h3>
 <p>Use "Disk Management" in Windows or similar tools to shrink the Windows 10 partition and use the space to create a new partition for Arch Linux.
 </p>
 <p>Run lsblk to list partitions and note the numbers for the following partitions:
@@ -198,7 +207,7 @@ mount /dev/mmcblk0p<b>Z</b> /mnt
 <pre>mkdir /mnt/boot
 mount /dev/mmcblk0p<b>X</b> /mnt/boot
 </pre>
-<h4><span class="mw-headline" id="Install_Arch_Linux">Install Arch Linux</span></h4>
+<h3><span class="mw-headline" id="Install_Arch_Linux">Install Arch Linux</span></h3>
 <p>Install base system
 </p>
 <pre>pacstrap -i /mnt base base-devel
@@ -209,7 +218,7 @@ mount /dev/mmcblk0p<b>X</b> /mnt/boot
 </pre>
 <p>Continue by following <a href="../en/Installation_guide.html#Configure_the_system" title="Installation guide">the regular install guide</a> until bootloader step, then continue below.
 </p>
-<h4><span class="mw-headline" id="Install_bootloader">Install bootloader</span></h4>
+<h3><span class="mw-headline" id="Install_bootloader">Install bootloader</span></h3>
 <p>Install bootloader
 </p>
 <pre>bootctl install
@@ -232,7 +241,11 @@ options fbcon=rotate:1 root=/dev/mmcblk0p<b>Z</b> rw
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:GPD.html" title="Category:GPD">GPD</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -240,8 +253,8 @@ options fbcon=rotate:1 root=/dev/mmcblk0p<b>Z</b> rw
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GPD_Win&amp;oldid=649245">https://wiki.archlinux.org/index.php?title=GPD_Win&amp;oldid=649245</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 19 January 2021, at 08:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GPD_Win&amp;oldid=661217">https://wiki.archlinux.org/index.php?title=GPD_Win&amp;oldid=661217</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 13:31.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

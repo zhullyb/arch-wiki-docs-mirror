@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -118,12 +119,20 @@ visualizer_look = "+|"
 </pre>
 <ul>
 <li>
-<b>visualizer_sync_interval</b>  - Set the interval for synchronizing the visualizer with the audio output from <i>mpd</i>. It should be set to greater than 10 to avoid trying to synchronize too frequently, which freezes the visualization. The recommended value is 30, but it can be reduced if the audio becomes desynced with the visualization.</li>
-<li>
 <b>visualizer_type</b> - Set the visualization to either a <code>spectrum</code>/<code>ellipse</code>/<code>wave_filled</code> analyzer or <code>wave</code> form.</li>
 <li>
 <b>visualizer_look</b> - Set the visualizer's look (string has to be exactly 2 characters long: first one is for wave and whereas second for frequency spectrum, wave_filled and ellipse).</li>
 </ul>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> If you experience synchronization issues, change the <code>buffer_time</code> in your <code>mpd</code> configuration to <a rel="nofollow" class="external text" href="https://github.com/ncmpcpp/ncmpcpp/blob/master/doc/config">100000 or less</a>.</div>
+<p>If you use <a rel="nofollow" class="external text" href="https://docs.mopidy.com/en/latest/installation/arch/">mopidy</a>, visualization is handled via <a rel="nofollow" class="external text" href="https://github.com/ncmpcpp/ncmpcpp/commit/fb886f687014e22b2fe1477da855be5201063ea8">gstreamer's udpsink</a>. Edit the <code>output</code> in the <code>[audio]</code> block of your <code>mopidy.conf</code>:
+</p>
+<pre>output = tee name=t ! queue ! autoaudiosink t. ! queue ! audio/x-raw,rate=44100,channels=2,format=S16LE ! udpsink host=localhost port=5555
+</pre>
+<p>This forwards the audio data to port <code>5555</code>. For <code>ncmpcpp</code> to read from this port, change its <code>visualizer_data_source</code> accordingly:
+</p>
+<pre>visualizer_data_source = "localhost:5555"
+</pre>
 <h2><span class="mw-headline" id="Basic_usage">Basic usage</span></h2>
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a><b>This section is being considered for removal.</b><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a></p>
@@ -269,8 +278,8 @@ If you choose <code>Get Tags From Filename</code>, a popup with two windows is s
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Ncmpcpp&amp;oldid=648845">https://wiki.archlinux.org/index.php?title=Ncmpcpp&amp;oldid=648845</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 January 2021, at 09:05.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Ncmpcpp&amp;oldid=657056">https://wiki.archlinux.org/index.php?title=Ncmpcpp&amp;oldid=657056</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 31 March 2021, at 19:42.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

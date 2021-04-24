@@ -557,22 +557,12 @@ card 2: Audio [Altec Lansing XT1 - USB Audio], device 0: USB Audio [USB Audio]
   Subdevices: 1/1
   Subdevice #0: subdevice #0
 </pre>
-<div class="archwiki-template-box archwiki-template-box-warning">
-<strong>警告：</strong> Simply setting a <code>type hw</code> as default card is equivalent to addressing hardware directly, which leaves the device unavailable to other applications. This method is only recommended if it is a part of a more sophisticated setup <code>~/.asoundrc</code> or if user deliberately wants to address sound card directly (digital output through <code>eic958</code> or dedicated music server for example).</div>
 <p>拿输出中的最后一项来说，这个声卡的声卡ID为2，设备ID为0。若要把这块声卡作为默认声卡，可以把下列配置添加到系统级别的 <code>/etc/asound.conf</code> 或用户级别的 <code>~/.asoundrc</code> 文件。如果文件不存在，可以手动创建。其中的各个ID，请根据实际情况调整：
 </p>
-<pre>pcm.!default {
-	type hw
-	card 2
-}
-
-ctl.!default {
-	type hw           
-	card 2
-}
+<pre>defaults.pcm.card 2
+defaults.ctl.card 2
+defaults.pcm.device 0
 </pre>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> For the Asus U32U serie it seems that card should be set to 1 for both pcm and ctl.</div>
 <p>在大部分情况下，推荐您使用声卡名来代替数字形式的参考名，同时这也能够解决启动顺序的问题。因此下面所示配置对上面所示的示例通常是正确的。
 </p>
 <pre>pcm.!default {
@@ -893,10 +883,8 @@ pcm.!surround40 {
     slave.pcm "default"
 }
 </pre>
-<p><br>
-</p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> 如果这不能让 缩混 工作，请参见 <a rel="nofollow" class="external autonumber" href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=541786">[1]</a> 。所以，你也许需要添加 <code>pcm.!default "plug:surround51"</code> 或是 <code>pcm.!default "plug:surround40"</code>。只有一个 <code>vdownmix</code> 插件能够使用；如果你有7.1声道音响，你需要使用 <code>surround71</code> 来代替上面所述的配置文件。一个让 <code>vdownmix</code> 和 <code>dmix</code> 同时工作的配置文件的示例可以在 <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=167275">这里</a> 找到。</div>
+<strong>Note:</strong> 如果这不能让 缩混 工作，请参见 <a rel="nofollow" class="external autonumber" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=541786">[1]</a> 。所以，你也许需要添加 <code>pcm.!default "plug:surround51"</code> 或是 <code>pcm.!default "plug:surround40"</code>。只有一个 <code>vdownmix</code> 插件能够使用；如果你有7.1声道音响，你需要使用 <code>surround71</code> 来代替上面所述的配置文件。一个让 <code>vdownmix</code> 和 <code>dmix</code> 同时工作的配置文件的示例可以在 <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=167275">这里</a> 找到。</div>
 <h2>
 <span id=".E6.B7.B7.E9.9F.B3"></span><span class="mw-headline" id="混音">混音</span>
 </h2>
@@ -919,8 +907,6 @@ pcm.!surround40 {
 <p>至于 S/PDIF 之类的数字音频输出，目前的 ALSA 还不会默认启用 dmix。因此，必须像上面这样手动启用。
 </p>
 <p>常见问题的解答，参见<a href="#%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94">#疑难解答</a>部分。
-</p>
-<p><br>
 </p>
 <h2>
 <span id=".E6.8F.90.E7.A4.BA.E5.92.8C.E6.8A.80.E5.B7.A7"></span><span class="mw-headline" id="提示和技巧">提示和技巧</span>
@@ -1226,8 +1212,9 @@ pcm.!default
 <h3>
 <span id=".E6.B6.88.E9.99.A4.E8.80.B3.E6.9C.BA.E7.94.B5.E6.B5.81.E5.A3.B0.E7.9A.84.E6.96.B9.E6.B3.95"></span><span class="mw-headline" id="消除耳机电流声的方法">消除耳机电流声的方法</span>
 </h3>
-<pre>1.终端输入alsamixer回车-输入密码后进入alsa高级控制面板
-2.按F5,显示所有音轨,左右键移动音轨,上下键调节音量,将其中的Internal选项的音量设置为00
+<p>1.终端输入alsamixer回车-输入密码后进入alsa高级控制面板
+</p>
+<pre>2.按F5,显示所有音轨,左右键移动音轨,上下键调节音量,将其中的Internal选项的音量设置为00
 </pre>
 <h3>
 <span id=".E5.AE.89.E8.A3.85.E6.94.AF.E6.8C.81_S.2FPDIF_.E8.BE.93.E5.87.BA.E7.9A.84.E6.98.BE.E5.8D.A1.E5.90.8E.E6.97.A0.E5.A3.B0"></span><span class="mw-headline" id="安装支持_S/PDIF_输出的显卡后无声">安装支持 S/PDIF 输出的显卡后无声</span>
@@ -1363,7 +1350,7 @@ install snd_hda_intel /bin/false
 <p>如果 aplay 没有给出错误信息，但还是听不到声音，请尝试重启通过HDMI链接的播放设备（显示器或电视）。HDMI接口会在链接时执行一次握手，有可能因为当时没有检测到音频流而禁用了音频解码。特别是，如果使用了独立的窗口管理器（不太清楚 Gnome 和 KDE 的情况），可能就必须一边播放音乐、一边链接HDMI线。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> 如果你正在使用AMD显卡和3.0版Linux内核，就需要修改启动引导程序（Grub）的内核参数 <code>radeon.audio=1</code>，或在 modprobe 的配置文件中添加相关参数。进行上述操作前，请阅读 <a rel="nofollow" class="external text" href="http://www.x.org/wiki/RadeonFeature#fndef-72849d6d6eb3927d486f50ece74a739042965a6c-25">Radeon Feature Matrix</a>，看看你的显卡是否已经被支持。<a rel="nofollow" class="external text" href="http://www.x.org/wiki/RadeonFeature#Decoder_ring_for_engineering_vs_marketing_names">S. Islands</a> 中列举的一些显卡（从HD7750到HD7970）尚不支持 HDMI 音频输出。</div>
+<strong>注意：</strong> 如果你正在使用AMD显卡和3.0版Linux内核，就需要修改启动引导程序（Grub）的内核参数 <code>radeon.audio=1</code>，或在 modprobe 的配置文件中添加相关参数。进行上述操作前，请阅读 <a rel="nofollow" class="external text" href="https://www.x.org/wiki/RadeonFeature#fndef-72849d6d6eb3927d486f50ece74a739042965a6c-25">Radeon Feature Matrix</a>，看看你的显卡是否已经被支持。<a rel="nofollow" class="external text" href="https://www.x.org/wiki/RadeonFeature#Decoder_ring_for_engineering_vs_marketing_names">S. Islands</a> 中列举的一些显卡（从HD7750到HD7970）尚不支持 HDMI 音频输出。</div>
 <p>若测试成功，接下来编辑或创建 <code>~/.asoundrc</code>，把 HDMI 设置为默认音频设备。
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.asoundrc</pre>
@@ -1568,8 +1555,8 @@ rm "_tmp.wav";
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=653904">https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture_(简体中文)&amp;oldid=653904</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 3 March 2021, at 13:22.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=660302">https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture_(简体中文)&amp;oldid=660302</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 21:32.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

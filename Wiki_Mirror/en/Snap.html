@@ -153,56 +153,55 @@ Once that is done you should find it in the list of installed snaps together wit
 </p>
 <p>To verify that basic confinement is working, install <i>hello-world</i> snap. Then run the following:
 </p>
-<pre> $ hello-world.evil
- Hello Evil World!
- This example demonstrates the app confinement
- You should see a permission denied error next
- /snap/hello-world/27/bin/evil: 9: /snap/hello-world/27/bin/evil: cannot create /var/tmp/myevil.txt: Permission denied
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ hello-world.evil</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Hello Evil World!
+This example demonstrates the app confinement
+You should see a permission denied error next
+/snap/hello-world/27/bin/evil: 9: /snap/hello-world/27/bin/evil: cannot create /var/tmp/myevil.txt: Permission denied
 </pre>
 <p>The denial was caused by AppArmor and should have been logged:
 </p>
-<pre> $ dmesg
- ...
- [  +0.000003] audit: type=1327 audit(1540469583.966:257): proctitle=2F62696E2F7368002F736E61702F68656C6C6F2D776F726C642F32372F62696E2F6576696C
- [ +12.268939] audit: type=1400 audit(1540469596.236:258): apparmor="DENIED" operation="open" profile="snap.hello-world.evil" name="/var/tmp/myevil.txt" pid=10835 comm="evil" requested_mask="wc" denied_mask="wc" fsuid=1000 ouid=1000
- [  +0.000006] audit: type=1300 audit(1540469596.236:258): arch=c000003e syscall=2 success=no exit=-13 a0=55d991ba6bc8 a1=241 a2=1b6 a3=55d991ba6be0 items=0 ppid=31349 pid=10835 auid=1000 uid=1000 gid=1000 euid=1000 suid=1000 fsuid=1000 egid=1000 sgid=1000 fsgid=1000 tty=pts2 ses=3 comm="evil" exe="/bin/dash" subj==snap.hello-world.evil (enforce)
- ...
-</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
+[  +0.000003] audit: type=1327 audit(1540469583.966:257): proctitle=2F62696E2F7368002F736E61702F68656C6C6F2D776F726C642F32372F62696E2F6576696C
+[ +12.268939] audit: type=1400 audit(1540469596.236:258): apparmor="DENIED" operation="open" profile="snap.hello-world.evil" name="/var/tmp/myevil.txt" pid=10835 comm="evil" requested_mask="wc" denied_mask="wc" fsuid=1000 ouid=1000
+[  +0.000006] audit: type=1300 audit(1540469596.236:258): arch=c000003e syscall=2 success=no exit=-13 a0=55d991ba6bc8 a1=241 a2=1b6 a3=55d991ba6be0 items=0 ppid=31349 pid=10835 auid=1000 uid=1000 gid=1000 euid=1000 suid=1000 fsuid=1000 egid=1000 sgid=1000 fsgid=1000 tty=pts2 ses=3 comm="evil" exe="/bin/dash" subj==snap.hello-world.evil (enforce)
+...</pre>
 <p>If you do not see the denial, verify that the profiles were loaded:
 </p>
-<pre>  # aa-status |grep snap.hello-world
-    snap.hello-world.env
-    snap.hello-world.evil
-    snap.hello-world.hello-world
-    snap.hello-world.sh
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># aa-status | grep snap.hello-world</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">   snap.hello-world.env
+   snap.hello-world.evil
+   snap.hello-world.hello-world
+   snap.hello-world.sh
 </pre>
 <p>Also, you can check what sandbox features are available in the system according to snapd:
 </p>
-<pre> $ snap debug sandbox-features
- apparmor:             kernel:caps kernel:domain kernel:file kernel:mount kernel:namespaces kernel:network_v8 kernel:policy kernel:ptrace kernel:query kernel:rlimit kernel:signal parser:unsafe policy:default support-level:partial
- confinement-options:  devmode
- dbus:                 mediated-bus-access
- kmod:                 mediated-modprobe
- mount:                freezer-cgroup-v1 layouts mount-namespace per-snap-persistency per-snap-profiles per-snap-updates per-snap-user-profiles stale-base-invalidation
- seccomp:              bpf-argument-filtering kernel:allow kernel:errno kernel:kill_process kernel:kill_thread kernel:log kernel:trace kernel:trap
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ snap debug sandbox-features</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">apparmor:             kernel:caps kernel:domain kernel:file kernel:mount kernel:namespaces kernel:network_v8 kernel:policy kernel:ptrace kernel:query kernel:rlimit kernel:signal parser:unsafe policy:default support-level:partial
+confinement-options:  devmode
+dbus:                 mediated-bus-access
+kmod:                 mediated-modprobe
+mount:                freezer-cgroup-v1 layouts mount-namespace per-snap-persistency per-snap-profiles per-snap-updates per-snap-user-profiles stale-base-invalidation
+seccomp:              bpf-argument-filtering kernel:allow kernel:errno kernel:kill_process kernel:kill_thread kernel:log kernel:trace kernel:trap
 </pre>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Text_unreadable">Text unreadable</span></h3>
 <p>If you are seeing squares instead of readable characters, you need to clear the font cache:
 </p>
-<pre> $ sudo rm -f /var/cache/fontconfig/*
- $ rm -f ~/.cache/fontconfig/*
- $ sudo fc-cache -r -v
+<pre># rm -f /var/cache/fontconfig/*
+$ rm -f ~/.cache/fontconfig/*
+# fc-cache -r -v
 </pre>
 <p>Snapctl also stores internal caches for each individual snap, which need to be <a rel="nofollow" class="external text" href="https://askubuntu.com/a/1228809">cleared seperately</a>.
 First, find them by running:
 </p>
-<pre> $ find ~/snap/ -wholename '*/.cache/fontconfig'
- ... /home/darth_vader/snap/mailspring/common/.cache/fontconfig
- ... /home/darth_vader/snap/authy/common/.cache/fontconfig
- ... /home/darth_vader/snap/icedrive/common/.cache/fontconfig
- ... /home/darth_vader/snap/discord/common/.cache/fontconfig
- ... /home/darth_vader/snap/bitwarden/common/.cache/fontconfig
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ find ~/snap/ -wholename '*/.cache/fontconfig'</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">... /home/darth_vader/snap/mailspring/common/.cache/fontconfig
+... /home/darth_vader/snap/authy/common/.cache/fontconfig
+... /home/darth_vader/snap/icedrive/common/.cache/fontconfig
+... /home/darth_vader/snap/discord/common/.cache/fontconfig
+... /home/darth_vader/snap/bitwarden/common/.cache/fontconfig
 </pre>
 <p>Then either remove them individually or use <a rel="nofollow" class="external text" href="https://gist.github.com/Techcable/a9382ad83f1b651a0e9c25e9c6f26f88">this simple loop</a>.
 </p>
@@ -219,7 +218,7 @@ First, find them by running:
 <li><a rel="nofollow" class="external text" href="https://snapcraft.io/">Official site</a></li>
 <li><a rel="nofollow" class="external text" href="https://github.com/snapcore/snapd">GitHub repository</a></li>
 <li>
-<a rel="nofollow" class="external text" href="http://arstechnica.com/information-technology/2016/06/goodbye-apt-and-yum-ubuntus-snap-apps-are-coming-to-distros-everywhere/">arstechnica article</a> (06/16) about Ubuntu snaps becoming available for Arch and other distros</li>
+<a rel="nofollow" class="external text" href="https://arstechnica.com/information-technology/2016/06/goodbye-apt-and-yum-ubuntus-snap-apps-are-coming-to-distros-everywhere/">arstechnica article</a> (06/16) about Ubuntu snaps becoming available for Arch and other distros</li>
 </ul>
 </div>
 </div>
@@ -231,8 +230,8 @@ First, find them by running:
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Snap&amp;oldid=654886">https://wiki.archlinux.org/index.php?title=Snap&amp;oldid=654886</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 March 2021, at 15:06.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Snap&amp;oldid=663272">https://wiki.archlinux.org/index.php?title=Snap&amp;oldid=663272</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 07:53.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

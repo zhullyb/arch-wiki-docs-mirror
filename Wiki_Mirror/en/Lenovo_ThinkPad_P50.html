@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,6 +33,11 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Stub (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Lenovo_ThinkPad_P50">Talk:Lenovo ThinkPad P50#</a>)</div>
+</div>
 <p>The Lenovo P50 is a quad core Intel Skylake Laptop.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -60,7 +66,7 @@
 <li class="toclevel-2 tocsection-12"><a href="#Fingerprint_Validity_Sensor_not_working"><span class="tocnumber">3.8</span> <span class="toctext">Fingerprint Validity Sensor not working</span></a></li>
 <li class="toclevel-2 tocsection-13"><a href="#Headsets_not_working_with_pulseaudio"><span class="tocnumber">3.9</span> <span class="toctext">Headsets not working with pulseaudio</span></a></li>
 <li class="toclevel-2 tocsection-14"><a href="#Wifi_failing_to_come_up_(Intel_8260)"><span class="tocnumber">3.10</span> <span class="toctext">Wifi failing to come up (Intel 8260)</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#External_monitor_can't_be_detected_on_Hybrid_Graphics"><span class="tocnumber">3.11</span> <span class="toctext">External monitor can't be detected on Hybrid Graphics</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#External_monitor_can't_be_detected_on_Hybrid_Graphics_in_X11"><span class="tocnumber">3.11</span> <span class="toctext">External monitor can't be detected on Hybrid Graphics in X11</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-16"><a href="#lspci"><span class="tocnumber">4</span> <span class="toctext">lspci</span></a></li>
@@ -87,8 +93,10 @@
 <h3>
 <span id="Sluggish_graphics_performance_with_HD_Graphics_530_.28Skylake_GT2.29"></span><span class="mw-headline" id="Sluggish_graphics_performance_with_HD_Graphics_530_(Skylake_GT2)">Sluggish graphics performance with HD Graphics 530 (Skylake GT2)</span>
 </h3>
-<p>When running with the native 4K resolution, performance can appear sluggish.
+<p>When running on a 4K monitor using only the embedded Intel graphics, graphics performance may feel sluggish. 
+This is true for both the built-in monitor (if yours is equipped with a 4K monitor), or an external 4K monitor.
 This might be improved in the UEFI BIOS by increasing the amount of RAM the Intel graphics adapter should take from the DRAM from 256MB to the maximum 512MB.
+<i>If battery life is not of primary concern, enabling the Nvidia GPU provides a much smoother experience.</i>
 </p>
 <h3><span class="mw-headline" id="High_CPU_chromium_bug">High CPU chromium bug</span></h3>
 <p>Chromium takes too long to even display the "new tab" page with the small previews and uses 100% CPU on all cores for several seconds if 5-6 new tabs get open simultaneously when using the Intel Graphics.
@@ -151,9 +159,10 @@ An official driver hasn't been released yet, discussion about this can be follow
 <p>At the time of this note, the available iwlwifi-8000C-XX.ucode files include version 13, 16, 21 and 22. 22 seems to be the culprit here. 21 and 16 both worked for me. I left all files in place and moved firmware v. 22 to /root/lib/firmware for safe keeping. A reboot (or modprobe -r iwlwifi / modprobe iwlwifi) and the card was working.
 </p>
 <h3>
-<span id="External_monitor_can.27t_be_detected_on_Hybrid_Graphics"></span><span class="mw-headline" id="External_monitor_can't_be_detected_on_Hybrid_Graphics">External monitor can't be detected on Hybrid Graphics</span>
+<span id="External_monitor_can.27t_be_detected_on_Hybrid_Graphics_in_X11"></span><span class="mw-headline" id="External_monitor_can't_be_detected_on_Hybrid_Graphics_in_X11">External monitor can't be detected on Hybrid Graphics in X11</span>
 </h3>
-<p>This <a href="../en/Bumblebee.html#Output_wired_to_the_NVIDIA_chip" title="Bumblebee">guide</a> works, if you want to use nvidia driver. If you are using nouveau driver look at <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=221358">this</a> thread. 
+<p>This <a href="../en/Bumblebee.html#Output_wired_to_the_NVIDIA_chip" title="Bumblebee">guide</a> works, if you want to use nvidia driver. If you are using nouveau driver look at <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=221358">this</a> thread.
+<a href="../en/Wayland.html" title="Wayland">Wayland</a>-based compositors such as <a href="../en/Sway.html" title="Sway">Sway</a> do not appear to exhibit this problem, and work well using either <a href="../en/Nouveau.html" title="Nouveau">nouveau</a> (Nvidia) or embedded Intel graphics.
 </p>
 <h2><span class="mw-headline" id="lspci">lspci</span></h2>
 <p><code>lspci</code> returns this on P50 model 20EN:
@@ -191,16 +200,20 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 </pre>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Lenovo.html" title="Category:Lenovo">Lenovo</a></li></ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_P50&amp;oldid=625358">https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_P50&amp;oldid=625358</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 July 2020, at 14:00.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_P50&amp;oldid=656998">https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_P50&amp;oldid=656998</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 31 March 2021, at 13:27.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

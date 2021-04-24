@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,12 +36,12 @@
 <p><span></span>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/Systemd-nspawn.html" title="Systemd-nspawn">Systemd-nspawn</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2019-09-23。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd-nspawn&amp;diff=0&amp;oldid=576931">更改</a>，则您可以帮助同步翻译。</div>
+<strong>翻译状态：</strong>本文是 <a href="../en/Systemd-nspawn.html" title="Systemd-nspawn">Systemd-nspawn</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-04-08。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd-nspawn&amp;diff=0&amp;oldid=576931">更改</a>，则您可以帮助同步翻译。</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
 <li><a href="../en/Linux_Containers.html" title="Linux Containers">Linux Containers</a></li>
-<li><a href="../en/Linux_Containers.html#Systemd_considerations_.28required.29" class="mw-redirect" title="Lxc-systemd">Lxc-systemd</a></li>
+<li><a href="../en/ArchWiki:Archive.html" class="mw-redirect" title="Lxc-systemd">Lxc-systemd</a></li>
 <li><a href="../zh-CN/Systemd.html" title="Systemd (简体中文)">systemd (简体中文)</a></li>
 <li><a href="../zh-CN/Systemd-networkd.html" title="Systemd-networkd (简体中文)">systemd-networkd (简体中文)</a></li>
 <li><a href="../zh-CN/Docker.html" title="Docker (简体中文)">Docker (简体中文)</a></li>
@@ -52,7 +53,7 @@
 </p>
 <p><i>systemd-nspawn</i> 将容器中各种内核接口的访问限制为只读，像是 <code>/sys</code>, <code>/proc/sys</code> 和 <code>/sys/fs/selinux</code>。 网络接口和系统时钟或许不能从容器内更改，不能创建设备节点。主机系统也无法重新启动，并且可能无法从容器内加载内核模块。
 </p>
-<p>这种机制不同于 <a href="../en/Linux_Containers.html#Systemd_considerations_.28required.29" class="mw-redirect" title="Lxc-systemd">Lxc-systemd</a> 或 <a href="../en/Libvirt.html" title="Libvirt">Libvirt</a>-lxc，它是一种更容易去配置的工具。
+<p>这种机制不同于 <a href="../en/ArchWiki:Archive.html" class="mw-redirect" title="Lxc-systemd">Lxc-systemd</a> 或 <a href="../en/Libvirt.html" title="Libvirt">Libvirt</a>-lxc，它是一种更容易配置的工具。
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -66,58 +67,66 @@
 <ul>
 <li class="toclevel-2 tocsection-3"><a href="#%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%92%8C%E5%90%AF%E5%8A%A8%E6%9C%80%E5%B0%8F_Arch_Linux_%E5%8F%91%E8%A1%8C%E7%89%88"><span class="tocnumber">2.1</span> <span class="toctext">在容器中创建和启动最小 Arch Linux 发行版</span></a></li>
 <li class="toclevel-2 tocsection-4"><a href="#%E5%88%9B%E5%BB%BA_Debian_%E6%88%96_Ubuntu_%E7%8E%AF%E5%A2%83"><span class="tocnumber">2.2</span> <span class="toctext">创建 Debian 或 Ubuntu 环境</span></a></li>
-<li class="toclevel-2 tocsection-5"><a href="#%E5%88%9B%E5%BB%BA%E4%B8%93%E6%9C%89%E7%94%A8%E6%88%B7%EF%BC%88%E6%97%A0%E7%89%B9%E6%9D%83%E5%AE%B9%E5%99%A8%EF%BC%89"><span class="tocnumber">2.3</span> <span class="toctext">创建专有用户（无特权容器）</span></a></li>
-<li class="toclevel-2 tocsection-6"><a href="#%E5%9C%A8%E5%90%AF%E5%8A%A8%E6%97%B6%E5%90%AF%E7%94%A8%E5%AE%B9%E5%99%A8"><span class="tocnumber">2.4</span> <span class="toctext">在启动时启用容器</span></a></li>
-<li class="toclevel-2 tocsection-7"><a href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E6%B5%8B%E8%AF%95%E5%8C%85"><span class="tocnumber">2.5</span> <span class="toctext">编译与测试包</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E6%B5%8B%E8%AF%95%E5%8C%85"><span class="tocnumber">2.3</span> <span class="toctext">编译与测试包</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-8">
+<li class="toclevel-1 tocsection-6">
 <a href="#%E7%AE%A1%E7%90%86"><span class="tocnumber">3</span> <span class="toctext">管理</span></a>
 <ul>
-<li class="toclevel-2 tocsection-9"><a href="#machinectl"><span class="tocnumber">3.1</span> <span class="toctext">machinectl</span></a></li>
-<li class="toclevel-2 tocsection-10"><a href="#systemd_%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="tocnumber">3.2</span> <span class="toctext">systemd 工具链</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#%E8%B5%84%E6%BA%90%E6%8E%A7%E5%88%B6"><span class="tocnumber">3.3</span> <span class="toctext">资源控制</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#%E9%BB%98%E8%AE%A4_systemd-nspawn_%E9%80%89%E9%A1%B9"><span class="tocnumber">3.1</span> <span class="toctext">默认 systemd-nspawn 选项</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#machinectl"><span class="tocnumber">3.2</span> <span class="toctext">machinectl</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#systemd_%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="tocnumber">3.3</span> <span class="toctext">systemd 工具链</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-12">
-<a href="#%E6%8F%90%E7%A4%BA%E5%92%8C%E6%8A%80%E5%B7%A7"><span class="tocnumber">4</span> <span class="toctext">提示和技巧</span></a>
+<li class="toclevel-1 tocsection-10">
+<a href="#%E9%85%8D%E7%BD%AE"><span class="tocnumber">4</span> <span class="toctext">配置</span></a>
 <ul>
-<li class="toclevel-2 tocsection-13">
-<a href="#%E4%BD%BF%E7%94%A8_X_%E7%8E%AF%E5%A2%83"><span class="tocnumber">4.1</span> <span class="toctext">使用 X 环境</span></a>
+<li class="toclevel-2 tocsection-11"><a href="#%E5%AE%B9%E5%99%A8%E5%89%8D%E8%AE%BE%E7%BD%AE"><span class="tocnumber">4.1</span> <span class="toctext">容器前设置</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#%E5%90%AF%E7%94%A8%E5%AE%B9%E5%99%A8%E7%9A%84%E9%9A%8F%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="tocnumber">4.2</span> <span class="toctext">启用容器的随开机启动</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#%E8%B5%84%E6%BA%90%E6%8E%A7%E5%88%B6"><span class="tocnumber">4.3</span> <span class="toctext">资源控制</span></a></li>
+<li class="toclevel-2 tocsection-14">
+<a href="#%E7%BD%91%E7%BB%9C"><span class="tocnumber">4.4</span> <span class="toctext">网络</span></a>
 <ul>
-<li class="toclevel-3 tocsection-14"><a href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8_xhost"><span class="tocnumber">4.1.1</span> <span class="toctext">避免使用 xhost</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#%E4%BD%BF%E7%94%A8%E4%B8%BB%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="tocnumber">4.4.1</span> <span class="toctext">使用主机网络</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#%E4%BD%BF%E7%94%A8%E8%99%9A%E6%8B%9F%E4%BB%A5%E5%A4%AA%E7%BD%91%E9%93%BE%E6%8E%A5"><span class="tocnumber">4.4.2</span> <span class="toctext">使用虚拟以太网链接</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#%E4%BD%BF%E7%94%A8%E7%BD%91%E7%BB%9C%E6%A1%A5%E6%8E%A5"><span class="tocnumber">4.4.3</span> <span class="toctext">使用网络桥接</span></a></li>
+<li class="toclevel-3 tocsection-18"><a href="#%E4%BD%BF%E7%94%A8_%22macvlan%22_%E6%88%96%E8%80%85_%22ipvlan%22_%E6%8E%A5%E5%8F%A3"><span class="tocnumber">4.4.4</span> <span class="toctext">使用 "macvlan" 或者 "ipvlan" 接口</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="#%E4%BD%BF%E7%94%A8%E7%8E%B0%E6%9C%89%E6%8E%A5%E5%8F%A3"><span class="tocnumber">4.4.5</span> <span class="toctext">使用现有接口</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-15"><a href="#%E8%BF%90%E8%A1%8C_Firefox"><span class="tocnumber">4.2</span> <span class="toctext">运行 Firefox</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#%E8%AE%BF%E9%97%AE%E4%B8%BB%E6%9C%BA%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="tocnumber">4.3</span> <span class="toctext">访问主机文件系统</span></a></li>
-<li class="toclevel-2 tocsection-17">
-<a href="#%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C"><span class="tocnumber">4.4</span> <span class="toctext">配置网络</span></a>
+<li class="toclevel-2 tocsection-20"><a href="#%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="tocnumber">4.5</span> <span class="toctext">端口映射</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="tocnumber">4.6</span> <span class="toctext">域名解析</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-22">
+<a href="#%E6%8F%90%E7%A4%BA%E5%92%8C%E6%8A%80%E5%B7%A7"><span class="tocnumber">5</span> <span class="toctext">提示和技巧</span></a>
 <ul>
-<li class="toclevel-3 tocsection-18"><a href="#nsswitch.conf"><span class="tocnumber">4.4.1</span> <span class="toctext">nsswitch.conf</span></a></li>
-<li class="toclevel-3 tocsection-19"><a href="#%E4%BD%BF%E7%94%A8%E4%B8%BB%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="tocnumber">4.4.2</span> <span class="toctext">使用主机网络</span></a></li>
-<li class="toclevel-3 tocsection-20"><a href="#%E8%99%9A%E6%8B%9F%E4%BB%A5%E5%A4%AA%E7%BD%91%E6%8E%A5%E5%8F%A3"><span class="tocnumber">4.4.3</span> <span class="toctext">虚拟以太网接口</span></a></li>
-<li class="toclevel-3 tocsection-21"><a href="#%E4%BD%BF%E7%94%A8%E7%BD%91%E7%BB%9C%E6%A1%A5%E6%8E%A5"><span class="tocnumber">4.4.4</span> <span class="toctext">使用网络桥接</span></a></li>
-<li class="toclevel-3 tocsection-22"><a href="#%E4%BD%BF%E7%94%A8_macvlan_%E9%80%89%E9%A1%B9"><span class="tocnumber">4.4.5</span> <span class="toctext">使用 macvlan 选项</span></a></li>
-</ul>
-</li>
-<li class="toclevel-2 tocsection-23"><a href="#Run_on_a_non-systemd_system"><span class="tocnumber">4.5</span> <span class="toctext">Run on a non-systemd system</span></a></li>
-<li class="toclevel-2 tocsection-24"><a href="#Specify_per-container_settings"><span class="tocnumber">4.6</span> <span class="toctext">Specify per-container settings</span></a></li>
-<li class="toclevel-2 tocsection-25"><a href="#Use_Btrfs_subvolume_as_container_root"><span class="tocnumber">4.7</span> <span class="toctext">Use Btrfs subvolume as container root</span></a></li>
-<li class="toclevel-2 tocsection-26"><a href="#Use_temporary_Btrfs_snapshot_of_container"><span class="tocnumber">4.8</span> <span class="toctext">Use temporary Btrfs snapshot of container</span></a></li>
-<li class="toclevel-2 tocsection-27"><a href="#Run_docker_in_systemd-nspawn"><span class="tocnumber">4.9</span> <span class="toctext">Run docker in systemd-nspawn</span></a></li>
-</ul>
-</li>
-<li class="toclevel-1 tocsection-28">
-<a href="#Troubleshooting"><span class="tocnumber">5</span> <span class="toctext">Troubleshooting</span></a>
+<li class="toclevel-2 tocsection-23"><a href="#%E6%97%A0%E7%89%B9%E6%9D%83%E5%AE%B9%E5%99%A8"><span class="tocnumber">5.1</span> <span class="toctext">无特权容器</span></a></li>
+<li class="toclevel-2 tocsection-24">
+<a href="#%E4%BD%BF%E7%94%A8_X_%E7%8E%AF%E5%A2%83"><span class="tocnumber">5.2</span> <span class="toctext">使用 X 环境</span></a>
 <ul>
-<li class="toclevel-2 tocsection-29"><a href="#Root_login_fails"><span class="tocnumber">5.1</span> <span class="toctext">Root login fails</span></a></li>
-<li class="toclevel-2 tocsection-30"><a href="#Unable_to_upgrade_some_packages_on_the_container"><span class="tocnumber">5.2</span> <span class="toctext">Unable to upgrade some packages on the container</span></a></li>
-<li class="toclevel-2 tocsection-31"><a href="#execv(...)_failed:_Permission_denied"><span class="tocnumber">5.3</span> <span class="toctext">execv(...) failed: Permission denied</span></a></li>
-<li class="toclevel-2 tocsection-32"><a href="#Reboot_not_working"><span class="tocnumber">5.4</span> <span class="toctext">Reboot not working</span></a></li>
-<li class="toclevel-2 tocsection-33"><a href="#Mounting_a_NFS_share_inside_the_container"><span class="tocnumber">5.5</span> <span class="toctext">Mounting a NFS share inside the container</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#Avoiding_xhost"><span class="tocnumber">5.2.1</span> <span class="toctext">Avoiding xhost</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-34"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#%E8%BF%90%E8%A1%8C_Firefox"><span class="tocnumber">5.3</span> <span class="toctext">运行 Firefox</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#%E8%AE%BF%E9%97%AE%E4%B8%BB%E6%9C%BA%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="tocnumber">5.4</span> <span class="toctext">访问主机文件系统</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#%E5%9C%A8%E9%9D%9Esystemd%E7%B3%BB%E7%BB%9F%E4%B8%8A%E8%BF%90%E8%A1%8C"><span class="tocnumber">5.5</span> <span class="toctext">在非systemd系统上运行</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#%E4%BD%BF%E7%94%A8Btrfs%E5%AD%90%E5%8D%B7%E4%BD%9C%E4%B8%BA%E5%AE%B9%E5%99%A8%E7%9A%84%E6%A0%B9"><span class="tocnumber">5.6</span> <span class="toctext">使用Btrfs子卷作为容器的根</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%B4%E6%97%B6Btrfs%E5%BF%AB%E7%85%A7"><span class="tocnumber">5.7</span> <span class="toctext">使用容器的临时Btrfs快照</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#%E5%9C%A8_systemd-nspawn_%E4%B8%AD%E8%BF%90%E8%A1%8C_docker"><span class="tocnumber">5.8</span> <span class="toctext">在 systemd-nspawn 中运行 docker</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#%E5%9C%A8%E6%97%A0root%E6%9D%83%E9%99%90%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E4%BD%BF%E7%94%A8machinectl"><span class="tocnumber">5.9</span> <span class="toctext">在无root权限的情况下使用machinectl</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-33">
+<a href="#%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94"><span class="tocnumber">6</span> <span class="toctext">疑难解答</span></a>
+<ul>
+<li class="toclevel-2 tocsection-34"><a href="#Root%E7%99%BB%E5%BD%95%E5%A4%B1%E8%B4%A5"><span class="tocnumber">6.1</span> <span class="toctext">Root登录失败</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#execv(...)_failed:_Permission_denied"><span class="tocnumber">6.2</span> <span class="toctext">execv(...) failed: Permission denied</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#TERM%E4%B8%AD%E7%9A%84%E7%BB%88%E7%AB%AF%E7%B1%BB%E5%9E%8B%E4%B8%8D%E6%AD%A3%E7%A1%AE%EF%BC%88%E7%A0%B4%E6%8D%9F%E7%9A%84%E9%A2%9C%E8%89%B2%EF%BC%89"><span class="tocnumber">6.3</span> <span class="toctext">TERM中的终端类型不正确（破损的颜色）</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#%E5%9C%A8%E5%AE%B9%E5%99%A8%E5%86%85%E6%8C%82%E8%BD%BDNFS%E5%85%B1%E4%BA%AB"><span class="tocnumber">6.4</span> <span class="toctext">在容器内挂载NFS共享</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-38"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -140,16 +149,24 @@
 </p>
 <pre># pacstrap -i -c ~/MyContainer base [additional pkgs/groups]
 </pre>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong>  请不要额外安装<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-firmware">linux-firmware</a></span> 以及 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> ，它们会导致 <code>systemd-tmpfiles-setup.service</code> 在 <code>systemd-nspawn</code> 的引导过程中会出现一些问题。详情见 <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/46591">FS#46591</a>。</div>
-<p>安装完成后，引导至容器中：
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span> 包已经不再依赖 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> 内核，它已准备为容器化.</div>
+<p>一旦安装完成后，chroot至容器中并设置root密码：
+</p>
+<pre># systemd-nspawn -D ~/MyContainer
+# passwd
+# logout
+</pre>
+<p>最后, 启动容器:
 </p>
 <pre># systemd-nspawn -b -D ~/MyContainer
 </pre>
 <p>参数 <code>-b</code> 将会启动这个容器（比如：以 PID=1 运行 <code>systemd</code>）, 而不是仅仅启动一个 shell, 而参数 <code>-D</code> 指定成为容器根目录的目录。
 </p>
-<p>容器启动后，以"root"身份登录，没有密码。
+<p>容器启动后，输入密码以"root"身份登录。
 </p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 如果登陆失败显示 "Login incorrect", 问题可能是 <code>securetty</code> TTY 设备白名单导致的。 请查看<a href="#Root%E7%99%BB%E5%BD%95%E5%A4%B1%E8%B4%A5">#Root登录失败</a>。</div>
 <p>可以在容器内运行 <code>poweroff</code> 来关闭容器。在主机端，容器可以通过 <a href="#machinectl">machinectl</a> 工具进行控制。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -164,65 +181,17 @@
 <p>在这里很容易设置 Debian 或 Ubuntu 环境：
 </p>
 <pre># cd /var/lib/machines
-# debootstrap --include=systemd-container --components=main,universe &lt;codename&gt; myContainer &lt;repository-url&gt;
+# debootstrap --include=systemd-container --components=main,universe <i>codename</i> <i>container-name</i> <i>repository-url</i>
 </pre>
-<p>对于 Debian，有效的<code>codename</code>要么是滚动式名称像是 "stable" 或 "testing"，要么是发行名称如 "stretch" 或 "sid"， 对于 Ubuntu，应使用"xenial"或者"zesty"等<code>codename</code>。 代码名称的完整列表位于 <code>/usr/share/debootstrap/scripts</code> 中。对于 Debian 镜像，"<code>repository-url</code>" 可以是 <code><a rel="nofollow" class="external free" href="http://deb.debian.org/debian/">http://deb.debian.org/debian/</a></code>。 对于 Ubuntu 镜像, "<code>repository-url</code>" 可以是 <code><a rel="nofollow" class="external free" href="http://archive.ubuntu.com/ubuntu/">http://archive.ubuntu.com/ubuntu/</a></code>。
+<p>对于 Debian，有效的<code>codename</code>要么是滚动式名称像是 "stable" 或 "testing"，要么是发行名称如 "stretch" 或 "sid"， 对于 Ubuntu，应使用"xenial"或者"zesty"等<code>codename</code>。 代码名称的完整列表位于 <code>/usr/share/debootstrap/scripts</code> 中。对于 Debian 镜像，"repository-url" 可以是 <a rel="nofollow" class="external free" href="https://deb.debian.org/debian/%E3%80%82">https://deb.debian.org/debian/。</a> 对于 Ubuntu 镜像, "repository-url" 可以是 <a rel="nofollow" class="external free" href="http://archive.ubuntu.com/ubuntu/%E3%80%82">http://archive.ubuntu.com/ubuntu/。</a>"repository-url" <i>不</i> 应该包含尾随斜线。
 </p>
-<p>与 Arch 不同，Debian 和 Ubuntu 不会让您在首次登录时无密码登录。为了设置root密码登录，要不使用"-b"参数并设置密码：
+<p>与 Arch 相同，Debian 和 Ubuntu 不会让您在首次登录时无密码登录。为了设置root密码登录，要不使用"-b"参数并设置密码：
 </p>
-<pre># systemd-nspawn -D myContainer
+<pre># cd /var/lib/machines
+# systemd-nspawn -D ./<i>container-name</i>
 # passwd
 # logout
 </pre>
-<p>如果上述不起作用。可以启动容器，改用以下命令：
-</p>
-<pre># systemd-nspawn -b -D myContainer  #Starts the container
-# machinectl shell root@myContainer /bin/bash  #Get a root bash shell
-# passwd
-# logout
-</pre>
-<h3>
-<span id=".E5.88.9B.E5.BB.BA.E4.B8.93.E6.9C.89.E7.94.A8.E6.88.B7.EF.BC.88.E6.97.A0.E7.89.B9.E6.9D.83.E5.AE.B9.E5.99.A8.EF.BC.89"></span><span class="mw-headline" id="创建专有用户（无特权容器）">创建专有用户（无特权容器）</span>
-</h3>
-<p><i>systemd-nspawn</i> 支持非特权容器，尽管容器需要以 root 身份引导启动。
-</p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> 此功能需要 <span class="plainlinks archwiki-template-man" title="$ man 7 user_namespaces"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/user_namespaces.7">user_namespaces(7)</a></span>，更多信息请参阅 <a href="../en/Linux_Containers.html#Enable_support_to_run_unprivileged_containers_(optional)" title="Linux Containers">Linux Containers#Enable support to run unprivileged containers (optional)</a>
-</div>
-<p>最简单的方法是让 <i>systemd-nspawn</i> 来决定一切：
-</p>
-<pre># systemd-nspawn -UD myContainer
-# passwd
-# logout
-# systemd-nspawn -bUD myContainer
-</pre>
-<p>在这里 <i>systemd-nspawn</i> 将确认目录的所有者是否已经被使用，如果没有，将使用这个作为基数的大于它的65536个ID。另一方面，如果 UID/GID 正在使用，它将从 524288 - 1878982656 中随机选择 65536 个未使用的范围，并使用它们。
-</p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> 
-<ul>
-<li>所选范围的基数始终为 65536 的倍数。</li>
-<li>如果内核支持用户命名空间，那么 <code>-U</code> 和 <code>--private-users=pick</code> 是相同的。<code>--private-users=pick</code> 还意味着 <code>--private-users-chown</code>，更多细节请参阅<span class="plainlinks archwiki-template-man" title="$ man 1 systemd-nspawn"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-nspawn.1">systemd-nspawn(1)</a></span>。</li>
-</ul>
-</div>
-<p>您还可以手动指定容器的 UID/GID：
-</p>
-<pre># systemd-nspawn -D myContainer --private-users=1354956800:65536 --private-users-chown
-# passwd
-# logout
-# systemd-nspawn -bUD myContainer
-</pre>
-<p>你仍然可以使用 <code>--private-users=1354956800:65536</code> 配合 <code>--private-users-chown</code> 来启动容器，但这是徒增麻烦罢了, 让 <code>-U</code> 在分配 ID 后处理它。
-</p>
-<h3>
-<span id=".E5.9C.A8.E5.90.AF.E5.8A.A8.E6.97.B6.E5.90.AF.E7.94.A8.E5.AE.B9.E5.99.A8"></span><span class="mw-headline" id="在启动时启用容器">在启动时启用容器</span>
-</h3>
-<p>当您频繁地使用容器时，您可能会希望能够在在启动时启用它。
-</p>
-<p>首先 <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> 这个 <code>machines.target</code>，然后启用 <code>systemd-nspawn@<i>myContainer</i>.service</code>，其中 <code>myContainer</code> 是在 <code>/var/lib/machines</code> 中的容器。
-</p>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> 要自定义容器的启动，请编辑 <code>/etc/systemd/nspawn/<i>myContainer</i>.nspawn</code>。有关所有选项，请参阅 <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.nspawn"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.nspawn.5">systemd.nspawn(5)</a></span>。</div>
 <h3>
 <span id=".E7.BC.96.E8.AF.91.E4.B8.8E.E6.B5.8B.E8.AF.95.E5.8C.85"></span><span class="mw-headline" id="编译与测试包">编译与测试包</span>
 </h3>
@@ -231,35 +200,57 @@
 <h2>
 <span id=".E7.AE.A1.E7.90.86"></span><span class="mw-headline" id="管理">管理</span>
 </h2>
+<p>位于 <code>/var/lib/machines/</code> 的容器可以被 <i>machinectl</i> 命令所控制，它可以内部控制 <code>systemd-nspawn@.service</code> 单元的实例。 <code>/var/lib/machines/</code> 下的子目录对应着容器的名字， 比如 <code>/var/lib/machines/<i>container-name</i>/</code>。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 如果因为某些原因容器不能移进 <code>/var/lib/machines/</code> ， 可以使用符号链接。 详情看 <span class="plainlinks archwiki-template-man" title="$ man 1 machinectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/machinectl.1#FILES_AND_DIRECTORIES">machinectl(1) § FILES AND DIRECTORIES</a></span> 。</div>
+<h3>
+<span id=".E9.BB.98.E8.AE.A4_systemd-nspawn_.E9.80.89.E9.A1.B9"></span><span class="mw-headline" id="默认_systemd-nspawn_选项">默认 systemd-nspawn 选项</span>
+</h3>
+<p>要明白非常重要的一点是通过 <i>machinectl</i> 与 <code>systemd-nspawn@.service</code> 启动的容器所使用的默认选项与通过 <i>systemd-nspawn</i> 命令手动启动的有所不同。 通过服务启动所使用的额外选项有：
+</p>
+<ul>
+<li>
+<code>-b</code>/<code>--boot</code> – 管理的容器会自动搜索一个init程序，并以PID 1的形式调用它。</li>
+<li>
+<code>--network-veth</code> 关联于 <code>--private-network</code> – 管理的容器获得一个虚拟网络接口，并与主机网络断开连接。 详情看 <a href="#%E7%BD%91%E7%BB%9C">#网络</a> 。</li>
+<li>
+<code>-U</code> – 如果内核支持，管理的容器默认使用 <span class="plainlinks archwiki-template-man" title="$ man 7 user_namespaces"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/user_namespaces.7">user_namespaces(7)</a></span> 特性。 解释请看 <a href="#%E6%97%A0%E7%89%B9%E6%9D%83%E5%AE%B9%E5%99%A8">#无特权容器</a> 。</li>
+<li><code>--link-journal=try-guest</code></li>
+</ul>
+<p>这些行为可以在每个容器配置文件中被覆盖， 详情看 <a href="#%E9%85%8D%E7%BD%AE">#配置</a> 。
+</p>
 <h3><span class="mw-headline" id="machinectl">machinectl</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> <i>machinectl</i> 工具要求在容器中安装 <a href="../en/Systemd.html" title="Systemd">systemd</a> 和 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dbus">dbus</a></span> 。有关详细讨论，请参阅 <a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/issues/685">[1]</a>。</div>
-<p>管理容器基本上使用 <code>machinectl</code> 命令。有关详细信息，请参阅 <span class="plainlinks archwiki-template-man" title="$ man 1 machinectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/machinectl.1">machinectl(1)</a></span> 。
+<p>容器可以被 <code>machinectl <i>subcommand</i> <i>container-name</i></code> 命令管理， 比如说，启动容器：
 </p>
-<p>用例：
-</p>
-<p>在正在运行的容器内生成一个新的 shell：
-</p>
-<pre>$ machinectl login <i>MyContainer</i>
+<pre>$ machinectl start <i>container-name</i>
 </pre>
-<p>显示有关容器的详细信息：
+<p>相似的， 还有其他的子命令 <code>poweroff</code>， <code>reboot</code>， <code>status</code> 和 <code>show</code>. 详细解释请看 <span class="plainlinks archwiki-template-man" title="$ man 1 machinectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/machinectl.1#Machine_Commands">machinectl(1) § Machine Commands</a></span> 。
 </p>
-<pre>$ machinectl status <i>MyContainer</i>
-</pre>
-<p>重新启动容器：
-</p>
-<pre>$ machinectl reboot <i>MyContainer</i>
-</pre>
-<p>容器关机：
-</p>
-<pre>$ machinectl poweroff <i>MyContainer</i>
-</pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> 可以使用 <i>systemctl</i> <code>poweroff</code> 和 <code>reboot</code> 命令从容器会话中执行关机和重新启动操作。</div>
-<p>下载镜像：
+<strong>Tip:</strong> 关机与重启操作可以在容器内通过 <code>poweroff</code> and <code>reboot</code> 命令执行。</div>
+<p>其他常见命令：
 </p>
-<pre># machinectl pull-tar <i>URL</i> <i>name</i>
-</pre>
+<ul>
+<li>
+<code>machinectl list</code> – 显示现在正在运行的容器</li>
+<li>
+<code>machinectl login <i>container-name</i></code> – 在一个容器中打开一个交互式登录会话</li>
+<li>
+<code>machinectl shell <i>[username@]container-name</i></code> – 在容器中打开一个交互式shell会话（这将立即调用一个用户进程，而不需要通过容器中的登录进程）</li>
+<li>
+<code>machinectl enable <i>container-name</i></code> 与 <code>machinectl disable <i>container-name</i></code> – 启用或禁用容器的随开机启动，详见 <a href="#%E5%90%AF%E7%94%A8%E5%AE%B9%E5%99%A8%E7%9A%84%E9%9A%8F%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8">#启用容器的随开机启动</a>
+</li>
+</ul>
+<p><i>machinectl</i> 也有管理容器（或虚拟机）镜像和镜像传输的子命令。 详情见 <span class="plainlinks archwiki-template-man" title="$ man 1 machinectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/machinectl.1#Image_Commands">machinectl(1) § Image Commands</a></span> 与 <span class="plainlinks archwiki-template-man" title="$ man 1 machinectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/machinectl.1#Image_Transfer_Commands">machinectl(1) § Image Transfer Commands</a></span> 。
+</p>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> 增加一些明确的例子，如何使用镜像传输命令。最重要的是，在哪里可以找到合适的镜像。 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-nspawn_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Systemd-nspawn (简体中文)#</a>)</div>
+</div>
 <h3>
 <span id="systemd_.E5.B7.A5.E5.85.B7.E9.93.BE"></span><span class="mw-headline" id="systemd_工具链">systemd 工具链</span>
 </h3>
@@ -282,6 +273,40 @@
 </p>
 <pre>$ systemd-cgtop
 </pre>
+<h2>
+<span id=".E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="配置">配置</span>
+</h2>
+<h3>
+<span id=".E5.AE.B9.E5.99.A8.E5.89.8D.E8.AE.BE.E7.BD.AE"></span><span class="mw-headline" id="容器前设置">容器前设置</span>
+</h3>
+<p>要指定容器前设置而不是全局覆盖，可以使用<i>.nspawn</i>文件。 详情见 <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.nspawn"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.nspawn.5">systemd.nspawn(5)</a></span> 。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 
+<ul>
+<li>当执行<code>machinectl remove</code> 的时候，<i>.nspawn</i> 文件可能会从 <code>/etc/systemd/nspawn/</code> 被意外移除。 <a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/issues/15900">[2]</a>
+</li>
+<li>当有<code>--settings=override</code>（在<code>systemd-nspawn@.service</code>文件内被指定）时，<i>.nspawn</i>内与命令行中所指定的为网络选项的交互不能正常工作。<a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/issues/12313#issuecomment-681116926">[3]</a> 作为一个变通方法，你需要引入<code>VirtualEthernet=on</code>选项，即使服务指定了<code>--network-veth</code>。</li>
+</ul>
+</div>
+<h3>
+<span id=".E5.90.AF.E7.94.A8.E5.AE.B9.E5.99.A8.E7.9A.84.E9.9A.8F.E5.BC.80.E6.9C.BA.E5.90.AF.E5.8A.A8"></span><span class="mw-headline" id="启用容器的随开机启动">启用容器的随开机启动</span>
+</h3>
+<p>当频繁使用一个容器时，你可能希望在系统启动时启动它。
+</p>
+<p>首先确保 <code>machines.target</code> 已经 <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enabled">enabled</a>。
+</p>
+<p>容器被 <a href="#machinectl">machinectl</a> 的可发现可以 enabled 或者 disabled。
+</p>
+<pre>$ machinectl enable <i>container-name</i>
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 
+<ul>
+<li>这样做的效果是启用 <code>systemd-nspawn@<i>container-name</i>.service</code> systemd单元。</li>
+<li>如<a href="#%E9%BB%98%E8%AE%A4_systemd-nspawn_%E9%80%89%E9%A1%B9">#默认 systemd-nspawn 选项</a>中提到的，由<i>machinectl</i>启动的容器会获得一个虚拟的以太网接口。要禁用私有网络，请参见<a href="#%E4%BD%BF%E7%94%A8%E4%B8%BB%E6%9C%BA%E7%BD%91%E7%BB%9C">#使用主机网络</a>。</li>
+</ul>
+</div>
 <h3>
 <span id=".E8.B5.84.E6.BA.90.E6.8E.A7.E5.88.B6"></span><span class="mw-headline" id="资源控制">资源控制</span>
 </h3>
@@ -299,9 +324,167 @@
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> 如果不希望在重新启动后保留此更改，则可以传递选项 <code>--runtime</code> 使更改成为临时性的。您可以使用 <code>systemd-cgtop</code> 检查其结果。</div>
+<h3>
+<span id=".E7.BD.91.E7.BB.9C"></span><span class="mw-headline" id="网络">网络</span>
+</h3>
+<p><i>systemd-nspawn</i> 容器可以使用 <i>主机网络</i> 或者 <i>私有网络</i>:
+</p>
+<ul>
+<li>在主机网络模式下，容器可以完全访问主机网络。这意味着容器将能够访问主机上的所有网络服务，来自容器的数据包将在外部网络中显示为来自主机（即共享同一IP地址）。</li>
+<li>在私有网络模式下，容器与主机的网络断开连接，这使得容器无法使用所有网络接口，但环回设备和明确分配给容器的接口除外。为容器设置网络接口有多种不同的方法：
+<ul>
+<li>可以将现有接口分配给容器（例如，如果您有多个以太网设备）。</li>
+<li>可以创建一个与现有接口（即<a href="../en/VLAN.html" title="VLAN">VLAN</a>接口）相关联的虚拟网络接口，并将其分配给容器。</li>
+<li>可以创建主机和容器之间的虚拟以太网链接。</li>
+</ul>
+</li>
+</ul>
+<dl><dd>在后一种情况下，容器的网络是完全隔离的（与外部网络以及其他容器），由管理员来配置主机和容器之间的网络。这通常涉及创建一个网桥<a href="../en/Network_bridge.html" title="Network bridge">network bridge</a>来连接多个（物理或虚拟）接口，或者在多个接口之间设置一个NAT<a href="https://en.wikipedia.org/wiki/Network_Address_Translation" class="extiw" title="wikipedia:Network Address Translation">Network Address Translation</a>。</dd></dl>
+<p>主机网络模式适用于<i>应用程序容器</i>，它不运行任何网络软件来配置分配给容器的接口。当你从shell运行<i>systemd-nspawn</i>时，主机联网是默认模式。
+</p>
+<p>另一方面，私有网络模式适用于应与主机系统隔离的 "系统容器"。创建虚拟以太网链路是一个非常灵活的工具，可以创建复杂的虚拟网络。这是由<i>machinectl</i>或<code>systemd-nspawn@.service</code>启动的容器的默认模式。
+</p>
+<p>下面的小节描述了常见的情况。关于可用的<i>systemd-nspawn</i>选项，请参见<span class="plainlinks archwiki-template-man" title="$ man 1 systemd-nspawn"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-nspawn.1#Networking_Options">systemd-nspawn(1) § Networking Options</a></span>。
+</p>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8.E4.B8.BB.E6.9C.BA.E7.BD.91.E7.BB.9C"></span><span class="mw-headline" id="使用主机网络">使用主机网络</span>
+</h4>
+<p>要禁用私有网络和创建由<i>machinectl</i>启动的容器使用的虚拟以太网链接，请添加<i>.nspawn</i>文件，其中包含以下选项：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/nspawn/<i>container-name</i>.nspawn</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Network]
+VirtualEthernet=no</pre>
+<p>这将覆盖在<code>systemd-nspawn@.service</code>中使用的<code>-n</code>/<code>--network-veth</code>选项，新启动的容器将使用主机网络模式。
+</p>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8.E8.99.9A.E6.8B.9F.E4.BB.A5.E5.A4.AA.E7.BD.91.E9.93.BE.E6.8E.A5"></span><span class="mw-headline" id="使用虚拟以太网链接">使用虚拟以太网链接</span>
+</h4>
+<p>如果使用<code>-n</code>/<code>--network-veth</code>选项启动容器，<i>systemd-nspawn</i>将在主机和容器之间创建一个虚拟的以太网链接。链接的主机侧将作为名为<code>ve-<i>容器名称</i></code>的网络接口提供。链路的容器侧将被命名为<code>host0</code>。请注意，这个选项意味着 <code>--private-network</code>。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 
+<ul>
+<li>如果容器名称太长，接口名称将被缩短（例如<code>ve-long-conKQGh</code>而不是<code>ve-long-container-name</code>），以适应<a rel="nofollow" class="external text" href="https://stackoverflow.com/a/29398765">15个字符的限制</a>。全名将被设置为接口的<code>altname</code>属性（见<span class="plainlinks archwiki-template-man" title="$ man 8 ip-link"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ip-link.8">ip-link(8)</a></span>），并且仍然可以用来引用接口。</li>
+<li>当检查带有<code>ip link</code>的接口时，接口名会显示一个后缀，例如<code>ve-<i>容器名</i>@if2</code>和<code>host0@if9</code>。<code>@if<i>N</i></code>实际上并不是接口名称的一部分，相反，<code>ip link</code>附加了这个信息，以指示虚拟以太网电缆连接到另一端的哪个 "槽"。</li>
+</ul>
+<dl><dd>例如，显示为<code>ve-<i>foo</i>@if2</code>的主机虚拟以太网接口与容器<code><i>foo</i></code>相连，在容器内部与第二个网络接口--在容器内部运行<code>ip link</code>时，显示索引为2的接口。同理，容器内名为<code>host0@if9</code>的接口连接到主机上的第9个网络接口。</dd></dl>
+</div>
+<p>当您启动容器时，必须为两个接口（主机上和容器中）分配一个 IP 地址。如果您在主机上和容器中都使用<a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>，这就是开箱即用：
+</p>
+<ul>
+<li>主机上的<code>/usr/lib/systemd/network/80-container-ve.network</code>文件与<code>ve-<i>container-name</i></code>接口相匹配，并启动一个DHCP服务器，该服务器为主机接口和容器分配IP地址，</li>
+<li>容器中的<code>/usr/lib/systemd/network/80-container-host0.network</code>文件与<code>host0</code>接口相匹配，并启动一个DHCP客户端，该客户端从主机接收一个IP地址。</li>
+</ul>
+<p>如果不使用 <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>，可以配置静态 IP 地址或在主机接口上启动 DHCP 服务器，在容器中启动 DHCP 客户端。详情请参见<a href="../en/Network_configuration.html" title="Network configuration">Network configuration</a>。
+</p>
+<p>要让容器访问外部网络，您可以按照 <a href="../en/Internet_sharing.html#Enable_NAT" title="Internet sharing">Internet sharing#Enable NAT</a> 中的描述配置 NAT。如果您使用 <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>，这将通过 <code>/usr/lib/systemd/network/80-container-ve.network</code> 中的 <code>IPMasquerade=yes</code> 选项自动（部分）完成。然而，这只会发出一个<a href="../en/Iptables.html" title="Iptables">iptables</a>规则，比如说：
+</p>
+<pre>-t nat -A POSTROUTING -s 192.168.163.192/28 -j MASQUERADE
+</pre>
+<p><code>filter</code>表必须手动配置，如<a href="../en/Internet_sharing.html#Enable_NAT" title="Internet sharing">Internet sharing#Enable NAT</a>所示。您可以使用通配符来匹配所有以<code>ve-</code>开头的接口：
+</p>
+<pre># iptables -A FORWARD -i ve-+ -o <i>internet0</i> -j ACCEPT
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> <i>systemd-networkd</i>使用<a rel="nofollow" class="external text" href="https://tldp.org/HOWTO/Querying-libiptc-HOWTO/whatis.html">libiptc</a>库与<a href="../en/Iptables.html" title="Iptables">iptables</a>交互。如果您使用<a href="../en/Nftables.html" title="Nftables">nftables</a>，请安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iptables-nft">iptables-nft</a></span> 转译层。参见 <a rel="nofollow" class="external text" href="https://github.com/systemd/systemd/issues/13307">systemd issue 13307</a>。</div>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> 调查是否有必要采取以下措施/原因： (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-nspawn_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Systemd-nspawn (简体中文)#</a>)</div>
+</div>
+<p>补充，<code>-A FORWARD -i ve-+ -o <i>internet0</i>-j ACCEPT</code>规则可能会像<a href="../en/Internet_sharing.html#Enable_NAT" title="Internet sharing">Internet sharing#Enable NAT</a>中描述的那样不起作用。如果是这种情况，请尝试<code>-A FORWARD -i ve-+ -j ACCEPT</code>。
+</p>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8.E7.BD.91.E7.BB.9C.E6.A1.A5.E6.8E.A5"></span><span class="mw-headline" id="使用网络桥接">使用网络桥接</span>
+</h4>
+<p>如果您已在主机系统上配置了网桥<a href="../en/Network_bridge.html" title="Network bridge">network bridge</a>，则可以为容器创建一个虚拟以太网链路，并将其主机侧添加到网桥中。这可以通过<code>--network-bridge=<i>bridge-name</i></code>选项来完成。请注意，<code>--network-bridge</code>意味着<code>--network-veth</code>，即虚拟以太网链路是自动创建的。然而，链路的主机端将使用<code>vb-</code>前缀而不是<code>ve-</code>，因此用于启动DHCP服务器和IP伪装的<a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>选项将不会被应用。
+</p>
+<p>网桥的管理由管理员负责。例如，网桥可以用一个物理接口连接虚拟接口，也可以只连接几个容器的虚拟接口。参见<a href="../en/Systemd-networkd.html#Network_bridge_with_DHCP" title="Systemd-networkd">systemd-networkd#Network bridge with DHCP</a>和<a href="../en/Systemd-networkd.html#Network_bridge_with_static_IP_addresses" title="Systemd-networkd">systemd-networkd#Network bridge with static IP addresses</a>，了解使用<a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>进行配置的例子。
+</p>
+<p>还有一个<code>--network-zone=<i>zone-name</i></code>选项，它与<code>--network-bridge</code>类似，但网桥由<i>systemd-nspawn</i>和<i>systemd-networkd</i>自动管理。当第一个用<code>vz-<i>zone-name</i></code>配置的容器启动时，会自动创建名为<code>--network-zone=<i>zone-name</i></code>的网桥接口，当最后一个用<code>--network-zone=<i>zone-name</i></code>配置的容器退出时，会自动删除。因此，这个选项可以方便地将多个相关的容器放置在一个共同的虚拟网络上。请注意，<code>vz-*</code>接口由<a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>管理的方式与<code>ve-*</code>接口相同，使用<code>/usr/lib/systemd/network/80-container-vz.network</code>文件中的选项。
+</p>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8_.22macvlan.22_.E6.88.96.E8.80.85_.22ipvlan.22_.E6.8E.A5.E5.8F.A3"></span><span class="mw-headline" id='使用_"macvlan"_或者_"ipvlan"_接口'>使用 "macvlan" 或者 "ipvlan" 接口</span>
+</h4>
+<p>您可以在现有的物理接口（即<a href="../en/VLAN.html" title="VLAN">VLAN</a>接口）上创建一个虚拟接口，并将其添加到容器中，而不是创建一个虚拟的以太网链路（其主机端可能被添加到桥接中，也可能没有）。该虚拟接口将与底层主机接口进行桥接，从而使容器暴露在外部网络中，从而使其能够通过DHCP从与主机相连的同一局域网中获得一个独特的IP地址。
+</p>
+<p><i>systemd-nspawn</i> 提供两个选项:
+</p>
+<ul>
+<li>
+<code>--network-macvlan=<i>interface</i></code> – 虚拟接口的MAC地址将与底层物理<code><i>interface</i></code>不同，并被命名为<code>mv-<i>interface</i></code>。</li>
+<li>
+<code>--network-ipvlan=<i>interface</i></code> – 虚拟接口的MAC地址将与底层物理<code><i>interface</i></code>相同，并命名为<code>iv-<i>interface</i></code>。​</li>
+</ul>
+<p>所有选项都意味着 <code>--private-network</code>.
+</p>
+<h4>
+<span id=".E4.BD.BF.E7.94.A8.E7.8E.B0.E6.9C.89.E6.8E.A5.E5.8F.A3"></span><span class="mw-headline" id="使用现有接口">使用现有接口</span>
+</h4>
+<p>如果主机系统有多个物理网络接口，可以使用<code>--network-interface=<i>interface</i></code>将<code><i>interface</i></code>分配给容器（并使它在容器启动时对主机不可用）。请注意，<code>--network-interface</code>意味着<code>--private-network</code>。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 目前不支持将无线网络接口传递给<i>systemd-nspawn</i>容器。<a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/issues/7873">[4]</a>
+</div>
+<h3>
+<span id=".E7.AB.AF.E5.8F.A3.E6.98.A0.E5.B0.84"></span><span class="mw-headline" id="端口映射">端口映射</span>
+</h3>
+<p>当启用私有网络时，可以使用<code>-p</code>/<code>-port</code>选项或使用<i>.nspawn</i>文件中的<code>Port</code>设置将主机上的各个端口映射到容器上的端口。这可以通过向<code>nat</code>表发出<a href="../en/Iptables.html" title="Iptables">iptables</a>规则来完成，但需要手动配置<code>forward</code>表中的<code>filter</code>链，如<a href="#%E4%BD%BF%E7%94%A8%E8%99%9A%E6%8B%9F%E4%BB%A5%E5%A4%AA%E7%BD%91%E9%93%BE%E6%8E%A5">#使用虚拟以太网链接</a>所示。
+</p>
+<p>例如，将主机上的TCP端口8000映射到容器中的TCP端口80：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/nspawn/<i>container-name</i>.nspawn</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Network]
+Port=tcp:8000:80</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 
+<ul>
+<li>
+<i>systemd-nspawn</i>在映射端口时明确地排除了<code>loopback</code>接口。因此，在上面的例子中，<code>localhost:8000</code> 连接到主机而不是容器。只有到其他接口的连接才会受到端口映射的影响。详情请参见 <a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/issues/6106">[5]</a>。</li>
+<li>端口映射只对IPv4连接有效。<a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/issues/10254">[6]</a>。</li>
+</ul>
+</div>
+<h3>
+<span id=".E5.9F.9F.E5.90.8D.E8.A7.A3.E6.9E.90"></span><span class="mw-headline" id="域名解析">域名解析</span>
+</h3>
+<p>容器中的域名解析<a href="../en/Domain_name_resolution.html" title="Domain name resolution">Domain name resolution</a>可以通过<i>systemd-nspawn</i>的<code>--resolv-conf</code>选项或<i>.nspawn</i>文件的相应选项<code>ResolvConf=</code>来配置。有很多可能的值，这些值在 <span class="plainlinks archwiki-template-man" title="$ man 1 systemd-nspawn"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-nspawn.1#Integration_Options">systemd-nspawn(1) § Integration Options</a></span> 中有描述。
+</p>
+<p>默认值是<code>auto</code>，即：
+</p>
+<ul>
+<li>如果启用了<code>--private-network</code>，<code>/etc/resolv.conf</code>就会保持容器中的原样。</li>
+<li>否则，如果<a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a>在主机上运行，它的存根文件<code>resolv.conf</code>将被复制或绑定到容器中。</li>
+<li>否则，<code>/etc/resolv.conf</code> 文件就会被从主机复制或绑定到容器上。</li>
+</ul>
+<p>在后两种情况下，如果容器根部是可写的，则复制文件，如果是只读的，则绑定挂载。
+</p>
 <h2>
 <span id=".E6.8F.90.E7.A4.BA.E5.92.8C.E6.8A.80.E5.B7.A7"></span><span class="mw-headline" id="提示和技巧">提示和技巧</span>
 </h2>
+<h3>
+<span id=".E6.97.A0.E7.89.B9.E6.9D.83.E5.AE.B9.E5.99.A8"></span><span class="mw-headline" id="无特权容器">无特权容器</span>
+</h3>
+<p><i>systemd-nspawn</i>支持无特权的容器，不过容器需要以root身份启动。​
+</p>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Very little of <a href="../en/Linux_Containers.html#Enable_support_to_run_unprivileged_containers_(optional)" title="Linux Containers">Linux Containers#Enable support to run unprivileged containers (optional)</a> applies to systemd-nspawn. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-nspawn_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Systemd-nspawn (简体中文)#</a>)</div>
+</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 此功能需要 <span class="plainlinks archwiki-template-man" title="$ man 7 user_namespaces"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/user_namespaces.7">user_namespaces(7)</a></span>, 更多信息请参见 <a href="../en/Linux_Containers.html#Enable_support_to_run_unprivileged_containers_(optional)" title="Linux Containers">Linux Containers#Enable support to run unprivileged containers (optional)</a>。</div>
+<p>最简单的方法是通过<code>-U</code>选项让<i>systemd-nspawn</i>自动选择一个未使用的UID/GID范围。
+</p>
+<pre># systemd-nspawn -bUD ~/MyContainer
+</pre>
+<p>如果内核支持用户命名空间，<code>-U</code>选项相当于<code>--private-users=pick --private-users-chown</code>。这意味着当容器启动时，容器中的文件和目录会被<a href="../en/File_permissions_and_attributes.html#Changing_ownership" class="mw-redirect" title="Chown">chown</a>到选定的私有 UID/GID 范围。详情请参见<span class="plainlinks archwiki-template-man" title="$ man 1 systemd-nspawn"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-nspawn.1#User_Namespacing_Options">systemd-nspawn(1) § User Namespacing Options</a></span>。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 您也可以手动指定容器的UID/GID范围，但是，这很少有用。</div>
+<p>一旦用私有UID/GID范围启动了一个容器，就需要一直这样使用它，以避免权限错误。另外，也可以撤销<code>--private-users-chown</code>的效果。(或<code>-U</code>)在文件系统中，通过指定一个从0开始的ID范围：
+</p>
+<pre># systemd-nspawn -D ~/MyContainer --private-users=0 --private-users-chown
+</pre>
 <h3>
 <span id=".E4.BD.BF.E7.94.A8_X_.E7.8E.AF.E5.A2.83"></span><span class="mw-headline" id="使用_X_环境">使用 X 环境</span>
 </h3>
@@ -318,24 +501,40 @@
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 从 systemd 版本 235 开始, <code>/tmp/.X11-unix</code> 的内容 <a rel="nofollow" class="external text" href="https://github.com/systemd/systemd/issues/7093">必须以只读方式装入</a>，否则它们将从文件系统中消失。只读挂载标志不会阻止在套接字上使用 <code>connect()</code>。如果你还绑定了<code>/run/user/1000</code> 那么你有可能希望显式绑定 <code>/run/user/1000/bus</code> 为只读，以防止 dbus 套接字被删除。</div>
-<h4>
-<span id=".E9.81.BF.E5.85.8D.E4.BD.BF.E7.94.A8_xhost"></span><span class="mw-headline" id="避免使用_xhost">避免使用 xhost</span>
-</h4>
+<h4><span class="mw-headline" id="Avoiding_xhost">Avoiding xhost</span></h4>
 <p><code>xhost</code> 仅提供对 X 服务器相当粗糙的访问权限。更细节的访问控制可通过<code>$XAUTHORITY</code> 文件。遗憾的是, 仅使 <code>$XAUTHORITY</code> 文件在容器中可被访问无法执行工作:
-您的 <code>$XAUTHORITY</code> 文件只特定于您的主机，但是容器是另一台主机。根据 <a rel="nofollow" class="external text" href="https://stackoverflow.com/a/25280523">stackoverflow</a> 下面这个技巧可以让你的X服务器接受来自于你容器中的X 应用的 <code>$XAUTHORITY</code> 文件：
+您的 <code>$XAUTHORITY</code> 文件只特定于您的主机，但是容器是另一台主机。
+根据 <a rel="nofollow" class="external text" href="https://stackoverflow.com/a/25280523">stackoverflow</a> 下面这个技巧可以让你的X服务器接受来自于你容器中的X应用的 <code>$XAUTHORITY</code> 文件：
 </p>
 <pre>$ XAUTH=/tmp/container_xauth
 $ xauth nextract - "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -f "$XAUTH" nmerge -
-$ sudo systemd-nspawn -D myContainer --bind=/tmp/.X11-unix --bind="$XAUTH" \
-                      -E DISPLAY="$DISPLAY" -E XAUTHORITY="$XAUTH" --as-pid2 /usr/bin/xeyes
+# systemd-nspawn -D myContainer --bind=/tmp/.X11-unix --bind="$XAUTH" -E DISPLAY="$DISPLAY" -E XAUTHORITY="$XAUTH" --as-pid2 /usr/bin/xeyes
 </pre>
-<p>上面第二行将连接组设定为 "FamilyWild"，值 <code>65535</code>，这会使输入匹配你的每一个显示。 更多信息请参考 <span class="plainlinks archwiki-template-man" title="$ man 7 Xsecurity"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/Xsecurity.7">Xsecurity(7)</a></span> 。
+<p>上面第二行将连接组设定为 "FamilyWild"，值<code>65535</code>，这会使输入匹配你的每一个显示。 更多信息请参考 <span class="plainlinks archwiki-template-man" title="$ man 7 Xsecurity"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/Xsecurity.7">Xsecurity(7)</a></span> 。
 </p>
 <h3>
 <span id=".E8.BF.90.E8.A1.8C_Firefox"></span><span class="mw-headline" id="运行_Firefox">运行 Firefox</span>
 </h3>
-<p>请见 <a href="../en/Firefox/Tweaks.html#Run_Firefox_inside_an_nspawn_container" class="mw-redirect" title="Firefox tweaks">Firefox tweaks</a>.
+<p>以PID 1运行​
 </p>
+<pre> # systemd-nspawn --setenv=DISPLAY=:0 \
+              --setenv=XAUTHORITY=~/.Xauthority \
+              --bind-ro=$HOME/.Xauthority:/root/.Xauthority \
+              --bind=/tmp/.X11-unix \
+              -D ~/containers/firefox \
+              firefox
+</pre>
+<p>或者你可以启动容器，让<a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>等设置虚拟网络接口：
+</p>
+<pre># systemd-nspawn --bind-ro=$HOME/.Xauthority:/root/.Xauthority \
+              --bind=/tmp/.X11-unix \
+              -D ~/containers/firefox \
+              --network-veth -b
+</pre>
+<p>一旦你的容器被启动，就像这样运行Xorg二进制文件：
+</p>
+<pre># systemd-run -M firefox --setenv=DISPLAY=:0 firefox
+</pre>
 <h3>
 <span id=".E8.AE.BF.E9.97.AE.E4.B8.BB.E6.9C.BA.E6.96.87.E4.BB.B6.E7.B3.BB.E7.BB.9F"></span><span class="mw-headline" id="访问主机文件系统">访问主机文件系统</span>
 </h3>
@@ -351,167 +550,151 @@ $ sudo systemd-nspawn -D myContainer --bind=/tmp/.X11-unix --bind="$XAUTH" \
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Files]
 Bind=/var/cache/pacman/pkg
 </pre>
-<p>详情见 <a href="#Specify_per-container_settings">#Specify per-container settings</a>.
+<p>详情见 <a href="#%E5%AE%B9%E5%99%A8%E5%89%8D%E8%AE%BE%E7%BD%AE">#容器前设置</a>.
+</p>
+<p>要将该目录绑定到容器内的不同路径，请添加路径，并用冒号分隔。例如：
+</p>
+<pre># systemd-nspawn --bind=<i>/path/to/host_dir:/path/to/container_dir</i>
+</pre>
+<h3>
+<span id=".E5.9C.A8.E9.9D.9Esystemd.E7.B3.BB.E7.BB.9F.E4.B8.8A.E8.BF.90.E8.A1.8C"></span><span class="mw-headline" id="在非systemd系统上运行">在非systemd系统上运行</span>
+</h3>
+<p>详情见 <a href="../en/Init.html#systemd-nspawn" title="Init">Init#systemd-nspawn</a>。
 </p>
 <h3>
-<span id=".E9.85.8D.E7.BD.AE.E7.BD.91.E7.BB.9C"></span><span class="mw-headline" id="配置网络">配置网络</span>
+<span id=".E4.BD.BF.E7.94.A8Btrfs.E5.AD.90.E5.8D.B7.E4.BD.9C.E4.B8.BA.E5.AE.B9.E5.99.A8.E7.9A.84.E6.A0.B9"></span><span class="mw-headline" id="使用Btrfs子卷作为容器的根">使用Btrfs子卷作为容器的根</span>
 </h3>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Reason:</b> <span style="color:red;">please use the first argument of the template to provide a brief explanation.</span> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-nspawn_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Systemd-nspawn (简体中文)#</a>)</div>
-</div>
-<p>对于最简单的设置，允许传出连接到互联网，你可以使用 <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> 进行网络管理和 DHCP ，并且针对DNS你可以使用 <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a> 。
-这里假设您已经使用 <code>-n</code> 启动 <code>systemd-nspawn</code> 来创建指向主机的虚拟以太网链接。
-</p>
-<p>您还可以通过添加 DNS 服务器的 IP 地址来手动 <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Textedit">编辑</a> 你容器的 <code>/etc/resolv.conf</code>，而不是使用 <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a>。
-</p>
-<p>请注意，规范的 <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> 主机和容器的 .network 文件来自于https://github.com/systemd/systemd/tree/master/network 。
-</p>
-<p>更多详细的例子请参阅 <a href="../en/Systemd-networkd.html#Usage_with_containers" title="Systemd-networkd">systemd-networkd#Usage with containers</a> 。
-</p>
-<h4><span class="mw-headline" id="nsswitch.conf">nsswitch.conf</span></h4>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>Notes:</b> <span style="color:red;">please use the second argument of the template to provide more detailed indications.</span> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-nspawn_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Systemd-nspawn (简体中文)#</a>)</div>
-</div>
-<p>为了能从主机更容易的的连接到容器中，你可以为容器名开启本地DNS解析。向 <code>/etc/nsswitch.conf</code> 文件中 <code>hosts:</code> 部分添加 <code>mymachines</code>。比如：
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/nsswitch.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">hosts: files mymachines dns myhostname</pre>
-<p>然后，任何DNS寻找主机中主机名 <code>foo</code> 时，将会先参看 <code>/etc/hosts</code>，然后时本地容器的名字，再是上游DNS等等。
-</p>
-<h4>
-<span id=".E4.BD.BF.E7.94.A8.E4.B8.BB.E6.9C.BA.E7.BD.91.E7.BB.9C"></span><span class="mw-headline" id="使用主机网络">使用主机网络</span>
-</h4>
-<p>为了关闭容器的私有网络，利用 <code>machinectl start MyContainer</code> 启动时，请往 <code>/etc/systemd/nspawn</code> 目录（如有必要请自行创建目录）下的 <code>MyContainer.nspawn</code> 文件中添加下文：
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/nspawn/MyContainer.nspawn</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Network]
-VirtualEthernet=no
-</pre>
-<p>在 <code>MyContainer.nspawn</code> 文件中参数集将会覆盖掉 <code>systemd-nspawn@.service</code> 的默认设置，然后重新启动的容器将会使用主机的网络。
-</p>
-<h4>
-<span id=".E8.99.9A.E6.8B.9F.E4.BB.A5.E5.A4.AA.E7.BD.91.E6.8E.A5.E5.8F.A3"></span><span class="mw-headline" id="虚拟以太网接口">虚拟以太网接口</span>
-</h4>
-<p>如果一个容器是用 <code>systemd-nspawn ... -n</code> 启动的，systemd 将会自动在主机和容器上各创建一个虚拟网络接口，并用虚拟以太网线路连接起来。
-</p>
-<p>如果容器的名字是 <code>foo</code>，那么主机上的虚拟网络接口的名字会是 <code>ve-foo</code>。容器里的虚拟网络接口名一直是 <code>host0</code>。
-</p>
-<p>当检查到接口带有 <code>ip link</code>，接口名显示时将会带有一个后缀，像是 <code>ve-foo@if2</code> 和 <code>host0@if9</code>。<code>@ifN</code> 实际上并不是接口名字的一部分，相反的，<code>ip link</code> 带有这个信息以指示虚拟以太网线缆所连接的另一端的“插槽”。
-</p>
-<p>举个例子，一个主机的虚拟以太网接口显示为 <code>ve-foo@if2</code>，它将连接到容器 <code>foo</code>，其内部的第二个网络接口 -- 当你在容器内运行 <code>ip link</code> 序号为 2 的那一个。相同的，在容器内，名字为 <code>host0@if9</code> 的接口将会连接到主机的第9个接口。
+<p>要使用 <a href="../en/Btrfs.html#Subvolumes" title="Btrfs">Btrfs subvolume</a> 作为容器根目录的模板，请使用 <code>--template</code> 标志。这将获取子卷的快照，并以它填充容器的根目录。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> 如果你使用防火墙，你的虚拟接口的流量可能会被阻挡。你必须开启必要的规则来通过你的防火墙。</div>
-<h4>
-<span id=".E4.BD.BF.E7.94.A8.E7.BD.91.E7.BB.9C.E6.A1.A5.E6.8E.A5"></span><span class="mw-headline" id="使用网络桥接">使用网络桥接</span>
-</h4>
-<p>如果你在主机系统上配置过一个网桥，以便将IP地址分配给容器，使其就像是本地网络中的一个物理机一样（比如，请看 <a href="../en/Systemd-networkd.html#DHCP_with_two_distinct_IP" title="Systemd-networkd">systemd-networkd#DHCP with two distinct IP</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 或 <a href="../en/Systemd-networkd.html#Static_IP_network" title="Systemd-networkd">systemd-networkd#Static IP network</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>），你可以通过选项 <code>--network-bridge=<i>br0</i></code> 使 systemd-nspawn 来使用它。
-</p>
-<h4>
-<span id=".E4.BD.BF.E7.94.A8_macvlan_.E9.80.89.E9.A1.B9"></span><span class="mw-headline" id="使用_macvlan_选项">使用 macvlan 选项</span>
-</h4>
-<p>类似使用网桥，你可以更简单地通过选项 <code>--network-macvlan=<i>eth0</i></code> 使 systemd-nspawn 为容器创建一个桥接物理端口 eth0 的网络接口，并在容器中使用于物理机相同的网络配置方式即可。
-</p>
-<h3><span class="mw-headline" id="Run_on_a_non-systemd_system">Run on a non-systemd system</span></h3>
-<p>See <a href="../en/Init.html#systemd-nspawn" title="Init">Init#systemd-nspawn</a>.
-</p>
-<h3><span class="mw-headline" id="Specify_per-container_settings">Specify per-container settings</span></h3>
-<p>To specify per-container settings and not overrides for all (e.g. bind a directory to only one container), the <i>.nspawn</i> files can be used. See <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.nspawn"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.nspawn.5">systemd.nspawn(5)</a></span> for details.
-</p>
-<h3><span class="mw-headline" id="Use_Btrfs_subvolume_as_container_root">Use Btrfs subvolume as container root</span></h3>
-<p>To use a <a href="../en/Btrfs.html#Subvolumes" title="Btrfs">Btrfs subvolume</a> as a template for the container's root, use the <code>--template</code> flag. This takes a snapshot of the subvolume and populates the root directory for the container with it.
-</p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If the template path specified is not the root of a subvolume, the <b>entire</b> tree is copied. This will be very time consuming.</div>
-<p>For example, to use a snapshot located at <code>/.snapshots/403/snapshot</code>:
+<strong>Note:</strong> 如果指定的模板路径不是子卷的根，则会复制<b>整个</b>树。这将非常耗时。​</div>
+<p>例如，要使用位于<code>/.snapshots/403/snapshot</code>的快照：
 </p>
 <pre># systemd-nspawn --template=/.snapshots/403/snapshots -b -D <i>my-container</i>
 </pre>
-<p>where <code><i>my-container</i></code> is the name of the directory that will be created for the container. After powering off, the newly created subvolume is retained.
+<p>其中<code><i>my-container</i></code>是将为容器创建的目录的名称。关机后，会保留新创建的子卷。​
 </p>
-<h3><span class="mw-headline" id="Use_temporary_Btrfs_snapshot_of_container">Use temporary Btrfs snapshot of container</span></h3>
-<p>One can use the <code>--ephemeral</code> or <code>-x</code> flag to create a temporary btrfs snapshot of the container and use it as the container root. Any changes made while booted in the container will be lost. For example:
+<h3>
+<span id=".E4.BD.BF.E7.94.A8.E5.AE.B9.E5.99.A8.E7.9A.84.E4.B8.B4.E6.97.B6Btrfs.E5.BF.AB.E7.85.A7"></span><span class="mw-headline" id="使用容器的临时Btrfs快照">使用容器的临时Btrfs快照</span>
+</h3>
+<p>可以使用<code>--ephemeral</code>或<code>-x</code>标志来创建容器的临时btrfs快照，并将其作为容器的根。在容器中启动时所作的任何更改都将丢失。例如：
 </p>
 <pre># systemd-nspawn -D <i>my-container</i> -xb
 </pre>
-<p>where <i>my-container</i> is the directory of an <b>existing</b> container or system. For example, if <code>/</code> is a btrfs subvolume one could create an ephemeral container of the currently running host system by doing:
+<p>其中<i>my-container</i>是<b>现有</b>容器或系统的目录。例如，如果<code>/</code>是一个btrfs子卷，我们可以通过以下操作创建一个当前运行的主机系统的短暂容器：
 </p>
 <pre># systemd-nspawn -D / -xb 
 </pre>
-<p>After powering off the container, the btrfs subvolume that was created is immediately removed.
+<p>关闭容器电源后，创建的btrfs子卷会立即被删除。
 </p>
-<h3><span class="mw-headline" id="Run_docker_in_systemd-nspawn">Run docker in systemd-nspawn</span></h3>
-<p><a href="../en/Docker.html" title="Docker">Docker</a> requires <code>rw</code> permission of <code>/sys/fs/cgroup</code> to run its containers, which is mounted read-only by <code>systemd-nspawn</code> by default due to cgroup namespace. However, it is possible to run Docker in a systemd-nspawn container by bind-mounting <code>/sys/fs/cgroup</code> from host os and enabling necessary capabilities and permissions.
+<h3>
+<span id=".E5.9C.A8_systemd-nspawn_.E4.B8.AD.E8.BF.90.E8.A1.8C_docker"></span><span class="mw-headline" id="在_systemd-nspawn_中运行_docker">在 systemd-nspawn 中运行 docker</span>
+</h3>
+<p><a href="../en/Docker.html" title="Docker">Docker</a> 需要 <code>/sys/fs/cgroup</code> 的 <code>rw</code> 权限去运行容器， 由于cgroup命名空间的原因，它默认被<i>systemd-nspawn</i>挂载为只读。但是，通过从主机系统绑定挂载<code>/sys/fs/cgroup</code>并启用必要的能力和权限，可以在<i>systemd-nspawn</i>容器中运行Docker。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The following steps are essentially sharing the cgroup namespace to the container, giving kernel keyring permissions and making it a privileged container, which is likely to increase the attack surface and decrease security level. You should always evaluate the actual benefits by doing so before following the steps.</div>
-<p>First, cgroup namespace should be disabled by <code>systemctl edit systemd-nspawn@myContainer</code>
+<strong>Note:</strong> 下面的步骤实质上是将cgroup / 用户命名空间共享给容器，赋予内核键环权限，使其成为特权容器，这很可能会增加攻击面，降低安全级别。在遵循这些步骤之前，你一定要通过这样做来评估实际的好处。</div>
+<p>首先，通过<code>systemctl edit systemd-nspawn@myContainer</code>禁用cgroup命名空间。
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">systemctl edit systemd-nspawn@myContainer</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
 Environment=SYSTEMD_NSPAWN_USE_CGNS=0
 </pre>
-<p>Then, edit <code>/etc/systemd/nspawn/myContainer.nspawn</code> (create if absent) and add the following configurations.
+<p>然后， 编辑（或创建） <code>/etc/systemd/nspawn/myContainer.nspawn</code> 并加入下方配置。
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/nspawn/myContainer.nspawn</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Exec]
 Capability=all
 SystemCallFilter=add_key keyctl
+PrivateUsers=no
 
 [Files]
 Bind=/sys/fs/cgroup
 </pre>
-<p>This grants all capabilities to the container, whitelists two system calls <code>add_key</code> and <code>keyctl</code> (related to kernel keyring and required by Docker), and bind-mounts <code>/sys/fs/cgroup</code> from host to the container. After editing these files, you need to poweroff and restart your container for them to take effect.
+<p>这将授予容器所有的功能，禁用用户名称间隔，将两个系统列入调用<code>add_key</code>和<code>keyctl</code>的白名单。(与内核键环有关，被Docker 所需要)，以及从主机到容器的绑定挂载<code>/sys/fs/cgroup</code>。编辑这些文件后，您需要关机并重新启动您的容器，它们才能生效。如果您的容器在此更改之前启用了用户命名空间（如果使用 <code>systemd-nspawn@.service</code> 单元，则为默认值），您还需要撤销由用户命名空间引起的权限更改以避免权限错误。详情请参见<a href="#%E6%97%A0%E7%89%B9%E6%9D%83%E5%AE%B9%E5%99%A8">#无特权容器</a>。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> You might need to load the <code>overlay</code> module on the host before starting Docker inside the systemd-nspawn to use the <code>overlay2</code> storage driver (default storage driver of Docker) properly. Failure to load the driver will cause Docker to choose the inefficient driver <code>vfs</code> which copies everything for every layer of Docker containers. Consult <a href="../en/Kernel_module.html#Automatic_module_loading_with_systemd" class="mw-redirect" title="Kernel modules">Kernel modules#Automatic module loading with systemd</a> on how to load the module automatically.</div>
-<h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
-<h3><span class="mw-headline" id="Root_login_fails">Root login fails</span></h3>
-<p>If you get the following error when you try to login (i.e. using <code>machinectl login &lt;name&gt;</code>):
+<strong>Note:</strong> 
+<ul>
+<li>在systemd-nspawn里面启动Docker之前，你可能需要在主机上加载<code>overlay</code>模块，才能正确使用<code>overlay2</code>存储驱动（Docker的默认存储驱动）。如果没有加载驱动，会导致Docker选择效率低下的驱动<code>vfs</code>，该驱动会为每一层Docker容器复制一切。请参考<a href="../en/Kernel_module.html#Automatic_module_loading_with_systemd" class="mw-redirect" title="Kernel modules">Kernel modules#Automatic module loading with systemd</a>，了解如何自动加载模块。</li>
+<li>从2020年11月起，cgroups v2 似乎会破坏<i>systemd-nspawn</i>内的Docker。如果你想以这种方式使用Docker，不要设置内核参数<code>systemd.unified_cgroup_hierarchy=1</code>。</li>
+</ul>
+</div>
+<h3>
+<span id=".E5.9C.A8.E6.97.A0root.E6.9D.83.E9.99.90.E7.9A.84.E6.83.85.E5.86.B5.E4.B8.8B.E4.BD.BF.E7.94.A8machinectl"></span><span class="mw-headline" id="在无root权限的情况下使用machinectl">在无root权限的情况下使用machinectl</span>
+</h3>
+<p>machined 启用了 <a href="../en/Polkit.html" title="Polkit">Polkit</a>，这就允许创建polkit规则，允许在不成为root用户的情况下执行某些操作。不同的权限在<code>/usr/share/polkit-1/actions/org.freedesktop.machine1.policy</code>中进行了描述，所有权限都在<code>org.freedesktop.machine1.</code>下。
+</p>
+<p>要允许名为 "foo "的用户在没有root权限的情况下执行所有操作，请添加一个规则：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/polkit-1/rules.d/machined.rules</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">polkit.addRule(
+  function(action, subject) {
+    if (action.id.startsWith("org.freedesktop.machine1.") &amp;&amp; subject.user == "foo") {
+      return polkit.Result.YES;
+    }
+  }
+);
+</pre>
+<p>另外，用户需要有管理<code>systemd-nspawn@</code>单元的权限，才能启动和停止nspawn容器，添加这个规则就可以了：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/polkit-1/rules.d/machined.rules</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">polkit.addRule(
+  function(action, subject) {
+    if ((action.id.startsWith("org.freedesktop.machine1.") || (action.id == "org.freedesktop.systemd1.manage-units" &amp;&amp; action.lookup("unit").startsWith("systemd-nspawn@"))) &amp;&amp; subject.user == "foo") {
+      return polkit.Result.YES;
+    }
+  }
+);
+</pre>
+<h2>
+<span id=".E7.96.91.E9.9A.BE.E8.A7.A3.E7.AD.94"></span><span class="mw-headline" id="疑难解答">疑难解答</span>
+</h2>
+<h3>
+<span id="Root.E7.99.BB.E5.BD.95.E5.A4.B1.E8.B4.A5"></span><span class="mw-headline" id="Root登录失败">Root登录失败</span>
+</h3>
+<p>如果您在尝试登录时（即使用<code>machinectl login &lt;name&gt;</code>）得到以下错误:
 </p>
 <pre>arch-nspawn login: root
 Login incorrect
 </pre>
-<p>And <code>journalctl</code> shows:
+<p>并且 <code>journalctl</code> 显示:
 </p>
 <pre>pam_securetty(login:auth): access denied: tty 'pts/0' is not secure !
 </pre>
-<p>Add <code>pts/0</code> to the list of terminal names in <code>/etc/securetty</code> on the <b>container</b> filesystem, see <a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/questions/41840/effect-of-entries-in-etc-securetty/41939#41939">[2]</a>. You can also opt to delete <code>/etc/securetty</code> on the <b>container</b> to allow root to login to any tty, see <a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/issues/852">[3]</a>.
-</p>
-<h3><span class="mw-headline" id="Unable_to_upgrade_some_packages_on_the_container">Unable to upgrade some packages on the container</span></h3>
-<p>It can sometimes be impossible to upgrade some packages on the container, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=filesystem">filesystem</a></span> being a perfect example. The issue is due to <code>/sys</code> being mounted as Read Only. The workaround is to remount the directory in Read Write when running <code>mount -o remount,rw -t sysfs sysfs /sys</code>, do the upgrade then reboot the container.
+<p>删除<b>容器</b>文件系统中的<code>/etc/securetty</code><a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/questions/41840/effect-of-entries-in-etc-securetty/41939#41939">[7]</a>和<code>/usr/share/factory/etc/securetty</code>。可以选择将它们添加到<code>/etc/pacman.conf</code>中的<a href="../en/Pacman.html#Skip_files_from_being_installed_to_system" title="Pacman">NoExtract</a>，以防止它们被重新安装。详情请参见<a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/45903">FS#45903</a>。
 </p>
 <h3>
 <span id="execv.28....29_failed:_Permission_denied"></span><span class="mw-headline" id="execv(...)_failed:_Permission_denied">execv(...) failed: Permission denied</span>
 </h3>
-<p>When trying to boot the container via <code>systemd-nspawn -bD <i>/path/to/container</i></code> (or executing something in the container), and the following error comes up:
+<p>当试图通过<code>systemd-nspawn -bD <i>/path/to/container</i></code>来启动容器时（或在容器中执行一些东西），出现以下错误：
 </p>
 <pre>execv(/usr/lib/systemd/systemd, /lib/systemd/systemd, /sbin/init) failed: Permission denied
 </pre>
-<p>even though the permissions of the files in question (i.e. <code>/lib/systemd/systemd</code>) are correct, this can be the result of having mounted the file system on which the container is stored as non-root user. For example, if you mount your disk manually with an entry in <a href="../en/Fstab.html" title="Fstab">fstab</a> that has the options <code>noauto,user,...</code>, <i>systemd-nspawn</i> will not allow executing the files even if they are owned by root.
+<p>即使有关文件的权限（即 <code>/lib/systemd/systemd</code>）是正确的，这也可能是由于以非root用户的身份挂载容器所在的文件系统造成的。例如，如果您在<a href="../en/Fstab.html" title="Fstab">fstab</a>中手动挂载了具有<code>noauto,user,...</code>选项的磁盘，<i>systemd-nspawn</i>将不允许执行文件，即使它们是由root用户拥有的。
 </p>
-<h3><span class="mw-headline" id="Reboot_not_working">Reboot not working</span></h3>
-<p>When trying to reboot the container via machinectl or within the container, the container does not reboot.
+<h3>
+<span id="TERM.E4.B8.AD.E7.9A.84.E7.BB.88.E7.AB.AF.E7.B1.BB.E5.9E.8B.E4.B8.8D.E6.AD.A3.E7.A1.AE.EF.BC.88.E7.A0.B4.E6.8D.9F.E7.9A.84.E9.A2.9C.E8.89.B2.EF.BC.89"></span><span class="mw-headline" id="TERM中的终端类型不正确（破损的颜色）">TERM中的终端类型不正确（破损的颜色）</span>
+</h3>
+<p>当通过<code>machinectl login</code>登录容器时，容器内的终端中的颜色和按键可能会被破坏。这可能是由于<code>TERM</code>环境变量中的终端类型不正确。除非明确配置，否则环境变量不会从主机上的 shell 继承，而是回到 systemd 中固定的默认值 (<code>vt220</code>)。要配置，在容器内为 <code>container-getty@.service</code> systemd 服务创建一个配置覆盖，启动 <code>machinectl login</code> 的登录 getty，并将 <code>TERM</code> 设置为与您登录的主机终端匹配的值：
 </p>
-<p>Workaround: edit <code>/usr/lib/systemd/system/systemd-nspawn@.service</code> and remove <code>--keep-unit</code>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/container-getty@.service.d/term.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
+Environment=TERM=xterm-256color</pre>
+<p>或者使用<code>machinectl shell</code>。它正确地继承了终端的<code>TERM</code>环境变量。
 </p>
-<p>Reference: <a rel="nofollow" class="external free" href="https://github.com/systemd/systemd/issues/2809">https://github.com/systemd/systemd/issues/2809</a>
-</p>
-<h3><span class="mw-headline" id="Mounting_a_NFS_share_inside_the_container">Mounting a NFS share inside the container</span></h3>
-<p>Not possible at this time (June 2019).
+<h3>
+<span id=".E5.9C.A8.E5.AE.B9.E5.99.A8.E5.86.85.E6.8C.82.E8.BD.BDNFS.E5.85.B1.E4.BA.AB"></span><span class="mw-headline" id="在容器内挂载NFS共享">在容器内挂载NFS共享</span>
+</h3>
+<p>目前（2019年6月）不可能
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a href="../en/Getty.html#Nspawn_console" title="Getty">Automatic console login</a></li>
-<li><a rel="nofollow" class="external text" href="https://www.freedesktop.org/software/systemd/man/machinectl.html">machinectl man page</a></li>
-<li><a rel="nofollow" class="external text" href="https://www.freedesktop.org/software/systemd/man/systemd-nspawn.html">systemd-nspawn man page</a></li>
-<li><a rel="nofollow" class="external text" href="http://lwn.net/Articles/572957/">Creating containers with systemd-nspawn</a></li>
-<li><a rel="nofollow" class="external text" href="https://www.youtube.com/results?search_query=systemd-nspawn&amp;aq=f">Presentation by Lennart Pottering on systemd-nspawn</a></li>
-<li><a rel="nofollow" class="external text" href="http://dabase.com/e/12009/">Running Firefox in a systemd-nspawn container</a></li>
+<li><a rel="nofollow" class="external text" href="https://lwn.net/Articles/572957/">Creating containers with systemd-nspawn</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.youtube.com/results?search_query=systemd-nspawn&amp;aq=f">Presentation by Lennart Poettering on systemd-nspawn</a></li>
+<li><a rel="nofollow" class="external text" href="https://dabase.com/e/12009/">Running Firefox in a systemd-nspawn container</a></li>
+<li><a rel="nofollow" class="external text" href="https://patrickskiba.com/sysytemd-nspawn/2019/03/21/graphical-applications-in-systemd-nspawn.html">Graphical applications in systemd-nspawn</a></li>
 </ul>
 </div>
 </div>
@@ -523,10 +706,9 @@ Login incorrect
 </ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 </ul>
 </div>
 </div>
@@ -535,8 +717,8 @@ Login incorrect
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-nspawn_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=648356">https://wiki.archlinux.org/index.php?title=Systemd-nspawn_(简体中文)&amp;oldid=648356</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 6 January 2021, at 12:06.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-nspawn_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=659364">https://wiki.archlinux.org/index.php?title=Systemd-nspawn_(简体中文)&amp;oldid=659364</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 April 2021, at 00:13.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

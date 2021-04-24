@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -101,15 +102,14 @@
 <li>
 <b>Windows 8/8.1</b> <b>x86_64</b> permiten el arranque en modo UEFI x86_64 de disco GPT solamente, o en modo BIOS desde disco MBR/msdos. No soportan arranque UEFI IA32, arranque UEFI x86_64 desde discos MBR/msdos o arranque BIOS desde discos GPT.</li>
 </ul>
-<p><br>
-En el caso de un sistema preinstalado:
+<p>En el caso de un sistema preinstalado:
 </p>
 <ul>
 <li>TODOS los sistemas preinstalados con Windows XP, Vista o 7 de 32 bits, con independencia de la versión de Service Pack, el modo de bits (bitness) del procesador (32 o 64), la edición (SKU) o la presencia de soporte UEFI del firmware, arrancan en modo BIOS-MBR por defecto.</li>
 <li>LA MAYORÍA de los sistemas de preinstalado con Windows 7 x86_64, con independencia de la versión de Service Pack, el modo de bits o la edición (SKU), arrancan en modo BIOS-MBR por defecto. Muy pocos sistemas recientes preinstalados con Windows 7 arrancan en modo UEFI x86_64-GPT de forma predeterminada.</li>
 <li>TODOS los sistemas preinstalados con Windows 8/8.1 en modo UEFI-GPT. El modo de bits del firmware coincide con el de Windows es decir, Windows 8/8.1 x86_64 arranca en modo UEFI x86_64 y Windows 8/8.1 de 32 bits arranca en modo UEFI IA32.</li>
 </ul>
-<p>La mejor manera de detectar el modo de inicio de Windows es hacer lo siguiente (información del <a rel="nofollow" class="external text" href="http://www.eightforums.com/tutorials/29504-bios-mode-see-if-windows-boot-uefi-legacy-mode">.html aquí</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-02]</sup>):
+<p>La mejor manera de detectar el modo de inicio de Windows es hacer lo siguiente (información del <a rel="nofollow" class="external text" href="https://www.eightforums.com/threads/bios-mode-see-if-windows-boot-in-uefi-or-legacy-mode.29504/">aquí</a>):
 </p>
 <ul>
 <li>Arranque Windows</li>
@@ -131,7 +131,7 @@ En el caso de un sistema preinstalado:
 <span id="Limitaciones_de_los_cargadores_de_arranque_UEFI_v.2Fs_BIOS"></span><span class="mw-headline" id="Limitaciones_de_los_cargadores_de_arranque_UEFI_v/s_BIOS">Limitaciones de los cargadores de arranque UEFI v/s BIOS</span>
 </h3>
 <p>La mayoría de los gestores de arranque de linux que se instalan para una versión de firmware, no permiten el inicio de gestores de arranque de otra versión del firmware. Esto es, si Arch se instala en modo UEFI-GPT o UEFI-MBR en un disco, y Windows se instala en modo BIOS-MBR en otro disco, el gestor de arranque UEFI utilizado por Arch no puede cargar el arranque BIOS del disco con Windows. De manera similar, si se instala Arch en modo BIOS-MBR o BIOS-GPT en un disco y se instala Windows en modo UEFI-GPT, el gestor de arranque BIOS utilizado por Arch no puede cargar el gestor UEFI del disco con Windows.
-Las únicas excepciones a esto son utilizando grub(2) en Apple Macs, en los que grub(2) instalado con EFI permite cargar el SO installado con BIOS utilizando el commando <b>appleloader</b> (No funciona en sistemas que no sean Apple) y con rEFInd que técnicamente soporta el arranque de SO BIOS desde sistemas con arranque UEFI, aunque el sistema de <a rel="nofollow" class="external text" href="http://rodsbooks.com/refind/using.html#legado">BIOS no siempre funciona en sistemas UEFI que no sean Apple</a> según explica el autor Rod Smith. 
+Las únicas excepciones a esto son utilizando grub(2) en Apple Macs, en los que grub(2) instalado con EFI permite cargar el SO installado con BIOS utilizando el commando <b>appleloader</b> (No funciona en sistemas que no sean Apple) y con rEFInd que técnicamente soporta el arranque de SO BIOS desde sistemas con arranque UEFI, aunque el sistema de <a rel="nofollow" class="external text" href="https://rodsbooks.com/refind/using.html#legado">BIOS no siempre funciona en sistemas UEFI que no sean Apple</a> según explica el autor Rod Smith. 
 </p>
 <p>De todas maneras, si se instala Arch en modo BIOS-GPT en un disco y se instala Windows en modo BIOS-MBR en otro disco, el gesto de arranque utilizado por Arch SÍ PUEDE cargar Windows desde el otro disco, siempre y cuando el gestor de arranque soporte el cargar en cadena desde otro disco.
 </p>
@@ -149,11 +149,10 @@ Las únicas excepciones a esto son utilizando grub(2) en Apple Macs, en los que 
 </h3>
 <p>El arranque rápido es una caracterítica de Windows 8, que hiberna al sistema en vez de apagarlo para acelerar el tiempo de arranque. El sistema puede llegar a perder datos is es que Windows hiberna, se arranca un segundo SO y se realizan cambios a archivos. Aun cuando no planee compartir sistemas de archvo, el particionado EFI puede dañarse (en un sistema EFI). De esta forma se recomienda la desahabilitación del arranque rápido, como se describe <a rel="nofollow" class="external text" href="http://www.eightforums.com/tutorials/6320-fast-startup-turn-off-windows-8-a.html">here</a>, antes de la instalación de Arch en un ordenador que utilice Windows 8. 
 </p>
-<p><br>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ntfs-3g">ntfs-3g</a></span> agregó una <a rel="nofollow" class="external text" href="https://sourceforge.net/p/ntfs-3g/ntfs-3g/ci/559270a8f67c77a7ce51246c23d2b2837bcff0c9/">salva guarda</a> para prevenir el montaje en modo lectura/escritura de discos hibernados, pero el controlador NTFS utilizado por el kernel de Linux no posee este tipo de salvaguardia.
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ntfs-3g">ntfs-3g</a></span> agregó una <a rel="nofollow" class="external text" href="https://sourceforge.net/p/ntfs-3g/ntfs-3g/ci/559270a8f67c77a7ce51246c23d2b2837bcff0c9/">salva guarda</a> para prevenir el montaje en modo lectura/escritura de discos hibernados, pero el controlador NTFS utilizado por el kernel de Linux no posee este tipo de salvaguardia.
 </p>
 <h3><span class="mw-headline" id="Limitaciones_de_nombres_de_archivos_en_Windows">Limitaciones de nombres de archivos en Windows</span></h3>
-<p>Windows está limitado a rutas de archivos más cortas que<a rel="nofollow" class="external text" href="http://blogs.msdn.com/b/bclteam/archive/2007/02/13/long-paths-in-net-part-1-of-3-kim-hamilton.aspx">260 caractéres</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-12-24]</sup>.
+<p>Windows está limitado a rutas de archivos más cortas que<a rel="nofollow" class="external text" href="https://docs.microsoft.com/en-us/archive/blogs/bclteam/long-paths-in-net-part-1-of-3-kim-hamilton">260 caractéres</a>.
 </p>
 <p>Windows también pone a <a rel="nofollow" class="external text" href="https://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx#naming_conventions">algunos carcacteres fuera de límites</a> en los nombres de archivo por razones que se pueden trazar hasta el DOS:
 </p>
@@ -169,7 +168,7 @@ Las únicas excepciones a esto son utilizando grub(2) en Apple Macs, en los que 
 <li>* (asterisco)</li>
 </ul>
 <p>Estas son limitaciones del sistema Windows, y no de la partición NTFS; otro SO que utilice la partición no tendrá estas limitaciones. Windows no podría detectar estos archivos y correr <code>chkdsk</code> probablemente cause su borrado, lo que puede provocar pérdida de datos.
-<b>NTFS-3G</b> aplica las restricciones de Windows para nombrar nuevos archivos a través de la opción <a rel="nofollow" class="external text" href="http://www.tuxera.com/community/ntfs-3g-manual/#4">windows_filenames</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-12-24]</sup> (vea <a href="../en/Fstab.html" title="Fstab">fstab</a>).
+<b>NTFS-3G</b> aplica las restricciones de Windows para nombrar nuevos archivos a través de la opción windows_filenames: <span class="plainlinks archwiki-template-man" title="$ man 8 ntfs-3g"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ntfs-3g.8#Windows_Filename_Compatibility">ntfs-3g(8) § Windows_Filename_Compatibility</a></span> (vea <a href="../en/Fstab.html" title="Fstab">fstab</a>).
 </p>
 <h2>
 <span id="Instalaci.C3.B3n"></span><span class="mw-headline" id="Instalación">Instalación</span>
@@ -214,7 +213,7 @@ bcdedit /timeout 30
 <h5>
 <span id="Cargador_de_arranque_de_Windows_2000.2FXP"></span><span class="mw-headline" id="Cargador_de_arranque_de_Windows_2000/XP">Cargador de arranque de Windows 2000/XP</span>
 </h5>
-<p>Para más información de este método vea <a rel="nofollow" class="external free" href="http://www.geocities.com/epark/linux/grub-w2k-HOWTO.html">http://www.geocities.com/epark/linux/grub-w2k-HOWTO.html</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-02]</sup>. No parecen haber muchas ventajas de utilizar este método por sobre el de utilizar un cargador de arranque de Linux; De todas formas necesitará crear una partición <code>/boot</code>, y este método es definitivamente más difícil de configurar. 
+<p>Para más información de este método vea <a rel="nofollow" class="external free" href="https://web.archive.org/web/20140522125434/http://www.geocities.com/epark/linux/grub-w2k-HOWTO.html">https://web.archive.org/web/20140522125434/http://www.geocities.com/epark/linux/grub-w2k-HOWTO.html</a>. No parecen haber muchas ventajas de utilizar este método por sobre el de utilizar un cargador de arranque de Linux; De todas formas necesitará crear una partición <code>/boot</code>, y este método es definitivamente más difícil de configurar.
 </p>
 <h3><span class="mw-headline" id="Sistema_UEFI">Sistema UEFI</span></h3>
 <p>Tanto <a href="../en/Systemd-boot.html" title="Systemd-boot">systemd-boot</a> (anteriormente llamado <b>gummiboot</b>) como <a href="../en/REFInd.html" title="REFInd">rEFInd</a> detectan automáticamente el <b>cargador de arranque Windows</b> <code>\EFI\Microsoft\Boot\bootmgfw.efi</code> y lo muestran en su menu de inicio, por lo que no es necesario realizar ninguna configuración manual.
@@ -249,10 +248,7 @@ bcdedit /timeout 30
 <li><a href="../es/Category:Installation_process.html" title="Category:Installation process (Español)">Installation process (Español)</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -260,8 +256,8 @@ bcdedit /timeout 30
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(Espa%C3%B1ol)&amp;oldid=646478">https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(Español)&amp;oldid=646478</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 December 2020, at 11:08.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(Espa%C3%B1ol)&amp;oldid=661884">https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(Español)&amp;oldid=661884</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 14:50.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

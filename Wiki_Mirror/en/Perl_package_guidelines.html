@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -232,13 +233,13 @@ WriteMakeFile(
     'PREREQ_PM' =&gt; { 'POSIX' =&gt; '0.01' },
 );
 </pre>
-<p>This is a contrived example but it is important to understand the dependencies aren't final until after the <code>Makefile.PL</code> or <code>Build.PL</code> script is run. Dependencies are specified at runtime, which means they can be changed or modified using the full power of perl. This means the module author can add, remove, or change versions of dependencies right before the distribution is installed. Some modules authors use this to do overly clever things like depend on modules only if they are installed. Some multi-platform dists also depend on system-specific modules when installed on different operating systems.
+<p>This is a contrived example but it is important to understand the dependencies are not final until after the <code>Makefile.PL</code> or <code>Build.PL</code> script is run. Dependencies are specified at runtime, which means they can be changed or modified using the full power of perl. This means the module author can add, remove, or change versions of dependencies right before the distribution is installed. Some modules authors use this to do overly clever things like depend on modules only if they are installed. Some multi-platform dists also depend on system-specific modules when installed on different operating systems.
 </p>
 <p>As an example, the CPANPLUS distribution looks for CPANPLUS::Dist plugins that are currently installed. If any plugins are installed for the currently installed version of CPANPLUS it adds them to the new CPANPLUS's prerequisites. I'm not quite sure why. Luckily for the perl packager most dependencies are static like in the above example that requires the POSIX module with a minimum version of 0.01.
 </p>
 <h3><span class="mw-headline" id="Meta_information">Meta information</span></h3>
 <p>Meta files are included in recent distributions which contain meta-information about distributions such as the name, author, abstract description, and module requirements. Previously there were <code>META.yml</code> files in the YAML format but more recently the switch has been made to <code>META.json</code> files in the JSON format. These files can
-be edited by hand but more often they are generated automatically by <code>Makefile.PL</code> or <code>Build.PL</code> scripts when packaging a distribution for release. The latest specification is described in <a rel="nofollow" class="external text" href="http://search.cpan.org/perldoc?CPAN::Meta::Spec">CPAN::Meta::Spec's online docs</a>.
+be edited by hand but more often they are generated automatically by <code>Makefile.PL</code> or <code>Build.PL</code> scripts when packaging a distribution for release. The latest specification is described in <a rel="nofollow" class="external text" href="https://search.cpan.org/perldoc?CPAN::Meta::Spec">CPAN::Meta::Spec's online docs</a>.
 </p>
 <p>Remember that dependencies can be changed at runtime! For this reason another meta file is generated after running the build script. This second meta file is called <code>MYMETA.json</code> and reflects changes the script made at runtime and may be different from the meta file generated when the distribution was packaged for CPAN.
 </p>
@@ -259,7 +260,7 @@ be edited by hand but more often they are generated automatically by <code>Makef
 <dt>Build script</dt>
 <dd><code>Makefile.PL</code></dd>
 <dt>CPAN link</dt>
-<dd><a rel="nofollow" class="external free" href="http://search.cpan.org/dist/ExtUtils-MakeMaker">http://search.cpan.org/dist/ExtUtils-MakeMaker</a></dd>
+<dd><a rel="nofollow" class="external free" href="https://search.cpan.org/dist/ExtUtils-MakeMaker">https://search.cpan.org/dist/ExtUtils-MakeMaker</a></dd>
 </dl>
 <p>The original, oldest module for installing modules is <code>ExtUtils::MakeMaker</code>.  The major downside to this module is that it requires the <code>make</code> program to build and install everything.  This may not seem like a big deal to linux users but is a real hassle for Windows people!
 </p>
@@ -268,7 +269,7 @@ be edited by hand but more often they are generated automatically by <code>Makef
 <dt>Build script</dt>
 <dd><code>Build.PL</code></dd>
 <dt>CPAN link</dt>
-<dd><a rel="nofollow" class="external free" href="http://search.cpan.org/dist/Module-Build">http://search.cpan.org/dist/Module-Build</a></dd>
+<dd><a rel="nofollow" class="external free" href="https://search.cpan.org/dist/Module-Build">https://search.cpan.org/dist/Module-Build</a></dd>
 </dl>
 <p>The main advantage of Module::Build is that it is pure-perl.  This means it does not require a <code>make</code> program to be installed for you to build/install modules.  Its adoption was rocky because if <code>Module::Build</code> was not already installed, you could not run the bundled <code>Build.PL</code> script!  This is not a problem with recent versions of perl because <code>Module::Build</code> is a core module. (<b>NOTE</b> As of perl 5.22, Module::Build will no longer be a core module)
 </p>
@@ -277,28 +278,28 @@ be edited by hand but more often they are generated automatically by <code>Makef
 <dt>Build script</dt>
 <dd><code>Build.PL</code></dd>
 <dt>CPAN link</dt>
-<dd><a rel="nofollow" class="external free" href="http://search.cpan.org/dist/Module-Build-Tiny">http://search.cpan.org/dist/Module-Build-Tiny</a></dd>
+<dd><a rel="nofollow" class="external free" href="https://search.cpan.org/dist/Module-Build-Tiny">https://search.cpan.org/dist/Module-Build-Tiny</a></dd>
 </dl>
-<p>This is another pure-perl build tool. As an interface it implements a subset of Module::Build's interface, in particular it requires dashes before its arguments (Module::Build accepts with and without) and doesn't support <code>.modulebuildrc</code>.
+<p>This is another pure-perl build tool. As an interface it implements a subset of Module::Build's interface, in particular it requires dashes before its arguments (Module::Build accepts with and without) and does not support <code>.modulebuildrc</code>.
 </p>
 <h3><span class="mw-headline" id="Module::Install">Module::Install</span></h3>
 <dl>
 <dt>Build script</dt>
 <dd><code>Makefile.PL</code></dd>
 <dt>CPAN link</dt>
-<dd><a rel="nofollow" class="external free" href="http://search.cpan.org/dist/Module-Install">http://search.cpan.org/dist/Module-Install</a></dd>
+<dd><a rel="nofollow" class="external free" href="https://search.cpan.org/dist/Module-Install">https://search.cpan.org/dist/Module-Install</a></dd>
 </dl>
 <p>Another modern build/installation module, <code>Module::Install</code> still requires the <code>make</code> program be installed to function.  <code>MI</code> was designed as a drop-in replacement for <code>MakeMaker</code>, to address some of <code>MakeMaker</code>'s shortcomings. Ironically, it depends on <code>MakeMaker</code> in order to operate. The <code>Makefile.PL</code> files that are generated by <code>MI</code> look much different and are implemented using a simple domain specific language.
 </p>
 <p>One very interesting feature is that <code>Module::Install</code> bundles a <i>complete</i> <i>copy</i> of itself into the distribution file.  Because of this, unlike <code>MakeMaker</code> or <code>M::B</code>, you do not need <code>Module::Install</code> to be installed on your system.
 </p>
-<p>Another very unique feature is auto-install.  <i>Though not recommended by <code>Module::Install</code>'s authors this feature is used quite often.</i>  When the module author enables auto-install for his distribution, <code>Module::Install</code> will search for and install any pre-requisite modules that are not installed when <code>Makefile.PL</code> is executed.  This feature is skipped when <code>Module::Install</code> detects it is being run by <code>CPAN</code> or <code>CPANPLUS</code>.  However, this feature is not skipped when run inside... oh I don't know... a <b>PKGBUILD</b>!  I hope you can see how a rogue perl program downloading and installing modules willy-nilly <i>inside a PKGBUILD</i> can be a problem.  See the <a href="#PERL_AUTOINSTALL">#PERL_AUTOINSTALL</a> environment variable to see how to fix this.
+<p>Another very unique feature is auto-install.  <i>Though not recommended by <code>Module::Install</code>'s authors this feature is used quite often.</i>  When the module author enables auto-install for his distribution, <code>Module::Install</code> will search for and install any pre-requisite modules that are not installed when <code>Makefile.PL</code> is executed.  This feature is skipped when <code>Module::Install</code> detects it is being run by <code>CPAN</code> or <code>CPANPLUS</code>.  However, this feature is not skipped when run inside... oh I do not know... a <b>PKGBUILD</b>!  I hope you can see how a rogue perl program downloading and installing modules willy-nilly <i>inside a PKGBUILD</i> can be a problem.  See the <a href="#PERL_AUTOINSTALL">#PERL_AUTOINSTALL</a> environment variable to see how to fix this.
 </p>
 <h3><span class="mw-headline" id="Environment_variables">Environment variables</span></h3>
 <p>A number of environment variables can affect the way the modules are built or installed.  Some have a very dramatic effect and can cause problems if misunderstood.  An advanced user could be using these environment variables.  Some of these will break an unsuspecting PKGBUILD or cause unexpected behavior.
 </p>
 <h4><span class="mw-headline" id="PERL_MM_USE_DEFAULT">PERL_MM_USE_DEFAULT</span></h4>
-<p>When this variable is set to a true value, the installation module will pretend the default answer was given to any question it would normally ask.  This does not <i>always</i> work, but all of the installation modules honour it.  <i>That doesn't mean the module author will!</i>
+<p>When this variable is set to a true value, the installation module will pretend the default answer was given to any question it would normally ask.  This does not <i>always</i> work, but all of the installation modules honour it.  <i>That does not mean the module author will!</i>
 </p>
 <h4><span class="mw-headline" id="PERL_AUTOINSTALL">PERL_AUTOINSTALL</span></h4>
 <p>You can pass additional command-line arguments to <code>Module::Install</code>'s <code>Makefile.PL</code> with this variable.  In order to turn off auto-install (<i>highly recommended</i>), assign <code>--skipdeps</code> to this.
@@ -313,7 +314,7 @@ be edited by hand but more often they are generated automatically by <code>Makef
 </p>
 <pre>export PERL_MB_OPT=--install_base=~/perl5</pre>
 <h4><span class="mw-headline" id="MODULEBUILDRC">MODULEBUILDRC</span></h4>
-<p><code>Module::Build</code> allows you to override its command-line-arguments with an rcfile.  This defaults to <code>~/.modulebuildrc</code>.  This is considered deprecated within the perl toolchain. You can override which file it uses by setting the path to the rcfile in <code>MODULEBUILDRC</code>.  The paranoid might set <code>MODULEBUILDRC</code> to <code>/dev/null</code>... just in case. 
+<p><code>Module::Build</code> allows you to override its command-line-arguments with an rcfile.  This defaults to <code>~/.modulebuildrc</code>.  This is considered deprecated within the perl toolchain. You can override which file it uses by setting the path to the rcfile in <code>MODULEBUILDRC</code>.  The paranoid might set <code>MODULEBUILDRC</code> to <code>/dev/null</code>... just in case.
 </p>
 <h4><span class="mw-headline" id="PERL5LIB">PERL5LIB</span></h4>
 <p>The directories searched for libraries can be set by the user (particularly if they are using <code>Local::Lib</code>) by setting <code>PERL5LIB</code>. That should be cleared before building.
@@ -344,8 +345,8 @@ be edited by hand but more often they are generated automatically by <code>Makef
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Perl_package_guidelines&amp;oldid=552531">https://wiki.archlinux.org/index.php?title=Perl_package_guidelines&amp;oldid=552531</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 2 November 2018, at 02:32.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Perl_package_guidelines&amp;oldid=662198">https://wiki.archlinux.org/index.php?title=Perl_package_guidelines&amp;oldid=662198</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 20:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

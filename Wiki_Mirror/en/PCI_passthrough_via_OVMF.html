@@ -37,11 +37,12 @@
 <p>Related articles</p>
 <ul>
 <li><a href="../en/Intel_GVT-g.html" title="Intel GVT-g">Intel GVT-g</a></li>
+<li><a href="../en/PCI_passthrough_via_OVMF/Examples.html" title="PCI passthrough via OVMF/Examples">PCI passthrough via OVMF/Examples</a></li>
 </ul>
 </div>
 <p>The Open Virtual Machine Firmware (<a rel="nofollow" class="external text" href="https://github.com/tianocore/tianocore.github.io/wiki/OVMF">OVMF</a>) is a project to enable UEFI support for virtual machines. Starting with Linux 3.9 and recent versions of <a href="../en/QEMU.html" title="QEMU">QEMU</a>, it is now possible to passthrough a graphics card, offering the VM native graphics performance which is useful for graphic-intensive tasks.
 </p>
-<p>Provided you have a desktop computer with a spare GPU you can dedicate to the host (be it an integrated GPU or an old OEM card, the brands do not even need to match) and that your hardware supports it (see <a href="#Prerequisites">#Prerequisites</a>), it is possible to have a VM of any OS with its own dedicated GPU and near-native performance. For more information on techniques see the background <a rel="nofollow" class="external text" href="https://www.linux-kvm.org/images/b/b3/01x09b-VFIOandYou-small.pdf">presentation (pdf)</a>. 
+<p>Provided you have a desktop computer with a spare GPU you can dedicate to the host (be it an integrated GPU or an old OEM card, the brands do not even need to match) and that your hardware supports it (see <a href="#Prerequisites">#Prerequisites</a>), it is possible to have a VM of any OS with its own dedicated GPU and near-native performance. For more information on techniques see the background <a rel="nofollow" class="external text" href="https://www.linux-kvm.org/images/b/b3/01x09b-VFIOandYou-small.pdf">presentation (pdf)</a>.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -71,173 +72,174 @@
 <a href="#Loading_vfio-pci_early"><span class="tocnumber">3.2</span> <span class="toctext">Loading vfio-pci early</span></a>
 <ul>
 <li class="toclevel-3 tocsection-10"><a href="#mkinitcpio"><span class="tocnumber">3.2.1</span> <span class="toctext">mkinitcpio</span></a></li>
-<li class="toclevel-3 tocsection-11"><a href="#dracut"><span class="tocnumber">3.2.2</span> <span class="toctext">dracut</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#booster"><span class="tocnumber">3.2.2</span> <span class="toctext">booster</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#dracut"><span class="tocnumber">3.2.3</span> <span class="toctext">dracut</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-12"><a href="#Verifying_that_the_configuration_worked"><span class="tocnumber">3.3</span> <span class="toctext">Verifying that the configuration worked</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Verifying_that_the_configuration_worked"><span class="tocnumber">3.3</span> <span class="toctext">Verifying that the configuration worked</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-13">
+<li class="toclevel-1 tocsection-14">
 <a href="#Setting_up_an_OVMF-based_guest_VM"><span class="tocnumber">4</span> <span class="toctext">Setting up an OVMF-based guest VM</span></a>
 <ul>
-<li class="toclevel-2 tocsection-14"><a href="#Configuring_libvirt"><span class="tocnumber">4.1</span> <span class="toctext">Configuring libvirt</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#Setting_up_the_guest_OS"><span class="tocnumber">4.2</span> <span class="toctext">Setting up the guest OS</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#Attaching_the_PCI_devices"><span class="tocnumber">4.3</span> <span class="toctext">Attaching the PCI devices</span></a></li>
-<li class="toclevel-2 tocsection-17"><a href="#Video_card_driver_virtualisation_detection"><span class="tocnumber">4.4</span> <span class="toctext">Video card driver virtualisation detection</span></a></li>
-<li class="toclevel-2 tocsection-18"><a href="#Passing_keyboard/mouse_via_Evdev"><span class="tocnumber">4.5</span> <span class="toctext">Passing keyboard/mouse via Evdev</span></a></li>
-<li class="toclevel-2 tocsection-19">
+<li class="toclevel-2 tocsection-15"><a href="#Configuring_libvirt"><span class="tocnumber">4.1</span> <span class="toctext">Configuring libvirt</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Setting_up_the_guest_OS"><span class="tocnumber">4.2</span> <span class="toctext">Setting up the guest OS</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Attaching_the_PCI_devices"><span class="tocnumber">4.3</span> <span class="toctext">Attaching the PCI devices</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Video_card_driver_virtualisation_detection"><span class="tocnumber">4.4</span> <span class="toctext">Video card driver virtualisation detection</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Passing_keyboard/mouse_via_Evdev"><span class="tocnumber">4.5</span> <span class="toctext">Passing keyboard/mouse via Evdev</span></a></li>
+<li class="toclevel-2 tocsection-20">
 <a href="#Gotchas_2"><span class="tocnumber">4.6</span> <span class="toctext">Gotchas</span></a>
 <ul>
-<li class="toclevel-3 tocsection-20"><a href="#Using_a_non-EFI_image_on_an_OVMF-based_VM"><span class="tocnumber">4.6.1</span> <span class="toctext">Using a non-EFI image on an OVMF-based VM</span></a></li>
+<li class="toclevel-3 tocsection-21"><a href="#Using_a_non-EFI_image_on_an_OVMF-based_VM"><span class="tocnumber">4.6.1</span> <span class="toctext">Using a non-EFI image on an OVMF-based VM</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-21">
+<li class="toclevel-1 tocsection-22">
 <a href="#Performance_tuning"><span class="tocnumber">5</span> <span class="toctext">Performance tuning</span></a>
 <ul>
-<li class="toclevel-2 tocsection-22">
+<li class="toclevel-2 tocsection-23">
 <a href="#CPU_pinning"><span class="tocnumber">5.1</span> <span class="toctext">CPU pinning</span></a>
 <ul>
-<li class="toclevel-3 tocsection-23"><a href="#CPU_topology"><span class="tocnumber">5.1.1</span> <span class="toctext">CPU topology</span></a></li>
-<li class="toclevel-3 tocsection-24">
+<li class="toclevel-3 tocsection-24"><a href="#CPU_topology"><span class="tocnumber">5.1.1</span> <span class="toctext">CPU topology</span></a></li>
+<li class="toclevel-3 tocsection-25">
 <a href="#XML_examples"><span class="tocnumber">5.1.2</span> <span class="toctext">XML examples</span></a>
 <ul>
-<li class="toclevel-4 tocsection-25"><a href="#4c/1t_CPU_w/o_Hyperthreading_Example"><span class="tocnumber">5.1.2.1</span> <span class="toctext">4c/1t CPU w/o Hyperthreading Example</span></a></li>
-<li class="toclevel-4 tocsection-26"><a href="#4c/2t_Intel/AMD_CPU_example_(after_ComboPI_AGESA_bios_update)"><span class="tocnumber">5.1.2.2</span> <span class="toctext">4c/2t Intel/AMD CPU example (after ComboPI AGESA bios update)</span></a></li>
-<li class="toclevel-4 tocsection-27"><a href="#4c/2t_AMD_CPU_example_(Before_ComboPi_AGESA_bios_update)"><span class="tocnumber">5.1.2.3</span> <span class="toctext">4c/2t AMD CPU example (Before ComboPi AGESA bios update)</span></a></li>
+<li class="toclevel-4 tocsection-26"><a href="#4c/1t_CPU_w/o_Hyperthreading_Example"><span class="tocnumber">5.1.2.1</span> <span class="toctext">4c/1t CPU w/o Hyperthreading Example</span></a></li>
+<li class="toclevel-4 tocsection-27"><a href="#4c/2t_Intel/AMD_CPU_example_(after_ComboPI_AGESA_bios_update)"><span class="tocnumber">5.1.2.2</span> <span class="toctext">4c/2t Intel/AMD CPU example (after ComboPI AGESA bios update)</span></a></li>
+<li class="toclevel-4 tocsection-28"><a href="#4c/2t_AMD_CPU_example_(Before_ComboPi_AGESA_bios_update)"><span class="tocnumber">5.1.2.3</span> <span class="toctext">4c/2t AMD CPU example (Before ComboPi AGESA bios update)</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-28">
+<li class="toclevel-2 tocsection-29">
 <a href="#Huge_memory_pages"><span class="tocnumber">5.2</span> <span class="toctext">Huge memory pages</span></a>
 <ul>
-<li class="toclevel-3 tocsection-29"><a href="#Transparent_huge_pages"><span class="tocnumber">5.2.1</span> <span class="toctext">Transparent huge pages</span></a></li>
-<li class="toclevel-3 tocsection-30"><a href="#Static_huge_pages"><span class="tocnumber">5.2.2</span> <span class="toctext">Static huge pages</span></a></li>
-<li class="toclevel-3 tocsection-31"><a href="#Dynamic_huge_pages"><span class="tocnumber">5.2.3</span> <span class="toctext">Dynamic huge pages</span></a></li>
+<li class="toclevel-3 tocsection-30"><a href="#Transparent_huge_pages"><span class="tocnumber">5.2.1</span> <span class="toctext">Transparent huge pages</span></a></li>
+<li class="toclevel-3 tocsection-31"><a href="#Static_huge_pages"><span class="tocnumber">5.2.2</span> <span class="toctext">Static huge pages</span></a></li>
+<li class="toclevel-3 tocsection-32"><a href="#Dynamic_huge_pages"><span class="tocnumber">5.2.3</span> <span class="toctext">Dynamic huge pages</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-32"><a href="#CPU_frequency_governor"><span class="tocnumber">5.3</span> <span class="toctext">CPU frequency governor</span></a></li>
-<li class="toclevel-2 tocsection-33">
+<li class="toclevel-2 tocsection-33"><a href="#CPU_frequency_governor"><span class="tocnumber">5.3</span> <span class="toctext">CPU frequency governor</span></a></li>
+<li class="toclevel-2 tocsection-34">
 <a href="#Isolating_pinned_CPUs"><span class="tocnumber">5.4</span> <span class="toctext">Isolating pinned CPUs</span></a>
 <ul>
-<li class="toclevel-3 tocsection-34"><a href="#With_isolcpus_kernel_parameter"><span class="tocnumber">5.4.1</span> <span class="toctext">With isolcpus kernel parameter</span></a></li>
-<li class="toclevel-3 tocsection-35"><a href="#Dynamically_isolating_CPUs"><span class="tocnumber">5.4.2</span> <span class="toctext">Dynamically isolating CPUs</span></a></li>
+<li class="toclevel-3 tocsection-35"><a href="#With_isolcpus_kernel_parameter"><span class="tocnumber">5.4.1</span> <span class="toctext">With isolcpus kernel parameter</span></a></li>
+<li class="toclevel-3 tocsection-36"><a href="#Dynamically_isolating_CPUs"><span class="tocnumber">5.4.2</span> <span class="toctext">Dynamically isolating CPUs</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-36"><a href="#Improving_performance_on_AMD_CPUs"><span class="tocnumber">5.5</span> <span class="toctext">Improving performance on AMD CPUs</span></a></li>
-<li class="toclevel-2 tocsection-37">
+<li class="toclevel-2 tocsection-37"><a href="#Improving_performance_on_AMD_CPUs"><span class="tocnumber">5.5</span> <span class="toctext">Improving performance on AMD CPUs</span></a></li>
+<li class="toclevel-2 tocsection-38">
 <a href="#Virtio_disk"><span class="tocnumber">5.6</span> <span class="toctext">Virtio disk</span></a>
 <ul>
-<li class="toclevel-3 tocsection-38"><a href="#Drivers"><span class="tocnumber">5.6.1</span> <span class="toctext">Drivers</span></a></li>
-<li class="toclevel-3 tocsection-39"><a href="#Considerations"><span class="tocnumber">5.6.2</span> <span class="toctext">Considerations</span></a></li>
-<li class="toclevel-3 tocsection-40"><a href="#IO_threads"><span class="tocnumber">5.6.3</span> <span class="toctext">IO threads</span></a></li>
-<li class="toclevel-3 tocsection-41"><a href="#Examples_with_libvirt"><span class="tocnumber">5.6.4</span> <span class="toctext">Examples with libvirt</span></a></li>
-<li class="toclevel-3 tocsection-42"><a href="#Example_with_virt-manager"><span class="tocnumber">5.6.5</span> <span class="toctext">Example with virt-manager</span></a></li>
+<li class="toclevel-3 tocsection-39"><a href="#Drivers"><span class="tocnumber">5.6.1</span> <span class="toctext">Drivers</span></a></li>
+<li class="toclevel-3 tocsection-40"><a href="#Considerations"><span class="tocnumber">5.6.2</span> <span class="toctext">Considerations</span></a></li>
+<li class="toclevel-3 tocsection-41"><a href="#IO_threads"><span class="tocnumber">5.6.3</span> <span class="toctext">IO threads</span></a></li>
+<li class="toclevel-3 tocsection-42"><a href="#Examples_with_libvirt"><span class="tocnumber">5.6.4</span> <span class="toctext">Examples with libvirt</span></a></li>
+<li class="toclevel-3 tocsection-43"><a href="#Example_with_virt-manager"><span class="tocnumber">5.6.5</span> <span class="toctext">Example with virt-manager</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-43"><a href="#Virtio_network"><span class="tocnumber">5.7</span> <span class="toctext">Virtio network</span></a></li>
-<li class="toclevel-2 tocsection-44"><a href="#Further_tuning"><span class="tocnumber">5.8</span> <span class="toctext">Further tuning</span></a></li>
+<li class="toclevel-2 tocsection-44"><a href="#Virtio_network"><span class="tocnumber">5.7</span> <span class="toctext">Virtio network</span></a></li>
+<li class="toclevel-2 tocsection-45"><a href="#Further_tuning"><span class="tocnumber">5.8</span> <span class="toctext">Further tuning</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-45">
+<li class="toclevel-1 tocsection-46">
 <a href="#Special_procedures"><span class="tocnumber">6</span> <span class="toctext">Special procedures</span></a>
 <ul>
-<li class="toclevel-2 tocsection-46">
+<li class="toclevel-2 tocsection-47">
 <a href="#Using_identical_guest_and_host_GPUs"><span class="tocnumber">6.1</span> <span class="toctext">Using identical guest and host GPUs</span></a>
 <ul>
-<li class="toclevel-3 tocsection-47">
+<li class="toclevel-3 tocsection-48">
 <a href="#Script_variants"><span class="tocnumber">6.1.1</span> <span class="toctext">Script variants</span></a>
 <ul>
-<li class="toclevel-4 tocsection-48"><a href="#Passthrough_all_GPUs_but_the_boot_GPU"><span class="tocnumber">6.1.1.1</span> <span class="toctext">Passthrough all GPUs but the boot GPU</span></a></li>
-<li class="toclevel-4 tocsection-49"><a href="#Passthrough_selected_GPU"><span class="tocnumber">6.1.1.2</span> <span class="toctext">Passthrough selected GPU</span></a></li>
+<li class="toclevel-4 tocsection-49"><a href="#Passthrough_all_GPUs_but_the_boot_GPU"><span class="tocnumber">6.1.1.1</span> <span class="toctext">Passthrough all GPUs but the boot GPU</span></a></li>
+<li class="toclevel-4 tocsection-50"><a href="#Passthrough_selected_GPU"><span class="tocnumber">6.1.1.2</span> <span class="toctext">Passthrough selected GPU</span></a></li>
 </ul>
 </li>
-<li class="toclevel-3 tocsection-50"><a href="#Script_installation"><span class="tocnumber">6.1.2</span> <span class="toctext">Script installation</span></a></li>
+<li class="toclevel-3 tocsection-51"><a href="#Script_installation"><span class="tocnumber">6.1.2</span> <span class="toctext">Script installation</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-51"><a href="#Passing_the_boot_GPU_to_the_guest"><span class="tocnumber">6.2</span> <span class="toctext">Passing the boot GPU to the guest</span></a></li>
-<li class="toclevel-2 tocsection-52">
+<li class="toclevel-2 tocsection-52"><a href="#Passing_the_boot_GPU_to_the_guest"><span class="tocnumber">6.2</span> <span class="toctext">Passing the boot GPU to the guest</span></a></li>
+<li class="toclevel-2 tocsection-53">
 <a href="#Using_Looking_Glass_to_stream_guest_screen_to_the_host"><span class="tocnumber">6.3</span> <span class="toctext">Using Looking Glass to stream guest screen to the host</span></a>
 <ul>
-<li class="toclevel-3 tocsection-53"><a href="#Adding_IVSHMEM_Device_to_VM"><span class="tocnumber">6.3.1</span> <span class="toctext">Adding IVSHMEM Device to VM</span></a></li>
-<li class="toclevel-3 tocsection-54"><a href="#Installing_the_IVSHMEM_Host_to_Windows_guest"><span class="tocnumber">6.3.2</span> <span class="toctext">Installing the IVSHMEM Host to Windows guest</span></a></li>
-<li class="toclevel-3 tocsection-55"><a href="#Setting_up_the_null_video_device"><span class="tocnumber">6.3.3</span> <span class="toctext">Setting up the null video device</span></a></li>
-<li class="toclevel-3 tocsection-56"><a href="#Getting_a_client"><span class="tocnumber">6.3.4</span> <span class="toctext">Getting a client</span></a></li>
-<li class="toclevel-3 tocsection-57"><a href="#Additional_information"><span class="tocnumber">6.3.5</span> <span class="toctext">Additional information</span></a></li>
+<li class="toclevel-3 tocsection-54"><a href="#Adding_IVSHMEM_Device_to_VM"><span class="tocnumber">6.3.1</span> <span class="toctext">Adding IVSHMEM Device to VM</span></a></li>
+<li class="toclevel-3 tocsection-55"><a href="#Installing_the_IVSHMEM_Host_to_Windows_guest"><span class="tocnumber">6.3.2</span> <span class="toctext">Installing the IVSHMEM Host to Windows guest</span></a></li>
+<li class="toclevel-3 tocsection-56"><a href="#Setting_up_the_null_video_device"><span class="tocnumber">6.3.3</span> <span class="toctext">Setting up the null video device</span></a></li>
+<li class="toclevel-3 tocsection-57"><a href="#Getting_a_client"><span class="tocnumber">6.3.4</span> <span class="toctext">Getting a client</span></a></li>
+<li class="toclevel-3 tocsection-58"><a href="#Additional_information"><span class="tocnumber">6.3.5</span> <span class="toctext">Additional information</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-58"><a href="#Swap_peripherals_to_and_from_the_Host"><span class="tocnumber">6.4</span> <span class="toctext">Swap peripherals to and from the Host</span></a></li>
-<li class="toclevel-2 tocsection-59"><a href="#Bypassing_the_IOMMU_groups_(ACS_override_patch)"><span class="tocnumber">6.5</span> <span class="toctext">Bypassing the IOMMU groups (ACS override patch)</span></a></li>
+<li class="toclevel-2 tocsection-59"><a href="#Swap_peripherals_to_and_from_the_Host"><span class="tocnumber">6.4</span> <span class="toctext">Swap peripherals to and from the Host</span></a></li>
+<li class="toclevel-2 tocsection-60"><a href="#Bypassing_the_IOMMU_groups_(ACS_override_patch)"><span class="tocnumber">6.5</span> <span class="toctext">Bypassing the IOMMU groups (ACS override patch)</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-60"><a href="#Plain_QEMU_without_libvirt"><span class="tocnumber">7</span> <span class="toctext">Plain QEMU without libvirt</span></a></li>
-<li class="toclevel-1 tocsection-61">
+<li class="toclevel-1 tocsection-61"><a href="#Plain_QEMU_without_libvirt"><span class="tocnumber">7</span> <span class="toctext">Plain QEMU without libvirt</span></a></li>
+<li class="toclevel-1 tocsection-62">
 <a href="#Passing_through_other_devices"><span class="tocnumber">8</span> <span class="toctext">Passing through other devices</span></a>
 <ul>
-<li class="toclevel-2 tocsection-62"><a href="#USB_controller"><span class="tocnumber">8.1</span> <span class="toctext">USB controller</span></a></li>
-<li class="toclevel-2 tocsection-63">
+<li class="toclevel-2 tocsection-63"><a href="#USB_controller"><span class="tocnumber">8.1</span> <span class="toctext">USB controller</span></a></li>
+<li class="toclevel-2 tocsection-64">
 <a href="#Passing_VM_audio_to_host_via_PulseAudio"><span class="tocnumber">8.2</span> <span class="toctext">Passing VM audio to host via PulseAudio</span></a>
 <ul>
-<li class="toclevel-3 tocsection-64"><a href="#QEMU_4.0/4.2+_audio_changes"><span class="tocnumber">8.2.1</span> <span class="toctext">QEMU 4.0/4.2+ audio changes</span></a></li>
+<li class="toclevel-3 tocsection-65"><a href="#QEMU_4.0/4.2+_audio_changes"><span class="tocnumber">8.2.1</span> <span class="toctext">QEMU 4.0/4.2+ audio changes</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-65">
+<li class="toclevel-2 tocsection-66">
 <a href="#Passing_VM_audio_to_host_via_Scream"><span class="tocnumber">8.3</span> <span class="toctext">Passing VM audio to host via Scream</span></a>
 <ul>
-<li class="toclevel-3 tocsection-66"><a href="#Using_Scream_with_a_bridged_network"><span class="tocnumber">8.3.1</span> <span class="toctext">Using Scream with a bridged network</span></a></li>
-<li class="toclevel-3 tocsection-67">
+<li class="toclevel-3 tocsection-67"><a href="#Using_Scream_with_a_bridged_network"><span class="tocnumber">8.3.1</span> <span class="toctext">Using Scream with a bridged network</span></a></li>
+<li class="toclevel-3 tocsection-68">
 <a href="#Adding_the_IVSHMEM_device_to_use_Scream_with_IVSHMEM"><span class="tocnumber">8.3.2</span> <span class="toctext">Adding the IVSHMEM device to use Scream with IVSHMEM</span></a>
 <ul>
-<li class="toclevel-4 tocsection-68">
+<li class="toclevel-4 tocsection-69">
 <a href="#Configuring_the_Windows_guest_for_IVSHMEM"><span class="tocnumber">8.3.2.1</span> <span class="toctext">Configuring the Windows guest for IVSHMEM</span></a>
 <ul>
-<li class="toclevel-5 tocsection-69"><a href="#Configuring_the_host"><span class="tocnumber">8.3.2.1.1</span> <span class="toctext">Configuring the host</span></a></li>
+<li class="toclevel-5 tocsection-70"><a href="#Configuring_the_host"><span class="tocnumber">8.3.2.1.1</span> <span class="toctext">Configuring the host</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-70"><a href="#Physical_disk/partition"><span class="tocnumber">8.4</span> <span class="toctext">Physical disk/partition</span></a></li>
-<li class="toclevel-2 tocsection-71">
+<li class="toclevel-2 tocsection-71"><a href="#Physical_disk/partition"><span class="tocnumber">8.4</span> <span class="toctext">Physical disk/partition</span></a></li>
+<li class="toclevel-2 tocsection-72">
 <a href="#Gotchas_3"><span class="tocnumber">8.5</span> <span class="toctext">Gotchas</span></a>
 <ul>
-<li class="toclevel-3 tocsection-72"><a href="#Passing_through_a_device_that_does_not_support_resetting"><span class="tocnumber">8.5.1</span> <span class="toctext">Passing through a device that does not support resetting</span></a></li>
+<li class="toclevel-3 tocsection-73"><a href="#Passing_through_a_device_that_does_not_support_resetting"><span class="tocnumber">8.5.1</span> <span class="toctext">Passing through a device that does not support resetting</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-73"><a href="#Complete_setups_and_examples"><span class="tocnumber">9</span> <span class="toctext">Complete setups and examples</span></a></li>
-<li class="toclevel-1 tocsection-74">
+<li class="toclevel-1 tocsection-74"><a href="#Complete_setups_and_examples"><span class="tocnumber">9</span> <span class="toctext">Complete setups and examples</span></a></li>
+<li class="toclevel-1 tocsection-75">
 <a href="#Troubleshooting"><span class="tocnumber">10</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-75"><a href="#QEMU_4.0:_Unable_to_load_graphics_drivers/BSOD/Graphics_stutter_after_driver_install_using_Q35"><span class="tocnumber">10.1</span> <span class="toctext">QEMU 4.0: Unable to load graphics drivers/BSOD/Graphics stutter after driver install using Q35</span></a></li>
-<li class="toclevel-2 tocsection-76"><a href="#QEMU_5.0:_host-passthrough_with_kernel_version_5.5_to_5.8.1_when_using_Zen_2_processors:_Windows_10_BSOD_loop_'KERNEL_SECURITY_CHECK_FAILURE'"><span class="tocnumber">10.2</span> <span class="toctext">QEMU 5.0: host-passthrough with kernel version 5.5 to 5.8.1 when using Zen 2 processors: Windows 10 BSOD loop 'KERNEL SECURITY CHECK FAILURE'</span></a></li>
-<li class="toclevel-2 tocsection-77"><a href="#%22Error_43:_Driver_failed_to_load%22_with_mobile_(Optimus/max-q)_nvidia_GPUs"><span class="tocnumber">10.3</span> <span class="toctext">"Error 43: Driver failed to load" with mobile (Optimus/max-q) nvidia GPUs</span></a></li>
-<li class="toclevel-2 tocsection-78"><a href="#%22BAR_3:_cannot_reserve_%5Bmem%5D%22_error_in_dmesg_after_starting_VM"><span class="tocnumber">10.4</span> <span class="toctext">"BAR 3: cannot reserve [mem]" error in dmesg after starting VM</span></a></li>
-<li class="toclevel-2 tocsection-79"><a href="#UEFI_(OVMF)_compatibility_in_VBIOS"><span class="tocnumber">10.5</span> <span class="toctext">UEFI (OVMF) compatibility in VBIOS</span></a></li>
-<li class="toclevel-2 tocsection-80"><a href="#Slowed_down_audio_pumped_through_HDMI_on_the_video_card"><span class="tocnumber">10.6</span> <span class="toctext">Slowed down audio pumped through HDMI on the video card</span></a></li>
-<li class="toclevel-2 tocsection-81"><a href="#No_HDMI_audio_output_on_host_when_intel_iommu_is_enabled"><span class="tocnumber">10.7</span> <span class="toctext">No HDMI audio output on host when intel_iommu is enabled</span></a></li>
-<li class="toclevel-2 tocsection-82"><a href="#X_does_not_start_after_enabling_vfio_pci"><span class="tocnumber">10.8</span> <span class="toctext">X does not start after enabling vfio_pci</span></a></li>
-<li class="toclevel-2 tocsection-83"><a href="#Chromium_ignores_integrated_graphics_for_acceleration"><span class="tocnumber">10.9</span> <span class="toctext">Chromium ignores integrated graphics for acceleration</span></a></li>
-<li class="toclevel-2 tocsection-84"><a href="#VM_only_uses_one_core"><span class="tocnumber">10.10</span> <span class="toctext">VM only uses one core</span></a></li>
-<li class="toclevel-2 tocsection-85"><a href="#Passthrough_seems_to_work_but_no_output_is_displayed"><span class="tocnumber">10.11</span> <span class="toctext">Passthrough seems to work but no output is displayed</span></a></li>
-<li class="toclevel-2 tocsection-86"><a href="#Host_lockup_after_VM_shutdown"><span class="tocnumber">10.12</span> <span class="toctext">Host lockup after VM shutdown</span></a></li>
-<li class="toclevel-2 tocsection-87"><a href="#Host_lockup_if_guest_is_left_running_during_sleep"><span class="tocnumber">10.13</span> <span class="toctext">Host lockup if guest is left running during sleep</span></a></li>
-<li class="toclevel-2 tocsection-88"><a href="#Cannot_boot_after_upgrading_ovmf"><span class="tocnumber">10.14</span> <span class="toctext">Cannot boot after upgrading ovmf</span></a></li>
-<li class="toclevel-2 tocsection-89"><a href="#QEMU_via_cli_pulseaudio_stuttering/delay"><span class="tocnumber">10.15</span> <span class="toctext">QEMU via cli pulseaudio stuttering/delay</span></a></li>
-<li class="toclevel-2 tocsection-90"><a href="#Bluescreen_at_boot_since_Windows_10_1803"><span class="tocnumber">10.16</span> <span class="toctext">Bluescreen at boot since Windows 10 1803</span></a></li>
-<li class="toclevel-2 tocsection-91"><a href="#AMD_Ryzen_/_BIOS_updates_(AGESA)_yields_%22Error:_internal_error:_Unknown_PCI_header_type_%E2%80%98127%E2%80%99%22"><span class="tocnumber">10.17</span> <span class="toctext">AMD Ryzen / BIOS updates (AGESA) yields "Error: internal error: Unknown PCI header type ‘127’"</span></a></li>
-<li class="toclevel-2 tocsection-92"><a href="#AMD_GPU_not_resetting_properly_yielding_%22Error:_internal_error:_Unknown_PCI_header_type_%E2%80%98127%E2%80%99%22_(Separate_issue_from_the_one_above)"><span class="tocnumber">10.18</span> <span class="toctext">AMD GPU not resetting properly yielding "Error: internal error: Unknown PCI header type ‘127’" (Separate issue from the one above)</span></a></li>
-<li class="toclevel-2 tocsection-93"><a href="#Host_crashes_when_hotplugging_Nvidia_card_with_USB"><span class="tocnumber">10.19</span> <span class="toctext">Host crashes when hotplugging Nvidia card with USB</span></a></li>
-<li class="toclevel-2 tocsection-94"><a href="#Host_unable_to_boot_and_stuck_in_black_screen_after_enabling_vfio"><span class="tocnumber">10.20</span> <span class="toctext">Host unable to boot and stuck in black screen after enabling vfio</span></a></li>
-<li class="toclevel-2 tocsection-95"><a href="#AER_errors_when_passing_through_PCIe_USB_hub"><span class="tocnumber">10.21</span> <span class="toctext">AER errors when passing through PCIe USB hub</span></a></li>
-<li class="toclevel-2 tocsection-96"><a href="#Reserved_Memory_Region_Reporting_(RMRR)_Conflict"><span class="tocnumber">10.22</span> <span class="toctext">Reserved Memory Region Reporting (RMRR) Conflict</span></a></li>
+<li class="toclevel-2 tocsection-76"><a href="#QEMU_4.0:_Unable_to_load_graphics_drivers/BSOD/Graphics_stutter_after_driver_install_using_Q35"><span class="tocnumber">10.1</span> <span class="toctext">QEMU 4.0: Unable to load graphics drivers/BSOD/Graphics stutter after driver install using Q35</span></a></li>
+<li class="toclevel-2 tocsection-77"><a href="#QEMU_5.0:_host-passthrough_with_kernel_version_5.5_to_5.8.1_when_using_Zen_2_processors:_Windows_10_BSOD_loop_'KERNEL_SECURITY_CHECK_FAILURE'"><span class="tocnumber">10.2</span> <span class="toctext">QEMU 5.0: host-passthrough with kernel version 5.5 to 5.8.1 when using Zen 2 processors: Windows 10 BSOD loop 'KERNEL SECURITY CHECK FAILURE'</span></a></li>
+<li class="toclevel-2 tocsection-78"><a href="#%22Error_43:_Driver_failed_to_load%22_with_mobile_(Optimus/max-q)_nvidia_GPUs"><span class="tocnumber">10.3</span> <span class="toctext">"Error 43: Driver failed to load" with mobile (Optimus/max-q) nvidia GPUs</span></a></li>
+<li class="toclevel-2 tocsection-79"><a href="#%22BAR_3:_cannot_reserve_%5Bmem%5D%22_error_in_dmesg_after_starting_VM"><span class="tocnumber">10.4</span> <span class="toctext">"BAR 3: cannot reserve [mem]" error in dmesg after starting VM</span></a></li>
+<li class="toclevel-2 tocsection-80"><a href="#UEFI_(OVMF)_compatibility_in_VBIOS"><span class="tocnumber">10.5</span> <span class="toctext">UEFI (OVMF) compatibility in VBIOS</span></a></li>
+<li class="toclevel-2 tocsection-81"><a href="#Slowed_down_audio_pumped_through_HDMI_on_the_video_card"><span class="tocnumber">10.6</span> <span class="toctext">Slowed down audio pumped through HDMI on the video card</span></a></li>
+<li class="toclevel-2 tocsection-82"><a href="#No_HDMI_audio_output_on_host_when_intel_iommu_is_enabled"><span class="tocnumber">10.7</span> <span class="toctext">No HDMI audio output on host when intel_iommu is enabled</span></a></li>
+<li class="toclevel-2 tocsection-83"><a href="#X_does_not_start_after_enabling_vfio_pci"><span class="tocnumber">10.8</span> <span class="toctext">X does not start after enabling vfio_pci</span></a></li>
+<li class="toclevel-2 tocsection-84"><a href="#Chromium_ignores_integrated_graphics_for_acceleration"><span class="tocnumber">10.9</span> <span class="toctext">Chromium ignores integrated graphics for acceleration</span></a></li>
+<li class="toclevel-2 tocsection-85"><a href="#VM_only_uses_one_core"><span class="tocnumber">10.10</span> <span class="toctext">VM only uses one core</span></a></li>
+<li class="toclevel-2 tocsection-86"><a href="#Passthrough_seems_to_work_but_no_output_is_displayed"><span class="tocnumber">10.11</span> <span class="toctext">Passthrough seems to work but no output is displayed</span></a></li>
+<li class="toclevel-2 tocsection-87"><a href="#Host_lockup_after_VM_shutdown"><span class="tocnumber">10.12</span> <span class="toctext">Host lockup after VM shutdown</span></a></li>
+<li class="toclevel-2 tocsection-88"><a href="#Host_lockup_if_guest_is_left_running_during_sleep"><span class="tocnumber">10.13</span> <span class="toctext">Host lockup if guest is left running during sleep</span></a></li>
+<li class="toclevel-2 tocsection-89"><a href="#Cannot_boot_after_upgrading_ovmf"><span class="tocnumber">10.14</span> <span class="toctext">Cannot boot after upgrading ovmf</span></a></li>
+<li class="toclevel-2 tocsection-90"><a href="#QEMU_via_cli_pulseaudio_stuttering/delay"><span class="tocnumber">10.15</span> <span class="toctext">QEMU via cli pulseaudio stuttering/delay</span></a></li>
+<li class="toclevel-2 tocsection-91"><a href="#Bluescreen_at_boot_since_Windows_10_1803"><span class="tocnumber">10.16</span> <span class="toctext">Bluescreen at boot since Windows 10 1803</span></a></li>
+<li class="toclevel-2 tocsection-92"><a href="#AMD_Ryzen_/_BIOS_updates_(AGESA)_yields_%22Error:_internal_error:_Unknown_PCI_header_type_%E2%80%98127%E2%80%99%22"><span class="tocnumber">10.17</span> <span class="toctext">AMD Ryzen / BIOS updates (AGESA) yields "Error: internal error: Unknown PCI header type ‘127’"</span></a></li>
+<li class="toclevel-2 tocsection-93"><a href="#AMD_GPU_not_resetting_properly_yielding_%22Error:_internal_error:_Unknown_PCI_header_type_%E2%80%98127%E2%80%99%22_(Separate_issue_from_the_one_above)"><span class="tocnumber">10.18</span> <span class="toctext">AMD GPU not resetting properly yielding "Error: internal error: Unknown PCI header type ‘127’" (Separate issue from the one above)</span></a></li>
+<li class="toclevel-2 tocsection-94"><a href="#Host_crashes_when_hotplugging_Nvidia_card_with_USB"><span class="tocnumber">10.19</span> <span class="toctext">Host crashes when hotplugging Nvidia card with USB</span></a></li>
+<li class="toclevel-2 tocsection-95"><a href="#Host_unable_to_boot_and_stuck_in_black_screen_after_enabling_vfio"><span class="tocnumber">10.20</span> <span class="toctext">Host unable to boot and stuck in black screen after enabling vfio</span></a></li>
+<li class="toclevel-2 tocsection-96"><a href="#AER_errors_when_passing_through_PCIe_USB_hub"><span class="tocnumber">10.21</span> <span class="toctext">AER errors when passing through PCIe USB hub</span></a></li>
+<li class="toclevel-2 tocsection-97"><a href="#Reserved_Memory_Region_Reporting_(RMRR)_Conflict"><span class="tocnumber">10.22</span> <span class="toctext">Reserved Memory Region Reporting (RMRR) Conflict</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-97"><a href="#See_also"><span class="tocnumber">11</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-98"><a href="#See_also"><span class="tocnumber">11</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -287,7 +289,7 @@
 </p>
 <p>After rebooting, check dmesg to confirm that IOMMU has been correctly enabled:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">dmesg | grep -i -e DMAR -e IOMMU</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep -i -e DMAR -e IOMMU</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[    0.000000] ACPI: DMAR 0x00000000BDCB1CB0 0000B8 (v01 INTEL  BDW      00000001 INTL 00000001)
 [    0.000000] Intel-IOMMU: enabled
 [    0.028879] dmar: IOMMU 0: reg_base_addr fed90000 ver 1:0 cap c0000020660462 ecap f0101a
@@ -394,6 +396,13 @@ IOMMU Group 13:
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">HOOKS=(... modconf ...)</pre>
 <p>Since new modules have been added to the initramfs configuration, you must <a href="../en/Mkinitcpio.html#Image_creation_and_activation" class="mw-redirect" title="Regenerate the initramfs">regenerate the initramfs</a>.
 </p>
+<h4><span class="mw-headline" id="booster">booster</span></h4>
+<p>Similar to mkinitcpio you need to specify modules to load early:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/booster.yaml</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">modules_force_load: vfio_pci,vfio,vfio_iommu_type1,vfio_virqfd</pre>
+<p>and then <a href="../en/Booster.html#Regenerate_booster_images" title="Booster">regenerate the initramfs</a>.
+</p>
 <h4><span class="mw-headline" id="dracut">dracut</span></h4>
 <p>dracut's early loading mechanism is configured via kernel parameters. To load vfio-pci early, add both the <a href="#Binding_vfio-pci_via_device_ID">device ids</a> and the following line to your <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a>:
 </p>
@@ -408,7 +417,7 @@ IOMMU Group 13:
 <h3><span class="mw-headline" id="Verifying_that_the_configuration_worked">Verifying that the configuration worked</span></h3>
 <p>Reboot and verify that vfio-pci has loaded properly and that it is now bound to the right devices.
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep -i vfio</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep -i vfio</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[    0.329224] VFIO - User Level meta-driver version: 0.3
 [    0.341372] vfio_pci: add [10de:13c2[ffff:ffff]] class 0x000000/00000000
 [    0.354704] vfio_pci: add [10de:0fbb[ffff:ffff]] class 0x000000/00000000
@@ -432,7 +441,12 @@ IOMMU Group 13:
 <h3><span class="mw-headline" id="Configuring_libvirt">Configuring libvirt</span></h3>
 <p><a href="../en/Libvirt.html" title="Libvirt">Libvirt</a> is a wrapper for a number of virtualization utilities that greatly simplifies the configuration and deployment process of virtual machines. In the case of KVM and QEMU, the frontend it provides allows us to avoid dealing with the permissions for QEMU and make it easier to add and remove various devices on a live VM. Its status as a wrapper, however, means that it might not always support all of the latest qemu features, which could end up requiring the use of a wrapper script to provide some extra arguments to QEMU.
 </p>
-<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=qemu">qemu</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libvirt">libvirt</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=edk2-ovmf">edk2-ovmf</a></span>, and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virt-manager">virt-manager</a></span>. For the default network connection, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ebtables">ebtables</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> are required.
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libvirt">libvirt</a></span> depends on <i>ebtables</i>, not <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iptables-nft">iptables-nft</a></span> which is just a translation layer. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PCI_passthrough_via_OVMF">Talk:PCI passthrough via OVMF#</a>)</div>
+</div>
+<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=qemu">qemu</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libvirt">libvirt</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=edk2-ovmf">edk2-ovmf</a></span>, and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virt-manager">virt-manager</a></span>. For the default network connection, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iptables-nft">iptables-nft</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> are required.
 </p>
 <p>You can now <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>libvirtd.service</code> and its logging component <code>virtlogd.socket</code>.
 </p>
@@ -482,7 +496,7 @@ IOMMU Group 13:
 <p>At this point, it also becomes possible to attach the PCI device that was isolated earlier; simply click on "Add Hardware" and select the PCI Host Devices you want to passthrough. If everything went well, the screen plugged into your GPU should show the OVMF splash screen and your VM should start up normally. From there, you can setup the drivers for the rest of your VM.
 </p>
 <h3><span class="mw-headline" id="Video_card_driver_virtualisation_detection">Video card driver virtualisation detection</span></h3>
-<p>Video card drivers by both Nvidia and AMD incorporate very basic virtual machine detection. Should this detection mechanism trigger, current drivers by both manufacturers will refuse to run (resulting in a generic exit code 43 in case of Nvidia and a black screen in case of AMD).
+<p>Video card drivers by AMD incorporate very basic virtual machine detection targeting Hyper-V extensions. Should this detection mechanism trigger the drivers will refuse to run (resulting in a black screen).
 </p>
 <p>It is therefore required to modify the reported Hyper-V vendor ID:
 </p>
@@ -498,7 +512,7 @@ IOMMU Group 13:
   ...
 &lt;/features&gt;
 ...</pre>
-<p>In addition to above's modification, Nvidia guest drivers also require hiding the KVM CPU leaf:
+<p>Nvidia guest drivers prior to version 465 exhibited a similar behaviour which resulted in a generic error 43 in the card's device manager status. Systems using these older drivers therefore also need the above modification. In addition, they also require hiding the KVM CPU leaf:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ virsh edit <i>vmname</i></pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
@@ -510,9 +524,7 @@ IOMMU Group 13:
   ...
 &lt;/features&gt;
 ...</pre>
-<p>As the KVM CPU leaf remains unused under Windows, no performance loss is incurred.
-</p>
-<p>Note that this does not equate 'hiding' the virtual machine from Windows or any drivers/programs running in the VM.
+<p>Note that the above steps do not equate 'hiding' the virtual machine from Windows or any drivers/programs running in the VM. Also, various other issues not related to any detection mechanism referred to here can also trigger error 43.
 </p>
 <h3>
 <span id="Passing_keyboard.2Fmouse_via_Evdev"></span><span class="mw-headline" id="Passing_keyboard/mouse_via_Evdev">Passing keyboard/mouse via Evdev</span>
@@ -1057,7 +1069,7 @@ total bytes / 1024 / 1024 = total mebibytes + 2
 <ul>
 <li>Find your <code>&lt;video&gt;</code> device, and set <code>&lt;model type='none'/&gt;</code>
 </li>
-<li>If you can't find it, make sure you have a <code>&lt;graphics&gt;</code> device, save and edit again</li>
+<li>If you cannot find it, make sure you have a <code>&lt;graphics&gt;</code> device, save and edit again</li>
 </ul>
 <h4><span class="mw-headline" id="Getting_a_client">Getting a client</span></h4>
 <p>Looking glass client can be installed from AUR using <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/looking-glass/">looking-glass</a></span><sup><small>AUR</small></sup> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/looking-glass-git/">looking-glass-git</a></span><sup><small>AUR</small></sup> packages.
@@ -1782,8 +1794,8 @@ kernel: pcieport 0000:00:01.1: AER: device recovery successful
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=654894">https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=654894</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 March 2021, at 16:13.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=663505">https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=663505</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 19:12.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

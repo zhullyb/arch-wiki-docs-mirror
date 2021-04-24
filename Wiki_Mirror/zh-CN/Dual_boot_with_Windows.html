@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -199,8 +200,7 @@
 </p>
 <p>某些 Intel Atom 芯片的平板电脑只支持 IA32-UEFI ，因此只能启动 GPT 分区上的 32 位 ( x86 ) 操作系统。
 </p>
-<p><br>
-对于预装在电脑上的 Windows 的大多数情况:
+<p>对于预装在电脑上的 Windows 的大多数情况:
 </p>
 <ul>
 <li>预装 Windows XP ( 所有版本 ),Windows Vista 或 Windows 7 (32 位版本),默认通过 BIOS-MBR 启动.</li>
@@ -231,7 +231,7 @@
 </h3>
 <p>大部分 Linux 的启动管理器不支持运行或链式加载另一种固件的启动管理器. 因此安装在 UEFI 模式下的 Arch Linux 的启动管理器无法加载位于另一个 BIOS-MBR 硬盘上的 Windows .安装在 BIOS 模式下的 Arch Linux 的启动管理器也无法加载位于另一个 UEFI-GPT 硬盘上的 Windows.
 </p>
-<p>例外是安装在 Apple Mac 上的 UEFI 模式的 GRUB (通过 <b>apploloader</b> 实现引导 BIOS 系统,不能用于非 Apple 设备上),和 rEFInd (技术上支持 UEFI 引导 BIOS 系统,但是作者 Rod Smith 称<a rel="nofollow" class="external text" href="http://rodsbooks.com/refind/using.html#legacy">不能用于非 Apple UEFI 上</a>.)
+<p>例外是安装在 Apple Mac 上的 UEFI 模式的 GRUB (通过 <b>apploloader</b> 实现引导 BIOS 系统,不能用于非 Apple 设备上),和 rEFInd (技术上支持 UEFI 引导 BIOS 系统,但是作者 Rod Smith 称<a rel="nofollow" class="external text" href="https://rodsbooks.com/refind/using.html#legacy">不能用于非 Apple UEFI 上</a>.)
 </p>
 <p>另外安装在 BIOS-GPT 上的 Arch 可以引导另一块 BIOS-MBR 硬盘上的 Windows (如果所选用的启动管理器支持链式加载另一块硬盘上的启动扇区).
 </p>
@@ -262,7 +262,7 @@ Arch Linux 的安装媒体可以在安全启动打开的状态下启动,参见<a
 <h3>
 <span id="Windows_.E4.B8.AD.E7.9A.84.E6.96.87.E4.BB.B6.E5.90.8D.E9.99.90.E5.88.B6"></span><span class="mw-headline" id="Windows_中的文件名限制">Windows 中的文件名限制</span>
 </h3>
-<p>Windows 中的文件名长度最长为 <a rel="nofollow" class="external text" href="http://blogs.msdn.com/b/bclteam/archive/2007/02/13/long-paths-in-net-part-1-of-3-kim-hamilton.aspx">260 字符</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-12-24 ⓘ]</sup>.
+<p>Windows 中的文件名长度最长为 <a rel="nofollow" class="external text" href="https://docs.microsoft.com/en-us/archive/blogs/bclteam/long-paths-in-net-part-1-of-3-kim-hamilton">260 字符</a>.
 </p>
 <p>另外 Windows <a rel="nofollow" class="external text" href="https://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx#naming_conventions">对文件名中包含的字符也有限制</a>, Windows 中文件名中不能包含:
 </p>
@@ -279,7 +279,7 @@ Arch Linux 的安装媒体可以在安全启动打开的状态下启动,参见<a
 </ul>
 <p>这是 Windows 而非 NTFS 的限制,因此其它系统依然可以在 NTFS 文件系统中创建文件名中带有这些符号的文件,但 Windows 无法识别这些文件. 运行 <code>chkdsk</code> 时也可能删除它们,这是一个引发数据丢失的风险.
 </p>
-<p><b>NTFS-3G</b> 可以通过 <a rel="nofollow" class="external text" href="http://www.tuxera.com/community/ntfs-3g-manual/#4">windows_filenames</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-12-24 ⓘ]</sup> 挂载选项遵循这些限制 (参阅 <a href="../en/Fstab.html" title="Fstab">fstab</a>).
+<p><b>NTFS-3G</b> 可以通过 windows_filenames 挂载选项遵循这些限制: <span class="plainlinks archwiki-template-man" title="$ man 8 ntfs-3g"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ntfs-3g.8#Windows_Filename_Compatibility">ntfs-3g(8) § Windows_Filename_Compatibility</a></span> (参阅 <a href="../en/Fstab.html" title="Fstab">fstab</a>).
 </p>
 <h2>
 <span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
@@ -388,7 +388,6 @@ Syslinux (version 6.02 和 6.03-pre9) 和 ELILO 不支持链式加载 EFI 可执
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
@@ -398,8 +397,8 @@ Syslinux (version 6.02 和 6.03-pre9) 和 ELILO 不支持链式加载 EFI 可执
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=646481">https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(简体中文)&amp;oldid=646481</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 December 2020, at 11:09.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=661886">https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(简体中文)&amp;oldid=661886</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 14:55.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -96,15 +97,14 @@ Description=spamassassin housekeeping stuff
 After=network.target
 
 [Service]
-#User=spamd
-#Group=spamd
+User=spamd
+Group=spamd
 Type=oneshot
 
-# remove --allowplugins, if you do not want plugin updates from SA.
-ExecStart=sudo -u spamd /usr/bin/vendor_perl/sa-update --allowplugins
+ExecStart=/usr/bin/vendor_perl/sa-update
 SuccessExitStatus=1
-ExecStart=sudo -u spamd /usr/bin/vendor_perl/sa-compile
-ExecStart=/usr/bin/systemctl -q --no-block try-restart spamassassin.service
+ExecStart=/usr/bin/vendor_perl/sa-compile
+ExecStart=!/usr/bin/systemctl -q --no-block try-restart spamassassin.service
 
 # uncomment the following ExecStart line to train SA's bayes filter
 # and specify the path to the mailbox that contains spam email(s)
@@ -133,8 +133,8 @@ WantedBy=timers.target</pre>
 </p>
 <pre> # /usr/bin/vendor_perl/cpanp -i File::Scan::ClamAV
 </pre>
-<p>Add the 2 files from <a rel="nofollow" class="external free" href="http://wiki.apache.org/spamassassin/ClamAVPlugin">http://wiki.apache.org/spamassassin/ClamAVPlugin</a> into <code>/etc/mail/spamassassin/</code>.
-Edit <code>/etc/mail/spamassassin/clamav.pm</code> and update <code>$CLAM_SOCK</code> to point to your Clamd socket location (default is <code>/run/clamav/clamd.ctl</code>).
+<p>Add the 2 files from <a rel="nofollow" class="external free" href="https://wiki.apache.org/spamassassin/ClamAVPlugin">https://wiki.apache.org/spamassassin/ClamAVPlugin</a> into <code>/etc/mail/spamassassin/</code>.
+Edit <code>/etc/mail/spamassassin/clamav.pm</code> and update <code>$CLAMD_SOCK</code> to point to your Clamd socket location (default is <code>/run/clamav/clamd.ctl</code>).
 </p>
 <p>Finally, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>spamassassin.service</code>.
 </p>
@@ -182,8 +182,8 @@ Edit <code>/etc/mail/spamassassin/clamav.pm</code> and update <code>$CLAM_SOCK</
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SpamAssassin&amp;oldid=649165">https://wiki.archlinux.org/index.php?title=SpamAssassin&amp;oldid=649165</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 January 2021, at 02:52.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SpamAssassin&amp;oldid=662367">https://wiki.archlinux.org/index.php?title=SpamAssassin&amp;oldid=662367</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 20:57.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

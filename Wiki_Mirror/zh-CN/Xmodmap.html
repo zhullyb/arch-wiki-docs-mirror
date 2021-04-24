@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -36,106 +37,196 @@
 <p>相关文章</p>
 <ul>
 <li><a href="../en/Xorg.html" title="Xorg">Xorg</a></li>
-<li><a href="../en/Extra_keyboard_keys.html" title="Extra keyboard keys">Extra keyboard keys</a></li>
-<li><a href="../en/Xorg/Keyboard_configuration.html#Keybinding" class="mw-redirect" title="Extra keyboard keys in Xorg">Extra keyboard keys in Xorg</a></li>
+<li><a href="../en/Keyboard_input.html" title="Keyboard input">Keyboard input</a></li>
 <li><a href="../en/Linux_console/Keyboard_configuration.html#Creating_a_custom_keymap" class="mw-redirect" title="Extra keyboard keys in console">Extra keyboard keys in console</a></li>
+<li><a href="../en/Xbindkeys.html" title="Xbindkeys">Xbindkeys</a></li>
 </ul>
 </div>
-<div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="../File:Tango-preferences-desktop-locale.png" decoding="async" width="48" height="48"></a><b>本文或本节需要<a href="../zh-CN/ArchWiki:Contributing.html#%E7%BF%BB%E8%AF%91" title="ArchWiki:Contributing (简体中文)">翻译</a>。要贡献翻译，请访问<a href="../zh-CN/ArchWiki:Translation_Team.html" class="mw-redirect" title="ArchWiki Translation Team (简体中文)">简体中文翻译团队</a>。</b><a href="../File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="../File:Tango-preferences-desktop-locale.png" decoding="async" width="48" height="48"></a></p>
-<div>
-<b>附注：</b> <span style="color:red;">请使用模板的第一个参数进行更详细的指示。</span>（在 <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Xmodmap_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:Xmodmap (简体中文)#</a> 中讨论）</div>
-</div>
-<p><b>Xmodmap</b> is a utility for modifying keymaps and pointer button mappings in <a href="../en/Xorg.html" title="Xorg">Xorg</a>.
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>翻译状态：</strong>本文是 <a href="../en/Xmodmap.html" title="Xmodmap">Xmodmap</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-4-15。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Xmodmap&amp;diff=0&amp;oldid=647793">更改</a>，则您可以帮助同步翻译。</div>
+<p><i>xmodmap</i>是一个用于修改 <a href="../en/Xorg.html" title="Xorg">Xorg</a> 中键位图和指针按钮映射的工具。
 </p>
+<p><i>xmodmap</i>与 <a href="../en/X_keyboard_extension.html" title="X keyboard extension">X keyboard extension</a> (XKB)没有直接关系。这两个程序对于X中的如何处理"键码"的理解是不一样的（xmodmap 更早）。一般来说，它只被推荐用于最简单的任务。请参阅 <a href="../en/X_keyboard_extension.html" title="X keyboard extension">X keyboard extension</a> 了解高级布局配置。
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 
+<ul>
+<li>
+<i>xmodmap</i>设置会被<i>setxkbmap</i>重置，它不仅将字母数字键改变为映射表中的值，还将所有其他键重置为启动时的默认值。<a rel="nofollow" class="external autonumber" href="http://wiki.linuxquestions.org/wiki/Configuring_keyboards">[1]</a>
+</li>
+<li>由于Xorg的限制，<i>xmodmap</i>设置不会自动应用到热插拔设备上。如果在应用了自定义映射表后，系统中添加了一个新的键盘，则必须重新应用自定义映射表。<a rel="nofollow" class="external autonumber" href="https://bugs.freedesktop.org/show_bug.cgi?id=25262">[2]</a>
+</li>
+</ul>
+</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#%E4%BB%8B%E7%BB%8D"><span class="tocnumber">1</span> <span class="toctext">介绍</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#Keymap%E8%A1%A8"><span class="tocnumber">2</span> <span class="toctext">Keymap表</span></a></li>
-<li class="toclevel-1 tocsection-3">
-<a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%98%A0%E5%B0%84%E8%A1%A8"><span class="tocnumber">3</span> <span class="toctext">自定义映射表</span></a>
+<li class="toclevel-1 tocsection-1"><a href="#%E7%AE%80%E4%BB%8B"><span class="tocnumber">1</span> <span class="toctext">简介</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#%E5%AE%89%E8%A3%85"><span class="tocnumber">2</span> <span class="toctext">安装</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#%E9%94%AE%E6%98%A0%E5%B0%84%E8%A1%A8"><span class="tocnumber">3</span> <span class="toctext">键映射表</span></a></li>
+<li class="toclevel-1 tocsection-4">
+<a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%98%A0%E5%B0%84%E8%A1%A8"><span class="tocnumber">4</span> <span class="toctext">自定义映射表</span></a>
 <ul>
-<li class="toclevel-2 tocsection-4"><a href="#%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%E4%BF%AE%E6%94%B9"><span class="tocnumber">3.1</span> <span class="toctext">测试你的修改</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#%E6%BF%80%E6%B4%BB%E8%87%AA%E5%AE%9A%E4%B9%89%E6%98%A0%E5%B0%84%E8%A1%A8"><span class="tocnumber">4.1</span> <span class="toctext">激活自定义映射表</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#%E6%B5%8B%E8%AF%95%E6%9B%B4%E6%94%B9"><span class="tocnumber">4.2</span> <span class="toctext">测试更改</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-5"><a href="#%E7%89%B9%E6%AE%8A%E7%9A%84%E6%8C%89%E9%94%AE"><span class="tocnumber">4</span> <span class="toctext">特殊的按键</span></a></li>
-<li class="toclevel-1 tocsection-6"><a href="#MAC_OS_X%E7%9A%84%E8%87%AA%E7%84%B6%E6%BB%9A%E5%8A%A8"><span class="tocnumber">5</span> <span class="toctext">MAC OS X的自然滚动</span></a></li>
-<li class="toclevel-1 tocsection-7"><a href="#Additional_resources"><span class="tocnumber">6</span> <span class="toctext">Additional resources</span></a></li>
+<li class="toclevel-1 tocsection-7">
+<a href="#%E4%BF%AE%E9%A5%B0%E9%94%AE"><span class="tocnumber">5</span> <span class="toctext">修饰键</span></a>
+<ul>
+<li class="toclevel-2 tocsection-8"><a href="#%E6%89%BE%E5%88%B0%E9%94%AE%E7%AC%A6%E7%9A%84%E4%BF%AE%E9%A5%B0%E9%94%AE"><span class="tocnumber">5.1</span> <span class="toctext">找到键符的修饰键</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#%E9%87%8D%E6%96%B0%E5%AE%89%E6%8E%92%E4%BF%AE%E9%A5%B0%E9%94%AE%E4%BD%8D"><span class="tocnumber">5.2</span> <span class="toctext">重新安排修饰键位</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10"><a href="#%E5%8F%8D%E5%90%91%E6%BB%9A%E5%8A%A8"><span class="tocnumber">6</span> <span class="toctext">反向滚动</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#%E4%BA%A4%E6%8D%A2%E9%BC%A0%E6%A0%87%E6%8C%89%E9%92%AE"><span class="tocnumber">7</span> <span class="toctext">交换鼠标按钮</span></a></li>
+<li class="toclevel-1 tocsection-12">
+<a href="#%E6%A8%A1%E6%9D%BF"><span class="tocnumber">8</span> <span class="toctext">模板</span></a>
+<ul>
+<li class="toclevel-2 tocsection-13"><a href="#%E8%A5%BF%E7%8F%AD%E7%89%99%E8%AF%AD"><span class="tocnumber">8.1</span> <span class="toctext">西班牙语</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#%E5%B0%86_CapsLock_%E6%8D%A2%E6%88%90_Control"><span class="tocnumber">8.2</span> <span class="toctext">将 CapsLock 换成 Control</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#%E5%B0%86CapsLock%E8%BD%AC%E4%B8%BAControl%EF%BC%8C%E5%B0%86%E5%B7%A6Control%E8%BD%AC%E4%B8%BAHyper"><span class="tocnumber">8.3</span> <span class="toctext">将CapsLock转为Control，将左Control转为Hyper</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#%E6%8A%8A%E5%8F%B3_Super_%E5%8F%98%E6%88%90%E5%8F%B3_Hyper"><span class="tocnumber">8.4</span> <span class="toctext">把右 Super 变成右 Hyper</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#%E5%B0%86Shift-%E6%95%B0%E5%AD%97%E9%94%AE%E4%B8%8E%E6%95%B0%E5%AD%97%E9%94%AE%E5%AF%B9%E6%8D%A2%EF%BC%88%E5%85%8B%E7%BD%97%E5%9C%B0%E4%BA%9A%E8%AF%AD%E5%B8%83%E5%B1%80%EF%BC%89"><span class="tocnumber">8.5</span> <span class="toctext">将Shift-数字键与数字键对换（克罗地亚语布局）</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-18"><a href="#%E5%8F%A6%E8%A7%81"><span class="tocnumber">9</span> <span class="toctext">另见</span></a></li>
 </ul>
 </div>
 
 <h2>
-<span id=".E4.BB.8B.E7.BB.8D"></span><span class="mw-headline" id="介绍">介绍</span>
+<span id=".E7.AE.80.E4.BB.8B"></span><span class="mw-headline" id="简介">简介</span>
 </h2>
-<p>在每次按下键盘时， Linux 内核都会生成一个 Code。 Code 同 <code>keycodes表</code> 比较，然后决定按下的是什么。
+<p>在 <a href="../en/Xorg.html" title="Xorg">Xorg</a> 中有两种类型的键盘值：键码和键符。
 </p>
-<p>而 <a href="../en/Xorg.html" title="Xorg">Xorg</a> 使用自己的 Keycodes表 来参与这个过程。 每一个 Keycode 属于一个 <code>keysym</code>。 一个 keysym 就像一个 function 被 Keycode 调用执行。 Xmodmap 允许你编辑 keycode-keysym 之间的关系。
+<dl>
+<dt>键码 keycode</dt>
+<dd>键码是当按键或鼠标按钮被按下时，内核收到的表示数字。</dd>
+<dt>键符 keysym</dt>
+<dd>键符是键码所对应的符号表达值。例如，按<code>a</code>产生<code>38</code>号键码，它被映射到<code>0×61</code>号键符，对应 <a href="https://en.wikipedia.org/wiki/ASCII" class="extiw" title="wikipedia:ASCII">ASCII表</a>中的 <code>a</code>。</dd>
+<dd>在<a href="../en/Xorg.html" title="Xorg">Xorg</a>中，键符通过一个定义键码-键符对应关系的表管理。这个表叫做<a href="#%E9%94%AE%E6%98%A0%E5%B0%84%E8%A1%A8">键映射表</a>。可以通过运行<code>xmodmap</code>来显示。</dd>
+</dl>
+<h2>
+<span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
+</h2>
+<p><i>xmodmap</i> 由 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xmodmap">xorg-xmodmap</a></span> 包提供。
+</p>
+<p>也可以安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xkeycaps">xkeycaps</a></span>，这是一个<i>xmodmap</i>的图形前端。
 </p>
 <h2>
-<span id="Keymap.E8.A1.A8"></span><span class="mw-headline" id="Keymap表">Keymap表</span>
+<span id=".E9.94.AE.E6.98.A0.E5.B0.84.E8.A1.A8"></span><span class="mw-headline" id="键映射表">键映射表</span>
 </h2>
-<p>以可被解释的格式打印当前 Keymap表，
+<p>打印以表达式格式呈现的键映射表：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ xmodmap -pke</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">keycode  57 = n N</pre>
-<p>每条 Keymap 之后都跟随要被映射的 <code>keysyms</code>。 下面的例子表明 keycode <code>57</code> 被映射到小写 <i>n</i>, 同时大写 <i>N</i> 映射于 <code>57</code> + <code>Shift</code>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[...]
+keycode  57 = n N
+[...]</pre>
+<p>每个键码后面都跟着映射到的键符。上面的例子意思是：键码<code>57</code>被映射到小写<code>n</code>键符，而大写<code>N</code>键符则对应按下<code>Shift</code>输入的<code>57</code>号键码。
 </p>
-<p>每个 keysym列 都对应指定的键组合：
+<p>表中的每一列键符都对应着一个特定的修饰键组合，Key为键码所对应的按键：
 </p>
 <ol>
 <li><code>Key</code></li>
 <li><code>Shift+Key</code></li>
-<li><code>mode_switch+Key</code></li>
-<li><code>mode_switch+Shift+Key</code></li>
-<li><code>AltGr+Key</code></li>
-<li><code>AltGr+Shift+Key</code></li>
+<li><code>Mode_switch+Key</code></li>
+<li><code>Mode_switch+Shift+Key</code></li>
+<li><code>ISO_Level3_Shift+Key</code></li>
+<li><code>ISO_Level3_Shift+Shift+Key</code></li>
 </ol>
-<p>在 keysym组合 没有被指定时， 使用 <code>NoSymbol</code> 代替。
+<p>并非所有的键符都必须设置，但如果要跳过一个键符，请将其值设为<code>NoSymbol</code>。
 </p>
-<p>使用 <a href="../en/Extra_keyboard_keys.html#In_Xorg" title="Extra keyboard keys">xev</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 来查看每个键对应的 keymap.
+<p>要查看一个键对应的键码，请参见<a href="../en/Keyboard_input.html#Identifying_keycodes_in_Xorg" title="Keyboard input">Keyboard input#Identifying keycodes in Xorg</a>以了解<i>xev</i>实用程序的细节，它将在你按下一个键时输出相关的键码与键符信息。
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong>  有一些预定义的keycodes被映射成附加的快捷键 (e.g. <code>XF86AudioMute</code>, <code>XF86Mail</code>). 那些keycodes能在这个文件找到: <code>/usr/include/X11/XF86keysym.h</code>
-</div>
+<strong>提示：</strong> 多媒体键有预定义的描述性键符，例如 <code>XF86AudioMute</code> 或 <code>XF86Mail</code> 。这些键符可以在{ {ic</div>
+<p> 中找到。许多多媒体程序都被设计成可以直接通过这些键符控制，而不需要配置任何第三方应用程序。
+</p>
+<p>}}
+</p>
+<p>请注意，xmodmap会受到 xkbd 设置的影响，所以所有8个键符都可以用于美式键盘（国际）的 xkbd 布局，但不能用于默认的没事键盘（它缺少ISO Level3中定义的ralt_switch符号）。为了让所有8个键位都可用，你应该配置把键盘设置为美式键盘（国际）。 以美式键盘布局为例，在调用 xmodmap 之前调用 <code>$ setxkbmap -layout 'us(intl)'</code> 以在当前X会话中测试您的更改。要永久地做这个改变，请编辑 xorg 配置或您的 .xprofile 或 .xinitrc 文件。完整解释参见<a href="../en/Xorg/Keyboard_configuration.html#Setting_keyboard_layout" title="Xorg/Keyboard configuration">Xorg/Keyboard configuration#Setting keyboard layout</a>。
+</p>
 <h2>
 <span id=".E8.87.AA.E5.AE.9A.E4.B9.89.E6.98.A0.E5.B0.84.E8.A1.A8"></span><span class="mw-headline" id="自定义映射表">自定义映射表</span>
 </h2>
-<p>你可以创建自己的映射表并且把它储存在你的<code>home</code>目录下(i.e. <code>~/.Xmodmap</code>). 输出当前键盘映射表到一个配置文件中：
+<p>创建一个键映射表（即文件 <code>~/.Xmodmap</code>）：
 </p>
-<pre>xmodmap -pke &gt; ~/.Xmodmap
+<pre>$ xmodmap -pke &gt; ~/.Xmodmap
 </pre>
-<p>在 <code>~/.Xmodmap</code> 文件中做好想要的修改 然后测试新的配置文件：
+<p>测试您的更改：
 </p>
-<pre>xmodmap ~/.Xmodmap
+<pre>$ xmodmap ~/.Xmodmap
 </pre>
-<p>要在启动Xorg时激活你自己的映射表，请添加下面的文件和内容：
+<h3>
+<span id=".E6.BF.80.E6.B4.BB.E8.87.AA.E5.AE.9A.E4.B9.89.E6.98.A0.E5.B0.84.E8.A1.A8"></span><span class="mw-headline" id="激活自定义映射表">激活自定义映射表</span>
+</h3>
+<p>对于<a href="../en/GDM.html" title="GDM">GDM</a>、<a href="../en/XDM.html" title="XDM">XDM</a>或<a href="../en/LightDM.html" title="LightDM">LightDM</a>，不需要特别加入<code>~/.Xmodmap</code>。对于<a href="../en/Xinit.html" class="mw-redirect" title="Startx">startx</a>，请使用：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.xinitrc</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">if [ -f $HOME/.Xmodmap ]; then
-    /usr/bin/xmodmap $HOME/.Xmodmap
-fi</pre>
-<p>或者你也可以编辑全局启动脚本 <code>/etc/X11/xinit/xinitrc</code>.
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[[ -f ~/.Xmodmap ]] &amp;&amp; xmodmap ~/.Xmodmap
+</pre>
+<p>也可以编辑全局启动脚本 <code>/etc/X11/xinit/xinitrc</code>。
 </p>
 <h3>
-<span id=".E6.B5.8B.E8.AF.95.E4.BD.A0.E7.9A.84.E4.BF.AE.E6.94.B9"></span><span class="mw-headline" id="测试你的修改">测试你的修改</span>
+<span id=".E6.B5.8B.E8.AF.95.E6.9B.B4.E6.94.B9"></span><span class="mw-headline" id="测试更改">测试更改</span>
 </h3>
-<p>你也可以在当前会话做临时的修改。 一个例子：
+<p>进行临时修改：
 </p>
-<pre>xmodmap -e "keycode  46 = l L l L lstroke Lstroke lstroke"
-xmodmap -e "keysym a = e E"
+<pre>$ xmodmap -e "keycode 46 = l L l L lstroke lstroke lstroke"
+$ xmodmap -e "keysym a = e E"
 </pre>
 <h2>
-<span id=".E7.89.B9.E6.AE.8A.E7.9A.84.E6.8C.89.E9.94.AE"></span><span class="mw-headline" id="特殊的按键">特殊的按键</span>
+<span id=".E4.BF.AE.E9.A5.B0.E9.94.AE"></span><span class="mw-headline" id="修饰键">修饰键</span>
 </h2>
-<p>你也可以编辑这些特殊的按键： <code>Shift</code>, <code>Ctrl</code>, <code>Alt</code> and <code>Super</code> (这里存在左右之分 (Alt_R=AltGr))
+<p><i>xmodmap</i>也可以用来覆盖<a href="https://en.wikipedia.org/wiki/Modifier_key" class="extiw" title="wikipedia:Modifier key">修饰键</a>，例如交换<code>Control</code>和<code>Super</code>（即 <a href="https://en.wikipedia.org/wiki/Windows_key" class="extiw" title="wikipedia:Windows key">Windows 键</a>）。
 </p>
-<p>首先你必须delete/clear你想要编辑的按键在<code>~/.Xmodmap</code>这个文件的开头:
+<p>打印当前完整的修饰符表：
 </p>
-<pre>!clear Shift
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ xmodmap -pm</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">xmodmap:  up to 4 keys per modifier, (keycodes in parentheses):
+
+shift       Shift_L (0x32),  Shift_R (0x3e)
+lock        Caps_Lock (0x42)
+control     Control_L (0x25),  Control_R (0x69)
+mod1        Alt_L (0x40),  Meta_L (0xcd)
+mod2        Num_Lock (0x94)
+mod3      
+mod4        Super_R (0x86),  Super_L (0xce),  Hyper_L (0xcf)
+mod5        ISO_Level3_Shift (0x5c),  ISO_Level3_Shift (0x6c),  Mode_switch (0x85),  Mode_switch (0xcb)</pre> 
+<h3>
+<span id=".E6.89.BE.E5.88.B0.E9.94.AE.E7.AC.A6.E7.9A.84.E4.BF.AE.E9.A5.B0.E9.94.AE"></span><span class="mw-headline" id="找到键符的修饰键">找到键符的修饰键</span>
+</h3>
+<dl>
+<dt>ISO_Level3_Shift</dt>
+<dd>非美式键盘上的AltGr键调用修饰键ISO_Level3_Shift。（在美式键盘上，右alt <code>Alt_R</code>与左alt <code>Alt_L</code>具有相同的功能，因此将布局设置为美式键盘（国际）会更灵活。参见<a href="#%E9%94%AE%E6%98%A0%E5%B0%84%E8%A1%A8">#键映射表</a>）</dd>
+<dt>Mode_switch</dt>
+<dd>默认情况下，Mode_switch修饰键可能会被映射到一个虚拟的键。</dd>
+</dl>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 修饰键<code>ISO_Level3_Shift</code>和<code>Mode_switch</code>的名称对于xmodmap和<a href="../en/X_keyboard_extension.html#xmodmap" title="X keyboard extension">X键盘扩展</a>是不同的。参见<a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/questions/55076/what-is-the-mode-switch-modifier-for">[3]</a>。</div>
+<h3>
+<span id=".E9.87.8D.E6.96.B0.E5.AE.89.E6.8E.92.E4.BF.AE.E9.A5.B0.E9.94.AE.E4.BD.8D"></span><span class="mw-headline" id="重新安排修饰键位">重新安排修饰键位</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> xmodmap是<i>区分大小写</i>的。使用不正确的大小写，如<code>Mode_Switch</code>，（正确的是 <code>Mode_switch</code>）会导致错误。</div>
+<p>在重排之前，需要清除修饰键。原来的键和新的键都得清除。例如，如果您打算将<code>Caps_Lock</code>换到A键，将<code>B</code>换成NumLock键，那么<code>Caps_Lock</code>,<code>Num_Lock</code>,A,B四个键都得清除，然后分配键位，最后再把他们加回来。
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Xmodmap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[...]
+clear lock
+clear mod2
+keycode  38 = Caps_Lock
+keycode  77 = Num_Lock
+add lock = Caps_Lock
+add mod2 = Num_Lock</pre>
+<p><code>!</code>用于注释一行，所以在下面的例子中，只有 <code>Control</code> 和 <code>Mod4</code> 这两个修饰符被清除。然后，键符<code>Control_L</code>、<code>Control_R</code>、<code>Super_L</code>和<code>Super_R</code>被分配给对应相反的修饰键。将左键和右键都分配给同一个修饰键意味着两个键会被当成同一个键。
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Xmodmap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[...]
+!clear Shift
 !clear Lock
 clear Control
 !clear Mod1
@@ -143,14 +234,6 @@ clear Control
 !clear Mod3
 clear Mod4
 !clear Mod5
-keycode   8 =
-...
-</pre>
-<p>记住, <code>!</code> 是一个注释符号 所以只有 <code>Control</code> 和 <code>Mod4</code> (Standard: Super_L Super_R) 被clear了.
-</p>
-<p>把你的修改写到 <code>~/.Xmodmap</code> 文件末尾
-</p>
-<pre>keycode 255 =
 !add Shift   = Shift_L Shift_R
 !add Lock    = Caps_Lock
 add Control = Super_L Super_R
@@ -158,70 +241,145 @@ add Control = Super_L Super_R
 !add Mod2    = Mode_switch
 !add Mod3    =
 add Mod4    = Control_L Control_R
-!add Mod5    =
-</pre>
-<p>现在 <code>Super</code> 键 和 <code>Ctrl</code> 键被交换了.
+!add Mod5    =</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 本例假设<code>Control_L</code>和<code>Control_R</code>键符分配给了<code>Control</code>修饰键，<code>Super_L</code>和<code>Super_R</code>键符分配给了<code>Mod4</code>修饰键。如果你得到以下错误信息<code>X Error of failed request:  BadValue (integer parameter out of range for operation)</code>，您需要进行相应的调整。运行<code>xmodmap</code>会产生一个修饰键和分配给它们的键符列表。</div>
+<p>下面的例子将<code>CapsLock</code>修改为<code>Control</code>，将<code>Shift+CapsLock</code>修改为<code>CapsLock</code>：
 </p>
-<p>附加一个将<code>CapsLock</code>映射成<code>Control</code>, <code>Shift+CapsLock</code>映射成<code>CapsLock</code>的例子：
-<code>~/.Xmodmap</code>
-</p>
-<pre>clear lock
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Xmodmap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">clear lock
 clear control
 add control = Caps_Lock Control_L Control_R
-keycode 66 = Control_L Caps_Lock NoSymbol NoSymbol
+keycode 66 = Control_L Caps_Lock NoSymbol NoSymbol</pre>
+<h2>
+<span id=".E5.8F.8D.E5.90.91.E6.BB.9A.E5.8A.A8"></span><span class="mw-headline" id="反向滚动">反向滚动</span>
+</h2>
+<p>OS X Lion中可用的<a rel="nofollow" class="external text" href="https://who-t.blogspot.com/2011/09/natural-scrolling-in-synaptics-driver.html">自然滚动</a>功能（模仿智能手机或平板电脑滚动）可以通过<i>xmodmap</i>来<a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=126258">实现</a>。由于 synaptics 驱动程序使用 4/5/6/7 按钮进行上/下/左/右滚动，你只需要调换一下 <code>~/.Xmodmap</code> 中按钮的声明顺序：
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Xmodmap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">pointer = 1 2 3 <b>5 4</b> 7 6 8 9 10 11 12</pre>
+<p>然后更新<i>xmodmap</i>：
+</p>
+<pre>$ xmodmap ~/.Xmodmap
 </pre>
 <h2>
-<span id="MAC_OS_X.E7.9A.84.E8.87.AA.E7.84.B6.E6.BB.9A.E5.8A.A8"></span><span class="mw-headline" id="MAC_OS_X的自然滚动">MAC OS X的自然滚动</span>
+<span id=".E4.BA.A4.E6.8D.A2.E9.BC.A0.E6.A0.87.E6.8C.89.E9.92.AE"></span><span class="mw-headline" id="交换鼠标按钮">交换鼠标按钮</span>
 </h2>
-<p>你能用xmodmap去模仿OS X上的自然滚动（反向滚动） 因为synaptics驱动使用按键 4/5/6/7 作为 up/down/left/right 滚动, 你只需要交换按钮的命令，它的描述在这个文件 <code>~/.Xmodmap</code> 里.
+<p>鼠标左、中、右按钮分别对应于 synaptics 驱动程序中的按钮 1、2和3。如果要交换鼠标左键和右键，也只需将它们在<code>~/.Xmodmap</code>中的顺序颠倒过来即可。
 </p>
-<p>打开 <code>~/.Xmodmap</code> 文件，然后把下面这行添加到文件里面：
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Xmodmap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">pointer = <b>3 2 1</b></pre>
+<p>这对于一个简单的鼠标设置来说应该足够了。再次更新<i>xmodmap</i>。
 </p>
-<pre>pointer = 1 2 3 5 4 7 6 8 9 10 11 12
+<pre>$ xmodmap ~/.Xmodmap
 </pre>
-<p>现在4和5互换了
-然后更新xmodmap的设置:
-</p>
-<pre>xmodmap ~/.Xmodmap
+<h2>
+<span id=".E6.A8.A1.E6.9D.BF"></span><span class="mw-headline" id="模板">模板</span>
+</h2>
+<h3>
+<span id=".E8.A5.BF.E7.8F.AD.E7.89.99.E8.AF.AD"></span><span class="mw-headline" id="西班牙语">西班牙语</span>
+</h3>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Xmodmap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">keycode  24 = a A aacute Aacute ae AE ae
+keycode  26 = e E eacute Eacute EuroSign cent EuroSign
+keycode  30 = u U uacute Uacute downarrow uparrow downarrow
+keycode  31 = i I iacute Iacute rightarrow idotless rightarrow
+keycode  32 = o O oacute Oacute oslash Oslash oslash
+keycode  57 = n N ntilde Ntilde n N n
+keycode  58 = comma question comma questiondown dead_acute dead_doubleacute dead_acute
+keycode  61 = exclam section exclamdown section dead_belowdot dead_abovedot dead_belowdot
+!Maps the Mode key to the Alt key
+keycode 64 = Mode_switch
 </pre>
-<p>恢复只需要交换4和5或者完全删除那行. 获取更多的信息请查看Peter Hutterer的帖子, <a rel="nofollow" class="external text" href="https://who-t.blogspot.com/2011/09/natural-scrolling-in-synaptics-driver.html">Natural scrolling in the synaptics driver</a>, 或者 <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=126258">Reverse scrolling direction ala Mac OS X Lion?</a> 论坛帖子
+<h3>
+<span id=".E5.B0.86_CapsLock_.E6.8D.A2.E6.88.90_Control"></span><span class="mw-headline" id="将_CapsLock_换成_Control">将 CapsLock 换成 Control</span>
+</h3>
+<p>将 <code>CapsLock</code> 改为 <code>Control</code> 的最简单的例子。
 </p>
-<h2><span class="mw-headline" id="Additional_resources">Additional resources</span></h2>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Xmodmap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">clear lock
+clear control
+keycode 66 = Control_L
+add control = Control_L Control_R
+</pre>
+<h3>
+<span id=".E5.B0.86CapsLock.E8.BD.AC.E4.B8.BAControl.EF.BC.8C.E5.B0.86.E5.B7.A6Control.E8.BD.AC.E4.B8.BAHyper"></span><span class="mw-headline" id="将CapsLock转为Control，将左Control转为Hyper">将CapsLock转为Control，将左Control转为Hyper</span>
+</h3>
+<p>笔记本用户可能更喜欢将<code>CapsLock</code>作为<code>Control</code>。<code>Left Control</code>键可以作为<code>Hyper</code>修饰键（emacs、openbox或i3的附加修饰键）。
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Xmodmap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">clear      lock 
+clear   control
+clear      mod1
+clear      mod2
+clear      mod3
+clear      mod4
+clear      mod5
+keycode      37 = Hyper_L
+keycode      66 = Control_L
+add     control = Control_L Control_R
+add        mod1 = Alt_L Alt_R Meta_L
+add        mod2 = Num_Lock
+add        mod3 = Hyper_L
+add        mod4 = Super_L Super_R
+add        mod5 = Mode_switch ISO_Level3_Shift
+</pre>
+<h3>
+<span id=".E6.8A.8A.E5.8F.B3_Super_.E5.8F.98.E6.88.90.E5.8F.B3_Hyper"></span><span class="mw-headline" id="把右_Super_变成右_Hyper">把右 Super 变成右 Hyper</span>
+</h3>
+<p>如果用户希望在全键盘布局中使用 Hyper 键，不妨将右 Super 键作为 Hyper 键。
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Xmodmap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">remove  mod4 = Super_R
+keycode  134 = Hyper_R
+add     mod3 = Hyper_R
+</pre>
+<h3>
+<span id=".E5.B0.86Shift-.E6.95.B0.E5.AD.97.E9.94.AE.E4.B8.8E.E6.95.B0.E5.AD.97.E9.94.AE.E5.AF.B9.E6.8D.A2.EF.BC.88.E5.85.8B.E7.BD.97.E5.9C.B0.E4.BA.9A.E8.AF.AD.E5.B8.83.E5.B1.80.EF.BC.89"></span><span class="mw-headline" id="将Shift-数字键与数字键对换（克罗地亚语布局）">将Shift-数字键与数字键对换（克罗地亚语布局）</span>
+</h3>
+<p>对于类似克罗地亚语的布局应该也能正常工作。
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Xmodmap</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">keycode 10 = exclam 1 1 exclam asciitilde dead_tilde asciitilde
+keycode 11 = quotedbl 2 2 quotedbl dead_caron caron dead_caron
+keycode 12 = numbersign 3 3 numbersign asciicircum dead_circumflex asciicircum
+keycode 13 = dollar 4 4 dollar dead_breve breve dead_breve
+keycode 14 = percent 5 5 percent degree dead_abovering degree
+keycode 15 = ampersand 6 6 ampersand dead_ogonek ogonek dead_ogonek
+keycode 16 = slash 7 7 slash grave dead_grave grave
+keycode 17 = parenleft 8 8 parenleft dead_abovedot abovedot dead_abovedot
+keycode 18 = parenright 9 9 parenright dead_acute apostrophe dead_acute
+keycode 19 = equal 0 0 equal dead_doubleacute doubleacute dead_doubleacute
+</pre>
+<h2>
+<span id=".E5.8F.A6.E8.A7.81"></span><span class="mw-headline" id="另见">另见</span>
+</h2>
 <ul>
 <li>
-<a rel="nofollow" class="external text" href="http://www.x.org/archive/current/doc/man/man1/xmodmap.1.xhtml">Current man page</a> at X.Org Foundation</li>
+<span class="plainlinks archwiki-template-man" title="$ man 1 xmodmap"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xmodmap.1">xmodmap(1)</a></span>。</li>
+<li>Christian Weiske 写的 <a rel="nofollow" class="external text" href="http://cweiske.de/howto/xmodmap/allinone.html">.Xmodmap 与多媒体键</a>
+</li>
+<li>Pascal Bleser 写的 <a rel="nofollow" class="external text" href="https://dev-loki.blogspot.com/2006/04/mapping-unsupported-keys-with-xmodmap.html">使用 xmodmap 映射键盘上缺少的键</a>
+</li>
 <li>
-<a rel="nofollow" class="external text" href="http://cweiske.de/howto/xmodmap/allinone.html">Multimediakeys with .Xmodmap HOWTO</a> by Christian Weiske</li>
-<li>
-<a rel="nofollow" class="external text" href="https://dev-loki.blogspot.com/2006/04/mapping-unsupported-keys-with-xmodmap.html">Mapping unsupported keys with xmodmap</a> by Pascal Bleser</li>
-<li>
-<a rel="nofollow" class="external text" href="http://keytouch.sourceforge.net/howto_keyboard/node4.html">How to retrieve scancodes</a> by Marvin Raaijmakers</li>
-<li>
-<a rel="nofollow" class="external text" href="http://wiki.linuxquestions.org/wiki/List_of_Keysyms_Recognised_by_Xmodmap">List of Keysyms Recognised by Xmodmap</a> on <a rel="nofollow" class="external text" href="http://linuxquestions.org">LinuxQuestions</a>
+<a rel="nofollow" class="external text" href="https://linuxquestions.org">LinuxQuestions</a>上的<a rel="nofollow" class="external text" href="http://wiki.linuxquestions.org/wiki/List_of_Keysyms_Recognised_by_Xmodmap">Xmodmap识别的键符列表</a>
 </li>
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
 <li><a href="../zh-CN/Category:Input_devices.html" title="Category:Input devices (简体中文)">Input devices (简体中文)</a></li>
 <li><a href="../zh-CN/Category:X_server.html" title="Category:X server (简体中文)">X server (简体中文)</a></li>
 </ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../zh-CN/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (简体中文)">Pages or sections flagged with Template:Translateme (简体中文)</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-</ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xmodmap_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=631649">https://wiki.archlinux.org/index.php?title=Xmodmap_(简体中文)&amp;oldid=631649</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 August 2020, at 09:40.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xmodmap_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=662635">https://wiki.archlinux.org/index.php?title=Xmodmap_(简体中文)&amp;oldid=662635</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:37.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

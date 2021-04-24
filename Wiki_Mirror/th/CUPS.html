@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -116,8 +117,6 @@
 </h3>
 <p>คัดมาจากเว็บไซท์ของ CUPS "The Common UNIX Printing System (CUPS) เป็นระบบการพิมพ์ cross-platform สำหรับสภาพแวดล้อมการทำงานบน UNIX มันถูกสร้างขึ้นมาให้รองรับกับ "Internet Printing Protocol" และสามารถทำงานได้อย่างสมบูรณ์แบบกับเครื่องพิมพ์แบบ Postscript และ Raster ส่วนใหญ่ CUPS เป็นโปรแกรม open-source ภายใต้ลิขสิทธิ์แบบ GNU GPL" ถึงแม้ว่าจะมีระบบการพิมพ์อื่นๆ เช่น LPRNG แต่ CUPS ก็ยังเป็นที่นิยมและยังง่ายต่อการใช้งาน CUPS เป็นระบบการพิมพ์มาตรฐานบน Arch Linux รวมถึง Linux distro อื่นๆ ด้วยเช่นกัน
 </p>
-<p><br>
-</p>
 <h3>
 <span id=".E0.B8.81.E0.B8.B2.E0.B8.A3.E0.B9.81.E0.B8.81.E0.B9.89.E0.B8.9B.E0.B8.B1.E0.B8.8D.E0.B8.AB.E0.B8.B2_CUPS"></span><span class="mw-headline" id="การแก้ปัญหา_CUPS">การแก้ปัญหา CUPS</span>
 </h3>
@@ -134,8 +133,7 @@
 <pre>D = Debug
 E = Error
 I = Information
-etc...
-</pre>
+etc...</pre>
 <p>ไฟล์อื่นๆ เหล่านี้อาจจะมีประโยชน์ในการแก้ปัญหา
 </p>
 <pre>/var/log/cups/page_log 'แสดงรายละเอียดทุกครั้งที่การพิมพ์เสร็จสิ้น'
@@ -165,8 +163,7 @@ etc...
 <li>
 <b>ghostscript</b> - ตัวแปลภาษา Postscript</li>
 </ul>
-<p><br>
-เหล่านี้คือชุดของ driver ซึ่งสามารถทำงานได้กับเครื่องพิมพ์ของคุณ หากคุณไม่แน่ใจ ให้ติดตั้ง gutenprint
+<p>เหล่านี้คือชุดของ driver ซึ่งสามารถทำงานได้กับเครื่องพิมพ์ของคุณ หากคุณไม่แน่ใจ ให้ติดตั้ง gutenprint
 </p>
 <ul>
 <li>
@@ -179,8 +176,7 @@ etc...
 <li>
 <b>cups-pdf</b> - แพคเกจที่ช่วยให้คุณสร้าง Virtual PDF Printer ซึ่งจะแปลงเอกสารต่างๆ ให้เป็นไฟล์ PDF</li>
 </ul>
-<p><br>
-หากระบบของคุณเชื่อมต่ออยู่กับเครื่องพิมพ์ที่อยู่บนเครือข่ายซึ่งใช้โปรโตคอลของ samba (Windows Networking) หรือคุณต้องการให้เครื่องของคุณแบ่งปันเครื่องพิมพ์บนระบบเครือข่ายของ Windows คุณต้องติดตั้ samba
+<p>หากระบบของคุณเชื่อมต่ออยู่กับเครื่องพิมพ์ที่อยู่บนเครือข่ายซึ่งใช้โปรโตคอลของ samba (Windows Networking) หรือคุณต้องการให้เครื่องของคุณแบ่งปันเครื่องพิมพ์บนระบบเครือข่ายของ Windows คุณต้องติดตั้ samba
 </p>
 <pre># pacman -S samba
 </pre>
@@ -189,21 +185,15 @@ etc...
 </h3>
 <p>ขั้นตอนนี้อาจจะไม่จำเป็นสำหรับเครื่องพิมพ์บางรุ่น เพราะ CUPS ได้มาพร้อมกับชุด driver มาตรฐาน (ส่วนใหญ่สำหรับเครื่องพิมพ์ PostScript) และที่มากไปกว่านั้น <i>foomatic-filters</i>, <i>gimp-print</i> และ <i>hplip</i> ได้รวมเอาไฟล์รายละเอียดเครื่องพิมพ์ไว้พอสมควร ซึ่ง CUPS จะตรวจพบได้เอง
 </p>
-<p><br>
-นี่คือคำอธิบายความหมายของไฟล์ PPD หรือไฟล์รายละเอียดเครื่องพิมพ์ ซึ่งได้มาจากเว็บไซท์ Linux Printing "สำหรับเครื่องพิมพ์ PostScript ทุกตัว ผู้ผลิตจะให้ไฟล์ PPD ซึ่งประกอบไปด้วยรายละเอียดต่างๆ เกี่ยวกับเครื่องพิมพ์รุ่นนั้นๆ เช่น ความสามารถมาตรฐานที่เครื่องพิมพ์สามารถทำได้ ความสามารถในการพิมพ์สี Font ต่างๆ และอื่นๆ อีกมากมาย รวมถึงการตั้งค่าที่ผู้ใช้สามารถเลือกได้ เช่น ขนาดกระดาษ หรือ ความละเอียดเป็นต้น"
-</p>
-<p><br>
+<p>นี่คือคำอธิบายความหมายของไฟล์ PPD หรือไฟล์รายละเอียดเครื่องพิมพ์ ซึ่งได้มาจากเว็บไซท์ Linux Printing "สำหรับเครื่องพิมพ์ PostScript ทุกตัว ผู้ผลิตจะให้ไฟล์ PPD ซึ่งประกอบไปด้วยรายละเอียดต่างๆ เกี่ยวกับเครื่องพิมพ์รุ่นนั้นๆ เช่น ความสามารถมาตรฐานที่เครื่องพิมพ์สามารถทำได้ ความสามารถในการพิมพ์สี Font ต่างๆ และอื่นๆ อีกมากมาย รวมถึงการตั้งค่าที่ผู้ใช้สามารถเลือกได้ เช่น ขนาดกระดาษ หรือ ความละเอียดเป็นต้น"
 </p>
 <ul><li>การ Download ไฟล์ PPD</li></ul>
 <p>ให้คุณเข้าไปยัง <a rel="nofollow" class="external free" href="http://www.linuxprinting.org/printer_list.cgi">http://www.linuxprinting.org/printer_list.cgi</a> และเลือกยี่ห้อกับรุ่นของเครื่องพิมพ์ของคุณ
 </p>
-<p><br>
-</p>
 <ul><li>หลังจากนั้น คุณต้องคัดลอกไฟล์ไปยัง directory ของ CUPS เพื่อให้ระบบสามารถตรวจสอบไฟล์ได้ ถ้าคุณอยู่ใน directory ที่คุณ download ไฟล์ PPD มา ให้ใช้คำสั่งดังนี้</li></ul>
 <pre># cp ชื่อไฟล์.ppd /usr/share/cups/model/
 </pre>
-<p><br>
-ถ้าคุณหายี่ห้อและรุ่นของเครื่องพิมพ์คุณไม่พบ คุณสามารถลองใช้งานไฟล์ของรุ่นที่คล้ายๆ กันได้ หรือสามารถลองใช้ Driver มาตรฐาน (Generic) โปรดหารายละเอียดเพิ่มเติมจาก Google หรือสอบถามจากผู้ผลิตเครื่องพิมพ์ของคุณ (เราขอให้คุณโชคดี)
+<p>ถ้าคุณหายี่ห้อและรุ่นของเครื่องพิมพ์คุณไม่พบ คุณสามารถลองใช้งานไฟล์ของรุ่นที่คล้ายๆ กันได้ หรือสามารถลองใช้ Driver มาตรฐาน (Generic) โปรดหารายละเอียดเพิ่มเติมจาก Google หรือสอบถามจากผู้ผลิตเครื่องพิมพ์ของคุณ (เราขอให้คุณโชคดี)
 </p>
 <h2>
 <span id=".E0.B8.81.E0.B8.B2.E0.B8.A3.E0.B8.95.E0.B8.B1.E0.B9.89.E0.B8.87.E0.B8.84.E0.B9.88.E0.B8.B2_CUPS"></span><span class="mw-headline" id="การตั้งค่า_CUPS">การตั้งค่า CUPS</span>
@@ -268,8 +258,7 @@ etc...
 </p>
 <pre># lp0: using parport0 (polling).
 </pre>
-<p><br>
-ข้อสังเกต ในบางกรณี การตั้งค่า Permission อาจจะผิดพลาด ซึ่งทำให้ระบบไม่สามารถพิมพ์งานได้ ตัวอย่างการแก้ไข permission มีดังนี้
+<p>ข้อสังเกต ในบางกรณี การตั้งค่า Permission อาจจะผิดพลาด ซึ่งทำให้ระบบไม่สามารถพิมพ์งานได้ ตัวอย่างการแก้ไข permission มีดังนี้
 </p>
 <pre>[root@mihal usb]# cd /dev/usb/
 [root@mihal usb]# ls
@@ -282,8 +271,7 @@ lp0
 </h4>
 <p>คุณอาจจะอยากให้ระบบเรียกใช้งาน kernel module อัตโนมัติทุกครั้งที่เริ่มทำงาน คุณสามารถตั้งค่าเหล่านี้ได้โดยการแก้ไขไฟล์ <code>/etc/rc.conf</code> และเพิ่มรายละเอียดในส่วนของ <i>MODULES=()</i> นี่คือตัวอย่างการตั้งค่าในส่วนของ MODULES
 </p>
-<pre>MODULES=(!usbserial scsi_mod sd_mod snd-ymfpci snd-pcm-oss printer ide-scsi)
-</pre>
+<pre>MODULES=(!usbserial scsi_mod sd_mod snd-ymfpci snd-pcm-oss printer ide-scsi)</pre>
 <h3><span class="mw-headline" id="CUPS_Daemon">CUPS Daemon</span></h3>
 <p>หลังจากที่ติดตั้ง Kernel Module เรียบร้อยแล้ว คุณสามารถเริ่มใช้งาน CUPS ได้ด้วยการใช้คำสั่งนี้
 </p>
@@ -291,8 +279,7 @@ lp0
 </pre>
 <p>และหากคุณต้องการใช้ CUPS เริ่มต้นทำงานโดยอัตโนมัติทุกครั้งที่คุณเริ่มใช้งานคอมพิวเตอร์ ให้เพิ่มข้อมูลเข้าไปในส่วนของ DAEMONS=() ในไฟล์ <i>/etc/rc.conf</i> ตัวอย่างเช่น
 </p>
-<pre># DAEMONS=(pcmcia syslogd klogd !fam esd mono network autofs cupsd crond gdm)
-</pre>
+<pre># DAEMONS=(pcmcia syslogd klogd !fam esd mono network autofs cupsd crond gdm)</pre>
 <h3>
 <span id="Web_Interface_.E0.B9.81.E0.B8.A5.E0.B8.B0.E0.B8.8A.E0.B8.B8.E0.B8.94.E0.B9.80.E0.B8.84.E0.B8.A3.E0.B8.B7.E0.B9.88.E0.B8.AD.E0.B8.87.E0.B8.A1.E0.B8.B7.E0.B8.AD"></span><span class="mw-headline" id="Web_Interface_และชุดเครื่องมือ">Web Interface และชุดเครื่องมือ</span>
 </h3>
@@ -346,9 +333,7 @@ no entries
 </pre>
 <p>นอกจากนี้ยังมีการตั้งค่าอีกหลายแบบ ซึ่งรวมถึงการตั้งค่าอัตโนมัติ โดยคุณสามารถดูรายละเอียดได้จาก <a rel="nofollow" class="external free" href="http://localhost:631/sam.html#CLIENT_SETUP">http://localhost:631/sam.html#CLIENT_SETUP</a> (ลิงค์นี้จะทำงานบนเครื่องแม่ข่ายเท่านั้น)
 </p>
-<p>หากคุณถูกถามรหัสผู้ใช้งาน ให้ใส่ชื่อผู้ใช้และรหัสผ่านสำหรับ root และหากคุณใช้เครื่องพิมพ์ JetDirect ให้เข้าไปดูยังหน้านี้ <a rel="nofollow" class="external free" href="http://www.digitalhermit.com/linux/printing/">http://www.digitalhermit.com/linux/printing/</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-20 ⓘ]</sup>
-</p>
-<p><br>
+<p>หากคุณถูกถามรหัสผู้ใช้งาน ให้ใส่ชื่อผู้ใช้และรหัสผ่านสำหรับ root และหากคุณใช้เครื่องพิมพ์ JetDirect ให้เข้าไปดูยังหน้านี้ <a rel="nofollow" class="external free" href="https://web.archive.org/web/20100311051035/http://www.digitalhermit.com/linux/printing/">https://web.archive.org/web/20100311051035/http://www.digitalhermit.com/linux/printing/</a>
 </p>
 <h3><span class="mw-headline" id="Linux_to_Windows">Linux to Windows</span></h3>
 <p>If you are connected to a Windows print server (or any other Samba capable print server), you can skip the section about kernel modules and such.  All you have to do is start the CUPS daemon and complete the web interface as specified in section 3.3 and 3.4.  Before this, you need to activate the Samba CUPS backend.  You can do this by entering the following command:
@@ -386,8 +371,7 @@ security = user
     writable = no
     printable = yes
     create mode = 0700
-    write list = @adm root neocephas
-</pre>
+    write list = @adm root neocephas</pre>
 <p>That should be enough to share your printer, but you just might want to add an individual printer entry:
 </p>
 <pre>[ML1250]
@@ -402,8 +386,7 @@ security = user
     guest ok = no
     writable = no
     write list = @adm root neocephas
-    valid users = @adm root neocephas
-</pre>
+    valid users = @adm root neocephas</pre>
 <p>Please note that in my configuration I made it so that users must have a valid account to access the printer.  To have a public printer, set guest ok to yes, and remove the valid users line.  To add accounts, you must setup a regular Linux account and then setup a Samba password on the server.  For instance:
 </p>
 <pre># useradd neocephas
@@ -456,7 +439,7 @@ application/octet-stream
 </p>
 <pre>pacman -S gnome-cups-manager
 </pre>
-<p>The package is also still available from the <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages.php?do_Details=1&amp;ID=66&amp;O=0&amp;L=0&amp;C=0&amp;K=cups&amp;SB=&amp;SO=&amp;PP=25&amp;do_MyPackages=0&amp;do_Orphans=0&amp;SeB=nd">AUR</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-20 ⓘ]</sup>.
+<p>The package is also still available from the <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/?O=0&amp;L=0&amp;C=0&amp;K=cups&amp;SB=&amp;SO=&amp;PP=25&amp;do_MyPackages=0&amp;do_Orphans=0&amp;SeB=nd">AUR</a>.
 </p>
 <p>KDE users can modify their printers from the Control Center.  Both should refer the those desktop environments' documentation for more information on how to use the interfaces.
 </p>
@@ -479,10 +462,10 @@ application/octet-stream
 <b>Linux Printing</b> - <a rel="nofollow" class="external free" href="http://www.linuxprinting.org/">http://www.linuxprinting.org/</a>
 </li>
 <li>
-<b>Tips and Suggestions on common CUPS problems</b> - <a rel="nofollow" class="external free" href="http://home.nyc.rr.com/computertaijutsu/cups.html">http://home.nyc.rr.com/computertaijutsu/cups.html</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-20 ⓘ]</sup>
+<b>Tips and Suggestions on common CUPS problems</b> - <a rel="nofollow" class="external free" href="https://web.archive.org/web/20080918042956/http://home.nyc.rr.com/computertaijutsu/cups.html">https://web.archive.org/web/20080918042956/http://home.nyc.rr.com/computertaijutsu/cups.html</a>
 </li>
 <li>
-<b>Gentoo's Printing Guide</b> - <a rel="nofollow" class="external free" href="http://www.gentoo.org/doc/en/printing-howto.xml">http://www.gentoo.org/doc/en/printing-howto.xml</a>
+<b>Gentoo's Printing Guide</b> - <a rel="nofollow" class="external free" href="https://www.gentoo.org/doc/en/printing-howto.xml">https://www.gentoo.org/doc/en/printing-howto.xml</a>
 </li>
 <li>
 <b>Arch Linux User Forums</b> - <a rel="nofollow" class="external free" href="https://bbs.archlinux.org/">https://bbs.archlinux.org/</a>
@@ -565,7 +548,6 @@ local/cups 1.1.23-3
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme">Pages or sections flagged with Template:Translateme</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
 </div>
 </div>
@@ -574,8 +556,8 @@ local/cups 1.1.23-3
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=CUPS_(%E0%B9%84%E0%B8%97%E0%B8%A2)&amp;oldid=646236">https://wiki.archlinux.org/index.php?title=CUPS_(ไทย)&amp;oldid=646236</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 December 2020, at 22:46.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=CUPS_(%E0%B9%84%E0%B8%97%E0%B8%A2)&amp;oldid=661408">https://wiki.archlinux.org/index.php?title=CUPS_(ไทย)&amp;oldid=661408</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 21:55.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

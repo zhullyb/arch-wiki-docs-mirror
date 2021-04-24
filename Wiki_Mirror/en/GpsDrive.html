@@ -166,7 +166,7 @@
 <pre>   createdb -E UTF8 -T template_postgis -U gis "location"
 </pre>
 <h2><span class="mw-headline" id="Importing_an_OSM_File_into_the_PostgreSQL_database">Importing an OSM File into the PostgreSQL database</span></h2>
-<p>To download a snapshot of the entire OpenStreetMap database (planet.osm), visit <a rel="nofollow" class="external text" href="http://wiki.openstreetmap.org/wiki/Planet.osm">OpenStreetMap Planet.osm</a>. The webpage also offers extracts of the database mainly from Europe. For greater variety, <a rel="nofollow" class="external text" href="http://downloads.cloudmade.com">CloudMade Maps</a> offers extracts from regions all around the globe. Once the <code>*.osm</code> file has been downloaded, it needs to be imported into PostgreSQL in order to be queried by Mapnik. The tool <code>osm2pgsql</code> (currently from AUR) accomplishes this. First though, the working directory needs to be setup:
+<p>To download a snapshot of the entire OpenStreetMap database (planet.osm), visit <a rel="nofollow" class="external text" href="https://wiki.openstreetmap.org/wiki/Planet.osm">OpenStreetMap Planet.osm</a>. The webpage also offers extracts of the database mainly from Europe. For greater variety, <a rel="nofollow" class="external text" href="http://downloads.cloudmade.com">CloudMade Maps</a> offers extracts from regions all around the globe. Once the <code>*.osm</code> file has been downloaded, it needs to be imported into PostgreSQL in order to be queried by Mapnik. The tool <code>osm2pgsql</code> (currently from AUR) accomplishes this. First though, the working directory needs to be setup:
 </p>
 <pre>   mkdir -p ~/gis/osm/
    cd ~/gis/osm
@@ -176,7 +176,7 @@
 <p>Two important notes. First, <code>osm2pgsql</code> has two operating modes, full and slim. Full uses RAM for intermediate storage, and therefore operates relatively fast. Slim-mode, on the other hand, uses the PostgreSQL database for storage of intermediate information. While this is slower, often the *.osm databases contain too many nodes to be cached in RAM. If this happens, <code>osm2pgsql</code> will abort with an error. 32-bit systems do not address enough ram for a planet.osm import, much less a full Europe import, and while 64-bit systems theoretically could have enough RAM, as of 2010 32GB is not enough for Europe.osm. In any case, since slim-mode offers additional features including incremental updates and proper evaluation of mutipolygons, the osm2pgsql wiki recommends always operating in slim-mode, even with small files.
 </p>
 <p>Secondly, the information that <code>osm2pgsql</code> imports into the PostgreSQL database is selected by the <code>default.style</code> file, usually located at <code>"/usr/share/osm2pgsql/default.style"</code>. Mapnik uses the <code>osm.xml</code> file to extract information from the same database. If either of the two files are out of sync, it is possible that mapnik will fail to fetch some columns from the database, and thus fail to draw some layers. Since <code>osm2pgsql</code> from AUR is currently packaged from SVN, and the following steps build a customized <code>osm.xml</code> file also from SVN, this should not be a problem.
-On the upside, to add more geographical features to the database, simple edit the default.style file. For a full overview see the <a rel="nofollow" class="external text" href="http://wiki.openstreetmap.org/wiki/Osm2pgsql">OpenStreetMap osm2pgsql Wiki</a>.
+On the upside, to add more geographical features to the database, simple edit the default.style file. For a full overview see the <a rel="nofollow" class="external text" href="https://wiki.openstreetmap.org/wiki/Osm2pgsql">OpenStreetMap osm2pgsql Wiki</a>.
 </p>
 <h2><span class="mw-headline" id="Testing_the_PostgreSQL_connection_with_QuantumGIS">Testing the PostgreSQL connection with QuantumGIS</span></h2>
 <ul>
@@ -225,12 +225,12 @@ On the upside, to add more geographical features to the database, simple edit th
    ln -s ne_110m_admin_0_boundary_lines_land.dbf 110m_admin_0_boundary_lines_land.dbf
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> See <a rel="nofollow" class="external free" href="http://wiki.openstreetmap.org/wiki/Mapnik#Download_required_data">http://wiki.openstreetmap.org/wiki/Mapnik#Download_required_data</a> for more information</div>
+<strong>Note:</strong> See <a rel="nofollow" class="external free" href="https://wiki.openstreetmap.org/wiki/Mapnik#Download_required_data">https://wiki.openstreetmap.org/wiki/Mapnik#Download_required_data</a> for more information</div>
 <h2><span class="mw-headline" id="Creating_a_customized_osm.xml">Creating a customized osm.xml</span></h2>
 <p>The final step is to create the <code>osm.xml</code> file GpsDrive/Mapnik needs to extract information from the PostgreSQL database. The latest Mapnik XML scripts can be exported from SVN.
 </p>
 <pre>   cd ~/gis/osm/
-   svn checkout <a rel="nofollow" class="external free" href="http://svn.openstreetmap.org/applications/rendering/mapnik">http://svn.openstreetmap.org/applications/rendering/mapnik</a>
+   svn checkout <a rel="nofollow" class="external free" href="https://svn.openstreetmap.org/applications/rendering/mapnik">https://svn.openstreetmap.org/applications/rendering/mapnik</a>
    cd mapnik
    #./generate_xml.py -h
    # in the following, replace "$(date '+%Y-%m-%d')" with the correct date
@@ -342,27 +342,27 @@ On the upside, to add more geographical features to the database, simple edit th
 </td>
 </tr>
 <tr>
-<td><a rel="nofollow" class="external free" href="http://wiki.openstreetmap.org/wiki/Planet.osm">http://wiki.openstreetmap.org/wiki/Planet.osm</a></td>
+<td><a rel="nofollow" class="external free" href="https://wiki.openstreetmap.org/wiki/Planet.osm">https://wiki.openstreetmap.org/wiki/Planet.osm</a></td>
 <td>Planet.osm
 </td>
 </tr>
 <tr>
-<td><a rel="nofollow" class="external free" href="http://wiki.openstreetmap.org/wiki/Mapnik">http://wiki.openstreetmap.org/wiki/Mapnik</a></td>
+<td><a rel="nofollow" class="external free" href="https://wiki.openstreetmap.org/wiki/Mapnik">https://wiki.openstreetmap.org/wiki/Mapnik</a></td>
 <td>OSM Mapnik Directions
 </td>
 </tr>
 <tr>
-<td><a rel="nofollow" class="external free" href="http://wiki.openstreetmap.org/wiki/Mapnik/PostGIS">http://wiki.openstreetmap.org/wiki/Mapnik/PostGIS</a></td>
+<td><a rel="nofollow" class="external free" href="https://wiki.openstreetmap.org/wiki/Mapnik/PostGIS">https://wiki.openstreetmap.org/wiki/Mapnik/PostGIS</a></td>
 <td>OSM Mapnik/PostGIS Directions
 </td>
 </tr>
 <tr>
-<td><a rel="nofollow" class="external free" href="http://wiki.openstreetmap.org/wiki/Map_Icons">http://wiki.openstreetmap.org/wiki/Map_Icons</a></td>
+<td><a rel="nofollow" class="external free" href="https://wiki.openstreetmap.org/wiki/Map_Icons">https://wiki.openstreetmap.org/wiki/Map_Icons</a></td>
 <td>OSM Map Icon Information
 </td>
 </tr>
 <tr>
-<td><a rel="nofollow" class="external free" href="http://wiki.openstreetmap.org/wiki/Osm2pgsql">http://wiki.openstreetmap.org/wiki/Osm2pgsql</a></td>
+<td><a rel="nofollow" class="external free" href="https://wiki.openstreetmap.org/wiki/Osm2pgsql">https://wiki.openstreetmap.org/wiki/Osm2pgsql</a></td>
 <td>OSM osm2pgsql Page
 </td>
 </tr>
@@ -372,7 +372,7 @@ On the upside, to add more geographical features to the database, simple edit th
 </td>
 </tr>
 <tr>
-<td><a rel="nofollow" class="external free" href="http://www.postgresql.org/docs/current/static/auth-methods.html">http://www.postgresql.org/docs/current/static/auth-methods.html</a></td>
+<td><a rel="nofollow" class="external free" href="https://www.postgresql.org/docs/current/static/auth-methods.html">https://www.postgresql.org/docs/current/static/auth-methods.html</a></td>
 <td>PostgreSQL Auth Methods
 </td>
 </tr>
@@ -402,8 +402,8 @@ On the upside, to add more geographical features to the database, simple edit th
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GpsDrive&amp;oldid=654788">https://wiki.archlinux.org/index.php?title=GpsDrive&amp;oldid=654788</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 17:45.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GpsDrive&amp;oldid=661537">https://wiki.archlinux.org/index.php?title=GpsDrive&amp;oldid=661537</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 09:49.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

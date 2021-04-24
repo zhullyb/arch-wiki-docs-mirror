@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,6 +33,10 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
+<p><br>
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong>  For Users of a hybrid setup with both an Intel GPU and an AMD GPU, usage of the proprietary AMDGPU Pro Workstation Driver might not work as expected due to different MESA implementations (see <a href="#Intel_+_AMD_hybrid_graphics">#Intel + AMD hybrid graphics</a> and <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/drm/amd/-/issues/985#note_359417">this</a> developer response) </div>
 <p>The amdgpu-pro-installer contains proprietary components for AMDGPU (a.k.a. Radeon Software for Linux).
 </p>
 <p>For proprietary OpenGL implementation, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/amdgpu-pro-libgl/">amdgpu-pro-libgl</a></span><sup><small>AUR</small></sup>. See <a href="../en/AMDGPU.html#AMDGPU_PRO" title="AMDGPU">AMDGPU#AMDGPU PRO</a> for more details.
@@ -40,7 +45,7 @@
 </p>
 <p>For proprietary Vulkan implementation, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vulkan-amdgpu-pro/">vulkan-amdgpu-pro</a></span><sup><small>AUR</small></sup>. See <a href="../en/Vulkan.html" title="Vulkan">Vulkan</a> for more details.
 </p>
-<p>For Advanced Media Framework implementation, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/amf-amdgpu-pro/">amf-amdgpu-pro</a></span><sup><small>AUR</small></sup>. See <a href="../en/FFmpeg.html#AMD_AMF" class="mw-redirect" title="Ffmpeg">ffmpeg#AMD AMF</a> for more details.
+<p>For Advanced Media Framework implementation, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/amf-amdgpu-pro/">amf-amdgpu-pro</a></span><sup><small>AUR</small></sup>. See <a href="../en/FFmpeg.html#AMD_AMF" title="FFmpeg">FFmpeg#AMD AMF</a> for more details.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -65,7 +70,7 @@
 <h3>
 <span id="Intel_.2B_AMD_hybrid_graphics"></span><span class="mw-headline" id="Intel_+_AMD_hybrid_graphics">Intel + AMD hybrid graphics</span>
 </h3>
-<p>Currently (version 19.30) there is a problem when using amdgpu pro opengl driver alongside with intel gpu. It is usual configuration for laptops, but also applies to desktop in case you set intel gpu as primary. When you boot your machine, you get a black screen, but mouse cursor is moving normally. If you have suggestion, please edit this wiki page. Reverse prime probably could be a solution, but <a href="../en/PRIME.html#Reverse_PRIME" title="PRIME">PRIME#Reverse PRIME</a> lacks this information.
+<p>Currently (as of version 19.30) there is a problem when using the AMDGPU Pro OpenGL driver alongside with an Intel GPU. It is a common configuration for laptops, but also applies to desktop users in case you set your Intel GPU as primary. When you boot your machine, you will get a black screen, but with your mouse cursor moving normally. If you have a suggestion, please edit this Wiki page. Reverse PRIME could probably be a solution, but <a href="../en/PRIME.html#Reverse_PRIME" title="PRIME">PRIME#Reverse PRIME</a> lacks this information.
 </p>
 <p>If you are affected, please upvote <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/drm/amd/issues/985">this</a> bug report.
 </p>
@@ -93,7 +98,7 @@
 </p>
 <pre>$ glxinfo | grep "OpenGL vendor string" | cut -f2 -d":" | xargs
 </pre>
-<p>If it returns <code>X.Org</code>, then you are running open source driver. If it returns <code>Advanced Micro Devices, Inc.</code>, then you are running proprietary driver.
+<p>If it returns <code>AMD</code>, then you are running open source driver. If it returns <code>Advanced Micro Devices, Inc.</code>, then you are running proprietary driver.
 </p>
 <p>Alternatively, run <a href="../en/Benchmarking.html#glmark2" title="Benchmarking">glmark2</a>. When using open driver, in OpenGL Information you will see:
 </p>
@@ -108,11 +113,15 @@
    GL_VERSION:    4.6.14756 Compatibility Profile Context
 </pre>
 <h3><span class="mw-headline" id="Workaround_for_using_proprietary_OpenGL">Workaround for using proprietary OpenGL</span></h3>
-<p>Curently (as of version 20.20_1098277-1) you can use proprietary OpenGL with workaround. You need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/amdgpu-pro-libgl/">amdgpu-pro-libgl</a></span><sup><small>AUR</small></sup> only before launching application that requires it (<a href="../en/DaVinci_Resolve.html" title="DaVinci Resolve">DaVinci Resolve</a> in most cases). Remove it, after your are done. Otherwise, your Display Manager (sddm, for example) could not be loaded at next system boot. In case you are already in such situation, just switch to the tty2 (Crtl+Alt+F2), login to the system and remove <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/amdgpu-pro-libgl/">amdgpu-pro-libgl</a></span><sup><small>AUR</small></sup>. Then run <code>systemctl restart sddm.service</code>, then switch to tty1.
+<p>As of version 20.20_1098277-1 you can use proprietary OpenGL with workaround. You need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/amdgpu-pro-libgl/">amdgpu-pro-libgl</a></span><sup><small>AUR</small></sup> only before launching application that requires it (<a href="../en/DaVinci_Resolve.html" title="DaVinci Resolve">DaVinci Resolve</a> in most cases). Remove it, after your are done. Otherwise, your Display Manager (sddm, for example) could not be loaded at next system boot. In case you are already in such situation, just switch to the tty2 (Crtl+Alt+F2), login to the system and remove <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/amdgpu-pro-libgl/">amdgpu-pro-libgl</a></span><sup><small>AUR</small></sup>. Then run <code>systemctl restart sddm.service</code>, then switch to tty1.
 </p>
 <p>Alternatively, you can extract the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/amdgpu-pro-libgl/">amdgpu-pro-libgl</a></span><sup><small>AUR</small></sup> package to a non-root location, then launch the program that requires the drivers with the following environment variables:
 </p>
 <pre>$ LD_LIBRARY_PATH="$PACKAGEPATH/opt/amdgpu-pro/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH}" LIBGL_DRIVERS_PATH="$PACKAGEPATH/usr/lib/x86_64-linux-gnu/dri/" dri_driver="amdgpu" command
+</pre>
+<p>As of 20.45_1188099-5, you do not need to use workaround. Just launch your application with progl prefix, for example:
+</p>
+<pre>$ progl glmark2
 </pre>
 </div>
 </div>
@@ -127,8 +136,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=AMDGPU_PRO&amp;oldid=649140">https://wiki.archlinux.org/index.php?title=AMDGPU_PRO&amp;oldid=649140</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 January 2021, at 11:53.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=AMDGPU_PRO&amp;oldid=663714">https://wiki.archlinux.org/index.php?title=AMDGPU_PRO&amp;oldid=663714</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 April 2021, at 23:06.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

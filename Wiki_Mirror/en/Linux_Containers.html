@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -135,11 +136,10 @@
 <li class="toclevel-1 tocsection-31">
 <a href="#Known_issues"><span class="tocnumber">6</span> <span class="toctext">Known issues</span></a>
 <ul>
-<li class="toclevel-2 tocsection-32"><a href="#Incompatibility_with_linux_kernel_5.10.0"><span class="tocnumber">6.1</span> <span class="toctext">Incompatibility with linux kernel 5.10.0</span></a></li>
-<li class="toclevel-2 tocsection-33"><a href="#lxc-execute_fails_due_to_missing_lxc.init.static"><span class="tocnumber">6.2</span> <span class="toctext">lxc-execute fails due to missing lxc.init.static</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#lxc-execute_fails_due_to_missing_lxc.init.static"><span class="tocnumber">6.1</span> <span class="toctext">lxc-execute fails due to missing lxc.init.static</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-34"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-33"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -186,6 +186,8 @@ UID        PID  PPID  C STIME TTY          TIME CMD
 <h4>
 <span id="Enable_support_to_run_unprivileged_containers_.28optional.29"></span><span class="mw-headline" id="Enable_support_to_run_unprivileged_containers_(optional)">Enable support to run unprivileged containers (optional)</span>
 </h4>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong>  The following method is only supported with cgroup v1. As cgroup v2 is now enabled by default, you would need to switch to cgroup v1 instead. See <a href="../en/Cgroups.html#Enable_cgroup_v1" title="Cgroups">Cgroups#Enable_cgroup_v1</a> for instructions. (Discuss in <a href="../en/Talk:Linux_Containers.html#pam_cgfs.so_instructions_outdated" title="Talk:Linux Containers">Talk:Linux_Containers#pam_cgfs.so_instructions_outdated</a>) </div>
 <p>Enable the <a href="../en/Cgroups.html" class="mw-redirect" title="Control groups">control groups</a> <a href="../en/PAM.html" title="PAM">PAM</a> module by modifying <code>/etc/pam.d/system-login</code> to additionally contain the following line:
 </p>
 <pre>session    optional   pam_cgfs.so -c freezer,memory,name=systemd,unified
@@ -537,9 +539,6 @@ keyctl errno 38</pre>
 <pre>lxc.seccomp.profile = /etc/lxc/unpriv.seccomp
 </pre>
 <h2><span class="mw-headline" id="Known_issues">Known issues</span></h2>
-<h3><span class="mw-headline" id="Incompatibility_with_linux_kernel_5.10.0">Incompatibility with linux kernel 5.10.0</span></h3>
-<p>Version 4.0.5 of lxc is incompatible with linux kernel 5.10.y currently.  Be sure to build <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lxc-git/">lxc-git</a></span><sup><small>AUR</small></sup> which contains the fix.  See <a rel="nofollow" class="external text" href="https://github.com/lxc/lxc/issues/3580">#3850</a> for context.
-</p>
 <h3><span class="mw-headline" id="lxc-execute_fails_due_to_missing_lxc.init.static">lxc-execute fails due to missing lxc.init.static</span></h3>
 <p><code>lxc-execute</code> fails with the error message <code>Unable to open lxc.init.static</code>. See <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/63814">FS#63814</a> for details.
 </p>
@@ -570,8 +569,8 @@ keyctl errno 38</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Linux_Containers&amp;oldid=642968">https://wiki.archlinux.org/index.php?title=Linux_Containers&amp;oldid=642968</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 2 December 2020, at 09:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Linux_Containers&amp;oldid=661356">https://wiki.archlinux.org/index.php?title=Linux_Containers&amp;oldid=661356</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 19:08.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

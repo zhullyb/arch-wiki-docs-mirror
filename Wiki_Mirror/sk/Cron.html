@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -68,14 +69,14 @@
 <p>Poprípade si môžete nainštalovať  <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fcron">fcron</a></span> z [community] alebo <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/bcron/">bcron</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> alebo <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vixie-cron/">vixie-cron</a></span><sup><small>AUR</small></sup> z <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>;
 všetky poskytujú široký rozsah funkcií a možností konfigurácie.
 </p>
-<p>Na <a rel="nofollow" class="external text" href="http://www.gentoo.org/doc/en/cron-guide.xml">Gentoo Linux Cron Guide</a> nájdete viacej porovnaní medzi spomenutými implementáciami.
+<p>Na <a rel="nofollow" class="external text" href="https://wiki.gentoo.org/wiki/Cron">Gentoo Linux Cron Guide</a> nájdete viacej porovnaní medzi spomenutými implementáciami.
 </p>
 <h2>
 <span id=".C3.9Avodn.C3.A1_konfigur.C3.A1cia"></span><span class="mw-headline" id="Úvodná_konfigurácia">Úvodná konfigurácia</span>
 </h2>
-<h4>
+<h3>
 <span id="Pou.C5.BE.C3.ADvatelia_a_auto.C5.A1tart"></span><span class="mw-headline" id="Používatelia_a_autoštart">Používatelia a autoštart</span>
-</h4>
+</h3>
 <p>Cron môže pre väčšinu užívateľov pracovať "out-of-box". Ak chcete používať crontab, používatelia musia byť členom určenej skupiny, ale v Arch-u je táto skupina <i>users</i>, ktorej členom by mali byť všetci používatelia. Ak by z nejakých dôvodov užívatelia neboli členmi danej skupiny, môžeme ich pridať nasledujúcim príkazom:
 </p>
 <pre># gpasswd -a <i>username</i> users
@@ -84,9 +85,9 @@ všetky poskytujú široký rozsah funkcií a možností konfigurácie.
 </p>
 <p>Aby ste sa uistili, že cron sa bude spúšťať pri štarte systému, pridajte <i>crond</i> do riadku DAEMONS v <code>/etc/rc.conf</code>.
 </p>
-<h4>
+<h3>
 <span id="Chyby_.C3.BAloh"></span><span class="mw-headline" id="Chyby_úloh">Chyby úloh</span>
-</h4>
+</h3>
 <p>Počas spúšťania daných úloh sa môžu vyskytnúť chyby. Keď sa to stane, cron zaregistruje <b>stderr</b> výstup úlohy a znaží sa ho poslať defaultne cez <b>sendmail</b>.
 Na log-ovanie týchto správ môžete použiť  prepínač <b>-M</b> pre cornd a napísať si svoj vlastný skript alebo nainštalovať základný SMTP subsystém
 </p>
@@ -158,7 +159,7 @@ Thats all! All error output of jobs now will be redirected to <code>/var/spool/m
 </p>
 <pre># crontab -u <i>username</i> -e
 </pre>
-<p>Tento formát funguje aj na mazanie a pridávanie crontabov. 
+<p>Tento formát funguje aj na mazanie a pridávanie crontabov.
 </p>
 <h2>
 <span id="Pr.C3.ADklady"></span><span class="mw-headline" id="Príklady">Príklady</span>
@@ -218,7 +219,7 @@ Thats all! All error output of jobs now will be redirected to <code>/var/spool/m
 </ol>
 <p>Súbory pre crontab sú zvyčajne uložené v <code>/var/spool/cron/username</code>. Napríklad crontab pre root nájdeme v <code>/var/spool/cron/root</code>.
 </p>
-<p>Pre viac informácií si pozrite crontab <a href="../en/Man_page.html" title="Man page">man page</a>, dcron man page <a rel="nofollow" class="external free" href="http://www.jimpryor.net/linux/dcron">http://www.jimpryor.net/linux/dcron</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-22 ⓘ]</sup> tu] a <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=78654&amp;p=1">tu</a> a príspevky na fóre.
+<p>Pre viac informácií si pozrite crontab <a href="../en/Man_page.html" title="Man page">man page</a>, dcron man page <a rel="nofollow" class="external free" href="http://www.jimpryor.net/linux/dcron.html">http://www.jimpryor.net/linux/dcron.html</a> tu] a <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=78654&amp;p=1">tu</a> a príspevky na fóre.
 </p>
 <h2>
 <span id="Beh_X_aplik.C3.A1ci.C3.AD"></span><span class="mw-headline" id="Beh_X_aplikácií">Beh X aplikácií</span>
@@ -249,9 +250,9 @@ Thats all! All error output of jobs now will be redirected to <code>/var/spool/m
 <pre>@hourly         ID=greatest_ever_job      echo This job is very usefull.
 </pre>
 <dl>
-<dt>Cronwhip (<a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages.php?ID=21079">AUR</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-22 ⓘ]</sup>, <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=57973">fórum</a>)</dt>
+<dt>Cronwhip (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cronwhip/">cronwhip</a></span><sup><small>AUR</small></sup>, <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=57973">fórum</a>)</dt>
 <dd>Skript na automatické spustenie zmeškaných úloh cronu, pracuje s default dcron-om.</dd>
-<dt>Anacron (<a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages.php?ID=5196">AUR</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-22 ⓘ]</sup>)</dt>
+<dt>Anacron (<a rel="nofollow" class="external text" href="https://github.com/aur-archive/anacron">AUR</a>)</dt>
 <dd>Plná náhrada za dcron, úlohy spracováva asynchrónne.</dd>
 </dl>
 <h2><span class="mw-headline" id="Zdroje">Zdroje</span></h2>
@@ -262,10 +263,7 @@ Thats all! All error output of jobs now will be redirected to <code>/var/spool/m
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:55fbafeb0c8f5149bf6c60fac5656e11.html" title="Category:Slovenský">Slovenský</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -273,8 +271,8 @@ Thats all! All error output of jobs now will be redirected to <code>/var/spool/m
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Cron_(Slovensk%C3%BD)&amp;oldid=646349">https://wiki.archlinux.org/index.php?title=Cron_(Slovenský)&amp;oldid=646349</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 December 2020, at 16:06.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Cron_(Slovensk%C3%BD)&amp;oldid=661404">https://wiki.archlinux.org/index.php?title=Cron_(Slovenský)&amp;oldid=661404</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 21:42.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

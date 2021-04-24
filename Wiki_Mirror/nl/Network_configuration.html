@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -187,7 +188,7 @@ Dit kan geweten worden aan de internet service provider of aan je eigen router/g
 </pre>
 <p>Controleer nu dat de driver daadwerkelijk geladen is via <code>dmesg | grep <i>module_name</i></code>. Bijvoorbeeld:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep atl1</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep atl1</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
 atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 </pre>
@@ -202,7 +203,7 @@ atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 <h3><span class="mw-headline" id="Device_namen">Device namen</span></h3>
 <p>Bij computers met meerdere Netwerk Interfaces (NIC's), is het van belang om vaste device benaming te gebruiken. Als dat niet gebeurt, worden configuratieproblemen veelal veroorzaakt door verandering in de benoeming.
 </p>
-<p><a href="../en/Udev.html" title="Udev">udev</a> zorgt ervoor dat elk device een naam toegewezen krijgt. Systemd gebruikt <a rel="nofollow" class="external text" href="http://www.freedesktop.org/wiki/Software/systemd/PredictablenetworkInterfaceNames">Predictable network Interface Names</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-05 ⓘ]</sup>, welk automatisch statische namen toekent aan netwerk devices. Interfaces worden hedentendage vooraf gegaan met <code>en</code> (bedraad/<a href="https://en.wikipedia.org/wiki/Ethernet" class="extiw" title="w:Ethernet">Ethernet</a>), <code>wl</code> (draadloos/WLAN), of <code>ww</code> (<a href="https://en.wikipedia.org/wiki/Wireless_WAN" class="extiw" title="w:Wireless WAN">WWAN</a>) gevolgd door een automatisch gegenereerde identifier, zoals: <code>enp0s25</code>.
+<p><a href="../en/Udev.html" title="Udev">udev</a> zorgt ervoor dat elk device een naam toegewezen krijgt. Systemd gebruikt <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">Predictable network Interface Names</a>, welk automatisch statische namen toekent aan netwerk devices. Interfaces worden hedentendage vooraf gegaan met <code>en</code> (bedraad/<a href="https://en.wikipedia.org/wiki/Ethernet" class="extiw" title="w:Ethernet">Ethernet</a>), <code>wl</code> (draadloos/WLAN), of <code>ww</code> (<a href="https://en.wikipedia.org/wiki/Wireless_WAN" class="extiw" title="w:Wireless WAN">WWAN</a>) gevolgd door een automatisch gegenereerde identifier, zoals: <code>enp0s25</code>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> Deze wijze van benoemen kan teruggedraaid worden naar de <b>eth0</b> of <b>wlan0</b> notatie, door <code>net.ifnames=0</code> aan de <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a> toe te voegen.</div>
@@ -260,9 +261,7 @@ atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 Let wel dat het 192.* IP bereik in aan te schaffen apparatuur. (printers, routers, IP camera's, etc), altijd als standaard ingesteld is, en dat het even moeite vraagt om deze apparatuur binnen het 10.0.0.0 bereik te kunnen gebruiken.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> 
-<ul><li>Wees er zeker van dat handmatig toegekende (statische) adressen niet in conflict komen met de door de DHCP serve toegekende dynamische adressen. Zie <a rel="nofollow" class="external text" href="http://www.raspberrypi.org/forums/viewtopic.php?f=28&amp;t=16797">op dit forum </a>.</li></ul>
-</div>
+<strong>Warning:</strong> Wees er zeker van dat handmatig toegekende (statische) adressen niet in conflict komen met de door de DHCP serve toegekende dynamische adressen. Zie <a rel="nofollow" class="external text" href="https://www.raspberrypi.org/forums/viewtopic.php?f=28&amp;t=16797">op dit forum </a>.</div>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> adressen kunnen berekend worden met behulp van het <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ipcalc">ipcalc</a></span> pakket; Zie <a href="#Calculating_addresses">#Calculating_addresses</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.</div>
 <h4><span class="mw-headline" id="Handmatige_toewijzing_statisch_adres">Handmatige toewijzing statisch adres</span></h4>
@@ -329,7 +328,7 @@ Hosts/Net: 2                     Class A, Private Internet
 <th>Automatically handles<br>wired connection</th>
 <th>Official <br>GUI</th>
 <th>
-<a href="../en/Archiso.html" title="Archiso">Archiso</a> <a rel="nofollow" class="external autonumber" href="https://git.archlinux.org/archiso.git/tree/configs/releng/packages.both">[1]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-05 ⓘ]</sup>
+<a href="../en/Archiso.html" title="Archiso">Archiso</a> <a rel="nofollow" class="external autonumber" href="https://git.archlinux.org/archiso.git/tree/configs/releng/packages.x86_64">[1]</a>
 </th>
 <th>Console tools</th>
 <th>Systemd units
@@ -501,10 +500,10 @@ SUBSYSTEM=="net", DEVPATH=="/devices/pci*/*1c.0/*/net/*", NAME="en"
 <p>Om <a href="../en/Udev.html#Testing_rules_before_loading" title="Udev">test</a> de rules te testen, kunnen deze vanuit een userspace direct geactiveerd worden, b.v. via <code>udevadm --debug test /sys/<i>DEVPATH</i></code>. Let er dan wel op dat de interface welke hernoemd gaat worden, eerst gedeactiveerd wordt(e.g. <code>ip link set enp1s0 down</code>).
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Bij het hernoemen zou <b>vermeden moeten worden om statische namen als </b>"eth<i>X</i>" and "wlan<i>X</i>"<b>, te gebruiken, daar dit tijdens het opstarten kan leiden tot onverwachte situaties tussen de kernel en udev. Daarvoor is het beter om namen te gebruiken die niet door de kernel gekend zijn, b.v.: <code>net0</code>, <code>net1</code>, <code>wifi0</code>, <code>wifi1</code>. Voor meer onformatie zie <a rel="nofollow" class="external text" href="http://www.freedesktop.org/wiki/Software/systemd/PredictablenetwerkInterfaceNames">systemd</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-05 ⓘ]</sup> documentation.</b>
+<strong>Note:</strong> Bij het hernoemen zou <b>vermeden moeten worden om statische namen als </b>"eth<i>X</i>" and "wlan<i>X</i>"<b>, te gebruiken, daar dit tijdens het opstarten kan leiden tot onverwachte situaties tussen de kernel en udev. Daarvoor is het beter om namen te gebruiken die niet door de kernel gekend zijn, b.v.: <code>net0</code>, <code>net1</code>, <code>wifi0</code>, <code>wifi1</code>. Voor meer onformatie zie <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">systemd</a> documentation.</b>
 </div>
 <h3><span class="mw-headline" id="Terug_naar_de_traditionele_device_namen">Terug naar de traditionele device namen</span></h3>
-<p>In het geval de gebruiker b.v. over scripts beschikt waarin verwezen wordt naar de traditionele benaming eth0 of wlan0, dan kan <a rel="nofollow" class="external text" href="http://www.freedesktop.org/wiki/Software/systemd/PredictablenetwerkInterfaceNames">Predictable netwerk Interface Names</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-05 ⓘ]</sup> gedeactiveerd worden via maskering van de udev-rule:
+<p>In het geval de gebruiker b.v. over scripts beschikt waarin verwezen wordt naar de traditionele benaming eth0 of wlan0, dan kan <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames">Predictable netwerk Interface Names</a> gedeactiveerd worden via maskering van de udev-rule:
 </p>
 <pre> # ln -s /dev/null /etc/udev/rules.d/80-net-setup-link.rules
 </pre>
@@ -593,8 +592,6 @@ WantedBy=multi-user.target
 </p>
 <p>De resulterende verbinding is in ieder geval zeer langzaam of gebroken.
 </p>
-<p><br>
-</p>
 <h4><span class="mw-headline" id="How_to_diagnose_the_problem">How to diagnose the problem</span></h4>
 <p>Het moge duidelijk zijn dat dit een raar probleem is. In sommige gevallen zal het niet mogelijk zijn om uberhaupt TCP aansluitingen (HTTP, FTP, ...) te gebruiken, en in een ander geval kan slechts met sommige hosts gecommuniceerd worden.
 </p>
@@ -619,7 +616,7 @@ WantedBy=multi-user.target
 <p>Omdat het probleem veroorzaakt wordt door een <b>defecte</b> router/firewall, is vervanging gewenst. Sommige gebruikers gaven aan dat  hun defecte router de DSL router was.
 </p>
 <h4><span class="mw-headline" id="Aanvullend">Aanvullend</span></h4>
-<p>Gebaseerd op het LWN artikel <a rel="nofollow" class="external text" href="http://lwn.net/Articles/92727/">TCP window scaling and broken routers</a> en een Kernel Trap artikel: <a rel="nofollow" class="external text" href="http://kerneltrap.org/node/6723">Window Scaling on the Internet</a>.
+<p>Gebaseerd op het LWN artikel <a rel="nofollow" class="external text" href="https://lwn.net/Articles/92727/">TCP window scaling and broken routers</a> en een Kernel Trap artikel: <a rel="nofollow" class="external text" href="http://kerneltrap.org/node/6723">Window Scaling on the Internet</a>.
 </p>
 <p>Meer relevante discussie zijn te vinden op de LKML.
 </p>
@@ -716,9 +713,7 @@ Dit kan meestal worden gevonden op een dual boot systeem waar Windows ook geïns
 <h2><span class="mw-headline" id="Zie_ook">Zie ook</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://www.debian.org/doc/manuals/debian-reference/ch05.en.html">Debian Reference: netwerk setup</a></li>
-<li>
-<a rel="nofollow" class="external text" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/netwerking_Guide/">RHEL7: netwerking Guide</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-05 ⓘ]</sup>
-</li>
+<li><a rel="nofollow" class="external text" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/index">RHEL7: networking Guide</a></li>
 </ul>
 </div>
 </div>
@@ -731,7 +726,6 @@ Dit kan meestal worden gevonden op een dual boot systeem waar Windows ook geïns
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
@@ -741,8 +735,8 @@ Dit kan meestal worden gevonden op een dual boot systeem waar Windows ook geïns
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Nederlands)&amp;oldid=640681">https://wiki.archlinux.org/index.php?title=Network_configuration_(Nederlands)&amp;oldid=640681</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 5 November 2020, at 06:51.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Nederlands)&amp;oldid=663778">https://wiki.archlinux.org/index.php?title=Network_configuration_(Nederlands)&amp;oldid=663778</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 07:01.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

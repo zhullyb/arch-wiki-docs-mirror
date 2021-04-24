@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -322,8 +323,7 @@
 <p>Następujące polecenia tworzą i montują zaszyfrowaną partycję root. Odpowiadają one procedurze opisanej szczegółowo w <a href="../../en/Dm-crypt/Encrypting_a_non-root_file_system.html#Partition" title="Dm-crypt/Encrypting a non-root file system">Dm-crypt/Encrypting a non-root file system#Partition</a> (which, despite the title, <i>can</i> be applied to root partitions, as long as <a href="#Konfigurowanie_mkinitcpio">mkinitcpio</a> and the <a href="#Configuring_the_boot_loader">boot loader</a><sup>[<a href="../../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> are correctly configured).
 If you want to use particular non-default encryption options (e.g. cipher, key length), see the <a href="../../en/Dm-crypt/Device_encryption.html#Encryption_options_for_LUKS_mode" title="Dm-crypt/Device encryption">encryption options</a> before executing the first command:
 </p>
-<p><br>
-(który, pomimo tytułu, może być zastosowany do partycji root, o ile mkinitcpio i program ładujący są poprawnie skonfigurowane). Jeśli chcesz użyć określonych, innych niż domyślne opcji szyfrowania (np. Szyfr, długość klucza), zobacz <a href="../../en/Dm-crypt/Device_encryption.html#Encryption_options_for_LUKS_mode" title="Dm-crypt/Device encryption">opcje szyfrowania</a> przed wykonaniem pierwszego polecenia:
+<p>(który, pomimo tytułu, może być zastosowany do partycji root, o ile mkinitcpio i program ładujący są poprawnie skonfigurowane). Jeśli chcesz użyć określonych, innych niż domyślne opcji szyfrowania (np. Szyfr, długość klucza), zobacz <a href="../../en/Dm-crypt/Device_encryption.html#Encryption_options_for_LUKS_mode" title="Dm-crypt/Device encryption">opcje szyfrowania</a> przed wykonaniem pierwszego polecenia:
 </p>
 <pre># cryptsetup -y -v luksFormat /dev/sdaX
 # cryptsetup open /dev/sdaX cryptroot
@@ -571,8 +571,7 @@ tmp	/dev/mapper/MyVol-tmp	/dev/urandom	tmp,cipher=aes-xts-plain64,size=256
 <p>Since this scenario uses LVM as the primary and dm-crypt as secondary mapper, each encrypted logical volume requires its own encryption. Yet, unlike the temporary filesystems configured with volatile encryption above, the logical volume for <code>/home</code> should be persistent, of course. The following assumes you have rebooted into the installed system, otherwise you have to adjust paths.
 To safe on entering a second passphrase at boot for it, a <a href="../../en/Dm-crypt/Device_encryption.html#Keyfiles" title="Dm-crypt/Device encryption">keyfile</a> is created:
 </p>
-<p><br>
-Ponieważ ten scenariusz używa LVM jako podstawowej i dm-crypt jako programu odwzorowującego wtórnego, każdy zaszyfrowany wolumin logiczny wymaga własnego szyfrowania. Jednak, inaczej niż w przypadku tymczasowych systemów plików skonfigurowanych powyżej z użyciem szyfrowania ulotnego, wolumin logiczny dla <code>/home</code>  powinien być oczywiście stały. Poniższe założenie zakłada ponowne uruchomienie systemu, w przeciwnym razie trzeba dostosować ścieżki. Aby zabezpieczyć się przed wprowadzeniem drugiego hasła podczas uruchamiania, tworzony jest plik <a href="../../en/Dm-crypt/Device_encryption.html#Keyfiles" title="Dm-crypt/Device encryption">klucza</a>:  
+<p>Ponieważ ten scenariusz używa LVM jako podstawowej i dm-crypt jako programu odwzorowującego wtórnego, każdy zaszyfrowany wolumin logiczny wymaga własnego szyfrowania. Jednak, inaczej niż w przypadku tymczasowych systemów plików skonfigurowanych powyżej z użyciem szyfrowania ulotnego, wolumin logiczny dla <code>/home</code>  powinien być oczywiście stały. Poniższe założenie zakłada ponowne uruchomienie systemu, w przeciwnym razie trzeba dostosować ścieżki. Aby zabezpieczyć się przed wprowadzeniem drugiego hasła podczas uruchamiania, tworzony jest plik <a href="../../en/Dm-crypt/Device_encryption.html#Keyfiles" title="Dm-crypt/Device encryption">klucza</a>:  
 </p>
 <pre># mkdir -m 700 /etc/luks-keys
 # dd if=/dev/random of=/etc/luks-keys/home bs=1 count=256 status=progress
@@ -599,11 +598,9 @@ Ponieważ ten scenariusz używa LVM jako podstawowej i dm-crypt jako programu od
 <h2><span class="mw-headline" id="LUKS_na_programowym_RAID">LUKS na programowym RAID</span></h2>
 <p>Ten przykład jest oparty na konfiguracji dla laptopa wyposażonego w dwa dyski SSD o jednakowej wielkości oraz dodatkowy dysk twardy dla pamięci masowej. Efektem końcowym jest oparte na LUKS pełne szyfrowanie dysku (w tym <code>/boot</code>) dla wszystkich dysków, z dyskami SSD w macierzy RAID0 i pliki kluczy używane do odblokowania całego szyfrowania po podaniu GRUB poprawnego hasła przy starcie. Obsługa formatów TRIM jest włączona na dyskach SSD, ale warto zapoznać się ze szczegółowymi informacjami na temat bezpieczeństwa <a href="../../en/Dm-crypt/Specialties.html#Discard/TRIM_support_for_solid_state_drives_(SSD)" title="Dm-crypt/Specialties">Dm-crypt/Specialties#Discard/TRIM support for solid state drives (SSD)</a> przed rozważeniem skorzystania z tego. 
 </p>
-<p><br>
-This setup utilizes a very simplistic partitioning scheme, with all the available RAID storage being mounted at <code>/</code> (no separate <code>/boot</code> partition), and the decrypted HDD being mounted at <code>/mnt/data</code>. It is also worth mentioning that the system in this example boots in BIOS mode and the drives are partitioned with <a href="../../en/Partitioning.html" title="Partitioning">GPT</a> partitions. 
+<p>This setup utilizes a very simplistic partitioning scheme, with all the available RAID storage being mounted at <code>/</code> (no separate <code>/boot</code> partition), and the decrypted HDD being mounted at <code>/mnt/data</code>. It is also worth mentioning that the system in this example boots in BIOS mode and the drives are partitioned with <a href="../../en/Partitioning.html" title="Partitioning">GPT</a> partitions. 
 </p>
-<p><br>
-Ta konfiguracja wykorzystuje bardzo uproszczony schemat partycjonowania, przy czym wszystkie dostępne pamięci RAID są montowane w / (brak oddzielnej partycji rozruchowej), a odszyfrowany dysk HDD jest montowany w {ic|/mnt/data}}. Warto również wspomnieć, że system w tym przykładzie uruchamia się w trybie BIOS, a dyski są partycjonowane przy użyciu partycji GPT.
+<p>Ta konfiguracja wykorzystuje bardzo uproszczony schemat partycjonowania, przy czym wszystkie dostępne pamięci RAID są montowane w / (brak oddzielnej partycji rozruchowej), a odszyfrowany dysk HDD jest montowany w {ic|/mnt/data}}. Warto również wspomnieć, że system w tym przykładzie uruchamia się w trybie BIOS, a dyski są partycjonowane przy użyciu partycji GPT.
 </p>
 <p>Należy pamiętać, że regularne kopie zapasowe są bardzo ważne w tej konfiguracji. Jeśli którakolwiek z dysków SSD ulegnie awarii, dane zawarte w macierzy RAID będą praktycznie niemożliwe do odzyskania. Możesz wybrać inny poziom RAID, jeśli twoja odporność na uszkodzenia jest dla ciebie ważna.
 </p>
@@ -964,8 +961,7 @@ GRUB_ENABLE_CRYPTODISK=y</pre>
 <li>Dodaj plik klucza do pliku (<code>/dev/sdaY</code>) <a href="../../en/Dm-crypt/Device_encryption.html#Configuring_LUKS_to_make_use_of_the_keyfile" title="Dm-crypt/Device encryption">boot partition's LUKS header</a> and</li>
 <li>Sprawdź wpis <code>/etc/fstab</code> i dodaj linię <code>/etc/crypttab</code> do <a href="../../en/Dm-crypt/Device_encryption.html#Unlocking_the_root_partition_at_boot" title="Dm-crypt/Device encryption">unlock it automatically at boot</a>.</li>
 </ol>
-<p><br>
-Jeśli z jakiegoś powodu plik klucza nie odblokuje partycji rozruchowej, systemd zrestartuje się, aby poprosić o hasło do odblokowania, a jeśli jest to poprawne, kontynuuj uruchamianie.
+<p>Jeśli z jakiegoś powodu plik klucza nie odblokuje partycji rozruchowej, systemd zrestartuje się, aby poprosić o hasło do odblokowania, a jeśli jest to poprawne, kontynuuj uruchamianie.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> Opcjonalne kroki poinstalacyjne:
@@ -1124,8 +1120,8 @@ Jeśli z jakiegoś powodu plik klucza nie odblokuje partycji rozruchowej, system
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt_(Polski)/Encrypting_an_entire_system_(Polski)&amp;oldid=646729">https://wiki.archlinux.org/index.php?title=Dm-crypt_(Polski)/Encrypting_an_entire_system_(Polski)&amp;oldid=646729</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 11:53.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt_(Polski)/Encrypting_an_entire_system_(Polski)&amp;oldid=660859">https://wiki.archlinux.org/index.php?title=Dm-crypt_(Polski)/Encrypting_an_entire_system_(Polski)&amp;oldid=660859</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 18:30.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

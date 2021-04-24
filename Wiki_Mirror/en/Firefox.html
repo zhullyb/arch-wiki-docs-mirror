@@ -231,6 +231,11 @@ pref("general.config.filename", "mozilla.cfg");
 <h3><span class="mw-headline" id="Multimedia_playback">Multimedia playback</span></h3>
 <p>Firefox uses <a href="../en/FFmpeg.html" title="FFmpeg">FFmpeg</a> for playing multimedia inside HTML5 <code>&lt;audio&gt;</code> and <code>&lt;video&gt;</code> elements. Go to <a rel="nofollow" class="external text" href="http://demo.nimius.net/video_test/">video-test page</a> or <a rel="nofollow" class="external text" href="https://hpr.dogphilosophy.net/test/">audio-test page</a> to check which formats are actually supported.
 </p>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=firefox">firefox</a></span> depends on <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libpulse">libpulse</a></span>, not <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseaudio">pulseaudio</a></span> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Firefox#Firefox_and_Pulseaudio">Talk:Firefox#Firefox and Pulseaudio</a>)</div>
+</div>
 <p>Firefox uses <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a> for audio playback and capture. For sound to work, you need to install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseaudio">pulseaudio</a></span> package.
 </p>
 <p>In case, for whatever reason, <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a> is not an option for you, you can use <a href="../en/Advanced_Linux_Sound_Architecture.html#PulseAudio_compatibility" title="Advanced Linux Sound Architecture">apulse</a> instead. To make this work, it is necessary to exclude <code>/dev/snd/</code> from Firefox' sandboxing by adding it to the comma-separated list in <code>about:config</code>:
@@ -244,9 +249,9 @@ pref("general.config.filename", "mozilla.cfg");
 <h4>
 <span id="HTML5_DRM.2FWidevine"></span><span class="mw-headline" id="HTML5_DRM/Widevine">HTML5 DRM/Widevine</span>
 </h4>
-<p>Widevine is a digital rights management tool that Netflix, Amazon Prime Video, and others use to protect their video content. It can be enabled in <i>Preferences &gt; General &gt; Digital Rights Management (DRM) Content</i>. If you visit a Widevine-enabled page when this setting is disabled, Firefox will display a prompt below the address bar asking for permission to install DRM. Approve this and then wait for the "Downloading" bar to disappear, you are now able to watch videos from Widevine protected sites.
+<p>Widevine is a digital rights management tool that Netflix, Amazon Prime Video, and others use to protect their video content. It can be enabled in <i>Preferences &gt; General &gt; Digital Rights Management (DRM) Content</i>. If you visit a Widevine-enabled page when this setting is disabled, Firefox will display a prompt below the address bar asking for permission to install DRM. Approve this and then wait for the "Downloading" bar to disappear, you are now able to watch videos from Widevine protected sites. 
 </p>
-<p>It is also required that the private mode browsing is disabled, for the window and in the preferences.
+<p>Firefox can only play 720p video (or lower) with Widevine, due to not using <a rel="nofollow" class="external text" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1700815">hardware DRM playback</a>. It is also required that the private mode browsing is disabled, for the window and in the preferences.
 </p>
 <h4><span class="mw-headline" id="Open_With_extension">Open With extension</span></h4>
 <ol>
@@ -283,8 +288,8 @@ pref("general.config.filename", "mozilla.cfg");
 </li>
 <li>Use a compositor that supports hardware acceleration, either:
 <ul>
-<li>Gecko's OpenGL back-end, which can be enabled as explained in <a href="../en/Firefox/Tweaks.html#Enable_OpenGL_compositor" title="Firefox/Tweaks">/Tweaks#Enable OpenGL compositor</a>;</li>
-<li>WebRender from the new Servo browser engine, which can be enabled as explained in <a href="../en/Firefox/Tweaks.html#Enable_WebRender_compositor" title="Firefox/Tweaks">/Tweaks#Enable WebRender compositor</a>;</li>
+<li>WebRender from the new Servo browser engine, which can be enabled as explained in <a href="../en/Firefox/Tweaks.html#Enable_WebRender_compositor" title="Firefox/Tweaks">/Tweaks#Enable WebRender compositor</a>. It is enabled by default in GNOME and other DEs <a rel="nofollow" class="external autonumber" href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/">[3]</a>.</li>
+<li>Gecko's legacy OpenGL back-end, which can be enabled as explained in <a href="../en/Firefox/Tweaks.html#Enable_OpenGL_compositor" title="Firefox/Tweaks">/Tweaks#Enable OpenGL compositor</a>;</li>
 </ul>
 </li>
 <li>Set the following flags in <code>about:config</code>:
@@ -294,7 +299,9 @@ pref("general.config.filename", "mozilla.cfg");
 <li>
 <code>media.ffvpx.enabled</code> to <code>false</code> to disable the internal decoders for VP8/VP9.</li>
 <li>
-<code>media.rdd-vpx.enabled</code> to <code>false</code> to disable the remote data decoder process for VP8/VP9. As of Firefox 85 its sandbox blocks VA-API access <a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1673184">[3]</a>.</li>
+<code>media.rdd-vpx.enabled</code> to <code>false</code> to disable the remote data decoder process for VP8/VP9. As of Firefox 85 its sandbox blocks VA-API access <a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1673184">[4]</a>.</li>
+<li>
+<code>media.navigator.mediadatadecoder_vpx_enabled</code> to <code>true</code> to enable hardware VA-API decoding for WebRTC<a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1665329">[5]</a><a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1680313">[6]</a>.</li>
 </ul>
 </li>
 <li>Run Firefox with the following <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a> enabled:
@@ -308,7 +315,7 @@ pref("general.config.filename", "mozilla.cfg");
 <strong>Tip:</strong> 
 <ul>
 <li>You can verify that VA-API is enabled by running Firefox with <code>MOZ_LOG="PlatformDecoderModule:5"</code> environment variable and check in the log output that VA-API is enabled and used (search for the "VA-API" string) when playing a video for example. Pay attention to these logs as they might indicate that only one of the two possible compositors described before (OpenGL or WebRender) works with VA-API on your particular setup.</li>
-<li>For Intel GPU, the <code>intel_gpu_top</code> utility from package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=intel-gpu-tools">intel-gpu-tools</a></span> can be used to monitor the GPU activity during video playback for example. For AMD GPU, use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=radeontop">radeontop</a></span>.</li>
+<li>For Intel GPU, the <i>intel_gpu_top</i> utility from package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=intel-gpu-tools">intel-gpu-tools</a></span> can be used to monitor the GPU activity during video playback for example. For AMD GPU, use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=radeontop">radeontop</a></span>.</li>
 <li>To allow hardware decoding in YouTube, the video codec used must be supported by the hardware. The profiles supported by your GPU can be checked with <a href="../en/Hardware_video_acceleration.html#Verifying_VA-API" title="Hardware video acceleration">Hardware video acceleration#Verifying VA-API</a> and the YouTube codecs used can <i>sometimes</i> (if offered by YouTube!) be controlled with the <a rel="nofollow" class="external text" href="https://addons.mozilla.org/firefox/addon/h264ify/">h264ify</a> or <a rel="nofollow" class="external text" href="https://addons.mozilla.org/firefox/addon/enhanced-h264ify/">enhanced-h264ify</a> extensions. Alternatively, you can install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/firefox-h264ify/">firefox-h264ify</a></span><sup><small>AUR</small></sup>.</li>
 </ul>
 </div>
@@ -332,7 +339,12 @@ pref("general.config.filename", "mozilla.cfg");
 <h3><span class="mw-headline" id="KDE_integration">KDE integration</span></h3>
 <ul>
 <li>To bring the <a href="../en/KDE.html" title="KDE">KDE</a> look to GTK apps (including Firefox), install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=breeze-gtk">breeze-gtk</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=kde-gtk-config">kde-gtk-config</a></span>. Afterwards, go to System Settings and in <i>Appearance &gt; Application Style &gt; Configure GNOME/GTK Application Style…</i> choose 'Breeze'.</li>
-<li>To use the KDE file selection and print dialogs in Firefox 64 or newer, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdg-desktop-portal">xdg-desktop-portal</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdg-desktop-portal-kde">xdg-desktop-portal-kde</a></span>, then set <code>widget.use-xdg-desktop-portal</code> to <code>true</code> in <code>about:config</code>.</li>
+<li>To use the KDE file selection and print dialogs in Firefox 64 or newer, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdg-desktop-portal">xdg-desktop-portal</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdg-desktop-portal-kde">xdg-desktop-portal-kde</a></span>, then do one of the following:
+<ul>
+<li>Set <code>widget.use-xdg-desktop-portal</code> to <code>true</code> in <code>about:config</code>.</li>
+<li>Launch firefox with <code>GTK_USE_PORTAL=1</code> <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a>.</li>
+</ul>
+</li>
 <li>For integration with <a href="../en/KDE.html" title="KDE">KDE</a> MIME type system, proxy and file dialog, one can use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/firefox-kde-opensuse/">firefox-kde-opensuse</a></span><sup><small>AUR</small></sup> variant from AUR with OpenSUSE’s patches applied. Alternatively, integration with MIME types can be achieved by creating a symbolic link to the MIME database <code>~/.config/mimeapps.list</code> from the deprecated <code>~/.local/share/applications/mimeapps.list</code> that is used by Firefox. See <a href="../en/XDG_MIME_Applications.html#mimeapps.list" title="XDG MIME Applications">XDG MIME Applications#mimeapps.list</a>.</li>
 <li>Extensions/add-ons may provide additional integration, such as:
 <ul><li>Browser integration in <a href="../en/KDE.html#Plasma" class="mw-redirect" title="Plasma">Plasma</a>: requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=plasma-browser-integration">plasma-browser-integration</a></span> and the <a rel="nofollow" class="external text" href="https://addons.mozilla.org/firefox/addon/plasma-integration/">Plasma Integration add-on</a>.</li></ul>
@@ -344,7 +356,7 @@ pref("general.config.filename", "mozilla.cfg");
 <h3><span class="mw-headline" id="Dark_themes">Dark themes</span></h3>
 <p>If a dark <a href="../en/GTK.html" title="GTK">GTK</a> theme is in use (e.g. Arc Dark), it is recommended to start Firefox with a brighter one (e.g. Adwaita). See <a href="../en/GTK.html#Themes" title="GTK">GTK#Themes</a> and <a href="../en/Firefox/Tweaks.html#Unreadable_input_fields_with_dark_GTK_themes" title="Firefox/Tweaks">Firefox/Tweaks#Unreadable input fields with dark GTK themes</a> for more information.
 </p>
-<p>Alternatively, starting with Firefox 68 you can make all the Firefox interfaces and even other websites respect dark themes, irrespective of the system GTK theme and Firefox theme. To do this, set <code>browser.in-content.dark-mode</code> to <code>true</code> and <code>ui.systemUsesDarkTheme</code> to <code>1</code> in <code>about:config</code> <a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1488384#c23">[4]</a>.
+<p>Alternatively, starting with Firefox 68 you can make all the Firefox interfaces and even other websites respect dark themes, irrespective of the system GTK theme and Firefox theme. To do this, set <code>browser.in-content.dark-mode</code> to <code>true</code> and <code>ui.systemUsesDarkTheme</code> to <code>1</code> in <code>about:config</code> <a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1488384#c23">[7]</a>.
 </p>
 <h3><span class="mw-headline" id="Frame_rate">Frame rate</span></h3>
 <p>If Firefox is unable to automatically detect the right value, it will default to 60 fps. To manually correct this, set <code>layout.frame_rate</code> to the refresh rate of your monitor (e.g. 144 for 144 Hz).
@@ -353,10 +365,10 @@ pref("general.config.filename", "mozilla.cfg");
 <p>To prevent pages from abusing memory (and possible <a href="https://en.wikipedia.org/wiki/Out_of_memory" class="extiw" title="wikipedia:Out of memory">OOM</a>), we can use <a href="../en/Firejail.html" title="Firejail">Firejail</a> with the <code>rlimit-as</code> option.
 </p>
 <h3><span class="mw-headline" id="New_tabs_position">New tabs position</span></h3>
-<p>To control where new tabs appears (relative or absolute), use <code>browser.tabs.insertAfterCurrent</code> and <code>browser.tabs.insertRelatedAfterCurrent</code>. See <a rel="nofollow" class="external autonumber" href="https://support.mozilla.org/en/questions/1229062">[5]</a> for more information.
+<p>To control where new tabs appears (relative or absolute), use <code>browser.tabs.insertAfterCurrent</code> and <code>browser.tabs.insertRelatedAfterCurrent</code>. See <a rel="nofollow" class="external autonumber" href="https://support.mozilla.org/en/questions/1229062">[8]</a> for more information.
 </p>
 <h3><span class="mw-headline" id="Screenshot_of_webpage">Screenshot of webpage</span></h3>
-<p>You can <i>Take a Screenshot</i> by either clicking the <i>Page actions</i> button (the three horizontal dots) in the address bar or by right-clicking on the webpage. See <a rel="nofollow" class="external autonumber" href="https://support.mozilla.org/en-US/kb/firefox-screenshots">[6]</a> for more information.
+<p>You can <i>Take a Screenshot</i> by either clicking the <i>Page actions</i> button (the three horizontal dots) in the address bar or by right-clicking on the webpage. See <a rel="nofollow" class="external autonumber" href="https://support.mozilla.org/en-US/kb/firefox-screenshots">[9]</a> for more information.
 </p>
 <p>As an alternative you can use the screenshot button in the <a rel="nofollow" class="external text" href="https://developer.mozilla.org/en-US/docs/Tools/Taking_screenshots">Developer Tools</a>.
 </p>
@@ -412,7 +424,7 @@ pref("general.config.filename", "mozilla.cfg");
 </p>
 <p>Firefox ships with <i>Twemoji Mozilla</i> font. To use system emoji font set <code>font.name-list.emoji</code> to <code>emoji</code> in <code>about:config</code>.
 </p>
-<p>Firefox has problems with <a href="../en/Fonts.html#Emoji_and_symbols" class="mw-redirect" title="Emoji">Emoji</a> presentation <a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1509988">[7]</a>. Set <code>gfx.font_rendering.fontconfig.max_generic_substitutions</code> to <code>0</code> as workaround.
+<p>Firefox has problems with <a href="../en/Fonts.html#Emoji_and_symbols" class="mw-redirect" title="Emoji">Emoji</a> presentation <a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1509988">[10]</a>. Set <code>gfx.font_rendering.fontconfig.max_generic_substitutions</code> to <code>0</code> as workaround.
 </p>
 <h3><span class="mw-headline" id="Setting_an_email_client">Setting an email client</span></h3>
 <p>Inside the browser, <code>mailto</code> links by default are opened by a web application such as Gmail or Yahoo Mail. To set an external email program, go to <i>Preferences &gt; Applications</i> and modify the <i>action</i> corresponding to the <code>mailto</code> content type; the file path will need to be designated (e.g. <code>/usr/bin/kmail</code> for Kmail).
@@ -490,7 +502,7 @@ pref("general.config.filename", "mozilla.cfg");
 </p>
 <p>If you upgraded your plugin when Firefox was still running, you will thus have the wrong information inside that file. The next time you will restart Firefox you will get that message <code>Firefox has prevented the outdated plugin "XXXX" from running on ...</code> when you will be trying to open content dedicated to that plugin on the web. This problem often appears with the official <a href="../en/Browser_plugins.html#Adobe_Flash_Player" title="Browser plugins">Adobe Flash Player plugin</a> which has been upgraded while Firefox was still running.
 </p>
-<p>The solution is to remove the file <code>pluginreg.dat</code> from your profile and that is it. Firefox will not complain about the missing file as it will be recreated the next time Firefox will be closed. <a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1109795#c16">[8]</a>
+<p>The solution is to remove the file <code>pluginreg.dat</code> from your profile and that is it. Firefox will not complain about the missing file as it will be recreated the next time Firefox will be closed. <a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1109795#c16">[11]</a>
 </p>
 <h3><span class="mw-headline" id="JavaScript_context_menu_does_not_appear_on_some_sites">JavaScript context menu does not appear on some sites</span></h3>
 <p>You can try setting <code>dom.w3c_touch_events.enabled</code> to <code>0</code> in <code>about:config</code>.
@@ -505,14 +517,14 @@ pref("general.config.filename", "mozilla.cfg");
 </ol>
 <p>When you only have system wide dictionaries installed with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=hunspell">hunspell</a></span>, Firefox might not remember your default dictionary language settings. This can be fixed by having at least one <a rel="nofollow" class="external text" href="https://addons.mozilla.org/firefox/language-tools/">dictionary</a> installed as a Firefox plugin. Notice that now you will also have a tab <i>Dictionaries</i> in <i>Add-ons</i>. You may have to change the order of <i>preferred language for displaying pages</i> in <code>about:preferences#general</code> to make the spell check default to the language of the addon dictionary.
 </p>
-<p>Related questions on the <b>StackExchange</b> platform: <a rel="nofollow" class="external autonumber" href="https://stackoverflow.com/questions/26936792/change-firefox-spell-check-default-language/29446115">[9]</a>, <a rel="nofollow" class="external autonumber" href="https://stackoverflow.com/questions/21542515/change-default-language-on-firefox/29446353">[10]</a>, <a rel="nofollow" class="external autonumber" href="https://askubuntu.com/questions/184300/how-can-i-change-firefoxs-default-dictionary/576877">[11]</a>
+<p>Related questions on the <b>StackExchange</b> platform: <a rel="nofollow" class="external autonumber" href="https://stackoverflow.com/questions/26936792/change-firefox-spell-check-default-language/29446115">[12]</a>, <a rel="nofollow" class="external autonumber" href="https://stackoverflow.com/questions/21542515/change-default-language-on-firefox/29446353">[13]</a>, <a rel="nofollow" class="external autonumber" href="https://askubuntu.com/questions/184300/how-can-i-change-firefoxs-default-dictionary/576877">[14]</a>
 </p>
 <p>Related bug reports: <a rel="nofollow" class="external text" href="https://bugzilla.mozilla.org/show_bug.cgi?id=776028">Bugzilla 776028</a>, <a rel="nofollow" class="external text" href="https://bugs.launchpad.net/ubuntu/+source/firefox/+bug/1026869">Ubuntu bug 1026869</a>
 </p>
 <h3><span class="mw-headline" id="Some_MathML_symbols_are_missing">Some MathML symbols are missing</span></h3>
-<p>You need some Math fonts, namely Latin Modern Math and STIX (see this MDN page: <a rel="nofollow" class="external autonumber" href="https://developer.mozilla.org/en-US/docs/Mozilla/MathML_Project/Fonts#Linux">[12]</a>), to display MathML correctly.
+<p>You need some Math fonts, namely Latin Modern Math and STIX (see this MDN page: <a rel="nofollow" class="external autonumber" href="https://developer.mozilla.org/en-US/docs/Mozilla/MathML_Project/Fonts#Linux">[15]</a>), to display MathML correctly.
 </p>
-<p>In Arch Linux, these fonts are provided by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=texlive-core">texlive-core</a></span> <b>and</b> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=texlive-fontsextra">texlive-fontsextra</a></span>, but they are not available to fontconfig by default. See <a href="../en/TeX_Live.html#Making_fonts_available_to_Fontconfig" title="TeX Live">TeX Live#Making fonts available to Fontconfig</a> for details. You can also try other <a href="../en/Fonts.html#Math" title="Fonts">Math fonts</a>.
+<p>In Arch Linux, these fonts are provided by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=texlive-core">texlive-core</a></span> <b>and</b> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=texlive-fontsextra">texlive-fontsextra</a></span>, but they are not available to fontconfig by default. See <a href="../en/TeX_Live.html#Making_fonts_available_to_Fontconfig" title="TeX Live">TeX Live#Making fonts available to Fontconfig</a> for details. You can also try other <a href="../en/Fonts.html#Math" title="Fonts">Math fonts</a>. In case you encounter this bug <a rel="nofollow" class="external autonumber" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1208776">[16]</a> installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=otf-latinmodern-math">otf-latinmodern-math</a></span> can help.
 </p>
 <h3><span class="mw-headline" id="Tearing_video_in_fullscreen_mode">Tearing video in fullscreen mode</span></h3>
 <p>If you are using the Xorg Intel or Nouveau drivers and experience tearing video in fullscreen mode, try <a href="../en/Firefox/Tweaks.html#Enable_OpenGL_compositor" title="Firefox/Tweaks">Firefox/Tweaks#Enable OpenGL compositor</a>.
@@ -559,7 +571,7 @@ jack_connect "PulseAudio JACK Sink:front-center" "system:playback_2"</pre>
 </p>
 <p>To fix it, navigate to <code>about:config</code> and change <code>ui.context_menus.after_mouseup</code> to <code>true</code>.
 </p>
-<p>See <a rel="nofollow" class="external autonumber" href="https://www.reddit.com/r/i3wm/comments/88k0yt/right_mouse_btn_instantly_clicks_first_option_in/">[13]</a>
+<p>See <a rel="nofollow" class="external autonumber" href="https://www.reddit.com/r/i3wm/comments/88k0yt/right_mouse_btn_instantly_clicks_first_option_in/">[17]</a>
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
@@ -582,7 +594,10 @@ jack_connect "PulseAudio JACK Sink:front-center" "system:playback_2"</pre>
 <li><a href="../en/Category:Mozilla.html" title="Category:Mozilla">Mozilla</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -590,8 +605,8 @@ jack_connect "PulseAudio JACK Sink:front-center" "system:playback_2"</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Firefox&amp;oldid=655650">https://wiki.archlinux.org/index.php?title=Firefox&amp;oldid=655650</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 16:25.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Firefox&amp;oldid=659637">https://wiki.archlinux.org/index.php?title=Firefox&amp;oldid=659637</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 April 2021, at 15:56.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

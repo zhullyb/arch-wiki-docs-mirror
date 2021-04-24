@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -63,8 +64,8 @@
 </ul>
 </div>
 
-<h3><span class="mw-headline" id="Analizzare_il_processo_di_boot">Analizzare il processo di boot</span></h3>
-<h4><span class="mw-headline" id="systemd-analyze">systemd-analyze</span></h4>
+<h2><span class="mw-headline" id="Analizzare_il_processo_di_boot">Analizzare il processo di boot</span></h2>
+<h3><span class="mw-headline" id="systemd-analyze">systemd-analyze</span></h3>
 <p>Systemd fornisce una utilità chiamata <code>systemd-analyze</code> che permette di analizzare il proprio processo d'avvio al fine di evidenziare quali unità stanno causando rallentamenti nel processo di avvio stesso. E' possibile quindi ottimizzare il sistema tenendo conto di ciò. 
 </p>
 <p>Per vedere quanto tempo ha impiegato il boot del kernelspace e dello userspace, semplicemente si usi:
@@ -86,13 +87,13 @@
 </p>
 <pre>$ systemd-analyze plot &gt; plot.svg
 </pre>
-<h4><span class="mw-headline" id="Usare_systemd-bootchart">Usare systemd-bootchart</span></h4>
+<h3><span class="mw-headline" id="Usare_systemd-bootchart">Usare systemd-bootchart</span></h3>
 <p>Bootchart è stato implementato in systemd dal 17 Ottobre 2012, e si può utilizzarlo per il boot proprio come si farebbe con il bootchart originale. Aggiongere alla linea del kernel:
 </p>
 <pre> initcall_debug printk.time=y init=/usr/lib/systemd/systemd-bootchart
  
 </pre>
-<h4><span class="mw-headline" id="Usare_bootchart2">Usare bootchart2</span></h4>
+<h3><span class="mw-headline" id="Usare_bootchart2">Usare bootchart2</span></h3>
 <p>E' possibile usare una versione di bootchart per visualizzare la sequenza di boot. Da quando non è più possibile inserire un secondo "init" nel comando del kernel non c'è più la possibilità di usare alcuna configurazione standard di bootchart. Tuttavia il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/bootchart2/">bootchart2</a></span><sup><small>AUR</small></sup> di <a href="../../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> nasce con un non documentato service di systemd. Dopo aver installato bootchart2 fare:
 </p>
 <pre># systemctl enable bootchart
@@ -112,9 +113,9 @@
 <h2><span class="mw-headline" id="Staggered_spin-up">Staggered spin-up</span></h2>
 <p>Some hardware implements <a href="https://en.wikipedia.org/wiki/Spin-up#Staggered_spin-up" class="extiw" title="wikipedia:Spin-up">staggered spin-up</a>, which causes the OS to probe ATA interfaces serially, which can spin up the drives one-by-one and reduce the peak power usage. This slows down the boot speed, and on most consumer hardware provides no benefits at all since the drives will already spin-up immediately when the power is turned on. To check if SSS is being used:
 </p>
-<pre>$ dmesg | grep SSS
+<pre># dmesg | grep SSS
 </pre>
-<p>If it wasn't used during boot, there will be no output.
+<p>If it was not used during boot, there will be no output.
 </p>
 <p>To disable it, add <code>libahci.ignore_sss=1</code> to the <a href="../../en/Kernel_parameters.html" class="mw-redirect" title="Kernel line">kernel line</a>.
 </p>
@@ -164,8 +165,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Improving_performance_(Italiano)/Boot_process_(Italiano)&amp;oldid=629190">https://wiki.archlinux.org/index.php?title=Improving_performance_(Italiano)/Boot_process_(Italiano)&amp;oldid=629190</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 August 2020, at 12:07.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Improving_performance_(Italiano)/Boot_process_(Italiano)&amp;oldid=663752">https://wiki.archlinux.org/index.php?title=Improving_performance_(Italiano)/Boot_process_(Italiano)&amp;oldid=663752</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 06:19.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -160,8 +161,6 @@
 <li>triplo boot: <a href="#OS_X,_Windows_XP,_e_Arch_Linux_triplo_boot">#OS X, Windows XP, e Arch Linux triplo boot</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>
 </li>
 </ul>
-<p><br>
-</p>
 <h3><span class="mw-headline" id="Solo_Arch_Linux">Solo Arch Linux</span></h3>
 <p>Questa situazione è la più facile da affrontare. Il partizionamento è uguale a qualsiasi altro hardware su cui può essere installato Arch Linux. Fare riferimento alla standard <a href="../it/Installation_guide.html" title="Installation guide (Italiano)">guida all'installazione</a> per i dettagli.
 </p>
@@ -233,7 +232,7 @@
 <ul>
 <li>La partizione di swap è opzionale, su macchine con ram superiori a 4GB. Buone performance si possono ottenere anche senza questa partizione. Si può tuttavia crearla in seguito <a href="../en/Swap.html#Swap_file" title="Swap">Swap#Swap file</a>.</li>
 <li>L'opzione di dual boot più semplice consiste nell'installare refind da OS X, nella sua directory di root (solitamente install.sh). In seguito, copiare la cartella contenente i driver dal tarball di installazione verso il luogo in cui si installa refind, e decommentare le linee "scan_all_linux_kernels" e "also_scan_dirs" in refind.conf. La configurazione delle opzioni di boot possono essere fatte tramite refind_linux.conf situato nella /boot directory di Arch.</li>
-<li>Se si vuole eseguire GRUB dal bootloader di Apple, bisogna creare una piccola partizione hfs+ (per convenienza, usare OS X per formattarla tramite Utilità Disco.app). Seguire la procedura d'installazione di GRUB EFI, e montare la <code>/boot/efi</code> directory nella partizione hfs+ appena creata. Infine uscire e ritornare in OS X. Questo imposterà GRUB come bootloader predefinito (tenendo premuto ALT si tornerà alla solita schermata di boot del Mac. Vedere <a rel="nofollow" class="external free" href="http://mjg59.dreamwidth.org/7468.html">http://mjg59.dreamwidth.org/7468.html</a>)</li>
+<li>Se si vuole eseguire GRUB dal bootloader di Apple, bisogna creare una piccola partizione hfs+ (per convenienza, usare OS X per formattarla tramite Utilità Disco.app). Seguire la procedura d'installazione di GRUB EFI, e montare la <code>/boot/efi</code> directory nella partizione hfs+ appena creata. Infine uscire e ritornare in OS X. Questo imposterà GRUB come bootloader predefinito (tenendo premuto ALT si tornerà alla solita schermata di boot del Mac. Vedere <a rel="nofollow" class="external free" href="https://mjg59.dreamwidth.org/7468.html">https://mjg59.dreamwidth.org/7468.html</a>)</li>
 <li>Per ulteriori informazioni sul partizionamento, vedere <a href="../en/Partitioning.html" title="Partitioning">Partitioning</a>.</li>
 <li>La partizione EFI di OS X può essere condivisa con Arch, rendendo la creazione di un'ulteriore partizione EFI dedicata ad Arch opzionale</li>
 </ul>
@@ -274,7 +273,7 @@
 <ul>
 <li>Nel passaggio per la <a href="../en/Installation_guide.html#Prepare_Hard_Drive" title="Installation guide">preparazione degli hard drives</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> esegui solo "<a href="../en/Installation_guide.html#Set_Filesystem_Mountpoints" title="Installation guide">set filesystem mountpoints</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>" stando attento ad assegnare le giuste partizioni.</li>
 <li>Durante l'<a href="../en/Installation_guide.html#Install_a_boot_loader" title="Installation guide">installazione del boot loader</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> modifica il file menu.lst e aggiungi <b>reboot=pci</b> alla fine delle linee <b>kernel</b> lines, per esempio: <pre style="margin: .5em 0; padding: .5em 1em">kernel /vmlinuz26 root=/dev/sda5 ro reboot=pci</pre> Questo ti consentirà di riavviare correttamente da Arch.</li>
-<li>Durante l'<a href="../en/Installation_guide.html#Install_a_boot_loader" title="Installation guide">installazione del boot loader</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> installa GRUB nella partizione con <tt>/boot</tt>. <div class="archwiki-template-box archwiki-template-box-warning">
+<li>Durante l'<a href="../en/Installation_guide.html#Install_a_boot_loader" title="Installation guide">installazione del boot loader</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> installa GRUB nella partizione con <code>/boot</code>. <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Attenzione:</strong>  Non installare GRUB in <i>/dev/sda</i> !!!  Facendolo rischi di avere un ambiente post-configurazione instabile!!.</div>
 </li>
 <li>Nella <a href="../en/Installation_guide.html#Configure_the_system" title="Installation guide">configurazione del sistema</a>, modifica /etc/mkinitcpio.conf e aggiungi l'hook <b>usbinput</b> nella riga degli<b>HOOKS</b> line in qualsiasi posizione dopo l'hook <b>autodetect</b>.  Questo caricherà i drivers della tastiera nel caso che ti serva prima del boot di Arch Linux.</li>
@@ -405,7 +404,7 @@ $ cd alsa-driver
 </p>
 <p>Se non funziona, prova ad eseguire un aggiornamento del sistema:
 </p>
-<pre># pacman -Syu 
+<pre># pacman -Syu
 </pre>
 <h3><span class="mw-headline" id="Sensori_della_Temperatura">Sensori della Temperatura</span></h3>
 <p>Per fare riconoscere i sensori ad Arch Linux, basta installare e configurare <b>lm_sensors</b>.
@@ -430,8 +429,6 @@ vedi <a href="../en/Lm_sensors.html" title="Lm sensors">lm_sensors</a>.
 <li>
 <b>Color LCD-4271780.icc</b> for MacBook (not Pro) based on CoreDuo or Core2Duo.</li>
 </ul>
-<p><br>
-</p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong>  Mac OS consente di salvare il profilo del colore corrente dalla sezione <b>Displays -&gt; Color</b> del <b>Mac OS System Preferences</b>, in questo caso il file è salvato in <b>/Users/&lt;username&gt;/Library/ColorSync/Profiles</b>.</div>
 <p>Ora puoi attivarlo eseguendo;
@@ -585,8 +582,8 @@ E' inoltre consigliato farlo subito dopo avere installato Arch Linux.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Mac_(Italiano)&amp;oldid=629009">https://wiki.archlinux.org/index.php?title=Mac_(Italiano)&amp;oldid=629009</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 August 2020, at 07:16.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Mac_(Italiano)&amp;oldid=663846">https://wiki.archlinux.org/index.php?title=Mac_(Italiano)&amp;oldid=663846</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 20:12.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

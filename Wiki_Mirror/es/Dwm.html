@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -43,7 +44,7 @@
 <li><a href="../en/Dmenu.html" title="Dmenu">dmenu</a></li>
 </ul>
 </div>
-<p><a rel="nofollow" class="external text" href="http://dwm.suckless.org/">dwm</a> es un gestor de ventanas dinámico para <a href="../en/Xorg.html" class="mw-redirect" title="X">X</a>. Permite posicionar las mismas en forma de mosaico (tiling), en forma de pila (stack), y en pantalla completa (monocle), así como en diversas modalidades adicionales mediante la ayuda de parches opcionales. La disposición de las ventanas puede ser aplicada en forma dinámica optimizando así el entorno en función de la aplicación en uso y la tarea a realizar. dwm es extremadamente liviano y rápido, está escrito en C con la premisa de que su código fuente no supere las 2000 líneas. Provee soporte de multi-monitor para xrandr y Xinerama.
+<p><a rel="nofollow" class="external text" href="https://dwm.suckless.org/">dwm</a> es un gestor de ventanas dinámico para <a href="../en/Xorg.html" class="mw-redirect" title="X">X</a>. Permite posicionar las mismas en forma de mosaico (tiling), en forma de pila (stack), y en pantalla completa (monocle), así como en diversas modalidades adicionales mediante la ayuda de parches opcionales. La disposición de las ventanas puede ser aplicada en forma dinámica optimizando así el entorno en función de la aplicación en uso y la tarea a realizar. dwm es extremadamente liviano y rápido, está escrito en C con la premisa de que su código fuente no supere las 2000 líneas. Provee soporte de multi-monitor para xrandr y Xinerama.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -153,7 +154,7 @@
 <p>Modificar la configuración de dwm es bastante sencillo utilizando éste procedimiento.
 </p>
 <h4><span class="mw-headline" id="Personalizando_config.h">Personalizando config.h</span></h4>
-<p>Busque y diríjase al directorio que contiene el código fuente de dwm utilizado durante la <a href="#Instalaci%C3%B3n">instalación</a> (<code>~/dwm</code> en el ejemplo anterior). Dentro de ésta carpeta encontramos el archivo <code>config.h</code>, en el cual se almacenan las preferencias generales de configuración de dwm. La mayoría de las opciones que encontramos dentro de éste archivo deberían ser auto-descriptivas, pese a que algunas no compartan el mismo rasgo. Para una información detallada de éstas opciones, visite el <a rel="nofollow" class="external free" href="http://www.suckless.org/dwm/">http://www.suckless.org/dwm/</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-02]</sup> sitio de dwm].
+<p>Busque y diríjase al directorio que contiene el código fuente de dwm utilizado durante la <a href="#Instalaci%C3%B3n">instalación</a> (<code>~/dwm</code> en el ejemplo anterior). Dentro de ésta carpeta encontramos el archivo <code>config.h</code>, en el cual se almacenan las preferencias generales de configuración de dwm. La mayoría de las opciones que encontramos dentro de éste archivo deberían ser auto-descriptivas, pese a que algunas no compartan el mismo rasgo. Para una información detallada de éstas opciones, visite el <a rel="nofollow" class="external free" href="https://dwm.suckless.org/">https://dwm.suckless.org/</a> sitio de dwm].
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Asegúrese de realizar una copia de respaldo del archivo <code>config.h</code>, en caso de que algo no funcione correctamente.</div>
@@ -237,17 +238,16 @@ exec dwm
 
   case $batt in
     *Discharging*) batt=${batt_main#* * * }; batt="${batt%%, *} " ;;
-    *)             batt=''                                        ;;
+    *)             batt=<i>                                        ;;</i>
   esac
 
   xsetroot -name "$batt`date +"%R"`"
 done &amp;
-exec dwm
-</pre>
+exec dwm</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Debe asegurarse de tener solamente una instancia de dwm en <code>~/.xinitrc</code> o <code>~/.Xclients</code>.</div> 
+<strong>Note:</strong> Debe asegurarse de tener solamente una instancia de dwm en <code>~/.xinitrc</code> o <code>~/.Xclients</code>.</div>
 <h3><span class="mw-headline" id="Barra_de_estado_con_conky">Barra de estado con conky</span></h3>
-<p>Disponible en <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/conky-cli/">conky-cli</a></span><sup><small>AUR</small></sup> es una versión especial de conky que imprime la información a <tt>stdout</tt>. Si ya se encuentra acostumbrado a <a href="../en/Conky.html" title="Conky">conky</a>, puede crear una barra de estado con abundante información en cuestión de minutos. Una vez que conky ha sido confiugrado a gusto, simplemente imprima el resultado redirigiendo conky a la barra de estado con <code>xsetroot -name</code>:
+<p>Disponible en <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/conky-cli/">conky-cli</a></span><sup><small>AUR</small></sup> es una versión especial de conky que imprime la información a <code>stdout</code>. Si ya se encuentra acostumbrado a <a href="../en/Conky.html" title="Conky">conky</a>, puede crear una barra de estado con abundante información en cuestión de minutos. Una vez que conky ha sido confiugrado a gusto, simplemente imprima el resultado redirigiendo conky a la barra de estado con <code>xsetroot -name</code>:
 </p>
 <pre>conky | while read -r; do xsetroot -name "$REPLY"; done &amp;
 exec dwm
@@ -286,7 +286,7 @@ $mpd_smart :: ${cpu cpu1}% / ${cpu cpu2}%  ${loadavg 1} ${loadavg 2 3} :: ${ac
 <h4>
 <span id="Habilitar_un_posicionamiento_.28layout.29_diferente_por_cada_tag"></span><span class="mw-headline" id="Habilitar_un_posicionamiento_(layout)_diferente_por_cada_tag">Habilitar un posicionamiento (layout) diferente por cada tag</span>
 </h4>
-<p>El comportamiento por defecto de dwm es aplicar el posicionamiento seleccionado a todos los tags en forma simultánea. Para tener diferentes posicionamientos en diferentes tags, debemos utilizar el partche <a rel="nofollow" class="external text" href="http://dwm.suckless.org/patches/pertag">pertag</a>.
+<p>El comportamiento por defecto de dwm es aplicar el posicionamiento seleccionado a todos los tags en forma simultánea. Para tener diferentes posicionamientos en diferentes tags, debemos utilizar el partche <a rel="nofollow" class="external text" href="https://dwm.suckless.org/patches/pertag">pertag</a>.
 </p>
 <h3><span class="mw-headline" id="Eliminar_espacios_entre_ventanas_de_las_terminales">Eliminar espacios entre ventanas de las terminales</span></h3>
 <p>Si se ven espacios vacíos en el escritorio fuera de las ventanas de las terminales, probablemente se deba al tamaño de la fuente de la terminal. Para solucionar ésto, o bien puede ajustar el tamaño de la fuente hasta encontrar la escala ideal que elimina el hueco, o modificar <code>resizehints</code> a <i>False</i> en el archivo <code>config.h</code>:
@@ -321,7 +321,7 @@ done
 </h3>
 <p>Para deshabilitar la posibilidad de ganar foco utilizando el ratón, simplemente hay que comentar la siguiente línea en la definición de la estructura de control en <code>dwm.c</code>:
 </p>
-<pre>[EnterNotify] = enternotify, </pre>
+<pre>[EnterNotify] = enternotify,</pre>
 <h2><span class="mw-headline" id="Recursos_adicionales">Recursos adicionales</span></h2>
 <ul>
 <li>
@@ -359,8 +359,8 @@ done
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dwm_(Espa%C3%B1ol)&amp;oldid=644905">https://wiki.archlinux.org/index.php?title=Dwm_(Español)&amp;oldid=644905</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 December 2020, at 22:27.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dwm_(Espa%C3%B1ol)&amp;oldid=660947">https://wiki.archlinux.org/index.php?title=Dwm_(Español)&amp;oldid=660947</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 21:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

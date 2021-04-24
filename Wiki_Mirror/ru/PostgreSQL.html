@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -98,7 +99,7 @@
 <pre>$ sudo su - postgres
 </pre>
 <ul><li>Добавляем нового пользователя базы данных</li></ul>
-<pre>$ <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/8.3/static/app-createuser.html">createuser</a> -DRSP &lt;username&gt;
+<pre>$ <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/8.3/static/app-createuser.html">createuser</a> -DRSP &lt;username&gt;
 </pre>
 <p>-D Пользователь не может создавать базы данных<br>
 -R Пользователь не может создавать аккаунты<br>
@@ -114,7 +115,7 @@ Shall the new role be allowed to create more new roles? (y/n)  y
 </pre>
 <ul><li>Если имя созданного пользователя совпадает с именем пользователя ($USER), вы получите доступ к базе данных оболочки PostgreSQL без указания имени пользователя (что весьма удобно).</li></ul>
 <ul><li>Создаём новую базу данных. Создавать можно только от пользователя (например, postgres, за которого мы зашли), имеющего разрешение на чтение и запись (read/write). Если кодировку не указать, то она будет той, что вы указали в разделе <a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_PostgreSQL">«Установка PostgreSQL»</a>.</li></ul>
-<pre>$ <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/8.3/static/app-createdb.html">createdb</a> -O username databasename [-E database_encoding]
+<pre>$ <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/8.3/static/app-createdb.html">createdb</a> -O username databasename [-E database_encoding]
 </pre>
 <ul><li>Вот и всё! Ваша база данных создана. Теперь можете уже под любым пользователем управлять БД:</li></ul>
 <pre>$ psql имя_базы -U имя_пользователя_бд
@@ -132,7 +133,7 @@ Shall the new role be allowed to create more new roles? (y/n)  y
 <pre>$ sudo su postgres
 </pre>
 <ul><li>Запускаем основную оболочку базы данных, в которой мы сможем создавать, удалять базы данных/таблицы,   задавать права и запускать команды SQL.</li></ul>
-<pre>$ <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/8.3/static/app-psql.html">psql</a>
+<pre>$ <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/8.3/static/app-psql.html">psql</a>
 </pre>
 <dl><dd><i>— Вы также можете использовать `psql &lt;database_name&gt;` для редактирования конкретной базы данных.</i></dd></dl>
 <ul><li>Список всех возможных команд (например, <code>CREATE TABLE</code>) для запросов</li></ul>
@@ -259,7 +260,7 @@ hhvm.extensions[pgsql] = pgsql.so</pre>
 </p>
 <pre>UPDATE pg_database SET datistemplate = TRUE WHERE datname = 'template1'; 
 </pre>
-<p>5. (Рекомендация) Документация по PostgreSQL <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/8.1/interactive/manage-ag-templatedbs.html">advises</a> рекомендует "замораживать" изменения шаблона функцией VACUUM FREEZE:
+<p>5. (Рекомендация) Документация по PostgreSQL <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/8.1/interactive/manage-ag-templatedbs.html">advises</a> рекомендует "замораживать" изменения шаблона функцией VACUUM FREEZE:
 </p>
 <pre>\c template1
 VACUUM FREEZE;
@@ -297,7 +298,7 @@ template1 | postgres | UTF8      | C         | C     |
 <h3>
 <span id=".D0.A3.D1.81.D0.BA.D0.BE.D1.80.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BC.D0.B5.D0.BB.D0.BA.D0.B8.D1.85_.D1.82.D1.80.D0.B0.D0.BD.D0.B7.D0.B0.D0.BA.D1.86.D0.B8.D0.B9"></span><span class="mw-headline" id="Ускорение_мелких_транзакций">Ускорение мелких транзакций</span>
 </h3>
-<p>Если вы используете PostgreSQL на своей локальной машине для разработки и он медленный, то можете попробовать <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/runtime-config-wal.html#GUC-SYNCHRONOUS-COMMIT">отключить synchronous_commit</a> в конфигурации. Однако, не забывайте про его <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/runtime-config-wal.html#GUC-SYNCHRONOUS-COMMIT">особенности</a>.
+<p>Если вы используете PostgreSQL на своей локальной машине для разработки и он медленный, то можете попробовать <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/static/runtime-config-wal.html#GUC-SYNCHRONOUS-COMMIT">отключить synchronous_commit</a> в конфигурации. Однако, не забывайте про его <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/static/runtime-config-wal.html#GUC-SYNCHRONOUS-COMMIT">особенности</a>.
 </p>
 <h3>
 <span id=".D0.97.D0.B0.D0.BF.D1.80.D0.B5.D1.82.D0.B8.D1.82.D1.8C_.D0.B7.D0.B0.D0.BF.D0.B8.D1.81.D1.8C_.D0.BD.D0.B0_.D0.B4.D0.B8.D1.81.D0.BA_.D0.B2.D0.BE_.D0.B2.D1.80.D0.B5.D0.BC.D1.8F_.D0.B1.D0.B5.D0.B7.D0.B4.D0.B5.D0.B9.D1.81.D1.82.D0.B2.D0.B8.D1.8F"></span><span class="mw-headline" id="Запретить_запись_на_диск_во_время_бездействия">Запретить запись на диск во время бездействия</span>
@@ -318,7 +319,7 @@ template1 | postgres | UTF8      | C         | C     |
 <h2>
 <span id=".D0.91.D0.BE.D0.BB.D1.8C.D1.88.D0.B5_.D0.B8.D0.BD.D1.84.D0.BE.D1.80.D0.BC.D0.B0.D1.86.D0.B8.D0.B8"></span><span class="mw-headline" id="Больше_информации">Больше информации</span>
 </h2>
-<ul><li><a rel="nofollow" class="external text" href="http://www.postgresql.org/">Официальная страница PostgreSQL</a></li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.postgresql.org/">Официальная страница PostgreSQL</a></li></ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
@@ -333,8 +334,8 @@ template1 | postgres | UTF8      | C         | C     |
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PostgreSQL_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=614867">https://wiki.archlinux.org/index.php?title=PostgreSQL_(Русский)&amp;oldid=614867</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 May 2020, at 07:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PostgreSQL_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=662226">https://wiki.archlinux.org/index.php?title=PostgreSQL_(Русский)&amp;oldid=662226</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 20:33.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

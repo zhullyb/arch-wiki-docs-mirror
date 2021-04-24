@@ -121,7 +121,7 @@
 <p>The parameters available are those listed under <code>/proc/sys/</code>. For example, the <code>kernel.sysrq</code> parameter refers to the file <code>/proc/sys/kernel/sysrq</code> on the file system. The <code>sysctl --all</code> command can be used to display all currently available values.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If you have the kernel documentation installed (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-docs">linux-docs</a></span>), you can find detailed information about sysctl settings in <code>/usr/lib/modules/$(uname -r)/build/Documentation/admin-guide/sysctl/</code>. It is highly recommended reading these before changing sysctl settings.</div>
+<strong>Note:</strong> If you have the kernel documentation installed (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-docs">linux-docs</a></span>), you can find detailed information about sysctl settings in <code>/usr/lib/modules/$(uname -r)/build/Documentation/admin-guide/sysctl/</code>. An online version is referred by the <a href="#see_also">#see also</a> section of this article. It is highly recommended reading these before changing sysctl settings.</div>
 <p>Settings can be changed through file manipulation or using the <code>sysctl</code> utility. For example, to temporarily enable the <a href="https://en.wikipedia.org/wiki/Magic_SysRq_key" class="extiw" title="wikipedia:Magic SysRq key">magic SysRq key</a>:
 </p>
 <pre># sysctl kernel.sysrq=1
@@ -137,7 +137,7 @@
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> Some parameters that can be applied may depend on kernel modules which in turn might not be loaded. For example parameters in <code>/proc/sys/net/bridge/*</code> depend on the <code>br_netfilter</code> module. If it is not loaded at runtime (or after a reboot), those will <i>silently</i> not be applied. See <a href="../en/Kernel_module.html" class="mw-redirect" title="Kernel modules">Kernel modules</a>.</div>
 <h2><span class="mw-headline" id="Security">Security</span></h2>
-<p>See <a href="../en/Security.html#Kernel_hardening" title="Security">Security#Kernel hardening</a>.
+<p>See also <a href="../en/Security.html#Kernel_hardening" title="Security">Security#Kernel hardening</a>, as well as the rest of this article.
 </p>
 <h2><span class="mw-headline" id="Networking">Networking</span></h2>
 <h3><span class="mw-headline" id="Improving_performance">Improving performance</span></h3>
@@ -196,7 +196,7 @@ net.ipv4.udp_wmem_min = 8192
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Mention the option to "enable all listeners to support Fast Open by default without explicit TCP_FASTOPEN socket option", i.e. value <code>1027</code> (0x1+0x2+0x400). (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Sysctl">Talk:Sysctl#</a>)</div>
+<b>Reason:</b> Mention the option to "enable all listeners to support Fast Open by default without explicit TCP_FASTOPEN socket option", i.e. value <code>1027</code> (0x1+0x2+0x400). (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Sysctl#TCP_Fast_Open">Talk:Sysctl#TCP Fast Open</a>)</div>
 </div>
 <p>TCP Fast Open is an extension to the transmission control protocol (TCP) that helps reduce network latency by enabling data to be exchanged during the sender’s initial TCP SYN <a rel="nofollow" class="external autonumber" href="https://www.keycdn.com/support/tcp-fast-open/">[3]</a>. Using the value <code>3</code> instead of the default <code>1</code> allows TCP Fast Open for both incoming and outgoing connections:
 </p>
@@ -272,7 +272,7 @@ net.ipv4.tcp_congestion_control = bbr
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> How does this change improve performance? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Sysctl">Talk:Sysctl#</a>)</div>
+<b>Reason:</b> How does this change improve performance? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Sysctl#talk:sysctl#net.ipv4.ip_local_port_range">Talk:Sysctl#talk:sysctl#net.ipv4.ip_local_port_range</a>)</div>
 </div>
 <p>The <a href="https://en.wikipedia.org/wiki/Ephemeral_port" class="extiw" title="wikipedia:Ephemeral port">Wikipedia:Ephemeral port</a> is typically used by the Transmission Control Protocol (TCP), User Datagram Protocol (UDP), or the Stream Control Transmission Protocol (SCTP) as the port assignment for the client end of a client–server communication.
 </p>
@@ -286,7 +286,7 @@ net.ipv4.tcp_congestion_control = bbr
 <p>For some use-cases, for example using the system as a <a href="../en/Router.html" title="Router">router</a>, other parameters may be useful or required as well. 
 </p>
 <h4><span class="mw-headline" id="TCP_SYN_cookie_protection">TCP SYN cookie protection</span></h4>
-<p>Helps protect against SYN flood attacks. Only kicks in when <code>net.ipv4.tcp_max_syn_backlog</code> is reached:
+<p>Helps protect against SYN flood attacks. Only kicks in when <code>net.ipv4.tcp_max_syn_backlog</code> is reached. More details at, for example, <a rel="nofollow" class="external autonumber" href="https://cateee.net/lkddb/web-lkddb/SYN_COOKIES.html">[6]</a>. As of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> 5.10, it is set by default.
 </p>
 <pre>net.ipv4.tcp_syncookies = 1
 </pre>
@@ -294,7 +294,7 @@ net.ipv4.tcp_congestion_control = bbr
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> This does not seem to be part of the TCP standard? The description may not be accurate. <a rel="nofollow" class="external autonumber" href="https://serverfault.com/questions/787624/why-isnt-net-ipv4-tcp-rfc1337-enabled-by-default">[6]</a> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Sysctl#net.ipv4.tcp_rfc1337">Talk:Sysctl#net.ipv4.tcp_rfc1337</a>)</div>
+<b>Reason:</b> This does not seem to be part of the TCP standard? The description may not be accurate. <a rel="nofollow" class="external autonumber" href="https://serverfault.com/questions/787624/why-isnt-net-ipv4-tcp-rfc1337-enabled-by-default">[7]</a> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Sysctl#net.ipv4.tcp_rfc1337">Talk:Sysctl#net.ipv4.tcp_rfc1337</a>)</div>
 </div>
 <p>Protect against tcp time-wait assassination hazards, drop RST packets for sockets in the time-wait state. Not widely supported outside of Linux,  but conforms to RFC:
 </p>
@@ -303,7 +303,7 @@ net.ipv4.tcp_congestion_control = bbr
 <h4><span class="mw-headline" id="Reverse_path_filtering">Reverse path filtering</span></h4>
 <p>By enabling reverse path filtering, the kernel will do source validation of the packets received from all the interfaces on the machine. This can protect from attackers that are using IP spoofing methods to do harm.
 </p>
-<p>The kernel's default value is <code>0</code> (no source validation), but systemd ships <code>/usr/lib/sysctl.d/50-default.conf</code> that sets <code>net.ipv4.conf.all.rp_filter</code> to <code>2</code> (loose mode)<a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/pull/10971">[7]</a>.
+<p>The kernel's default value is <code>0</code> (no source validation), but systemd ships <code>/usr/lib/sysctl.d/50-default.conf</code> that sets <code>net.ipv4.conf.all.rp_filter</code> to <code>2</code> (loose mode)<a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/pull/10971">[8]</a>.
 </p>
 <p>The following will set the reverse path filtering mechanism to value <code>1</code> (strict mode):
 </p>
@@ -315,7 +315,7 @@ net.ipv4.conf.all.rp_filter = 1
 <h4><span class="mw-headline" id="Log_martian_packets">Log martian packets</span></h4>
 <p>A <a href="https://en.wikipedia.org/wiki/Martian_packet" class="extiw" title="wikipedia:Martian packet">martian packet</a> is an IP packet which specifies a source or destination address that is reserved for special-use by Internet Assigned Numbers Authority (IANA). See <a href="https://en.wikipedia.org/wiki/Reserved_IP_addresses" class="extiw" title="wikipedia:Reserved IP addresses">Reserved IP addresses</a> for more details.
 </p>
-<p>Often martian and unroutable packet may be used for a dangerous purpose. Logging these packets for further inspection may be useful <a rel="nofollow" class="external autonumber" href="https://www.cyberciti.biz/faq/linux-log-suspicious-martian-packets-un-routable-source-addresses/">[8]</a>:
+<p>Often martian and unroutable packet may be used for a dangerous purpose. Logging these packets for further inspection may be useful <a rel="nofollow" class="external autonumber" href="https://www.cyberciti.biz/faq/linux-log-suspicious-martian-packets-un-routable-source-addresses/">[9]</a>:
 </p>
 <pre>net.ipv4.conf.default.log_martians = 1
 net.ipv4.conf.all.log_martians = 1
@@ -426,7 +426,7 @@ To take advantage of this setting programs which currently uses raw sockets need
      [=&gt;...................]  resync =  5.3% (1657016448/31251490816) finish=1234.9min speed=399407K/sec
      bitmap: 221/233 pages [884KB], 65536KB chunk
 </pre>
-<p>If mdadm is compiled as a module <code>md_mod</code>, the above settings are available only after the module has been loaded. If the settings shall be loaded on boot via <code>/etc/sysctl.d/</code>, the module <code>md_mod</code> may be loaded beforehand through <span class="plainlinks archwiki-template-man" title="$ man 5 modules-load.d"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/modules-load.d.5">modules-load.d(5)</a></span>.
+<p>If mdadm is compiled as a module <code>md_mod</code>, the above settings are available only after the module has been loaded. If the settings shall be loaded on boot via <code>/etc/sysctl.d/</code>, the module <code>md_mod</code> may be loaded beforehand. See <a href="../en/Kernel_module.html#Automatic_module_loading_with_systemd" title="Kernel module">Kernel_module#Automatic_module_loading_with_systemd</a>.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Small_periodic_system_freezes">Small periodic system freezes</span></h3>
@@ -472,8 +472,8 @@ vm.dirty_bytes = 4194304
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Sysctl&amp;oldid=652872">https://wiki.archlinux.org/index.php?title=Sysctl&amp;oldid=652872</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 February 2021, at 13:42.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Sysctl&amp;oldid=657773">https://wiki.archlinux.org/index.php?title=Sysctl&amp;oldid=657773</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 5 April 2021, at 20:35.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

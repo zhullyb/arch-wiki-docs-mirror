@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Patching packages (简体中文) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Patching_packages_简体中文 rootpage-Patching_packages_简体中文 skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">Patching packages (简体中文)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="archwiki-template-meta-related-articles-start">
+<p>Related articles</p>
+<ul>
+<li><a href="../en/Arch_Build_System.html" title="Arch Build System">Arch Build System</a></li>
+</ul>
+</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>翻译状态：</strong>本文是 <a href="../en/Patching_packages.html" title="Patching packages">Patching_packages</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-03-30。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Patching_packages&amp;diff=0&amp;oldid=656633">更改</a>，则您可以帮助同步翻译。</div>
+<p>本文涵盖了如何在 <a href="../en/Arch_Build_System.html" title="Arch Build System">Arch Build System</a> (ABS) 中为软件包创建和应用补丁。
+</p>
+<p><a href="https://en.wikipedia.org/wiki/Patch_(computing)" class="extiw" title="wikipedia:Patch (computing)">补丁</a> 描述了一个或多个文件的行更改。补丁通常用于自动更改源代码。
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#%E5%88%9B%E5%BB%BA%E8%A1%A5%E4%B8%81"><span class="tocnumber">1</span> <span class="toctext">创建补丁</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#%E5%BA%94%E7%94%A8%E8%A1%A5%E4%B8%81"><span class="tocnumber">2</span> <span class="toctext">应用补丁</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#%E4%BD%BF%E7%94%A8_quilt"><span class="tocnumber">3</span> <span class="toctext">使用 quilt</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#%E5%8F%A6%E8%A7%81"><span class="tocnumber">4</span> <span class="toctext">另见</span></a></li>
+</ul>
+</div>
+
+<h2>
+<span id=".E5.88.9B.E5.BB.BA.E8.A1.A5.E4.B8.81"></span><span class="mw-headline" id="创建补丁">创建补丁</span>
+</h2>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 如果你只是想要更改一两行，你可能会想使用 <a href="../zh-CN/Core_utilities.html#sed" title="Core utilities (简体中文)">sed</a>。</div>
+<p><i>diff</i> 工具逐行比较文件。将它的输出保存下来你就得到了一个补丁，如 <code>diff --unified --recursive --text foo bar &gt; patch</code>， 如果你传递了目录， <i>diff</i> 会比较它们包含的文件。
+</p>
+<ol>
+<li>如果你已将构建了软件包，请删除 <code>src</code> 目录。</li>
+<li>运行 <code>makepkg --nobuild</code> 会下载并提取，但不会构建 <code>PKGBUILD</code> 中声明的源文件。如果你正在创建补丁的系统上没有必要的依赖，你可能需要运行 <code>makepkg --nobuild --nodeps</code> 作为替代。</li>
+<li>在 <code>src</code> 目录中创建两份提取的目录的副本，一个作为原始版本，一个作为你修改过的版本，将他们称为 <code>package.orig</code> 和 <code>package.new</code>。</li>
+<li>在 <code>package.new</code> 目录中进行你的更改。</li>
+<li>运行 <code>diff --unified --recursive --text package.orig package.new --color</code> 并检查补丁是否看起来良好。</li>
+<li>运行 <code>diff --unified --recursive --text package.orig package.new &gt; package.patch</code> 来生成补丁。</li>
+<li>进入 <code>package.orig</code> 目录并使用 <code>patch --strip=1 &lt; ../package.patch</code> 命令来应用补丁。运行 <code>makepkg --noextract --install</code> 命令构建并安装更改后的软件包来验证补丁是否正常工作。</li>
+</ol>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 你也可以使用 <a href="../en/Git.html" title="Git">Git</a> 的 <code>git diff</code> 命令或者 <code>git format-patch</code> 命令 <a rel="nofollow" class="external autonumber" href="https://stackoverflow.com/questions/6658313/generate-a-git-patch-for-a-specific-commit">[1]</a>。</div>
+<p>更多信息参见 <span class="plainlinks archwiki-template-man" title="$ man 1 diff"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/diff.1">diff(1)</a></span> 和 <span class="plainlinks archwiki-template-man" title="$ man 1 git-diff"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/git-diff.1">git-diff(1)</a></span>。
+</p>
+<h2>
+<span id=".E5.BA.94.E7.94.A8.E8.A1.A5.E4.B8.81"></span><span class="mw-headline" id="应用补丁">应用补丁</span>
+</h2>
+<p>本节概述如何在 <code>PKGBUILD</code> 的 <code>prepare()</code> 函数中应用你创建或从网络下载的补丁。请遵循以下步骤：
+</p>
+<ol>
+<li>为补丁文件在 <code>PKGBUILD</code> 的 <code>source</code> 数组中添加一个条目，将该条目与原始源 url 之间用空格隔开。如果该文件可在网上获得，你可以提供完整的 URL ，它将被自动下载并放在 <code>src</code> 目录中。如果它是你自己创建的补丁，则应将补丁文件与 <code>PKGBUILD</code> 文件放在同一目录中，并只需将文件名添加到 <code>source</code> 数组中，以便将其复制到 <code>src</code> 目录中。如果你重新发布 <code>PKGBUILD</code>，你应该在 <code>PKGBUILD</code> 中包含补丁。</li>
+<li>然后使用 <code>makepkg -g &gt;&gt; PKGBUILD</code> 或者 <code>updpkgsums</code> (来自于 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pacman-contrib">pacman-contrib</a></span>) 来更新 <code>sha512sums</code> 数组。 或者手动添加一个条目到 <code>sha512sums</code> 数组； 你可以使用 <i>sha512sum</i> 工具来生成你的补丁的校验和。</li>
+<li>如果 <code>PKGBUILD</code> 还没有 <code>prepare()</code> 函数就创建它。</li>
+<li>第一步是进入到需要被打补丁的目录（在 <code>prepare()</code> 函数中，不是你的终端！你希望自动化打补丁这一过程）。 你也可以通过像 <code>cd "$srcdir/$pkgname-$pkgver"</code> 或者其他类似的命令来完成。 <code>$pkgname-$pkgver</code> 通常是解包一个下载源文件的目录名，但并不总是这样。</li>
+<li>现在你只需要从这个目录里面应用补丁。这可以通过添加 <code>patch --strip=1 --input=<i>pkgname</i>.patch</code> 到你的 <code>prepare()</code> 函数就能简单完成。 将 <code><i>pkgname</i>.patch</code> 改成包含 diff 的文件的名字（因为在 <code>PKGBUILD</code> 的 <code>source</code> 数组中而被自动复制到 <code>src</code> 的文件）。</li>
+</ol>
+<p>一个 prepare 函数示例：
+</p>
+<pre>prepare() {
+    cd "$pkgname-$pkgver"
+    patch --forward --strip=1 --input="${srcdir}/eject.patch"
+}</pre>
+<p>从终端运行 <code>makepkg</code>， 如果一切顺利，补丁会被自动应用，并且你的新软件包会包含补丁中的更改。如果不是这样的话，你可能需要试验一下补丁的 <code>--strip</code> 选项。 在试验的时候，你会发现 <code>--dry-run</code>, <code>--reverse</code> 或者 <code>--verbose</code> 选项会有用。更多信息参见 <span class="plainlinks archwiki-template-man" title="$ man 1 patch"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/patch.1">patch(1)</a></span>。 
+</p>
+<p>基本上它的工作原理如下。如果 diff 文件被创建来将补丁应用到 <code>myversion/</code> 中的文件，那么 diff 文件将被应用于 <code>myversion/file</code>。你正在 <code>yourversion/</code> 目录中运行它（因为你会 cd 到 <code>PKGBUILD</code> 中的目录），因此当补丁应用该文件时，你希望它将其应用到 <code>file</code> 文件，并从 <code>myversion/</code> 部分中取出。 <code>--strip=1</code> 通过从路径中删除一个目录来实现这一点。但是，如果开发者在 <code>myfiles/myversion</code> 中修补，则需要删除两个目录，因此你使用 <code>--strip=2</code>。
+</p>
+<p>如果你不应用一个 <code>--strip</code> 选项，它将会去掉所有目录结构。如果所有文件都在基础目录中的时候是可以的。但是如果补丁是在 <code>myversion/</code> 上创建的，并且有一个被编辑的文件是 <code>myversion/src/file</code>，当你从 <code>yourversion</code> 目录以不带 <code>--strip</code> 参数的方式运行补丁的时候，它会尝试为一个名为 <code>yourversion/file</code> 的文件打补丁。
+</p>
+<p>大多数开发者从被打补丁的目录的父目录创建补丁，因此 <code>--strip=1</code> 通常是正确的。
+</p>
+<h2>
+<span id=".E4.BD.BF.E7.94.A8_quilt"></span><span class="mw-headline" id="使用_quilt">使用 quilt</span>
+</h2>
+<p>一个更简单的创建补丁的方法是使用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=quilt">quilt</a></span>，它为管理许多补丁提供了更好的支持，例如应用补丁，刷新补丁和将打补丁的文件回退到原始状态。<a href="https://wiki.debian.org/UsingQuilt" class="extiw" title="debian:UsingQuilt">Debian</a> 使用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=quilt">quilt</a></span> 来管理他们的补丁。quilt 生成和应用补丁、回退打补丁的文件的基本用法的基本信息可参考 <a rel="nofollow" class="external text" href="http://www.shakthimaan.com/downloads/glv/quilt-tutorial/quilt-doc.pdf">使用 Quilt</a>。
+</p>
+<h2>
+<span id=".E5.8F.A6.E8.A7.81"></span><span class="mw-headline" id="另见">另见</span>
+</h2>
+<ul><li>
+<a rel="nofollow" class="external free" href="http://www.kegel.com/academy/opensource.html">http://www.kegel.com/academy/opensource.html</a> — 有关修补文件的有用信息</li></ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Package_management.html" title="Category:Package management (简体中文)">Package management (简体中文)</a></li></ul>
+</div></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Patching_packages_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=656641">https://wiki.archlinux.org/index.php?title=Patching_packages_(简体中文)&amp;oldid=656641</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 29 March 2021, at 10:17.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

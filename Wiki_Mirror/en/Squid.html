@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -210,12 +211,23 @@ echo "url_rewrite_children 10" &gt;&gt; /etc/squid/squid.conf
 <pre> http_port 3128
  http_port 3129 <b>intercept</b>
 </pre>
+<p>And for TLS:
+</p>
+<pre> https_port 3130 intercept ssl-bump generate-host-certificates=on dynamic_cert_mem_cache_size=4MB cert=/etc/squid/squidCA.pem
+ acl step1 at_step SslBump1
+ ssl_bump peek step1
+ ssl_bump splice all
+ # workaround for some sites
+ client_persistent_connections off
+ server_persistent_connections off
+</pre>
 <h3><span class="mw-headline" id="iptables">iptables</span></h3>
 <p>From a terminal with root privileges, run: 
 </p>
 <pre># gid=`id -g proxy`
 # iptables -t nat -A OUTPUT -p tcp --dport 80 -m owner --gid-owner $gid -j ACCEPT
 # iptables -t nat -A OUTPUT -p tcp --dport 80 -j DNAT --to-destination SQUIDIP:3129
+# iptables -t nat -A OUTPUT -p tcp --dport 443 -j DNAT --to-destination SQUIDIP:3130
 # iptables-save &gt; /etc/iptables/iptables.rules
 </pre>
 <p>Then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> the <code>iptables.service</code> systemd unit.
@@ -385,8 +397,8 @@ fi</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Squid&amp;oldid=645864">https://wiki.archlinux.org/index.php?title=Squid&amp;oldid=645864</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 December 2020, at 10:21.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Squid&amp;oldid=658567">https://wiki.archlinux.org/index.php?title=Squid&amp;oldid=658567</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 April 2021, at 13:14.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

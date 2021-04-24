@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Kernel (Русский)/Traditional compilation (Русский) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Kernel_Русский_Traditional_compilation_Русский rootpage-Kernel_Русский skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">Kernel (Русский)/Traditional compilation (Русский)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"><span class="subpages">&lt; <a href="../ru/Kernel.html" title="Kernel (Русский)">Kernel (Русский)</a></span></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Состояние перевода:</strong> На этой странице представлен перевод статьи <a href="../en/Kernel/Traditional_compilation.html" title="Kernel/Traditional compilation">Kernel/Traditional compilation</a>. Дата последней синхронизации: 18 апреля 2021. Вы можете <a href="../ru/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Русский)">помочь</a> синхронизировать перевод, если в английской версии произошли <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Kernel/Traditional_compilation&amp;diff=0&amp;oldid=661933">изменения</a>.</div>
+<p>В статье представлена краткая инструкция по сборке собственного ядра из исходников <b>kernel.org</b>. Данный метод является традиционным и общим для всех дистрибутивов. В зависимости от вашего опыта, компиляция из исходников может показаться несколько более сложной в сравнении с использованием <a href="../ru/3b407c4bc81374daebcb84198d9b3ead.html" title="Kernel (Русский)/Arch Build System (Русский)">системы сборки</a>. Инструменты <a href="../ru/Arch_Build_System.html" title="Arch Build System (Русский)">Arch Build System</a> разрабатывались как раз с целью сделать многократно повторяющиеся задачи по компиляции более удобными и безопасными.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1">
+<a href="#%D0%9F%D0%BE%D0%B4%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BA%D0%B0"><span class="tocnumber">1</span> <span class="toctext">Подготовка</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D0%BE%D0%B2"><span class="tocnumber">1.1</span> <span class="toctext">Установка пакетов</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3%D0%B0_%D1%81%D0%B1%D0%BE%D1%80%D0%BA%D0%B8"><span class="tocnumber">1.2</span> <span class="toctext">Создание каталога сборки</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#%D0%97%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0_%D0%B8%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2"><span class="tocnumber">1.3</span> <span class="toctext">Загрузка исходников</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#%D0%A0%D0%B0%D1%81%D0%BF%D0%B0%D0%BA%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B8%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2"><span class="tocnumber">1.4</span> <span class="toctext">Распаковка исходников</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-6">
+<a href="#%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0"><span class="tocnumber">2</span> <span class="toctext">Настройка</span></a>
+<ul>
+<li class="toclevel-2 tocsection-7">
+<a href="#%D0%9A%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D1%8F_%D1%8F%D0%B4%D1%80%D0%B0"><span class="tocnumber">2.1</span> <span class="toctext">Конфигурация ядра</span></a>
+<ul>
+<li class="toclevel-3 tocsection-8"><a href="#A._%D0%A1%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D0%B0%D1%8F_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D1%8F_Arch"><span class="tocnumber">2.1.1</span> <span class="toctext">A. Стандартная конфигурация Arch</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#B._%D0%A1%D0%B3%D0%B5%D0%BD%D0%B5%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D1%8F"><span class="tocnumber">2.1.2</span> <span class="toctext">B. Сгенерированная конфигурация</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-10"><a href="#%D0%9F%D1%80%D0%BE%D0%B4%D0%B2%D0%B8%D0%BD%D1%83%D1%82%D0%B0%D1%8F_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D1%8F"><span class="tocnumber">2.2</span> <span class="toctext">Продвинутая конфигурация</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-11"><a href="#%D0%9A%D0%BE%D0%BC%D0%BF%D0%B8%D0%BB%D1%8F%D1%86%D0%B8%D1%8F"><span class="tocnumber">3</span> <span class="toctext">Компиляция</span></a></li>
+<li class="toclevel-1 tocsection-12">
+<a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0"><span class="tocnumber">4</span> <span class="toctext">Установка</span></a>
+<ul>
+<li class="toclevel-2 tocsection-13"><a href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D0%B5%D0%B9"><span class="tocnumber">4.1</span> <span class="toctext">Установка модулей</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#%D0%9A%D0%BE%D0%BF%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8F%D0%B4%D1%80%D0%B0_%D0%B2_%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3_/boot"><span class="tocnumber">4.2</span> <span class="toctext">Копирование ядра в каталог /boot</span></a></li>
+<li class="toclevel-2 tocsection-15">
+<a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BD%D0%B0%D1%87%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE_RAM-%D0%B4%D0%B8%D1%81%D0%BA%D0%B0"><span class="tocnumber">4.3</span> <span class="toctext">Создание начального RAM-диска</span></a>
+<ul>
+<li class="toclevel-3 tocsection-16"><a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4"><span class="tocnumber">4.3.1</span> <span class="toctext">Автоматизированный метод</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#%D0%A0%D1%83%D1%87%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4"><span class="tocnumber">4.3.2</span> <span class="toctext">Ручной метод</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-18"><a href="#%D0%9A%D0%BE%D0%BF%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_System.map"><span class="tocnumber">4.4</span> <span class="toctext">Копирование System.map</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-19"><a href="#%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D1%87%D0%B8%D0%BA%D0%B0"><span class="tocnumber">5</span> <span class="toctext">Настройка загрузчика</span></a></li>
+<li class="toclevel-1 tocsection-20"><a href="#%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D0%B8%D1%82%D0%B5_%D1%82%D0%B0%D0%BA%D0%B6%D0%B5"><span class="tocnumber">6</span> <span class="toctext">Смотрите также</span></a></li>
+</ul>
+</div>
+
+<h2>
+<span id=".D0.9F.D0.BE.D0.B4.D0.B3.D0.BE.D1.82.D0.BE.D0.B2.D0.BA.D0.B0"></span><span class="mw-headline" id="Подготовка">Подготовка</span>
+</h2>
+<p>Для подготовки ядра не требуется ни root-аккаунт, ни root-привилегии (например, через <a href="../ru/Sudo.html" title="Sudo (Русский)">sudo</a>).
+</p>
+<h3>
+<span id=".D0.A3.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BA.D0.B0_.D0.BF.D0.B0.D0.BA.D0.B5.D1.82.D0.BE.D0.B2"></span><span class="mw-headline" id="Установка_пакетов">Установка пакетов</span>
+</h3>
+<p>Установите группу пакетов <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/groups/x86_64/base-devel/">base-devel</a></span> с набором необходимых инструментов вроде <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=make">make</a></span> и <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gcc">gcc</a></span>. Также рекомендуется установить пакеты, указанные в стандартном <a rel="nofollow" class="external text" href="https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/PKGBUILD">PKGBUILD</a> ядра Arch Linux: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xmlto">xmlto</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=kmod">kmod</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=inetutils">inetutils</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bc">bc</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libelf">libelf</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=git">git</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cpio">cpio</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=perl">perl</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tar">tar</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xz">xz</a></span>.
+</p>
+<h3>
+<span id=".D0.A1.D0.BE.D0.B7.D0.B4.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BA.D0.B0.D1.82.D0.B0.D0.BB.D0.BE.D0.B3.D0.B0_.D1.81.D0.B1.D0.BE.D1.80.D0.BA.D0.B8"></span><span class="mw-headline" id="Создание_каталога_сборки">Создание каталога сборки</span>
+</h3>
+<p>Рекомендуется создать отдельный каталог для сборки вашего ядра. В этом примере будет использоваться каталог <code>kernelbuild</code> в домашнем каталоге:
+</p>
+<pre>$ mkdir ~/kernelbuild
+</pre>
+<h3>
+<span id=".D0.97.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B0_.D0.B8.D1.81.D1.85.D0.BE.D0.B4.D0.BD.D0.B8.D0.BA.D0.BE.D0.B2"></span><span class="mw-headline" id="Загрузка_исходников">Загрузка исходников</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Важно:</strong> Для <a href="../ru/Systemd.html" title="Systemd (Русский)">systemd</a> необходимо ядро не старше версии 3.12 (4.2 и выше, если требуется поддержка единой иерархии <a href="../en/Cgroups.html" title="Cgroups">контрольных групп</a>. Подробнее см. <code>/usr/share/doc/systemd/README</code>.</div>
+<p>Выберите версию ядра и загрузите файлы с исходным кодом с сайта <a rel="nofollow" class="external free" href="https://www.kernel.org">https://www.kernel.org</a>. Они будут иметь вид сжатого <a href="https://en.wikipedia.org/wiki/ru:tar" class="extiw" title="wikipedia:ru:tar">tar-архива</a> (суффикс <code>tar.xz</code>).
+</p>
+<p>Загрузить можно просто через браузер (правый клик по ссылке с <code>tar.xz</code> и выбрать <code>Save Link As...</code>) или любой другой программой, с графическим интерфейсом или интерфейсом командной строки, работающей через HTTP, <a href="../en/TFTP.html" title="TFTP">TFTP</a>, <a href="../ru/Rsync.html" title="Rsync (Русский)">Rsync</a> или <a href="../en/Git.html" title="Git">Git</a>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примечание:</strong> Стоит также проверить PGP-подпись загруженного архива. Этим вы проверите его подлинность и поможете сформировать сеть доверия. Подробнее см. <a rel="nofollow" class="external text" href="https://kernel.org/signature.html#using-gnupg-to-verify-kernel-signatures">kernel.org/signature</a>.</div> 
+<p>Например, так выглядит загрузка ядра версии 4.8.6 в каталог <code>~/kernelbuild</code> утилитой <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wget">wget</a></span>:
+</p>
+<pre>$ cd ~/kernelbuild
+$ wget https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.8.6.tar.xz
+</pre>
+<p>Также стоит проверить корректность загрузки. Скачайте файл подписи, с его помощью добудьте отпечаток (fingerprint) ключа, а с помощью отпечатка получите сам ключ:
+</p>
+<pre>$ wget https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.8.6.tar.sign
+$ gpg --list-packets linux-4.8.6.tar.sign
+$ gpg --recv-keys &lt;отпечаток_из_предыдущего_шага&gt;
+</pre>
+<p>Обратите внимание, что подпись создаётся для tar-архива (суффикс <code>.tar</code>), а не для сжатого файла <code>.tar.xz</code>, который был загружен. Необходимо выполнить декомпрессию, но без извлечения архива. Для этого потребуется <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xz">xz</a></span>:
+</p>
+<pre>$ unxz linux-4.8.6.tar.xz
+$ gpg --verify linux-4.8.6.tar.sign linux-4.8.6.tar
+</pre>
+<p>К последующим шагам нельзя переходить, если вы не получили вывод в виде "Good signature".
+</p>
+<p>Если <code>wget</code> запускался не из каталога сборки, переместите в него скачанный архив:
+</p>
+<pre>$ mv /путь/к/linux-4.8.6.tar.xz ~/kernelbuild/
+</pre>
+<h3>
+<span id=".D0.A0.D0.B0.D1.81.D0.BF.D0.B0.D0.BA.D0.BE.D0.B2.D0.BA.D0.B0_.D0.B8.D1.81.D1.85.D0.BE.D0.B4.D0.BD.D0.B8.D0.BA.D0.BE.D0.B2"></span><span class="mw-headline" id="Распаковка_исходников">Распаковка исходников</span>
+</h3>
+<p>Распакуйте архив ядра в каталоге сборки:
+</p>
+<pre>$ tar -xvf linux-4.8.6.tar
+</pre>
+<p>Для завершения приготовлений убедитесь, что дерево файлов ядра абсолютно чистое; не стоит полагаться на то, что что оно будет таковым после распаковки. Перейдите в новый каталог с исходниками и выполните команду <code>make mrproper</code>:
+</p>
+<pre>$ cd linux-4.8.6/
+$ make mrproper
+</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примечание:</strong> <code>mrproper</code> — цель Make. Она зависит от цели <code>clean</code>, поэтому указывать обе цели не обязательно. Подробнее см. <a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/q/387640">[1]</a>.</div>
+<h2>
+<span id=".D0.9D.D0.B0.D1.81.D1.82.D1.80.D0.BE.D0.B9.D0.BA.D0.B0"></span><span class="mw-headline" id="Настройка">Настройка</span>
+</h2>
+<p>Это наиболее важный шаг в процессе "подгонки" ядра под точные характеристики вашего компьютера. Настройки ядра, включая используемые <a href="../ru/Kernel_module.html" title="Kernel module (Русский)">модули</a>, задаются в файле <code>.config</code>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примечание:</strong> root-аккаунт или root-привилегии на этом этапе не требуются.</div>
+<p>Если правильно выбрать параметры в файле <code>.config</code>, то производительность вашего ядра и компьютера значительно вырастет.
+</p>
+<h3>
+<span id=".D0.9A.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8F_.D1.8F.D0.B4.D1.80.D0.B0"></span><span class="mw-headline" id="Конфигурация_ядра">Конфигурация ядра</span>
+</h3>
+<p>Существует два способа создать конфигурацию:
+</p>
+<ul>
+<li>A. Использовать стандартные настройки Arch для официального ядра (рекомендуется).</li>
+<li>B. Сгенерировать файл с настройками ядра, работающего в данный момент (например, если вы желаете подкорректировать текущие настройки).</li>
+</ul>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примечание:</strong> Особенно в случае варианта **B**, вы получите запрос на ручное задание опций ядра инструментами из раздела <a href="#%D0%9F%D1%80%D0%BE%D0%B4%D0%B2%D0%B8%D0%BD%D1%83%D1%82%D0%B0%D1%8F_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D1%8F">#Продвинутая конфигурация</a>.</div>
+<h4>
+<span id="A._.D0.A1.D1.82.D0.B0.D0.BD.D0.B4.D0.B0.D1.80.D1.82.D0.BD.D0.B0.D1.8F_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8F_Arch"></span><span class="mw-headline" id="A._Стандартная_конфигурация_Arch">A. Стандартная конфигурация Arch</span>
+</h4>
+<p>Этот метод предполагает создание нового файла <code>.config</code> на основе настроек стандартного ядра Arch. Если на вашей машине работает стандартное ядро, выполните следующую команду в каталоге с исходниками нового ядра:
+</p>
+<pre>$ zcat /proc/config.gz &gt; .config
+</pre>
+<p>В противном случае стандартную конфигурацию можно взять в  <a rel="nofollow" class="external text" href="https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/config">официальном пакете</a> ядра Arch Linux.
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Совет:</strong> При обновлении ядер опции иногда могут меняться или даже удаляться. В этом случае при запуске <code>make</code> на этапе <a href="#%D0%9A%D0%BE%D0%BC%D0%BF%D0%B8%D0%BB%D1%8F%D1%86%D0%B8%D1%8F">#Компиляция</a> вам будут заданы вопросы насчёт каждой изменённой опции. Чтобы применить стандартные настройки и не отвечать на вопросы, выполните <code>make olddefconfig</code>.</div>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Важно:</strong> Если вы компилируете ядро с использованием текущего файла <code>.config</code>, не забудьте переименовать вашу версию ядра "CONFIG_LOCALVERSION" в новом <code>.config</code>-файле, или выберите опцию <i>General Setup &gt; Local version - append to kernel release</i> в одном из интерфейсов из раздела <a href="#%D0%9F%D1%80%D0%BE%D0%B4%D0%B2%D0%B8%D0%BD%D1%83%D1%82%D0%B0%D1%8F_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D1%8F">#Продвинутая конфигурация</a>. Если вы пропустите этот шаг, то можете случайно перезаписать одно из существующих ядер.</div>
+<h4>
+<span id="B._.D0.A1.D0.B3.D0.B5.D0.BD.D0.B5.D1.80.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.BD.D0.B0.D1.8F_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8F"></span><span class="mw-headline" id="B._Сгенерированная_конфигурация">B. Сгенерированная конфигурация</span>
+</h4>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Совет:</strong> Подключите все устройства, которые вы собираетесь использовать на этой системе в будущем.</div>
+<p>С ядра 2.6.32 команда <code>localmodconfig</code> создаёт файл <code>.config</code> для нового ядра, отключив все опции, которые не заданы в работающем <i>здесь и сейчас</i> ядре. Другими словами, включены будут только опции, включённые в данный момент.
+</p>
+<p>Хотя данный минималистичный подход позволяет создать высокоэффективную конфигурацию, подогнанную конкретно под вашу систему, есть ряд недостатков, таких как потенциальная неспособность ядра поддерживать более новое аппаратное обеспечение, периферийные устройства и другие особенности.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примечание:</strong> Ещё раз, убедитесь, что вы подключили все устройства (и они были успешно обнаружены) к системе перед запуском следующей команды.</div>
+<pre>$ make localmodconfig
+</pre>
+<h3>
+<span id=".D0.9F.D1.80.D0.BE.D0.B4.D0.B2.D0.B8.D0.BD.D1.83.D1.82.D0.B0.D1.8F_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8F"></span><span class="mw-headline" id="Продвинутая_конфигурация">Продвинутая конфигурация</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Совет:</strong> Если вы хотите уменьшить количество сообщений при загрузке/выключении системы с новым ядром, стоит отключить соответствующие отладочные опции.</div>
+<p>Существует ряд инструментов для тонкой настройки конфигурации ядра, которые можно использовать вместо многочасовой ручной настройки каждой возможной при компиляции опции.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примечание:</strong> Эти инструменты перечислены ниже и предоставляют три возможных значения для каждой особенности ядра: <code>y</code> для включения, <code>n</code> для отключения и <code>m</code> для включения в качестве модуля ядра (загружается при необходимости).</div>
+<p>Инструменты:
+</p>
+<ul>
+<li>
+<code>make menuconfig</code>: утилита командной строки с интерфейсом ncurses; была заменена <code>nconfig</code>.</li>
+<li>
+<code>make nconfig</code>: новый инструмент командной строки с ncurses-интерфейсом.</li>
+<li>
+<code>make xconfig</code>: более дружелюбный к пользвателю графический интерфейс, которому требуется пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=packagekit-qt5">packagekit-qt5</a></span> в качестве зависимости. Это рекомендуемый метод — особенно для неопытных пользователей — поскольку в нём упрощена навигация, а также выводится справочная информация о каждой опции.</li>
+<li>
+<code>make gconfig</code>: графический настройщик, похожий на xconfig, но использующий gtk.</li>
+</ul>
+<p>Выбранную программу необходимо запустить внутри каталога с исходниками ядра. Все они создают новый <code>.config</code> либо перезаписывают существующий. Все опциональные настройки будут автоматически включены, но новые опции (т.е. отсутствовавшие в <code>.config</code> старого ядра) могут не включиться.
+</p>
+<p>После внесения всех необходимых изменений сохраните файл <code>.config</code>. Имеет смысл тажке сделать резервную копию этого файла вне каталога с исходниками. Возможно, придётся повторить процесс несколько раз, прежде чем результат вас устроит.
+</p>
+<p>Если испытываете сомнения, изменяйте по несколько опций между компиляциями. Если вы не можете загрузиться с новым ядром, изучите список необходимых пунктов конфигурации <a rel="nofollow" class="external text" href="https://archlinux.org/news/users-of-unofficial-kernels-must-enable-devtmpfs-support/">здесь</a>.
+</p>
+<p>Команда <code>$ lspci -k #</code> в окружении liveCD выведет список используемых модулей ядра. Важно также не забыть обеспечить поддержку <a href="../en/Cgroups.html" title="Cgroups">cgroups</a>. Это необходимо для <a href="../ru/Systemd.html" title="Systemd (Русский)">systemd</a>.
+</p>
+<h2>
+<span id=".D0.9A.D0.BE.D0.BC.D0.BF.D0.B8.D0.BB.D1.8F.D1.86.D0.B8.D1.8F"></span><span class="mw-headline" id="Компиляция">Компиляция</span>
+</h2>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Совет:</strong> Если вы хотите оптимизировать <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gcc">gcc</a></span> под набор инструкция вашего процессора, отредактируйте файл <code>arch/x86/Makefile</code> (как для 32-битной архитектуры, так и для 64-битной; см. <a rel="nofollow" class="external autonumber" href="https://lkml.org/lkml/2007/7/20/447">[2]</a>) в каталоге с исходниками ядра:
+<ul>
+<li>В параметре <code>Processor type and features &gt; Processor Family</code> выберите архитектуру среди значений: <code>CONFIG_MK8,CONFIG_MPSC,CONFIG_MCORE2,CONFIG_MATOM,CONFIG_GENERIC_CPU</code>.</li>
+<li>Измените флаг <code>call cc-options</code> со значения <code>-march=native</code> на то, которое вы выбрали в параметре Processor Family, например: <code>cflags-$(CONFIG_MK8) += $(call cc-option,-march=native)</code>. Это, возможно, лучший работающий способ копиляции с <code>-march=native</code>.</li>
+<li>Примечание: для 32-битных ядер необходимо аналогичным образом отредактировать файл <code>arch/x86/Makefile_32.cpu</code> и так же задать <code>-march=native</code> для вашего процессора.</li>
+</ul>
+</div>
+<p>Время компиляции может варьироваться от небольшого (~15 минут) до значительного (более часа) в зависимости от настроек ядра и мощности процессора. После задания всех необходимых настроек нового ядра в файле <code>.config</code>, выполните в каталоге с исходниками следующую команду:
+</p>
+<pre>$ make
+</pre>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Совет:</strong> Для ускорения компиляции можно запустить <i>make</i> с аргументом <code>-jX</code>, где <code>X</code> — целое число, обозначающе количество параллельно работающих процессов. Наилучший результат получается при использовании всех доступных ядер процессора; например, для двухядерной машины выполните <code>make -j2</code>. Подробнее см. <a href="../ru/Makepkg.html#%D0%A1%D0%BE%D0%BA%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8_%D0%BA%D0%BE%D0%BC%D0%BF%D0%B8%D0%BB%D1%8F%D1%86%D0%B8%D0%B8" title="Makepkg (Русский)">makepkg#Сокращение времени компиляции</a>.</div>
+<h2>
+<span id=".D0.A3.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BA.D0.B0"></span><span class="mw-headline" id="Установка">Установка</span>
+</h2>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Важно:</strong> С этого момента все команды должны выполняться либо от учётной записи суперпользователя, либо с его правами. В противном случае они завершатся неудачно.</div>
+<h3>
+<span id=".D0.A3.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BA.D0.B0_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D0.B5.D0.B9"></span><span class="mw-headline" id="Установка_модулей">Установка модулей</span>
+</h3>
+<p>После того, как ядро скомпилировано, то же самое необходимо сделать с модулями. Сначала соберите модули:
+</p>
+<pre>$ make modules
+</pre>
+<p>Затем установите их:
+</p>
+<pre># make modules_install
+</pre>
+<p>Эта команда скопирует откомпилированные модули в каталог <code>/lib/modules/&lt;версия_ядра&gt;-&lt;версия_конфигурации&gt;</code>. Например, для ядра версии 4.8 они будут скопированы в <code>/lib/modules/4.8.6-ARCH</code>. Это позволяет хранить модули разных ядер в отдельных каталогах.
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Совет:</strong> Если вашему ядру необходимы модули, которые не распространяются со стандартным ядром Linux, необходимо их скомпилировать. Это обычно касается модулей, которые вы устанавливаете явно (вручную) на уже запущенной системе. См. пример в <a href="../ru/NVIDIA.html#%D0%A1%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5_%D1%8F%D0%B4%D1%80%D0%BE" title="NVIDIA (Русский)">NVIDIA#Собственное ядро</a>.</div>
+<h3>
+<span id=".D0.9A.D0.BE.D0.BF.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D1.8F.D0.B4.D1.80.D0.B0_.D0.B2_.D0.BA.D0.B0.D1.82.D0.B0.D0.BB.D0.BE.D0.B3_.2Fboot"></span><span class="mw-headline" id="Копирование_ядра_в_каталог_/boot">Копирование ядра в каталог /boot</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примечание:</strong> Убедитесь, что файл ядра <code>bzImage</code> копируется из каталога, соответствующего вашей архитектуре. См. ниже.</div>
+<p>В результате компиляции ядра создаётся <code>bzImage</code> (big zImage, "большой сжатый образ") этого ядра, который необходимо скопировать в каталог <code>/boot</code> и переименовать. Имя должно начинаться с <code>vmlinuz-</code>, окончание можно выбрать любое. В примерах ниже установленное и скомпилированное ядро версии 4.8 копируется и переименуется в <code>vmlinuz-linux48</code>:
+</p>
+<ul><li>32-битное (i686) ядро:</li></ul>
+<pre># cp -v arch/x86/boot/bzImage /boot/vmlinuz-linux48
+</pre>
+<ul><li>64-битное (x86_64) ядро:</li></ul>
+<pre># cp -v arch/x86_64/boot/bzImage /boot/vmlinuz-linux48
+</pre>
+<h3>
+<span id=".D0.A1.D0.BE.D0.B7.D0.B4.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BD.D0.B0.D1.87.D0.B0.D0.BB.D1.8C.D0.BD.D0.BE.D0.B3.D0.BE_RAM-.D0.B4.D0.B8.D1.81.D0.BA.D0.B0"></span><span class="mw-headline" id="Создание_начального_RAM-диска">Создание начального RAM-диска</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Примечание:</strong> Вы можете выбрать абсолютно любое имя для initramfs-образа. Тем не менее, рекомендуется использовать схему <code>linux&lt;старший_номер&gt;&lt;младший_номер&gt;</code>. Например, название 'linux48' означает ядро версии 4.8, где старший номер (ревизии) — '4', а младший — '8'. При таком именовании можно хранить в системе несколько ядер разных версий, регулярно использовать mkinitcpio и собирать сторонние модули.</div>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Совет:</strong> Если вы используете загрузчик LILO и ему не удаётся связаться с драйвером device-mapper в ядре, выполните сначала <code>modprobe dm-mod</code>.</div>
+<p>Если вы не знаете, что такое создание начального RAM-диска, изучите статьи <a href="https://en.wikipedia.org/wiki/ru:initrd" class="extiw" title="wikipedia:ru:initrd">initrd</a> и <a href="../ru/Mkinitcpio.html" title="Mkinitcpio (Русский)">mkinitcpio</a>.
+</p>
+<h4>
+<span id=".D0.90.D0.B2.D1.82.D0.BE.D0.BC.D0.B0.D1.82.D0.B8.D0.B7.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.BD.D1.8B.D0.B9_.D0.BC.D0.B5.D1.82.D0.BE.D0.B4"></span><span class="mw-headline" id="Автоматизированный_метод">Автоматизированный метод</span>
+</h4>
+<p>Чтобы initramfs для нового ядра был сгенерирован аналогично официальному ядру, можно скопировать и модифицировать существующий <a href="../ru/Mkinitcpio.html#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BE%D1%87%D0%BD%D0%BE%D0%B3%D0%BE_%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%B0" title="Mkinitcpio (Русский)">mkinitcpio preset</a>. Это удобно при перекомпиляции ядра (например, после обновления). В примере ниже файл предустановок (preset file) стокового ядра Arch копируется и модифицируется под ядро версии 4.8, установленное выше.
+</p>
+<p>Сначала скопируйте существующий preset-файл, переименовав его с использованием суффикса из <code>/boot/vmlinuz-</code> (в нашем случае — <code>linux48</code>):
+</p>
+<pre># cp /etc/mkinitcpio.d/linux.preset /etc/mkinitcpio.d/linux48.preset
+</pre>
+<p>Затем отредактируйте файл под новое ядро. В параметре <code>ALL_kver=</code> необходимо указать имя нового ядра, выбранное при копировании <code>bzImage</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.d/linux48.preset</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
+ALL_kver="/boot/vmlinuz-linux48"
+...
+default_image="/boot/initramfs-linux48.img"
+...
+fallback_image="/boot/initramfs-linux48-fallback.img"</pre>
+<p>Наконец, сгенерируйте initramfs-образ для нового ядра:
+</p>
+<pre># mkinitcpio -p linux48
+</pre>
+<h4>
+<span id=".D0.A0.D1.83.D1.87.D0.BD.D0.BE.D0.B9_.D0.BC.D0.B5.D1.82.D0.BE.D0.B4"></span><span class="mw-headline" id="Ручной_метод">Ручной метод</span>
+</h4>
+<p>Вместо использования файла с предустановками можно сгенерировать initramfs-файл вручную посредством mkinitcpio:
+</p>
+<pre># mkinitcpio -k &lt;версия_ядра&gt; -g /boot/initramfs-&lt;имя_файла&gt;.img
+</pre>
+<ul>
+<li>
+<code>-k</code> (<code>--kernel &lt;версия_ядра&gt;</code>): указывает модули, которые будут использованы при генерации образа. Имя <code>&lt;версия_ядра&gt;</code> совпадает с именем каталога с исходниками нового ядра (и каталога с модулями для него, расположенного в <code>/usr/lib/modules/</code>).</li>
+<li>
+<code>-g</code> (<code>--generate &lt;имя_файла&gt;</code>): указывается имя initramfs-файла, который будет создан в каталоге <code>/boot</code>. Ещё раз — рекомендуется использовать стандартную схему именования, упомянутую выше.</li>
+</ul>
+<p>Например, команда для ядра версии 4.8:
+</p>
+<pre># mkinitcpio -k linux-4.8.6 -g /boot/initramfs-linux48.img
+</pre>
+<h3>
+<span id=".D0.9A.D0.BE.D0.BF.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_System.map"></span><span class="mw-headline" id="Копирование_System.map">Копирование System.map</span>
+</h3>
+<p>Файл <code>System.map</code> не требуется для загрузки Linux. Это что-то вроде "телефонной книги" со списком функций для конкретной сборки ядра. <code>System.map</code> содержит список символов ядра (т.е. имён функций, переменных и т.п.) и соответсвующих им адресов. Это отображение имён символов на адреса используется:
+</p>
+<ul>
+<li>Некоторыми процессами вроде klogd, ksymoops и т.д.</li>
+<li>Обработчиком OOPS, когда во время падения ядра на экран выводится информация (например, о том, какая именно функция вызывала падение).</li>
+</ul>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Совет:</strong> <a href="../en/Unified_Extensible_Firmware_Interface.html" class="mw-redirect" title="UEFI">UEFI</a>-разделы используют файловую систему FAT32, которая не поддерживает символические ссылки.</div>
+<p>Если ваш каталог <code>/boot</code> использует файловую систему с поддержкой символических ссылок (т.е. не FAT32), скопируйте <code>System.map</code> в <code>/boot</code>, добавив название ядра к итоговому файлу. Затем создайте символическую ссылку <code>/boot/System.map</code> на <code>/boot/System.map-&lt;название_ядра&gt;</code>:
+</p>
+<pre># cp System.map /boot/System.map-&lt;название_ядра&gt;
+# ln -sf /boot/System.map-&lt;название_ядра&gt; /boot/System.map
+</pre>
+<p>В итоге в <code>/boot</code> должно быть 3 файла и 1 символическая ссылка (не считая любых других файлов, находившихся там до этого):
+</p>
+<ul>
+<li>Ядро: <code>vmlinuz-&lt;название_ядра&gt;</code>
+</li>
+<li>Initramfs: <code>Initramfs-&lt;название_ядра&gt;.img</code>
+</li>
+<li>System Map: <code>System.map-&lt;название_ядра&gt;</code>
+</li>
+<li>Символическая ссылка на System Map.</li>
+</ul>
+<h2>
+<span id=".D0.9D.D0.B0.D1.81.D1.82.D1.80.D0.BE.D0.B9.D0.BA.D0.B0_.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D1.87.D0.B8.D0.BA.D0.B0"></span><span class="mw-headline" id="Настройка_загрузчика">Настройка загрузчика</span>
+</h2>
+<p>Добавьте в файл настроек загрузчика пункт с новым ядром. В статье <a href="../en/Arch_boot_process.html#Feature_comparison" title="Arch boot process">Arch boot process#Feature comparison</a> приведено сравнение доступных загрузчиков; также изучите соответствующие статьи.
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Совет:</strong> Среди исходников ядра есть сценарий для автоматизации настройки <a href="../ru/LILO.html" title="LILO (Русский)">LILO</a>: <code>$ arch/x86/boot/install.sh</code>. В конце выполните <code>lilo</code> с правами root, чтобы изменения вступили в силу.</div>
+<h2>
+<span id=".D0.A1.D0.BC.D0.BE.D1.82.D1.80.D0.B8.D1.82.D0.B5_.D1.82.D0.B0.D0.BA.D0.B6.D0.B5"></span><span class="mw-headline" id="Смотрите_также">Смотрите также</span>
+</h2>
+<ul><li>
+<a rel="nofollow" class="external free" href="https://cateee.net/lkddb/web-lkddb/">https://cateee.net/lkddb/web-lkddb/</a> — подробный отсортированный список строк конфигурации ядра и с пояснениями.</li></ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../ru/Category:Kernel.html" title="Category:Kernel (Русский)">Kernel (Русский)</a></li></ul>
+</div></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Kernel_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)/Traditional_compilation_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=661946">https://wiki.archlinux.org/index.php?title=Kernel_(Русский)/Traditional_compilation_(Русский)&amp;oldid=661946</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 17:23.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

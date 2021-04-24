@@ -90,12 +90,8 @@
 <li>
 <a href="../zh-CN/Help:Reading.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" class="mw-redirect" title="安装">安装</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-tools">wireguard-tools</a></span> 包</li>
 <li>对于版本小于 5.6 的 Linux 内核，需要额外安装合适的内核模块（当使用默认的 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> 包时不需要）：
-<ul>
-<li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-lts">wireguard-lts</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span>]</sup> 用于 LTS <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span> 内核。</li>
-<li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-dkms">wireguard-dkms</a></span> 用于其他版本小于 5.6 的 DKMS 变体<a href="../en/Kernel.html" title="Kernel">内核</a>。</li>
-</ul>
+<ul><li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-dkms">wireguard-dkms</a></span> 用于其他版本小于 5.6 的 DKMS 变体<a href="../en/Kernel.html" title="Kernel">内核</a>。</li></ul>
 </li>
 </ol>
 <div class="archwiki-template-box archwiki-template-box-tip">
@@ -138,9 +134,9 @@
 <tr>
 <td>wireguard listening port
 </td>
-<td>UDP/48574
+<td>UDP/4857
 </td>
-<td>UDP/39814
+<td>UDP/3981
 </td>
 </tr>
 </tbody>
@@ -153,9 +149,10 @@
 <p>这个 peer 将监听 UDP 端口 48574，通过将 peer B 的公钥与其内部和外部 IP 地址关联，接受来自 peer B 的连接。
 </p>
 <pre># ip link add dev wg0 type wireguard
+# ip link set dev wg0 mtu 1420
 # ip addr add 10.0.0.1/24 dev wg0
-# wg set wg0 listen-port 48574 private-key ./privatekey
-# wg set wg0 peer [Peer B public key] persistent-keepalive 25 allowed-ips 10.0.0.2/32 endpoint 10.10.10.2:39814
+# wg set wg0 listen-port 4857 private-key ./privatekey
+# wg set wg0 peer [Peer B public key] persistent-keepalive 25 allowed-ips 10.0.0.2/32 endpoint 10.10.10.2:3981
 # ip link set wg0 up
 </pre>
 <p><code>[Peer B public key]</code> 的格式应当如同 <code>EsnHH9m6RthHSs+sd9uM6eCHe/mMVFaRh93GYadDDnM=</code>。<code>allowed-ips</code> 是 peer A 能够向之发送流量的地址列表。<code>allowed-ips 0.0.0.0/0</code> 将允许向任意地址发送流量。
@@ -166,9 +163,10 @@
 <p>如同 Peer A，只不过 wireguard 守护监听 UDP 端口 39814 并且只接受 peer A 的连接
 </p>
 <pre># ip link add dev wg0 type wireguard
+# ip link set dev wg0 mtu 1420
 # ip addr add 10.0.0.2/24 dev wg0
-# wg set wg0 listen-port 39814 private-key ./privatekey
-# wg set wg0 peer [Peer A public key] persistent-keepalive 25 allowed-ips 10.0.0.1/32 endpoint 10.10.10.1:48574
+# wg set wg0 listen-port 3981 private-key ./privatekey
+# wg set wg0 peer [Peer A public key] persistent-keepalive 25 allowed-ips 10.0.0.1/32 endpoint 10.10.10.1:4857
 # ip link set wg0 up
 </pre>
 <h4>
@@ -182,10 +180,10 @@
  interface: wg0
    public key: UguPyBThx/+xMXeTbRYkKlP0Wh/QZT3vTLPOVaaXTD8=
    private key: (hidden)
-   listening port: 48574
+   listening port: 4857
  
  peer: 9jalV3EEBnVXahro0pRMQ+cHlmjE33Slo9tddzCVtCw=
-   endpoint: 10.10.10.2:39814
+   endpoint: 10.10.10.2:3981
    allowed ips: 10.0.0.2/32
 </pre>
 <p>此时我们可以 ping 通隧道的另一端：
@@ -206,16 +204,17 @@
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/wireguard/wg0.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Interface]
 PrivateKey = [CLIENT PRIVATE KEY]
+MTU = 1420
 
 [Peer]
 PublicKey = [SERVER PUBLICKEY]
 AllowedIPs = 10.0.0.0/24, 10.123.45.0/24, 1234:4567:89ab::/48
-Endpoint = [SERVER ENDPOINT]:51820
+Endpoint = [SERVER ENDPOINT]:5182
 PersistentKeepalive = 25</pre>
 <h2>
 <span id=".E9.85.8D.E7.BD.AE.E4.B8.80.E4.B8.AA_VPN_.E6.9C.8D.E5.8A.A1.E5.99.A8"></span><span class="mw-headline" id="配置一个_VPN_服务器">配置一个 VPN 服务器</span>
 </h2>
-<p>Wireguard 自带一个快速创建和销毁 VPN 服务器的工具，<code>wg-quick</code>。注意这里使用的配置文件不是一个能被 <code>wg setconf</code> 有效的配置文件，并且你可能至少要把 <code>eth0</code> 改成你实际使用的。
+<p>WireGuard 自带一个快速创建和销毁 VPN 服务器的工具，<code>wg-quick</code>。注意这里使用的配置文件不是一个能被 <code>wg setconf</code> 有效的配置文件，并且你可能至少要把 <code>eth0</code> 改成你实际使用的。
 </p>
 <h4>
 <span id=".E6.9C.8D.E5.8A.A1.E5.99.A8"></span><span class="mw-headline" id="服务器">服务器</span>
@@ -225,12 +224,13 @@ PersistentKeepalive = 25</pre>
 Address = 10.0.0.1/24  # This is the virtual IP address, with the subnet mask we will use for the VPN
 PostUp   = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
-ListenPort = 51820
+ListenPort = 5182
 PrivateKey = [SERVER PRIVATE KEY]
+MTU = 1420
 
 [Peer]
 PublicKey = [CLIENT PUBLIC KEY]
-AllowedIPs = 10.0.0.2/32  # 这表示客户端只有一个 ip。</pre>
+AllowedIPs = 10.0.0.2/32  # 这表示客户端只有一个 IP。</pre>
 <p>要使 iptables 规则生效，启用 IPv4 转发：
 </p>
 <pre># sysctl net.ipv4.ip_forward=1
@@ -247,11 +247,12 @@ AllowedIPs = 10.0.0.2/32  # 这表示客户端只有一个 ip。</pre>
 Address = 10.0.0.2/24  # The client IP from wg0server.conf with the same subnet mask
 PrivateKey = [CLIENT PRIVATE KEY]
 DNS = 10.0.0.1
+MTU = 1420
 
 [Peer]
 PublicKey = [SERVER PUBLICKEY]
 AllowedIPs = 0.0.0.0/0, ::0/0
-Endpoint = [SERVER ENDPOINT]:51820
+Endpoint = [SERVER ENDPOINT]:5182
 PersistentKeepalive = 25</pre>
 <p>使用 <code>wg-quick up wg0</code> 来启用 Interface, 使用 <code>wg-quick down wg0</code> 来关闭。
 </p>
@@ -261,7 +262,7 @@ PersistentKeepalive = 25</pre>
 </p>
 <p>或者你使用的是 systemd-networkd, 启用 systemd-networkd-wait-online.service <code>systemctl enable systemd-networkd-wait-online.service</code>
 </p>
-<p>等待所有设备就绪再尝试 wireguard 连接
+<p>等待所有设备就绪再尝试 WireGuard 连接
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="DKMS_module_not_available">DKMS module not available</span></h3>
@@ -276,7 +277,7 @@ RTNETLINK answers: Operation not supported
 </pre>
 <p>you probably miss the linux headers.
 </p>
-<p>These headers are available in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-headers">linux-headers</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts-headers">linux-lts-headers</a></span> depending of the kernel installed on your system.
+<p>These headers are available in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-headers">linux-headers</a></span>.
 </p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Store_private_keys_in_encrypted_form">Store private keys in encrypted form</span></h3>
@@ -292,10 +293,7 @@ RTNETLINK answers: Operation not supported
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Virtual_Private_Network.html" title="Category:Virtual Private Network (简体中文)">Virtual Private Network (简体中文)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../zh-CN/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (简体中文)">Pages or sections flagged with Template:Translateme (简体中文)</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../zh-CN/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (简体中文)">Pages or sections flagged with Template:Translateme (简体中文)</a></li></ul>
 </div>
 </div>
 	</div>
@@ -303,8 +301,8 @@ RTNETLINK answers: Operation not supported
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=WireGuard_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=652843">https://wiki.archlinux.org/index.php?title=WireGuard_(简体中文)&amp;oldid=652843</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 February 2021, at 09:48.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=WireGuard_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=658852">https://wiki.archlinux.org/index.php?title=WireGuard_(简体中文)&amp;oldid=658852</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 10 April 2021, at 18:51.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

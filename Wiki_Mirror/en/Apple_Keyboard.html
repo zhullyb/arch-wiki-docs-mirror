@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -112,8 +113,6 @@ keycode  81 = KP_9 KP_9 KP_9 KP_9 KP_9 KP_9
 <pre>   0 = as silkscreened, Mac layout (Default)
    1 = swapped, PC layout
 </pre>
-<p><br>
-</p>
 <h2><span class="mw-headline" id="Function_keys_do_not_work">Function keys do not work</span></h2>
 <p>If your <code>F&lt;num&gt;</code> keys do not work, this is probably because the kernel driver for the keyboard has defaulted to using the media keys and requiring you to use the <code>Fn</code> key to get to the <code>F&lt;num&gt;</code> keys. To change the behavior temporarily, <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Append">append</a> <code>2</code> to <code>/sys/module/hid_apple/parameters/fnmode</code>.
 </p>
@@ -156,6 +155,11 @@ keycode  81 = KP_9 KP_9 KP_9 KP_9 KP_9 KP_9
 <h2>
 <span id=".3C_and_.3E_have_changed_place_with_.C2.A7_and_.C2.BD"></span><span class="mw-headline" id="&lt;_and_&gt;_have_changed_place_with_§_and_½">&lt; and &gt; have changed place with § and ½</span>
 </h2>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a><b>This section is being considered for removal.</b><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> This issue is only present in very old kernels (&lt; 2.6.19) and the apple:badmap directive was removed years ago (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Apple_Keyboard#Removal_of_section_about_apple:badmap">Talk:Apple Keyboard#Removal of section about apple:badmap</a>)</div>
+</div>
 <p>If the <b>&lt;</b> and <b>&gt;</b> are switched with the <b>§</b> and <b>½</b> keys, <a href="../en/Xorg/Keyboard_configuration.html" class="mw-redirect" title="Keyboard configuration in Xorg">set the xkb option</a> <code>apple:badmap</code>, for instance by running the following command in your graphical environment:
 </p>
 <pre>$ setxkbmap -option apple:badmap
@@ -193,8 +197,6 @@ keycode  49 = ugrave Ugrave ugrave Ugrave notsign notsign
 <h2><span class="mw-headline" id="Treating_Apple_keyboards_like_regular_keyboards">Treating Apple keyboards like regular keyboards</span></h2>
 <p>Depending on the customisations you want to accomplish, there are two solutions available and some options that are in the kernel. You need to choose one of the other.
 </p>
-<p><br>
-</p>
 <h3><span class="mw-headline" id="Use_a_patch_to_hid-apple">Use a patch to hid-apple</span></h3>
 <p>While the original <code>hid-apple</code> module does not have options to further customize the keyboard, like swapping <code>Fn</code> and left <code>Ctrl</code> keys or having <code>Alt</code> on the left side of <code>Super</code>, there is a <a rel="nofollow" class="external text" href="https://github.com/free5lot/hid-apple-patched">patched version</a> adding this functionality to the module. To use it, <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/hid-apple-patched-git-dkms/">hid-apple-patched-git-dkms</a></span><sup><small>AUR</small></sup> package. This will install the patched <code>hid-apple</code> and mask out the original one.
 </p>
@@ -227,7 +229,7 @@ keycode  49 = ugrave Ugrave ugrave Ugrave notsign notsign
 </p>
 <pre>ls /sys/module/hid_apple/parameters/
 </pre>
-<p>If you don't see new options like <code>swap_fn_leftctrl</code>, <code>ejectcd_as_delete</code>, etc., check your dkms installation.
+<p>If you do not see new options like <code>swap_fn_leftctrl</code>, <code>ejectcd_as_delete</code>, etc., check your dkms installation.
 </p>
 <p>Then, check if configuration files are correctly included in <i>initramfs</i>:
 </p>
@@ -276,7 +278,7 @@ be a <code>modconf</code> hook that automatically include those files, if not, a
 </p>
 <pre>setxkbmap -print -verbose 10 | grep symbols
 </pre>
-<p>This translation table located in <code>/usr/share/X11/xkb/symbols/macintosh_vndr/us</code> and don't contains dvorak/dvp layout. You can use default translation table from <code>/usr/share/X11/xkb/symbols/us</code> and add command <code>setxkbmap</code> in your <code>.profile</code> for forced loading layout:
+<p>This translation table located in <code>/usr/share/X11/xkb/symbols/macintosh_vndr/us</code> and do not contains dvorak/dvp layout. You can use default translation table from <code>/usr/share/X11/xkb/symbols/us</code> and add command <code>setxkbmap</code> in your <code>.profile</code> for forced loading layout:
 </p>
 <pre>sudo mv /usr/share/X11/xkb/symbols/macintosh_vndr/us /usr/share/X11/xkb/symbols/macintosh_vndr/us.back
 sudo cp /usr/share/X11/xkb/symbols/us /usr/share/X11/xkb/symbols/macintosh_vndr/us
@@ -301,16 +303,20 @@ echo "setxkbmap -v 10 -layout us -variant dvp" &gt;&gt; .xprofile
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Keyboards.html" title="Category:Keyboards">Keyboards</a></li></ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Sections_flagged_with_Template:Remove.html" title="Category:Sections flagged with Template:Remove">Sections flagged with Template:Remove</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Apple_Keyboard&amp;oldid=647736">https://wiki.archlinux.org/index.php?title=Apple_Keyboard&amp;oldid=647736</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 31 December 2020, at 10:17.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Apple_Keyboard&amp;oldid=659920">https://wiki.archlinux.org/index.php?title=Apple_Keyboard&amp;oldid=659920</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 14:21.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

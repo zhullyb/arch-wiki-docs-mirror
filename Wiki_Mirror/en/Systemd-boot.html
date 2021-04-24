@@ -186,11 +186,18 @@ Exec = /usr/bin/sh -c "/usr/bin/find /boot/ -type f \( -name 'vmlinuz-*' -o -nam
 Depends = sbsigntools
 Depends = findutils
 Depends = grep</pre>
-<p>The <code>Target</code> needs to be duplicated each time you want to add a new package. With respect to the <code>find</code> statement, since we had a condition with the filenames and APLM hooks are being split on spaces, we had to surround the whole statement by quotes in order for the hook to be parsed properly. Since systemd-boot is located in sub-directories, the depth needed to be adjusted as well so that we removed the <code>-maxdepth</code> argument. In order to avoid hassle, if you are unsure, try to reinstall the package you want to test to see if the hook and signing part are processed successfully. See <a href="../en/Pacman.html#Hooks" title="Pacman">Pacman#Hooks</a> or <span class="plainlinks archwiki-template-man" title="$ man 5 alpm-hooks"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/alpm-hooks.5">alpm-hooks(5)</a></span> for more information.
+<p>The <code>Target</code> needs to be duplicated each time you want to add a new package. With respect to the <code>find</code> statement, since we had a condition with the filenames and ALPM hooks are being split on spaces, we had to surround the whole statement by quotes in order for the hook to be parsed properly. Since systemd-boot is located in sub-directories, the depth needed to be adjusted as well so that we removed the <code>-maxdepth</code> argument. In order to avoid hassle, if you are unsure, try to reinstall the package you want to test to see if the hook and signing part are processed successfully. See <a href="../en/Pacman.html#Hooks" title="Pacman">Pacman#Hooks</a> or <span class="plainlinks archwiki-template-man" title="$ man 5 alpm-hooks"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/alpm-hooks.5">alpm-hooks(5)</a></span> for more information.
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <h3><span class="mw-headline" id="Loader_configuration">Loader configuration</span></h3>
-<p>The loader configuration is stored in the file <code><i>esp</i>/loader/loader.conf</code>. The following settings can be specified:
+<p>The loader configuration is stored in the file <code><i>esp</i>/loader/loader.conf</code>.
+</p>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a><b>This section is being considered for removal.</b><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Duplicates <span class="plainlinks archwiki-template-man" title="$ man 5 loader.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/loader.conf.5#OPTIONS">loader.conf(5) § OPTIONS</a></span>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-boot">Talk:Systemd-boot#</a>)</div>
+</div>
+<p>The following settings can be specified:
 </p>
 <ul>
 <li>
@@ -244,7 +251,13 @@ editor   no
 </div>
 <h3><span class="mw-headline" id="Adding_loaders">Adding loaders</span></h3>
 <p><i>systemd-boot</i> will search for boot menu items in <code><i>esp</i>/loader/entries/*.conf</code> and additionally in <code>boot/loader/entries/*.conf</code> if using <a href="#Installation_using_XBOOTLDR">XBOOTLDR</a>.
-The possible options are:
+</p>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a><b>This section is being considered for removal.</b><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Duplicates <a rel="nofollow" class="external free" href="https://systemd.io/BOOT_LOADER_SPECIFICATION/#type-1-boot-loader-specification-entries">https://systemd.io/BOOT_LOADER_SPECIFICATION/#type-1-boot-loader-specification-entries</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-boot">Talk:Systemd-boot#</a>)</div>
+</div>
+<p>The possible options are:
 </p>
 <ul>
 <li>
@@ -332,6 +345,11 @@ efi     /EFI/shellx64_v2.efi
 <p>With enabled editor you will be prompted for your password before you can edit kernel parameters.
 </p>
 <h2><span class="mw-headline" id="Keys_inside_the_boot_menu">Keys inside the boot menu</span></h2>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a><b>This section is being considered for removal.</b><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Duplicates <span class="plainlinks archwiki-template-man" title="$ man 7 systemd-boot"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-boot.7#KEY_BINDINGS">systemd-boot(7) § KEY BINDINGS</a></span>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-boot">Talk:Systemd-boot#</a>)</div>
+</div>
 <p>The following keys are used inside the menu:
 </p>
 <ul>
@@ -365,7 +383,7 @@ a specific entry:
 <li>
 <code>w</code> - Windows</li>
 <li>
-<code>a</code> - OS X</li>
+<code>a</code> - macOS</li>
 <li>
 <code>s</code> - EFI Shell</li>
 <li>
@@ -392,7 +410,7 @@ a specific entry:
 </p>
 <pre>$ objcopy \
     --add-section .osrel="/usr/lib/os-release" --change-section-vma .osrel=0x20000 \
-    --add-section .cmdline="kernel-command-line.txt" --change-section-vma .cmdline=0x30000 \
+    --add-section .cmdline="/etc/kernel/cmdline" --change-section-vma .cmdline=0x30000 \
     --add-section .splash="/usr/share/systemd/bootctl/splash-arch.bmp" --change-section-vma .splash=0x40000 \
     --add-section .linux="vmlinuz-file" --change-section-vma .linux=0x2000000 \
     --add-section .initrd="initrd-file" --change-section-vma .initrd=0x3000000 \
@@ -479,7 +497,10 @@ options apm=power-off boot=live live-media-path=/grml/ nomce net.ifnames=0</pre>
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Boot_loaders.html" title="Category:Boot loaders">Boot loaders</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Sections_flagged_with_Template:Remove.html" title="Category:Sections flagged with Template:Remove">Sections flagged with Template:Remove</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -487,8 +508,8 @@ options apm=power-off boot=live live-media-path=/grml/ nomce net.ifnames=0</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;oldid=655528">https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;oldid=655528</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 March 2021, at 21:17.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;oldid=663076">https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;oldid=663076</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 16:47.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

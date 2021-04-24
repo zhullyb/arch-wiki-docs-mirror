@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -68,10 +69,10 @@
 </p>
 <p>Install tp_smapi from the community repository. After a reboot, this will activate most of the drivers, represented through the <code>/sys/devices/platform/smapi</code> filesystem.
 </p>
-<p>The kernel provides its own HDAPS drivers.  Previously, it was necessary to manually <code>insmod</code> the module via <code>/etc/rc.local</code> to prevent the default drivers from being loaded.  The <a href="../en/Tp_smapi.html" title="Tp smapi">tp_smapi</a> package from community now installs <code>hdaps.ko</code> to <a rel="nofollow" class="external text" href="http://www.mail-archive.com/arch-dev-public@archlinux.org/msg01995.html">/lib/modules/$(uname -r)/updates</a>, which will let it supercede the built-in module.  Thus, you can simply add <code>hdaps</code> to your <code>MODULES</code> array.
+<p>The kernel provides its own HDAPS drivers.  Previously, it was necessary to manually <code>insmod</code> the module via <code>/etc/rc.local</code> to prevent the default drivers from being loaded.  The <a href="../en/Tp_smapi.html" title="Tp smapi">tp_smapi</a> package from community now installs <code>hdaps.ko</code> to <a rel="nofollow" class="external text" href="https://www.mail-archive.com/arch-dev-public@archlinux.org/msg01995.html">/lib/modules/$(uname -r)/updates</a>, which will let it supercede the built-in module.  Thus, you can simply add <code>hdaps</code> to your <code>MODULES</code> array.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> According to <a rel="nofollow" class="external text" href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628829">this bug report</a>, certain ThinkPad laptops use different firmware which tp_smapi does not support and is unlikely to support in the near future. This includes the following series: Edge, SL, L, X1xxe. Only one of these is listed in the "unsupported hardware" page for the project, however, and that listing suggests that the x121e should mostly work. I get the same error with the x121e listed at the bottom of the bug report as a different and more fundamental problem, though, so it may be that some models of the x121e are mostly supported and others are entirely unsupported.</div>
+<strong>Note:</strong> According to <a rel="nofollow" class="external text" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628829">this bug report</a>, certain ThinkPad laptops use different firmware which tp_smapi does not support and is unlikely to support in the near future. This includes the following series: Edge, SL, L, X1xxe. Only one of these is listed in the "unsupported hardware" page for the project, however, and that listing suggests that the x121e should mostly work. I get the same error with the x121e listed at the bottom of the bug report as a different and more fundamental problem, though, so it may be that some models of the x121e are mostly supported and others are entirely unsupported.</div>
 <h3><span class="mw-headline" id="Invert_module_parameter">Invert module parameter</span></h3>
 <p>For some ThinkPads, the invert module parameter is needed in order to handle the X and Y rotation axes correctly. In that case, you can add the option in <code>/etc/modprobe.d/modprobe.conf</code>:
 </p>
@@ -84,7 +85,7 @@
 <li>invert=2 invert the X axes (uninvert if already both axes inverted)</li>
 <li>invert=4 swap X and Y (takes place before inverting)</li>
 </ul>
-<p>Note that options can be summed. For instance, invert=5 swaps the axes and inverts them. The maximum value of invert is obviously 7. If you do not know which option is correct for you, just try them out with hdaps-gl or some other GUI (see below). Alternatively, you can determine the exact value for your thinkpad model from <a rel="nofollow" class="external text" href="http://www.thinkwiki.org/wiki/Tp_smapi">this table</a> under the column labelled "HDAPS axis orientation".
+<p>Note that options can be summed. For instance, invert=5 swaps the axes and inverts them. The maximum value of invert is obviously 7. If you do not know which option is correct for you, just try them out with hdaps-gl or some other GUI (see below). Alternatively, you can determine the exact value for your thinkpad model from <a rel="nofollow" class="external text" href="https://www.thinkwiki.org/wiki/Tp_smapi">this table</a> under the column labelled "HDAPS axis orientation".
 </p>
 <p>As an alternative to reloading the <code>hdaps</code> module, the <code>invert</code> value can also be written directly to <code>/sys/devices/platform/hdaps/invert</code>.
 </p>
@@ -96,7 +97,7 @@
 </p>
 <p>You should check your "Load cycle count" in <a href="../en/S.M.A.R.T..html" class="mw-redirect" title="SMART">SMART</a> when setting up hdaps, if it is too sensitive the head would park too often and load cycle count would rise too rapidly.
 </p>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=hdapsd">hdapsd</a></span>. You can <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> the hdapsd daemon with <code>hdapsd@device.service</code>, however you don't need to enable it.
+<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=hdapsd">hdapsd</a></span>. You can <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> the hdapsd daemon with <code>hdapsd@device.service</code>, however you do not need to enable it.
 </p>
 <p>The package installs udev rules. Udev will start one hdapsd instance for each rotational, non-removable disk it finds.
 For more information, see the <a rel="nofollow" class="external text" href="https://github.com/evgeni/hdapsd#systemd-and-udev-integration:Link">hdapsd github page</a>
@@ -135,8 +136,8 @@ ExecStart=/usr/bin/hdapsd --sensitivity=40 -blp
 </dd></dl>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://www.thinkwiki.org/wiki/How_to_protect_the_harddisk_through_APS">How to protect the harddisk through APS at ThinkWiki</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.thinkwiki.org/wiki/HDAPS">HDAPS at ThinkWiki</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.thinkwiki.org/wiki/How_to_protect_the_harddisk_through_APS">How to protect the harddisk through APS at ThinkWiki</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.thinkwiki.org/wiki/HDAPS">HDAPS at ThinkWiki</a></li>
 </ul>
 </div>
 </div>
@@ -148,8 +149,8 @@ ExecStart=/usr/bin/hdapsd --sensitivity=40 -blp
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Hard_Drive_Active_Protection_System&amp;oldid=579978">https://wiki.archlinux.org/index.php?title=Hard_Drive_Active_Protection_System&amp;oldid=579978</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 August 2019, at 19:29.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Hard_Drive_Active_Protection_System&amp;oldid=661461">https://wiki.archlinux.org/index.php?title=Hard_Drive_Active_Protection_System&amp;oldid=661461</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 08:45.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

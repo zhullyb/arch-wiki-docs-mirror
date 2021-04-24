@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -80,11 +81,11 @@
 <h3><span class="mw-headline" id="Tell_the_kernel_to_report_a_version_of_Windows">Tell the kernel to report a version of Windows</span></h3>
 <p>Use the variable <b>acpi_os_name</b> as a kernel parameter. For example:
 </p>
-<pre> acpi_os_name="Microsoft Windows NT"
+<pre>acpi_os_name="Microsoft Windows NT"
 </pre>
 <p>Or
 </p>
-<pre> acpi_osi="!Windows2012"
+<pre>acpi_osi="!Windows2012"
 </pre>
 <p>appended to the kernel line in grub legacy configuration
 </p>
@@ -104,50 +105,59 @@
 <p>Out of curiousity, you can follow the steps below to extract your DSDT and search the .dsl file.  Just grep for "Windows" and see what pops up.
 </p>
 <h3><span class="mw-headline" id="Find_a_fixed_DSDT">Find a fixed DSDT</span></h3>
-<p>A DSDT file is originally written in ACPI Source language (an .asl/.dsl file). Using a compiler this can produce an 'ACPI Machine Language' file (.aml) or a hex table (.hex). To incorporate the file in your Arch install, you will need to get hold of a compiled .aml file. - whether this means compiling it yourself or trusting some stranger on the Internet is at your discretion.  If you do download a file from the world wide web, it will most likely be a compressed .asl file.  So you will need to unzip it and compile it. The upside to this is that you won't have to research specific code fixes yourself.
+<p>A DSDT file is originally written in ACPI Source language (an .asl/.dsl file). Using a compiler this can produce an 'ACPI Machine Language' file (.aml) or a hex table (.hex). To incorporate the file in your Arch install, you will need to get hold of a compiled .aml file. - whether this means compiling it yourself or trusting some stranger on the Internet is at your discretion.  If you do download a file from the world wide web, it will most likely be a compressed .asl file.  So you will need to unzip it and compile it. The upside to this is that you will not have to research specific code fixes yourself.
 </p>
-<p>Arch users with the same laptop as you are: a minority of a minority of a minority. Try browsing other distro/linux forums for talk about the same model. Likelihood is that they have the same problems and either because there is a lot of them, or because they're tech savvy -- someone there has produced a working DSDT and maybe even provides a precompiled version (again, use at your own risk).
+<p>Arch users with the same laptop as you are: a minority of a minority of a minority. Try browsing other distro/linux forums for talk about the same model. Likelihood is that they have the same problems and either because there is a lot of them, or because they are tech savvy -- someone there has produced a working DSDT and maybe even provides a precompiled version (again, use at your own risk).
 Search engines are your best tools. Try keeping it short: 'model name' + 'dsdt' will probably produce results.
 </p>
 <h2><span class="mw-headline" id="Recompiling_it_yourself">Recompiling it yourself</span></h2>
 <p>Your best resources in this endeavor are going to be <a rel="nofollow" class="external text" href="http://www.acpi.info">ACPI Spec homepage</a>, and <a rel="nofollow" class="external text" href="https://01.org/linux-acpi">Linux ACPI Project</a> which supercedes the activity that occurred at <i>acpi.sourceforge.net</i>.
 In a nutshell, you can use Intel's ASL compiler to turn your systems DSDT table into source code, locate/fix the errors, and recompile.
 </p>
-<p>You'll need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=acpica">acpica</a></span> to modify code.
+<p>You will need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=acpica">acpica</a></span> to modify code.
 </p>
 <p><b>What compiled the original code?</b>
 Check if your system's DSDT was compiled using Intel or Microsoft compiler:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"> $ dmesg|grep DSDT </pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep DSDT</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">ACPI: DSDT 00000000bf7e5000 0A35F (v02 Intel  CALPELLA 06040000 INTL 20060912)
 ACPI: EC: Look up EC in DSDT
 </pre>
 <p>In case Microsoft's compiler had been used, abbreviation INTL would instead be MSFT.
 In the example, there were 5 errors on decompiling/recompiling the DSDT. Two of them were easy to fix after a bit of googling and delving into the ACPI specification. Three of them were due to different versions of compiler used and are, as later discovered, handled by the ACPICA at boot-time. The ACPICA component of the kernel can handle most of the trivial errors you get while compiling the DSDT. So do not fret yourself over compile errors if your system is <i>working the way it should</i>.
 </p>
-<ol>
-<li> Extract ACPI tables (as root): <code>cat /sys/firmware/acpi/tables/DSDT &gt; dsdt.dat</code>
-</li>
-<li> Decompile: <code>iasl -d dsdt.dat</code>
-</li>
-<li> Recompile: <code>iasl -tc dsdt.dsl</code>
-</li>
-<li> Examine errors and fix. e.g.:<pre>dsdt.dsl   6727:                         Name (_PLD, Buffer (0x10)  
-Error    4105 -          Invalid object type for reserved name ^  (found BUFFER, requires Package) </pre>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"> nano +6727 dsdt.dsl</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">(_PLD, Package(1) {Buffer (0x10)...</pre>
-</li>
-<li> Increase OEM version or otherwise the kernel will not apply the modified ACPI table. For example, before modification:
-
-<pre>DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "TEMPLATE", 0x00000000)</pre>
-<p>After modification:
+<p>Extract the binary ACPI tables:
 </p>
-<pre>DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "TEMPLATE", 0x00000001)</pre>
-</li>
-<li> Compile fixed code: <code>iasl -tc dsdt.dsl</code> (Might want to try option -ic for C include file to insert into kernel source)
-</li>
-</ol>
-<p>If it says no errors and no warnings you should be good to go.
+<pre># cat /sys/firmware/acpi/tables/DSDT &gt; dsdt.dat</pre>
+<p>Disassemble the ACPI tables to a <i>.dsl</i> file:
+</p>
+<pre>$ iasl -d dsdt.dat</pre>
+<p>Attempt to create a hex AML table (in C) from the <i>.dsl</i> file:
+</p>
+<pre>$ iasl -tc dsdt.dsl</pre>
+<p>Examine any errors outputted from creating the hex AML table and fix them. For example:
+</p>
+<pre>dsdt.dsl   6727:                         Name (_PLD, Buffer (0x10)  
+Error    4105 -          Invalid object type for reserved name ^  (found BUFFER, requires Package)
+</pre>
+<p>Amend the file at line 6727 where the error occurred:
+</p>
+<pre>(_PLD, <b>Package(1) {</b>Buffer (0x10)
+{
+    ...
+}<b>}</b>)
+</pre>
+<p>Increase the OEM version. Otherwise, the kernel will not apply the modified ACPI table. For example, before increasing the OEM version:
+</p>
+<pre>DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "TEMPLATE", 0x00000000)</pre>
+<p>After increasing the OEM version:
+</p>
+<pre>DefinitionBlock ("DSDT.aml", "DSDT", 2, "INTEL ", "TEMPLATE", <b>0x00000001</b>)</pre>
+<p>Create the hex AML table again after fixing all errors and increasing the OEM version:
+</p>
+<pre>$ iasl -tc dsdt.dsl</pre>
+<p>(Might want to try option -ic for C include file to insert into kernel source.)
+If it says no errors and no warnings you should be good to go.
 </p>
 <h2><span class="mw-headline" id="Using_modified_code">Using modified code</span></h2>
 <div class="archwiki-template-box archwiki-template-box-warning">
@@ -190,13 +200,13 @@ options  root=PARTUUID=ec9d5998-a9db-4bd8-8ea0-35a45df04701 resume=PARTUUID=58d0
 <p>Now all that is left to do is to reboot and to <a href="#Verify_successful_override">verify the result.</a>
 </p>
 <h3><span class="mw-headline" id="Compiling_into_the_kernel">Compiling into the kernel</span></h3>
-<p>You'll want to be familiar with <a href="../en/Kernel.html" class="mw-redirect" title="Kernels">compiling your own kernel</a>.  The most straightforward way is with the "traditional" approach.
+<p>You will want to be familiar with <a href="../en/Kernel.html" class="mw-redirect" title="Kernels">compiling your own kernel</a>.  The most straightforward way is with the "traditional" approach.
 After compiling DSDT, iasl produce two files: <code>dsdt.hex</code> and <code>dsdt.aml</code>.
 </p>
 <p><b>Using <code>menuconfig</code>:</b>
 </p>
 <ul>
-<li>Disable "Select only drivers that don't need compile-time external firmware". Located in "Device Drivers -&gt; Generic Driver Options".</li>
+<li>Disable "Select only drivers that do not need compile-time external firmware". Located in "Device Drivers -&gt; Generic Driver Options".</li>
 <li>Enable "Include Custom DSDT" and specify the absolute path of your fixed DSDT file (<code>dsdt.hex</code>, not <code>dsdt.aml</code>). Located in "Power management and ACPI options -&gt; ACPI (Advanced Configuration and Power Interface) Support".</li>
 </ul>
 <h2><span class="mw-headline" id="Verify_successful_override">Verify successful override</span></h2>
@@ -227,8 +237,8 @@ After compiling DSDT, iasl produce two files: <code>dsdt.hex</code> and <code>ds
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=DSDT&amp;oldid=607733">https://wiki.archlinux.org/index.php?title=DSDT&amp;oldid=607733</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 25 April 2020, at 01:26.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=DSDT&amp;oldid=663244">https://wiki.archlinux.org/index.php?title=DSDT&amp;oldid=663244</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 06:44.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

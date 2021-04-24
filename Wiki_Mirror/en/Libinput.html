@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -65,7 +66,7 @@
 <li class="toclevel-1 tocsection-6">
 <a href="#Tips_and_tricks"><span class="tocnumber">3</span> <span class="toctext">Tips and tricks</span></a>
 <ul>
-<li class="toclevel-2 tocsection-7"><a href="#Button_re-mapping"><span class="tocnumber">3.1</span> <span class="toctext">Button re-mapping</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Tapping_button_re-mapping"><span class="tocnumber">3.1</span> <span class="toctext">Tapping button re-mapping</span></a></li>
 <li class="toclevel-2 tocsection-8"><a href="#Manual_button_re-mapping"><span class="tocnumber">3.2</span> <span class="toctext">Manual button re-mapping</span></a></li>
 <li class="toclevel-2 tocsection-9"><a href="#Change_touchpad_sensitivity"><span class="tocnumber">3.3</span> <span class="toctext">Change touchpad sensitivity</span></a></li>
 <li class="toclevel-2 tocsection-10"><a href="#Disable_touchpad"><span class="tocnumber">3.4</span> <span class="toctext">Disable touchpad</span></a></li>
@@ -157,7 +158,7 @@ If you <i>do</i> have <code>/etc/X11/xorg.conf.d/</code> configuration files for
 [    28.886] (II) Using input driver 'libinput' for 'TPPS/2 IBM TrackPoint'
 [    28.895] (II) Using input driver 'libinput' for 'ThinkPad Extra Buttons'
 </pre>
-<p>is a notebook without any configuration files in <code>/etc/X11/xorg.conf.d/</code>, i.e. devices are autodetected.
+<p>is a notebook without any configuration files in <code>/etc/X11/xorg.conf.d/</code>, i.e. devices are auto-detected.
 </p>
 <p>Of course you can elect to use an alternative driver for one device and libinput for others. A number of factors may influence which driver to use. For example, in comparison to <a href="../en/Touchpad_Synaptics.html" title="Touchpad Synaptics">Touchpad Synaptics</a> the libinput driver has fewer options to customize touchpad behaviour to one's own taste, but far more programmatic logic to process multitouch events (e.g. palm detection as well). Hence, it makes sense to try the alternative, if you are experiencing problems on your hardware with one driver or the other.
 </p>
@@ -175,7 +176,7 @@ If you <i>do</i> have <code>/etc/X11/xorg.conf.d/</code> configuration files for
 EndSection
 </pre>
 <p>You may define as many sections as you like in a single configuration file (usually one per input device).
-To configure the device of your choice specify a filter by using one of the filters in the INPUTCLASS SECTION <span class="plainlinks archwiki-template-man" title="$ man 5 xorg.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xorg.conf.5">xorg.conf(5)</a></span>, e.g.
+To configure the device of your choice specify a filter by using one of the available filters from <span class="plainlinks archwiki-template-man" title="$ man 5 xorg.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xorg.conf.5#INPUTCLASS_SECTION">xorg.conf(5) § INPUTCLASS_SECTION</a></span>, e.g.
 </p>
 <ul>
 <li>
@@ -184,7 +185,7 @@ To configure the device of your choice specify a filter by using one of the filt
 <li><code>MatchIsTouchpad "on"</code></li>
 <li><code>MatchIsTouchscreen "on"</code></li>
 </ul>
-<p>The input device can then be configured with any of the lines in the CONFIGURATION DETAILS section of <span class="plainlinks archwiki-template-man" title="$ man 4 libinput"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/libinput.4">libinput(4)</a></span>. Common options include:
+<p>The input device can then be configured with any of the lines of <span class="plainlinks archwiki-template-man" title="$ man 4 libinput"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/libinput.4#CONFIGURATION_DETAILS">libinput(4) § CONFIGURATION_DETAILS</a></span>. Common options include:
 </p>
 <ul>
 <li>
@@ -215,6 +216,11 @@ To configure the device of your choice specify a filter by using one of the filt
 <ul><li>Similar to the GNOME UI, with more options.</li></ul>
 </li>
 <li>
+<a href="../en/MATE.html" title="MATE">MATE</a>:
+<ul><li>Mouse option available in the settings panel. Also accessible using <code>mate-mouse-properties</code>
+</li></ul>
+</li>
+<li>
 <a href="../en/KDE.html#Plasma" class="mw-redirect" title="KDE Plasma">KDE Plasma</a> 5:
 <ul><li>Keyboard, mouse and controller devices can be configured from System Settings.</li></ul>
 </li>
@@ -224,7 +230,7 @@ To configure the device of your choice specify a filter by using one of the filt
 </li>
 </ul>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
-<h3><span class="mw-headline" id="Button_re-mapping">Button re-mapping</span></h3>
+<h3><span class="mw-headline" id="Tapping_button_re-mapping">Tapping button re-mapping</span></h3>
 <p>Swapping two- and three-finger tap for a touchpad is a straight forward example. Instead of the default three-finger tap for pasting you can configure two-finger tap pasting by setting the <code>TappingButtonMap</code> option in your <a href="../en/Xorg.html" title="Xorg">Xorg</a> configuration file. To set 1/2/3-finger taps to left/right/middle set <code>TappingButtonMap</code> to <code>lrm</code>, for left/middle/right set it to <code>lmr</code>.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/X11/xorg.conf.d/30-touchpad.conf</pre>
@@ -247,6 +253,7 @@ EndSection</pre>
 <pre>$ xinput set-button-map <i>device</i> 1 6 3 4 5 0 7
 </pre>
 <p>In this example, we mapped button 6 to be the middle button and disabled the original middle button by assigning it to button 0. 
+For more information, please read about "ButtonMapping" section in <span class="plainlinks archwiki-template-man" title="$ man 4 libinput"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/libinput.4">libinput(4)</a></span>.
 This may also be used for <a href="../en/Wayland.html" title="Wayland">Wayland</a>, but be aware both the <i>device</i> number and its button-map will be different. Hence, settings are not directly interchangeable. 
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
@@ -385,13 +392,19 @@ Unlike Fusuma, it doesn't support pinching (support is planned in the future tho
 EndSection
 </pre>
 <h3><span class="mw-headline" id="Mouse_wheel_scrolling_speed_scaling">Mouse wheel scrolling speed scaling</span></h3>
-<p>For some mouses, especially when using on a <a href="../en/HiDPI.html" title="HiDPI">HiDPI</a> desktop, the wheel scrolls too slow. A <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/xorg/driver/xf86-input-libinput/-/merge_requests/12">patch</a> is submitted to libinput but it is not accepted. There is a third-party package <a rel="nofollow" class="external text" href="https://github.com/archlinuxcn/repo/commit/d0eb728b38450b47a4913539193a58fb523cc255">xf86-input-libinput-oldherl</a> at <a href="../en/Unofficial_user_repositories.html#archlinuxcn" title="Unofficial user repositories">Unofficial user repositories#archlinuxcn</a> that incoperates this patch. You may install it by adding the [archlinuxcn] third-party repo.
+<p>For some mouses, especially when using on a <a href="../en/HiDPI.html" title="HiDPI">HiDPI</a> desktop, the wheel scrolls too slow. A <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/xorg/driver/xf86-input-libinput/-/merge_requests/12">patch</a> is submitted to libinput but it hasn't been accepted. There is a third-party <a rel="nofollow" class="external text" href="https://github.com/archlinuxcn/repo/tree/d0eb728b38450b47a4913539193a58fb523cc255/archlinuxcn/xf86-input-libinput-oldherl">xf86-input-libinput</a> that incoperates this patch.
 </p>
-<p>That patch introduces a new property <code>libinput Scroll Distance Scale</code> to mouses, and you can set a scaling factor like
+<p>This patch introduces a new property <code>libinput Scroll Distance Scale</code> to mouses, and you can set a scaling factor like
 </p>
 <pre>$ xinput --set-prop 'RAPOO Rapoo 2.4G Wireless Device' 'libinput Scroll Distance Scale' 2.5 2.5
 </pre>
 <p>where the <code>RAPOO Rapoo 2.4G Wireless Device</code> is the name of your mouse device, listed in <code>xinput --list</code>. <code>2.5 2.5</code> are the scaling factors, for x- and y-axis, respectively.
+</p>
+<p>Alternatively, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libinput-multiplier/">libinput-multiplier</a></span><sup><small>AUR</small></sup> and restart <a href="../en/Xorg.html" title="Xorg">Xorg</a>, then enlarge y-axis scroll distance to 6 times by
+</p>
+<pre>$ echo 6 &gt; /tmp/libinput_discrete_deltay_multiplier
+</pre>
+<p>Here is an <a rel="nofollow" class="external text" href="https://github.com/tkkcc/libinput_patch#change-with-focused-window">example</a> to modify the scaling factor upon focusing change
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <p>First, see whether executing <code>libinput debug-events</code> can support you in debugging the problem, see <span class="plainlinks archwiki-template-man" title="$ man 1 libinput-debug-events"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/libinput-debug-events.1">libinput-debug-events(1)</a></span> for options.
@@ -416,7 +429,7 @@ $ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 <li>
 <a rel="nofollow" class="external text" href="https://archive.fosdem.org/2015/schedule/event/libinput/attachments/slides/591/export/events/attachments/libinput/slides/591/libinput_xorg.pdf">FOSDEM 2015 - libinput</a> - Hans de Goede on goals and plans of the project</li>
 <li>
-<a rel="nofollow" class="external text" href="http://who-t.blogspot.com.au/">Peter Hutterer's Blog</a> - numerous posts on libinput from one of the project's hackers</li>
+<a rel="nofollow" class="external text" href="https://who-t.blogspot.com.au/">Peter Hutterer's Blog</a> - numerous posts on libinput from one of the project's hackers</li>
 </ul>
 </div>
 </div>
@@ -428,8 +441,8 @@ $ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Libinput&amp;oldid=645582">https://wiki.archlinux.org/index.php?title=Libinput&amp;oldid=645582</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 December 2020, at 08:51.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Libinput&amp;oldid=661704">https://wiki.archlinux.org/index.php?title=Libinput&amp;oldid=661704</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 11:56.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

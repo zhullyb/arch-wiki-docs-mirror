@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -146,6 +147,10 @@
 <li>BCM4331 noticed to have problems with <b>b43-firmware-classic</b>. Use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/b43-firmware/">b43-firmware</a></span><sup><small>AUR</small></sup> for this card instead, or switch to the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=broadcom-wl">broadcom-wl</a></span> mentioned below for a more stable experience.</li>
 </ul>
 </div>
+<p>If the <code>b43</code> module does not load on boot, you need to force it by creating the following file:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modules-load.d/b43.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">b43</pre>
 <h3><span class="mw-headline" id="broadcom-wl">broadcom-wl</span></h3>
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
@@ -169,7 +174,7 @@
 </ul>
 </div>
 <h4><span class="mw-headline" id="Offline_installation">Offline installation</span></h4>
-<p>An Internet connection is the ideal way to install the <b>broadcom-wl</b> driver; many newer laptops with Broadcom cards forgo Ethernet ports, so a USB Ethernet adapter or <a href="../en/Android_tethering.html" title="Android tethering">Android tethering</a> may be helpful. If you have neither, you'll need to first install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/groups/x86_64/base-devel/">base-devel</a></span> group during installation. Then, use another Internet-connected computer to download <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-headers">linux-headers</a></span> and the driver tarball from the AUR, and install them in that order.
+<p>An Internet connection is the ideal way to install the <b>broadcom-wl</b> driver; many newer laptops with Broadcom cards forgo Ethernet ports, so a USB Ethernet adapter or <a href="../en/Android_tethering.html" title="Android tethering">Android tethering</a> may be helpful. If you have neither, you will need to first install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/groups/x86_64/base-devel/">base-devel</a></span> group during installation. Then, use another Internet-connected computer to download <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-headers">linux-headers</a></span> and the driver tarball from the AUR, and install them in that order.
 </p>
 <h4><span class="mw-headline" id="Manually">Manually</span></h4>
 <div class="archwiki-template-box archwiki-template-box-warning">
@@ -234,7 +239,7 @@ enabled, active
 <h3><span class="mw-headline" id="Device_BCM43241_EFI_Vars">Device BCM43241 EFI Vars</span></h3>
 <p>As per <a rel="nofollow" class="external text" href="https://wireless.wiki.kernel.org/en/users/drivers/brcm80211">the driver page</a> it may be necessary to copy the efi vars before the driver will operate correctly. However the expected path depends on your system.
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep bcrm</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep bcrm</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
 Direct firmware load for bcrm/<i>your driver</i>.<i>your device</i> failed with error -2
 </pre>
@@ -249,7 +254,7 @@ Direct firmware load for bcrm/<i>your driver</i>.<i>your device</i> failed with 
 <span id="No_5GHz_for_BCM4360_.2814e4:43a0.29_.2F_BCM43602_.2814e4:43ba.29_devices"></span><span class="mw-headline" id="No_5GHz_for_BCM4360_(14e4:43a0)_/_BCM43602_(14e4:43ba)_devices">No 5GHz for BCM4360 (14e4:43a0) / BCM43602 (14e4:43ba)  devices</span>
 </h3>
 <p>Issue appears to be linked to a <a rel="nofollow" class="external text" href="https://askubuntu.com/questions/749420/wireless-lost-ability-to-use-5ghz-pce-ac68">channel issue</a>. Changing the wireless channel to a lower channel number (like 40 or, if your router show MHz instead of channel numbers, like 5200 MHz or 5280 MHz) seems to allow connection to 5GHz bands.
-If your router has the same SSID for the 2.4GHZ and 5GHZ, this can fix problems with your wireless connection being unstable or very slow. 
+If your router has the same SSID for the 2.4GHZ and 5GHZ, this can fix problems with your wireless connection being unstable or very slow.
 </p>
 <h3><span class="mw-headline" id="Device_works_intermittently">Device works intermittently</span></h3>
 <p>In some cases (e.g. using BCM4331 and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/b43-firmware/">b43-firmware</a></span><sup><small>AUR</small></sup>), wifi connection works intermittently. One way to fix this is to check if the card is <i>hard-blocked</i> or <i>soft-blocked</i> by kernel, and if it is, unblock it with <a href="../en/Network_configuration/Wireless.html#Rfkill_caveat" class="mw-redirect" title="Rfkill">rfkill</a>.
@@ -271,8 +276,8 @@ If your router has the same SSID for the 2.4GHZ and 5GHZ, this can fix problems 
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Broadcom_wireless&amp;oldid=635498">https://wiki.archlinux.org/index.php?title=Broadcom_wireless&amp;oldid=635498</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 September 2020, at 21:23.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Broadcom_wireless&amp;oldid=663256">https://wiki.archlinux.org/index.php?title=Broadcom_wireless&amp;oldid=663256</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 07:12.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -37,6 +37,8 @@
 </p>
 <p>This article describes how to modify and create keyboard layouts. If you are looking for how to configure your keyboard, see <a href="../en/Xorg/Keyboard_configuration.html" title="Xorg/Keyboard configuration">Xorg/Keyboard configuration</a>.
 </p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> While working with XKB, it is possible that your X server may hang or crash, or that your keyboard may be put into an unusable state that can only be reverted by terminating your current session. Before making any changes, please follow <a href="#Precautions_and_preparations">#Precautions and preparations</a> to make sure you can recover.</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -136,15 +138,17 @@
 </div>
 
 <h2><span class="mw-headline" id="Precautions_and_preparations">Precautions and preparations</span></h2>
-<p>It is easy to end up disabling some keys on your keyboard for the current X session while working with XKB. Make sure you have some way to terminate the session without using your keyboard.
+<p>To prepare for the possibility of your X server crashing or your keyboard being put into an unusable state:
 </p>
-<p>While it is rare, changing XKB configuration can sometimes hang or crash X server. Make sure you can handle it. Having some way to killall X or reboot the host remotely may be a good idea.
-</p>
-<p>Stop <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xxkb">xxkb</a></span>, or any other layout switching applications. xxkb actively changes XKB state. Debugging both at the same time is not a good idea.
-</p>
+<ol>
+<li>Make sure you have some way to terminate the session without using your keyboard. (Aside from a power button, having some way to killall X or reboot the host remotely may be a good idea.)</li>
+<li>Make sure you have saved all your work to prevent data loss.</li>
+</ol>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> To make debugging easier, stop applications such as <span class="plainlinks archwiki-template-man" title="$ man 1 xxkb"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xxkb.1">xxkb(1)</a></span> that switch keyboard layouts or otherwise actively change XKB state.</div>
 <h2><span class="mw-headline" id="Getting_and_setting_XKB_layout">Getting and setting XKB layout</span></h2>
 <h3><span class="mw-headline" id="Using_rules">Using rules</span></h3>
-<p>Look inside <code>/usr/share/X11/xkb/rules/</code> for <code>*.lst</code> files or the <a rel="nofollow" class="external text" href="http://www.x.org/wiki/XKB/">XKB Homepage</a> to get ideas on how to configure rules. Your own configurations can go in <code>/etc/X11/xorg.conf.d/</code>.
+<p>Look inside <code>/usr/share/X11/xkb/rules/</code> for <code>*.lst</code> files or the <a rel="nofollow" class="external text" href="https://www.x.org/wiki/XKB/">XKB Homepage</a> to get ideas on how to configure rules. Your own configurations can go in <code>/etc/X11/xorg.conf.d/</code>.
 </p>
 <p>For example one may want to remap their <code>Caps Lock</code> key to <code>Escape</code>:
 </p>
@@ -159,19 +163,21 @@ EndSection
 <h3><span class="mw-headline" id="Using_keymap">Using keymap</span></h3>
 <p>Use <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> (package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xkbcomp">xorg-xkbcomp</a></span>) to manipulate XKB data. To get current configuration, run
 </p>
-<pre>   xkbcomp $DISPLAY output.xkb
+<pre>$ xkbcomp $DISPLAY output.xkb
 </pre>
 <p>To upload the data back to the server, run
 </p>
-<pre>   xkbcomp input.xkb $DISPLAY
+<pre>$ xkbcomp input.xkb $DISPLAY
 </pre>
-<p>Note that without <code>$DISPLAY</code> argument xkbcomp will try to compile .xkb file into (mostly useless) .xkm file, without uploading anything to the server. It will, however, check the syntax and report errors.
+<p>Note that without <code>$DISPLAY</code> argument <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> will try to compile .xkb file into (mostly useless) .xkm file, without uploading anything to the server. It will, however, check the syntax and report errors.
 </p>
 <p>Once the layout is ready, save it as <code>~/.Xkeymap</code> and make <code>~/.xinitrc</code> load it on startup:
 </p>
-<pre>   test -f ~/.Xkeymap &amp;&amp; xkbcomp ~/.Xkeymap $DISPLAY
-</pre>
-<p>The actual file name is irrelevant. Note that unlike standard system-wide configuration via <code>xorg.conf</code>, this is a per-user keymap. Also, there is no problem changing XKB configuration while X is running.
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.xinitrc</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
+
+test -f ~/.Xkeymap &amp;&amp; xkbcomp ~/.Xkeymap $DISPLAY</pre>
+<p>The actual file name is irrelevant. Note that unlike standard system-wide configuration via <span class="plainlinks archwiki-template-man" title="$ man 5 xorg.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xorg.conf.5">xorg.conf(5)</a></span>, this is a per-user keymap. Also, there is no problem changing XKB configuration while X is running.
 </p>
 <h2><span class="mw-headline" id="Basic_information_on_XKB">Basic information on XKB</span></h2>
 <p>The core XKB functionality is quite simple, and it's necessary to have a some ideas on how it works before starting working on the keymaps.
@@ -238,7 +244,7 @@ EndSection
 <h2><span class="mw-headline" id="Editing_the_layout">Editing the layout</span></h2>
 <p>Start with whatever default configuration your server has. Whenever possible, make the changes gradually and test them.
 </p>
-<p>The .xkb file produced by xkbcomp is a simple text file. C++ style comments, // till the end of line, are allowed.  Section names, as in xkb_keycodes "name-here", are irrelevant at this point and can be omitted.
+<p>The .xkb file produced by <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> is a simple text file. C++ style comments, // till the end of line, are allowed.  Section names, as in xkb_keycodes "name-here", are irrelevant at this point and can be omitted.
 </p>
 <h3><span class="mw-headline" id="xkb_keycodes">xkb_keycodes</span></h3>
 <p>Keycode definition. The rest of the file does not use numeric keycodes, only symbolic keylabels defined in this section.
@@ -260,7 +266,7 @@ EndSection
 </p>
 <pre>   map[Shift+LevelThree]= Level4;
 </pre>
-<p>define which combination corresponds to which level value. xkbcomp uses "LevelN" when dumping the data, but short and much more convenient "N" can be used as well.
+<p>define which combination corresponds to which level value. <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> uses "LevelN" when dumping the data, but short and much more convenient "N" can be used as well.
 </p>
 <p>level_name lines are irrelevant and can be ignored.
 </p>
@@ -276,7 +282,7 @@ EndSection
 </p>
 <pre>   key &lt;LABL&gt; { [ G1L1, G1L2, G1L3, ... ], [ G2L1, G2L2, G2L3, ... ], ... }
 </pre>
-<p><code>&lt;LABL&gt;</code> is keylabel from xkb_keycodes section, <code>GiLj</code> is keysym for group i level j. The number of keysyms in each group must match the number of levels defined for this type (<code>xkbcomp</code> will warn you if it does not).
+<p><code>&lt;LABL&gt;</code> is keylabel from xkb_keycodes section, <code>GiLj</code> is keysym for group i level j. The number of keysyms in each group must match the number of levels defined for this type (<span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> will warn you if it does not).
 </p>
 <p>Check <code>/usr/include/X11/keysymdef.h</code> for the list of possible keysyms. Aside from those listed, you can also use <code>Unnnn</code> for Unicode symbol with hex code nnnn, e.g. <code>U0301</code> for combining acute accent. Note that <code>a</code> and <code>U0061</code> are treated differently (for instance, most applications expect <code>Ctrl+a</code>, not <code>Ctrl+U0061</code> because their numeric values are different.
 </p>
@@ -304,7 +310,7 @@ EndSection
    name[2] = "RU";     // group 2
    name[3] = "UA";     // group 3
 </pre>
-<p>This is what xxkb will show if labels are enabled there.
+<p>This is what <span class="plainlinks archwiki-template-man" title="$ man 1 xxkb"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xxkb.1">xxkb(1)</a></span> will show if labels are enabled there.
 </p>
 <p>The section also contains <code>modifier_map</code> lines. Leave them alone for now, or check Virtual Modifiers below.
 </p>
@@ -538,7 +544,7 @@ EndSection
    key &lt;AC08&gt; { [ k, K,    Up ] };
    key &lt;AC09&gt; { [ l, L, Right ] };
 </pre>
-<p>As you may find out using xev, this produces Mod5+Left instead of just Left. But that is ok as most applications ignore state bits they do not use. For an alternative solution, check Overlays below.
+<p>As you may find out using <span class="plainlinks archwiki-template-man" title="$ man 1 xev"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xev.1">xev(1)</a></span>, this produces Mod5+Left instead of just Left. But that is ok as most applications ignore state bits they do not use. For an alternative solution, check Overlays below.
 </p>
 <h3>
 <span id="Meta.2C_Super_and_Hyper"></span><span class="mw-headline" id="Meta,_Super_and_Hyper">Meta, Super and Hyper</span>
@@ -580,16 +586,16 @@ EndSection
    Option  "XkbVariant"  "altgr-intl,qwerty,"                                                                                          
    Option  "XkbOptions"  "grp:menu_toggle,grp_led:caps"        
 </pre>
-<p>These values define full XKB map (the one that can be dumped by xkbcomp) by combining several files from <code>/usr/share/X11/xkb</code>. In fact, equivalent .xkb file for xkbcomp can be obtained using <code>setxkbmap -print</code>:
+<p>These values define full XKB map (the one that can be dumped by <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span>) by combining several files from <code>/usr/share/X11/xkb</code>. In fact, equivalent .xkb file for <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> can be obtained using <code>setxkbmap -print</code>:
 </p>
-<pre>   setxkbmap -model thinkpad60 -layout us,sk,de -variant altgr-intl,qwerty \
+<pre>$ setxkbmap -model thinkpad60 -layout us,sk,de -variant altgr-intl,qwerty \
        -option -option grp:menu_toggle -option grp_led:caps -print
 </pre>
 <p>Note include statements in the output. The files for each section are fetched from relevant subdirectories under <code>/usr/share/X11/xkb</code>, i.e.
 </p>
 <pre>   xkb_types { include "complete" };
 </pre>
-<p>means xkbcomp will look for <code>/usr/share/X11/xkb/types/complete</code>. Plus signs mean concatenation, so
+<p>means <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> will look for <code>/usr/share/X11/xkb/types/complete</code>. Plus signs mean concatenation, so
 </p>
 <pre>   xkb_keycodes { include "evdev+aliases(qwerty)" };
 </pre>
@@ -608,17 +614,15 @@ EndSection
 </p>
 <p>Unlike XkbTypes/XkbCompat/XkbSymbols/XkbGeometry values, which define relevant .xkb file sections directly, XkbModel, XkbLayout and XkbRules refer to additional non-xkb files found under <code>/usr/share/X11/xkb/rules/</code> that match model and layout values to specific symbols and geometry. XkbKeymap refers to complete keymaps. Check Ivan Pascal page for detailed description.
 </p>
-<p>Just like with xkbcomp approach, this kind of configuration can be done on the fly: use setxkbmap without -print option.
+<p>Just like with <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> approach, this kind of configuration can be done on the fly: use <span class="plainlinks archwiki-template-man" title="$ man 1 setxkbmap"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/setxkbmap.1">setxkbmap(1)</a></span> without -print option.
 </p>
 <p>The files from <code>/usr/share/X11/xkb</code> are a good source of examples, especially when it comes to standard keyboard features with nontrivial XKB implementation (e.g. keypad/NumLock handling). Also, these are the files you have to edit to push your changes upstream. Check <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/XKeyboardConfig/Rules">X Keyboard Config Rules</a> before doing it though.
 </p>
 <h3><span class="mw-headline" id="xmodmap">xmodmap</span></h3>
-<p>While sometimes used in conjunction with preset configuration, <a href="../en/Xmodmap.html" title="Xmodmap">xmodmap</a> is not directly related to XKB. This tool uses different (pre-XKB) ideas on how keycodes are processed within X; in particular, xmodmap lacks the notion of groups and types, so trying to set more than one keysym per key is not likely to work.
-</p>
-<p>Generally it is not recommended to use xmodmap, except maybe for the simplest tasks. XKB-compatible equivalent of xmodmap is xkbcomp; however, xkbcomp lacks -e option, so it is not that simple. Anyway, whenever possible, xkbcomp should be preferred.
+<p><a href="../en/Xmodmap.html" title="Xmodmap">xmodmap</a> is not directly related to XKB; it uses different (pre-XKB) ideas on how keycodes are processed within X. In particular, it lacks the notion of groups and types, so trying to set more than one keysym per key is not likely to work. In general, except for the simplest modifications of keymaps or pointer button mappings, <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> should be used instead.
 </p>
 <h2><span class="mw-headline" id="Indicators">Indicators</span></h2>
-<p>As in "keyboard LEDs". Indicator names are used to match the to the physical LEDs in xkb_keycodes section. Otherwise, they are irrelevant. Indicators not matched to any LED are called "virtual"; xkbvleds (package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xkbutils">xorg-xkbutils</a></span>) can be used to check their state. Example:
+<p>As in "keyboard LEDs". Indicator names are used to match the to the physical LEDs in xkb_keycodes section. Otherwise, they are irrelevant. Indicators not matched to any LED are called "virtual"; <span class="plainlinks archwiki-template-man" title="$ man 1 xkbvleds"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbvleds.1">xkbvleds(1)</a></span> (package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xkbutils">xorg-xkbutils</a></span>) can be used to check their state. Example:
 </p>
 <pre>   xkb_keycodes {
        indicator 1 = "LED1";       // first physical LED
@@ -645,7 +649,7 @@ EndSection
 </p>
 <p>Decide which bits you will use. There are only eight of them, and of those, Shift, Control and Mod1 are widely used in applications, and Lock (aka CapsLock) has pre-defined meaning which also may be hard to override. The remaining four, however, are fair play.
 </p>
-<p>Warning: four standard types, ONE_LEVEL, TWO_LEVEL, ALPHABETIC and KEYPAD, receive special treatment in xkbcomp. They may work differently just because they are named this way. Avoid deleting them. If some changes do not work as expected, try adding a new type instead.
+<p>Warning: four standard types, ONE_LEVEL, TWO_LEVEL, ALPHABETIC and KEYPAD, receive special treatment in <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span>. They may work differently just because they are named this way. Avoid deleting them. If some changes do not work as expected, try adding a new type instead.
 </p>
 <h3><span class="mw-headline" id="Using_real_modifiers_in_standard_types">Using real modifiers in standard types</span></h3>
 <p>Depending of your base configuration, there may be a lot of unused standard types like EIGHT_LEVEL or PC_RCONTROL_LEVEL2. Remove them to avoid doing unnecessary work.
@@ -717,33 +721,33 @@ EndSection
 </pre>
 <p>Now,
 </p>
-<pre>   xkbcomp -i 11 file.xkb $DISPLAY
+<pre>$ xkbcomp -i 11 file.xkb $DISPLAY
 </pre>
 <p>or
 </p>
-<pre>   setxkbmap -device 11 ...
+<pre>$ setxkbmap -device 11 ...
 </pre>
 <p>will set keymap for specified keyboard only. Dumping XKB configuration works too:
 </p>
-<pre>   xkbcomp -i 11 $DISPLAY file.xkb
+<pre>$ xkbcomp -i 11 $DISPLAY file.xkb
 </pre>
 <p>Note <code>xkbcomp -i11</code> will not work and will not give a clear error message either. Make sure you have space after <code>-i</code>.
 </p>
 <h2><span class="mw-headline" id="Debugging_XKB">Debugging XKB</span></h2>
-<p>When keys do not work as expected, the first thing to check is XKB internal state: modifiers, effective group and control bits. All three can be used to drive LEDs; use xkbvleds to check them
+<p>When keys do not work as expected, the first thing to check is XKB internal state: modifiers, effective group and control bits. All three can be used to drive LEDs; use <span class="plainlinks archwiki-template-man" title="$ man 1 xkbvleds"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbvleds.1">xkbvleds(1)</a></span> to check them
 </p>
 <pre>   indicator "LED1" { modifiers = Lock; };
    indicator "LED2" { groups = 2; };
    indicator "LED3" { controls = audiblebell; };
    
 </pre>
-<p>Additionally, xkbwatch shows all (real) modifiers together with their lock/latch status. Modifiers are also reported by xev. Xxkb can be used to monitor effective group, but make sure two_state mode is off.
+<p>Additionally, <span class="plainlinks archwiki-template-man" title="$ man 1 xkbwatch"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbwatch.1">xkbwatch(1)</a></span> shows all (real) modifiers together with their lock/latch status. Modifiers are also reported by <span class="plainlinks archwiki-template-man" title="$ man 1 xev"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xev.1">xev(1)</a></span>. <span class="plainlinks archwiki-template-man" title="$ man 1 xxkb"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xxkb.1">xxkb(1)</a></span> can be used to monitor effective group, but make sure two_state mode is off.
 </p>
 <p>In case interpretations section does not work well, make sure to check for duplicated "interpret" blocks. Better yet, try commenting out anything related to specific keysym. See section 9.2 for explanation.
 </p>
 <p>It also makes sense to check what exactly the server got by downloading the keymap back with
 </p>
-<pre>   xkbcomp $DISPLAY out.xkb
+<pre>$ xkbcomp $DISPLAY out.xkb
 </pre>
 <p>The results tend to be different from the input file. There is no known work-around for this.
 </p>
@@ -789,7 +793,7 @@ EndSection
 <pre>   interpret &lt;key&gt; { }
    interpret &lt;key&gt;+V { }
 </pre>
-<p>blocks will be treated as duplicates. Only one of them, the last one in the file, will work. xkbcomp usually gives a warning in cases like this.
+<p>blocks will be treated as duplicates. Only one of them, the last one in the file, will work. <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> usually gives a warning in cases like this.
 </p>
 <h3><span class="mw-headline" id="Client_side_notes">Client side notes</span></h3>
 <p>Handling XKB virtual modifiers on the client side requires some non-trivial server interaction. Most applications just do not bother, sticking with 8 real modifiers supplied in XKeyEvent.state.
@@ -855,7 +859,7 @@ EndSection
     // xkb_geometry  { include "pc(pc104)" };
 };
 </pre>
-<p>You can use <i>includes</i> from this file, where the inclusion refer to a local folder instead of <code>/usr/share/X11/xkb</code>. You need to use the <code>-I/path/</code> parameter of xkbcomp for that. Full example:
+<p>You can use <i>includes</i> from this file, where the inclusion refer to a local folder instead of <code>/usr/share/X11/xkb</code>. You need to use the <code>-I/path/</code> parameter of <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> for that. Full example:
 </p>
 <pre>$ xkbcomp -I$HOME/.xkb $HOME/.keymap.xkb $DISPLAY
 </pre>
@@ -888,13 +892,13 @@ EndSection
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://www.x.org/releases/current/doc/xorg-docs/input/XKB-Config.html">The XKB Configuration Guide</a></li>
-<li><a rel="nofollow" class="external free" href="http://www.x.org/wiki/XKB">http://www.x.org/wiki/XKB</a></li>
+<li><a rel="nofollow" class="external free" href="https://www.x.org/wiki/XKB">https://www.x.org/wiki/XKB</a></li>
 <li>
 <a rel="nofollow" class="external text" href="http://www.charvolant.org/doug/xkb/html/index.html">An Unreliable Guide To XKB Configuration</a>.</li>
 <li>
 <a rel="nofollow" class="external text" href="http://pascal.tsu.ru/en/xkb/">Ivan Pascal XKB docs</a>. One of the oldest and most well-known guides. Focuses a lot on details, and explains some of exotic XKB features.</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.x.org/releases/current/doc/kbproto/xkbproto.pdf">XKB protocol specification</a>. Comprehensive description of all XKB features. Extremely useful for understating how XKB works, includes a good description of virtual modifiers among other things. Some practice with xkbcomp is strongly recommended though, because the features are described on protocol level.</li>
+<a rel="nofollow" class="external text" href="https://www.x.org/releases/current/doc/kbproto/xkbproto.pdf">XKB protocol specification</a>. Comprehensive description of all XKB features. Extremely useful for understating how XKB works, includes a good description of virtual modifiers among other things. Some practice with <span class="plainlinks archwiki-template-man" title="$ man 1 xkbcomp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xkbcomp.1">xkbcomp(1)</a></span> is strongly recommended though, because the features are described on protocol level.</li>
 </ul>
 </div>
 </div>
@@ -913,8 +917,8 @@ EndSection
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=X_keyboard_extension&amp;oldid=655241">https://wiki.archlinux.org/index.php?title=X_keyboard_extension&amp;oldid=655241</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 March 2021, at 15:22.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=X_keyboard_extension&amp;oldid=662609">https://wiki.archlinux.org/index.php?title=X_keyboard_extension&amp;oldid=662609</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:33.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

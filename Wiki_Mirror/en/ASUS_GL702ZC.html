@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,6 +33,11 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Stub (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:ASUS_GL702ZC">Talk:ASUS GL702ZC#</a>)</div>
+</div>
 <p>This page is about the Laptop ROG Strix AMD laptop. Runs pretty good out of the box, with some minor issues.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -55,7 +61,7 @@
 </div>
 
 <h2><span class="mw-headline" id="Backlight">Backlight</span></h2>
-<p>This ASUS model comes with Radeon RX580. Backlight with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xbacklight">xorg-xbacklight</a></span> will not work; since Radeon cards don't support RandR. The relevant module for backlight is <code>amdgpu_bl0</code>. (Keyboard LED's are interfaced with <code>asus::kbd_backlight</code>) <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=light">light</a></span> works well, and available in the repos. (The default should be the screen backlight) For example; the following commands will increase/decrease backlight of the screen;
+<p>This ASUS model comes with Radeon RX580. Backlight with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xbacklight">xorg-xbacklight</a></span> will not work; since Radeon cards do not support RandR. The relevant module for backlight is <code>amdgpu_bl0</code>. (Keyboard LED's are interfaced with <code>asus::kbd_backlight</code>) <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=light">light</a></span> works well, and available in the repos. (The default should be the screen backlight) For example; the following commands will increase/decrease backlight of the screen;
 </p>
 <pre>$ light -A 5
 $ light -U i
@@ -75,7 +81,7 @@ $ light -Urs "sysfs/leds/asus::kbd_backlight" 1
 <h3>
 <span id="Fans_turn_100.25_and_computer_becomes_unresponsive_after_long_idle_time"></span><span class="mw-headline" id="Fans_turn_100%_and_computer_becomes_unresponsive_after_long_idle_time">Fans turn 100% and computer becomes unresponsive after long idle time</span>
 </h3>
-<p>Haven't found a fix for this, but reporting this issue nonetheless. This might also indicate a hardware failure: certain power control circuitry can fail and require an RMA for a mainboard replacement.
+<p>Have not found a fix for this, but reporting this issue nonetheless. This might also indicate a hardware failure: certain power control circuitry can fail and require an RMA for a mainboard replacement.
 </p>
 <h3><span class="mw-headline" id="Crashes_with_MCE">Crashes with MCE</span></h3>
 <p>The system will sometimes crash (check the <a rel="nofollow" class="external text" href="https://www.phoronix.com/forums/forum/hardware/general-hardware/961327-asus-rog-strix-gl702zc/page12">Phoronix thread</a>). The problem seems to be the AMD processor. There is no suggested fix other than RMA; you can check if you are affected by running <a rel="nofollow" class="external text" href="https://github.com/suaefar/ryzen-test/blob/master/kill-ryzen.sh">ryzen kill script</a>. My personal experience is that I have two cores that cause these errors; and I had not have it happen much after configuring fans using <code>nbfc</code>.
@@ -83,20 +89,24 @@ $ light -Urs "sysfs/leds/asus::kbd_backlight" 1
 <p>To further investigate, check out <a href="../en/Machine-check_exception.html" title="Machine-check exception">Machine-check exception</a>
 </p>
 <h3><span class="mw-headline" id="Bluetooth_and_network_issues">Bluetooth and network issues</span></h3>
-<p>The wifi card is of model <code>rtl8822be</code>. Older kernel versions don't have the bluetooth module for this card (&gt;4.19). Also, on 5.2; the rtl cards wifi modules were merged into <code>rtlwifi</code>; which was not working for a while. (See my BBS thread <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=247711">here</a>) Currently, wifi works with the stable kernel; but is noticeably slower than the previous kernel module.
+<p>The wifi card is of model <code>rtl8822be</code>. Older kernel versions do not have the bluetooth module for this card (&gt;4.19). Also, on 5.2; the rtl cards wifi modules were merged into <code>rtlwifi</code>; which was not working for a while. (See my BBS thread <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=247711">here</a>) Currently, wifi works with the stable kernel; but is noticeably slower than the previous kernel module.
 </p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:ASUS.html" title="Category:ASUS">ASUS</a></li></ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ASUS_GL702ZC&amp;oldid=647851">https://wiki.archlinux.org/index.php?title=ASUS_GL702ZC&amp;oldid=647851</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 January 2021, at 16:57.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ASUS_GL702ZC&amp;oldid=658045">https://wiki.archlinux.org/index.php?title=ASUS_GL702ZC&amp;oldid=658045</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 April 2021, at 15:20.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

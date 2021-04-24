@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -41,10 +42,10 @@
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/KMSCON.html" title="KMSCON">KMSCON</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2017-04-26。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=KMSCON&amp;diff=0&amp;oldid=464375">更改</a>，则您可以帮助同步翻译。</div>
-<p>来自 <a rel="nofollow" class="external text" href="https://github.com/dvdhrm/kmscon">project GitHub page</a> 的介绍：
+<strong>翻译状态：</strong>本文是 <a href="../en/KMSCON.html" title="KMSCON">KMSCON</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-04-05。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=KMSCON&amp;diff=0&amp;oldid=657748">更改</a>，则您可以帮助同步翻译。</div>
+<p>来自 <a rel="nofollow" class="external text" href="https://cgit.freedesktop.org/~dvdhrm/kmscon/tree/README">该项目代码库</a> 的介绍：
 </p>
-<dl><dd><i>Kmscon 是基于 KMS 的简单终端模拟软件。它试图为 VT 终端的内核实现提供一种用户空间终端实现。</i></dd></dl>
+<dl><dd>Kmscon 是基于 linux <a href="../zh-CN/Kernel_mode_setting.html" title="Kernel mode setting (简体中文)">内核级显示模式设置</a>的简单终端模拟软件。它试图以用户空间终端替代内核中的虚拟终端实现。</dd></dl>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -54,7 +55,14 @@
 <li class="toclevel-1 tocsection-1"><a href="#%E7%89%B9%E6%80%A7"><span class="tocnumber">1</span> <span class="toctext">特性</span></a></li>
 <li class="toclevel-1 tocsection-2"><a href="#%E5%AE%89%E8%A3%85"><span class="tocnumber">2</span> <span class="toctext">安装</span></a></li>
 <li class="toclevel-1 tocsection-3"><a href="#%E4%B8%AD%E6%97%A5%E9%9F%A9%E6%96%87%E5%AD%97%E6%94%AF%E6%8C%81"><span class="tocnumber">3</span> <span class="toctext">中日韩文字支持</span></a></li>
-<li class="toclevel-1 tocsection-4"><a href="#%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94"><span class="tocnumber">4</span> <span class="toctext">疑难解答</span></a></li>
+<li class="toclevel-1 tocsection-4">
+<a href="#%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94"><span class="tocnumber">4</span> <span class="toctext">疑难解答</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#%E5%9C%A8%E5%88%87%E6%8D%A2_Xorg_%E5%92%8C_kmscon_%E6%97%B6%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98"><span class="tocnumber">4.1</span> <span class="toctext">在切换 Xorg 和 kmscon 时遇到问题</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#%E6%97%A0%E6%B3%95%E6%8E%A7%E5%88%B6%E5%A3%B0%E9%9F%B3"><span class="tocnumber">4.2</span> <span class="toctext">无法控制声音</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Vim_%E6%97%A0%E6%B3%95%E6%B8%85%E7%A9%BA%E7%BB%88%E7%AB%AF%E8%BE%93%E5%87%BA"><span class="tocnumber">4.3</span> <span class="toctext">Vim 无法清空终端输出</span></a></li>
+</ul>
+</li>
 </ul>
 </div>
 
@@ -72,18 +80,18 @@
 </ul>
 </li>
 <li>硬件加速渲染。</li>
-<li>Multi-seat capability.</li>
+<li>支持 <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/multiseat/">multi-seat</a>。</li>
 </ul>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> 要允许 root 用户通过 kmscon 登录，你需要移除或注释 <code>/etc/pam.d/login</code> 中的 <code>pam_securetty</code> 来停用这个模块。 </div>
+<strong>注意：</strong> 要允许 root 用户通过 kmscon 登录，你需要移除或注释 <code>/etc/pam.d/login</code> 中相应行来停用 <code>pam_securetty</code> 模块。 </div>
 <h2>
 <span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
 </h2>
 <p>虽然名字里带有 KMS，kmscon 并非硬性依赖 KMS。Kmscon 支持的视频后端如下：fbdev（Linux fbdev 视频后端），drm2d（Linux DRM 软解后端），drm3d（Linux DRM 硬解后端）。请确保你的系统中有其中之一。
 </p>
-<p>你可以从 <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> 安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=kmscon">kmscon</a></span> 或者 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/kmscon-git/">kmscon-git</a></span><sup><small>AUR</small></sup>。
+<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=kmscon">kmscon</a></span>，或者从 <a href="../zh-CN/Arch_User_Repository.html" class="mw-redirect" title="AUR (简体中文)">AUR</a> 安装最新开发版 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/kmscon-git/">kmscon-git</a></span><sup><small>AUR</small></sup>。还可以安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/kmscon-patched-git/">kmscon-patched-git</a></span><sup><small>AUR</small></sup>，这个版本与其打过补丁的依赖 （<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libtsm-patched-git/">libtsm-patched-git</a></span><sup><small>AUR</small></sup>）包含了一些标准版（2014 年后停止更新）没有的修复与改进（例如 24 位彩色支持）。
 </p>
-<p>出于保守的策略，你可以继续在 tty1 上使用传统的 getty 而只在其他虚拟终端上运行 kmscon ，或者你可以用 kmscon 替换 getty。
+<p>在 tty1 上一般有特殊的 systemd 配置。出于保守的策略，你可以继续在 tty1 上使用传统的 getty 而只在其他虚拟终端上运行 kmscon ，或者你可以用 kmscon 替换 getty。
 </p>
 <p>要在 tty1 上启用 kmscon:
 </p>
@@ -101,11 +109,11 @@
 <p>如果 <i> kmscon</i> 无法启动，它会尝试启动  <code>getty@.service</code> ，此外没有虚拟终端可用时这个单元不会启动。
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> 如果你在所有的终端替换了 getty ，请在重新启动之前确认 <i>kmscon</i> 可用 ！不然你只能用 Live CD 一类的介质恢复系统了。</div>
+<strong>警告：</strong> 如果你在所有的终端替换了 getty ，请在重新启动之前确认 <i>kmscon</i> 可用 ！不然你只能用 Live CD 一类的介质恢复系统了。</div>
 <h2>
 <span id=".E4.B8.AD.E6.97.A5.E9.9F.A9.E6.96.87.E5.AD.97.E6.94.AF.E6.8C.81"></span><span class="mw-headline" id="中日韩文字支持">中日韩文字支持</span>
 </h2>
-<p>Kmscon 通过默认的字体引擎 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pango">pango</a></span> 支持渲染中日韩文字。但是， 必须为 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fontconfig">fontconfig</a></span> 设置全局配置，来将等宽字体映射到合适的中日韩字体上。我们为中文用户提供如下配置模板。此模板可以满足中文字体渲染要求：
+<p>Kmscon 通过默认的字体引擎 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pango">pango</a></span> 支持渲染中日韩文字。但是， 必须为 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fontconfig">fontconfig</a></span> 设置<b>全局</b>配置，来将等宽字体映射到合适的中日韩字体上。我们为中文用户提供如下配置模板。此模板可以满足中文字体渲染要求：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fonts/conf.d/99-kmscon.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">&lt;?xml version="1.0"?&gt;
@@ -120,17 +128,34 @@
 &lt;/match&gt;
 &lt;/fontconfig&gt;
 </pre>
+<p>还可以将以下行加入 <code>/etc/kmscon/kmscon.conf</code> 来配置 kmscon 全局使用这些字体： 
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/kmscon/kmscon.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">font-name=DejaVu Sans Mono, WenQuanYi Micro Hei Mono
+</pre>
 <p>你需要安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ttf-dejavu">ttf-dejavu</a></span> 和 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wqy-microhei">wqy-microhei</a></span>，它们都可以在官方仓库中找到。
 </p>
 <h2>
 <span id=".E7.96.91.E9.9A.BE.E8.A7.A3.E7.AD.94"></span><span class="mw-headline" id="疑难解答">疑难解答</span>
 </h2>
-<ul><li>如果你在切换 <a href="../en/Xorg.html" title="Xorg">Xorg</a> 和 kmscon 时遇到问题，试着吧 <code>hwaccel</code> 添加到 <code>/etc/kmscon/kmscon.conf</code> 中。</li></ul>
-<p>这个文件和目录不在包内，因此你需要手动创建它们，或者你可以 <a href="../en/Systemd.html#Editing_provided_units" title="Systemd">编辑 systemd 服务文件</a>。
+<h3>
+<span id=".E5.9C.A8.E5.88.87.E6.8D.A2_Xorg_.E5.92.8C_kmscon_.E6.97.B6.E9.81.87.E5.88.B0.E9.97.AE.E9.A2.98"></span><span class="mw-headline" id="在切换_Xorg_和_kmscon_时遇到问题">在切换 Xorg 和 kmscon 时遇到问题</span>
+</h3>
+<p>如果你在切换 <a href="../zh-CN/Xorg.html" title="Xorg (简体中文)">Xorg</a> 和 kmscon 时遇到问题，试着把 <code>hwaccel</code> 添加到 <code>/etc/kmscon/kmscon.conf</code> 中。
+这个文件和目录不在包内，因此你需要手动创建它们，或者你可以 <a href="../zh-CN/Systemd.html#%E4%BF%AE%E6%94%B9%E7%8E%B0%E5%AD%98%E5%8D%95%E5%85%83%E6%96%87%E4%BB%B6" title="Systemd (简体中文)">编辑 systemd 单元文件</a>。
 </p>
-<pre> ExecStart=/usr/bin/kmscon "--vt=%I" --seats=seat0 --no-switchvt --font-name Terminus --font-size 12 --hwaccel --drm 
+<pre> ExecStart=/usr/bin/kmscon "--vt=%I" --seats=seat0 --no-switchvt --font-name Terminus --font-size 12 <b>--hwaccel</b> --drm
 </pre>
-<ul><li>在版本 7 中，如果你不能控制声音，把你的用户添加到 <b>audio</b> <a href="../en/Users_and_groups.html#Group_management" class="mw-redirect" title="User group">组</a> 中。不过要注意这么做的缺点。（ <a href="../en/Advanced_Linux_Sound_Architecture.html#Installation" class="mw-redirect" title="Alsa">shortcomings</a> ）</li></ul>
+<h3>
+<span id=".E6.97.A0.E6.B3.95.E6.8E.A7.E5.88.B6.E5.A3.B0.E9.9F.B3"></span><span class="mw-headline" id="无法控制声音">无法控制声音</span>
+</h3>
+<p>在版本 7 中，如果你不能控制声音，把你的用户添加到 <code>audio</code> <a href="../zh-CN/Users_and_groups.html#%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86" class="mw-redirect" title="用户组">用户组</a>中。不过要注意这么做的<a href="../zh-CN/Advanced_Linux_Sound_Architecture.html#%E5%AE%89%E8%A3%85" class="mw-redirect" title="Alsa (简体中文)">缺点</a>。
+</p>
+<h3>
+<span id="Vim_.E6.97.A0.E6.B3.95.E6.B8.85.E7.A9.BA.E7.BB.88.E7.AB.AF.E8.BE.93.E5.87.BA"></span><span class="mw-headline" id="Vim_无法清空终端输出">Vim 无法清空终端输出</span>
+</h3>
+<p>Vim 可能会在启动时不清除终端输出，这时仍然可以编辑文件，但只有更改文本后才能看到文本。解决方法是，尝试设置<a href="../zh-CN/Environment_variables.html" class="mw-redirect" title="环境变量">环境变量</a> <code>TERM = vt220</code>。 另外，其它类似于 vim 的编辑器（例如 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=vi">vi</a></span> 或 <a href="../en/Neovim.html" title="Neovim">Neovim</a>）可能会正常工作。
+</p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
@@ -141,8 +166,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=KMSCON_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=548793">https://wiki.archlinux.org/index.php?title=KMSCON_(简体中文)&amp;oldid=548793</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 October 2018, at 13:33.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=KMSCON_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663832">https://wiki.archlinux.org/index.php?title=KMSCON_(简体中文)&amp;oldid=663832</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 17:41.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

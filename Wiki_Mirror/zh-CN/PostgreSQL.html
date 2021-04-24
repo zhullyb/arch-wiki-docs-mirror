@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -109,11 +110,11 @@
 </h2>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>提示：</strong> 如果创建一个与你的 Arch 用户 ($USER) 同名的数据库用户，并允许其访问 PostgreSQL 数据库的 shell，那么在使用PostgreSQL 数据库 shell 的时候无需指定用户登录（这样做会比较方便）。</div>
-<p>以 postgres 用户身份, 添加一个新的数据库用户使用 <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/9.0/static/app-createuser.html">createuser</a> 命令
+<p>以 postgres 用户身份, 添加一个新的数据库用户使用 <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/9.0/static/app-createuser.html">createuser</a> 命令
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">[postgres]$ createuser --interactive</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">输入要增加的角色名称: 我登录 Arch 的用户名</pre>
-<p>以具备读写权限的用户身份，创建一个新的数据库,使用<a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/9.0/static/app-createdb.html">createdb</a> 命令。
+<p>以具备读写权限的用户身份，创建一个新的数据库,使用<a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/9.0/static/app-createdb.html">createdb</a> 命令。
 </p>
 <p>从你的 shell (<b>不是</b> 以 postrgres 用户的身份)
 </p>
@@ -125,7 +126,7 @@
 <h3>
 <span id=".E8.BF.9E.E6.8E.A5.E6.95.B0.E6.8D.AE.E5.BA.93shell"></span><span class="mw-headline" id="连接数据库shell">连接数据库shell</span>
 </h3>
-<p>登陆为postgres用户，启动主要数据库shell <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/app-psql.html">psql</a>，你可以创建数据库或表、设计权限和运行原始的SQL命令。使用<code>-d</code>选项连接你创建的数据库（如果没有指定数据库，<code>psql</code>会尝试连接与你用户名同名的数据库）。
+<p>登陆为postgres用户，启动主要数据库shell <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/static/app-psql.html">psql</a>，你可以创建数据库或表、设计权限和运行原始的SQL命令。使用<code>-d</code>选项连接你创建的数据库（如果没有指定数据库，<code>psql</code>会尝试连接与你用户名同名的数据库）。
 </p>
 <pre>[postgres]$ psql -d myDatabaseName
 </pre>
@@ -171,7 +172,7 @@ host   all   all   <i>my_remote_client_ip_address</i>/32   md5
 </pre>
 <p><code>my_remote_client_ip_address</code>是客户端的IP地址。
 </p>
-<p>如需更多帮助请查看<a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html">pg_hba.conf</a>的文档。
+<p>如需更多帮助请查看<a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html">pg_hba.conf</a>的文档。
 </p>
 <p>在完成编辑后你需要<a href="../zh-CN/Systemd.html#%E4%BD%BF%E7%94%A8%E5%8D%95%E5%85%83" title="Systemd (简体中文)">重启</a> <code>postgresql.service</code>服务使你的配置生效。
 </p>
@@ -346,14 +347,14 @@ template1 | postgres | UTF8      | C         | C     |
 <span id=".E8.AF.A6.E7.BB.86.E8.AF.B4.E6.98.8E"></span><span class="mw-headline" id="详细说明">详细说明</span>
 </h3>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Official PostgreSQL <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/upgrading.html">upgrade documentation</a> should be followed.</div>
+<strong>Note:</strong> Official PostgreSQL <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/static/upgrading.html">upgrade documentation</a> should be followed.</div>
 <p>需要注意的是，这些指令可能会导致数据丢失。 <b>后果自负</b>.
 </p>
 <p>推荐把下面的加入你的 <code>/etc/pacman.conf</code> 文件中:
 </p>
 <pre>IgnorePkg = postgresql postgresql-libs
 </pre>
-<p>这将确保你不会不小心将数据库升级到不兼容的版本中。当一个升级可用时，pacman将通知你，因为在pacman.conf中的设置，它跳过了升级。小版本升级 (e.g., 9.0.3 to 9.0.4) 可以被安全地执行。不过，当如果你突然做一个不同的主版本升级时，(e.g., 9.0.X to 9.1.X), 您可能无法访问你的任何数据。请务必检查PostgreSQL的主页 (<a rel="nofollow" class="external free" href="http://www.postgresql.org/">http://www.postgresql.org/</a>) ，以确认每次升级所需要的步骤。对于为什么是这种情况见 <a rel="nofollow" class="external text" href="http://www.postgresql.org/support/versioning">versioning policy</a>。
+<p>这将确保你不会不小心将数据库升级到不兼容的版本中。当一个升级可用时，pacman将通知你，因为在pacman.conf中的设置，它跳过了升级。小版本升级 (e.g., 9.0.3 to 9.0.4) 可以被安全地执行。不过，当如果你突然做一个不同的主版本升级时，(e.g., 9.0.X to 9.1.X), 您可能无法访问你的任何数据。请务必检查PostgreSQL的主页 (<a rel="nofollow" class="external free" href="https://www.postgresql.org/">https://www.postgresql.org/</a>) ，以确认每次升级所需要的步骤。对于为什么是这种情况见 <a rel="nofollow" class="external text" href="https://www.postgresql.org/support/versioning">versioning policy</a>。
 </p>
 <p>主要有两种方式来升级您的PostgreSQL数据库。阅读官方文档细节。
 </p>
@@ -368,7 +369,7 @@ template1 | postgres | UTF8      | C         | C     |
 # systemctl start postgresql
 # systemctl stop postgresql
 </pre>
-<p>Reference the <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/pgupgrade.html">upstream pg_upgrade documentation</a> for details.
+<p>Reference the <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/static/pgupgrade.html">upstream pg_upgrade documentation</a> for details.
 </p>
 <p>The upgrade invocation will likely look something like the following (run as the postgres user). <b>Do not run this command blindly without understanding what it does!</b>
 </p>
@@ -385,7 +386,7 @@ template1 | postgres | UTF8      | C         | C     |
 </pre>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Improve_performance_of_small_transactions">Improve performance of small transactions</span></h3>
-<p>If you are using PostgresSQL on a local machine for development and it seems slow, you could try turning <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/runtime-config-wal.html#GUC-SYNCHRONOUS-COMMIT">synchronous_commit off</a> in the configuration (<code>/var/lib/postgres/data/postgresql.conf</code>). Beware of the <a rel="nofollow" class="external text" href="http://www.postgresql.org/docs/current/static/runtime-config-wal.html#GUC-SYNCHRONOUS-COMMIT">caveats</a>, however.
+<p>If you are using PostgresSQL on a local machine for development and it seems slow, you could try turning <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/static/runtime-config-wal.html#GUC-SYNCHRONOUS-COMMIT">synchronous_commit off</a> in the configuration (<code>/var/lib/postgres/data/postgresql.conf</code>). Beware of the <a rel="nofollow" class="external text" href="https://www.postgresql.org/docs/current/static/runtime-config-wal.html#GUC-SYNCHRONOUS-COMMIT">caveats</a>, however.
 </p>
 <pre>synchronous_commit = off
 </pre>
@@ -397,7 +398,7 @@ template1 | postgres | UTF8      | C         | C     |
 <pre>stats_temp_directory = '/run/postgresql'
 </pre>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
-<ul><li><a rel="nofollow" class="external text" href="http://www.postgresql.org/">Official PostgreSQL Homepage</a></li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.postgresql.org/">Official PostgreSQL Homepage</a></li></ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
@@ -412,8 +413,8 @@ template1 | postgres | UTF8      | C         | C     |
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PostgreSQL_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=627532">https://wiki.archlinux.org/index.php?title=PostgreSQL_(简体中文)&amp;oldid=627532</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 31 July 2020, at 19:33.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PostgreSQL_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=662227">https://wiki.archlinux.org/index.php?title=PostgreSQL_(简体中文)&amp;oldid=662227</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 20:33.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

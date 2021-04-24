@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -148,7 +149,7 @@
 <h3>
 <span id=".E4.BD.BF.E7.94.A8_rules_.E8.B3.87.E6.96.99.E5.A4.BE.E8.A6.8F.E5.89.87.E8.B3.87.E6.96.99"></span><span class="mw-headline" id="使用_rules_資料夾規則資料">使用 rules 資料夾規則資料</span>
 </h3>
-<p>看着 <code>/usr/share/X11/xkb/rules/</code> 裡面的<code>*.lst</code>檔案或<a rel="nofollow" class="external text" href="http://www.x.org/wiki/XKB/">XKB Homepage</a>以獲得怎麼設定rules檔的想法。你自定的設定可以可以運行在<code>/etc/X11/xorg.conf.d/</code>。
+<p>看着 <code>/usr/share/X11/xkb/rules/</code> 裡面的<code>*.lst</code>檔案或<a rel="nofollow" class="external text" href="https://www.x.org/wiki/XKB/">XKB Homepage</a>以獲得怎麼設定rules檔的想法。你自定的設定可以可以運行在<code>/etc/X11/xorg.conf.d/</code>。
 </p>
 <p>例如有可能想重新規劃他的 <code>Caps Lock</code> 到 <code>Escape</code>鍵:
 </p>
@@ -299,8 +300,6 @@ EndSection
 <p>查看 <code>/usr/include/X11/keysymdef.h</code> 可能的按鍵象徵清單。 撇開這些清單，你也可以用 <code>Unnnn</code> 給 Unicode 符號加上十六位元碼 nnnn, 例如： <code>U0301</code> 給組合符號 重音符號。 注意 <code>a</code> 與 <code>U0061</code> 視為不同地 (目前, 多數應用程式期待 <code>Ctrl+a</code>, 不是 <code>Ctrl+U0061</code> 因為他們的數字值不一樣。)
 </p>
 <p>按鍵類別也在這指定，其中像
-</p>
-<p><br>
 </p>
 <pre>   key.type = "T1";
    key &lt;...&gt; { ... };
@@ -649,8 +648,7 @@ EndSection
 </pre>
 <p>這是 <code>aliases(qwerty)</code> 部分參考處。 最後，冒號轉移佈局的一部份到另一個群組。
 </p>
-<p><br>
-不像 XkbTypes/XkbCompat/XkbSymbols/XkbGeometry 的值，都直接地相關 .xkb 檔案的段落， XkbModel, XkbLayout and XkbRules 參考額外的 non-xkb 檔案 可在下面發現 <code>/usr/share/X11/xkb/rules/</code> 這個配合 model 與 layout 值去指定符號(symbols) 和 鍵盤幾何構成(geometry)。 XkbKeymap 參考完整的按鍵規劃。參照 Ivan Pascal 記錄得到詳細敘述。
+<p>不像 XkbTypes/XkbCompat/XkbSymbols/XkbGeometry 的值，都直接地相關 .xkb 檔案的段落， XkbModel, XkbLayout and XkbRules 參考額外的 non-xkb 檔案 可在下面發現 <code>/usr/share/X11/xkb/rules/</code> 這個配合 model 與 layout 值去指定符號(symbols) 和 鍵盤幾何構成(geometry)。 XkbKeymap 參考完整的按鍵規劃。參照 Ivan Pascal 記錄得到詳細敘述。
 </p>
 <p>就好像用xkbcomp能達到的，這類設定可以馬上完成： 用指令 setxkbmap 不帶 -print 選項。
 </p>
@@ -860,7 +858,7 @@ EndSection
 </h3>
 <p>處理 XKB 虛擬修飾鍵在客戶端側需要某些非瑣碎伺服器解譯。大多數應用程式只是不操心，附上8個真實修飾鍵提供在 XKeyEvent.state。
 </p>
-<p>不過,那是有可能給應用程式獲得虛擬修飾鍵結合按鍵按下。 Gtk,例如, <a rel="nofollow" class="external text" href="http://www.gtk.org/api/2.6/gdk/gdk-Keyboard-Handling.html#gdk-keymap-translate-keyboard-state">gdk-keymap-translate-keyboard-state()</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-02-26]</sup> 那個功能可能有也可能沒有被用於特定應用程式。
+<p>不過,那是有可能給應用程式獲得虛擬修飾鍵結合按鍵按下。 Gtk,例如, <a rel="nofollow" class="external text" href="https://developer.gnome.org/gdk2/2.24/gdk2-Keyboard-Handling.html#gdk-keymap-translate-keyboard-state">gdk-keymap-translate-keyboard-state()</a> 那個功能可能有也可能沒有被用於特定應用程式。
 </p>
 <p>某些人可能實現某些事像虛擬修飾鍵支援，但實際沒有。檢查Openbox在章節5.3.3.2。關於Alt處理，查看章節 8.3。(備註：搜尋不到openbox的文件，待高手補充)
 </p>
@@ -950,20 +948,20 @@ The symbol file must have the same name as specified in the <code>xkb_symbols</c
 <span id=".E6.9C.89.E5.80.8Busb.E9.8D.B5.E7.9B.A4_.E7.95.B6.E6.8F.92.E6.8B.94.E4.B9.8B.E5.BE.8C.E8.A8.AD.E5.AE.9A.E6.B6.88.E5.A4.B1.E4.BA.86_I_have_an_USB_keyboard_and_the_settings_get_lost_upon_unplugging_it"></span><span class="mw-headline" id="有個usb鍵盤_當插拔之後設定消失了_I_have_an_USB_keyboard_and_the_settings_get_lost_upon_unplugging_it">有個usb鍵盤 當插拔之後設定消失了 I have an USB keyboard and the settings get lost upon unplugging it</span>
 </h3>
 <p>使用 <a href="#Using_rules">rules</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> 替代靜態按鍵規劃設定會讓你更有彈性和長久性按鍵規劃映射那不需手動地(或用腳本script)
-Using <a href="#Using_rules">rules</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> instead of static keymap configuration will give you a more flexible and permanent key mapping that doesn't need to be reloaded manually (or by a script).
+Using <a href="#Using_rules">rules</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> instead of static keymap configuration will give you a more flexible and permanent key mapping that does not need to be reloaded manually (or by a script).
 </p>
 <h2>
 <span id=".E4.B9.9F.E5.8F.83.E8.80.83_See_also"></span><span class="mw-headline" id="也參考_See_also">也參考 See also</span>
 </h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://www.x.org/releases/current/doc/xorg-docs/input/XKB-Config.html">The XKB Configuration Guide</a></li>
-<li><a rel="nofollow" class="external free" href="http://www.x.org/wiki/XKB">http://www.x.org/wiki/XKB</a></li>
+<li><a rel="nofollow" class="external free" href="https://www.x.org/wiki/XKB">https://www.x.org/wiki/XKB</a></li>
 <li>
 <a rel="nofollow" class="external text" href="http://www.charvolant.org/doug/xkb/html/index.html">An Unreliable Guide To XKB Configuration</a>.</li>
 <li>
 <a rel="nofollow" class="external text" href="http://pascal.tsu.ru/en/xkb/">Ivan Pascal XKB docs</a>. 最老的與最爲人知的指南之一，聚焦許多細節，且解釋某些獨特的XKB功能。</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.x.org/releases/current/doc/kbproto/xkbproto.pdf">XKB protocol specification</a>. 全面描述所有XKB功能。極度有用於瞭解XKB如何工作，在所有東西中包含虛擬修飾鍵的良好敘述。某些xkbcomp實踐極度建議做過，儘管功能被描述於協定等級。</li>
+<a rel="nofollow" class="external text" href="https://www.x.org/releases/current/doc/kbproto/xkbproto.pdf">XKB protocol specification</a>. 全面描述所有XKB功能。極度有用於瞭解XKB如何工作，在所有東西中包含虛擬修飾鍵的良好敘述。某些xkbcomp實踐極度建議做過，儘管功能被描述於協定等級。</li>
 </ul>
 </div>
 </div>
@@ -977,7 +975,6 @@ Using <a href="#Using_rules">rules</a><sup>[<a href="../en/Help:Procedures.html#
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 </ul>
 </div>
@@ -987,8 +984,8 @@ Using <a href="#Using_rules">rules</a><sup>[<a href="../en/Help:Procedures.html#
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=X_keyboard_extension_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)&amp;oldid=645191">https://wiki.archlinux.org/index.php?title=X_keyboard_extension_(正體中文)&amp;oldid=645191</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 December 2020, at 14:38.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=X_keyboard_extension_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)&amp;oldid=662610">https://wiki.archlinux.org/index.php?title=X_keyboard_extension_(正體中文)&amp;oldid=662610</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:33.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -178,8 +178,7 @@ Section "Screen"
     Option         "MetaModes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
     Option         "AllowIndirectGLXProtocol" "off"
     Option         "TripleBuffer" "on"
-EndSection
-</pre>
+EndSection</pre>
 <p>If you do not have an Xorg configuration file, you can create one for your present hardware using <code>nvidia-xconfig</code> (see <a href="../../en/NVIDIA.html#Automatic_configuration" title="NVIDIA">NVIDIA#Automatic configuration</a>) and move it from <code>/etc/X11/xorg.conf</code> to the preferred location <code>/etc/X11/xorg.conf.d/20-nvidia.conf</code>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -208,15 +207,14 @@ EndSection
 <p>For posterity, these are the legacy workarounds. Do <b>not</b> apply both workarounds because this may lead to high CPU load <a rel="nofollow" class="external autonumber" href="https://bugs.kde.org/show_bug.cgi?id=322060">[3]</a>.
 </p>
 <h5><span class="mw-headline" id="1._GL_threads">1. GL threads</span></h5>
-<p>Set GL threads to sleep by exporting <code>__GL_YIELD="USLEEP"</code> to just <code>kwin_x11</code>. Unlike setting up a global environment variable, this affects only KWin. It should also have the advantage over other workarounds, like forcing triple buffering or forcing composition pipeline in the driver, that it doesn't introduce additional stuttering when scrolling in Firefox or moving windows.
+<p>Set GL threads to sleep by exporting <code>__GL_YIELD="USLEEP"</code> to just <code>kwin_x11</code>. Unlike setting up a global environment variable, this affects only KWin. It should also have the advantage over other workarounds, like forcing triple buffering or forcing composition pipeline in the driver, that it does not introduce additional stuttering when scrolling in Firefox or moving windows.
 </p>
 <p>The script can be executed automatically at login with an autostart script:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.config/autostart-scripts/kwin.sh</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/bash
 
-(sleep 2s &amp;&amp; __GL_YIELD="USLEEP" kwin_x11 --replace)
-</pre>
+(sleep 2s &amp;&amp; __GL_YIELD="USLEEP" kwin_x11 --replace)</pre>
 <p>Flag the script as executable.
 </p>
 <p>The <code>sleep</code> argument helps to prevent issues when KWin is restarted/hanging after logging in, you might need to increase this time.
@@ -242,7 +240,7 @@ modprobe: ERROR: could not insert 'nvidia': No such device
 modprobe: INFO: context 0x24481e0 released
 insmod /lib/modules/4.8.6-1-ARCH/extramodules/nvidia.ko.gz 
 </pre>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
 NVRM: The NVIDIA GPU 0000:01:00.0 (PCI ID: 10de:139b)
 NVRM: installed in this system is not supported by the 370.28
@@ -390,7 +388,7 @@ install intel_agp /usr/bin/false
 # modprobe nvidia-drm
 # xinit -- -retro
 </pre>
-<p>If you are running your TTY on nvidia, put the lines in a script so you don't end up with no screen.
+<p>If you are running your TTY on nvidia, put the lines in a script so you do not end up with no screen.
 </p>
 <h2><span class="mw-headline" id="Black_screen_on_systems_with_VIA_integrated_GPU">Black screen on systems with VIA integrated GPU</span></h2>
 <p>As above, blacklisting the <i>viafb</i> module may resolve conflicts with NVIDIA drivers:
@@ -500,7 +498,7 @@ EndSection
 <pre> nvidia-settings -a GPUGraphicsClockOffsetAllPerformanceLevels=50 -a GPUMemoryTransferRateOffsetGPUGraphicsClockOffsetAllPerformanceLevels=50 -a GPUOverVoltageOffset=100
 </pre>
 <h2><span class="mw-headline" id="Overclocking_not_working_with_Unknown_Error">Overclocking not working with Unknown Error</span></h2>
-<p>If you're running Xorg as a non-root user and trying to overclock your NVIDIA GPU, you will get an error similar to this one:
+<p>If you are running Xorg as a non-root user and trying to overclock your NVIDIA GPU, you will get an error similar to this one:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ nvidia-settings -a "[gpu:0]/GPUGraphicsClockOffset[3]=10"</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">ERROR: Error assigning value 10 to attribute 'GPUGraphicsClockOffset' (trinity-zero:1[gpu:0]) as specified in assignment
@@ -572,8 +570,8 @@ kernel: nvidia-modeset: ERROR: GPU:0: Failure reading maximum pixel clock value 
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NVIDIA/Troubleshooting&amp;oldid=655517">https://wiki.archlinux.org/index.php?title=NVIDIA/Troubleshooting&amp;oldid=655517</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 March 2021, at 20:10.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NVIDIA/Troubleshooting&amp;oldid=663322">https://wiki.archlinux.org/index.php?title=NVIDIA/Troubleshooting&amp;oldid=663322</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 11:00.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

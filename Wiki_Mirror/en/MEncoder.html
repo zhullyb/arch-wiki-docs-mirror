@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -160,7 +161,7 @@ mencoder -dvd-device "$ISO" dvd://"$TITLE" -alang "$AUDIOLANG" -chapter "$CHAPTE
 <p>The <b>.mkv</b> file will contain everything, so you can store your movie keeping all the audio track you want. Even if you are not interested in keeping multiple sound tracks, the H.264/Vorbis format pair should ensure great quality.
 </p>
 <h3><span class="mw-headline" id="Encoding_video_mp4_for_Nokia_5800_XM_and_Nokia_N97">Encoding video mp4 for Nokia 5800 XM and Nokia N97</span></h3>
-<p>In <b>2 pass</b>es with small bitrates (640kbps video vbitrate and 96kbps audio abitrate) yields pretty watchable video mp4 for nokia 5800 xm and Nokia N97 phones' default video player. Let's assume that we have a video.avi file (replace video.avi with your video file)
+<p>In <b>2 pass</b>es with small bitrates (640kbps video vbitrate and 96kbps audio abitrate) yields pretty watchable video mp4 for nokia 5800 xm and Nokia N97 phones' default video player. Let us assume that we have a video.avi file (replace video.avi with your video file)
 </p>
 <p><b>mkv to mp4 (nokia 97, 5800 compatible)</b>
 </p>
@@ -210,11 +211,10 @@ aglobal=1:vglobal=1:<b>acodec=libfaac:vcodec=mpeg4:abitrate=96:vbitrate=640</b>:
 <p>The following output video codec (-ovc) options are suggested as very high-quality settings and should suffice for most transcodings, including the additon of subtitles to a stream. 
 </p>
 <h4>
-<span id="Two-pass_x264_.28very_high-quality.29"></span><span class="mw-headline" id="Two-pass_x264_(very_high-quality)">Two-pass <a rel="nofollow" class="external text" href="http://www.videolan.org/developers/x264.html">x264</a> (<a rel="nofollow" class="external text" href="http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-x264.html">very high-quality</a>)</span>
+<span id="Two-pass_x264_.28very_high-quality.29"></span><span class="mw-headline" id="Two-pass_x264_(very_high-quality)">Two-pass <a rel="nofollow" class="external text" href="https://www.videolan.org/developers/x264.html">x264</a> (<a rel="nofollow" class="external text" href="http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-x264.html">very high-quality</a>)</span>
 </h4>
-<pre style="overflow:auto">mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=1:preset=veryslow:fast_pskip=0:tune=film:frameref=15:bitrate=3000:threads=auto -sub original_video.srt -subfont-text-scale 3 -o /dev/null
-mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=2:preset=veryslow:fast_pskip=0:tune=film:frameref=15:bitrate=3000:threads=auto -sub original_video.srt -subfont-text-scale 3 -o output_video.avi
-</pre>
+<pre>mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=1:preset=veryslow:fast_pskip=0:tune=film:frameref=15:bitrate=3000:threads=auto -sub original_video.srt -subfont-text-scale 3 -o /dev/null
+mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=2:preset=veryslow:fast_pskip=0:tune=film:frameref=15:bitrate=3000:threads=auto -sub original_video.srt -subfont-text-scale 3 -o output_video.avi</pre>
 <ul>
 <li>
 <code>fast_pskip</code>=<code>0</code> is a maximum quality <code>placebo</code> preset option.</li>
@@ -228,20 +228,17 @@ mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=2:preset=verys
 <h4>
 <span id="Single-pass_x264_.28very_high-quality.29"></span><span class="mw-headline" id="Single-pass_x264_(very_high-quality)">Single-pass x264 (very high-quality)</span>
 </h4>
-<pre style="overflow:auto">mencoder original_video.avi -oac copy -ovc x264 -x264encopts preset=veryslow:tune=film:crf=15:frameref=15:fast_pskip=0:threads=auto -sub original_video.srt -subfont-text-scale 3 -o output_video.avi
-</pre>
+<pre>mencoder original_video.avi -oac copy -ovc x264 -x264encopts preset=veryslow:tune=film:crf=15:frameref=15:fast_pskip=0:threads=auto -sub original_video.srt -subfont-text-scale 3 -o output_video.avi</pre>
 <ul><li>The following example uses the option <code>-of lavf</code> to mux the output into a <a href="https://en.wikipedia.org/wiki/Matroska" class="extiw" title="wikipedia:Matroska">Matroska</a> container which is autodetected from the output file extension <code>.mkv</code>
 </li></ul>
-<pre style="overflow:auto">mencoder original_video.avi -oac copy -of lavf -ovc x264 -x264encopts preset=veryslow:tune=film:crf=15:frameref=15:fast_pskip=0:global_header:threads=auto -sub original_video.srt -subfont-text-scale 3 -o output_video.mkv
-</pre>
+<pre>mencoder original_video.avi -oac copy -of lavf -ovc x264 -x264encopts preset=veryslow:tune=film:crf=15:frameref=15:fast_pskip=0:global_header:threads=auto -sub original_video.srt -subfont-text-scale 3 -o output_video.mkv</pre>
 <ul><li>
 <code>global_header</code> writes global video headers to extradata, or in front of keyframes and is typically required for .mp4 and .mkv containers.</li></ul>
 <h4>
 <span id="Two-pass_xvid_.28very_high-quality.29"></span><span class="mw-headline" id="Two-pass_xvid_(very_high-quality)">Two-pass <a rel="nofollow" class="external text" href="http://www.xvid.org/">xvid</a> (<a rel="nofollow" class="external text" href="http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-xvid.html">very high-quality</a>)</span>
 </h4>
-<pre style="overflow:auto">mencoder original_video.avi -oac copy -ovc xvid -xvidencopts pass=1:chroma_opt:vhq=4:max_bframes=1:quant_type=mpeg:threads=6 -sub original_video.srt -subfont-text-scale 3 -o /dev/null
-mencoder original_video.avi -oac copy -ovc xvid -xvidencopts pass=2:chroma_opt:vhq=4:max_bframes=1:quant_type=mpeg:bitrate=3000:threads=6 -sub original_video.srt -subfont-text-scale 3 -o output_video.avi
-</pre>
+<pre>mencoder original_video.avi -oac copy -ovc xvid -xvidencopts pass=1:chroma_opt:vhq=4:max_bframes=1:quant_type=mpeg:threads=6 -sub original_video.srt -subfont-text-scale 3 -o /dev/null
+mencoder original_video.avi -oac copy -ovc xvid -xvidencopts pass=2:chroma_opt:vhq=4:max_bframes=1:quant_type=mpeg:bitrate=3000:threads=6 -sub original_video.srt -subfont-text-scale 3 -o output_video.avi</pre>
 <ul>
 <li>
 <code>threads</code>=<code>n</code> where n = physical, or CPU cores.</li>
@@ -255,12 +252,11 @@ mencoder original_video.avi -oac copy -ovc xvid -xvidencopts pass=2:chroma_opt:v
 <h4>
 <span id="Three-pass_lavc_.28very_high-quality_mpeg4.29"></span><span class="mw-headline" id="Three-pass_lavc_(very_high-quality_mpeg4)">Three-pass <a href="https://en.wikipedia.org/wiki/Libavcodec" class="extiw" title="wikipedia:Libavcodec">lavc</a> (<a rel="nofollow" class="external text" href="http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-enc-libavcodec.html">very high-quality mpeg4</a>)</span>
 </h4>
-<pre style="overflow:auto">mencoder original_video.avi -oac copy -ffourcc DX50 -ovc lavc -lavcopts vpass=1:mbd=2:mv0:trell:v4mv:cbp:predia=6:dia=6:precmp=6:cmp=6:subcmp=6:preme=2:qns=2:vbitrate=3000 -sub original_video.srt -subfont-text-scale 3 -o output_video.avi
+<pre>mencoder original_video.avi -oac copy -ffourcc DX50 -ovc lavc -lavcopts vpass=1:mbd=2:mv0:trell:v4mv:cbp:predia=6:dia=6:precmp=6:cmp=6:subcmp=6:preme=2:qns=2:vbitrate=3000 -sub original_video.srt -subfont-text-scale 3 -o output_video.avi
 mencoder original_video.avi -oac copy -ffourcc DX50 -ovc lavc -lavcopts vpass=3:mbd=2:mv0:trell:v4mv:cbp:predia=6:dia=6:precmp=6:cmp=6:subcmp=6:preme=2:qns=2:vbitrate=3000 -sub original_video.srt -subfont-text-scale 3 -o output_video.avi
-mencoder original_video.avi -oac copy -ffourcc DX50 -ovc lavc -lavcopts vpass=3:mbd=2:mv0:trell:v4mv:cbp:predia=6:dia=6:precmp=6:cmp=6:subcmp=6:preme=2:qns=2:vbitrate=3000 -sub original_video.srt -subfont-text-scale 3 -o output_video.avi
-</pre>
+mencoder original_video.avi -oac copy -ffourcc DX50 -ovc lavc -lavcopts vpass=3:mbd=2:mv0:trell:v4mv:cbp:predia=6:dia=6:precmp=6:cmp=6:subcmp=6:preme=2:qns=2:vbitrate=3000 -sub original_video.srt -subfont-text-scale 3 -o output_video.avi</pre>
 <ul>
-<li>Introducing <code>threads</code>=<code>n</code>&gt;<code>1</code> for <code>-vcodec mpeg4</code> may skew the effects of <a href="https://en.wikipedia.org/wiki/Motion_estimation" class="extiw" title="wikipedia:Motion estimation">motion estimation</a> and lead to <a rel="nofollow" class="external text" href="http://ffmpeg.org/faq.html#SEC16">reduced video quality</a> and compression efficiency.</li>
+<li>Introducing <code>threads</code>=<code>n</code>&gt;<code>1</code> for <code>-vcodec mpeg4</code> may skew the effects of <a href="https://en.wikipedia.org/wiki/Motion_estimation" class="extiw" title="wikipedia:Motion estimation">motion estimation</a> and lead to <a rel="nofollow" class="external text" href="https://ffmpeg.org/faq.html#SEC16">reduced video quality</a> and compression efficiency.</li>
 <li>
 <code>predia</code>=<code>6</code>:<code>dia</code>=<code>6</code>:<code>precmp</code>=<code>6</code>:<code>cmp</code>=<code>6</code>:<code>subcmp</code>=<code>6</code> to <code>predia</code>=<code>3</code>:<code>dia</code>=<code>3</code>:<code>precmp</code>=<code>3</code>:<code>cmp</code>=<code>3</code>:<code>subcmp</code>=<code>3</code> can reduce encoding times without incurring much loss in quality.</li>
 <li>
@@ -271,8 +267,7 @@ mencoder original_video.avi -oac copy -ffourcc DX50 -ovc lavc -lavcopts vpass=3:
 <h4>
 <span id="Single-pass_lavc_.28very_high-quality_mpeg-2.29"></span><span class="mw-headline" id="Single-pass_lavc_(very_high-quality_mpeg-2)">Single-pass <a href="https://en.wikipedia.org/wiki/Libavcodec" class="extiw" title="wikipedia:Libavcodec">lavc</a> (<a rel="nofollow" class="external text" href="http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-vcd-dvd.html">very high-quality mpeg-2</a>)</span>
 </h4>
-<pre style="overflow:auto">mencoder -mc 0 -noskip -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf  -vf scale=720:576,harddup -srate 48000 -af lavcresample=48000   -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=15:vstrict=0:acodec=mp2:abitrate=192:aspect=16/9  -sub-bg-alpha 100 -subpos 95 -subfont-text-scale 2.5 -subcp cp1250 -sub subFile.srt  -o outFile.mpg inFile.mkv
-</pre>
+<pre>mencoder -mc 0 -noskip -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf  -vf scale=720:576,harddup -srate 48000 -af lavcresample=48000   -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=15:vstrict=0:acodec=mp2:abitrate=192:aspect=16/9  -sub-bg-alpha 100 -subpos 95 -subfont-text-scale 2.5 -subcp cp1250 -sub subFile.srt  -o outFile.mpg inFile.mkv</pre>
 <ul>
 <li>
 <b>-mc 0 -noskip</b> to ensure A/V sync</li>
@@ -292,23 +287,20 @@ mencoder original_video.avi -oac copy -ffourcc DX50 -ovc lavc -lavcopts vpass=3:
 <li>Direct <code>-vobsub</code> to the <code>subtitle_file</code> using the full pathname of the file without extensions (<code>.idx</code>/<code>.sub</code>).</li>
 <li>Select the second subtitle ID language (<code>-vobsubid 2</code>) contained within the VOBsub files (<code>.idx</code>/<code>.sub</code>).</li>
 </ul>
-<pre style="overflow:auto">mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=1:preset=veryslow:fast_pskip=0:tune=film:frameref=15:bitrate=3000:threads=auto -vobsub subtitle_file -vobsubid 2 -o /dev/null
-mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=2:preset=veryslow:fast_pskip=0:tune=film:frameref=15:bitrate=3000:threads=auto -vobsub subtitle_file -vobsubid 2 -o output_video.avi
-</pre>
+<pre>mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=1:preset=veryslow:fast_pskip=0:tune=film:frameref=15:bitrate=3000:threads=auto -vobsub subtitle_file -vobsubid 2 -o /dev/null
+mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=2:preset=veryslow:fast_pskip=0:tune=film:frameref=15:bitrate=3000:threads=auto -vobsub subtitle_file -vobsubid 2 -o output_video.avi</pre>
 <h4><span class="mw-headline" id="Testing_subtitle_muxing_results">Testing subtitle muxing results</span></h4>
 <p>Avoid passing resource intensive encoding options in order to verify desired results sooner rather than later.
 </p>
 <h5>
 <span id="Single-pass_x264_.28low_quality.29"></span><span class="mw-headline" id="Single-pass_x264_(low_quality)">Single-pass x264 (low quality)</span>
 </h5>
-<pre style="overflow:auto">mencoder original_video.avi -oac copy -ovc x264 -x264encopts preset=ultrafast:threads=auto -sub original_video.srt -subfont-text-scale 3 -o output_video.avi
-</pre>
-<pre style="overflow:auto">mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=2:preset=ultrafast:threads=auto -vobsub subtitle_file -vobsubid 2 -o output_video.avi
-</pre>
+<pre>mencoder original_video.avi -oac copy -ovc x264 -x264encopts preset=ultrafast:threads=auto -sub original_video.srt -subfont-text-scale 3 -o output_video.avi</pre>
+<pre>mencoder original_video.avi -oac copy -ovc x264 -x264encopts pass=2:preset=ultrafast:threads=auto -vobsub subtitle_file -vobsubid 2 -o output_video.avi</pre>
 <h3><span class="mw-headline" id="mp2_vs._mp3lame_vs._aac">mp2 vs. mp3lame vs. aac</span></h3>
 <ul>
 <li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=toolame">toolame</a></span> is recommended over <a rel="nofollow" class="external text" href="http://www.ffmpeg.org/">FFmpeg</a> lavc (libavcodec) for mp2 encoding.</li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=toolame">toolame</a></span> is recommended over <a rel="nofollow" class="external text" href="https://www.ffmpeg.org/">FFmpeg</a> lavc (libavcodec) for mp2 encoding.</li>
 <li>
 <a rel="nofollow" class="external text" href="http://lame.sourceforge.net/">mp3lame</a> is recommended over <a rel="nofollow" class="external text" href="http://www.audiocoding.com/faac.html">FAAC</a> (not fully developed) encoding at all bitrates.</li>
 </ul>
@@ -336,7 +328,7 @@ mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=2:$opt -oac mp3lame -o outpu
 <a rel="nofollow" class="external free" href="http://www.selur.de/">http://www.selur.de/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/hybrid-encoder/">hybrid-encoder</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
-<b>Hyper Video Converter</b> — A frontend for various cli videoencoder tools I have made because I wanted something, that let's me quickly convert videos from konqueror without typing 3-line-commands in the console.</li></ul>
+<b>Hyper Video Converter</b> — A frontend for various cli videoencoder tools I have made because I wanted something, that lets me quickly convert videos from konqueror without typing 3-line-commands in the console.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="http://hypervideoconve.sourceforge.net/">http://hypervideoconve.sourceforge.net/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/hypervc-qt4/">hypervc-qt4</a></span><sup><small>AUR</small></sup>
 </dd></dl>
@@ -355,8 +347,8 @@ mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=2:$opt -oac mp3lame -o outpu
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MEncoder&amp;oldid=586063">https://wiki.archlinux.org/index.php?title=MEncoder&amp;oldid=586063</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 October 2019, at 07:11.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MEncoder&amp;oldid=661814">https://wiki.archlinux.org/index.php?title=MEncoder&amp;oldid=661814</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 13:54.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

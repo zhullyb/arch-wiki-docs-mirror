@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -49,7 +50,7 @@
 <div class="noprint archwiki-template-message">
 <p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> The configuration using Apache or nginx, with Dovecot, Postfix, and Samba is complete. Configurations need to be added for OpenLDAP and SQL user sources, as well as for other SMTP, IMAP, and HTTP servers. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:SOGo">Talk:SOGo#</a>)</div>
+<b>Reason:</b> The configuration using Apache or nginx for an HTTP server, Samba or MariaDB/MySQL as a user source, with Postfix (SMTP) and Dovecot (IMAP/POP3) is complete. Configurations need to be added for OpenLDAP and PostgreSQL as user sources, as well as for other SMTP, IMAP, and HTTP servers. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:SOGo">Talk:SOGo#</a>)</div>
 </div>
 <p><a rel="nofollow" class="external text" href="http://www.sogo.nu/">SOGo</a> provides a rich AJAX-based Web interface and supports multiple native clients through the use of standard protocols such as CalDAV, CardDAV and GroupDAV, as well as Microsoft ActiveSync. This article explains how to setup a groupware server using SOGo.
 </p>
@@ -169,7 +170,7 @@
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
 <h3><span class="mw-headline" id="Considerations">Considerations</span></h3>
-<p>SOGo can use many different sources for user authentication including, but not limited to, Active Directory, OpenLDAP, MySQL/MariaDB, PostgreSQL, and probably many others if you include PAM. This article will focus on using a centrally managed user database (following on from the <a href="../en/Samba/Active_Directory_domain_controller.html" title="Samba/Active Directory domain controller">Samba/Active Directory domain controller</a> article initially -- hopefully others will contribute OpenLDAP/MySQL/PostgreSQL user configs) for both authentication, and to provide a global address list.
+<p>SOGo can use many different sources for user authentication including, but not limited to, Active Directory, OpenLDAP, MySQL/MariaDB, PostgreSQL, and probably many others if you include PAM. This article will focus on using a centrally managed user database for both authentication, and to provide a global address list.
 </p>
 <p>Additionally, either <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mariadb">mariadb</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=postgresql">postgresql</a></span> must be used to store the users' calendars and address books. As of this writing, the SOGo documentation has a clear preference for MariaDB (or MySQL), but if you have an existing PostgreSQL installation, it might make sense to use it. Other SQL implementations might also be supported, but are not currently covered.
 </p>
@@ -293,7 +294,7 @@ Add the following to <code>/etc/nginx/nginx.conf</code>:
 <h3>
 <span id="MySQL.2FMariaDB"></span><span class="mw-headline" id="MySQL/MariaDB">MySQL/MariaDB</span>
 </h3>
-<p>If you haven't already done so, create the first MySQL database with the following command:
+<p>If you have not already done so, create the first MySQL database with the following command:
 </p>
 <pre># mysql_install_db --user=mysql --basedir=/usr/ --ldata=/var/lib/mysql/
 </pre>
@@ -326,9 +327,9 @@ FLUSH PRIVILEGES;
 <p>Simply restart sogo to continue using the MySQL/MariaDB.
 </p>
 <h3><span class="mw-headline" id="PostgreSQL">PostgreSQL</span></h3>
-<p>If you've elected to use PostgreSQL over MySQL/MariaDB, the old instructions have been left for convenience. If this is a new installation, it is recommended that you use only MySQL/MariaDB for sogo/openchange data.
+<p>If you have elected to use PostgreSQL over MySQL/MariaDB, the old instructions have been left for convenience. If this is a new installation, it is recommended that you use only MySQL/MariaDB for sogo/openchange data.
 </p>
-<p>Initialize the default database and start PostgreSQl (be sure to replace <b>en_US.UTF-8</b> with the correct locale for your installation):
+<p>Initialize the default database and start PostgreSQL (be sure to replace <b>en_US.UTF-8</b> with the correct locale for your installation):
 </p>
 <pre># mkdir -p /var/lib/postgres/data
 # chown -R postgres:postgres /var/lib/postgres
@@ -359,7 +360,7 @@ $ createdb -O sogo sogo
 <h3><span class="mw-headline" id="Active_Directory">Active Directory</span></h3>
 <p>If using Active Directory for user authentication, whether using Samba (following the <a href="../en/Samba/Active_Directory_domain_controller.html" title="Samba/Active Directory domain controller">Samba/Active Directory domain controller</a> article) or using a Microsoft server, the needed attributes for mail users are already present in the default schema. Users, however, need to have both <i>mail</i> and <i>proxyAddresses</i> attributes set. The <i>proxyAddress</i> attribute labeled <b>SMTP</b> (as opposed to smtp) is the default mail address. If using internal and external domains, you will need to set SMTP to the user's external address as this will be the SMTP from address and envelope sender in outgoing messages. Additionally, the <i>mail</i> attribute must also be set to the user's external email address.
 </p>
-<p>For Samba, you can use the <i>ldbedit</i> command to edit users. In this example, we'll modify the "Administrator" user and add aliases for postmaster, as well as internal and external email addresses. Replace <i>vim</i> in the following command with your preferred editor:
+<p>For Samba, you can use the <i>ldbedit</i> command to edit users. In this example, we will modify the "Administrator" user and add aliases for postmaster, as well as internal and external email addresses. Replace <i>vim</i> in the following command with your preferred editor:
 </p>
 <pre># LDB_MODULES_PATH="/usr/lib/samba/ldb" ldbedit -e <i>vim</i> -H /var/lib/samba/private/sam.ldb '(samaccountname=<b>administrator</b>)'
 </pre>
@@ -372,7 +373,7 @@ proxyAddresses: smtp:postmaster@<b>internal</b>.<b>domain</b>.<b>tld</b>
 proxyAddresses: smtp:postmaster@<b>domain</b>.<b>tld</b>
 proxyAddresses: smtp:administrator@<b>internal</b>.<b>domain</b>.<b>tld</b>
 ...</pre>
-<p>If using Microsoft's Active Directory Users and Computers MMC snap-in to edit users, you'll need to enable "Show Advanced Features" from the Tools menu, and use the Attribute Editor tab.
+<p>If using Microsoft's Active Directory Users and Computers MMC snap-in to edit users, you will need to enable "Show Advanced Features" from the Tools menu, and use the Attribute Editor tab.
 </p>
 <p>Next, allow daemons to lookup users in the directory using LDAP. To do this, create an unprivileged user to use for LDAP lookups and optionally (recommended), set the password not to expire. If using Samba, execute the following commands. Be certain to set a suitably strong password:
 </p>
@@ -464,7 +465,7 @@ userdb ldap {
 <pre># chmod 0644 /etc/dovecot/conf.d/ldap.conf
 # chown root:root /etc/dovecot/conf.d/ldap.conf
 </pre>
-<p>Create the LDAP user and password configuration files (replace dc=<b>internal</b>,dc=<b>domain</b>,dc=<b>tld</b>, <b>INTERNAL</b>, and <b>ldapPW</b> with appropriate values). Remove the tls lines below if you haven't enabled the TLS configuration in your directory:
+<p>Create the LDAP user and password configuration files (replace dc=<b>internal</b>,dc=<b>domain</b>,dc=<b>tld</b>, <b>INTERNAL</b>, and <b>ldapPW</b> with appropriate values). Remove the tls lines below if you have not enabled the TLS configuration in your directory:
 </p>
 <p><code>/etc/dovecot/dovecot-ldap-passdb.conf</code>
 </p>
@@ -1084,8 +1085,8 @@ ProxyPass /Microsoft-Server-ActiveSync \
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SOGo&amp;oldid=625044">https://wiki.archlinux.org/index.php?title=SOGo&amp;oldid=625044</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 July 2020, at 10:59.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SOGo&amp;oldid=662734">https://wiki.archlinux.org/index.php?title=SOGo&amp;oldid=662734</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 02:30.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

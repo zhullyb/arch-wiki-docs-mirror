@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,7 +33,7 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p>MongoDB (from hu<b>mongo</b>us) is an open source document-oriented database system developed and supported by <a rel="nofollow" class="external text" href="http://www.mongodb.com/">MongoDB Inc. (formerly 10gen)</a>. It is part of the NoSQL family of database systems. Instead of storing data in tables as is done in a "classical" relational database, MongoDB stores structured data as JSON-like documents with dynamic schemas (MongoDB calls the format <a rel="nofollow" class="external text" href="http://bsonspec.org/">BSON</a>), making the integration of data in certain types of applications easier and faster.
+<p>MongoDB (from hu<b>mongo</b>us) is an open source document-oriented database system developed and supported by <a rel="nofollow" class="external text" href="https://www.mongodb.com/">MongoDB Inc. (formerly 10gen)</a>. It is part of the NoSQL family of database systems. Instead of storing data in tables as is done in a "classical" relational database, MongoDB stores structured data as JSON-like documents with dynamic schemas (MongoDB calls the format <a rel="nofollow" class="external text" href="http://bsonspec.org/">BSON</a>), making the integration of data in certain types of applications easier and faster.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -98,7 +99,7 @@
 </pre>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <h3><span class="mw-headline" id="File_Format">File Format</span></h3>
-<p>MongoDB 2.6 introduced a YAML-based configuration file format. The 2.4 configuration file format remains for backward compatibility <a rel="nofollow" class="external autonumber" href="https://docs.mongodb.com/manual/reference/configuration-options/#file-format">[3]</a>:
+<p>MongoDB uses a YAML-based configuration file format. See <a rel="nofollow" class="external free" href="https://docs.mongodb.com/manual/reference/configuration-options/">https://docs.mongodb.com/manual/reference/configuration-options/</a> for available configuration options.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mongodb.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">systemLog:
@@ -116,12 +117,10 @@ net:
 setParameter:
    enableLocalhostAuthBypass: false
 ..</pre>
-<p>See <a rel="nofollow" class="external free" href="https://docs.mongodb.com/manual/reference/configuration-options/">https://docs.mongodb.com/manual/reference/configuration-options/</a> for available configuration options.
-</p>
 <h3><span class="mw-headline" id="Requiring_Authentication">Requiring Authentication</span></h3>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> By default, MongoDB does not require any authentication. Although MongoDB only listens on the localhost interface by default, this still allows any local user to connect without authenticating and may exposes the database(s). It is recommended to enable access control to prevent any unwanted access.</div>
-<p>To create a MongoDB user account with administrator access <a rel="nofollow" class="external autonumber" href="https://docs.mongodb.com/manual/tutorial/enable-authentication/">[4]</a>:
+<p>To create a MongoDB user account with administrator access <a rel="nofollow" class="external autonumber" href="https://docs.mongodb.com/manual/tutorial/enable-authentication/">[3]</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ mongo</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">use admin
@@ -132,24 +131,20 @@ db.createUser(
     roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
   }
 )</pre>
-<p>If your <code>/etc/mongodb.conf</code> uses the new YAML format, <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Append">append</a>:
+<p><a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Append">Append</a> the following to your <code>/etc/mongodb.conf</code>.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mongodb.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">security:
   authorization: "enabled"
 </pre>
-<p>If it uses the v2.4 format, add:
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mongodb.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">auth = true</pre>
 <p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">Restart</a> <code>mongodb.service</code>.
 </p>
 <h3><span class="mw-headline" id="NUMA">NUMA</span></h3>
-<p>Running MongoDB with Non-Uniform Access Memory (NUMA) can significantly impact performance.  <a rel="nofollow" class="external autonumber" href="https://docs.mongodb.com/manual/administration/production-notes/#mongodb-and-numa-hardware">[5]</a>
+<p>Running MongoDB with Non-Uniform Access Memory (NUMA) can significantly impact performance.  <a rel="nofollow" class="external autonumber" href="https://docs.mongodb.com/manual/administration/production-notes/#mongodb-and-numa-hardware">[4]</a>
 </p>
 <p>To see if your system uses NUMA:
 </p>
-<pre>$ dmesg | grep -i numa
+<pre># dmesg | grep -i numa
 </pre>
 <p>Also, <code>/var/log/mongodb/mongod.log</code> will show warnings if NUMA is in use and MongoDB is not started through <code>numactl</code>.  (The <code>mongo</code> shell will also show this, but only if you do not have authentication enabled.)
 </p>
@@ -186,10 +181,10 @@ db.createUser(
 </p>
 <p>Large MongoDB databases can take a considerable amount of time to cleanly shut down, especially if swap is being used.  (An active 450GB database on a top of the line NVMe with 64GB RAM and 16GB swap can take an hour to shut down.)
 </p>
-<p>By default, MongoDB uses journaling. <a rel="nofollow" class="external autonumber" href="https://docs.mongodb.com/manual/reference/configuration-options/#storage-options">[6]</a>  With journaling, an unclean shutdown should not pose a risk of data loss.  But, if not shutdown cleanly, large MongoDB databases can take a considerable amount of time to start back up.  In this case, choosing whether to require a clean shutdown is a choice of a slower shutdown versus a slower startup. <a rel="nofollow" class="external autonumber" href="https://groups.google.com/forum/?utm_medium=email&amp;utm_source=footer#!msg/mongodb-user/KjBU_GcNcmw/gR2UxRIFAgAJ">[7]</a>  
+<p>By default, MongoDB uses journaling. <a rel="nofollow" class="external autonumber" href="https://docs.mongodb.com/manual/reference/configuration-options/#storage-options">[5]</a>  With journaling, an unclean shutdown should not pose a risk of data loss.  But, if not shutdown cleanly, large MongoDB databases can take a considerable amount of time to start back up.  In this case, choosing whether to require a clean shutdown is a choice of a slower shutdown versus a slower startup. <a rel="nofollow" class="external autonumber" href="https://groups.google.com/forum/?utm_medium=email&amp;utm_source=footer#!msg/mongodb-user/KjBU_GcNcmw/gR2UxRIFAgAJ">[6]</a>  
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> If you disable journaling, failing to require a clean shutdown severely risks data loss, so you really need to require a clean shutdown. <a rel="nofollow" class="external autonumber" href="https://docs.mongodb.com/manual/tutorial/recover-data-following-unexpected-shutdown/">[8]</a>
+<strong>Warning:</strong> If you disable journaling, failing to require a clean shutdown severely risks data loss, so you really need to require a clean shutdown. <a rel="nofollow" class="external autonumber" href="https://docs.mongodb.com/manual/tutorial/recover-data-following-unexpected-shutdown/">[7]</a>
 </div>
 <p>To prevent <a href="../en/Systemd.html" title="Systemd">systemd</a> from killing MongoDB after 90 seconds, make and then <a href="../en/Systemd.html#Editing_provided_units" class="mw-redirect" title="Edit">edit</a> your own <code>.service</code> file, i.e.:
 </p>
@@ -199,7 +194,7 @@ db.createUser(
 </p>
 <pre>TimeoutStopSec=infinity
 </pre>
-<p>If MongoDB needs a long time to start back up, it can be very problematic for <a href="../en/Systemd.html" title="Systemd">systemd</a> to keep killing and restarting it every 90 seconds <a rel="nofollow" class="external autonumber" href="https://jira.mongodb.org/browse/SERVER-38086">[9]</a>, so <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mongodb/">mongodb</a></span><sup><small>AUR</small></sup> prevents this.  If using <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mongodb-bin/">mongodb-bin</a></span><sup><small>AUR</small></sup>, to make <a href="../en/Systemd.html" title="Systemd">systemd</a> wait as long as it takes for MongoDB to start, <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Append">append</a> to the <code>[Service]</code> section:
+<p>If MongoDB needs a long time to start back up, it can be very problematic for <a href="../en/Systemd.html" title="Systemd">systemd</a> to keep killing and restarting it every 90 seconds <a rel="nofollow" class="external autonumber" href="https://jira.mongodb.org/browse/SERVER-38086">[8]</a>, so <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mongodb/">mongodb</a></span><sup><small>AUR</small></sup> prevents this.  If using <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mongodb-bin/">mongodb-bin</a></span><sup><small>AUR</small></sup>, to make <a href="../en/Systemd.html" title="Systemd">systemd</a> wait as long as it takes for MongoDB to start, <a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Append">append</a> to the <code>[Service]</code> section:
 </p>
 <pre>TimeoutStartSec=infinity
 </pre>
@@ -281,8 +276,8 @@ LimitNPROC=64000
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MongoDB&amp;oldid=633983">https://wiki.archlinux.org/index.php?title=MongoDB&amp;oldid=633983</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 September 2020, at 13:36.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MongoDB&amp;oldid=663303">https://wiki.archlinux.org/index.php?title=MongoDB&amp;oldid=663303</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 10:01.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

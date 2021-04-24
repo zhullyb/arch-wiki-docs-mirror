@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -36,6 +37,7 @@
 <p>Related articles</p>
 <ul>
 <li><a href="../en/Active_Directory_integration.html" class="mw-redirect" title="Active Directory Integration">Active Directory Integration</a></li>
+<li><a href="../en/Identity_management.html" title="Identity management">identity management</a></li>
 </ul>
 </div>
 <p><a href="https://en.wikipedia.org/wiki/Kerberos_(protocol)" class="extiw" title="wikipedia:Kerberos (protocol)">Kerberos</a> is a network authentication system. See <a rel="nofollow" class="external text" href="https://web.mit.edu/kerberos/krb5-latest/doc/">krb5 documentation</a>.
@@ -77,16 +79,16 @@
 </li>
 <li class="toclevel-1 tocsection-14"><a href="#Cross-Realm_Trust"><span class="tocnumber">6</span> <span class="toctext">Cross-Realm Trust</span></a></li>
 <li class="toclevel-1 tocsection-15">
-<a href="#SSH_Authentication"><span class="tocnumber">7</span> <span class="toctext">SSH Authentication</span></a>
+<a href="#SSH_authentication"><span class="tocnumber">7</span> <span class="toctext">SSH authentication</span></a>
 <ul>
 <li class="toclevel-2 tocsection-16"><a href="#Authorize_other_principals"><span class="tocnumber">7.1</span> <span class="toctext">Authorize other principals</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-17">
-<a href="#NFS_Security"><span class="tocnumber">8</span> <span class="toctext">NFS Security</span></a>
+<a href="#NFS_security"><span class="tocnumber">8</span> <span class="toctext">NFS security</span></a>
 <ul>
-<li class="toclevel-2 tocsection-18"><a href="#NFS_Server"><span class="tocnumber">8.1</span> <span class="toctext">NFS Server</span></a></li>
-<li class="toclevel-2 tocsection-19"><a href="#NFS_Client"><span class="tocnumber">8.2</span> <span class="toctext">NFS Client</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#NFS_server"><span class="tocnumber">8.1</span> <span class="toctext">NFS server</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#NFS_client"><span class="tocnumber">8.2</span> <span class="toctext">NFS client</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-20">
@@ -207,7 +209,7 @@ Valid starting       Expires              Service principal
 <li>750, TCP and UDP for Kerberos v4 if you need backwards compatibility</li>
 </ul>
 <h3><span class="mw-headline" id="DNS_records">DNS records</span></h3>
-<p>This isn't necessary if you specify the kerberos and kadmin server in each machine's krb5.conf
+<p>This is not necessary if you specify the kerberos and kadmin server in each machine's krb5.conf
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">db.example.com</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">kerberos.example.com.           A     1.2.3.4
@@ -216,8 +218,6 @@ _kerberos._udp.example.com.     SRV   0 0  88 kerberos.example.com.
 _kerberos-adm._udp.example.com. SRV   0 0 749 kerberos.example.com.
 </pre>
 <p>Do not forget reverse DNS.
-</p>
-<p><br>
 </p>
 <h2><span class="mw-headline" id="Client_configuration">Client configuration</span></h2>
 <p>Edit the client's <code>/etc/krb5.conf</code> to match your server's configuration. You can copy this file from the server, or just set the required realm information.
@@ -235,10 +235,8 @@ Default principal: myuser@EXAMPLE.COM
 Valid starting       Expires              Service principal
 08/30/2017 15:36:10  08/31/2017 15:36:10  krbtgt/EXAMPLE.COM@EXAMPLE.COM
 </pre>
-<p><br>
-</p>
 <h2><span class="mw-headline" id="Configuring_kadmin">Configuring kadmin</span></h2>
-<p>You'll need /etc/krb5.conf configured on the kadmin client, and the server's firewall configured for kadmin.
+<p>You will need /etc/krb5.conf configured on the kadmin client, and the server's firewall configured for kadmin.
 </p>
 <h3><span class="mw-headline" id="Configuring_kadmin_ACL">Configuring kadmin ACL</span></h3>
 <p>Create a principal for administration:
@@ -273,9 +271,8 @@ Principal "myuser/admin@EXAMPLE.COM" created.
 </pre>
 <p>This file's format is described in the MIT Kerberos <a rel="nofollow" class="external text" href="https://web.mit.edu/kerberos/krb5-1.12/doc/admin/conf_files/kdc_conf.html">documentation</a>
 </p>
-<p>Restart the kdc and kadmin daemons:
+<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">Restart</a> <code>krb-kdc.servce</code> and <code>krb5-kadmind</code>.
 </p>
-<pre>sudo systemctl restart krb5-kdc krb5-kadmind</pre>
 <p>You can now use kadmin as your own user, authenticating with kerberos:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ kadmin</pre>
@@ -283,10 +280,8 @@ Principal "myuser/admin@EXAMPLE.COM" created.
 Password for myuser/admin@EXAMPLE.COM: ***
 kadmin:
 </pre>
-<p><br>
-</p>
 <h2><span class="mw-headline" id="Service_principals_and_keytabs">Service principals and keytabs</span></h2>
-<p>First, ensure you've configured krb5.conf on all involved machines.
+<p>First, ensure you have configured krb5.conf on all involved machines.
 </p>
 <p>A kerberos principal has three components, formatted as `primary/instance@REALM`. For user principals, the primary is your username and the instance is omitted or is a role (eg. "admin"): `myuser@EXAMPLE.COM` or `myuser/admin@EXAMPLE.COM`. For hosts, the primary is "host" and the instance is the server FQDN: `host/myserver.example.com@EXAMPLE.COM`. For services, the primary is the service abbreviation and the instance is the FQDN: `nfs/myserver.example.com@EXAMPLE.COM`.
 The realm can often be omitted, the local computer's default realm is usually assumed.
@@ -336,8 +331,6 @@ Entry for principal host/kbclient.example.com with kvno 2, encryption type aes12
 <pre># install -b -o root -g root -m 600 kbclient.keytab /etc/krb5.keytab</pre>
 <p>Finally, delete kbclient.keytab from the server and client.
 </p>
-<p><br>
-</p>
 <h2><span class="mw-headline" id="Cross-Realm_Trust">Cross-Realm Trust</span></h2>
 <p>Set up a second server as shown above, then create the cross-realm principal on both KDCs. Cross-realm principals must be created with strong passwords, not <code>-randkey</code>, and the same password must be used on both KDCs. The principal must have the same key version number (kvno) in both KDCs.
 </p>
@@ -347,7 +340,7 @@ Entry for principal host/kbclient.example.com with kvno 2, encryption type aes12
 </pre>
 <p>The <code>[capaths]</code> section of <code>krb5.conf</code> can be used to further control cross-realm trust relationships.
 </p>
-<h2><span class="mw-headline" id="SSH_Authentication">SSH Authentication</span></h2>
+<h2><span class="mw-headline" id="SSH_authentication">SSH authentication</span></h2>
 <p>Use the instructions in <a href="#Service_principals_and_keytabs">Service principals and keytabs</a> to create a principal for the "host" service for both client and server, then put the client's keys in the client's keytab and the server's keys in the server's keytab.
 </p>
 <p>Modify your <a href="../en/Secure_Shell.html" class="mw-redirect" title="SSH">SSH</a> server configuration to enable GSSAPI authentication:
@@ -400,13 +393,13 @@ Valid starting       Expires              Service principal
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/home/alice/.k5login</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">robert@EXAMPLE.COM
 </pre>
-<h2><span class="mw-headline" id="NFS_Security">NFS Security</span></h2>
+<h2><span class="mw-headline" id="NFS_security">NFS security</span></h2>
 <p>First, configure your <a href="../en/NFS.html#Server" title="NFS">NFS server</a> server. Also see <a href="../en/NFS/Troubleshooting.html" class="mw-redirect" title="NFS Troubleshooting">NFS Troubleshooting</a>.
 Configuring a <a href="../en/System_time.html#Time_synchronization" class="mw-redirect" title="Time synchronization">time synchronization</a> daemon on both the clients and the server is strongly recommended. Clock drift will cause this to break, and the error message will not be helpful.
 </p>
 <p>Use the instructions in <a href="#Service_principals_and_keytabs">Service principals and keytabs</a> to create a principal for the "nfs" service for both client and server, then put the client's keys in the client's keytab and the server's keys in the server's keytab.
 </p>
-<h3><span class="mw-headline" id="NFS_Server">NFS Server</span></h3>
+<h3><span class="mw-headline" id="NFS_server">NFS server</span></h3>
 <p>Add a Kerberos export option:
 </p>
 <ul>
@@ -421,7 +414,7 @@ Configuring a <a href="../en/System_time.html#Time_synchronization" class="mw-re
 </p>
 <pre># exportfs -arv
 </pre>
-<h3><span class="mw-headline" id="NFS_Client">NFS Client</span></h3>
+<h3><span class="mw-headline" id="NFS_client">NFS client</span></h3>
 <p>Mount the exported directory:
 </p>
 <pre># mount nfsserver:/srv/export /mnt/
@@ -474,8 +467,8 @@ Configuring a <a href="../en/System_time.html#Time_synchronization" class="mw-re
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Kerberos&amp;oldid=591494">https://wiki.archlinux.org/index.php?title=Kerberos&amp;oldid=591494</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 9 December 2019, at 22:04.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Kerberos&amp;oldid=659151">https://wiki.archlinux.org/index.php?title=Kerberos&amp;oldid=659151</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 11 April 2021, at 18:07.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -66,15 +66,14 @@
 </div>
 
 <h2><span class="mw-headline" id="Getting_the_ingredients">Getting the ingredients</span></h2>
-<p>Since you'll be using <a href="../../en/Makepkg.html" title="Makepkg">makepkg</a>, follow the best practices outlined there first.  For example, you cannot run makepkg as root/sudo. Therefore, create a <code>build</code> directory in your user home first.
+<p>Since you will be using <a href="../../en/Makepkg.html" title="Makepkg">makepkg</a>, follow the best practices outlined there first. For example, you cannot run makepkg as root/sudo. Therefore, create a <code>build</code> directory in your user home first.
 </p>
-<pre> $ cd ~/
- $ mkdir build
- $ cd build/
+<pre>$ mkdir ~/build/
+$ cd ~/build/
 </pre>
 <p><a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=asp">asp</a></span> package and the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/groups/x86_64/base-devel/">base-devel</a></span> package group.
 </p>
-<p>You need a clean kernel to start your customization from. <a href="../../en/Arch_Build_System.html#Retrieve_PKGBUILD_source_using_Git" class="mw-redirect" title="ABS">ABS#Retrieve PKGBUILD source using Git</a> and few other files into your build directory by running:
+<p>You need a clean kernel to start your customization from. <a href="../../en/Arch_Build_System.html#Retrieve_PKGBUILD_source_using_Git" class="mw-redirect" title="ABS">Retrieve PKGBUILD source using Git</a> and few other files into your build directory by running:
 </p>
 <pre>$ asp update linux
 $ asp export linux
@@ -83,14 +82,15 @@ $ asp export linux
 </p>
 <pre>~/build/linux/-+
                +--config
-               \__PKGBUILD</pre>
+               \__PKGBUILD
+</pre>
 <p>Then, get any other file you need (e.g. custom configuration files, patches, etc.) from the respective sources.
 </p>
 <h2><span class="mw-headline" id="Modifying_the_PKGBUILD">Modifying the PKGBUILD</span></h2>
-<p>Edit <code>PKGBUILD</code> and look for the <code>pkgbase</code> parameter.  Change this to your custom package name, e.g.:
+<p>Edit <code>PKGBUILD</code> and look for the <code>pkgbase</code> parameter. Change this to your custom package name, e.g.:
 </p>
-<pre> pkgbase=linux-custom
-</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">PKGBUILD</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">pkgbase=linux-custom</pre>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> <b>Do not</b> add <code>linux</code> to the <code>provides</code> array. Your custom kernel will not be compatible with binary modules built against that kernel, so it cannot satisfy that dependency. Similarly, do not add <code>linux-headers</code> to the <code>provides</code> array of the headers package, for similar reasons.</div>
 <h3><span class="mw-headline" id="Avoid_creating_the_doc">Avoid creating the doc</span></h3>
@@ -107,7 +107,7 @@ $ asp export linux
 <h3>
 <span id="Changing_prepare.28.29"></span><span class="mw-headline" id="Changing_prepare()">Changing prepare()</span>
 </h3>
-<p>In <code>prepare()</code> function, you can <a href="../../en/Patching_packages.html#Applying_patches" title="Patching packages">apply needed kernel patches</a>  or change kernel build configuration. 
+<p>In <code>prepare()</code> function, you can <a href="../../en/Patching_packages.html#Applying_patches" title="Patching packages">apply needed kernel patches</a> or change kernel build configuration. 
 </p>
 <p>If you need to change a few config options you can edit config file in the source.
 </p>
@@ -128,17 +128,16 @@ $ asp export linux
 ...
 </pre>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong>  systemd has a number of kernel configuration requirements for general use, for specific usecases (e.g., UEFI) and for specific systemd functionality (e.g., bootchart). Failure to meet these requirements can result in your system being degraded or unusable. The list of required and recommended kernel CONFIGs can be found in <code>/usr/share/doc/systemd/README</code>. Check them before you compile.These requirements also change over time. Because Arch assumes you are using the official kernel, there will be no announcement of these changes. Before you install a new version of systemd, check the version release notes to make sure your current custom kernel meets any new systemd requirements.</div>
+<strong>Warning:</strong> systemd has a number of kernel configuration requirements for general use, for specific usecases (e.g., UEFI) and for specific systemd functionality (e.g., bootchart). Failure to meet these requirements can result in your system being degraded or unusable. The list of required and recommended kernel CONFIGs can be found in <code>/usr/share/doc/systemd/README</code>. Check them before you compile. These requirements also change over time. Because Arch assumes you are using the official kernel, there will be no announcement of these changes. Before you install a new version of systemd, check the version release notes to make sure your current custom kernel meets any new systemd requirements.</div>
 <h3><span class="mw-headline" id="Generate_new_checksums">Generate new checksums</span></h3>
 <p><a href="#Changing_prepare()">#Changing prepare()</a> suggests a possible modification to <code>$_srcname/.config</code>. Since this path is not where downloading the package files ended, its checksum was not checked by makepkg (which actually checked <code>$_srcname/../../config</code>).
 </p>
-<p>If you replaced the downloaded <code>config</code> with another config file before running makepkg, <a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pacman-contrib">pacman-contrib</a></span> package.
-Which will generate new checksums by running:
+<p>If you replaced the downloaded <code>config</code> with another config file before running makepkg, <a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pacman-contrib">pacman-contrib</a></span> package and generate new checksums by running:
 </p>
 <pre>$ updpkgsums
 </pre>
 <h2><span class="mw-headline" id="Compiling">Compiling</span></h2>
-<p>You can now proceed to compile your kernel by the usual command <code>makepkg</code>
+<p>You can now proceed to compile your kernel by the usual command <code>makepkg</code>.
 </p>
 <p>If you have chosen an interactive program for configuring the kernel parameters (like menuconfig), you need to be there during the compilation.
 </p>
@@ -156,10 +155,10 @@ Which will generate new checksums by running:
 <h2><span class="mw-headline" id="Installing">Installing</span></h2>
 <p>The compile step will leave two packages in the <code>~/build/linux</code> folder, one for the kernel and one for the kernel headers. They might have names like:
 </p>
-<pre>  linux-custom-5.8.12-x86_64.pkg.tar.zst
-  linux-custom-headers-5.8.12-x86_64.pkg.tar.zst
+<pre>linux-custom-5.8.12-x86_64.pkg.tar.zst
+linux-custom-headers-5.8.12-x86_64.pkg.tar.zst
 </pre>
-<p>Best practice is to <a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> both packages together as they might be both needed (e.g. DKMS.)
+<p>Best practice is to <a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> both packages together as they might be both needed (e.g. DKMS.):
 </p>
 <pre># pacman -U <i>linux-custom-headers-5.8.12-x86_64.pkg.tar.zst</i> <i>linux-custom-5.8.12-x86_64.pkg.tar.zst</i>
 </pre>
@@ -169,17 +168,16 @@ Which will generate new checksums by running:
 <p>If you have modified <code>pkgbase</code> in order to have your new kernel installed alongside the default kernel you will need to update your bootloader configuration file and add new entries ('default' and 'fallback') for your custom kernel and the associated initramfs images.
 </p>
 <h2><span class="mw-headline" id="Updating">Updating</span></h2>
-<p>Assuming one has an arch kernel source that they want to update, one method to do that is with <a rel="nofollow" class="external free" href="https://git.archlinux.org/linux.git">https://git.archlinux.org/linux.git</a>. In what follows, the top kernel source directory is assumed at ~/build/linux/.
+<p>Assuming one has an arch kernel source that they want to update, one method to do that is with <a rel="nofollow" class="external free" href="https://git.archlinux.org/linux.git">https://git.archlinux.org/linux.git</a>. In what follows, the top kernel source directory is assumed at <code>~/build/linux/</code>.
 </p>
-<p>In general, arch sets an arch kernel source with two local git repositories. The one at archlinux-linux/ is a local bare <a href="../../en/Git.html" title="Git">git</a> repository pointing to <a rel="nofollow" class="external free" href="git://git.archlinux.org/linux.git">git://git.archlinux.org/linux.git</a>. The other one is at <b>src/</b>archlinux-linux/, pulling from the bare repository. Possible local patches, and building, are expected at <b>src/</b>archlinux-linux/. Note the different names of the archlinux-linux/ and <b>src/</b>archlinux-linux/ directories.
+<p>In general, arch sets an arch kernel source with two local git repositories. The one at <code>archlinux-linux/</code> is a local bare <a href="../../en/Git.html" title="Git">git</a> repository pointing to <code>git://git.archlinux.org/linux.git</code>. The other one is at <code><b>src/</b>archlinux-linux/</code>, pulling from the bare repository. Possible local patches, and building, are expected at <code><b>src/</b>archlinux-linux/</code>.
 </p>
-<pre>$ cd ~/build/linux/archlinux-linux/
-</pre>
-<p>For this example, the HEAD of the locally installed bare git repository source at archlinux-linux/ was initially pointing to
+<p>For this example, the HEAD of the locally installed bare git repository source at <code>archlinux-linux/</code> was initially pointing to
 </p>
-<pre>$ git log --oneline --max-count 1 HEAD
-4010b622f1d2 Merge branch 'dax-fix-5.3-rc3' of <a rel="nofollow" class="external free" href="git://git.kernel.org/pub/scm/linux/kernel/git/nvdimm/nvdimm">git://git.kernel.org/pub/scm/linux/kernel/git/nvdimm/nvdimm</a></pre>
-<p>, which is somewhere between v5.2.5-arch1 and v5.2.6-arch1.
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ cd ~/build/linux/archlinux-linux/
+$ git log --oneline --max-count 1 HEAD</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">4010b622f1d2 Merge branch 'dax-fix-5.3-rc3' of git://git.kernel.org/pub/scm/linux/kernel/git/nvdimm/nvdimm</pre>
+<p>which is somewhere between v5.2.5-arch1 and v5.2.6-arch1.
 </p>
 <pre>$ git fetch --verbose
 </pre>
@@ -196,15 +194,15 @@ $ git checkout 5.2.7-arch1
 </pre>
 <p>You can verify you are on track with something like
 </p>
-<pre>$ git log --oneline 5.2.7-arch1 --max-count=7
-13193bfc03d4 <b>Arch Linux kernel v5.2.7-arch1</b>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ git log --oneline 5.2.7-arch1 --max-count=7</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">13193bfc03d4 <b>Arch Linux kernel v5.2.7-arch1</b>
 9475c6772d05 netfilter: nf_tabf676926c7f60les: fix module autoload for redir
 498d650048f6 iwlwifi: Add support for SAR South Korea limitation
 bb7293abdbc7 iwlwifi: mvm: disable TX-AMSDU on older NICs
 f676926c7f60 ZEN: Add CONFIG for unprivileged_userns_clone
 5e4e503f4f28 add sysctl to disallow unprivileged CLONE_NEWUSER by default
 5697a9d3d55f <b>Linux 5.2.7</b></pre>
-<p>This shows few specific archlinux patches between  Arch Linux kernel v5.2.7-arch1 and Linux 5.2.7. The important lines here are Arch Linux kernel v5.2.7-arch1 and Linux 5.2.7. Obviously, there might be other patches at other versions, which is why 7 for <code>--max-count</code> might require adjustment. In a similar manner, the commit identifiers, such as f676926c7f60, as well as the kernel version, will be different for other versions.
+<p>This shows few specific archlinux patches between <code>Arch Linux kernel v5.2.7-arch1</code> and <code>Linux 5.2.7</code>.
 </p>
 <p>The up to date PKGBUILD, as well archlinux kernel configuration file, can be pulled in by the <code>asp</code> command:
 </p>
@@ -213,8 +211,8 @@ $ asp update linux
 $ asp export linux
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Sometimes the <code>asp</code> command does not update linux files even though there is a newer archlinux source tag. A possible reason is that archlinux linux files lag behind archlinux linux source.</div>
-<p>Now you should <a href="../../en/Vim.html#Merging_files" title="Vim">Vim#Merging files</a> located in <code>~/build/linux/linux/*</code> into <code>~/build/linux/</code>. Merging can also done manually, or with <a href="../../en/List_of_applications.html#Comparison,_diff,_merge" title="List of applications">list of applications#Comparison, diff, merge</a>. Review <a href="#Changing_prepare()">#Changing prepare()</a>, and run manually most, if not all, the shell commands of PKGBUILD::prepare().
+<strong>Note:</strong> Sometimes the <code>asp</code> command does not update linux files even though there is a newer archlinux source tag. A possible reason is that archlinux linux files lag behind archlinux <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> source.</div>
+<p>Now you should <a href="../../en/Vim.html#Merging_files" title="Vim">merge files</a> located in <code>~/build/linux/linux/*</code> into <code>~/build/linux/</code>. Merging can also done manually, or with <a href="../../en/List_of_applications.html#Comparison,_diff,_merge" title="List of applications">specific utilities</a>. Review <a href="#Changing_prepare()">#Changing prepare()</a>, and run manually most, if not all, the shell commands of PKGBUILD::prepare().
 </p>
 <p>At this point, <code>makepkg --verifysource</code> should succeed. While <a href="#Compiling">#Compiling</a>, make sure to also add <code>--noextract</code> option to the <code>makepkg</code> command, since it should be able to build the packages as if the source was extracted by <code>makepkg --nobuild</code>. And you are back to <a href="#Installing">#Installing</a>.
 </p>
@@ -237,8 +235,8 @@ $ git branch --delete --force --verbose 5.2.7-arch1
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Kernel/Arch_Build_System&amp;oldid=655720">https://wiki.archlinux.org/index.php?title=Kernel/Arch_Build_System&amp;oldid=655720</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 23:16.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Kernel/Arch_Build_System&amp;oldid=663605">https://wiki.archlinux.org/index.php?title=Kernel/Arch_Build_System&amp;oldid=663605</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 April 2021, at 11:03.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

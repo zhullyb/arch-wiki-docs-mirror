@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -79,7 +80,7 @@
 <p>بعض تطبيقات العتاد <a href="https://en.wikipedia.org/wiki/Spin-up#Staggered_spin-up" class="extiw" title="wikipedia:Spin-up">staggered spin-up</a>,  تتسبب في جعل نظام التشغيل  يفحص واجهات  موصلات ATA بشكل تسلسلي ، والتي تشغل برامج التشغيل واحدا بعد واحد ،  وتقلل من استهلاك الطاقة. وذلك يبطئ من سرعة الإقلاع، على الرغم من أن معظم اﻷجهزة  المستهلكة لا تقدم أي فائدة على الإطلاق، حيث إن المشغلات ستعمل مباشرة عند تشغيل زر الطاقة. للتأكد من كون SSS  قيد التشغيل نفذ الأمر:
 </p>
 <div align="left" dir="ltr">
-<pre>$ dmesg | grep SSS
+<pre># dmesg | grep SSS
 </pre>
 </div>
 <p>إذا كانت غير مستخدمة أثناء الإقلاع، فلن يظهر أي خرج للأمر.
@@ -94,14 +95,12 @@
 </p>
 <p>نظم الملفات اﻷخرى مثل <code>/home</code> يمكن وصلها على وحدات وصل مختارة. إضافة المدخلات  <code>noauto,x-systemd.automount</code> سوف يخفف عمليات الوصول لهذا القسم ، وسوف يقوم بعمل فحص fsck  ووصله عند أو تشغيل، ويقلل من عدد نظم الملفات التي يجب عمل فحص وربط fsck/mount أثناء عملية الإقلاع.
 </p>
-<p><br>
-</p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>ملاحظة:</strong>  ذلك سيجعل نوع نظام ملفات <code>/home</code> هو <code>autofs</code>, والذي سيتم تجاهله من قِبل <a href="../en/Locate.html" class="mw-redirect" title="Mlocate">mlocate</a>  افتراضيا. سرعة الوصل التلقائي لقسم <code>/home</code> ربما لن تزيد  عن ثانية أو ثانيتين، اعتمادا على نظامك، لذا ربما لا تحتاج هذه الحيلة لكل هذا العناء.</div>
 <h2>
 <span id=".D9.86.D8.B8.D8.A7.D9.85_.D9.85.D9.84.D9.81.D8.A7.D8.AA_.D8.A7.D9.84.D8.B0.D8.A7.D9.83.D8.B1.D8.A9_.D8.A7.EF.BB.B7.D9.88.D9.84.D9.8A_Initramfs"></span><span class="mw-headline" id="نظام_ملفات_الذاكرة_اﻷولي_Initramfs">نظام ملفات الذاكرة اﻷولي  Initramfs</span>
 </h2>
-<p>كما أشرنا من قبل ، يمكن تقليل وقت الإقلاع عن طريق تخسيس  النواة ، مما يقلل من كمية البيانات التي يجب أن يتم تحميلها. وذلك أيضا حقيقي بالنسبة ل initramfs لديك (الناتج من الأمر mkinitcpio ) ، حيث إنه يتم تحميله مباشرة بعد النواة ، وكن مهتما بترتيب نظام ملفاتك  الجذر ووصلك له. للإقلاع ،  ما هو مطلوب فعلا قليل جدا ويشمل موصلات  التخزين ، أجهزة الكتل ، ونظم الملفات . قام المطور  Falconindy (Dave Reisner)  مرغما بعمل  <a rel="nofollow" class="external text" href="http://blog.falconindy.com/articles/optmizing-bootup-with-mkinitcpio.html">درس تعليمي مختصر</a> عن كيفية تحقيق ذلك على مدونته.
+<p>كما أشرنا من قبل ، يمكن تقليل وقت الإقلاع عن طريق تخسيس  النواة ، مما يقلل من كمية البيانات التي يجب أن يتم تحميلها. وذلك أيضا حقيقي بالنسبة ل initramfs لديك (الناتج من الأمر mkinitcpio ) ، حيث إنه يتم تحميله مباشرة بعد النواة ، وكن مهتما بترتيب نظام ملفاتك  الجذر ووصلك له. للإقلاع ،  ما هو مطلوب فعلا قليل جدا ويشمل موصلات  التخزين ، أجهزة الكتل ، ونظم الملفات . قام المطور  Falconindy (Dave Reisner)  مرغما بعمل  <a rel="nofollow" class="external text" href="https://blog.falconindy.com/articles/optmizing-bootup-with-mkinitcpio.html">درس تعليمي مختصر</a> عن كيفية تحقيق ذلك على مدونته.
 </p>
 <h2>
 <span id=".D8.AE.D8.B1.D8.AC_.D9.82.D9.84.D9.8A.D9.84_.D8.A3.D8.AB.D9.86.D8.A7.D8.A1_.D8.A7.D9.84.D8.A5.D9.82.D9.84.D8.A7.D8.B9"></span><span class="mw-headline" id="خرج_قليل_أثناء_الإقلاع">خرج قليل أثناء الإقلاع</span>
@@ -139,8 +138,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Improving_performance_(%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9)/Boot_process_(%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9)&amp;oldid=612039">https://wiki.archlinux.org/index.php?title=Improving_performance_(العربية)/Boot_process_(العربية)&amp;oldid=612039</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 10 May 2020, at 09:12.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Improving_performance_(%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9)/Boot_process_(%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9)&amp;oldid=663747">https://wiki.archlinux.org/index.php?title=Improving_performance_(العربية)/Boot_process_(العربية)&amp;oldid=663747</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 06:16.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

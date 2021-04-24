@@ -679,7 +679,7 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 fi</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The test involving the <code>gnupg_SSH_AUTH_SOCK_by</code> variable is for the case where the agent is started as <code>gpg-agent --daemon /bin/sh</code>, in which case the shell inherits the <code>SSH_AUTH_SOCK</code> variable from the parent, <i>gpg-agent</i> <a rel="nofollow" class="external autonumber" href="http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=agent/gpg-agent.c;hb=7bca3be65e510eda40572327b87922834ebe07eb#l1307">[3]</a>.</div>
+<strong>Note:</strong> The test involving the <code>gnupg_SSH_AUTH_SOCK_by</code> variable is for the case where the agent is started as <code>gpg-agent --daemon /bin/sh</code>, in which case the shell inherits the <code>SSH_AUTH_SOCK</code> variable from the parent, <i>gpg-agent</i> <a rel="nofollow" class="external autonumber" href="https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=agent/gpg-agent.c;hb=7bca3be65e510eda40572327b87922834ebe07eb#l1307">[3]</a>.</div>
 <h4><span class="mw-headline" id="Configure_pinentry_to_use_the_correct_TTY">Configure pinentry to use the correct TTY</span></h4>
 <p>Also set the GPG_TTY and refresh the TTY in case user has switched into an X session as stated in <span class="plainlinks archwiki-template-man" title="$ man 1 gpg-agent"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/gpg-agent.1">gpg-agent(1)</a></span>. For example:
 </p>
@@ -698,7 +698,7 @@ gpg-connect-agent updatestartuptty /bye &gt;/dev/null</pre>
 <li>Reduced key maintenance, as you will no longer need to maintain an SSH key.</li>
 <li>The ability to store the authentication key on a smartcard. GnuPG will automatically detect the key when the card is available, and add it to the agent (check with <code>ssh-add -l</code> or <code>ssh-add -L</code>). The comment for the key should be something like: <code>openpgp:<i>key-id</i></code> or <code>cardno:<i>card-id</i></code>.</li>
 </ul>
-<p>To retrieve the public key part of your GPG/SSH key, run <code>gpg --export-ssh-key <i>gpg-key</i></code>.
+<p>To retrieve the public key part of your GPG/SSH key, run <code>gpg --export-ssh-key <i>gpg-key</i></code>. If your key is authentication-capable but this command still fails with "Unusable public key", add a <code>!</code> suffix (<a rel="nofollow" class="external autonumber" href="https://dev.gnupg.org/T2957">[4]</a>). 
 </p>
 <p>Unless you have your GPG key on a keycard, you need to add your key to <code>$GNUPGHOME/sshcontrol</code> to be recognized as a SSH key. If your key is on a keycard, its keygrip is added to <code>sshcontrol</code> implicitly. If not, get the keygrip of your key this way:
 </p>
@@ -972,8 +972,8 @@ gpg: [stdin]: clear-sign failed: Inappropriate ioctl for device
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GnuPG&amp;oldid=655320">https://wiki.archlinux.org/index.php?title=GnuPG&amp;oldid=655320</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 March 2021, at 19:02.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GnuPG&amp;oldid=661279">https://wiki.archlinux.org/index.php?title=GnuPG&amp;oldid=661279</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 15:21.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

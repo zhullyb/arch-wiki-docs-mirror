@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -304,16 +305,16 @@
 <h4>
 <span id=".E6.B7.B7.E5.90.88.E4.BC.91.E7.9C.A0"></span><span class="mw-headline" id="混合休眠">混合休眠</span>
 </h4>
-<p><code>systemctl hybrid-sleep</code> 同时执行休眠和挂起，这样如果计算机突然断电(交流电源被拔掉或电池耗尽)，将会从硬盘休眠中恢复。如果没有断电，将从内存挂起中恢复，速度比从硬盘恢复快。因为 "hybrid-sleep" 需要将内存转存到交换空间，所以进入睡眠的时间比 <code>systemctl suspend</code> 慢。另外一个选择是使用延迟休眠功能。 
+<p><code>systemctl hybrid-sleep</code> 同时执行休眠和挂起，这样如果计算机突然断电(交流电源被拔掉或电池耗尽)，将会从硬盘休眠中恢复。如果没有断电，将从内存挂起中恢复，速度比从硬盘恢复快。因为 "hybrid-sleep" 需要将内存转存到交换空间，所以进入睡眠的时间比 <code>systemctl suspend</code> 慢。另外一个选择是使用延迟休眠功能。
 </p>
 <h3>
 <span id=".E4.BC.91.E7.9C.A0.E9.92.A9.E5.AD.90"></span><span class="mw-headline" id="休眠钩子">休眠钩子</span>
 </h3>
 <p>systemd 提供了两种类似的待机/休眠时执行脚本的机制。
 </p>
-<h5>
+<h4>
 <span id=".E4.BD.BF.E7.94.A8.E6.9C.8D.E5.8A.A1.E6.96.87.E4.BB.B6"></span><span class="mw-headline" id="使用服务文件">使用服务文件</span>
-</h5>
+</h4>
 <p>可以将服务文件附在 suspend.target、hibernate.target 或 sleep.target 中，这样就能在待机/休眠前后执行某些操作。用户级操作和root/系统级操作应该使用不同的服务文件。要启用用户级服务文件，使用 <code># systemctl enable suspend@&lt;用户名&gt; &amp;&amp; systemctl enable resume@&lt;用户名&gt;</code>。例如：
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/suspend@.service</pre>
@@ -377,9 +378,9 @@ WantedBy=sleep.target</pre>
 <li>若命令前加上一个“-”（半角减号），则命令返回非零值时会被忽略、当作正常执行处理。</li>
 <li>有关调试，最好的方法是用 <code>journalctl</code> 查看日志。</li>
 </ul>
-<h5>
+<h4>
 <span id=".E5.90.88.E5.B9.B6.E5.BE.85.E6.9C.BA.E5.92.8C.E5.94.A4.E9.86.92.E6.9C.8D.E5.8A.A1.E6.96.87.E4.BB.B6"></span><span class="mw-headline" id="合并待机和唤醒服务文件">合并待机和唤醒服务文件</span>
-</h5>
+</h4>
 <p>利用下面这种自定义的一体化待机和唤醒服务，使用单一的钩子扩展即可对不同操作（待机/休眠/混合休眠）的不同阶段（进入/唤醒）进行控制。
 </p>
 <p>例子和解释：
@@ -496,8 +497,8 @@ esac</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Power_management_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=648093">https://wiki.archlinux.org/index.php?title=Power_management_(简体中文)&amp;oldid=648093</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 3 January 2021, at 12:09.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Power_management_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663349">https://wiki.archlinux.org/index.php?title=Power_management_(简体中文)&amp;oldid=663349</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 13:25.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

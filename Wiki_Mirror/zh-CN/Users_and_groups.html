@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -138,7 +139,7 @@ drwxrwx--- 1 root vboxsf 16384 Jan 29 11:02 sf_Shared</pre>
 </pre>
 <p>文件的属主、属组可以通过<code>chown</code>命令更改。文件的权限可以通过<code>chmod</code>命令修改。
 </p>
-<p>详情参见：<span class="plainlinks archwiki-template-man" title="$ man 1 chown"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/chown.1">chown(1)</a></span>、<span class="plainlinks archwiki-template-man" title="$ man 1 chmod"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/chmod.1">chmod(1)</a></span>、<a rel="nofollow" class="external text" href="http://www.linux.com/learn/tutorials/309527-understanding-linux-file-permissions">Linux 文件权限</a>。
+<p>详情参见：<span class="plainlinks archwiki-template-man" title="$ man 1 chown"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/chown.1">chown(1)</a></span>、<span class="plainlinks archwiki-template-man" title="$ man 1 chmod"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/chmod.1">chmod(1)</a></span>、<a rel="nofollow" class="external text" href="https://www.linux.com/learn/tutorials/309527-understanding-linux-file-permissions">Linux 文件权限</a>。
 </p>
 <h2><span class="mw-headline" id="Shadow">Shadow</span></h2>
 <p>Arch Linux 的用户、群组和密码管理工具由 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=shadow">shadow</a></span> 提供，这个软件包是 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span> <a href="../en/Meta_package_and_package_group.html#Difference_between_meta_package_and_package_group" class="mw-redirect" title="Meta package">元软件包</a>的依赖。
@@ -211,7 +212,7 @@ drwxrwx--- 1 root vboxsf 16384 Jan 29 11:02 sf_Shared</pre>
 <li>需要用 <i>passwd</i> 为新用户设置密码。</li>
 <li>如果设置了用户初始组的名称或数字ID；该组必须是存在的；如果没有设置该选项，<code>useradd</code>会根据<code>/etc/login.defs</code>文件中的USERGROUPS_ENAB环境变量进行设置。默认(<code>USERGROUPS_ENAB yes</code>) 会用和用户名相同的名字创建群组，<code>GID</code> 等于 <code>UID</code>。</li>
 </ul>
-<p>更多选项说明请查看 <span class="plainlinks archwiki-template-man" title="$ man 8 useradd"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/useradd.8">useradd(8)</a></span>。 
+<p>更多选项说明请查看 <span class="plainlinks archwiki-template-man" title="$ man 8 useradd"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/useradd.8">useradd(8)</a></span>。
 </p>
 <h3>
 <span id=".E6.B7.BB.E5.8A.A0.E7.99.BB.E5.BD.95.E7.94.A8.E6.88.B7"></span><span class="mw-headline" id="添加登录用户">添加登录用户</span>
@@ -606,7 +607,7 @@ drwxrwx--- 1 root vboxsf 16384 Jan 29 11:02 sf_Shared</pre>
 <h3>
 <span id="systemd_.E4.B9.8B.E5.89.8D.E7.9A.84.E7.BE.A4.E7.BB.84"></span><span class="mw-headline" id="systemd_之前的群组">systemd 之前的群组</span>
 </h3>
-<p>Before arch migrated to <a href="../en/Systemd.html" title="Systemd">systemd</a>, users had to be manually added to these groups in order to be able to access the corresponding devices. This way has been deprecated in favour of <a href="../en/Udev.html" title="Udev">udev</a> marking the devices with a <code>uaccess</code> <a rel="nofollow" class="external text" href="https://github.com/systemd/systemd/blob/master/src/login/70-uaccess.rules">tag</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-06 ⓘ]</sup> and <i>logind</i> assigning the permissions to users dynamically via <a href="../en/Access_Control_Lists.html" class="mw-redirect" title="ACL">ACLs</a> according to which session is currently active. Note that the session must not be broken for this to work (see <a href="../en/General_troubleshooting.html#Session_permissions" title="General troubleshooting">General troubleshooting#Session permissions</a> to check it).
+<p>Before arch migrated to <a href="../en/Systemd.html" title="Systemd">systemd</a>, users had to be manually added to these groups in order to be able to access the corresponding devices. This way has been deprecated in favour of <a href="../en/Udev.html" title="Udev">udev</a> marking the devices with a <code>uaccess</code> <a rel="nofollow" class="external text" href="https://github.com/systemd/systemd/blob/main/src/login/70-uaccess.rules.m4">tag</a> and <i>logind</i> assigning the permissions to users dynamically via <a href="../en/Access_Control_Lists.html" class="mw-redirect" title="ACL">ACLs</a> according to which session is currently active. Note that the session must not be broken for this to work (see <a href="../en/General_troubleshooting.html#Session_permissions" title="General troubleshooting">General troubleshooting#Session permissions</a> to check it).
 </p>
 <p>There are some notable exceptions which require adding a user to some of these groups: for example if you want to allow users to access the device even when they are not logged in. However, note that adding users to the groups can even cause some functionality to break (for example, the <code>audio</code> group will break fast user switching and allows applications to block software mixing).
 </p>
@@ -770,10 +771,7 @@ drwxrwx--- 1 root vboxsf 16384 Jan 29 11:02 sf_Shared</pre>
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Security.html" title="Category:Security (简体中文)">Security (简体中文)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -781,8 +779,8 @@ drwxrwx--- 1 root vboxsf 16384 Jan 29 11:02 sf_Shared</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Users_and_groups_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=630136">https://wiki.archlinux.org/index.php?title=Users_and_groups_(简体中文)&amp;oldid=630136</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 6 August 2020, at 18:17.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Users_and_groups_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=662854">https://wiki.archlinux.org/index.php?title=Users_and_groups_(简体中文)&amp;oldid=662854</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 17:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -71,6 +71,7 @@
 <a href="#Troubleshooting"><span class="tocnumber">3</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
 <li class="toclevel-2 tocsection-13"><a href="#Push-to-talk_on_Wayland"><span class="tocnumber">3.1</span> <span class="toctext">Push-to-talk on Wayland</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#undefined_symbol:_glPopClientAttrib"><span class="tocnumber">3.2</span> <span class="toctext">undefined symbol: glPopClientAttrib</span></a></li>
 </ul>
 </li>
 </ul>
@@ -145,6 +146,14 @@ sslCA=/etc/letsencrypt/live/$domain/fullchain.pem</pre>
 <h3><span class="mw-headline" id="Push-to-talk_on_Wayland">Push-to-talk on Wayland</span></h3>
 <p>Currently with <a href="../en/Wayland.html" title="Wayland">Wayland</a>/<a href="../en/GNOME.html" title="GNOME">GNOME</a>/<a href="../en/Sway.html" title="Sway">Sway</a>, push-to-talk won't work without the window being in focus. Not allowing clients to sniff on the input when they do not have focus is a feature in <a href="../en/Wayland.html" title="Wayland">Wayland</a>, and it will be kept that way. A proposal for a patch exists at their source <a rel="nofollow" class="external text" href="https://github.com/mumble-voip/mumble/issues/3243?_pjax=%23js-repo-pjax-container">repository</a> and a <a rel="nofollow" class="external text" href="https://github.com/mumble-voip/mumble/pull/3675">merge request</a> has been merged and is slated for Mumble version 1.4.0. Tips for integrating this patch with Sway exist in the merge request.
 </p>
+<h3><span class="mw-headline" id="undefined_symbol:_glPopClientAttrib">undefined symbol: glPopClientAttrib</span></h3>
+<p>To use the overlay on a on 32-bit games, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lib32-libglvnd">lib32-libglvnd</a></span> and preload <code>libGL.so</code> along with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lib32-libmumble/">lib32-libmumble</a></span><sup><small>AUR</small></sup>.
+With <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mumble-git/">mumble-git</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lib32-libmumble/">lib32-libmumble</a></span><sup><small>AUR</small></sup> is no longer needed.
+</p>
+<p>To display the overlay on a <a href="../en/Steam.html" title="Steam">Steam</a> 32-bit game, preload both with the shared libraries with the following launch options:
+</p>
+<pre>LD_PRELOAD=/usr/lib/mumble/libmumbleoverlay.x86.so:/usr/lib32/libGL.so %command%
+</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
@@ -155,8 +164,8 @@ sslCA=/etc/letsencrypt/live/$domain/fullchain.pem</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Mumble&amp;oldid=653095">https://wiki.archlinux.org/index.php?title=Mumble&amp;oldid=653095</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 February 2021, at 04:42.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Mumble&amp;oldid=656209">https://wiki.archlinux.org/index.php?title=Mumble&amp;oldid=656209</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 March 2021, at 20:38.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

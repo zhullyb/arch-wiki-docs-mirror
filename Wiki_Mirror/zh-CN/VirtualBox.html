@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -316,8 +317,6 @@
 </pre>
 <p>自从 5.0.16 版本起，<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-modules-arch">virtualbox-guest-modules-arch</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span>]</sup> 与 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-dkms">virtualbox-guest-dkms</a></span> 都能利用 <code>systemd-modules-load.service</code> 服务来在开机时自动加载各自提供的模块。
 </p>
-<p><br>
-</p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 
 <p>如果你希望开机时不要加载 VirtualBox 模块，办法是将配置文件 <code>/usr/lib/modules-load.d/virtualbox-guest-modules-arch.conf</code> (或是 <code>-dkms.conf</code>，如果安装了 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virtualbox-guest-dkms">virtualbox-guest-dkms</a></span>) 屏蔽掉。具体的操作是：在 <code>/etc/modules-load.d</code> 目录里创建一个同文件名的空文件。例如：
@@ -510,7 +509,7 @@
 </p>
 <pre># mount -t vdi -o fstype=ext4,rw,noatime,noexec <i>vdi_file_location</i> <i>/mnt/</i>
 </pre>
-<p>还有一个办法是用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=qemu">qemu</a></span> 的内核模块来实现<a rel="nofollow" class="external autonumber" href="http://bethesignal.org/blog/2011/01/05/how-to-mount-virtualbox-vdi-image/">[6]</a>：
+<p>还有一个办法是用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=qemu">qemu</a></span> 的内核模块来实现<a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20201112040635/http://bethesignal.org/blog/2011/01/05/how-to-mount-virtualbox-vdi-image/">[6]</a>：
 </p>
 <pre># modprobe nbd max_part=16
 # qemu-nbd -c /dev/nbd0 &lt;storage.vdi&gt;
@@ -526,7 +525,7 @@
 </h3>
 <p>只有 <code>.vdi</code> 格式的虚拟磁盘文件可以压紧。具体操作步骤如下。
 </p>
-<p>启动虚拟机，手动删除无用文件，或者用自动的清理工具（如 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bleachbit">bleachbit</a></span>，同时也支持 <a rel="nofollow" class="external text" href="http://bleachbit.sourceforge.net/download/windows">Windows</a>）来清理磁盘。
+<p>启动虚拟机，手动删除无用文件，或者用自动的清理工具（如 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bleachbit">bleachbit</a></span>，同时也支持 <a rel="nofollow" class="external text" href="https://www.bleachbit.org/download/windows">Windows</a>）来清理磁盘。
 </p>
 <p>下一步要用零字节来填充可用空间。这有如下的可行方案：
 </p>
@@ -543,7 +542,7 @@
 <dl><dd>
 <ul>
 <li>由 <a rel="nofollow" class="external text" href="https://technet.microsoft.com/en-us/sysinternals/bb842062.aspx">Sysinternals Suite</a> 提供的 <code>sdelete</code> 命令，用法是 <code>sdelete -s -z <i>c:</i></code>。在虚拟机里的每一个分区都要执行一遍（当然 <i>c:</i> 这个参数要对应地改成各个分区的盼覆）；</li>
-<li>如果你喜欢脚本，可以用这个 <a rel="nofollow" class="external text" href="http://blog.whatsupduck.net/2012/03/powershell-alternative-to-sdelete.html">PowerShell 实现的方案</a>，但依然要每个分区执行一次。</li>
+<li>如果你喜欢脚本，可以用这个 <a rel="nofollow" class="external text" href="https://blog.whatsupduck.net/2012/03/powershell-alternative-to-sdelete.html">PowerShell 实现的方案</a>，但依然要每个分区执行一次。</li>
 </ul>
 <dl>
 <dd><pre>PS&gt; ./Write-ZeroesToFreeSpace.ps1 -Root <i>c:\</i> -PercentFree 0</pre></dd>
@@ -560,7 +559,7 @@
 <ul><li>在 Windows 系统上：</li></ul>
 <dl><dd><ul>
 <li>可以用这个命令 <code>chkdsk <i>c:</i> /F</code>。其中 <code><i>c:</i></code> 可以替换成所有你希望检查的盘符；</li>
-<li>或者从 <a rel="nofollow" class="external text" href="http://therightstuff.de/2009/02/14/ChkDskAll-ChkDsk-For-All-Drives.aspx">这里下载</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-06 ⓘ]</sup> <code>FsckDskAll</code>。这和前面的 <code>chkdsk</code> 基本一样，只是不必手动为每个分区执行一遍了。</li>
+<li>或者从 <a rel="nofollow" class="external text" href="https://web.archive.org/web/20180520081335/http://therightstuff.de/2009/02/14/ChkDskAll-ChkDsk-For-All-Drives.aspx">这里下载</a> <code>FsckDskAll</code>。这和前面的 <code>chkdsk</code> 基本一样，只是不必手动为每个分区执行一遍了。</li>
 </ul></dd></dl>
 <p>接下来用 <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-modifyvdi">VBoxManage modifyhd</a> 即可完成压紧过程：
 </p>
@@ -611,7 +610,7 @@ Storage Controller Bootable (1):        on
 IDE (1, 0): Empty
 <i>SATA</i> (<i>0</i>, 0): /home/wget/IT/Virtual_machines/GNU_Linux_distributions/ArchLinux_x64_EFI/Snapshots/{6bb17af7-e8a2-4bbf-baac-fbba05ebd704}.vdi (UUID: 6bb17af7-e8a2-4bbf-baac-fbba05ebd704)
 [...]</pre>
-<p>下载 <a rel="nofollow" class="external text" href="http://gparted.org/download.php">GParted Live 可引导镜像</a>，在虚拟机里用虚拟光驱加载之，启动虚拟机，调整分区大小 / 位置，取下镜像并重启。这样扩容就完成了。
+<p>下载 <a rel="nofollow" class="external text" href="https://gparted.org/download.php">GParted Live 可引导镜像</a>，在虚拟机里用虚拟光驱加载之，启动虚拟机，调整分区大小 / 位置，取下镜像并重启。这样扩容就完成了。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 如果虚拟盘用了 GPT 分区表，扩容会导致 GPT 备份头不再位于磁盘末尾。GParted 会询问是否要将其修复，此时两次询问都要点 <i>Fix</i>。如果是 MBR 分区，就不存在这一问题。</div>
@@ -643,7 +642,7 @@ $ rm <i>old.vdi</i>
   &lt;Image uuid="<i>{670157e5-8bd4-4f7b-8b96-9ee412a712b5}</i>"/&gt;
 &lt;/AttachedDevice&gt;</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> 如果你还不知道新镜像文件的 GUID 值，可以用命令 <code>VBoxManage showhdinfo <i>file</i></code> 来查看。如果你用 <code>VBoxManage clonehd</code> 命令来处理过虚拟盘，那么在复制 / 转换过程完成时，也会打印出 GUID 值。随便写一个 GUID 上去是不行的，必须与 <a rel="nofollow" class="external text" href="http://www.virtualbox.org/manual/ch05.html#cloningvdis">镜像文件里的 GUID 值</a>相对应才行。</div>
+<strong>注意：</strong> 如果你还不知道新镜像文件的 GUID 值，可以用命令 <code>VBoxManage showhdinfo <i>file</i></code> 来查看。如果你用 <code>VBoxManage clonehd</code> 命令来处理过虚拟盘，那么在复制 / 转换过程完成时，也会打印出 GUID 值。随便写一个 GUID 上去是不行的，必须与 <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch05.html#cloningvdis">镜像文件里的 GUID 值</a>相对应才行。</div>
 <h4>
 <span id=".E5.B0.86.E8.99.9A.E6.8B.9F.E6.9C.BA.E4.BB.8E_Linux_.E5.AE.BF.E4.B8.BB.E7.B3.BB.E7.BB.9F.E8.BF.81.E7.A7.BB.E5.88.B0.E5.85.B6.E4.BB.96.E7.B3.BB.E7.BB.9F.EF.BC.88.E6.88.96.E8.BF.81.E5.9B.9E.EF.BC.89"></span><span class="mw-headline" id="将虚拟机从_Linux_宿主系统迁移到其他系统（或迁回）">将虚拟机从 Linux 宿主系统迁移到其他系统（或迁回）</span>
 </h4>
@@ -674,7 +673,7 @@ else print $0}' "$Filename"</pre>
 <h3>
 <span id=".E5.A4.8D.E5.88.B6.E8.99.9A.E6.8B.9F.E7.9B.98.E5.B9.B6.E4.B8.BA.E5.85.B6.E5.88.86.E9.85.8D.E6.96.B0_UUID"></span><span class="mw-headline" id="复制虚拟盘并为其分配新_UUID">复制虚拟盘并为其分配新 UUID</span>
 </h3>
-<p>VirtualBox 广泛应用了 UUID。每个虚拟机，虚拟机的每个虚拟盘，都有属于自己的 UUID。用 <a rel="nofollow" class="external text" href="http://www.virtualbox.org/manual/ch08.html#vboxmanage-list">VBoxManage list</a> 命令可以列出 VirtualBox 管理的所有资源。
+<p>VirtualBox 广泛应用了 UUID。每个虚拟机，虚拟机的每个虚拟盘，都有属于自己的 UUID。用 <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-list">VBoxManage list</a> 命令可以列出 VirtualBox 管理的所有资源。
 </p>
 <p>如果你想复制一台虚拟机，仅复制虚拟盘镜像文件是不够的。你还得给复制出的新镜像文件分配一个新的 UUID。否则在同一个 VirtualBox 的环境里无法同时注册两个具有相同 UUID 的镜像文件。
 </p>
@@ -683,7 +682,7 @@ else print $0}' "$Filename"</pre>
 <pre>$ VBoxManage internalcommands sethduuid <i>/path/to/disk.vdi</i>
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> 用 <a rel="nofollow" class="external text" href="http://www.virtualbox.org/manual/ch08.html#vboxmanage-clonevdi">VBoxManage clonehd</a> 可以一次性完成复制内容与分配新 UUID</div>
+<strong>Tip:</strong> 用 <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-clonevdi">VBoxManage clonehd</a> 可以一次性完成复制内容与分配新 UUID</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 上述命令可以用于任意 <a href="#VirtualBox_%E6%94%AF%E6%8C%81%E7%9A%84%E6%A0%BC%E5%BC%8F">VirtualBox 所支持的镜像格式</a>。</div>
 <h2>
@@ -974,7 +973,6 @@ Medium
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 </ul>
 </div>
@@ -984,8 +982,8 @@ Medium
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=VirtualBox_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=647085">https://wiki.archlinux.org/index.php?title=VirtualBox_(简体中文)&amp;oldid=647085</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:29.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=VirtualBox_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=662828">https://wiki.archlinux.org/index.php?title=VirtualBox_(简体中文)&amp;oldid=662828</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 14:49.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

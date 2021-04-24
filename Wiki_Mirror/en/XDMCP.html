@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -46,7 +47,7 @@
 </div>
 <ul>
 <li class="toclevel-1 tocsection-1">
-<a href="#Setup_Graphical_Logins"><span class="tocnumber">1</span> <span class="toctext">Setup Graphical Logins</span></a>
+<a href="#Setup_graphical_logins"><span class="tocnumber">1</span> <span class="toctext">Setup graphical logins</span></a>
 <ul>
 <li class="toclevel-2 tocsection-2"><a href="#XDM"><span class="tocnumber">1.1</span> <span class="toctext">XDM</span></a></li>
 <li class="toclevel-2 tocsection-3"><a href="#GDM"><span class="tocnumber">1.2</span> <span class="toctext">GDM</span></a></li>
@@ -54,7 +55,7 @@
 <li class="toclevel-2 tocsection-5"><a href="#LightDM"><span class="tocnumber">1.4</span> <span class="toctext">LightDM</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-6"><a href="#Accessing_X_from_a_remote_Machine_on_your_LAN"><span class="tocnumber">2</span> <span class="toctext">Accessing X from a remote Machine on your LAN</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Accessing_X_from_a_remote_machine_on_your_LAN"><span class="tocnumber">2</span> <span class="toctext">Accessing X from a remote machine on your LAN</span></a></li>
 <li class="toclevel-1 tocsection-7">
 <a href="#Thin_client_setup"><span class="tocnumber">3</span> <span class="toctext">Thin client setup</span></a>
 <ul>
@@ -65,13 +66,12 @@
 <a href="#Troubleshooting"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
 <li class="toclevel-2 tocsection-10"><a href="#Session_declined:_Maximum_Number_of_Sessions_Reached"><span class="tocnumber">4.1</span> <span class="toctext">Session declined: Maximum Number of Sessions Reached</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#Login_screen_and_GNOME_is_somehow_flickering"><span class="tocnumber">4.2</span> <span class="toctext">Login screen and GNOME is somehow flickering</span></a></li>
 </ul>
 </li>
 </ul>
 </div>
 
-<h2><span class="mw-headline" id="Setup_Graphical_Logins">Setup Graphical Logins</span></h2>
+<h2><span class="mw-headline" id="Setup_graphical_logins">Setup graphical logins</span></h2>
 <h3><span class="mw-headline" id="XDM">XDM</span></h3>
 <p>Modify <code>/etc/X11/xdm/xdm-config</code> and comment out:
 </p>
@@ -94,7 +94,7 @@ a login window. Look for a line that looks like this:
 </pre>
 <p>Where 192.168.0.10 should be you server IP address.
 </p>
-<p>Then reboot or restart your X server and xdm daemon. 
+<p>Then reboot or restart your X server and the xdm daemon. 
 </p>
 <h3><span class="mw-headline" id="GDM">GDM</span></h3>
 <p>Modify <code>/etc/gdm/custom.conf</code> to include:
@@ -103,10 +103,8 @@ a login window. Look for a line that looks like this:
 Enable=true
 Port=177
 </pre>
-<p>Then restart the Gnome Display Manager:
+<p>Then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>gdm.service</code>.
 </p>
-<pre>systemctl restart gdm
-</pre>
 <p>Or if using the inittab method, login as root on another tty and
 </p>
 <pre>telinit 3
@@ -120,10 +118,8 @@ telinit 5 &amp;&amp; exit
 <pre>[Xdmcp]
 Enable=true
 </pre>
-<p>Then you need to restart your X server so the change you just made takes effect:
+<p>Then you need to <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>kdm.service</code> so the change you just made takes effect.
 </p>
-<pre>systemctl restart kdm
-</pre>
 <h3><span class="mw-headline" id="LightDM">LightDM</span></h3>
 <p>Modify <code>/etc/lightdm/lightdm.conf</code> 
 </p>
@@ -138,22 +134,20 @@ port=177
 <pre>[LightDM]
 start-default-seat=false
 </pre>
-<p>Then restart the LightDM:
+<p>Then restart <code>lightdm.service</code>.
 </p>
-<pre>systemctl restart lightdm
-</pre>
-<h2><span class="mw-headline" id="Accessing_X_from_a_remote_Machine_on_your_LAN">Accessing X from a remote Machine on your LAN</span></h2>
+<h2><span class="mw-headline" id="Accessing_X_from_a_remote_machine_on_your_LAN">Accessing X from a remote machine on your LAN</span></h2>
 <p>You can access your login manager on the network computer 192.168.0.10 via the following command. TCP and UDP streams are opened. So it is not possible to access the login manager via an SSH connection.
 </p>
-<pre>Xnest -query 192.168.0.10 -geometry 1280x1024 :1
+<pre>$ Xnest -query 192.168.0.10 -geometry 1280x1024 :1
 </pre>
 <p>Or, with Xephyr, if you experience refreshing problems with Xnest:
 </p>
-<pre>Xephyr -query 192.168.0.10 -screen 1280x1024 -br -reset -terminate :1
+<pre>$ Xephyr -query 192.168.0.10 -screen 1280x1024 -br -reset -terminate :1
 </pre>
 <p>Or, if you are on runlevel 3
 </p>
-<pre>X -query your_server_ip
+<pre>$ X -query <i>server address</i>
 </pre>
 <p>Xserver should recognize your monitor and set appropriate resolution.
 </p>
@@ -183,11 +177,6 @@ If your network card does not support PXE, you can try <a rel="nofollow" class="
 Enable=true
 <b>MaxSessions=2</b>
 </pre>
-<h3><span class="mw-headline" id="Login_screen_and_GNOME_is_somehow_flickering">Login screen and GNOME is somehow flickering</span></h3>
-<p>If the login screen is created again and again and unresponsive, you are trying to access GNOME Shell on the remote machine. This is apparently caused by network speed, e.g. by accessing via wireless connections. The workaround is to disable/deinstall GNOME Shell.
-</p>
-<pre> pacman -R gnome-shell
-</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
@@ -205,8 +194,8 @@ Enable=true
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=XDMCP&amp;oldid=639740">https://wiki.archlinux.org/index.php?title=XDMCP&amp;oldid=639740</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 25 October 2020, at 16:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=XDMCP&amp;oldid=658417">https://wiki.archlinux.org/index.php?title=XDMCP&amp;oldid=658417</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 April 2021, at 14:52.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

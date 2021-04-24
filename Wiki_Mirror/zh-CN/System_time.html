@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -145,12 +146,12 @@
 <strong>Note:</strong> 如果不存在 <code>/etc/adjtime</code>，<a href="../en/Systemd.html" title="Systemd">systemd</a> 会假定硬件时间按 UTC 设置。</div>
 <p>系统启动装入 rtc 驱动时可能会根据系统时钟设置硬件时钟。是否设置依赖于平台、内核版本和内核编译选项。如果进行了设置，此时会假定硬件时钟为 UTC 标准，<code>/sys/class/rtc/rtcN/hctosys</code>(N=0,1,2,..) 会设置成 1。后面 systemd 会根据<code>/etc/adjtime</code>重新设置。
 </p>
-<p>如果设置成本地时间，处理夏令时有些麻烦。如果夏令时调整发生在关机时，下次启动时时间会出现问题（<a rel="nofollow" class="external text" href="http://www.cl.cam.ac.uk/~mgk25/mswish/ut-rtc.html">更多信息</a>）。最新的内核直接从实时时钟芯片（RTC）读取时间，不使用 <code>hwclock</code>，内核把从 RTC 读取的时间当作 UTC 处理。所以如果硬件时间是地方时，系统启动一开始识别的时间是错误的，之后很快会进行矫正。这可能导致一些问题（尤其是时间倒退时）。
+<p>如果设置成本地时间，处理夏令时有些麻烦。如果夏令时调整发生在关机时，下次启动时时间会出现问题（<a rel="nofollow" class="external text" href="https://www.cl.cam.ac.uk/~mgk25/mswish/ut-rtc.html">更多信息</a>）。最新的内核直接从实时时钟芯片（RTC）读取时间，不使用 <code>hwclock</code>，内核把从 RTC 读取的时间当作 UTC 处理。所以如果硬件时间是地方时，系统启动一开始识别的时间是错误的，之后很快会进行矫正。这可能导致一些问题（尤其是时间倒退时）。
 </p>
 <h3>
 <span id="Windows_.E7.B3.BB.E7.BB.9F.E4.BD.BF.E7.94.A8_UTC"></span><span class="mw-headline" id="Windows_系统使用_UTC">Windows 系统使用 UTC</span>
 </h3>
-<p>如果同时安装了 Windows 操作系统（<a rel="nofollow" class="external text" href="http://blogs.msdn.com/b/oldnewthing/archive/2004/09/02/224672.aspx">默认使用地方时</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-06 ⓘ]</sup>），那么一般 RTC 会被设置为地方时。Windows 其实也能处理 UTC，需要<a href="#Windows_%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8_UTC">修改注册表</a>。建议让 Windows 使用 UTC，而非让 Linux 使用地方时。Windows 使用 UTC 后，请记得禁用 Windows 的时间同步功能，以防 Windows 错误设置硬件时间。如上文所说，Linux 可以使用<a href="../zh-CN/Network_Time_Protocol_daemon.html" class="mw-redirect" title="NTP (简体中文)">NTP服务</a>来在线同步硬件时钟。
+<p>如果同时安装了 Windows 操作系统（<a rel="nofollow" class="external text" href="https://devblogs.microsoft.com/oldnewthing/2004/09/02">默认使用地方时</a>），那么一般 RTC 会被设置为地方时。Windows 其实也能处理 UTC，需要<a href="#Windows_%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8_UTC">修改注册表</a>。建议让 Windows 使用 UTC，而非让 Linux 使用地方时。Windows 使用 UTC 后，请记得禁用 Windows 的时间同步功能，以防 Windows 错误设置硬件时间。如上文所说，Linux 可以使用<a href="../zh-CN/Network_Time_Protocol_daemon.html" class="mw-redirect" title="NTP (简体中文)">NTP服务</a>来在线同步硬件时钟。
 </p>
 <p>使用 <code>regedit</code>,新建如下 DWORD 值，并将其值设为十六进制的 <code>1</code>。
 </p>
@@ -202,7 +203,7 @@
 </pre>
 <p>此命令会创建一个<code>/etc/localtime</code>软链接，指向<code>/usr/share/zoneinfo/</code>中的时区文件，如果手动创建此链接请确保是相对链接而不是绝对链接，参阅archlinux(7).
 </p>
-<p>See <span class="plainlinks archwiki-template-man" title="$ man 1 timedatectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/timedatectl.1">timedatectl(1)</a></span>, <span class="plainlinks archwiki-template-man" title="$ man 5 localtime"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/localtime.5">localtime(5)</a></span>, and <span class="plainlinks archwiki-template-man" title="$ man 7 archlinux"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/archlinux.7">archlinux(7)</a></span> for more details.
+<p>See <span class="plainlinks archwiki-template-man" title="$ man 1 timedatectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/timedatectl.1">timedatectl(1)</a></span>, <span class="plainlinks archwiki-template-man" title="$ man 5 localtime"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/localtime.5">localtime(5)</a></span>, and <span class="plainlinks archwiki-template-man" title="$ man 7 archlinux"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/archlinux.7">archlinux(7)</a></span><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2021-02-08]</sup> for more details.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 如果pre-systemd配置的/etc/timezone仍然存在于你的系统，你可以放心地将其删除，因为它不再使用。</div>
@@ -284,11 +285,11 @@ Sa 24. Mai 22:38:26 FJT 2014</pre>
 <span id=".E5.A4.96.E9.83.A8.E8.B5.84.E6.BA.90"></span><span class="mw-headline" id="外部资源">外部资源</span>
 </h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://sunnyan.tistory.com/entry/Linux-Clocks-and-Time">Linux Tips - Linux, Clocks, and Time</a></li>
+<li><a rel="nofollow" class="external text" href="https://sunnyan.tistory.com/entry/Linux-Clocks-and-Time">Linux Tips - Linux, Clocks, and Time</a></li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.twinsun.com/tz/tz-link.htm">Sources for Time Zone and Daylight Saving Time Data</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-06 ⓘ]</sup> for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tzdata">tzdata</a></span>
+<a rel="nofollow" class="external text" href="https://web.archive.org/web/20180312023340/http://www.twinsun.com/tz/tz-link.htm">Sources for Time Zone and Daylight Saving Time Data</a> for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tzdata">tzdata</a></span>
 </li>
-<li><a rel="nofollow" class="external text" href="http://www.ucolick.org/~sla/leapsecs/timescales.html">Time Scales</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.ucolick.org/~sla/leapsecs/timescales.html">Time Scales</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Time" class="extiw" title="wikipedia:Time">Wikipedia:Time</a></li>
 </ul>
 </div>
@@ -301,8 +302,8 @@ Sa 24. Mai 22:38:26 FJT 2014</pre>
 </ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
+<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 </ul>
 </div>
@@ -312,8 +313,8 @@ Sa 24. Mai 22:38:26 FJT 2014</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=System_time_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=632145">https://wiki.archlinux.org/index.php?title=System_time_(简体中文)&amp;oldid=632145</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 August 2020, at 01:20.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=System_time_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=662090">https://wiki.archlinux.org/index.php?title=System_time_(简体中文)&amp;oldid=662090</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 20:07.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

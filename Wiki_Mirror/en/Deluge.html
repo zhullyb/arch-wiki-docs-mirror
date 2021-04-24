@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -42,10 +43,8 @@
 <li><a href="../en/OpenSSL.html" title="OpenSSL">OpenSSL</a></li>
 </ul>
 </div>
-<p><a rel="nofollow" class="external text" href="http://deluge-torrent.org/">Deluge</a> is a full-featured BitTorrent application written in Python 3. It has a variety of features, including but not limited to: a client/server model, DHT support, magnet links, a plugin system, UPnP support, full-stream encryption, proxy support, and three different client applications. When the server daemon is running, users can connect to it via a console client, a GTK-based GUI, or a Web-based UI. A full list of features can be viewed <a rel="nofollow" class="external text" href="http://dev.deluge-torrent.org/wiki/About">here</a>.
+<p><a rel="nofollow" class="external text" href="https://deluge-torrent.org/">Deluge</a> is a full-featured BitTorrent application written in Python 3. It has a variety of features, including but not limited to: a client/server model, DHT support, magnet links, a plugin system, UPnP support, full-stream encryption, proxy support, and three different client applications. When the server daemon is running, users can connect to it via a console client, a GTK-based GUI, or a Web-based UI. A full list of features can be viewed <a rel="nofollow" class="external text" href="https://dev.deluge-torrent.org/wiki/About">here</a>.
 </p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The last commit to the develop branch of this project was made on <a rel="nofollow" class="external text" href="https://git.deluge-torrent.org/deluge/log/?h=develop">30-Apr-2020</a>.  The status of this project should no longer be consider active.  Users may want to use an alternative that is actively developed.</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -178,7 +177,7 @@ WantedBy=default.target
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> One can limit this to a single port, just be sure to enable both TCP and UDP.</div>
-<p>On many default configurations, when using iptables with connection tracking (conntrack) set to drop "INVALID" packets, sometimes a great deal of legitimate torrent traffic (especially DHT traffic) is dropped as "invalid." This is typically caused by either conntrack's memory restrictions, or from long periods between packets among peers (see <a rel="nofollow" class="external autonumber" href="https://github.com/rakshasa/rtorrent/wiki/Using-DHT#dht-and-ip-connection-tracking">[1]</a> and <a rel="nofollow" class="external autonumber" href="http://www.linuxquestions.org/questions/showthread.php?p=5145026">[2]</a>). Symptoms of this problem include torrents not seeding, especially when the torrent client has been active for more than a day or two continuously, and consistently low overhead traffic (in one experience, less than 3KiB/s in either in or out) with DHT enabled, even when deluge/libtorrent has been continuously running for more than forty-eight hours and many torrents are active. For this reason, it may be necessary to disable connection tracking of all torrent traffic for optimal performance, even with the listening ports set to ACCEPT (as the causes for dropping INVALID packets, for instance conntrack's memory problems, may supercede any rules to accept traffic to/from those ports).
+<p>On many default configurations, when using iptables with connection tracking (conntrack) set to drop "INVALID" packets, sometimes a great deal of legitimate torrent traffic (especially DHT traffic) is dropped as "invalid." This is typically caused by either conntrack's memory restrictions, or from long periods between packets among peers (see <a rel="nofollow" class="external autonumber" href="https://github.com/rakshasa/rtorrent/wiki/Using-DHT#dht-and-ip-connection-tracking">[1]</a> and <a rel="nofollow" class="external autonumber" href="https://www.linuxquestions.org/questions/showthread.php?p=5145026">[2]</a>). Symptoms of this problem include torrents not seeding, especially when the torrent client has been active for more than a day or two continuously, and consistently low overhead traffic (in one experience, less than 3KiB/s in either in or out) with DHT enabled, even when deluge/libtorrent has been continuously running for more than forty-eight hours and many torrents are active. For this reason, it may be necessary to disable connection tracking of all torrent traffic for optimal performance, even with the listening ports set to ACCEPT (as the causes for dropping INVALID packets, for instance conntrack's memory problems, may supercede any rules to accept traffic to/from those ports).
 </p>
 <p>To fully turn off connection tracking for torrents, specify ports for both Incoming and Outgoing traffic in Deluge, for instance, 56881-56889 for incoming connections and 56890-57200 for outgoing connections.
 </p>
@@ -202,7 +201,7 @@ WantedBy=default.target
 <h3><span class="mw-headline" id="Plugins">Plugins</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Plugins should be compiled with Python2.7: e.g. <code>$ python2.7 <i>setup.py build</i></code>.</div>
-<p>A complete list of plugins can be found on the <a rel="nofollow" class="external text" href="http://dev.deluge-torrent.org/wiki/Plugins">Deluge Wiki</a>
+<p>A complete list of plugins can be found on the <a rel="nofollow" class="external text" href="https://dev.deluge-torrent.org/wiki/Plugins">Deluge Wiki</a>
 </p>
 <p><a rel="nofollow" class="external text" href="https://github.com/ratanakvlun/deluge-ltconfig">ltConfig</a> is a useful plugin that allows direct modification to libtorrent settings and has preset support.
 </p>
@@ -274,7 +273,7 @@ Description=Deluge Web UI
 After=deluged.service
 
 [Service]
-ExecStart=/usr/bin/deluge-web --ssl
+ExecStart=/usr/bin/deluge-web -d --ssl
 
 [Install]
 WantedBy=default.target
@@ -395,7 +394,7 @@ Please install it from &lt;<a rel="nofollow" class="external free" href="https:/
 Without the service_identity module and a recent enough pyOpenSSL to support it, Twisted can perform only rudimentary TLS 
 client hostname verification.  Many valid certificate/hostname mappings may be rejected.
 </pre>
-<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python2-service-identity">python2-service-identity</a></span>, an optional dependency to <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python2-twisted">python2-twisted</a></span>, is likely missing. See <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/43806">FS#43806</a>.
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python2-service-identity">python2-service-identity</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>, an optional dependency to <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python2-twisted">python2-twisted</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>, is likely missing. See <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/43806">FS#43806</a>.
 </p>
 <h3><span class="mw-headline" id="Web_ui_.torrent_upload_does_not_work">Web ui .torrent upload does not work</span></h3>
 <p>Users running the web ui behind a reverse proxy need to allow embedding for .torrent upload to work (X-Frame-Options ALLOW)
@@ -418,21 +417,25 @@ client hostname verification.  Many valid certificate/hostname mappings may be r
 </p>
 <h2><span class="mw-headline" id="See_Also">See Also</span></h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://deluge-torrent.org/">Deluge homepage</a></li>
-<li><a rel="nofollow" class="external text" href="http://dev.deluge-torrent.org/wiki">Deluge wiki</a></li>
+<li><a rel="nofollow" class="external text" href="https://deluge-torrent.org/">Deluge homepage</a></li>
+<li><a rel="nofollow" class="external text" href="https://dev.deluge-torrent.org/wiki">Deluge wiki</a></li>
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:BitTorrent.html" title="Category:BitTorrent">BitTorrent</a></li></ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Deluge&amp;oldid=646172">https://wiki.archlinux.org/index.php?title=Deluge&amp;oldid=646172</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 December 2020, at 13:32.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Deluge&amp;oldid=660841">https://wiki.archlinux.org/index.php?title=Deluge&amp;oldid=660841</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 18:05.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

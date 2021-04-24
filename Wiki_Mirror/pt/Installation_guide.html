@@ -34,7 +34,7 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="../en/Installation_guide.html" title="Installation guide">Installation guide</a>. Data da última tradução: 2021-02-12. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Installation_guide&amp;diff=0&amp;oldid=646839">alterações</a> na versão em inglês.</div>
+<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="../en/Installation_guide.html" title="Installation guide">Installation guide</a>. Data da última tradução: 2021-04-13. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Installation_guide&amp;diff=0&amp;oldid=658520">alterações</a> na versão em inglês.</div>
 <p>Este documento é um guia para instalação do <a href="../pt/Arch_Linux.html" title="Arch Linux (Português)">Arch Linux</a> usando o sistema <i>live</i> inicializado de uma mídia de instalação feita a partir da imagem de instalação oficial. A mídia de instalação fornece recursos de acessibilidade que são descritas na página <a href="../pt/Install_Arch_Linux_with_accessibility_options.html" class="mw-redirect" title="Instalar Arch Linux com opções de acessibilidade">Instalar Arch Linux com opções de acessibilidade</a>. Para meios alternativos de instalação, consulte <a href="../pt/Category:Installation_process.html" title="Category:Installation process (Português)">Category:Installation process (Português)</a>.
 </p>
 <p>Antes de instalar, é recomendável ler rapidamente o <a href="../pt/Frequently_asked_questions.html" class="mw-redirect" title="FAQ (Português)">FAQ</a>. Para convenções usadas neste documento, veja <a href="../pt/Help:Reading.html" class="mw-redirect" title="Help:Leitura">Help:Leitura</a>. Em especial, exemplos de código podem conter objetos reservados (formatados em <code><i>italics</i></code>) que devem ser substituídos manualmente.
@@ -102,7 +102,7 @@
 <h3>
 <span id="Obter_uma_imagem_de_instala.C3.A7.C3.A3o"></span><span class="mw-headline" id="Obter_uma_imagem_de_instalação">Obter uma imagem de instalação</span>
 </h3>
-<p>Visite a página <a rel="nofollow" class="external text" href="https://archlinux.org/download/">Download</a> e, dependendo de como você deseja inicializar, obtenha o arquivo ISO e uma imagem netboot, e a respectiva assinatura <a href="../en/GnuPG.html" title="GnuPG">GnuPG</a>.
+<p>Visite a página <a rel="nofollow" class="external text" href="https://archlinux.org/download/">Download</a> e, dependendo de como você deseja inicializar, obtenha o arquivo ISO ou a imagem netboot, e a respectiva assinatura <a href="../en/GnuPG.html" title="GnuPG">GnuPG</a>.
 </p>
 <h3><span class="mw-headline" id="Verificar_a_assinatura">Verificar a assinatura</span></h3>
 <p>É recomendável verificar a assinatura da imagem antes de usá-la, especialmente ao fazer o download de um <i>espelho HTTP</i>, no qual os downloads geralmente são propensos a serem interceptados para <a rel="nofollow" class="external text" href="https://www2.cs.arizona.edu/stork/packagemanagersecurity/attacks-on-package-managers.html">servir imagens maliciosas</a>.
@@ -187,17 +187,18 @@
 <ul>
 <li>Certifique-se que sua <a href="../pt/Network_configuration.html#Interfaces_de_rede" class="mw-redirect" title="Interface de rede">interface de rede</a> esteja listada e ativada, por exemplo, com <span class="plainlinks archwiki-template-man" title="$ man 8 ip-link"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ip-link.8">ip-link(8)</a></span>: <pre># ip link</pre>
 </li>
-<li>Para rede sem fio, certifique-se que a placa de rede não esteja bloqueada com <a href="../pt/b9b884f10bec6b20a2e6f1b1fe79d6b3.html#Problemas_com_rfkill" class="mw-redirect" title="Rfkill (Português)">rfkill</a>.</li>
+<li>Para rede sem fio e WWAN, certifique-se que a placa de rede não esteja bloqueada com <a href="../pt/b9b884f10bec6b20a2e6f1b1fe79d6b3.html#Problemas_com_rfkill" class="mw-redirect" title="Rfkill (Português)">rfkill</a>.</li>
 <li>Conecte-se à rede:
 <ul>
 <li>Ethernet — conecte o cabo.</li>
 <li>Wi-Fi — autentique-se à rede sem fio usando <a href="../pt/Iwd.html#iwctl" class="mw-redirect" title="Iwctl (Português)">iwctl</a>.</li>
+<li>Modem de internet móvel — conecte-se à rede móvel com o utilitário <a href="../en/Mobile_broadband_modem.html#ModemManager" class="mw-redirect" title="Mmcli">mmcli</a>.</li>
 </ul>
 </li>
 <li>Configure sua conexão de rede:
 <ul>
 <li>
-<a href="../pt/Network_configuration.html#DHCP" class="mw-redirect" title="DHCP (Português)">DHCP</a>: atribuição de endereço de IP e servidor DNS dinâmicos (fornecidos por <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> e <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a>) deve usar sem qualquer esforço as interfaces de rede <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-ethernet.network">cabeadas</a> e <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-wireless.network">sem fio</a>.</li>
+<a href="../pt/Network_configuration.html#DHCP" class="mw-redirect" title="DHCP (Português)">DHCP</a>: atribuição de endereço de IP e servidor DNS dinâmicos (fornecidos por <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> e <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a>) deve usar sem qualquer esforço as interfaces de rede <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-ethernet.network">Ethernet</a>, <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-wlan.network">WLAN</a> e <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-wwan.network">WWAN</a>.</li>
 <li>Endereço IP estático: siga <a href="../pt/Network_configuration.html#Endere%C3%A7o_IP_est%C3%A1tico" class="mw-redirect" title="Configuração de rede">Configuração de rede#Endereço IP estático</a>
 </li>
 </ul>
@@ -206,7 +207,7 @@
 </li>
 </ul>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Na imagem de instalação, <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>, <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a> e <a href="../pt/Iwd.html" title="Iwd (Português)">iwd</a> estão pré-configurados e habilitados por padrão. Este não será o caso para o sistema instalado.</div>
+<strong>Nota:</strong> Na imagem de instalação, <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>, <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a>, <a href="../pt/Iwd.html" title="Iwd (Português)">iwd</a> e <a href="../en/Mobile_broadband_modem.html#ModemManager" class="mw-redirect" title="ModemManager">ModemManager</a> estão pré-configurados e habilitados por padrão. Este não será o caso para o sistema instalado.</div>
 <h3>
 <span id="Atualizar_o_rel.C3.B3gio_do_sistema"></span><span class="mw-headline" id="Atualizar_o_relógio_do_sistema">Atualizar o relógio do sistema</span>
 </h3>
@@ -233,6 +234,10 @@
 </ul>
 <p>Se você quiser criar algum dispositivo de bloco empilhado para <a href="../pt/LVM.html" title="LVM (Português)">LVM</a>, <a href="../pt/Dm-crypt.html" title="Dm-crypt (Português)">criptografia de sistema</a> ou <a href="../en/RAID.html" title="RAID">RAID</a>, faça isso agora.
 </p>
+<p>Use <a href="../en/Fdisk.html" title="Fdisk">fdisk</a> ou <a href="../en/Parted.html" title="Parted">parted</a> para modificar tabelas de partição. Por exemplo:
+</p>
+<pre># fdisk <i>/dev/o_disco_a_ser_particionado</i>
+</pre>
 <h4><span class="mw-headline" id="Exemplos_de_layouts">Exemplos de layouts</span></h4>
 <table class="wikitable">
 <caption>BIOS com <a href="../pt/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="MBR (Português)">MBR</a>
@@ -334,7 +339,6 @@
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> 
 <ul>
-<li>Use <a href="../en/Fdisk.html" title="Fdisk">fdisk</a> ou <a href="../en/Parted.html" title="Parted">parted</a> para modificar as tabelas de partição, por exemplo <code>fdisk <i>/dev/o_disco_a_ser_particionado</i></code>.</li>
 <li>Um espaço <a href="../pt/Swap.html" title="Swap (Português)">swap</a> pode ser definido em um <a href="../pt/Swap.html#Arquivo_swap" class="mw-redirect" title="Arquivo swap">Arquivo swap</a> para sistemas de arquivos que possuem suporte.</li>
 <li>Se o disco a partir do qual você deseja inicializar <a href="../pt/EFI_system_partition.html#Verificar_uma_parti%C3%A7%C3%A3o_existente" class="mw-redirect" title="Partição de sistema EFI">já tiver uma partição de sistema EFI</a>, não crie outra, use a partição existente.</li>
 </ul>
@@ -371,9 +375,9 @@
 <span id="Instala.C3.A7.C3.A3o"></span><span class="mw-headline" id="Instalação">Instalação</span>
 </h2>
 <h3><span class="mw-headline" id="Selecionar_os_espelhos">Selecionar os espelhos</span></h3>
-<p>Pacotes a serem instalados devem ser baixados de <a href="../pt/Mirrors.html" class="mw-redirect" title="Espelhos">espelhos</a> <i>(mirrors)</i>, que são definidos na <code>/etc/pacman.d/mirrorlist</code>. No sistema <i>live</i>, após se conectar À internet, o <a href="../pt/Reflector.html" title="Reflector (Português)">reflector</a> atualizar a lista de espelhos escolhendo 70 espelhos HTTPS sincronizados mais recentemente e ordenando-os por taxa de download.<a rel="nofollow" class="external autonumber" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/system/reflector.service">[2]</a>
+<p>Pacotes a serem instalados devem ser baixados de <a href="../pt/Mirrors.html" class="mw-redirect" title="Espelhos">espelhos</a> <i>(mirrors)</i>, que são definidos na <code>/etc/pacman.d/mirrorlist</code>. No sistema <i>live</i>, após se conectar À internet, o <a href="../pt/Reflector.html" title="Reflector (Português)">reflector</a> atualizar a lista de espelhos escolhendo 20 espelhos HTTPS sincronizados mais recentemente e ordenando-os por taxa de download.<a rel="nofollow" class="external autonumber" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/xdg/reflector/reflector.conf">[2]</a>
 </p>
-<p>Quanto mais alto um espelho está posicionado na lista, mais prioritário ele será ao baixar um pacote. Você pode querer inspecionar o arquivo para ver se ele está satisfatório. Se não estiver, edite o arquivo e mova espelhos geograficamente mais perto para o topo da lista, apesar de que outros critérios devem ser levados em consideração.
+<p>Quanto mais alto um espelho está posicionado na lista, mais prioritário ele será ao baixar um pacote. Você pode querer inspecionar o arquivo para ver se ele está satisfatório. Se não estiver, <a href="../pt/Help:Reading.html#Acrescentar,_adicionar,_criar,_editar" class="mw-redirect" title="Edição de texto">edite</a> o arquivo e mova espelhos geograficamente mais perto para o topo da lista, apesar de que outros critérios devem ser levados em consideração.
 </p>
 <p>Esse arquivo será posteriormente copiado para o novo sistema por <i>pacstrap</i>, então é melhor fazer direito.
 </p>
@@ -406,7 +410,7 @@
 </p>
 <pre># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
 </pre>
-<p>Verifique o arquivo <code>/mnt/etc/fstab</code> resultante e edite-o caso haja erros.
+<p>Verifique o arquivo <code>/mnt/etc/fstab</code> resultante e <a href="../pt/Help:Reading.html#Acrescentar,_adicionar,_criar,_editar" class="mw-redirect" title="Edição de texto">edite</a>-o caso haja erros.
 </p>
 <h3><span class="mw-headline" id="Chroot">Chroot</span></h3>
 <p><a href="../pt/Chroot.html" class="mw-redirect" title="Change root (Português)">Mude a raiz</a> para novo sistema:
@@ -433,11 +437,11 @@
 <h3>
 <span id="Localiza.C3.A7.C3.A3o"></span><span class="mw-headline" id="Localização">Localização</span>
 </h3>
-<p>Edite <code>/etc/locale.gen</code> e descomente <code>pt_BR.UTF-8 UTF-8</code> com qualquer outro <a href="../pt/Locale.html" title="Locale (Português)">locale</a> necessário. Gere os locales executando:
+<p><a href="../pt/Help:Reading.html#Acrescentar,_adicionar,_criar,_editar" class="mw-redirect" title="Edição de texto">Edite</a> <code>/etc/locale.gen</code> e descomente <code>pt_BR.UTF-8 UTF-8</code> com qualquer outro <a href="../pt/Locale.html" title="Locale (Português)">locale</a> necessário. Gere os locales executando:
 </p>
 <pre># locale-gen
 </pre>
-<p>Crie o arquivo <span class="plainlinks archwiki-template-man" title="$ man 5 locale.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/locale.conf.5">locale.conf(5)</a></span> e <a href="../pt/Locale.html#Configurando_o_locale_do_sistema" title="Locale (Português)">defina a variável LANG</a> adequadamente:
+<p><a href="../pt/Help:Reading.html#Acrescentar,_adicionar,_criar,_editar" class="mw-redirect" title="Crie">Crie</a> o arquivo <span class="plainlinks archwiki-template-man" title="$ man 5 locale.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/locale.conf.5">locale.conf(5)</a></span> e <a href="../pt/Locale.html#Configurando_o_locale_do_sistema" title="Locale (Português)">defina a variável LANG</a> adequadamente:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/locale.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">LANG=<i>pt_BR.UTF-8</i></pre>
@@ -448,7 +452,7 @@
 <h3>
 <span id="Configura.C3.A7.C3.A3o_de_rede"></span><span class="mw-headline" id="Configuração_de_rede">Configuração de rede</span>
 </h3>
-<p>Crie o arquivo <a href="../pt/Network_configuration.html#Configurando_um_hostname" class="mw-redirect" title="Hostname (Português)">hostname</a>:
+<p><a href="../pt/Help:Reading.html#Acrescentar,_adicionar,_criar,_editar" class="mw-redirect" title="Crie">Crie</a> o arquivo <a href="../pt/Network_configuration.html#Configurando_um_hostname" class="mw-redirect" title="Hostname (Português)">hostname</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/hostname</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"><i>meuhostname</i>
@@ -503,8 +507,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Installation_guide_(Portugu%C3%AAs)&amp;oldid=652062">https://wiki.archlinux.org/index.php?title=Installation_guide_(Português)&amp;oldid=652062</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 February 2021, at 12:41.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Installation_guide_(Portugu%C3%AAs)&amp;oldid=659396">https://wiki.archlinux.org/index.php?title=Installation_guide_(Português)&amp;oldid=659396</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 April 2021, at 08:16.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

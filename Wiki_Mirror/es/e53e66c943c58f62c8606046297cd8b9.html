@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -213,12 +214,12 @@
 </p>
 <p>Compruebe los eventuales mensajes del kernel relativos al cargamento del firmware:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep firmware</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep firmware</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[   7.148259] iwlwifi 0000:02:00.0: loaded firmware version 39.30.4.1 build 35138 op_mode iwldvm
 </pre>
 <p>Si no hay salida relevante, compruebe los mensajes de la salida completa para el módulo que ha identificado anteriormente (<code>iwlwifi</code> en este ejemplo) para idenfificar el mensaje pertinente u otras cuestiones:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep iwlwifi</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep iwlwifi</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[   12.342694] iwlwifi 0000:02:00.0: irq 44 for MSI/MSI-X
 [   12.353466] iwlwifi 0000:02:00.0: loaded firmware version 39.31.5.1 build 35138 op_mode iwldvm
 [   12.430317] iwlwifi 0000:02:00.0: CONFIG_IWLWIFI_DEBUG disabled
@@ -235,10 +236,10 @@
 <ul>
 <li>La <a rel="nofollow" class="external text" href="https://help.ubuntu.com/community/WifiDocs/WirelessCardsSupported">Wiki de Ubuntu</a> tiene una buena lista de tarjetas inalámbricas y muestra si están o no soportadas, ya sea por el kernel de Linux, ya sea por un controlador en el espacio de usuario (incluye el nombre del controlador).</li>
 <li>
-<a rel="nofollow" class="external text" href="http://linux-wless.passys.nl/">Soporte inalámbrico para Linux</a> y las preguntas para Linux de la <a rel="nofollow" class="external text" href="http://www.linuxquestions.org/hcl/index.php?cat=10">Lista de compatibilidad de hardware</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-04]</sup> (HCL) también proporcinan una buena base de datos sobre hardware compatible con el kernel.</li>
+<a rel="nofollow" class="external text" href="http://linux-wless.passys.nl/">Soporte inalámbrico para Linux</a> y las preguntas para Linux de la <a rel="nofollow" class="external text" href="https://web.archive.org/web/20110711100256/http://www.linuxquestions.org/hcl/index.php?cat=10">Lista de compatibilidad de hardware</a> (HCL) también proporcinan una buena base de datos sobre hardware compatible con el kernel.</li>
 <li>La <a rel="nofollow" class="external text" href="https://wireless.wiki.kernel.org/en/users/Devices">página del kernel</a>, contiene una matriz adicional de hardware compatible.</li>
 </ul>
-<p>Si su tarjeta inalámbrica aparece en la lista anterior, continúe en <a href="#Soluci.C3.B3n_de_problemas_sobre_controladores_y_firmware">esta sección</a> del presente artículo, que contiene información sobre la instalación de controladores y firmware de algunas tarjetas de red específicas. A continuación <a href="#Comprobar_el_estado_del_controlador">compruebe el estado del controlador</a> de nuevo.
+<p>Si su tarjeta inalámbrica aparece en la lista anterior, continúe en <a href="#Soluci%C3%B3n_de_problemas_sobre_controladores_y_firmware">esta sección</a> del presente artículo, que contiene información sobre la instalación de controladores y firmware de algunas tarjetas de red específicas. A continuación <a href="#Comprobar_el_estado_del_controlador">compruebe el estado del controlador</a> de nuevo.
 </p>
 <p>Si su tarjeta inalámbrica no aparece en la lista anterior, es posible que sea compatible solo en Windows (algunas como Broadcom, 3com, etc.). En estos casos, pruebe a usar <a href="#ndiswrapper">ndiswrapper</a>.
 </p>
@@ -478,7 +479,7 @@
 <pre># iw dev wlan0 scan | less
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Si aparece le mensaje «<i>Interface doesn't support scanning</i>» (interfaz no compatible con el escaneo), entonces probablemente se olvidó de instalar el firmware. En algunos casos, este mensaje también se muestra cuando no se está ejecutando <i>iwlist</i> como root.</div>
+<strong>Nota:</strong> Si aparece le mensaje «<i>Interface does not support scanning</i>» (interfaz no compatible con el escaneo), entonces probablemente se olvidó de instalar el firmware. En algunos casos, este mensaje también se muestra cuando no se está ejecutando <i>iwlist</i> como root.</div>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Sugerencia:</strong> Dependiendo de su ubicación, es posible que tenga que establecer el <a href="#Dominio_regulador">dominio regulador</a> correcto, con el fin de ver todas las redes disponibles.</div>
 <p>Puntos importantes a comprobar:
@@ -767,7 +768,7 @@ WantedBy=multi-user.target
 <h3><span class="mw-headline" id="Observar_los_registros">Observar los registros</span></h3>
 <p>Una buena medida inicial para solucionar problemas, es analizar primero los archivos de registro del sistema. A fin de no analizar de forma manual dichos archivos directamente, puede ayudar abrir una segunda ventana de terminal/consola y ver los mensajes del kernel con la orden:
 </p>
-<pre>$ dmesg -w
+<pre># dmesg -w
 </pre>
 <p>mientras se realización la acción correspondiente, por ejemplo, intentar asociarse a una red inalámbrica.
 </p>
@@ -831,7 +832,7 @@ WantedBy=multi-user.target
 <h4>
 <span id="Causa_.231"></span><span class="mw-headline" id="Causa_#1">Causa #1</span>
 </h4>
-<p>Si dmesg informa <code>wlan0: deauthenticating from MAC by local choice (reason=3)</code> y se pierde la conexión Wi-Fi, es probable que tenga un modo demasiado agresivo de ahorro de energía para su tarjeta Wi-Fi <a rel="nofollow" class="external autonumber" href="http://us.generation-nt.com/answer/gentoo-user-wireless-deauthenticating-by-local-choice-help-204640041.html">[2]</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-04]</sup>. Pruebe a desactivar las funciones de ahorro de energía de la tarjeta inalámbrica:
+<p>Si dmesg informa <code>wlan0: deauthenticating from MAC by local choice (reason=3)</code> y se pierde la conexión Wi-Fi, es probable que tenga un modo demasiado agresivo de ahorro de energía para su tarjeta Wi-Fi <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20120422190638/http://us.generation-nt.com/answer/gentoo-user-wireless-deauthenticating-by-local-choice-help-204640041.html">[2]</a>. Pruebe a desactivar las funciones de ahorro de energía de la tarjeta inalámbrica:
 </p>
 <pre># iwconfig wlan0 power off
 </pre>
@@ -859,7 +860,7 @@ WantedBy=multi-user.target
 <h4><span class="mw-headline" id="rt2x00">rt2x00</span></h4>
 <p>Este es el controlador unificado para los chipsets Ralink  (que reemplaza a <code>rt2500</code>, <code>rt61</code>, <code>rt73</code>, etc.). Este controlador está incorporado en el kernel de Linux desde la versión 2.6.24, con lo cual basta con cargar el módulo correcto para el chip: <code>rt2400pci</code>, <code>rt2500pci</code>, <code>rt2500usb</code>, <code>rt61pci</code> o <code>rt73usb</code>, los cuales, a su vez, cargarán automáticamente los módulos <code>rt2x00</code> apropiados.
 </p>
-<p>Una lista de los dispositivos soportados por los módulos está disponible en la <a rel="nofollow" class="external text" href="http://rt2x00.serialmonkey.com/wiki/index.php/Hardware">página principal</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-04]</sup> del proyecto.
+<p>Una lista de los dispositivos soportados por los módulos está disponible en la <a rel="nofollow" class="external text" href="https://web.archive.org/web/20150506184123/http://rt2x00.serialmonkey.com:80/wiki/index.php/Hardware">página principal</a> del proyecto.
 </p>
 <dl><dt>Notas adicionales.-</dt></dl>
 <ul>
@@ -881,7 +882,7 @@ WantedBy=multi-user.target
 <p>Nuevo chipset a partir de 2012. Puede requerir controladores propietarios de Ralink . Algunos fabricantes los utilizan, consulte el hilo del foro <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1164228#p1164228">Belkin N750 DB wireless usb adapter</a>.
 </p>
 <h4><span class="mw-headline" id="rt5572">rt5572</span></h4>
-<p>Nuevo chipset a partir de 2012 con soporte para bandas de hasta 5 Ghz. Puede requerir controladores propietarios de Ralink, lo que requiere cierto trabajo para compilarlo. En el momento de escribir esta guía está disponible la compilación para un DLINK DWA-160 rev. B2 <a rel="nofollow" class="external text" href="http://bernaerts.dyndns.org/linux/229-ubuntu-precise-dlink-dwa160-revb2">aquí</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-04]</sup>.
+<p>Nuevo chipset a partir de 2012 con soporte para bandas de hasta 5 Ghz. Puede requerir controladores propietarios de Ralink, lo que requiere cierto trabajo para compilarlo. En el momento de escribir esta guía está disponible la compilación para un DLINK DWA-160 rev. B2 <a rel="nofollow" class="external text" href="http://bernaerts.dyndns.org/linux/74-ubuntu/229-ubuntu-precise-dlink-dwa160-revb2/">aquí</a>.
 </p>
 <h3><span class="mw-headline" id="Realtek">Realtek</span></h3>
 <h4><span class="mw-headline" id="rtl8192cu">rtl8192cu</span></h4>
@@ -926,7 +927,7 @@ r8169 0000:03:00.0: eth0: link down
 </p>
 <ul>
 <li><a rel="nofollow" class="external free" href="https://wireless.wiki.kernel.org/en/users/Drivers/ath5k">https://wireless.wiki.kernel.org/en/users/Drivers/ath5k</a></li>
-<li><a rel="nofollow" class="external free" href="http://wiki.debian.org/ath5k">http://wiki.debian.org/ath5k</a></li>
+<li><a rel="nofollow" class="external free" href="https://wiki.debian.org/ath5k">https://wiki.debian.org/ath5k</a></li>
 </ul>
 <p>Si encuentra que algunas páginas web se cargan muy lentas, o si el dispositivo no mantiene una dirección IP, pruebe cambiando la encriptación por hardware a software para cargar el módulo <code>ath5k</code> con la opción <code>nohwcrypt=1</code>. Véase <a href="../en/Kernel_module.html#Options" class="mw-redirect" title="Kernel modules">Kernel modules#Options</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> para obtener más detalles.
 </p>
@@ -942,7 +943,7 @@ r8169 0000:03:00.0: eth0: link down
 </p>
 <ul>
 <li><a rel="nofollow" class="external free" href="https://wireless.wiki.kernel.org/en/users/Drivers/ath9k">https://wireless.wiki.kernel.org/en/users/Drivers/ath9k</a></li>
-<li><a rel="nofollow" class="external free" href="http://wiki.debian.org/ath9k">http://wiki.debian.org/ath9k</a></li>
+<li><a rel="nofollow" class="external free" href="https://wiki.debian.org/ath9k">https://wiki.debian.org/ath9k</a></li>
 </ul>
 <p>En el hipotético caso de que tenga problemas de estabilidad, intente probar con el paquete <a rel="nofollow" class="external text" href="https://wireless.wiki.kernel.org/en/users/Download">compat-wireless</a>.
 Existe una <a rel="nofollow" class="external text" href="https://lists.ath9k.org/mailman/listinfo/ath9k-devel">ath9k mailing list</a> para dar soporte y debate relacionados con su desarrollo.
@@ -1086,7 +1087,7 @@ iwconfig
 </h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://wireless.wiki.kernel.org/">The Linux Wireless project</a></li>
-<li><a rel="nofollow" class="external text" href="http://aircrack-ng.org/doku.php?id=install_drivers">Aircrack-ng guide on installing drivers</a></li>
+<li><a rel="nofollow" class="external text" href="https://aircrack-ng.org/doku.php?id=install_drivers">Aircrack-ng guide on installing drivers</a></li>
 </ul>
 </div>
 </div>
@@ -1099,9 +1100,9 @@ iwconfig
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
+<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
 </div>
 </div>
@@ -1110,8 +1111,8 @@ iwconfig
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Espa%C3%B1ol)/Wireless_(Espa%C3%B1ol)&amp;oldid=646948">https://wiki.archlinux.org/index.php?title=Network_configuration_(Español)/Wireless_(Español)&amp;oldid=646948</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:17.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Espa%C3%B1ol)/Wireless_(Espa%C3%B1ol)&amp;oldid=663766">https://wiki.archlinux.org/index.php?title=Network_configuration_(Español)/Wireless_(Español)&amp;oldid=663766</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 06:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

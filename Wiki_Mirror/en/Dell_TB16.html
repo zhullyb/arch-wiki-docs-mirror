@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -48,8 +49,20 @@
 </ul>
 </li>
 <li class="toclevel-1 tocsection-4"><a href="#Firmware_Updates"><span class="tocnumber">2</span> <span class="toctext">Firmware Updates</span></a></li>
-<li class="toclevel-1 tocsection-5"><a href="#Troubleshooting"><span class="tocnumber">3</span> <span class="toctext">Troubleshooting</span></a></li>
-<li class="toclevel-1 tocsection-6"><a href="#External_Links"><span class="tocnumber">4</span> <span class="toctext">External Links</span></a></li>
+<li class="toclevel-1 tocsection-5">
+<a href="#Troubleshooting"><span class="tocnumber">3</span> <span class="toctext">Troubleshooting</span></a>
+<ul>
+<li class="toclevel-2 tocsection-6">
+<a href="#Bus_issues"><span class="tocnumber">3.1</span> <span class="toctext">Bus issues</span></a>
+<ul>
+<li class="toclevel-3 tocsection-7"><a href="#Disabling_PCIE_power_manage"><span class="tocnumber">3.1.1</span> <span class="toctext">Disabling PCIE power manage</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#Unbinding_and_Rebinding"><span class="tocnumber">3.1.2</span> <span class="toctext">Unbinding and Rebinding</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-9"><a href="#Blank_screen_on_boot_with_Nvidia_drivers"><span class="tocnumber">3.2</span> <span class="toctext">Blank screen on boot with Nvidia drivers</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10"><a href="#External_Links"><span class="tocnumber">4</span> <span class="toctext">External Links</span></a></li>
 </ul>
 </div>
 
@@ -93,10 +106,36 @@
 <p>jasondclinton also notes that the official NVM updates are often far behind Intel's latest releases (e.g. TB16's 1.0.0 firmware includes NVM 16 wherehas Intel had already released NVM 33 at time of writing).  It is unknown if there is an easy way to update these independently.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
+<h3><span class="mw-headline" id="Bus_issues">Bus issues</span></h3>
 <p>Issues such as the USB bus (and all connected devices) failing when plugging/unplugging devices are improved by following all the instructions above (notably, *disabling* Thunderbolt Security, "Dell Type-C Dock configuration options" and firmware updates).  Read the firmware updates section carefully: not all updates are possible via Linux.
 </p>
-<p>Issues with the USB bus failing can also be mitigated by disabling PCIE power management in the TLP config. Use the <i>lspci </i> output to identify and add the dock to the <code>RUNTIME_PM_BLACKLIST</code> list in <code>/etc/tlp.conf</code>
+<p>Some devices behave differently in the dock vs directly on laptop's USB ports, e.g. Microsoft's keyboard receiver is erratically put to sleep, or gets stuck repeating a particular key.  The un-intuitive fix for this is to disable Thunderbolt security (see note about this above).
 </p>
+<h4><span class="mw-headline" id="Disabling_PCIE_power_manage">Disabling PCIE power manage</span></h4>
+<p>Issues with the USB bus failing can also be mitigated by disabling PCIE power management in the <a href="../en/TLP.html" title="TLP">TLP</a> config.  Create an <code>/etc/tlp.d/01-tb16.conf</code> with the following line:
+</p>
+<pre># lspci -nnd 1b21:1142
+# 3f:00.0 USB controller [0c03]: ASMedia Technology Inc. ASM1042A USB 3.0 Host Controller [1b21:1142]
+RUNTIME_PM_BLACKLIST="3f:00.0"
+</pre>
+<p>Verify that you have the correct serial using <code>lspci</code> as in the comments.
+</p>
+<p>Run <code>sudo tlp start</code> to reload the configuration.
+</p>
+<h4><span class="mw-headline" id="Unbinding_and_Rebinding">Unbinding and Rebinding</span></h4>
+<p>You can use this script to recover from bus failures without rebooting.  Useful for laptops without great compatibility with the TB16, especially after resuming from suspend:
+</p>
+<pre>#!/bin/sh
+
+# 0b:00.0 USB controller [0c03]: ASMedia Technology Inc. ASM1042A USB 3.0 Host Controller [1b21:1142]
+SERIAL=$(lspci -Dd "1b21:1142" | awk '{ print $1 }')
+DRIVER="/sys/bus/pci/drivers/xhci_hcd"
+
+echo -n $SERIAL | sudo tee $DRIVER/unbind
+sleep 4
+echo -n $SERIAL | sudo tee $DRIVER/bind
+</pre>
+<h3><span class="mw-headline" id="Blank_screen_on_boot_with_Nvidia_drivers">Blank screen on boot with Nvidia drivers</span></h3>
 <p>If, when using Nvidia drivers, you get a black screen on boot with the dock and 3 external monitors connected, there is a good chance the machine is trying to use the 3 external displays plus the internal display of the laptop. This can be resolved by writing a block into <code>~/.xinitrc</code> or your display manager's custom xstart scripts e.g. for SDDM the default for KDE. the file is <code>/usr/share/sddm/scripts/Xsetup</code>
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/share/sddm/scripts/Xsetup</pre>
@@ -116,8 +155,6 @@ else
         xrandr --auto
 fi
 </pre>
-<p>Some devices behave differently in the dock vs directly on laptop's USB ports, e.g. Microsoft's keyboard receiver is erratically put to sleep, or gets stuck repeating a particular key.  The un-intuitive fix for this is to disable Thunderbolt security (see note about this above).
-</p>
 <h2><span class="mw-headline" id="External_Links">External Links</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://www.reddit.com/r/sysadmin/comments/9bwqt8/dell_tb16_dock_rant_seriously_dont_buy_this_thing/">Reddit r/sysadmin: Dell TB16 Dock Rant - Seriously don't buy this thing...</a></li>
@@ -133,8 +170,8 @@ fi
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dell_TB16&amp;oldid=626656">https://wiki.archlinux.org/index.php?title=Dell_TB16&amp;oldid=626656</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 July 2020, at 16:00.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dell_TB16&amp;oldid=658025">https://wiki.archlinux.org/index.php?title=Dell_TB16&amp;oldid=658025</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 April 2021, at 13:04.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

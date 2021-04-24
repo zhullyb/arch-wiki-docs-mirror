@@ -73,17 +73,23 @@
 <a href="#Using_TPM_2.0"><span class="tocnumber">3</span> <span class="toctext">Using TPM 2.0</span></a>
 <ul>
 <li class="toclevel-2 tocsection-9"><a href="#Checking_support"><span class="tocnumber">3.1</span> <span class="toctext">Checking support</span></a></li>
-<li class="toclevel-2 tocsection-10"><a href="#Data-at-rest_encryption_using_Clevis_and_LUKS"><span class="tocnumber">3.2</span> <span class="toctext">Data-at-rest encryption using Clevis and LUKS</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#Other_good_examples_of_TPM_2.0_usage"><span class="tocnumber">3.3</span> <span class="toctext">Other good examples of TPM 2.0 usage</span></a></li>
+<li class="toclevel-2 tocsection-10">
+<a href="#Data-at-rest_encryption_with_LUKS"><span class="tocnumber">3.2</span> <span class="toctext">Data-at-rest encryption with LUKS</span></a>
+<ul>
+<li class="toclevel-3 tocsection-11"><a href="#systemd-cryptenroll"><span class="tocnumber">3.2.1</span> <span class="toctext">systemd-cryptenroll</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#Clevis"><span class="tocnumber">3.2.2</span> <span class="toctext">Clevis</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-12">
+<li class="toclevel-2 tocsection-13"><a href="#Other_good_examples_of_TPM_2.0_usage"><span class="tocnumber">3.3</span> <span class="toctext">Other good examples of TPM 2.0 usage</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-14">
 <a href="#Troubleshooting"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-13"><a href="#tcsd.service_failed_to_start"><span class="tocnumber">4.1</span> <span class="toctext">tcsd.service failed to start</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#tcsd.service_failed_to_start"><span class="tocnumber">4.1</span> <span class="toctext">tcsd.service failed to start</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-14"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-16"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -326,7 +332,77 @@ $ stpm-keygen -o ~/.simple-tpm-pk11/my.key
 <li>read the value of <code>/sys/class/tpm/tpm0/device/description</code><a rel="nofollow" class="external autonumber" href="https://github.com/tpm2-software/tpm2-tools/issues/604#issuecomment-342784674">[3]</a> or <code>/sys/class/tpm/tpm0/tpm_version_major</code>
 </li>
 </ul>
-<h3><span class="mw-headline" id="Data-at-rest_encryption_using_Clevis_and_LUKS">Data-at-rest encryption using Clevis and LUKS</span></h3>
+<h3><span class="mw-headline" id="Data-at-rest_encryption_with_LUKS">Data-at-rest encryption with LUKS</span></h3>
+<p>There are two methods for unlocking a LUKS volume using a TPM.  An older method using <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=clevis">clevis</a></span>, and a newer method using <i>systemd-cryptenroll</i>.  The newer method will be detailed first.
+</p>
+<p>Using either method, an encrypted volume or volumes may be unlocked using keys stored in a TPM, either automatically at boot or manually at a later time.  Using a TPM for this purpose ensures that your drives will not unlock unless certain conditions are met, such as your firmware not having been modified and <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> not having been disabled (see <a href="#Accessing_PCR_registers">#Accessing PCR registers</a>).
+</p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> If you use this method on your root volume, this means that, as long as the previously mentioned certain conditions are met, your computer will <b>unlock automatically</b> at boot without needing to enter an encryption password.
+<ul>
+<li>This means that access to data is not protected in case the hardware gets stolen.</li>
+<li>Be aware that this method makes you more vulnerable to <a href="https://en.wikipedia.org/wiki/Cold_boot_attack" class="extiw" title="wikipedia:Cold boot attack">cold boot attacks</a>, because even if your computer has been powered off for a long time (ensuring the memory is completely cleared), an attacker could simply turn it on and wait for the TPM to load the key automatically. This may be a concern for high-value targets.</li>
+</ul>
+</div>
+<h4><span class="mw-headline" id="systemd-cryptenroll">systemd-cryptenroll</span></h4>
+<p>Since version 248, <a href="../en/Systemd.html" title="Systemd">systemd</a> has had native support for enrolling LUKS keys in TPMs.  This functionality is managed through the <i>systemd-cryptenroll</i> command.  This method requires the following:
+</p>
+<ul>
+<li>A LUKS2 device (currently the default type used by <a href="../en/Dm-crypt/Device_encryption.html#Encryption_options_with_dm-crypt" title="Dm-crypt/Device encryption">cryptsetup</a>),</li>
+<li>If you intend to use this method on your root partition, use of the <code>systemd</code> and <code>sd-encrypt</code> hooks in the initramfs.  See <a href="../en/Mkinitcpio.html#HOOKS" title="Mkinitcpio">Mkinitcpio#HOOKS</a> and <a href="../en/Dm-crypt/System_configuration.html#Using_sd-encrypt_hook" title="Dm-crypt/System configuration">Using sd-encrypt hook</a>.</li>
+</ul>
+<p>To begin, run the following command to list your installed TPMs:
+</p>
+<pre>$ systemd-cryptenroll --tpm2-device=list
+</pre>
+<p>A key may be enrolled in both the TPM and the LUKS volume using only one command.  The following example binds the key to PCRs 0 and 7 (the system firmware and <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> state):
+</p>
+<pre># systemd-cryptenroll --tpm2-device=<i>/path/to/tpm2_device</i> --tpm2-pcrs=0,7 /dev/sdX
+</pre>
+<p>where <code>/dev/sdX</code> is the full path to the encrypted LUKS volume and <code><i>/path/to/tpm2_device</i></code> is the full path to the TPM as given in the output of the first command.
+</p>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> If your computer has only one TPM installed, which is usually the case, you may instead specify <code>--tpm2-device=auto</code> to automatically select the only available TPM.</div>
+<p>To test that the key works, run the following command while the LUKS volume is closed:
+</p>
+<pre># /usr/lib/systemd/systemd-cryptsetup attach <i>mapping_name</i> /dev/sdX - tpm2-device=<i>/path/to/tpm2_device</i>
+</pre>
+<p>where <code><i>mapping_name</i></code> is your chosen name for the volume once opened.  If the volume successfully unlocks, you are ready to add the required information to the <a href="../en/Dm-crypt/System_configuration.html#crypttab" title="Dm-crypt/System configuration">crypttab</a> so that <a href="../en/Systemd.html" title="Systemd">systemd</a> can automatically unlock the device at boot.
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/crypttab</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># Example crypttab file. Fields are: name, underlying device, passphrase, cryptsetup options.
+
+# Unlock /dev/sdX using the only available TPM, naming it myvolume
+ myvolume	/dev/sdX	-	tpm2-device=auto</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> While you may specify the UUID of your LUKS volume in place of the pathname <code>/etc/crypttab</code>, the <i>systemd-cryptenroll</i> command itself currently only supports pathnames.</div>
+<p>If the volume you wish to unlock contains your root filesystem, you must take the following additional steps:
+</p>
+<ul>
+<li>Ensure you are using <code>systemd</code> and <code>sd-encrypt</code> in the <code>HOOKS</code> array of <code>/etc/mkinitcpio.conf</code>
+</li>
+<li>Configure your initramfs to unlock the root volume with one of the following methods:
+<ul>
+<li>Specifying the root volume using the configuration outlined above in <code>/etc/crypttab.initramfs</code> (see tip at the top of <a href="../en/Dm-crypt/System_configuration.html#Using_sd-encrypt_hook" title="Dm-crypt/System configuration">Using sd-encrypt hook</a>)</li>
+<li>Setting <code>rd.luks.options=<i>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</i>=tpm2-device=auto</code> in addition to <code>rd.luks.uuid</code> or <code>rd.luks.name</code> in the kernel command line</li>
+</ul>
+</li>
+</ul>
+<p>To remove a key enrolled using this method, run:
+</p>
+<pre># systemd-cryptenroll /dev/sdX --wipe-slot=<i>slot_number</i>
+</pre>
+<p>where <code><i>slot_number</i></code> is the numeric LUKS slot number in which your TPM key is stored.  
+</p>
+<p>Alternatively, run:
+</p>
+<pre># systemd-cryptenroll /dev/sdX --wipe-slot=tpm2
+</pre>
+<p>to remove all TPM-associated keys from your LUKS volume.
+</p>
+<p>See <span class="plainlinks archwiki-template-man" title="$ man 1 systemd-cryptenroll"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-cryptenroll.1">systemd-cryptenroll(1)</a></span> and <span class="plainlinks archwiki-template-man" title="$ man 5 crypttab"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/crypttab.5">crypttab(5)</a></span> for more information and examples.
+</p>
+<h4><span class="mw-headline" id="Clevis">Clevis</span></h4>
 <p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=clevis">clevis</a></span> allows binding a LUKS volume to a system by creating a key and encrypting it using the TPM, and sealing the key using PCR values which represent the system state at the time of the Clevis pin creation.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
@@ -370,16 +446,25 @@ $ stpm-keygen -o ~/.simple-tpm-pk11/my.key
 </pre>
 <p>For automated decryption of volumes in <a href="../en/Dm-crypt/System_configuration.html#crypttab" title="Dm-crypt/System configuration">/etc/crypttab</a>, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>clevis-luks-askpass.path</code>.
 </p>
-<p>For automated decryption of the root volume, use <a href="../en/Booster.html" title="Booster">Booster</a> or <a href="../en/Dracut.html" title="Dracut">Dracut</a>. Booster automatically decrypts LUKS volumes bound using Clevis out of the box. Dracut needs the following extra packages:
+<p>For automated decryption of the root volume, use <a href="../en/Booster.html" title="Booster">Booster</a>, <a href="../en/Dracut.html" title="Dracut">Dracut</a> or <a rel="nofollow" class="external text" href="https://github.com/kishorv06/arch-mkinitcpio-clevis-hook">mkinitcpio-clevis-hook</a>. Booster automatically decrypts LUKS volumes bound using Clevis out of the box. Dracut and mkinitcpio-clevis-hook needs the following extra packages:
 </p>
 <ul>
 <li><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libpwquality">libpwquality</a></span></li>
 <li><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=luksmeta">luksmeta</a></span></li>
-<li><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nmap">nmap</a></span></li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nmap">nmap</a></span> (For Dracut)</li>
+<li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tpm2-tools">tpm2-tools</a></span> (For mkinitcpio-clevis-hook)</li>
 </ul>
 <p>followed by an initramfs regeneration:
 </p>
+<p>Dracut:
+</p>
 <pre># dracut -f
+</pre>
+<p>mkinitcpio-clevis-hook:
+</p>
+<pre># mkinitcpio -P
 </pre>
 <h3><span class="mw-headline" id="Other_good_examples_of_TPM_2.0_usage">Other good examples of TPM 2.0 usage</span></h3>
 <ul>
@@ -399,8 +484,8 @@ $ stpm-keygen -o ~/.simple-tpm-pk11/my.key
 </pre>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://lwn.net/Articles/674751/">Protecting systems with the TPM</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.thinkwiki.org/wiki/Embedded_Security_Subsystem">Embedded Security Subsystem on Thinkwiki</a></li>
+<li><a rel="nofollow" class="external text" href="https://lwn.net/Articles/674751/">Protecting systems with the TPM</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.thinkwiki.org/wiki/Embedded_Security_Subsystem">Embedded Security Subsystem on Thinkwiki</a></li>
 <li><a rel="nofollow" class="external text" href="http://www.cs.unh.edu/~it666/reading_list/Hardware/tpm_fundamentals.pdf">TPM Fundamentals (PDF)</a></li>
 <li><a rel="nofollow" class="external text" href="https://www.lorier.net/docs/tpm">Using a TPM</a></li>
 </ul>
@@ -421,8 +506,8 @@ $ stpm-keygen -o ~/.simple-tpm-pk11/my.key
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Trusted_Platform_Module&amp;oldid=655162">https://wiki.archlinux.org/index.php?title=Trusted_Platform_Module&amp;oldid=655162</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 March 2021, at 20:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Trusted_Platform_Module&amp;oldid=662478">https://wiki.archlinux.org/index.php?title=Trusted_Platform_Module&amp;oldid=662478</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:15.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -44,10 +45,10 @@
 <div>
 <b>Reason:</b> The sections need better structuring. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Xen">Talk:Xen#</a>)</div>
 </div>
-<p>From <a rel="nofollow" class="external text" href="http://wiki.xen.org/wiki/Xen_Overview">Xen Overview</a>:
+<p>From <a rel="nofollow" class="external text" href="https://wiki.xen.org/wiki/Xen_Overview">Xen Overview</a>:
 </p>
 <dl><dd><i>Xen is an open-source type-1 or baremetal hypervisor, which makes it possible to run many instances of an operating system or indeed different operating systems in parallel on a single machine (or host). Xen is the only type-1 hypervisor that is available as open source.</i></dd></dl>
-<p>The Xen hypervisor is a thin layer of software which emulates a computer architecture allowing multiple operating systems to run simultaneously. The hypervisor is started by the boot loader of the computer it is installed on. Once the hypervisor is loaded, it starts the <a rel="nofollow" class="external text" href="http://wiki.xen.org/wiki/Dom0">dom0</a> (short for "domain 0", sometimes called the host or privileged domain) which in our case runs Arch Linux. Once the <i>dom0</i> has started, one or more <a rel="nofollow" class="external text" href="http://wiki.xen.org/wiki/DomU">domU</a> (short for user domains, sometimes called VMs or guests) can be started and controlled from the <i>dom0</i>. Xen supports both paravirtualized (PV) and hardware virtualized (HVM) <i>domU</i>. See <a rel="nofollow" class="external text" href="http://wiki.xen.org/wiki/Xen_Overview">Xen.org</a> for a full overview.
+<p>The Xen hypervisor is a thin layer of software which emulates a computer architecture allowing multiple operating systems to run simultaneously. The hypervisor is started by the boot loader of the computer it is installed on. Once the hypervisor is loaded, it starts the <a rel="nofollow" class="external text" href="https://wiki.xen.org/wiki/Dom0">dom0</a> (short for "domain 0", sometimes called the host or privileged domain) which in our case runs Arch Linux. Once the <i>dom0</i> has started, one or more <a rel="nofollow" class="external text" href="https://wiki.xen.org/wiki/DomU">domU</a> (short for user domains, sometimes called VMs or guests) can be started and controlled from the <i>dom0</i>. Xen supports both paravirtualized (PV) and hardware virtualized (HVM) <i>domU</i>. See <a rel="nofollow" class="external text" href="https://wiki.xen.org/wiki/Xen_Overview">Xen.org</a> for a full overview.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> Do not run other virtualization software such as <a href="../en/VirtualBox.html" title="VirtualBox">VirtualBox</a> when running Xen hypervisor, it might hang your system. See this <a rel="nofollow" class="external text" href="https://www.virtualbox.org/ticket/12146">bug report (wontfix)</a>.</div>
@@ -247,7 +248,7 @@ configfile /boot/grub/grub.cfg
 <pre># cp /usr/lib/syslinux/bios/mboot.c32 /boot/syslinux
 </pre>
 <h3><span class="mw-headline" id="Creation_of_a_network_bridge">Creation of a network bridge</span></h3>
-<p>Xen requires that network communications between <i>domU</i> and the <i>dom0</i> (and beyond) be set up manually. The use of both DHCP and static addressing is possible, and the choice should be determined by the network topology. Complex setups are possible, see the <a rel="nofollow" class="external text" href="http://wiki.xen.org/wiki/Xen_Networking">Networking</a> article on the Xen wiki for details and <code>/etc/xen/scripts</code> for scripts for various networking configurations. A basic bridged network, in which a virtual switch is created in <i>dom0</i> that every <i>domU</i> is attached to, can be set up by creating a <a href="../en/Network_bridge.html" title="Network bridge">network bridge</a> with the expected name <code>xenbr0</code>.
+<p>Xen requires that network communications between <i>domU</i> and the <i>dom0</i> (and beyond) be set up manually. The use of both DHCP and static addressing is possible, and the choice should be determined by the network topology. Complex setups are possible, see the <a rel="nofollow" class="external text" href="https://wiki.xen.org/wiki/Xen_Networking">Networking</a> article on the Xen wiki for details and <code>/etc/xen/scripts</code> for scripts for various networking configurations. A basic bridged network, in which a virtual switch is created in <i>dom0</i> that every <i>domU</i> is attached to, can be set up by creating a <a href="../en/Network_bridge.html" title="Network bridge">network bridge</a> with the expected name <code>xenbr0</code>.
 </p>
 <p>See <a href="../en/Network_bridge.html#Creating_a_bridge" title="Network bridge">Network bridge#Creating a bridge</a> for details.
 </p>
@@ -304,7 +305,7 @@ Domain-0                                     0   511     2     r-----   41652.9
 </pre>
 <p>Of course, the Mem, VCPUs and Time columns will be different depending on machine configuration and uptime. The important thing is that <i>dom0</i> is listed.
 </p>
-<p>In addition to the required steps above, see <a rel="nofollow" class="external text" href="http://wiki.xen.org/wiki/Xen_Best_Practices">best practices for running Xen</a> which includes information on allocating a fixed amount of memory and how to dedicate (pin) a CPU core for <i>dom0</i> use. It also may be beneficial to create a xenfs filesystem mount point by including in <code>/etc/fstab</code>
+<p>In addition to the required steps above, see <a rel="nofollow" class="external text" href="https://wiki.xen.org/wiki/Xen_Best_Practices">best practices for running Xen</a> which includes information on allocating a fixed amount of memory and how to dedicate (pin) a CPU core for <i>dom0</i> use. It also may be beneficial to create a xenfs filesystem mount point by including in <code>/etc/fstab</code>
 </p>
 <pre>none /proc/xen xenfs defaults 0 0
 </pre>
@@ -312,7 +313,7 @@ Domain-0                                     0   511     2     r-----   41652.9
 <p>Review <a rel="nofollow" class="external text" href="https://wiki.xen.org/wiki/Xen_Project_Best_Practices">Xen Project Best Practices</a> before using Xen.
 </p>
 <h2><span class="mw-headline" id="Using_Xen">Using Xen</span></h2>
-<p>Xen supports both paravirtualized (PV) and hardware virtualized (HVM) <i>domU</i>. In the following sections the steps for creating HVM and PV <i>domU</i> running Arch Linux are described. In general, the steps for creating an HVM <i>domU</i> are independent of the <i>domU</i> OS and HVM <i>domU</i> support a wide range of operating systems including Microsoft Windows. To use HVM <i>domU</i> the <i>dom0</i> hardware must have virtualization support. Paravirtualized <i>domU</i> do not require virtualization support, but instead require modifications to the guest operating system making the installation procedure different for each operating system (see the <a rel="nofollow" class="external text" href="http://wiki.xen.org/wiki/Category:Guest_Install">Guest Install</a> page of the Xen wiki for links to instructions). Some operating systems (e.g., Microsoft Windows) cannot be installed as a PV <i>domU</i>. In general, HVM <i>domU</i> often run slower than PV <i>domU</i> since HVMs run on emulated hardware. While there are some common steps involved in setting up PV and HVM <i>domU</i>, the processes are substantially different. In both cases, for each <i>domU</i>, a "hard disk" will need to be created and a configuration file needs to be written. Additionally, for installation each <i>domU</i> will need access to a copy of the installation ISO stored on the <i>dom0</i> (see the <a rel="nofollow" class="external text" href="https://archlinux.org/download/">Download Page</a> to obtain the Arch Linux ISO).
+<p>Xen supports both paravirtualized (PV) and hardware virtualized (HVM) <i>domU</i>. In the following sections the steps for creating HVM and PV <i>domU</i> running Arch Linux are described. In general, the steps for creating an HVM <i>domU</i> are independent of the <i>domU</i> OS and HVM <i>domU</i> support a wide range of operating systems including Microsoft Windows. To use HVM <i>domU</i> the <i>dom0</i> hardware must have virtualization support. Paravirtualized <i>domU</i> do not require virtualization support, but instead require modifications to the guest operating system making the installation procedure different for each operating system (see the <a rel="nofollow" class="external text" href="https://wiki.xen.org/wiki/Category:Guest_Install">Guest Install</a> page of the Xen wiki for links to instructions). Some operating systems (e.g., Microsoft Windows) cannot be installed as a PV <i>domU</i>. In general, HVM <i>domU</i> often run slower than PV <i>domU</i> since HVMs run on emulated hardware. While there are some common steps involved in setting up PV and HVM <i>domU</i>, the processes are substantially different. In both cases, for each <i>domU</i>, a "hard disk" will need to be created and a configuration file needs to be written. Additionally, for installation each <i>domU</i> will need access to a copy of the installation ISO stored on the <i>dom0</i> (see the <a rel="nofollow" class="external text" href="https://archlinux.org/download/">Download Page</a> to obtain the Arch Linux ISO).
 </p>
 <h3>
 <span id="Create_a_domU_.22hard_disk.22"></span><span class="mw-headline" id='Create_a_domU_"hard_disk"'>Create a domU "hard disk"</span>
@@ -457,7 +458,7 @@ vif = [ 'mac=00:16:3e:XX:XX:XX,bridge=xenbr0' ]
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="http://www.xen.org/">The homepage at xen.org</a></li>
-<li><a rel="nofollow" class="external text" href="http://wiki.xen.org/wiki/Main_Page">The wiki at xen.org </a></li>
+<li><a rel="nofollow" class="external text" href="https://wiki.xen.org/wiki/Main_Page">The wiki at xen.org </a></li>
 </ul>
 </div>
 </div>
@@ -479,8 +480,8 @@ vif = [ 'mac=00:16:3e:XX:XX:XX,bridge=xenbr0' ]
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xen&amp;oldid=647091">https://wiki.archlinux.org/index.php?title=Xen&amp;oldid=647091</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:30.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xen&amp;oldid=662616">https://wiki.archlinux.org/index.php?title=Xen&amp;oldid=662616</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:34.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

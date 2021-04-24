@@ -39,9 +39,14 @@
 <li><a href="../../en/StrongSwan.html" title="StrongSwan">strongSwan</a></li>
 </ul>
 </div>
+<div class="noprint archwiki-template-message">
+<p><a href="../../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> This article needs language improvements, do not write in first person (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Openswan_L2TP/IPsec_VPN_client_setup">Talk:Openswan L2TP/IPsec VPN client setup#</a>)</div>
+</div>
 <p>This article describes how to configure and use a L2TP/IPsec Virtual Private Network client on Arch Linux. It covers the installation and setup of several needed software packages. L2TP refers to the <a href="https://en.wikipedia.org/wiki/Layer_2_Tunneling_Protocol" class="extiw" title="w:Layer 2 Tunneling Protocol">w:Layer 2 Tunneling Protocol</a> and for <a href="https://en.wikipedia.org/wiki/IPsec" class="extiw" title="w:IPsec">w:IPsec</a>, the <a rel="nofollow" class="external text" href="https://www.openswan.org/">Openswan</a> implementation is employed. 
 </p>
-<p>This guide is primarily targeted for clients connecting to a Windows Server machine, as it uses some settings that are specific to the Microsoft implementation of L2TP/IPsec. However, it is adaptable with any other common L2TP/IPsec setup. The <a rel="nofollow" class="external text" href="https://github.com/xelerance/Openswan/wiki/L2tp-ipsec-configuration-using-openswan-and-xl2tpd">Openswan wiki</a> features instructions to set up a corresponding L2TP/IPSec Linux server. 
+<p>This guide is primarily targeted for clients connecting to a Windows Server machine, as it uses some settings that are specific to the Microsoft implementation of L2TP/IPsec. However, it is adaptable with any other common L2TP/IPsec setup. The <a rel="nofollow" class="external text" href="https://github.com/xelerance/Openswan/wiki/L2tp-ipsec-configuration-using-openswan-and-xl2tpd">Openswan wiki</a> features instructions to set up a corresponding L2TP/IPSec Linux server.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -66,13 +71,13 @@
 <li class="toclevel-1 tocsection-7">
 <a href="#Routing"><span class="tocnumber">3</span> <span class="toctext">Routing</span></a>
 <ul>
-<li class="toclevel-2 tocsection-8"><a href="#Routing_traffic_to_a_single_IP_address_or_Subnet_through_the_tunnel"><span class="tocnumber">3.1</span> <span class="toctext">Routing traffic to a single IP address or Subnet through the tunnel</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Routing_traffic_to_a_single_IP_address_or_subnet_through_the_tunnel"><span class="tocnumber">3.1</span> <span class="toctext">Routing traffic to a single IP address or subnet through the tunnel</span></a></li>
 <li class="toclevel-2 tocsection-9"><a href="#Routing_all_traffic_through_the_tunnel"><span class="tocnumber">3.2</span> <span class="toctext">Routing all traffic through the tunnel</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-10"><a href="#Troubleshooting"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a></li>
 <li class="toclevel-1 tocsection-11">
-<a href="#Tips_and_Tricks"><span class="tocnumber">5</span> <span class="toctext">Tips and Tricks</span></a>
+<a href="#Tips_and_tricks"><span class="tocnumber">5</span> <span class="toctext">Tips and tricks</span></a>
 <ul>
 <li class="toclevel-2 tocsection-12"><a href="#Script_start_up_and_shut_down"><span class="tocnumber">5.1</span> <span class="toctext">Script start up and shut down</span></a></li>
 <li class="toclevel-2 tocsection-13"><a href="#A_further_script"><span class="tocnumber">5.2</span> <span class="toctext">A further script</span></a></li>
@@ -94,7 +99,7 @@
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <h3><span class="mw-headline" id="NetworkManager">NetworkManager</span></h3>
-<p>Open you NetworkManager UI, then:
+<p>Open the NetworkManager UI, then:
 </p>
 <ol>
 <li>Go to Network &gt; VPN. Click "+"</li>
@@ -145,7 +150,7 @@ conn L2TP-PSK
 </p>
 <pre>192.168.0.123 68.68.32.79 : PSK "<b>your_pre_shared_key</b>"
 </pre>
-<p>Remember to replace the local (<code>192.168.0.123</code>) and remote (<code>68.68.32.79</code>) IP addresses with the correct numbers for your location. The pre-shared key will be supplied by the VPN provider and will need to be placed in this file in cleartext form. You may find this file already exists and already have some data, try to back it up and create a new file only with your PSK if you'll see "Can't authenticate: no preshared key found for ..." when enabling connection in next section. Don't forget to set proper permissions (600) for this file or you will get error message "We cannot identify ourselves with either end of this connection.".
+<p>Remember to replace the local (<code>192.168.0.123</code>) and remote (<code>68.68.32.79</code>) IP addresses with the correct numbers for your location. The pre-shared key will be supplied by the VPN provider and will need to be placed in this file in cleartext form. You may find this file already exists and already have some data, try to back it up and create a new file only with your PSK if you will see "Can't authenticate: no preshared key found for ..." when enabling connection in next section. Do not forget to set proper permissions (600) for this file or you will get error message "We cannot identify ourselves with either end of this connection.".
 </p>
 <p>Add the connection, so it's available to use:
 </p>
@@ -154,7 +159,7 @@ conn L2TP-PSK
 <p>At this point the IPsec configuration is complete and we can move on to the L2TP configuration.
 </p>
 <h4><span class="mw-headline" id="Running_Openswan_in_a_container">Running Openswan in a container</span></h4>
-<p>Don't forget to add CAP_SYS_MODULE capability and access to host module tree. Example for nspawn:
+<p>Do not forget to add CAP_SYS_MODULE capability and access to host module tree. Example for nspawn:
 </p>
 <pre>--bind=/lib/modules --capability=CAP_SYS_MODULE
 </pre>
@@ -203,7 +208,7 @@ password <b>your_password</b>
 <p>You should see a <code>pppX</code> device that represents the tunnel. Right now, nothing is going to get routed through it. You need to add some routing rules to make it work right:
 </p>
 <h2><span class="mw-headline" id="Routing">Routing</span></h2>
-<h3><span class="mw-headline" id="Routing_traffic_to_a_single_IP_address_or_Subnet_through_the_tunnel">Routing traffic to a single IP address or Subnet through the tunnel</span></h3>
+<h3><span class="mw-headline" id="Routing_traffic_to_a_single_IP_address_or_subnet_through_the_tunnel">Routing traffic to a single IP address or subnet through the tunnel</span></h3>
 <p>This is as easy as adding a routing rule to your kernel table:
 </p>
 <pre># ip route add xxx.xxx.xxx.xxx via yyy.yyy.yyy.yyy dev pppX
@@ -245,11 +250,9 @@ See example below for command to identify tunnel device name and peer ip and the
 </p>
 <p><b>Solution</b> Make sure you have strongswan installed
 </p>
-<p><br>
-</p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The first step may be to use the <b>ipsec verify</b> command to check the configuration of the installed IPSEC.</div>
-<p><b>Issue:</b> I get a message from pppd saying "Failed to authenticate ourselves to peer" and I've verified my password is correct. What could be wrong?
+<p><b>Issue:</b> I get a message from pppd saying "Failed to authenticate ourselves to peer" and I have verified my password is correct. What could be wrong?
 </p>
 <p><b>Solution 1:</b> If you see the following in your /var/log/daemon.log:
 </p>
@@ -283,7 +286,7 @@ vas. 03 12:31:21 myhost pppd[8922]: CHAP authentication failed</pre>
 name DOMAIN\\your_vpn_username
 password your_password
 </pre>
-<h2><span class="mw-headline" id="Tips_and_Tricks">Tips and Tricks</span></h2>
+<h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Script_start_up_and_shut_down">Script start up and shut down</span></h3>
 <p>You can create some scripts either in your home directory or elsewhere(remember where you put them) to bring up the tunnel then shut it back down.
 </p>
@@ -325,7 +328,7 @@ ip route del 68.68.32.79 via 192.168.1.1 dev eth0
 ip route add default via 192.168.1.1
 </pre>
 <h3><span class="mw-headline" id="A_further_script">A further script</span></h3>
-<p>Above script really help me work. And notice the script use fixed ip, and someone like me may change net vpn addr, i'd like to put my further script below(not sure how to add attachment, so just raw ):
+<p>Above script really help me work. And notice the script use fixed ip, and someone like me may change net vpn addr, i would like to put my further script below(not sure how to add attachment, so just raw ):
 </p>
 <pre>#!/bin/bash
 if [ $# != 1 ] ; then
@@ -408,7 +411,7 @@ from time import sleep
 # The script is useful if you have dynamic IP, or need to use a domain for the vpn server
 # gist: https://gist.github.com/physicalit/bf9e27c7ecbc12843cd68e442358616c
 # The template files are identical to the examples from the link above, except they use the sign `&lt;` as placeholder for the server ip
-# can be added to cron, don't forghet to modify your domain and the ip/subnet from the `ip add route ...`
+# can be added to cron, do not forghet to modify your domain and the ip/subnet from the `ip add route ...`
 
 ip = gethostbyname('your.domain.tld')
 
@@ -447,7 +450,7 @@ if __name__ == "__main__":
 <li><a rel="nofollow" class="external free" href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md#ubuntu-linux">https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md#ubuntu-linux</a></li>
 <li><a rel="nofollow" class="external free" href="https://github.com/xelerance/xl2tpd">https://github.com/xelerance/xl2tpd</a></li>
 <li>
-<a rel="nofollow" class="external free" href="https://strongvpn.com/forum/viewtopic.php?pid=1844">https://strongvpn.com/forum/viewtopic.php?pid=1844</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-01 ⓘ]</sup> (<a rel="nofollow" class="external text" href="https://web.archive.org/web/20130129212118/https://strongvpn.com/forum/viewtopic.php?pid=1844">archive link</a>) — The main source used to write the initial revisions of this article.</li>
+<a rel="nofollow" class="external free" href="https://web.archive.org/web/20130129212118/https://strongvpn.com/forum/viewtopic.php?pid=1844">https://web.archive.org/web/20130129212118/https://strongvpn.com/forum/viewtopic.php?pid=1844</a> (<a rel="nofollow" class="external text" href="https://web.archive.org/web/20130129212118/https://strongvpn.com/forum/viewtopic.php?pid=1844">archive link</a>) — The main source used to write the initial revisions of this article.</li>
 </ul>
 </div>
 </div>
@@ -455,10 +458,7 @@ if __name__ == "__main__":
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../../en/Category:Virtual_Private_Network.html" title="Category:Virtual Private Network">Virtual Private Network</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
-<li><a href="../../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li></ul>
 </div>
 </div>
 	</div>
@@ -466,8 +466,8 @@ if __name__ == "__main__":
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Openswan_L2TP/IPsec_VPN_client_setup&amp;oldid=652171">https://wiki.archlinux.org/index.php?title=Openswan_L2TP/IPsec_VPN_client_setup&amp;oldid=652171</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 February 2021, at 09:48.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Openswan_L2TP/IPsec_VPN_client_setup&amp;oldid=663506">https://wiki.archlinux.org/index.php?title=Openswan_L2TP/IPsec_VPN_client_setup&amp;oldid=663506</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 19:12.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

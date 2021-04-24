@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -47,7 +48,7 @@
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Состояние перевода:</strong> На этой странице представлен перевод статьи <a href="../en/OpenSSH.html" title="OpenSSH">OpenSSH</a>. Дата последней синхронизации: 2 ноября 2020. Вы можете <a href="../ru/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Русский)">помочь</a> синхронизировать перевод, если в английской версии произошли <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=OpenSSH&amp;diff=0&amp;oldid=639665">изменения</a>.</div>
+<strong>Состояние перевода:</strong> На этой странице представлен перевод статьи <a href="../en/OpenSSH.html" title="OpenSSH">OpenSSH</a>. Дата последней синхронизации: 3 февраля 2020. Вы можете <a href="../ru/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Русский)">помочь</a> синхронизировать перевод, если в английской версии произошли <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=OpenSSH&amp;diff=0&amp;oldid=646974">изменения</a>.</div>
 <p><a href="https://en.wikipedia.org/wiki/ru:OpenSSH" class="extiw" title="wikipedia:ru:OpenSSH">OpenSSH</a> (OpenBSD Secure Shell) — набор программ, предоставляющих шифрование сеансов связи в компьютерных сетях по протоколу SSH (<a href="../en/Secure_Shell.html" title="Secure Shell">Secure Shell</a>). OpenSSH разработан в рамках возглавляемого Тео де Раадтом (Theo de Raadt) проекта <a href="https://en.wikipedia.org/wiki/ru:OpenBSD" class="extiw" title="wikipedia:ru:OpenBSD">OpenBSD</a> как открытая альтернатива проприетарному Secure Shell компании SSH Communications Security.
 </p>
 <p>OpenSSH иногда путают с <a href="https://en.wikipedia.org/wiki/ru:OpenSSL" class="extiw" title="wikipedia:ru:OpenSSL">OpenSSL</a>; они разрабатываются разными командами и имеют различное назначение. Определённая схожесть в названиях возникла из-за приверженности обоих проектов принципам открытого программного обеспечения (open software).
@@ -271,7 +272,7 @@ $ ssh <i>мой-сервер</i>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Примечание:</strong> Для <code>sshd.socket</code> нельзя задать параметр <code>ListenAddress</code>, поэтому будут разрешены соединения с любых адресов. Для создания аналогичной <code>ListenAddress</code> настройки <a href="../ru/Systemd.html#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%B5%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D0%B0%D0%BC%D0%B8_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Отредактируйте">отредактируйте</a> файл <code>sshd.socket</code>, указав порт и IP-адрес в параметре <code>ListenStream</code> (например, <code>ListenStream=192.168.1.100:22</code>). Также нужно добавить параметр <code>FreeBind=true</code> в раздел <code>[Socket]</code>, иначе проявится та же проблема, что и при задании <code>ListenAddress</code>: если сеть не успела вовремя включиться, сокет не запустится.
+<strong>Примечание:</strong> Для <code>sshd.socket</code> нельзя задать параметр <code>ListenAddress</code>, поэтому будут разрешены соединения с любых адресов. Для создания аналогичной <code>ListenAddress</code> настройки <a href="../ru/Systemd.html#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Отредактируйте">отредактируйте</a> файл <code>sshd.socket</code>, указав порт и IP-адрес в параметре <code>ListenStream</code> (например, <code>ListenStream=192.168.1.100:22</code>). Также нужно добавить параметр <code>FreeBind=true</code> в раздел <code>[Socket]</code>, иначе проявится та же проблема, что и при задании <code>ListenAddress</code>: если сеть не успела вовремя включиться, сокет не запустится.
 </div>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Совет:</strong> При использовании активации сокета для каждого соединения создаётся временный экземпляр <code>sshd@.service</code> (каждый со своим названием). Следовательно, ни <code>sshd.socket</code>, ни обычный <code>sshd.service</code> не будут логировать попытки установления соединения. Логи экземпляров сокетов можно просматривать командами <code>journalctl -u "sshd@*"</code> и <code>journalctl /usr/bin/sshd</code>.
@@ -477,7 +478,7 @@ session   include   system-remote-login
 <h3>
 <span id=".D0.9F.D1.80.D0.BE.D0.B1.D1.80.D0.BE.D1.81_X11"></span><span class="mw-headline" id="Проброс_X11">Проброс X11</span>
 </h3>
-<p>Проброс Х11 — механизм, который позволяет графическим интерфейсам программ удаленной машины-сервера отображаться на локальной машине-клиенте. При этом нет необходимости устанавливать на удаленном узле всю систему Х11, но надо установить хотя бы <i>xauth</i>. <i>xauth</i> — утилита, которая поддерживает конфигурации <code>Xauthority</code>, используемые сервером и клиентом для аутентификации сессии X11 <a rel="nofollow" class="external autonumber" href="http://xmodulo.com/2012/11/how-to-enable-x11-forwarding-using-ssh.html">[3]</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">устаревшая ссылка</a> 2020-08-04]</sup>.
+<p>Проброс Х11 — механизм, который позволяет графическим интерфейсам программ удаленной машины-сервера отображаться на локальной машине-клиенте. При этом нет необходимости устанавливать на удаленном узле всю систему Х11, но надо установить хотя бы <i>xauth</i>. <i>xauth</i> — утилита, которая поддерживает конфигурации <code>Xauthority</code>, используемые сервером и клиентом для аутентификации сессии X11 <a rel="nofollow" class="external autonumber" href="https://www.xmodulo.com/how-to-enable-x11-forwarding-using-ssh.html">[3]</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Важно:</strong> Использование проброса X11 имеет важные последствия для безопасности. Изучите соответствующие разделы страниц справочных руководств <span class="plainlinks archwiki-template-man" title="$ man 1 ssh"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ssh.1">ssh(1)</a></span>, <span class="plainlinks archwiki-template-man" title="$ man 5 sshd_config"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/sshd_config.5">sshd_config(5)</a></span> и <span class="plainlinks archwiki-template-man" title="$ man 5 ssh_config"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ssh_config.5">ssh_config(5)</a></span>, а также  <a rel="nofollow" class="external text" href="https://security.stackexchange.com/questions/14815/security-concerns-with-x11-forwarding">вопрос на StackExchange</a>
@@ -507,7 +508,7 @@ session   include   system-remote-login
 <li>включите опцию <code>ForwardX11</code> либо добавив флаг <code>-X</code> в командной строке, либо задав в <a href="#%D0%9A%D0%BB%D0%B8%D0%B5%D0%BD%D1%82">файле настроек клиента</a> параметр <code>ForwardX11 yes</code>.</li>
 </ul>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Совет:</strong> Если графический интерфейс отображается плохо или вы получаете сообщения об ошибках, включите опцию <code>ForwardX11Trusted</code> (в командной строке это флаг <code>-Y</code>). Это предотвратит управление пробросом Х11 со стороны <a rel="nofollow" class="external text" href="http://www.x.org/wiki/Development/Documentation/Security/">расширения безопасности X11</a>. Если вы будете использовать эту опцию, обязательно прочитайте <a href="#%D0%9F%D1%80%D0%BE%D0%B1%D1%80%D0%BE%D1%81_X11">предупреждение</a> в начале этого раздела</div>
+<strong>Совет:</strong> Если графический интерфейс отображается плохо или вы получаете сообщения об ошибках, включите опцию <code>ForwardX11Trusted</code> (в командной строке это флаг <code>-Y</code>). Это предотвратит управление пробросом Х11 со стороны <a rel="nofollow" class="external text" href="https://www.x.org/wiki/Development/Documentation/Security/">расширения безопасности X11</a>. Если вы будете использовать эту опцию, обязательно прочитайте <a href="#%D0%9F%D1%80%D0%BE%D0%B1%D1%80%D0%BE%D1%81_X11">предупреждение</a> в начале этого раздела</div>
 <h4>
 <span id=".D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5"></span><span class="mw-headline" id="Использование">Использование</span>
 </h4>
@@ -1012,12 +1013,12 @@ $ scp /usr/share/terminfo/${TERM:0:1}/$TERM myserver:~/.terminfo/${TERM:0:1}/
 <h3>
 <span id="id_dsa_.D0.BD.D0.B5_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D1.83.D0.B5.D1.82.D1.81.D1.8F_.D0.B2_OpenSSH_7.0"></span><span class="mw-headline" id="id_dsa_не_используется_в_OpenSSH_7.0">id_dsa не используется в OpenSSH 7.0</span>
 </h3>
-<p>OpenSSH 7.0 прекратил использование открытых ключей DSA из соображений безопасности. Если вам очень нужно именно эти ключи, воспольуйтесь <a href="#%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0">опцией</a> <code>PubkeyAcceptedKeyTypes +ssh-dss</code> (на странице <a rel="nofollow" class="external free" href="http://www.openssh.com/legacy.html">http://www.openssh.com/legacy.html</a> она не упомянута).
+<p>OpenSSH 7.0 прекратил использование открытых ключей DSA из соображений безопасности. Если вам очень нужно именно эти ключи, воспольуйтесь <a href="#%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0">опцией</a> <code>PubkeyAcceptedKeyTypes +ssh-dss</code> (на странице <a rel="nofollow" class="external free" href="https://www.openssh.com/legacy.html">https://www.openssh.com/legacy.html</a> она не упомянута).
 </p>
 <h3>
 <span id=".D0.9D.D0.B5_.D1.83.D0.B4.D0.B0.D1.91.D1.82.D1.81.D1.8F_.D0.BF.D0.BE.D0.B4.D0.BE.D0.B1.D1.80.D0.B0.D1.82.D1.8C_.D1.81.D0.BF.D0.BE.D1.81.D0.BE.D0.B1_.D0.BE.D0.B1.D0.BC.D0.B5.D0.BD.D0.B0_.D0.BA.D0.BB.D1.8E.D1.87.D0.B0.D0.BC.D0.B8_.D0.B2_OpenSSH_7.0"></span><span class="mw-headline" id="Не_удаётся_подобрать_способ_обмена_ключами_в_OpenSSH_7.0">Не удаётся подобрать способ обмена ключами в OpenSSH 7.0</span>
 </h3>
-<p>OpenSSH 7.0 прекратил использование алгоритма diffie-hellman-group1-sha1, поскольку он ненадёжный и теоретически может быть взломан т.н. атакой Logjam (см. <a rel="nofollow" class="external free" href="http://www.openssh.com/legacy.html">http://www.openssh.com/legacy.html</a>). Если этот алгоритм будет нужен какому-то хосту, ssh выдаст соощение об ошибке следующего содержания:
+<p>OpenSSH 7.0 прекратил использование алгоритма diffie-hellman-group1-sha1, поскольку он ненадёжный и теоретически может быть взломан т.н. атакой Logjam (см. <a rel="nofollow" class="external free" href="https://www.openssh.com/legacy.html">https://www.openssh.com/legacy.html</a>). Если этот алгоритм будет нужен какому-то хосту, ssh выдаст соощение об ошибке следующего содержания:
 </p>
 <pre>Unable to negotiate with 127.0.0.1: no matching key exchange method found.
 Their offer: diffie-hellman-group1-sha1
@@ -1071,8 +1072,8 @@ packet_write_wait: Connection to A.B.C.D port 22: Broken pipe
 <span id=".D0.A1.D0.BC.D0.BE.D1.82.D1.80.D0.B8.D1.82.D0.B5_.D1.82.D0.B0.D0.BA.D0.B6.D0.B5"></span><span class="mw-headline" id="Смотрите_также">Смотрите также</span>
 </h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://www.la-samhna.de/library/brutessh.html">Защита от атак перебором</a></li>
-<li>Управление ключами OpenSSH: <a rel="nofollow" class="external text" href="http://www.ibm.com/developerworks/library/l-keyc/index.html">Часть 1</a> на IBM developerWorks, <a rel="nofollow" class="external text" href="https://www.funtoo.org/OpenSSH_Key_Management,_Part_2">Часть 2</a>, <a rel="nofollow" class="external text" href="https://www.funtoo.org/OpenSSH_Key_Management,_Part_3">Часть 3</a> на funtoo.org</li>
+<li><a rel="nofollow" class="external text" href="https://www.la-samhna.de/library/brutessh.html">Защита от атак перебором</a></li>
+<li>Управление ключами OpenSSH: <a rel="nofollow" class="external text" href="https://developer.ibm.com/articles/l-keyc/">Часть 1</a> на IBM developerWorks, <a rel="nofollow" class="external text" href="https://www.funtoo.org/OpenSSH_Key_Management,_Part_2">Часть 2</a>, <a rel="nofollow" class="external text" href="https://www.funtoo.org/OpenSSH_Key_Management,_Part_3">Часть 3</a> на funtoo.org</li>
 <li><a rel="nofollow" class="external text" href="https://stribika.github.io/2015/01/04/secure-secure-shell.html">Secure Secure Shell</a></li>
 </ul>
 </div>
@@ -1098,8 +1099,8 @@ packet_write_wait: Connection to A.B.C.D port 22: Broken pipe
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenSSH_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=646975">https://wiki.archlinux.org/index.php?title=OpenSSH_(Русский)&amp;oldid=646975</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:20.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenSSH_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=661762">https://wiki.archlinux.org/index.php?title=OpenSSH_(Русский)&amp;oldid=661762</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 13:01.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -36,7 +37,7 @@
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>翻译状态：</strong>本文是 <a href="../en/Dnsmasq.html" title="Dnsmasq">Dnsmasq</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2016-07-24。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Dnsmasq&amp;diff=0&amp;oldid=442246">更改</a>，则您可以帮助同步翻译。</div>
-<p><a rel="nofollow" class="external text" href="http://www.thekelleys.org.uk/dnsmasq/doc.html">Dnsmasq</a> 提供 DNS 缓存和 DHCP 服务功能。作为域名解析服务器(DNS)，dnsmasq可以通过缓存 DNS 请求来提高对访问过的网址的连接速度。作为DHCP 服务器，<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> 可以用于为局域网电脑分配内网ip地址和提供路由。DNS和DHCP两个功能可以同时或分别单独实现。dnsmasq轻量且易配置，适用于个人用户或少于50台主机的网络。此外它还自带了一个 <a href="../zh-CN/Preboot_Execution_Environment.html" class="mw-redirect" title="PXE (简体中文)">PXE</a> 服务器。
+<p><a rel="nofollow" class="external text" href="https://www.thekelleys.org.uk/dnsmasq/doc.html">Dnsmasq</a> 提供 DNS 缓存和 DHCP 服务功能。作为域名解析服务器(DNS)，dnsmasq可以通过缓存 DNS 请求来提高对访问过的网址的连接速度。作为DHCP 服务器，<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> 可以用于为局域网电脑分配内网ip地址和提供路由。DNS和DHCP两个功能可以同时或分别单独实现。dnsmasq轻量且易配置，适用于个人用户或少于50台主机的网络。此外它还自带了一个 <a href="../zh-CN/Preboot_Execution_Environment.html" class="mw-redirect" title="PXE (简体中文)">PXE</a> 服务器。
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -119,8 +120,6 @@
 <pre>$ dnsmasq --test
 </pre>
 </div>
-<p><br>
-</p>
 <h2>
 <span id="DNS_.E7.BC.93.E5.AD.98.E8.AE.BE.E7.BD.AE"></span><span class="mw-headline" id="DNS_缓存设置">DNS 缓存设置</span>
 </h2>
@@ -136,7 +135,7 @@
 </p>
 <p>多个ip地址设置:
 </p>
-<pre>listen-address=127.0.0.1,192.168.x.x 
+<pre>listen-address=127.0.0.1,192.168.x.x
 </pre>
 <h3>
 <span id="DNS_.E5.9C.B0.E5.9D.80.E6.96.87.E4.BB.B6"></span><span class="mw-headline" id="DNS_地址文件">DNS 地址文件</span>
@@ -214,8 +213,6 @@ dns=dnsmasq
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>提示：</strong> 这种方法可以让你启用特定域名的自定义DNS设置。例如: <code>server=/example1.com/exemple2.com/xx.xxx.xxx.x</code> 改变第一个DNS地址，浏览以下网站<code>example1.com, example2.com</code>使用<code>xx.xxx.xxx.xx</code>。This method is preferred to a global DNS configuration when using particular DNS nameservers which lack of speed, stability, privacy and security.</div>
-<p><br>
-</p>
 <h4><span class="mw-headline" id="IPv6">IPv6</span></h4>
 <p>启用 <code>dnsmasq</code> 在 NetworkManager 可能会中断仅持IPv6的DNS查询 (例如 <code>dig -6 [hostname]</code>) 否则将工作。 为了解决这个问题，创建以下文件将配置 <i>dnsmasq</i> 总是监听IPv6的loopback：
 </p>
@@ -298,7 +295,7 @@ dhcp-host=aa:bb:cc:dd:ee:ff,192.168.111.50
 <p>用你的互联网服务供应商（ISP）的 DNS 服务器/路由器的 IP 替换 &lt;ISP DNS IP&gt; 。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> 因为众所周知的原因，ISP的DNS服务器可能会污染或劫持Google的DNS <a rel="nofollow" class="external autonumber" href="https://github.com/lifetyper/FreeRouter/wiki/3-DNS%E6%B1%A1%E6%9F%93%E4%B8%8E%E5%BA%94%E5%AF%B9">[1]</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-12-24 ⓘ]</sup>，请自行搜索解决办法。</div>
+<strong>Note:</strong> 因为众所周知的原因，ISP的DNS服务器可能会污染或劫持Google的DNS <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20160410020846/https://github.com/lifetyper/FreeRouter/wiki/3-DNS%E6%B1%A1%E6%9F%93%E4%B8%8E%E5%BA%94%E5%AF%B9">[1]</a>，请自行搜索解决办法。</div>
 <h3>
 <span id=".E6.9F.A5.E7.9C.8B.E7.A7.9F.E7.BA.A6"></span><span class="mw-headline" id="查看租约">查看租约</span>
 </h3>
@@ -359,7 +356,6 @@ bind-dynamic
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
 <li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
 </div>
 </div>
@@ -368,8 +364,8 @@ bind-dynamic
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dnsmasq_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=646467">https://wiki.archlinux.org/index.php?title=Dnsmasq_(简体中文)&amp;oldid=646467</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 December 2020, at 10:31.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dnsmasq_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663157">https://wiki.archlinux.org/index.php?title=Dnsmasq_(简体中文)&amp;oldid=663157</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 23:11.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

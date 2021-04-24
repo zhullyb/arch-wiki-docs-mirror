@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -322,7 +323,7 @@ where_field = email
 <pre># postmap /etc/postfix/transport
 </pre>
 <h3><span class="mw-headline" id="Dovecot">Dovecot</span></h3>
-<p>Instead of using the provided Dovecot example config file, we'll create our own <code>/etc/dovecot/dovecot.conf</code>. Please note that the user and group here might be vmail <b>instead of postfix</b>!
+<p>Instead of using the provided Dovecot example config file, we will create our own <code>/etc/dovecot/dovecot.conf</code>. Please note that the user and group here might be vmail <b>instead of postfix</b>!
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/dovecot/dovecot.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">protocols = imap pop3
@@ -352,7 +353,7 @@ ssl_cert = &lt;/etc/ssl/private/vmail.crt
 ssl_key = &lt;/etc/ssl/private/vmail.key
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If you instead want to modify <code>dovecot.conf.sample</code>, beware that the default configuration file imports the content of <code>conf.d/*.conf</code>. Those files call other files that aren't present in our configuration.</div>
+<strong>Note:</strong> If you instead want to modify <code>dovecot.conf.sample</code>, beware that the default configuration file imports the content of <code>conf.d/*.conf</code>. Those files call other files that are not present in our configuration.</div>
 <p>Now we create <code>/etc/dovecot/dovecot-sql.conf</code>, which we just referenced in the config above. Use the following contents and check if everything is set accordingly to your system's configuration.
 </p>
 <p>If you used PostfixAdmin, then you add the following:
@@ -384,7 +385,7 @@ password_query = SELECT email as user, password, '/home/vmail/%d/%n' as userdb_h
 #password_query = SELECT null AS password, ‘%u’ AS user
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> Visit <a rel="nofollow" class="external free" href="http://wiki2.dovecot.org/Variables">http://wiki2.dovecot.org/Variables</a> to learn more about Dovecot variables.</div>
+<strong>Tip:</strong> Visit <a rel="nofollow" class="external free" href="https://wiki2.dovecot.org/Variables">https://wiki2.dovecot.org/Variables</a> to learn more about Dovecot variables.</div>
 <h4><span class="mw-headline" id="DH_parameters">DH parameters</span></h4>
 <p>With v2.3 you are required to provide <code>ssl_dh = &lt;/path/to/dh.pem</code> yourself.
 </p>
@@ -594,7 +595,7 @@ map {
 <pre> user_query = SELECT '/home/vmail/%d/%n' as home, 'maildir:/home/vmail/%d/%n' as mail, 5000 AS uid, 5000 AS gid, concat('*:bytes=', quota) AS quota_rule FROM mailbox WHERE username = '%u' AND active = '1'
  iterate_query = SELECT username AS user FROM mailbox
 </pre>
-<ul><li>Set up LDA as described above under SpamAssassin. If you're not using SpamAssassin, the pipe should look like this in /etc/postfix/master.cf :</li></ul>
+<ul><li>Set up LDA as described above under SpamAssassin. If you are not using SpamAssassin, the pipe should look like this in /etc/postfix/master.cf :</li></ul>
 <pre> dovecot    unix  -       n       n       -       -       pipe
  flags=DRhu user=vmail:vmail argv=/usr/lib/dovecot/deliver -f ${sender} -d ${recipient}
 </pre>
@@ -698,7 +699,7 @@ namespace {
 </h3>
 <p>If you get similar errors, take a look into <code>/var/log/mail.log</code> or use <code>journalctl -xn --unit postfix.service</code> to find out more.
 </p>
-<p>It may turn out that the Maildir <code>/home/vmail/mail@domain.tld</code> is just being created if there is at least one email waiting. Otherwise there wouldn't be any need for the directory creation before.
+<p>It may turn out that the Maildir <code>/home/vmail/mail@domain.tld</code> is just being created if there is at least one email waiting. Otherwise there would not be any need for the directory creation before.
 </p>
 <h3>
 <span id="Roundcube_not_able_to_delete_emails_or_view_any_.27standard.27_folders"></span><span class="mw-headline" id="Roundcube_not_able_to_delete_emails_or_view_any_'standard'_folders">Roundcube not able to delete emails or view any 'standard' folders</span>
@@ -739,8 +740,8 @@ $rcmail_config['protect_default_folders'] = true;</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Virtual_user_mail_system_with_Postfix,_Dovecot_and_Roundcube_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=628059">https://wiki.archlinux.org/index.php?title=Virtual_user_mail_system_with_Postfix,_Dovecot_and_Roundcube_(简体中文)&amp;oldid=628059</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 August 2020, at 22:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Virtual_user_mail_system_with_Postfix,_Dovecot_and_Roundcube_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=662560">https://wiki.archlinux.org/index.php?title=Virtual_user_mail_system_with_Postfix,_Dovecot_and_Roundcube_(简体中文)&amp;oldid=662560</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:24.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -126,16 +126,15 @@ KDE: Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" cl
 <p>Works out of the box
 </p>
 <h3><span class="mw-headline" id="Brightness">Brightness</span></h3>
-<p>fn + F5 / fn + F6 - control brightness.
+<p><code>Fn+F5</code>/<code>Fn+F6</code> controls display brightness.
 Kernel parameter: <code>acpi_osi= acpi_backlight=native</code>
 For example for the systemd-boot EFI boot manager:
 </p>
-<pre># cat /boot/loader/entries/arch.conf 
-title   Arch Linux
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># cat /boot/loader/entries/arch.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
-options root=PARTUUID=dfe3c3a3-ea61-4440-ba0a-2b29267298cb rw acpi_osi= acpi_backlight=native
-</pre>
+options root=PARTUUID=dfe3c3a3-ea61-4440-ba0a-2b29267298cb rw acpi_osi= acpi_backlight=native</pre>
 <p>KDE: install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=powerdevil">powerdevil</a></span>
 </p>
 <h3><span class="mw-headline" id="Webcam">Webcam</span></h3>
@@ -146,8 +145,8 @@ options root=PARTUUID=dfe3c3a3-ea61-4440-ba0a-2b29267298cb rw acpi_osi= acpi_bac
 </p>
 <p>Install: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez">bluez</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez-utils">bluez-utils</a></span>
 </p>
-<pre>$ dmesg|grep -i bluetooth
-[   21.959501] Bluetooth: Core ver 2.21
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep -i bluetooth</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[   21.959501] Bluetooth: Core ver 2.21
 [   21.959527] Bluetooth: HCI device and connection manager initialized
 [   21.959533] Bluetooth: HCI socket layer initialized
 [   21.959536] Bluetooth: L2CAP socket layer initialized
@@ -163,8 +162,8 @@ options root=PARTUUID=dfe3c3a3-ea61-4440-ba0a-2b29267298cb rw acpi_osi= acpi_bac
 </pre>
 <p>In spite of <code>hci0: BCM: Patch brcm/BCM.hcd not found</code> the bluetooth module works:
 </p>
-<pre># hciconfig -a
-hci0:   Type: Primary  Bus: USB
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># hciconfig -a</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">hci0:   Type: Primary  Bus: USB
        BD Address: A4:DB:30:BB:2F:C1  ACL MTU: 1021:8  SCO MTU: 64:1
        DOWN 
        RX bytes:872 acl:0 sco:0 events:35 errors:0
@@ -174,9 +173,10 @@ hci0:   Type: Primary  Bus: USB
        Link policy: RSWITCH HOLD SNIFF 
        Link mode: SLAVE ACCEPT 
 </pre>
-<pre># hciconfig hci0 up
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># hciconfig hci0 up
 # hciconfig -a
-hci0:   Type: Primary  Bus: USB
+</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">hci0:   Type: Primary  Bus: USB
        BD Address: A4:DB:30:BB:2F:C1  ACL MTU: 1021:8  SCO MTU: 64:1
        UP RUNNING PSCAN ISCAN 
        RX bytes:1488 acl:0 sco:0 events:72 errors:0
@@ -199,15 +199,15 @@ hci0:   Type: Primary  Bus: USB
 </pre>
 <p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=blueman">blueman</a></span> works correctly.
 </p>
-<p>Here <a rel="nofollow" class="external free" href="https://forum.libreelec.tv/post-12512.html">https://forum.libreelec.tv/post-12512.html</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-28 ⓘ]</sup> I've found a firmware for BCM43142 - BCM.hcd.
+<p>Here <a rel="nofollow" class="external free" href="https://forum.libreelec.tv/post-12512.html">https://forum.libreelec.tv/post-12512.html</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-28 ⓘ]</sup> I have found a firmware for BCM43142 - BCM.hcd.
 </p>
 <pre># unzip BCM.zip
 # cp BCM.hcd /lib/firmware/brcm/
 </pre>
 <p>After restart:
 </p>
-<pre>$ dmesg|grep -i bluetooth
-[   21.606725] Bluetooth: Core ver 2.21
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep -i bluetooth</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[   21.606725] Bluetooth: Core ver 2.21
 [   21.606750] Bluetooth: HCI device and connection manager initialized
 [   21.606758] Bluetooth: HCI socket layer initialized
 [   21.606762] Bluetooth: L2CAP socket layer initialized
@@ -227,8 +227,8 @@ hci0:   Type: Primary  Bus: USB
 <p>Works out of the box. Tested with SD card 512 Mb.
 </p>
 <h2><span class="mw-headline" id="Dual_boot_with_Windows">Dual boot with Windows</span></h2>
-<p>To boot Windows 7 it is needed to switch on <code>CSM</code> at BIOS. Otherwise Windows boot hangs at logo.
-Set the BIOS setting <code>OS Selection</code> in the <code>Advanced</code> menu to <code>Windows 7</code>.
+<p>To boot Windows 7 it is needed to switch on <i>CSM</i> at BIOS. Otherwise Windows boot hangs at logo.
+Set the BIOS setting <i>OS Selection</i> in the <i>Advanced</i> menu to <i>Windows 7</i>.
 </p>
 <h2><span class="mw-headline" id="Freezing_on_4.x_kernels">Freezing on 4.x kernels</span></h2>
 <p>Pentium N3520 processor is affected by the c-state bug: <a rel="nofollow" class="external free" href="https://bugzilla.kernel.org/show_bug.cgi?id=109051">https://bugzilla.kernel.org/show_bug.cgi?id=109051</a>
@@ -252,8 +252,8 @@ Set the BIOS setting <code>OS Selection</code> in the <code>Advanced</code> menu
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ASUS_X551MA&amp;oldid=654638">https://wiki.archlinux.org/index.php?title=ASUS_X551MA&amp;oldid=654638</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 18:20.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ASUS_X551MA&amp;oldid=663251">https://wiki.archlinux.org/index.php?title=ASUS_X551MA&amp;oldid=663251</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 07:06.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -81,7 +81,7 @@
 <li class="toclevel-3 tocsection-13"><a href="#Test_whether_PHP_works"><span class="tocnumber">3.1.4</span> <span class="toctext">Test whether PHP works</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-14"><a href="#HTTP2"><span class="tocnumber">3.2</span> <span class="toctext">HTTP2</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#HTTP/2"><span class="tocnumber">3.2</span> <span class="toctext">HTTP/2</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-15">
@@ -136,7 +136,7 @@ The default configuration file should be fine for a simple setup. By default, it
 <dl><dd>Change it, if you want to, but do not forget to also change <code>&lt;Directory "/srv/http"&gt;</code> to whatever you changed your <code>DocumentRoot</code> to, or you will likely get a <b>403 Error</b> (lack of privileges) when you try to access the new document root. Do not forget to change the <code>Require all denied</code> line to <code>Require all granted</code>, otherwise you will get a <b>403 Error</b>. Remember that the DocumentRoot directory and its parent folders must allow execution permission to others (can be set with <code>chmod o+x /path/to/DocumentRoot</code>), otherwise you will get a <b>403 Error</b>.</dd></dl>
 <pre>AllowOverride None
 </pre>
-<dl><dd>This directive in <code>&lt;Directory&gt;</code> sections causes Apache to completely ignore <code>.htaccess</code> files. Note that this is now the default for Apache 2.4, so you need to explicitly allow overrides if you plan to use <code>.htaccess</code> files. If you intend to use <code>mod_rewrite</code> or other settings in <code>.htaccess</code> files, you can allow which directives declared in that file can override server configuration. For more info refer to the <a rel="nofollow" class="external text" href="http://httpd.apache.org/docs/current/mod/core.html#allowoverride">Apache documentation</a>.</dd></dl>
+<dl><dd>This directive in <code>&lt;Directory&gt;</code> sections causes Apache to completely ignore <code>.htaccess</code> files. Note that this is now the default for Apache 2.4, so you need to explicitly allow overrides if you plan to use <code>.htaccess</code> files. If you intend to use <code>mod_rewrite</code> or other settings in <code>.htaccess</code> files, you can allow which directives declared in that file can override server configuration. For more info refer to the <a rel="nofollow" class="external text" href="https://httpd.apache.org/docs/current/mod/core.html#allowoverride">Apache documentation</a>.</dd></dl>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> If you have issues with your configuration you can have Apache check the configuration with: <code>apachectl configtest</code>
 </div>
@@ -265,7 +265,7 @@ Include conf/vhosts/domainname2.dom
 <p>First <a href="../en/PHP.html#Installation" title="PHP">install PHP</a>, then follow one of the next three subsections below.  Finally, test the installation as described in the final subsection.  
 </p>
 <h4><span class="mw-headline" id="Using_libphp">Using libphp</span></h4>
-<p>This method is probably the easiest, but is also the least scalable: it is suitable for a light request load. It also requires you to change the mpm module, which may cause problems with other extensions (e.g. it is not compatible with <a href="#HTTP2">#HTTP2</a>).
+<p>This method is probably the easiest, but is also the least scalable: it is suitable for a light request load. It also requires you to change the mpm module, which may cause problems with other extensions (e.g. it is not compatible with <a href="#HTTP/2">#HTTP/2</a>).
 </p>
 <p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=php7-apache">php7-apache</a></span> for PHP 7 or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=php-apache">php-apache</a></span> for PHP 8, as appropriate.
 </p>
@@ -386,8 +386,18 @@ LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
 </pre>
 <p>Then go to <a rel="nofollow" class="external free" href="http://localhost/test.php">http://localhost/test.php</a> or http://localhost/~&lt;username&gt;/test.php as appropriate.
 </p>
-<h3><span class="mw-headline" id="HTTP2">HTTP2</span></h3>
-<p>To enable HTTP/2 support, uncomment the following line in <code>httpd.conf</code>:
+<h3>
+<span id="HTTP.2F2"></span><span class="mw-headline" id="HTTP/2">HTTP/2</span>
+</h3>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> 
+<ul>
+<li>While Apache supports unencrypted HTTP/2 over TCP (<code>h2c</code>), common browsers <a rel="nofollow" class="external text" href="https://stackoverflow.com/a/46789195">do not</a>. Thus for use with the latter, <a href="#TLS">#TLS</a> must be enabled first.</li>
+<li>If supporting clients do not use HTTP/2 instead of HTTP/1.1 and Mozilla's config generator (which already includes the <code>Protocols</code> line below) was used to setup <a href="#TLS">#TLS</a>, try <code>Include</code>ing <code>httpd-ssl.conf</code> <i>after</i> the latter's output.</li>
+<li>Ways to test include <code>curl -sI https://your.website</code> or <a rel="nofollow" class="external text" href="https://chrome.google.com/webstore/detail/http2-and-spdy-indicator/mpbpobfflnpcgagjijhmgnchggcjblin">this Chrome extension</a>.</li>
+</ul>
+</div>
+<p>To enable HTTP/2 over TLS support, uncomment the following line in <code>httpd.conf</code>:
 </p>
 <pre>LoadModule http2_module modules/mod_http2.so
 </pre>
@@ -395,10 +405,16 @@ LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
 </p>
 <pre>Protocols h2 http/1.1
 </pre>
-<p>For more information, see the <a rel="nofollow" class="external text" href="https://httpd.apache.org/docs/2.4/mod/mod_http2.html">mod_http2</a> documentation.
+<p>To debug, you can set only the module rather than the entire server to <code>debug</code> or <code>info</code>:
 </p>
-<p>Be aware that http2_module is not compatible with mpm_prefork_module that widely use for PHP setup. You may consider using <a href="#Using_php-fpm_and_mod_proxy_fcgi">php-fpm</a> instead
+<pre>&lt;IfModule http2_module&gt;
+    LogLevel http2:info
+&lt;/IfModule&gt;
+</pre>
+<p>For more information – including extra HTTP/2 feature settings – see the <a rel="nofollow" class="external text" href="https://httpd.apache.org/docs/2.4/mod/mod_http2.html">mod_http2</a> documentation.
 </p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> The <code>http2_module</code> is incompatible with the <code>mpm_prefork_module</code> that old configurations widely use to setup PHP. Consider using <a href="#Using_php-fpm_and_mod_proxy_fcgi">php-fpm</a> instead.</div>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Apache_Status_and_Logs">Apache Status and Logs</span></h3>
 <p>See the status of the Apache daemon with <a href="../en/Systemd.html#Basic_systemctl_usage" class="mw-redirect" title="Systemctl">systemctl</a>.
@@ -507,8 +523,8 @@ Listen [::]:80
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Apache_HTTP_Server&amp;oldid=652702">https://wiki.archlinux.org/index.php?title=Apache_HTTP_Server&amp;oldid=652702</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 23:28.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Apache_HTTP_Server&amp;oldid=660315">https://wiki.archlinux.org/index.php?title=Apache_HTTP_Server&amp;oldid=660315</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 21:35.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -145,10 +146,10 @@
 <p>这种方法和 <code>dd</code> 一样简单，只要下载 Arch Linux 安装镜像并用 <a rel="nofollow" class="external text" href="https://sourceforge.net/p/usbwriter/wiki/Documentation/">USBwriter</a> 写入U盘即可。
 </p>
 <h5><span class="mw-headline" id="Using_win32diskimager">Using win32diskimager</span></h5>
-<p><a rel="nofollow" class="external text" href="https://sourceforge.net/projects/win32diskimager/">win32diskimager</a> is another graphical USB iso writing tool for Windows. Simply select your iso image and the target USB drive letter (you may have to format it first to assign it a drive letter), and click Write. 
+<p><a rel="nofollow" class="external text" href="https://sourceforge.net/projects/win32diskimager/">win32diskimager</a> is another graphical USB iso writing tool for Windows. Simply select your iso image and the target USB drive letter (you may have to format it first to assign it a drive letter), and click Write.
 </p>
 <h5><span class="mw-headline" id="Cygwin">Cygwin</span></h5>
-<p>请确认您安装了<a rel="nofollow" class="external text" href="http://www.cygwin.com/">Cygwin</a>的 <code>dd</code> 包。
+<p>请确认您安装了<a rel="nofollow" class="external text" href="https://www.cygwin.com/">Cygwin</a>的 <code>dd</code> 包。
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>提示：</strong> 如果您不想安装 Cygwin，您可以直接从 <a rel="nofollow" class="external text" href="http://www.chrysocome.net/dd">这里</a>下载 <code>dd</code> for Windows。查看下一节以获得更多信息。</div>
@@ -260,9 +261,9 @@
 <ul><li>
 <code>&gt;</code> 表示 Windows 命令提示符。</li></ul>
 </div>
-<ul><li>分区和格式化工具用 <a rel="nofollow" class="external text" href="http://rufus.akeo.ie/">Rufus USB partitioner</a>。partition scheme 选 <b>MBR for BIOS and UEFI</b>，文件系统选<b>FAT32</b>，反选“Create a bootable disk using ISO image”和“Create extended label and icon files”</li></ul>
+<ul><li>分区和格式化工具用 <a rel="nofollow" class="external text" href="https://rufus.akeo.ie/">Rufus USB partitioner</a>。partition scheme 选 <b>MBR for BIOS and UEFI</b>，文件系统选<b>FAT32</b>，反选“Create a bootable disk using ISO image”和“Create extended label and icon files”</li></ul>
 <ul><li>如果用的是官方 ISO 镜像（<a href="../en/Archiso.html" title="Archiso">Archiso</a>），修改U盘 <code>X:</code> <b>卷标</b>，与 <code>&lt;ISO&gt;\loader\entries\archiso-x86_64.conf</code> 中的 <code>archisolabel=</code> 保持一致。如果是 <a href="../en/Archboot.html" title="Archboot">Archboot</a> 则不需要修改。卷标可在上一步使用 Rufus 进行分区和格式化时修改。</li></ul>
-<ul><li>解压 ISO 文件至U盘（像解压 ZIP 文件一样，软件可用<a rel="nofollow" class="external text" href="http://7-zip.org/">7-Zip</a>）。</li></ul>
+<ul><li>解压 ISO 文件至U盘（像解压 ZIP 文件一样，软件可用<a rel="nofollow" class="external text" href="https://7-zip.org/">7-Zip</a>）。</li></ul>
 <ul><li>从 <a rel="nofollow" class="external free" href="https://www.kernel.org/pub/linux/utils/boot/syslinux/">https://www.kernel.org/pub/linux/utils/boot/syslinux/</a> 下载官方 syslinux 6.xx （ZIP文件）并解压。Syslinux 的版本应与 ISO 镜像所使用的版本一致。</li></ul>
 <ul><li>运行以下命令（在命令提示符内，以管理员身份运行）：</li></ul>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -379,7 +380,7 @@ append initrd=/arch/boot/i686/archiso.img archisodevice=/dev/sd<b>x1</b> ../../<
 <b>Notes:</b> 除了 Syslinux 是从 Windows 上安装的，其他都一样。考虑到 <a href="../en/Multiboot_USB_drive.html" title="Multiboot USB drive">多启动U盘</a>也能引导安装介质，而且也已经在相关文章添加了链接，或许这两小节可以合并在一起？ (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:USB_flash_installation_medium_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:USB flash installation medium (简体中文)#</a>)</div>
 </div>
 <p>这个方法使用 <a href="../zh-CN/Syslinux.html" title="Syslinux (简体中文)">Syslinux (简体中文)</a> 和一个 <a href="../en/Tmpfs.html" class="mw-redirect" title="Ramdisk">Ramdisk</a> (<a rel="nofollow" class="external text" href="https://wiki.syslinux.org/wiki/index.php/MEMDISK">MEMDISK</a>) 来把整个 Arch Linux ISO 镜像加载到内存中。因为它将完全运行于系统内存中，您要确保使用这种方法安装的系统有足够的内存。至少 500MB 到 1G 内存就足以在 MEMDISK 上安装 Arch Linux。
-Arch Linux 和 MEMDISK 系统要求参见<a href="../zh-CN/Installation_guide.html" title="Installation guide (简体中文)">安装指南</a>和<a rel="nofollow" class="external text" href="http://www.etherboot.org/wiki/bootingmemdisk#preliminaries">这里</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2014-09-14]</sup>。<a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=135266">论坛参考贴</a>。
+Arch Linux 和 MEMDISK 系统要求参见<a href="../zh-CN/Installation_guide.html" title="Installation guide (简体中文)">安装指南</a>和<a rel="nofollow" class="external text" href="http://etherboot.org/wiki/bootingmemdisk#preliminaries">这里</a>。<a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=135266">论坛参考贴</a>。
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>提示：</strong>  一旦安装程序加载完毕，您就可以移除 U 盘，甚至再在另一台机器上用它开始执行整个安装步骤。使用 MEMDISK 还允许你在同一个 U 盘中引导并安装 Arch Linux 到它上面。</div>
@@ -443,7 +444,7 @@ Arch Linux 和 MEMDISK 系统要求参见<a href="../zh-CN/Installation_guide.ht
 <ul>
 <li><a rel="nofollow" class="external text" href="https://wiki.gentoo.org/wiki/LiveUSB/HOWTO">Gentoo wiki - LiveUSB/HOWTO</a></li>
 <li><a rel="nofollow" class="external text" href="https://fedoraproject.org/wiki/How_to_create_and_use_Live_USB">Fedora wiki - How to create and use Live USB</a></li>
-<li><a rel="nofollow" class="external text" href="http://en.opensuse.org/SDB:Live_USB_stick">openSUSE wiki - SDB:Live USB stick</a></li>
+<li><a rel="nofollow" class="external text" href="https://en.opensuse.org/SDB:Live_USB_stick">openSUSE wiki - SDB:Live USB stick</a></li>
 </ul>
 </div>
 </div>
@@ -455,7 +456,6 @@ Arch Linux 和 MEMDISK 系统要求参见<a href="../zh-CN/Installation_guide.ht
 <li><a href="../zh-CN/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (简体中文)">Pages or sections flagged with Template:Translateme (简体中文)</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
 </div>
 </div>
@@ -464,8 +464,8 @@ Arch Linux 和 MEMDISK 系统要求参见<a href="../zh-CN/Installation_guide.ht
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=USB_flash_installation_medium_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=649009">https://wiki.archlinux.org/index.php?title=USB_flash_installation_medium_(简体中文)&amp;oldid=649009</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 January 2021, at 08:51.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=USB_flash_installation_medium_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=662858">https://wiki.archlinux.org/index.php?title=USB_flash_installation_medium_(简体中文)&amp;oldid=662858</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 17:30.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

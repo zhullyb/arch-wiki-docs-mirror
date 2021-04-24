@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -41,7 +42,7 @@
 <p>From <a href="https://en.wikipedia.org/wiki/Rust_(programming_language)" class="extiw" title="wikipedia:Rust (programming language)">Wikipedia</a>:
 </p>
 <dl><dd>
-<a rel="nofollow" class="external text" href="http://rust-lang.org/">Rust</a> is a general-purpose, multi-paradigm, compiled programming language sponsored by Mozilla Research. It is designed to be a "safe, concurrent, practical language", supporting pure-functional, imperative-procedural, and object-oriented styles. The goal of Rust is to be a good language for creating highly concurrent and highly safe systems, and programming in the large. This has led to a feature set with an emphasis on safety, control of memory layout, and concurrency. Performance of idiomatic Rust is comparable to the performance of idiomatic C++.</dd></dl>
+<a rel="nofollow" class="external text" href="https://rust-lang.org/">Rust</a> is a general-purpose, multi-paradigm, compiled programming language sponsored by Mozilla Research. It is designed to be a "safe, concurrent, practical language", supporting pure-functional, imperative-procedural, and object-oriented styles. The goal of Rust is to be a good language for creating highly concurrent and highly safe systems, and programming in the large. This has led to a feature set with an emphasis on safety, control of memory layout, and concurrency. Performance of idiomatic Rust is comparable to the performance of idiomatic C++.</dd></dl>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -122,7 +123,7 @@
 <p>The <a rel="nofollow" class="external text" href="https://doc.rust-lang.org/core/">Rust Core Library</a> is the dependency-free foundation of the Rust Standard Library. It interfaces directly with LLVM primitives, which allows Rust to be platform and hardware-agnostic. It is this integration with LLVM that allows Rust to obtain greater performance than equivalent C applications compiled with Clang, making Rust software designed with libcore lower level than C. Developers looking to target software for embedded platforms may forego the standard library with <code>#![no_std]</code> to exclusively use the no-batteries-included core library for smaller binary sizes and improved performance. However, using <code>#![no_std]</code> limits the amount of software support that you can get from the larger Rust community as a majority of libraries require the standard library.
 </p>
 <h3><span class="mw-headline" id="Rust_Standard_Library">Rust Standard Library</span></h3>
-<p>The <a rel="nofollow" class="external text" href="http://doc.rust-lang.org/std/index.html">Rust Standard Library</a> provides the convenient high level abstractions by which a majority of portable Rust software is created with. It features convenient features such as the <code>Vec</code>, <code>Iterator</code>, <code>Option</code>, <code>Result</code>, and <code>String</code> types; a vast amount of methods for language primitives; a large number of standard macros; I/O and multithreading support; heap allocations with <code>Box</code>; and many more high level features not available in the core library.
+<p>The <a rel="nofollow" class="external text" href="https://doc.rust-lang.org/std/index.html">Rust Standard Library</a> provides the convenient high level abstractions by which a majority of portable Rust software is created with. It features convenient features such as the <code>Vec</code>, <code>Iterator</code>, <code>Option</code>, <code>Result</code>, and <code>String</code> types; a vast amount of methods for language primitives; a large number of standard macros; I/O and multithreading support; heap allocations with <code>Box</code>; and many more high level features not available in the core library.
 </p>
 <h3><span class="mw-headline" id="Release_cycle">Release cycle</span></h3>
 <p>Rust follows a regular six week release cycle, similar to the release cycle of Firefox. With each new release, the core and standard libraries are improved to support more platforms, improve performance, and to stabilize new features for use with stable Rust.
@@ -141,7 +142,7 @@
 <p>The benefits to using the Rustup toolchain manager instead of the standalone prepackaged Rust in the software repository is the ability to install multiple toolchains (stable, beta, nightly) for multiple targets (windows, mac, android) and architectures (x86, x86_64, arm).
 </p>
 <h4><span class="mw-headline" id="Upstream_installation_script">Upstream installation script</span></h4>
-<p>Download the file with <code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs &gt; rust.sh</code>, view it: <code>less ./rust.sh</code>, and run the script <code>./rust.sh</code> to start rustup installation. The script makes PATH changes only to login shell <a href="../en/Bash.html#Invocation" title="Bash">configuration files</a>.  You need to <code>source ~/.cargo/env</code> until you logout and login back into the system.
+<p>Download the file with <code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o rust.sh</code>, view it: <code>less ./rust.sh</code>, and run the script <code>./rust.sh</code> to start rustup installation. The script makes PATH changes only to login shell <a href="../en/Bash.html#Invocation" title="Bash">configuration files</a>.  You need to <code>source ~/.cargo/env</code> until you logout and login back into the system.
 To update rustup afterwards, run <code>rustup self update</code>.
 </p>
 <p>The script installs and activates the default toolchain by default (the one used by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=rust">rust</a></span> package, so there is no need to manually install it to start using Rust.
@@ -234,7 +235,7 @@ $ cargo test --target "$ARCH-pc-windows-gnu"
 <p>where <code>CHANNEL</code> is the update channel (<code>stable</code>, <code>beta</code> or <code>nightly</code>)
 </p>
 <h3><span class="mw-headline" id="Unofficial_packages">Unofficial packages</span></h3>
-<p>The <a href="../en/Unofficial_user_repositories.html#archlinuxcn" title="Unofficial user repositories">unofficial repository archlinuxcn</a> has rust-nightly and Rust std library for i686, ARM, ARMv7, Windows 32 and 64 so you can just install the one you want then enjoy cross compiling. However, you have to find an ARM toolchain by yourself. For Windows 32bit targets, you'll need to get a libgcc_s_dw2-1.dll to build and run.
+<p>The <a href="../en/Unofficial_user_repositories.html#archlinuxcn" title="Unofficial user repositories">unofficial repository archlinuxcn</a> has rust-nightly and Rust std library for i686, ARM, ARMv7, Windows 32 and 64 so you can just install the one you want then enjoy cross compiling. However, you have to find an ARM toolchain by yourself. For Windows 32bit targets, you'll need to get a libgcc_s_dw2-1.dll (provided by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mingw-w64-gcc">mingw-w64-gcc</a></span>) to build and run.
 </p>
 <h2><span class="mw-headline" id="Cargo">Cargo</span></h2>
 <p><a rel="nofollow" class="external text" href="https://crates.io/">Cargo</a>, Rust's package manager, is part of the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=rust">rust</a></span> package. The nightly version is available in the AUR as <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cargo-nightly-bin/">cargo-nightly-bin</a></span><sup><small>AUR</small></sup>. If you use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=rustup">rustup</a></span>, it already includes cargo.
@@ -348,7 +349,7 @@ rustc-wrapper = "sccache"
 </p>
 <p>If using rustup, use rustup to download the source (<code>rustup component add rust-src</code>), and then select <code>~/.rustup/toolchains/&lt;your toolchain&gt;/bin</code> as the toolchain location.
 </p>
-<p>If using Rust from the official Arch Linux software repository, select <code>/usr/lib/rustlib/src/rust/library/</code> as the stdlib sources location.
+<p>If using Rust from the official Arch Linux software repository, select <code>/usr/bin</code> as the toolchain location and <code>/usr/lib/rustlib/src/rust/library/</code> as the stdlib sources location.
 </p>
 <h4><span class="mw-headline" id="Visual_Studio_Code">Visual Studio Code</span></h4>
 <p><a href="../en/Visual_Studio_Code.html" title="Visual Studio Code">Visual Studio Code</a> support for Rust can be obtained via <a rel="nofollow" class="external text" href="https://marketplace.visualstudio.com/items?itemName=rust-lang.rust">rust-lang.rls</a> extension (requires rustup). If using <a href="#rust-analyzer">rust-analyzer</a>, use the <a rel="nofollow" class="external text" href="https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer">matklad.rust-analyzer</a> extension instead.
@@ -374,15 +375,15 @@ if you install the Rust source with rustup.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://rust-lang.org/">Official website of the Rust Programming Language</a></li>
+<li><a rel="nofollow" class="external text" href="https://rust-lang.org/">Official website of the Rust Programming Language</a></li>
 <li><a rel="nofollow" class="external text" href="https://www.rust-lang.org/documentation.html">Rust Documentation</a></li>
-<li><a rel="nofollow" class="external text" href="http://doc.rust-lang.org/stable/book/">Official Rust Book</a></li>
+<li><a rel="nofollow" class="external text" href="https://doc.rust-lang.org/stable/book/">Official Rust Book</a></li>
 <li><a rel="nofollow" class="external text" href="https://doc.rust-lang.org/std/">Standard Library API Lookup</a></li>
 <li><a rel="nofollow" class="external text" href="https://doc.rust-lang.org/stable/rust-by-example/">Examples with small descriptions</a></li>
 <li><a rel="nofollow" class="external text" href="https://github.com/ctjhoa/rust-learning">Page listing of Rust tutorials</a></li>
 <li><a rel="nofollow" class="external text" href="https://crates.io/">Libraries(crates) available through Cargo</a></li>
 <li><a rel="nofollow" class="external text" href="https://this-week-in-rust.org/">This Week in Rust</a></li>
-<li><a rel="nofollow" class="external text" href="http://blog.rust-lang.org/">The Rust Programming Language Blog</a></li>
+<li><a rel="nofollow" class="external text" href="https://blog.rust-lang.org/">The Rust Programming Language Blog</a></li>
 <li><a rel="nofollow" class="external text" href="https://users.rust-lang.org/">The Rust Users Forum</a></li>
 <li><a rel="nofollow" class="external text" href="https://internals.rust-lang.org/">The Rust Internals Forum</a></li>
 <li><a rel="nofollow" class="external text" href="https://rust.libhunt.com/">Awesome Rust: A curated list of Rust libraries and resources</a></li>
@@ -398,8 +399,8 @@ if you install the Rust source with rustup.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Rust&amp;oldid=648161">https://wiki.archlinux.org/index.php?title=Rust&amp;oldid=648161</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 January 2021, at 06:09.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Rust&amp;oldid=662310">https://wiki.archlinux.org/index.php?title=Rust&amp;oldid=662310</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 20:47.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

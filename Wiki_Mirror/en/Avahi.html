@@ -36,7 +36,7 @@
 <p>From <a href="https://en.wikipedia.org/wiki/Avahi_(software)" class="extiw" title="wikipedia:Avahi (software)">Wikipedia:Avahi (software)</a>:
 </p>
 <dl><dd>
-<a rel="nofollow" class="external text" href="http://avahi.org/">Avahi</a> is a free <a href="https://en.wikipedia.org/wiki/Zero-configuration_networking" class="extiw" title="wikipedia:Zero-configuration networking">Zero-configuration networking</a> (zeroconf) implementation, including a system for multicast DNS/DNS-SD service discovery. It allows programs to publish and discover services and hosts running on a local network with no specific configuration. For example you can plug into a network and instantly find printers to print to, files to look at and people to talk to. It is licensed under the GNU Lesser General Public License (LGPL).</dd></dl>
+<a rel="nofollow" class="external text" href="https://avahi.org/">Avahi</a> is a free <a href="https://en.wikipedia.org/wiki/Zero-configuration_networking" class="extiw" title="wikipedia:Zero-configuration networking">Zero-configuration networking</a> (zeroconf) implementation, including a system for multicast DNS/DNS-SD service discovery. It allows programs to publish and discover services and hosts running on a local network with no specific configuration. For example you can plug into a network and instantly find printers to print to, files to look at and people to talk to. It is licensed under the GNU Lesser General Public License (LGPL).</dd></dl>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -125,7 +125,7 @@
 </pre>
 <p>to discover services in your network.
 </p>
-<p>The Avahi Zeroconf Browser (<code>avahi-discover</code> – note that it needs avahi's optional dependencies <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gtk3">gtk3</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-dbus">python-dbus</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-gobject">python-gobject</a></span>) shows the various services on your network. You can also browse SSH and VNC Servers using <code>bssh</code> and <code>bvnc</code> respectively.
+<p>The Avahi Zeroconf Browser (<code>avahi-discover</code> – note that it needs Avahi's optional dependencies <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gtk3">gtk3</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dbus-python">dbus-python</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-gobject">python-gobject</a></span>) shows the various services on your network. You can also browse SSH and VNC Servers using <code>bssh</code> and <code>bvnc</code> respectively.
 </p>
 <h3><span class="mw-headline" id="Firewall">Firewall</span></h3>
 <p>Be sure to open UDP port <code>5353</code> if you're using a <a href="../en/Category:Firewalls.html" class="mw-redirect" title="Firewall">firewall</a>.
@@ -157,7 +157,7 @@
 <p>If you want to advertise a service for which there is no <code>*.service</code> file, it is very easy to create your own.
 As an example, let's say you wanted to advertise a quote of the day (QOTD) service operating per RFC 865 on TCP port <code>17</code> which you are running on your machine
 </p>
-<p>The first thing to do is to determine the <code>&lt;type&gt;</code>. <span class="plainlinks archwiki-template-man" title="$ man 5 avahi.service"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/avahi.service.5">avahi.service(5)</a></span> indicates that the type should be "the DNS-SD service type for this service. e.g. '_http._tcp'". Since the <a rel="nofollow" class="external text" href="http://www.dns-sd.org/ServiceTypes.html">DNS-SD register was merged into the IANA register in 2010</a>, we look for the service name on the <a rel="nofollow" class="external text" href="http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml">IANA register</a> or in <code>/etc/services</code> file. The service name shown there is <code>qotd</code>. Since we're running QOTD on tcp, we now know the service is <code>_qotd._tcp</code> and the port (per IANA and RFC 865) is <code>17</code>.
+<p>The first thing to do is to determine the <code>&lt;type&gt;</code>. <span class="plainlinks archwiki-template-man" title="$ man 5 avahi.service"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/avahi.service.5">avahi.service(5)</a></span> indicates that the type should be "the DNS-SD service type for this service. e.g. '_http._tcp'". Since the <a rel="nofollow" class="external text" href="http://www.dns-sd.org/ServiceTypes.html">DNS-SD register was merged into the IANA register in 2010</a>, we look for the service name on the <a rel="nofollow" class="external text" href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml">IANA register</a> or in <code>/etc/services</code> file. The service name shown there is <code>qotd</code>. Since we're running QOTD on tcp, we now know the service is <code>_qotd._tcp</code> and the port (per IANA and RFC 865) is <code>17</code>.
 </p>
 <p>Our service file is thus:
 </p>
@@ -201,13 +201,13 @@ As an example, let's say you wanted to advertise a quote of the day (QOTD) servi
   &lt;/service&gt;
 &lt;/service-group&gt;
 </pre>
-<p>The port is correct if you have <i>insecure</i> as an option in your <code>/etc/exports</code>; otherwise, it needs to be changed (note that <i>insecure</i> is needed for macOS clients). The path is the path to your export, or a subdirectory of it. For some reason the automount functionality has been removed from Leopard, however <a rel="nofollow" class="external text" href="http://www.macosxhints.com/article.php?story=20071116042238744">a script is available</a>. This was based upon <a rel="nofollow" class="external text" href="http://ubuntuforums.org/showthread.php?p=4387032#post4387032">this post</a>.
+<p>The port is correct if you have <i>insecure</i> as an option in your <code>/etc/exports</code>; otherwise, it needs to be changed (note that <i>insecure</i> is needed for macOS clients). The path is the path to your export, or a subdirectory of it. For some reason the automount functionality has been removed from Leopard, however <a rel="nofollow" class="external text" href="http://www.macosxhints.com/article.php?story=20071116042238744">a script is available</a>. This was based upon <a rel="nofollow" class="external text" href="https://ubuntuforums.org/showthread.php?p=4387032#post4387032">this post</a>.
 </p>
 <h4><span class="mw-headline" id="Samba">Samba</span></h4>
 <p>With the Avahi daemon running on both the server and client, the file manager on the client should automatically find the server.
 </p>
 <h4><span class="mw-headline" id="Vsftpd">Vsftpd</span></h4>
-<p>You can also auto-discover regular FTP servers, such as <a href="../en/Very_Secure_FTP_Daemon.html" class="mw-redirect" title="Vsftpd">vsftpd</a>. Install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=vsftpd">vsftpd</a></span> package and change the settings of vsftpd according to your own personal preferences (see <a rel="nofollow" class="external text" href="http://ubuntuforums.org/showthread.php?t=218630">this thread on ubuntuforums.org</a> or <span class="plainlinks archwiki-template-man" title="$ man 5 vsftpd.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/vsftpd.conf.5">vsftpd.conf(5)</a></span>).
+<p>You can also auto-discover regular FTP servers, such as <a href="../en/Very_Secure_FTP_Daemon.html" class="mw-redirect" title="Vsftpd">vsftpd</a>. Install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=vsftpd">vsftpd</a></span> package and change the settings of vsftpd according to your own personal preferences (see <a rel="nofollow" class="external text" href="https://ubuntuforums.org/showthread.php?t=218630">this thread on ubuntuforums.org</a> or <span class="plainlinks archwiki-template-man" title="$ man 5 vsftpd.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/vsftpd.conf.5">vsftpd.conf(5)</a></span>).
 </p>
 <p>Create a <code>.service</code> file in <code>/etc/avahi/services</code> with the following contents:
 </p>
@@ -281,7 +281,7 @@ As an example, let's say you wanted to advertise a quote of the day (QOTD) servi
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li>
-<a rel="nofollow" class="external text" href="http://avahi.org/">Avahi</a> - Official project website</li>
+<a rel="nofollow" class="external text" href="https://avahi.org/">Avahi</a> - Official project website</li>
 <li><a href="https://en.wikipedia.org/wiki/Avahi_(software)" class="extiw" title="wikipedia:Avahi (software)">Wikipedia:Avahi (software)</a></li>
 <li>
 <a rel="nofollow" class="external text" href="https://www.apple.com/itunes/download/">iTunes (includes Bonjour)</a> - Enable Zeroconf on Windows</li>
@@ -301,8 +301,8 @@ As an example, let's say you wanted to advertise a quote of the day (QOTD) servi
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Avahi&amp;oldid=653725">https://wiki.archlinux.org/index.php?title=Avahi&amp;oldid=653725</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 28 February 2021, at 23:41.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Avahi&amp;oldid=660513">https://wiki.archlinux.org/index.php?title=Avahi&amp;oldid=660513</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 06:44.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

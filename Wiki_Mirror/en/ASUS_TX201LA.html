@@ -38,7 +38,7 @@
 <div>
 <b>Reason:</b> Stub (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:ASUS_TX201LA">Talk:ASUS TX201LA#</a>)</div>
 </div>
-<p><a rel="nofollow" class="external text" href="http://www.asus.com/Notebooks_Ultrabooks/ASUS_Transformer_Book_Trio_TX201LA/specifications/">Asus Trio TX201LA</a> is a good piece of recent (for 2014) hardware, which allows one to combine desktop, laptop and tablet in a single piece. In fact the tablet is a different story - detachable screen runs Android and is out of scope. Nevertheless the base itself (which can serve as desktop) or with attached tablet (forming laptop) can boast Intel Haswell Core i7 or Core i5 CPU, 4G RAM and 500G HDD. And that is what running Linux, almost smoothly.
+<p><a rel="nofollow" class="external text" href="https://www.asus.com/Notebooks_Ultrabooks/ASUS_Transformer_Book_Trio_TX201LA/specifications/">Asus Trio TX201LA</a> is a good piece of recent (for 2014) hardware, which allows one to combine desktop, laptop and tablet in a single piece. In fact the tablet is a different story - detachable screen runs Android and is out of scope. Nevertheless the base itself (which can serve as desktop) or with attached tablet (forming laptop) can boast Intel Haswell Core i7 or Core i5 CPU, 4G RAM and 500G HDD. And that is what running Linux, almost smoothly.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -67,13 +67,13 @@
 </ul>
 </div>
 
-<h3><span class="mw-headline" id="Install">Install</span></h3>
+<h2><span class="mw-headline" id="Install">Install</span></h2>
 <p>You can follow the standard <a href="../en/Installation_guide.html" title="Installation guide">Installation guide</a>. No problems with <a href="../en/Unified_Extensible_Firmware_Interface.html" class="mw-redirect" title="UEFI">UEFI</a> spotted.
 </p>
-<h4><span class="mw-headline" id="WiFi">WiFi</span></h4>
-<p>When installing from 2014.12 image running on 3.17 kernel wifi for some reason doesn't work. It seems it works for some older versions, and for 3.18+ but with 3.17 you'd probably need some USB wifi. WIFI is detected, wpa_supplicant runs on it however it cannot associate in any band. It seems it's caused by way too restrictive regulation settings, so you may also try to adjust AP settings for safe channels (1-11, 36-44) and sit closer to AP to get it working. 
+<h3><span class="mw-headline" id="WiFi">WiFi</span></h3>
+<p>When installing from 2014.12 image running on 3.17 kernel wifi for some reason does not work. It seems it works for some older versions, and for 3.18+ but with 3.17 you would probably need some USB wifi. WIFI is detected, wpa_supplicant runs on it however it cannot associate in any band. It seems it's caused by way too restrictive regulation settings, so you may also try to adjust AP settings for safe channels (1-11, 36-44) and sit closer to AP to get it working. 
 </p>
-<p>Don't forget to install crda among other required wireless packages to apply less restrictive regional regulation domain settings.
+<p>Do not forget to install crda among other required wireless packages to apply less restrictive regional regulation domain settings.
 </p>
 <pre>pacman -Syu iw iwconfig wpa_supplicant crda dhcpcd
 </pre>
@@ -81,7 +81,7 @@
 </p>
 <pre>echo 'options rtl8821ae ips=N fwlps=N swlps=Y' &gt; /etc/modprobe.d/wifi.conf
 </pre>
-<p>to switch to software PM. If even that doesn't help you may switch off PM now by
+<p>to switch to software PM. If even that does not help you may switch off PM now by
 </p>
 <pre>iwconfig wlp2s0 power off
 </pre>
@@ -90,23 +90,23 @@ permanently across reboots
 </p>
 <pre>echo 'ACTION=="add",SUBSYSTEM=="net",ENV{ID_NET_DRIVER}=="rtl8821ae", RUN+="iwconfig $name power off"' &gt; /etc/udev/rules.d/wifi.rules
 </pre>
-<p>If the above actions don't fix the disconnects add this to /etc/NetworkManager/NetworkManager.conf
+<p>If the above actions do not fix the disconnects add this to /etc/NetworkManager/NetworkManager.conf
 </p>
 <pre>[device]
 wifi.scan-rand-mac-address=0
 </pre>
-<h3><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h3>
-<h4><span class="mw-headline" id="SATA">SATA</span></h4>
+<h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
+<h3><span class="mw-headline" id="SATA">SATA</span></h3>
 <p>You may notice during installation or on initial reboot ATA errors, such as <code>CRC</code> or <code>READ FPDMA QUEUED</code> - those are result of SATA speed mismatches. The controller is capable of 6Gbps while the internal HDD can only run at 3Gbps. This will add a boot delay until <code>libata</code> finds the correct speed by probing and resetting.
 </p>
 <p>It is likely better to enforce 3Gbps by adding <code>libata.force=3.0Gbps</code> to the <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel command line">kernel command line</a>. Remove this restriction after migrating to an SSD drive.
 </p>
-<h4><span class="mw-headline" id="Kernel">Kernel</span></h4>
+<h3><span class="mw-headline" id="Kernel">Kernel</span></h3>
 <p>Even though system is capable of running current stable kernel it maybe worth spending some time compiling newer rc+ kernel until it is packaged.
 With 3.18 kernel you may experience various lock-outs, hang-outs and even kernel panics - due to inadequate memory and resource management.
 On the other hand 3.19 or 4.0+ is running much more smoothly, although not fully fixed even that. The hardware is heavily dependent on ACPI management which in turn mostly relies on certain driver feedback so be ready to expect various oops and kernel thread hangups until proper hooks are installed by kernel and drivers.
 </p>
-<p>When configuring kernel don't forget to enable drivers/options for following device specific components:
+<p>When configuring kernel do not forget to enable drivers/options for following device specific components:
 </p>
 <table border="1">
 <tbody>
@@ -168,8 +168,8 @@ On the other hand 3.19 or 4.0+ is running much more smoothly, although not fully
 </tr>
 </tbody>
 </table>
-<h4><span class="mw-headline" id="ACPI">ACPI</span></h4>
-<h4><span class="mw-headline" id="Backlight">Backlight</span></h4>
+<h3><span class="mw-headline" id="ACPI">ACPI</span></h3>
+<h3><span class="mw-headline" id="Backlight">Backlight</span></h3>
 <p>Backlight does not work by default in Linux due to missing Ambient Light Sensor (ALS) driver. ACPI handler for backlight is hooked to ALS probe and when driver is absent it generates ACPI Error:
 </p>
 <pre>ACPI Exception: AE_AML_PACKAGE_LIMIT, Index (0xFFFFFFFFFFFFFFFF) is beyond end of object (length 0x10) (20140926/exoparg2-420)
@@ -185,11 +185,11 @@ ACPI Error: Method parse/execution failed [\_SB_.PCI0.LPCB.EC0_._Q0E] (Node ffff
 </p>
 <p>To make the backlight keys work you need to load ALS driver. That could be achieved by booting Windows and rebooting to Linux - but that will work until power-off or suspend.
 </p>
-<p>If you don't mind compiling kernel module you may try to use off-the-tree driver for ALS by <a rel="nofollow" class="external text" href="https://github.com/victorenator/als.git">Viktar Vaŭčkievič</a>. With the driver ACPI handler works properly so you don't need any other scripts.
+<p>If you do not mind compiling kernel module you may try to use off-the-tree driver for ALS by <a rel="nofollow" class="external text" href="https://github.com/victorenator/als.git">Viktar Vaŭčkievič</a>. With the driver ACPI handler works properly so you do not need any other scripts.
 </p>
-<p>If the driver still doesn't work (most of the time it doesn't - certain hardware initialisation for ALS seems to be still missing) you may try instead <a rel="nofollow" class="external text" href="https://github.com/rufferson/als">this fork</a> which by default disabled ALS allowing manual backlight management via ACPI with fn keys.
+<p>If the driver still does not work (most of the time it does not - certain hardware initialisation for ALS seems to be still missing) you may try instead <a rel="nofollow" class="external text" href="https://github.com/rufferson/als">this fork</a> which by default disabled ALS allowing manual backlight management via ACPI with fn keys.
 </p>
-<h4><span class="mw-headline" id="Wireless_Switch">Wireless Switch</span></h4>
+<h3><span class="mw-headline" id="Wireless_Switch">Wireless Switch</span></h3>
 <p>Wireless switch does not work by default on linux. ACPI handler detects Win8 OS and delegates rfkill management to software driver, which is missing. One way to handle this is to remove Windows 2012 OSI string - which may affect other ACPI handlers though. When OSI is below Win8 - asus-nb-wmi's wapf parameter influences how hardware switch is acting. WAPF handling is different from the one documented in asus-nb-wmi.c - the implementation states following:
 </p>
 <dl>
@@ -202,7 +202,7 @@ ACPI Error: Method parse/execution failed [\_SB_.PCI0.LPCB.EC0_._Q0E] (Node ffff
 </dl>
 <p>If OSI string is required to be preserved - the only way out is using driver for ACPI device (<a rel="nofollow" class="external text" href="https://github.com/rufferson/ashs">ASHS</a>) which will handle events and do radio management.
 </p>
-<h4><span class="mw-headline" id="Other_Keys">Other Keys</span></h4>
+<h3><span class="mw-headline" id="Other_Keys">Other Keys</span></h3>
 <p>There are multiple special keys available under the same ACPI event key: Display-Off key (fn+F7), Camera key (fn+V), Screen-profile (fn+C), Auto-backlight (fn+A) and Touchpad-Off (fn+F9). All of them are generating 
 </p>
 <pre>PNP0C14:00 000000ff 00000000
@@ -266,8 +266,8 @@ action=/etc/acpi/bl.sh
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ASUS_TX201LA&amp;oldid=654636">https://wiki.archlinux.org/index.php?title=ASUS_TX201LA&amp;oldid=654636</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 18:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ASUS_TX201LA&amp;oldid=660275">https://wiki.archlinux.org/index.php?title=ASUS_TX201LA&amp;oldid=660275</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 21:28.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

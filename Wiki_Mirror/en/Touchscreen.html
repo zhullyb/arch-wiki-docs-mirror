@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -53,20 +54,20 @@
 <ul>
 <li class="toclevel-1 tocsection-1"><a href="#Introduction"><span class="tocnumber">1</span> <span class="toctext">Introduction</span></a></li>
 <li class="toclevel-1 tocsection-2"><a href="#Available_X11_drivers"><span class="tocnumber">2</span> <span class="toctext">Available X11 drivers</span></a></li>
-<li class="toclevel-1 tocsection-3">
-<a href="#evdev_drivers"><span class="tocnumber">3</span> <span class="toctext">evdev drivers</span></a>
+<li class="toclevel-1 tocsection-3"><a href="#Two-fingers_scrolling"><span class="tocnumber">3</span> <span class="toctext">Two-fingers scrolling</span></a></li>
+<li class="toclevel-1 tocsection-4">
+<a href="#evdev_drivers"><span class="tocnumber">4</span> <span class="toctext">evdev drivers</span></a>
 <ul>
-<li class="toclevel-2 tocsection-4"><a href="#Calibration"><span class="tocnumber">3.1</span> <span class="toctext">Calibration</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Calibration"><span class="tocnumber">4.1</span> <span class="toctext">Calibration</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-5">
-<a href="#Using_a_touchscreen_in_a_multi-head_setup"><span class="tocnumber">4</span> <span class="toctext">Using a touchscreen in a multi-head setup</span></a>
+<li class="toclevel-1 tocsection-6">
+<a href="#Using_a_touchscreen_in_a_multi-head_setup"><span class="tocnumber">5</span> <span class="toctext">Using a touchscreen in a multi-head setup</span></a>
 <ul>
-<li class="toclevel-2 tocsection-6"><a href="#Using_xrandr-watch-git_to_automate_map-to-output"><span class="tocnumber">4.1</span> <span class="toctext">Using xrandr-watch-git to automate map-to-output</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Using_xrandr-watch-git_to_automate_map-to-output"><span class="tocnumber">5.1</span> <span class="toctext">Using xrandr-watch-git to automate map-to-output</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-7"><a href="#Touchegg"><span class="tocnumber">5</span> <span class="toctext">Touchegg</span></a></li>
-<li class="toclevel-1 tocsection-8"><a href="#Firefox"><span class="tocnumber">6</span> <span class="toctext">Firefox</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Touchegg"><span class="tocnumber">6</span> <span class="toctext">Touchegg</span></a></li>
 </ul>
 </div>
 
@@ -104,9 +105,15 @@
 </p>
 <p>Depending on your touchscreen device choose an appropriate driver. Again, evdev is likely to be the default if your touchscreen "just works."
 </p>
+<h2><span class="mw-headline" id="Two-fingers_scrolling">Two-fingers scrolling</span></h2>
+<p>The two-fingers scrolling has to be implemented on the application side (see <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1839974#p1839974">this link</a>).
+For Firefox, see <a href="../en/Firefox/Tweaks.html#Enable_touchscreen_gestures" title="Firefox/Tweaks">Firefox/Tweaks#Enable touchscreen gestures</a>.
+</p>
+<p>There is a hack to emulates this scrolling behavior for every application in <a href="#Touchegg">#Touchegg</a>, but the X server still handles it as text selection (at least with <a href="../en/KDE.html#Plasma" class="mw-redirect" title="Plasma">Plasma</a>).
+</p>
 <h2><span class="mw-headline" id="evdev_drivers">evdev drivers</span></h2>
 <h3><span class="mw-headline" id="Calibration">Calibration</span></h3>
-<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xinput_calibrator/">xinput_calibrator</a></span><sup><small>AUR</small></sup> (AUR). Then, run xinput_calibrator and follow the instructions. 
+<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xinput_calibrator/">xinput_calibrator</a></span><sup><small>AUR</small></sup> (AUR). Then, run xinput_calibrator and follow the instructions.
 </p>
 <h2><span class="mw-headline" id="Using_a_touchscreen_in_a_multi-head_setup">Using a touchscreen in a multi-head setup</span></h2>
 <p>To use multiple displays (some of which are touchscreens), you need to tell Xorg the mapping between the touch surface and the screen. This can be achieved with <i>xinput</i> as follows.
@@ -147,7 +154,7 @@ VGA1 connected 1920x1080+1024+0 (normal left inverted right x axis y axis) 477mm
 <pre>$ xinput --map-to-output 'Serial Wacom Tablet WACf004 stylus' LVDS1
 $ xinput --map-to-output 'Serial Wacom Tablet WACf004 eraser' LVDS1
 </pre>
-<p>You can automate this by putting these commands in your <code>~/.xinitrc</code> or similar. The mapping will be lost if the touchscreen is disconnected and re-connected, for example, when switching monitors via a KVM. In that case it is better to use a udev rule. The <a href="../en/Calibrating_Touchscreen.html" title="Calibrating Touchscreen">Calibrating Touchscreen</a> page has an example udev rule for the case when a transformation matrix has been calculated manually and needs to be applied automatically. 
+<p>You can automate this by putting these commands in your <code>~/.xinitrc</code> or similar. The mapping will be lost if the touchscreen is disconnected and re-connected, for example, when switching monitors via a KVM. In that case it is better to use a udev rule. The <a href="../en/Calibrating_Touchscreen.html" title="Calibrating Touchscreen">Calibrating Touchscreen</a> page has an example udev rule for the case when a transformation matrix has been calculated manually and needs to be applied automatically.
 </p>
 <h3><span class="mw-headline" id="Using_xrandr-watch-git_to_automate_map-to-output">Using xrandr-watch-git to automate map-to-output</span></h3>
 <p>There are <a href="../en/Xrandr.html" title="Xrandr">xrandr</a> events we can capture from a script. Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xrandr-watch-git/">xrandr-watch-git</a></span><sup><small>AUR</small></sup>, create a script <code>~/.xrandr-changed</code> with execution permission to perform map-to-output, for example:
@@ -159,10 +166,10 @@ xinput --map-to-output "Wacom HID 4861 Finger touch" "eDP1"
 <p>and start, test and enable the <a href="../en/Systemd/User.html" title="Systemd/User">systemd/User</a> service <code>xrandr-watcher.service</code>.
 </p>
 <h2><span class="mw-headline" id="Touchegg">Touchegg</span></h2>
-<p><a href="../en/Touchegg.html" title="Touchegg">Touchegg</a> is a multitouch gesture program, that runs as a user in the background, recognizes gestures, and translates them to more conventional events such as mouse wheel movements, so that you can for example use two fingers to scroll.  But it also interferes with applications or window managers which already do their own gesture recognition.  If you have both a touchpad and a touchscreen, and if the touchpad driver (such as synaptics or libinput) has been configured not to recognize gestures itself, but to pass through the multi-touch events, then Touchegg will recognize gestures on both: this cannot be configured.  In fact it does a better job of recognizing gestures than either the synaptics or libinput touchpad drivers; but on the touchscreen, it's generally better for applications to respond to touch in their own unique ways.  Some Qt and GTK applications do that, but they will not be able to if you have Touchegg "eating" the touch events.  So, Touchegg is useful when you are running mainly legacy applications which do not make their own use of touch events.
+<p><a href="../en/Touchegg.html" title="Touchegg">Touchegg</a> is a multitouch gesture program, only compatible with X, that runs as a user in the background, recognizes gestures, and translates them to more conventional events such as mouse wheel movements, so that you can for example use two fingers to scroll.  But it also interferes with applications or window managers which already do their own gesture recognition.  If you have both a touchpad and a touchscreen, and if the touchpad driver (such as synaptics or libinput) has been configured not to recognize gestures itself, but to pass through the multi-touch events, then Touchegg will recognize gestures on both: this cannot be configured.  In fact it does a better job of recognizing gestures than either the synaptics or libinput touchpad drivers; but on the touchscreen, it's generally better for applications to respond to touch in their own unique ways.  Some Qt and GTK applications do that, but they will not be able to if you have Touchegg "eating" the touch events.  So, Touchegg is useful when you are running mainly legacy applications which do not make their own use of touch events.
 </p>
-<h2><span class="mw-headline" id="Firefox">Firefox</span></h2>
-<p>See <a href="../en/Firefox/Tweaks.html#Enable_touchscreen_gestures" title="Firefox/Tweaks">Firefox/Tweaks#Enable touchscreen gestures</a>.
+<p>The two-fingers scrolling has been disabled in the recent rewrite of touchegg 2.0.
+To enable it, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdotool">xdotool</a></span> and see <a rel="nofollow" class="external text" href="https://github.com/JoseExposito/touchegg/issues/438">this closed issue</a>.
 </p>
 </div>
 </div>
@@ -181,8 +188,8 @@ xinput --map-to-output "Wacom HID 4861 Finger touch" "eDP1"
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Touchscreen&amp;oldid=638000">https://wiki.archlinux.org/index.php?title=Touchscreen&amp;oldid=638000</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 00:36.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Touchscreen&amp;oldid=660243">https://wiki.archlinux.org/index.php?title=Touchscreen&amp;oldid=660243</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 21:04.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

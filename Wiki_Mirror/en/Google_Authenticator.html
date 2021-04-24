@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -37,6 +38,7 @@
 <ul>
 <li><a href="../en/Initiative_for_Open_Authentication.html" class="mw-redirect" title="OATH">OATH</a></li>
 <li><a href="../en/Pam_oath.html" title="Pam oath">pam_oath</a></li>
+<li><a href="../en/Identity_management.html" title="Identity management">Identity management</a></li>
 </ul>
 </div>
 <p><a rel="nofollow" class="external text" href="https://github.com/google/google-authenticator">Google Authenticator</a> provides a two-step authentication procedure using one-time passcodes (<a href="https://en.wikipedia.org/wiki/One-time_password" class="extiw" title="wikipedia:One-time password">OTP</a>). The OTP generator application is available for iOS, Android and Blackberry. Similar to <a href="../en/ArchWiki:Archive.html" class="mw-redirect" title="S/KEY Authentication">S/KEY Authentication</a> the authentication mechanism integrates into the Linux <a href="../en/PAM.html" title="PAM">PAM</a> system. This guide shows the installation and configuration of this mechanism.
@@ -51,7 +53,7 @@
 <ul>
 <li class="toclevel-1 tocsection-1"><a href="#Installation"><span class="tocnumber">1</span> <span class="toctext">Installation</span></a></li>
 <li class="toclevel-1 tocsection-2">
-<a href="#Setting_up_the_PAM"><span class="tocnumber">2</span> <span class="toctext">Setting up the PAM</span></a>
+<a href="#Setting_up_PAM"><span class="tocnumber">2</span> <span class="toctext">Setting up PAM</span></a>
 <ul>
 <li class="toclevel-2 tocsection-3"><a href="#Request_OTP_only_when_connecting_from_outside_your_local_network"><span class="tocnumber">2.1</span> <span class="toctext">Request OTP only when connecting from outside your local network</span></a></li>
 </ul>
@@ -64,7 +66,7 @@
 <li class="toclevel-1 tocsection-9">
 <a href="#Code_generation"><span class="tocnumber">8</span> <span class="toctext">Code generation</span></a>
 <ul>
-<li class="toclevel-2 tocsection-10"><a href="#Code_Managers"><span class="tocnumber">8.1</span> <span class="toctext">Code Managers</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Code_managers"><span class="tocnumber">8.1</span> <span class="toctext">Code managers</span></a></li>
 <li class="toclevel-2 tocsection-11"><a href="#Command_line"><span class="tocnumber">8.2</span> <span class="toctext">Command line</span></a></li>
 </ul>
 </li>
@@ -72,11 +74,11 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libpam-google-authenticator">libpam-google-authenticator</a></span> package, which provides the client program <code>google-authenticator</code> and the PAM module <code>pam_google_authenticator.so</code>. Development version is also available with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/google-authenticator-libpam-git/">google-authenticator-libpam-git</a></span><sup><small>AUR</small></sup>.
+<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libpam-google-authenticator">libpam-google-authenticator</a></span> package, which provides the client program <code>google-authenticator</code> and the PAM module <code>pam_google_authenticator.so</code>. The development version is available with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/google-authenticator-libpam-git/">google-authenticator-libpam-git</a></span><sup><small>AUR</small></sup>.
 </p>
-<h2><span class="mw-headline" id="Setting_up_the_PAM">Setting up the PAM</span></h2>
+<h2><span class="mw-headline" id="Setting_up_PAM">Setting up PAM</span></h2>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> If you do all configuration via <a href="../en/Secure_Shell.html" class="mw-redirect" title="SSH">SSH</a> do not close the session before you tested that everything is working, else you may lock yourself out. Furthermore consider generating the key file before activating the PAM.</div>
+<strong>Warning:</strong> If you do all configuration via <a href="../en/Secure_Shell.html" class="mw-redirect" title="SSH">SSH</a> do not close the session before you tested that everything is working, else you may lock yourself out. Furthermore consider generating the key file before editing (and therefore applying) the PAM configuration.</div>
 <p>Usually one demands two-pass authentication only for remote login. The corresponding PAM configuration file is <code>/etc/pam.d/sshd</code>. In case you want to use Google Authenticator globally you would need to change <code>/etc/pam.d/system-auth</code>, however, in this case proceed with extreme caution to not lock yourself out.
 In this guide we proceed with editing <code>/etc/pam.d/sshd</code> which is most safely (but not necessarily) done in a local session.
 </p>
@@ -100,7 +102,7 @@ In this guide we proceed with editing <code>/etc/pam.d/sshd</code> which is most
 </p>
 <pre> ChallengeResponseAuthentication yes
 </pre>
-<p>Finally, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Reload">reload</a> the <code>sshd</code> service.
+<p>Finally, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Reload">reload</a> <code>sshd.service</code>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> OpenSSH will ignore all of this if you are authenticating with a SSH-key pair and have <a href="../en/OpenSSH.html#Force_public_key_authentication" title="OpenSSH">disabled password logins</a>. However, as of OpenSSH 6.2, you can add <code>AuthenticationMethods</code> to allow both: two-factor and key-based authentication. See <a href="../en/OpenSSH.html#Two-factor_authentication_and_public_keys" title="OpenSSH">OpenSSH#Two-factor authentication and public keys</a>.</div>
@@ -190,7 +192,7 @@ This can very easily be done using <i>google-authenticator</i>:
 </p>
 <pre>$ google-authenticator --secret="/<b>PATH_FOLDER</b>/<b>USERNAME</b>"
 </pre>
-<p>Then, don't forget to change the location path for PAM, in <code>/etc/pam.d/sshd</code>:
+<p>Then, do not forget to change the location path for PAM, in <code>/etc/pam.d/sshd</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pam.d/sshd</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">auth required pam_google_authenticator.so user=root secret=/<b>PATH_FOLDER</b>/${USER}</pre>
@@ -204,21 +206,19 @@ This can very easily be done using <i>google-authenticator</i>:
 <h2><span class="mw-headline" id="Desktop_logins">Desktop logins</span></h2>
 <p>The Google Authenticator PAM plugin can also be used for console logins and with GDM. Just add the following to <code>/etc/pam.d/login</code> or the <code>/etc/pam.d/gdm-password</code> file:
 </p>
-<pre>   auth required pam_google_authenticator.so
+<pre>auth required pam_google_authenticator.so
 </pre>
 <h2><span class="mw-headline" id="Code_generation">Code generation</span></h2>
 <p>If you have Google Authenticator configured with other systems, then losing your device can prevent you from being able to log in to those systems.  Having additional ways to generate the codes can be helpful.
 </p>
-<h3><span class="mw-headline" id="Code_Managers">Code Managers</span></h3>
+<h3><span class="mw-headline" id="Code_managers">Code managers</span></h3>
 <p>A script that enables the display, generation, storage and management of google authenticator codes is available from the AUR (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gashell/">gashell</a></span><sup><small>AUR</small></sup>). Alternatively there is also auther (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/auther-git/">auther-git</a></span><sup><small>AUR</small></sup>).
 </p>
 <h3><span class="mw-headline" id="Command_line">Command line</span></h3>
 <p>The easiest way to generate codes is with <code>oath-tool</code>.  It is available in the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=oath-toolkit">oath-toolkit</a></span> package, and can be used as follows:
 </p>
-<pre>oathtool --totp -b ABC123
+<pre>$ oathtool --totp -b <i>secret key</i>
 </pre>
-<p>Where <code>ABC123</code> is the secret key.
-</p>
 <p>On most Android systems with sufficient user access, the Google Authenticator database can be copied off the device and accessed directly, as it is an sqlite3 database.  This shell script will read a Google Authenticator database and generate live codes for each key found:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">google-authenticator.sh</pre>
@@ -249,8 +249,8 @@ done</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Google_Authenticator&amp;oldid=640603">https://wiki.archlinux.org/index.php?title=Google_Authenticator&amp;oldid=640603</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 November 2020, at 15:17.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Google_Authenticator&amp;oldid=663796">https://wiki.archlinux.org/index.php?title=Google_Authenticator&amp;oldid=663796</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 09:59.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

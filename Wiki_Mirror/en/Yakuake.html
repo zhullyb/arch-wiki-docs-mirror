@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -49,12 +50,24 @@
 <li class="toclevel-1 tocsection-1"><a href="#Installation"><span class="tocnumber">1</span> <span class="toctext">Installation</span></a></li>
 <li class="toclevel-1 tocsection-2"><a href="#Usage"><span class="tocnumber">2</span> <span class="toctext">Usage</span></a></li>
 <li class="toclevel-1 tocsection-3">
-<a href="#Yakuake_scripting"><span class="tocnumber">3</span> <span class="toctext">Yakuake scripting</span></a>
+<a href="#Configuration"><span class="tocnumber">3</span> <span class="toctext">Configuration</span></a>
 <ul>
-<li class="toclevel-2 tocsection-4"><a href="#dbus-send_instead_of_qdbus"><span class="tocnumber">3.1</span> <span class="toctext">dbus-send instead of qdbus</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Background_transparency_and_blur_on_Plasma"><span class="tocnumber">3.1</span> <span class="toctext">Background transparency and blur on Plasma</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-5"><a href="#See_also"><span class="tocnumber">4</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-5">
+<a href="#Yakuake_scripting"><span class="tocnumber">4</span> <span class="toctext">Yakuake scripting</span></a>
+<ul>
+<li class="toclevel-2 tocsection-6"><a href="#dbus-send_instead_of_qdbus"><span class="tocnumber">4.1</span> <span class="toctext">dbus-send instead of qdbus</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7">
+<a href="#Troubleshooting"><span class="tocnumber">5</span> <span class="toctext">Troubleshooting</span></a>
+<ul>
+<li class="toclevel-2 tocsection-8"><a href="#True-color_programs_do_not_display_correctly"><span class="tocnumber">5.1</span> <span class="toctext">True-color programs do not display correctly</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -68,13 +81,27 @@
 </pre>
 <p>After Yakuake has started you can click on configure Yakuake by clicking on the <i>Open Menu</i> button (middle button on the bottom right hand side of the interface) and select <i>Configure Shortcuts</i> to change the hotkey to drop/retract the terminal automatically, by default it is set to F12.
 </p>
+<h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
+<h3><span class="mw-headline" id="Background_transparency_and_blur_on_Plasma">Background transparency and blur on Plasma</span></h3>
+<p>While most configuration options can be changed from Yakuake GUI, there are some options only accessible from modifying the configuration file, e.g. the option to use blur background under <a href="../en/KDE.html#Plasma" class="mw-redirect" title="Plasma">Plasma</a>.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> Enabling the <i>Blur background</i> option in Yakuake's Konsole profile will not enable blur for Yakuake's window, and will show a warning as <code>Konsole was started before desktop effects were enabled. You need to restart Konsole to see transparent background.</code>. There are <a rel="nofollow" class="external text" href="https://bugs.kde.org/show_bug.cgi?id=395520">bug reports on upstream about this warning</a> . The warning is somewhat misleading because Yakuake uses KonsolePart which does not have support for blur/transparency, but Yakuake itself can apply such effects to its window.</div>
+<p>In order to apply blur background for Yakuake, edit the following file:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.config/yakuakerc</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Appearance]
+Blur=true
+Translucency=true</pre>
+<p>Then restart Yakuake to apply the change.
+</p>
 <h2><span class="mw-headline" id="Yakuake_scripting">Yakuake scripting</span></h2>
 <p>Like <a href="../en/Guake.html" title="Guake">Guake</a>, Yakuake allows to control itself at runtime by sending the <a href="../en/D-Bus.html" title="D-Bus">D-Bus</a> messages. Thus it can be used to start Yakuake in a user defined session. You can create tabs, assign names for them and also ask to run any specific command in any opened tab or just to show/hide Yakuake window, manually in a terminal or by creating a custom script for it.
 </p>
 <p>Example of such a script is given below. This includes opening tabs, renaming tabs, splitting shells, and running commands.
 </p>
 <pre>#!/bin/bash
-# Starting Yakuake based on user preferences. Information based on <a rel="nofollow" class="external free" href="http://forums.gentoo.org/viewtopic-t-873915-start-0.html">http://forums.gentoo.org/viewtopic-t-873915-start-0.html</a>
+# Starting Yakuake based on user preferences. Information based on <a rel="nofollow" class="external free" href="https://forums.gentoo.org/viewtopic-t-873915-start-0.html">https://forums.gentoo.org/viewtopic-t-873915-start-0.html</a>
 # Adding sessions from previous website is broken, use this: <a rel="nofollow" class="external free" href="http://pawelkoston.pl/blog/sublime-text-3-cheatsheet-modules-web-develpment/">http://pawelkoston.pl/blog/sublime-text-3-cheatsheet-modules-web-develpment/</a>
 
 # This line is needed in case Yakuake does not accept fcitx inputs.
@@ -116,6 +143,10 @@ qdbus org.kde.yakuake /yakuake/sessions runCommandInTerminal 6 "ssh work"
 </p>
 <pre>$ dbus-send --type=method_call --dest=org.kde.yakuake /yakuake/window org.kde.yakuake.toggleWindowState
 </pre>
+<h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
+<h3><span class="mw-headline" id="True-color_programs_do_not_display_correctly">True-color programs do not display correctly</span></h3>
+<p>See <a href="../en/Konsole.html#True-color_programs_do_not_display_correctly" title="Konsole">Konsole#True-color programs do not display correctly</a>.
+</p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul><li><a rel="nofollow" class="external text" href="https://coderwall.com/p/kq9ghg/yakuake-scripting">Yakuake scripting on coderwall.com</a></li></ul>
 </div>
@@ -131,8 +162,8 @@ qdbus org.kde.yakuake /yakuake/sessions runCommandInTerminal 6 "ssh work"
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Yakuake&amp;oldid=601347">https://wiki.archlinux.org/index.php?title=Yakuake&amp;oldid=601347</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 March 2020, at 18:24.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Yakuake&amp;oldid=662649">https://wiki.archlinux.org/index.php?title=Yakuake&amp;oldid=662649</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:39.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

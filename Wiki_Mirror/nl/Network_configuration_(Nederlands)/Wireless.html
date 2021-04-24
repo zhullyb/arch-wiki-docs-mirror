@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -172,15 +173,13 @@ WLAN_INTERFACES=(ath0)
 <pre>Voor:
 INTERFACES=(lo eth0)
 Na:
-INTERFACES=(lo eth0 ath0)
-</pre>
+INTERFACES=(lo eth0 ath0)</pre>
 <ul><li>
 <b>Let Op:</b> Het kan zijn dat je de 'country-code' instellen tijdens het laden van de module, om channels te gebruiken, en de tx-power in te kunnen stellen die legaal zijn in jouw land. In nederland zou je deze country-code moeten gebruiken:</li></ul>
 <pre>modprobe ath_pci countrycode=528</pre>
 <ul><li>Dit kun je ook tijdens het booten doen, door het in /etc/modprobe.d/modprobe.conf te zetten (voor 2.6 kernels)</li></ul>
 <pre>#/etc/modprobe.d/modprobe.conf
-options ath_pci countrycode=&lt;jouw land-code&gt;
-</pre>
+options ath_pci countrycode=&lt;jouw land-code&gt;</pre>
 <ul><li>Je kunt je instellingen verifieren door middel van het 'iwlist' commando, zie ook 'man iwlist'. Zie ook de <a rel="nofollow" class="external text" href="http://madwifi.org/wiki/UserDocs/CountryCode">CountryCode</a> pagina op de madwifi wiki.</li></ul>
 <h4><span class="mw-headline" id="ipw2100_and_ipw2200">ipw2100 and ipw2200</span></h4>
 <p>Om de correcte firmware met pacman te installeren:
@@ -276,13 +275,13 @@ Als hij nog niet bestaat, maak dan de directory /lib/firmware en zet de file daa
 </li>
 <li>Voer uit <pre>pacman -S bcm43xx-fwcutter</pre> om de firmware cutter te installeren.</li>
 <li>Download de windows driver voor jouw netwerkkaart om de firmware te extrahere.
-<ul><li>I initially downloaded the driver from Dell's support site. When that didn't work I found a link on the Ubuntu Wiki and used that file instead: <a rel="nofollow" class="external autonumber" href="http://drinus.net/airport/wl_apsta.o">[2]</a>. I just saved this file to my desktop, you won't need it after the next step.</li></ul>
+<ul><li>I initially downloaded the driver from Dell's support site. When that did not work I found a link on the Ubuntu Wiki and used that file instead: <a rel="nofollow" class="external autonumber" href="http://drinus.net/airport/wl_apsta.o">[2]</a>. I just saved this file to my desktop, you will not need it after the next step.</li></ul>
 </li>
 <li>Run <pre>bcm43xx-fwcutter -w /lib/firmware /home/&lt;user&gt;/Desktop/wl_apsta.o</pre> You may have to create /lib/firmware first.</li>
 <li>Restart, and configure your device as normal. You may want to add bcm43xx into the modules section of your rc.conf file. Good luck!</li>
 </ol>
 <h2><span class="mw-headline" id="Setup_and_Boot">Setup and Boot</span></h2>
-<p>Archlinux provides two methods for enabling wireless connections.  The first method is based on the existing network script and is to be used for non-roaming wireless access.  If you're only on 1 wireless network, this is the best setup to use.  However, if you continually roam from network to network, the Network Profiles setup would be best, though slightly more complicated.
+<p>Archlinux provides two methods for enabling wireless connections.  The first method is based on the existing network script and is to be used for non-roaming wireless access.  If you are only on 1 wireless network, this is the best setup to use.  However, if you continually roam from network to network, the Network Profiles setup would be best, though slightly more complicated.
 </p>
 <h3>
 <span id="Using_the_Archlinux_Wireless_Network_settings_.28verouderd.29"></span><span class="mw-headline" id="Using_the_Archlinux_Wireless_Network_settings_(verouderd)">Using the Archlinux Wireless Network settings  (verouderd)</span>
@@ -301,7 +300,7 @@ wlan_wlan0="wlan0 essid MyEssid"
 </pre>
 <ul><li>
 <i>phrakture's trick</i>
-<ul><li>My personal trick isn't much of a trick at all, it just simplifies a lot of the process.  While /etc/conf.d/wireless is sourced (included) in the network script, it is not a requirement for having a wireless interface.  Therefore, the actual settings for the wireless interface can exist in anything sourced by the network script.  For that reason, I put all my settings in /etc/rc.conf:</li></ul>
+<ul><li>My personal trick is not much of a trick at all, it just simplifies a lot of the process.  While /etc/conf.d/wireless is sourced (included) in the network script, it is not a requirement for having a wireless interface.  Therefore, the actual settings for the wireless interface can exist in anything sourced by the network script.  For that reason, I put all my settings in /etc/rc.conf:</li></ul>
 </li></ul>
 <pre># /etc/rc.conf
 eth0="dhcp"
@@ -320,25 +319,25 @@ INTERFACES=(lo eth0 wlan0)
 <ol>
 <li>Create new profile
 <ol>
-<li>Create a new network profile in <tt>/etc/network-profiles/</tt> based on the <tt>template</tt> file. Let's call it <tt>home</tt>. Remember the filename you chose! We'll use it to refer to our new profile later.</li>
+<li>Create a new network profile in <code>/etc/network-profiles/</code> based on the <code>template</code> file. Let us call it <code>home</code>. Remember the filename you chose! We will use it to refer to our new profile later.</li>
 <li>Adjust the settings in the new profile to your needs.</li>
 </ol>
 </li>
-<li>Remove outdated settings from <tt>rc.conf</tt>
+<li>Remove outdated settings from <code>rc.conf</code>
 <ol>
 <li>Remove all interfaces which should be managed by the Network Profiles in the future from INTERFACES.</li>
 <li>Remove any relevant routes from ROUTES.</li>
 <li>Leave the "lo" interface in place.</li>
 </ol>
 </li>
-<li>Add Network Profile settings to <tt>rc.conf</tt>
-<ol><li>Add the name of your new network profile to <tt>NET_PROFILES=()</tt> <pre>NET_PROFILES=(home)</pre>
+<li>Add Network Profile settings to <code>rc.conf</code>
+<ol><li>Add the name of your new network profile to <code>NET_PROFILES=()</code> <pre>NET_PROFILES=(home)</pre>
 </li></ol>
 </li>
 </ol>
-<p>So much for the quick setup... You can also set <tt>NET_PROFILES</tt> to "menu" and it will present a dialog/ncurses menu (which requires the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dialog">dialog</a></span> package installed) at bootup where you can pick the profile you want.
+<p>So much for the quick setup... You can also set <code>NET_PROFILES</code> to "menu" and it will present a dialog/ncurses menu (which requires the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dialog">dialog</a></span> package installed) at bootup where you can pick the profile you want.
 </p>
-<p>Alternatively, you can pass a <tt>NET=</tt> value on the kernel boot line, telling netcfg which profile you wish to start with.
+<p>Alternatively, you can pass a <code>NET=</code> value on the kernel boot line, telling netcfg which profile you wish to start with.
 </p>
 <pre>vmlinuz root=/dev/hda3 vga=773 ro NET=home
 </pre>
@@ -364,11 +363,11 @@ phydeaux created a great patch for WPA support which has been adopted straight i
    then press ESC, then colon (:), then x, then ENTER to save and exit.
 </pre>
 <ol>
-<li>now, just add wifi-radar to your daemons list in /etc/rc.conf, and run wifi-radar from your internet menu and you're all set :)</li>
+<li>now, just add wifi-radar to your daemons list in /etc/rc.conf, and run wifi-radar from your internet menu and you are all set :)</li>
 <li>oh, and you might need to edit /etc/conf.d/wifi-radar to set the particular        network interface that you want to use</li>
 </ol>
 <h3><span class="mw-headline" id="NetworkManager">NetworkManager</span></h3>
-<p><b>NetworkManager</b> A more advanced network management system for Linux.  This is included in various Linux distributions and now can be used in Arch Linux.  It is very painless for roaming users, and includes an easy-to-use GUI program for selcting your desired network.  One caveat however is that you are prompted for your keyring password every time you log into gnome and the program starts.  This most likely won't be fixed until later versions, and can be quite annoying.  More information on NetworkManager can be found at: <a href="../../en/NetworkManager.html" title="NetworkManager">NetworkManager</a>.
+<p><b>NetworkManager</b> A more advanced network management system for Linux.  This is included in various Linux distributions and now can be used in Arch Linux.  It is very painless for roaming users, and includes an easy-to-use GUI program for selcting your desired network.  One caveat however is that you are prompted for your keyring password every time you log into gnome and the program starts.  This most likely will not be fixed until later versions, and can be quite annoying.  More information on NetworkManager can be found at: <a href="../../en/NetworkManager.html" title="NetworkManager">NetworkManager</a>.
 </p>
 <h3>
 <span id="Using_phrakture.27s_old_scripts_.28very_outdated.29"></span><span class="mw-headline" id="Using_phrakture's_old_scripts_(very_outdated)">Using phrakture's old scripts (very outdated)</span>
@@ -399,8 +398,8 @@ phydeaux created a great patch for WPA support which has been adopted straight i
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Nederlands)/Wireless_(Nederlands)&amp;oldid=609610">https://wiki.archlinux.org/index.php?title=Network_configuration_(Nederlands)/Wireless_(Nederlands)&amp;oldid=609610</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 2 May 2020, at 10:51.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Nederlands)/Wireless_(Nederlands)&amp;oldid=659902">https://wiki.archlinux.org/index.php?title=Network_configuration_(Nederlands)/Wireless_(Nederlands)&amp;oldid=659902</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 12:43.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -55,7 +55,7 @@
 <li class="toclevel-1 tocsection-5"><a href="#Keyboard_lights"><span class="tocnumber">5</span> <span class="toctext">Keyboard lights</span></a></li>
 <li class="toclevel-1 tocsection-6"><a href="#Intel_powersaving_options"><span class="tocnumber">6</span> <span class="toctext">Intel powersaving options</span></a></li>
 <li class="toclevel-1 tocsection-7"><a href="#OLED_screen_brightness"><span class="tocnumber">7</span> <span class="toctext">OLED screen brightness</span></a></li>
-<li class="toclevel-1 tocsection-8"><a href="#OLED_screen_doesn't_light_up_after_resume"><span class="tocnumber">8</span> <span class="toctext">OLED screen doesn't light up after resume</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#OLED_screen_does_not_light_up_after_resume"><span class="tocnumber">8</span> <span class="toctext">OLED screen does not light up after resume</span></a></li>
 <li class="toclevel-1 tocsection-9"><a href="#Switching_Windows_from_RAID_to_AHCI_mode"><span class="tocnumber">9</span> <span class="toctext">Switching Windows from RAID to AHCI mode</span></a></li>
 <li class="toclevel-1 tocsection-10"><a href="#HDMI/Mini-DP_audio"><span class="tocnumber">10</span> <span class="toctext">HDMI/Mini-DP audio</span></a></li>
 <li class="toclevel-1 tocsection-11"><a href="#R1_freezes_on_suspend/hibernate"><span class="tocnumber">11</span> <span class="toctext">R1 freezes on suspend/hibernate</span></a></li>
@@ -167,7 +167,7 @@
 <p>Refer to <a href="../en/Intel_graphics.html#RC6_sleep_modes_(enable_rc6)" title="Intel graphics">Intel graphics#RC6 sleep modes (enable_rc6)</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> and <a href="../en/Dell_XPS_13_(9360).html#Power_saving" title="Dell XPS 13 (9360)">Dell XPS 13 (9360)#Power saving</a> for additional information on each of them.
 </p>
 <h2><span class="mw-headline" id="OLED_screen_brightness">OLED screen brightness</span></h2>
-<p>With gnome, the brightness control keys toggles the on-screen display, but it doesn't change the brightness level. The screen blanking feature also doesn't work. The following command can be used to set the brightness to 50%.
+<p>With gnome, the brightness control keys toggles the on-screen display, but it does not change the brightness level. The screen blanking feature also does not work. The following command can be used to set the brightness to 50%.
 </p>
 <pre>xrandr --output eDP1 --brightness .5
 </pre>
@@ -194,11 +194,9 @@ inotifywait -me modify --format '' "$path"/actual_brightness | while read; do
     xrandr --output eDP-1 --brightness "$(luminance)"
 done
 </pre>
-<p>Make it executable and add it to your DE's autostart and you are set. We use inotifywait to know when the value is modified so we don't busy wait but are still responsive.
+<p>Make it executable and add it to your DE's autostart and you are set. We use inotifywait to know when the value is modified so we do not busy wait but are still responsive.
 </p>
-<h2>
-<span id="OLED_screen_doesn.27t_light_up_after_resume"></span><span class="mw-headline" id="OLED_screen_doesn't_light_up_after_resume">OLED screen doesn't light up after resume</span>
-</h2>
+<h2><span class="mw-headline" id="OLED_screen_does_not_light_up_after_resume">OLED screen does not light up after resume</span></h2>
 <p>Sometimes when you sleep the computer and resume it, the OLED screen will flicker but not actually light up again. To fix this use the following xrandr command:
 </p>
 <pre>$ cat /usr/local/bin/resmon 
@@ -246,8 +244,6 @@ xrandr -d :0.0 --output eDP-1 --off &amp;&amp; xrandr -d :0.0 --output eDP-1 --a
 </h2>
 <p>Due to firmware crashes with the ath10 wifi driver on R1 you may encounter system freezes upon suspend/hibernate. A workaround would be to unload the ath10 module before going down and load it back upon wake up. Put this in /usr/lib/systemd/system-sleep/suspend.sh and make it executable: 
 </p>
-<p><br>
-</p>
 <pre>#!/bin/bash
 if [ "${1}" == "pre" ]; then
    rmmod ath10k_pci ath10k_core
@@ -256,14 +252,13 @@ elif [ "${1}" == "post" ]; then
    modprobe ath10k_pci
 fi
 </pre>
-<p><br>
-Don't forget to 
+<p>Do not forget to 
 </p>
 <pre>systemctl daemon reload
 </pre>
 <p>after that. 
 </p>
-<p>Note that the nouveau driver also can be the source of problems with suspend, so if the above doesn't help, try to either blacklist it or install the non-free nvidia driver to replace it.
+<p>Note that the nouveau driver also can be the source of problems with suspend, so if the above does not help, try to either blacklist it or install the non-free nvidia driver to replace it.
 </p>
 </div>
 </div>
@@ -282,8 +277,8 @@ Don't forget to
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Alienware_13&amp;oldid=655261">https://wiki.archlinux.org/index.php?title=Alienware_13&amp;oldid=655261</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 March 2021, at 21:41.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Alienware_13&amp;oldid=658736">https://wiki.archlinux.org/index.php?title=Alienware_13&amp;oldid=658736</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 10 April 2021, at 11:26.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

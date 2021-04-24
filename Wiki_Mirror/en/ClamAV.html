@@ -233,6 +233,7 @@ milter_default_action = tempfail</pre>
 <p>Check journalctl if the permission to access clamav-milter.socket for postfix is set accordingly, if not, add user postfix to group clamav.
 </p>
 <h2><span class="mw-headline" id="OnAccessScan">OnAccessScan</span></h2>
+<dl><dd><i>(Original source: <a rel="nofollow" class="external free" href="http://blog.clamav.net/2016/03/configuring-on-access-scanning-in-clamav.html">http://blog.clamav.net/2016/03/configuring-on-access-scanning-in-clamav.html</a>)</i></dd></dl>
 <p>On-access scanning requires the kernel to be compiled with the <i>fanotify</i> kernel module (kernel &gt;= 3.8). Check if <i>fanotify</i> has been enabled before enabling on-access scanning.
 </p>
 <pre>$ zgrep FANOTIFY /proc/config.gz
@@ -242,14 +243,12 @@ milter_default_action = tempfail</pre>
 <p>First, edit the <code>/etc/clamav/clamd.conf</code> configuration file by adding the following to the end of the file (you can also change the individual options):
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/clamav/clamd.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># Enables on-access scan, requires clamav-daemon.service running
-ScanOnAccess true
-
-# Set the mount point where to recursively perform the scan,
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># Set the mount point where to recursively perform the scan,
 # this could be every path or multiple path (one line for path)
-OnAccessMountPath /usr
-OnAccessMountPath /home/
-OnAccessExcludePath /var/log/
+OnAccessMountPath /
+OnAccessExcludePath /proc
+OnAccessExcludePath /run
+OnAccessExcludePath /sys
 
 # Flag fanotify to block any events on monitored files to perform the scan
 OnAccessPrevention false
@@ -262,14 +261,14 @@ OnAccessExcludeUID 0
 
 # Specify an action to perform when clamav detects a malicious file
 # it is possible to specify an inline command too
-VirusEvent /etc/clamav/detected.sh
+VirusEvent /etc/clamav/virus-event.bash
 
 # WARNING: clamd should run as root
 User root
 </pre>
-<p>Next, create the file <code>/etc/clamav/detected.sh</code> and add the following. This allows you to change/specify the debug message when a virus has been detected by clamd's on-access scanning service:
+<p>Next, create the file <code>/etc/clamav/virus-event.bash</code> and add the following. This allows you to change/specify the debug message when a virus has been detected by clamd's on-access scanning service:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/clamav/detected.sh</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/clamav/virus-event.bash</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/bash
 PATH=/usr/bin
 alert="Signature detected: $CLAM_VIRUSEVENT_VIRUSNAME in $CLAM_VIRUSEVENT_FILENAME"
@@ -302,7 +301,7 @@ done
 </pre>
 <p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">Restart</a> the <code>clamav-daemon.service</code>.
 </p>
-<p>Source: <a rel="nofollow" class="external free" href="http://blog.clamav.net/2016/03/configuring-on-access-scanning-in-clamav.html">http://blog.clamav.net/2016/03/configuring-on-access-scanning-in-clamav.html</a>
+<p>Lastly, you will need to enable and start the <code>clamav-clamonacc</code> service.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Error:_Clamd_was_NOT_notified">Error: Clamd was NOT notified</span></h3>
@@ -373,8 +372,8 @@ in /var/lib/clamav ERROR: Not supported data format
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ClamAV&amp;oldid=654186">https://wiki.archlinux.org/index.php?title=ClamAV&amp;oldid=654186</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 8 March 2021, at 00:20.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ClamAV&amp;oldid=662730">https://wiki.archlinux.org/index.php?title=ClamAV&amp;oldid=662730</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 01:35.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

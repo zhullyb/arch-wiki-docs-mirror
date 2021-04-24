@@ -42,7 +42,7 @@
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>翻译状态：</strong>本文是 <a href="../en/Music_Player_Daemon.html" title="Music Player Daemon">Music_Player_Daemon</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2015-01-17。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Music_Player_Daemon&amp;diff=0&amp;oldid=352912">更改</a>，则您可以帮助同步翻译。</div>
-<p><b><a rel="nofollow" class="external text" href="http://mpd.wikia.com">MPD</a></b> (<b>m</b>usic <b>p</b>layer <b>d</b>aemon) 是一个服务器-客户端架构的音频播放器. 功能包括音频播放, 播放列表管理和音乐库维护，所有功能占用的资源都很少. 你需要一个独立的 <a href="#Clients">客户端</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 与它进行交互。
+<p><a rel="nofollow" class="external text" href="https://www.musicpd.org/">MPD</a>（Music Player Daemon，音乐播放器守护进程）是一个服务器-客户端架构的音频播放器。占用极少资源的同时有着播放音频、管理播放列表和音乐等功能。与它进行交互需要一个单独的 <a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF">客户端</a>。
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -54,81 +54,97 @@
 <li class="toclevel-1 tocsection-2">
 <a href="#%E8%AE%BE%E7%BD%AE"><span class="tocnumber">2</span> <span class="toctext">设置</span></a>
 <ul>
-<li class="toclevel-2 tocsection-3">
-<a href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE"><span class="tocnumber">2.1</span> <span class="toctext">全局配置</span></a>
+<li class="toclevel-2 tocsection-3"><a href="#%E5%8D%95%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE"><span class="tocnumber">2.1</span> <span class="toctext">单用户配置</span></a></li>
+<li class="toclevel-2 tocsection-4">
+<a href="#%E5%85%A8%E7%B3%BB%E7%BB%9F%E8%8C%83%E5%9B%B4%E9%85%8D%E7%BD%AE"><span class="tocnumber">2.2</span> <span class="toctext">全系统范围配置</span></a>
 <ul>
-<li class="toclevel-3 tocsection-4"><a href="#%E9%9F%B3%E4%B9%90%E7%9B%AE%E5%BD%95"><span class="tocnumber">2.1.1</span> <span class="toctext">音乐目录</span></a></li>
-<li class="toclevel-3 tocsection-5">
-<a href="#%E5%90%AF%E5%8A%A8_MPD"><span class="tocnumber">2.1.2</span> <span class="toctext">启动 MPD</span></a>
+<li class="toclevel-3 tocsection-5"><a href="#%E9%9F%B3%E4%B9%90%E7%9B%AE%E5%BD%95"><span class="tocnumber">2.2.1</span> <span class="toctext">音乐目录</span></a></li>
+<li class="toclevel-3 tocsection-6">
+<a href="#%E5%90%AF%E5%8A%A8_MPD"><span class="tocnumber">2.2.2</span> <span class="toctext">启动 MPD</span></a>
 <ul>
-<li class="toclevel-4 tocsection-6"><a href="#%E5%A5%97%E6%8E%A5%E5%AD%97%E5%90%AF%E5%8A%A8"><span class="tocnumber">2.1.2.1</span> <span class="toctext">套接字启动</span></a></li>
+<li class="toclevel-4 tocsection-7"><a href="#%E5%A5%97%E6%8E%A5%E5%AD%97%E5%90%AF%E5%8A%A8"><span class="tocnumber">2.2.2.1</span> <span class="toctext">套接字启动</span></a></li>
 </ul>
 </li>
-<li class="toclevel-3 tocsection-7"><a href="#%E9%85%8D%E7%BD%AE%E9%9F%B3%E9%A2%91"><span class="tocnumber">2.1.3</span> <span class="toctext">配置音频</span></a></li>
-<li class="toclevel-3 tocsection-8"><a href="#%E6%9B%B4%E6%94%B9%E7%94%A8%E6%88%B7"><span class="tocnumber">2.1.4</span> <span class="toctext">更改用户</span></a></li>
-<li class="toclevel-3 tocsection-9"><a href="#MPD_%E5%90%AF%E5%8A%A8%E6%97%B6%E9%97%B4%E8%BD%B4"><span class="tocnumber">2.1.5</span> <span class="toctext">MPD 启动时间轴</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#%E9%85%8D%E7%BD%AE%E9%9F%B3%E9%A2%91"><span class="tocnumber">2.2.3</span> <span class="toctext">配置音频</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#%E6%9B%B4%E6%94%B9%E7%94%A8%E6%88%B7"><span class="tocnumber">2.2.4</span> <span class="toctext">更改用户</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#MPD_%E5%90%AF%E5%8A%A8%E6%97%B6%E9%97%B4%E8%BD%B4"><span class="tocnumber">2.2.5</span> <span class="toctext">MPD 启动时间轴</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-10">
-<a href="#%E6%9C%AC%E5%9C%B0%E9%85%8D%E7%BD%AE%EF%BC%88%E5%8D%95%E7%94%A8%E6%88%B7%EF%BC%89"><span class="tocnumber">2.2</span> <span class="toctext">本地配置（单用户）</span></a>
+<li class="toclevel-2 tocsection-11">
+<a href="#%E6%9C%AC%E5%9C%B0%E9%85%8D%E7%BD%AE%EF%BC%88%E5%8D%95%E7%94%A8%E6%88%B7%EF%BC%89"><span class="tocnumber">2.3</span> <span class="toctext">本地配置（单用户）</span></a>
 <ul>
-<li class="toclevel-3 tocsection-11"><a href="#%E5%9C%A8_tty_%E7%99%BB%E9%99%86%E6%97%B6%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="tocnumber">2.2.1</span> <span class="toctext">在 tty 登陆时自启动</span></a></li>
-<li class="toclevel-3 tocsection-12"><a href="#%E5%9C%A8_X_%E4%B8%8B%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="tocnumber">2.2.2</span> <span class="toctext">在 X 下自启动</span></a></li>
-<li class="toclevel-3 tocsection-13"><a href="#%E9%80%9A%E8%BF%87_systemd_%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="tocnumber">2.2.3</span> <span class="toctext">通过 systemd 自启动</span></a></li>
-<li class="toclevel-3 tocsection-14"><a href="#%E8%84%9A%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="tocnumber">2.2.4</span> <span class="toctext">脚本配置</span></a></li>
+<li class="toclevel-3 tocsection-12"><a href="#%E5%9C%A8_tty_%E7%99%BB%E9%99%86%E6%97%B6%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="tocnumber">2.3.1</span> <span class="toctext">在 tty 登陆时自启动</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#%E5%9C%A8_X_%E4%B8%8B%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="tocnumber">2.3.2</span> <span class="toctext">在 X 下自启动</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#%E9%80%9A%E8%BF%87_systemd_%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="tocnumber">2.3.3</span> <span class="toctext">通过 systemd 自启动</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#%E8%84%9A%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="tocnumber">2.3.4</span> <span class="toctext">脚本配置</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-15"><a href="#%E5%A4%9A_mpd_%E5%AE%9E%E4%BE%8B%E8%AE%BE%E7%BD%AE"><span class="tocnumber">2.3</span> <span class="toctext">多 mpd 实例设置</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#%E5%A4%9A_mpd_%E5%AE%9E%E4%BE%8B%E8%AE%BE%E7%BD%AE"><span class="tocnumber">2.4</span> <span class="toctext">多 mpd 实例设置</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-16">
+<li class="toclevel-1 tocsection-17">
 <a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="tocnumber">3</span> <span class="toctext">客户端</span></a>
 <ul>
-<li class="toclevel-2 tocsection-17"><a href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8B"><span class="tocnumber">3.1</span> <span class="toctext">命令行下</span></a></li>
-<li class="toclevel-2 tocsection-18"><a href="#%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E4%B8%8B"><span class="tocnumber">3.2</span> <span class="toctext">图形界面下</span></a></li>
-<li class="toclevel-2 tocsection-19"><a href="#Web%E7%95%8C%E9%9D%A2"><span class="tocnumber">3.3</span> <span class="toctext">Web界面</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8B"><span class="tocnumber">3.1</span> <span class="toctext">命令行下</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E4%B8%8B"><span class="tocnumber">3.2</span> <span class="toctext">图形界面下</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Web%E7%95%8C%E9%9D%A2"><span class="tocnumber">3.3</span> <span class="toctext">Web界面</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-20"><a href="#%E5%8F%82%E9%98%85"><span class="tocnumber">4</span> <span class="toctext">参阅</span></a></li>
+<li class="toclevel-1 tocsection-21"><a href="#%E5%8F%82%E9%98%85"><span class="tocnumber">4</span> <span class="toctext">参阅</span></a></li>
 </ul>
 </div>
 
 <h2>
 <span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
 </h2>
-<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mpd">mpd</a></span>，或者开发版本—<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mpd-git/">mpd-git</a></span><sup><small>AUR</small></sup>。
+<p>安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mpd">mpd</a></span> 软件包，或者开发版本 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mpd-git/">mpd-git</a></span><sup><small>AUR</small></sup>。
 </p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> <a rel="nofollow" class="external text" href="http://www.mopidy.com">Mopidy</a> 是另一个选择，使用 Python 实现。可以通过 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mopidy">mopidy</a></span> 和 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mopidy-git/">mopidy-git</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：package not found]</sup>获得。注意这不是一个完全的 MPD <a rel="nofollow" class="external text" href="http://docs.mopidy.com/en/latest/ext/mpd/#limitations">代替品</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup>。Mopidy 与 MPD 相比的优势在于它具有从 Spotify，SoundCloud 和 Google Play Music 等云服务播放音乐的插件。然而，mopidy 项目不是那么活跃，并且许多插件在一段时间内会变得不可用或者很奇怪。</div>
 <h2>
 <span id=".E8.AE.BE.E7.BD.AE"></span><span class="mw-headline" id="设置">设置</span>
 </h2>
-<p>MPD 可以本地运行(单用户设置)、全局运行(为所有用户设置)，也可以同时运行多个实例。将 MPD 设置成哪种方式运行取决于它被如何使用，例如，设置成本地运行就很适合桌面系统。
+<p>MPD 可以以 <a href="#%E5%8D%95%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE">#单用户配置</a>、<a href="#%E5%85%A8%E7%B3%BB%E7%BB%9F%E8%8C%83%E5%9B%B4%E9%85%8D%E7%BD%AE">#全系统范围配置</a> （即配置应用给所有用户）模式运行，也可以在 <a href="#MPD_%E5%A4%9A%E5%AE%9E%E4%BE%8B%E8%BF%90%E8%A1%8C%E8%AE%BE%E7%BD%AE">#MPD 多实例运行设置</a> 下同时运行多个实例。将 MPD 设置成哪种方式运行取决于使用它的方式：例如，单用户配置更容易设置，也可能更适合桌面系统环境。全系统范围配置则更适合多用户共享单个 MPD 实例的常在线音频服务器。
 </p>
-<p>为了使 MPD 能够播放音频，需要先设置好 <a href="../zh-CN/Advanced_Linux_Sound_Architecture.html" title="Advanced Linux Sound Architecture (简体中文)">ALSA</a> 或者 <a href="../zh-CN/Open_Sound_System.html" title="Open Sound System (简体中文)">OSS</a> (可选 <a href="../zh-CN/PulseAudio.html" title="PulseAudio (简体中文)">PulseAudio</a>)。
+<p>为了让 MPD 能够播放音频，须要先设置好 <a href="../zh-CN/Advanced_Linux_Sound_Architecture.html" title="Advanced Linux Sound Architecture (简体中文)">ALSA</a>  (可选 <a href="../zh-CN/PulseAudio.html" title="PulseAudio (简体中文)">PulseAudio</a>)，并让它们正常工作。下文的 <a href="#%E9%9F%B3%E9%A2%91%E9%85%8D%E7%BD%AE">#音频配置</a> 小节会说明 <i>ALSA</i> 或者 <i>PulseAudio</i> 所需的参数。
 </p>
-<p>MPD 的配置文件是 <code>mpd.conf</code>，运行方式不同，文件的位置也不同。下面是常用的配置选项:
+<p>MPD 由 <span class="plainlinks archwiki-template-man" title="$ man 5 mpd.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mpd.conf.5">mpd.conf(5)</a></span> 文件进行配置，运行方式不同（单用户或全系统范围），文件的位置也不同。简单来说，有以下两个常用位置：
+</p>
+<ol>
+<li>
+<code>~/.config/mpd/mpd.conf</code> —— 单用户配置模式，这是第一个会搜索的位置，</li>
+<li>
+<code>/etc/mpd.conf</code> —— 全系统范围配置。</li>
+</ol>
+<p>下面是常用的配置选项:
 </p>
 <ul>
 <li>
-<code>pid_file</code> - MPD进程ID存储文件</li>
+<code>pid_file</code> - MPD 存储进程 ID（PID）的文件</li>
 <li>
 <code>db_file</code> - 音乐数据库</li>
 <li>
-<code>state_file</code> - 记录MPD当前状态</li>
+<code>state_file</code> - 记录 MPD 当前状态</li>
 <li>
 <code>playlist_directory</code> - 播放列表存储文件夹</li>
 <li>
-<code>music_directory</code> - MPD在这个文件夹中扫描音乐</li>
+<code>music_directory</code> - MPD 在这个文件夹中扫描音乐</li>
 <li>
 <code>sticker_file</code> - 标签数据库</li>
 </ul>
 <h3>
-<span id=".E5.85.A8.E5.B1.80.E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="全局配置">全局配置</span>
+<span id=".E5.8D.95.E7.94.A8.E6.88.B7.E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="单用户配置">单用户配置</span>
+</h3>
+<p>MPD 可配置为单用户使用。以普通用户运行它有几点好处：
+</p>
+<ul>
+<li>在一个文件夹  <code>~/.config/mpd/</code> 下 （或任何其他在 <code>$HOME</code> 家目录下的文件夹）重新部署（管理）所有 MPD 配置文件。</li>
+<li>避免不可预见的文件夹和文件权限错误。</li>
+</ul>
+<h3>
+<span id=".E5.85.A8.E7.B3.BB.E7.BB.9F.E8.8C.83.E5.9B.B4.E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="全系统范围配置">全系统范围配置</span>
 </h3>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>警告：</strong> 使用 PulseAudio 并且将 mpd 设置为全局配置的用户可能需要 <a href="../en/Music_Player_Daemon/Tips_and_tricks.html#Local_(with_separate_mpd_user)" title="Music Player Daemon/Tips and tricks">一个小技巧</a> 来作为自己的用户运行 mpd！</div>
-<p>The default /etc/mpd.conf keeps the setup in /var/lib/mpd which is assigned to user as well as primary group mpd. 
+<p>The default /etc/mpd.conf keeps the setup in /var/lib/mpd which is assigned to user as well as primary group mpd.
 </p>
 <h4>
 <span id=".E9.9F.B3.E4.B9.90.E7.9B.AE.E5.BD.95"></span><span class="mw-headline" id="音乐目录">音乐目录</span>
@@ -190,7 +206,7 @@ $ chmod 710 /home/&lt;your home dir&gt;
         type            "pulse"
         name            "pulse audio"
 }</pre>
-<p>PulseAudio 支持多种高级操作。例如：将音频传输到不同的机器。MPD 的高级设置参考 <a rel="nofollow" class="external text" href="http://mpd.wikia.com/wiki/PulseAudio">Music Player Daemon Community Wiki</a>。
+<p>PulseAudio 支持多种高级操作。例如：将音频传输到不同的机器。MPD 的高级设置参考 <a rel="nofollow" class="external text" href="https://mpd.fandom.com/wiki/PulseAudio">Music Player Daemon Community Wiki</a>。
 </p>
 <h4>
 <span id=".E6.9B.B4.E6.94.B9.E7.94.A8.E6.88.B7"></span><span class="mw-headline" id="更改用户">更改用户</span>
@@ -216,12 +232,6 @@ $ chmod 710 /home/&lt;your home dir&gt;
 <h3>
 <span id=".E6.9C.AC.E5.9C.B0.E9.85.8D.E7.BD.AE.EF.BC.88.E5.8D.95.E7.94.A8.E6.88.B7.EF.BC.89"></span><span class="mw-headline" id="本地配置（单用户）">本地配置（单用户）</span>
 </h3>
-<p>MPD 可以被配置为单用户（而不是全局配置 MPD 的典型方法）。以普通用户运行 MPD 有以下好处：
-</p>
-<ul>
-<li>一个可以包含所有 MPD 配置文件的单独目录 <code>~/.config/mpd/</code> （或者 <code>$HOME</code> 下的任一目录）。</li>
-<li>更容易避免不可预见的读/写权限错误。</li>
-</ul>
 <p>好的做法是为所有需要的文件和播放列表创建一个单独目录。该目录可以是任何一个你可以读写的目录。例如： <code>~/.config/mpd/</code> 或者 <code>~/.mpd/</code>。本章节假设该目录是 <code>~/.config/mpd/</code>，其对应 <code>$XDG_CONFIG_HOME</code> （ <a rel="nofollow" class="external text" href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG Base Directory Specification</a> 的部分）的缺省值 。
 </p>
 <p>MPD 首先搜索配置文件 <code>$XDG_CONFIG_HOME/mpd/mpd.conf</code>，其次搜索 <code>~/.mpdconf</code>。还可以通过命令行参数指定其他路径。
@@ -300,7 +310,7 @@ X-GNOME-Autostart-enabled=false
 <h4>
 <span id=".E8.84.9A.E6.9C.AC.E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="脚本配置">脚本配置</span>
 </h4>
-<p>Rasi 创建了一个脚本，该脚本可以创建合适的目录结构、配置文件，并且提示用户音乐目录的位置。可以在 <a rel="nofollow" class="external text" href="http://dl.53280.de/mpdsetup.sh">这里</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup> 下载。
+<p>Rasi 创建了一个脚本，该脚本可以创建合适的目录结构、配置文件，并且提示用户音乐目录的位置。可以在 <a rel="nofollow" class="external text" href="https://web.archive.org/web/20150918131634/http://dl.53280.de/mpdsetup.sh">这里</a> 下载。
 </p>
 <h3>
 <span id=".E5.A4.9A_mpd_.E5.AE.9E.E4.BE.8B.E8.AE.BE.E7.BD.AE"></span><span class="mw-headline" id="多_mpd_实例设置">多 mpd 实例设置</span>
@@ -332,17 +342,17 @@ X-GNOME-Autostart-enabled=false
 <ul><li>
 <b>mpc</b> — 简单的基于KISS原则的客户端。 拥有所有的基本功能。</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://mpd.wikia.com/wiki/Client:Mpc">http://mpd.wikia.com/wiki/Client:Mpc</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mpc">mpc</a></span>
+<a rel="nofollow" class="external free" href="https://mpd.fandom.com/wiki/Client:Mpc">https://mpd.fandom.com/wiki/Client:Mpc</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mpc">mpc</a></span>
 </dd></dl>
 <ul><li>
 <b>ncmpc</b> — 一个使用NCursers的客户端。</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://mpd.wikia.com/wiki/Client:Ncmpc">http://mpd.wikia.com/wiki/Client:Ncmpc</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ncmpc">ncmpc</a></span>
+<a rel="nofollow" class="external free" href="https://mpd.fandom.com/wiki/Client:Ncmpc">https://mpd.fandom.com/wiki/Client:Ncmpc</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ncmpc">ncmpc</a></span>
 </dd></dl>
 <ul><li>
 <b><a href="../en/Ncmpcpp.html" title="Ncmpcpp">ncmpcpp</a></b> — 差不多是完全克隆ncmpc的客户端， 但是有一些用C++写成的新功能(tag editor, search engine)</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://unkart.ovh.org/ncmpcpp/">http://unkart.ovh.org/ncmpcpp/</a><sup title="最后检查状态：domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ncmpcpp">ncmpcpp</a></span>
+<a rel="nofollow" class="external free" href="https://rybczak.net/ncmpcpp/">https://rybczak.net/ncmpcpp/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ncmpcpp">ncmpcpp</a></span>
 </dd></dl>
 <ul><li>
 <b>pms</b> — Highly configurable and accessible ncurses client</li></ul>
@@ -365,12 +375,12 @@ X-GNOME-Autostart-enabled=false
 <ul><li>
 <b>QmpdClient</b> — 用 Qt 4.x 写的图形客户端。</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://bitcheese.net/wiki/QMPDClient">http://bitcheese.net/wiki/QMPDClient</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/qmpdclient/">qmpdclient</a></span><sup><small>AUR</small></sup>
+<a rel="nofollow" class="external free" href="https://bitcheese.net/QMPDClient">https://bitcheese.net/QMPDClient</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/qmpdclient/">qmpdclient</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
 <b>Sonata</b> — 一个用 Python 写的客户端，非常优雅。</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://www.nongnu.org/sonata/">http://www.nongnu.org/sonata/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/sonata/">sonata</a></span><sup><small>AUR</small></sup>
+<a rel="nofollow" class="external free" href="https://www.nongnu.org/sonata/">https://www.nongnu.org/sonata/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/sonata/">sonata</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
 <b>gmpc</b> — GTK2 写的 MPD 前端。被设计为轻量且易用，同时也对所有的 MPD 的特性提供完全访问。为用户提供几种不同的方法来浏览音乐。可以通过很多可获得的插件来扩展。</li></ul>
@@ -388,15 +398,15 @@ X-GNOME-Autostart-enabled=false
 <ul><li>
 <b>Patchfork</b> — 用 PHP 和 Ajax 写的 web 客户端</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://mpd.wikia.com/wiki/Client:Pitchfork">http://mpd.wikia.com/wiki/Client:Pitchfork</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/patchfork-git/">patchfork-git</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：package not found]</sup>.</dd></dl>
-<p>在 <a rel="nofollow" class="external text" href="http://mpd.wikia.com/wiki/Clients">mpd wiki</a> 上可以查看到客户端列表。
+<a rel="nofollow" class="external free" href="https://web.archive.org/web/20170102164901/http://mpd.wikia.com/wiki/Client:Pitchfork">https://web.archive.org/web/20170102164901/http://mpd.wikia.com/wiki/Client:Pitchfork</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/patchfork-git/">patchfork-git</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：package not found]</sup>.</dd></dl>
+<p>在 <a rel="nofollow" class="external text" href="https://mpd.fandom.com/wiki/Clients">mpd wiki</a> 上可以查看到客户端列表。
 </p>
 <h2>
 <span id=".E5.8F.82.E9.98.85"></span><span class="mw-headline" id="参阅">参阅</span>
 </h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://mpd.wikia.com/wiki/Clients">Sorted List of MPD Clients</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.musicpd.org/forum/">MPD forum</a></li>
+<li><a rel="nofollow" class="external text" href="https://mpd.fandom.com/wiki/Clients">Sorted List of MPD Clients</a></li>
+<li><a rel="nofollow" class="external text" href="https://forum.musicpd.org/">MPD forum</a></li>
 </ul>
 </div>
 </div>
@@ -407,7 +417,6 @@ X-GNOME-Autostart-enabled=false
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 <li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
 </div>
 </div>
@@ -416,8 +425,8 @@ X-GNOME-Autostart-enabled=false
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Music_Player_Daemon_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=655454">https://wiki.archlinux.org/index.php?title=Music_Player_Daemon_(简体中文)&amp;oldid=655454</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 March 2021, at 07:53.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Music_Player_Daemon_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=661180">https://wiki.archlinux.org/index.php?title=Music_Player_Daemon_(简体中文)&amp;oldid=661180</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 12:00.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

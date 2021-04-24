@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -177,14 +178,14 @@ MOUNTD_OPTS="--manage-gids"</pre>
 <p>When trying to connect from a OS X client, you will see that everything is ok at logs, but MacOS X refuses to mount your NFS share. You have to add <code>insecure</code> option to your share and re-run <code>exportfs -r</code>.
 </p>
 <h3><span class="mw-headline" id="Unreliable_connection_from_OS_X_clients">Unreliable connection from OS X clients</span></h3>
-<p>OS X's NFS client is optimized for OS X Servers and might present some issues with Linux servers. If you are experiencing slow performance, frequent disconnects and problems with international characters edit the default mount options by adding the line <code>nfs.client.mount.options = intr,locallocks,nfc</code> to <code>/etc/nfs.conf</code> on your Mac client. More information about the mount options can be found <a rel="nofollow" class="external text" href="https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man8/mount_nfs.8.html#//apple_ref/doc/man/8/mount_nfs">here</a><sup title="最后检查状态：domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup>.
+<p>OS X's NFS client is optimized for OS X Servers and might present some issues with Linux servers. If you are experiencing slow performance, frequent disconnects and problems with international characters edit the default mount options by adding the line <code>nfs.client.mount.options = intr,locallocks,nfc</code> to <code>/etc/nfs.conf</code> on your Mac client. More information about the mount options can be found <a rel="nofollow" class="external text" href="https://web.archive.org/web/20180422153229/https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man8/mount_nfs.8.html">here</a>.
 </p>
 <h3>
 <span id=".E6.8B.B7.E8.B4.9D.E5.A4.A7.E6.96.87.E4.BB.B6.E6.97.B6.E5.AE.A2.E6.88.B7.E7.AB.AF.E4.BC.BC.E4.B9.8E.E5.8D.A1.E4.BD.8F.E4.BA.86"></span><span class="mw-headline" id="拷贝大文件时客户端似乎卡住了">拷贝大文件时客户端似乎卡住了</span>
 </h3>
 <p>从客户端向 NFS 服务器拷贝大文件时，传输速度极快，但若干秒钟后速度掉下来了，客户端似乎完全被锁住一段时间直至传输结束。
 </p>
-<p>试试在客户端挂载时增加 <tt>sync</tt> 选项（例如在 <tt>/etc/fstab</tt> 中）以修复此问题。
+<p>试试在客户端挂载时增加 <code>sync</code> 选项（例如在 <code>/etc/fstab</code> 中）以修复此问题。
 </p>
 <h3><span class="mw-headline" id="mount.nfs:_Operation_not_permitted">mount.nfs: Operation not permitted</span></h3>
 <p>After updating to <i>nfs-utils</i> 1.2.1-2 or higher, mounting NFS shares stopped working. Henceforth, <i>nfs-utils</i> uses NFSv4 per default instead of NFSv3. The problem can be solved by using either mount option <code>'vers=3'</code> or <code>'nfsvers=3'</code> on the command line: 
@@ -247,30 +248,30 @@ For example, to set the number of threads to 32:
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/conf.d/nfs-server.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">NFSD_OPTS="32"
 </pre>
-<p>The default number of threads is 8.  Try doubling this number until <code>retrans</code> remains consistently at zero.  Don't be afraid of increasing the number quite substantially.  256 threads may be quite reasonable, depending on the workload.  You will need to restart the NFS server daemon each time you modify the configuration file.  Bear in mind that the client statistics will only be reset to zero when the client is rebooted.
+<p>The default number of threads is 8.  Try doubling this number until <code>retrans</code> remains consistently at zero.  Do not be afraid of increasing the number quite substantially.  256 threads may be quite reasonable, depending on the workload.  You will need to restart the NFS server daemon each time you modify the configuration file.  Bear in mind that the client statistics will only be reset to zero when the client is rebooted.
 </p>
-<p>Use <b>htop</b> (disable the hiding of kernel threads) to keep an eye on how much work each nfsd thread is doing.  If you reach a point where the <code>retrans</code> values are non-zero, but you can see <code>nfsd</code> threads on the server doing no work, something different is now causing your bottleneck, and you'll need to re-diagnose this new problem.
+<p>Use <b>htop</b> (disable the hiding of kernel threads) to keep an eye on how much work each nfsd thread is doing.  If you reach a point where the <code>retrans</code> values are non-zero, but you can see <code>nfsd</code> threads on the server doing no work, something different is now causing your bottleneck, and you will need to re-diagnose this new problem.
 </p>
 <h3>
 <span id="Close-to-open.2Fflush-on-close"></span><span class="mw-headline" id="Close-to-open/flush-on-close">Close-to-open/flush-on-close</span>
 </h3>
 <p><b>Symptoms:</b> Your clients are writing many small files.  The server CPU is not maxed out, but there is very high wait-IO, and the server disk seems to be churning more than you might expect.
 </p>
-<p>In order to ensure data consistency across clients, the NFS protocol requires that the client's cache is flushed (all data is pushed to the server) whenever a file is closed after writing.  Because the server is not allowed to buffer disk writes (if it crashes, the client won't realise the data wasn't written properly), the data is written to disk immediately before the client's request is completed.  When you're writing lots of small files from the client, this means that the server spends most of its time waiting for small files to be written to its disk, which can cause a significant reduction in throughput.
+<p>In order to ensure data consistency across clients, the NFS protocol requires that the client's cache is flushed (all data is pushed to the server) whenever a file is closed after writing.  Because the server is not allowed to buffer disk writes (if it crashes, the client will not realise the data was not written properly), the data is written to disk immediately before the client's request is completed.  When you are writing lots of small files from the client, this means that the server spends most of its time waiting for small files to be written to its disk, which can cause a significant reduction in throughput.
 </p>
 <p>See <a rel="nofollow" class="external text" href="http://docstore.mik.ua/orelly/networking_2ndEd/nfs/ch07_04.htm">this excellent article</a> or the <b>nfs</b> manpage for more details on the close-to-open policy.  There are several approaches to solving this problem:
 </p>
 <h4><span class="mw-headline" id="The_nocto_mount_option">The nocto mount option</span></h4>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The linux kernel does not seem to honour this option properly. Files are still flushed when they're closed.</div>
+<strong>Note:</strong> The linux kernel does not seem to honour this option properly. Files are still flushed when they are closed.</div>
 <p>Does your situation match these conditions?
 </p>
 <ul>
 <li>The export you have mounted on the client is only going to be used by the one client.</li>
-<li>It doesn't matter too much if a file written on one client doesn't immediately appear on other clients.</li>
-<li>It doesn't matter if after a client has written a file, and the client thinks the file has been saved, and then the client crashes, the file may be lost.</li>
+<li>It does not matter too much if a file written on one client does not immediately appear on other clients.</li>
+<li>It does not matter if after a client has written a file, and the client thinks the file has been saved, and then the client crashes, the file may be lost.</li>
 </ul>
-<p>If you're happy with the above conditions, you can use the <b>nocto</b> mount option, which will disable the close-to-open behaviour.  See the <b>nfs</b> manpage for details.
+<p>If you are happy with the above conditions, you can use the <b>nocto</b> mount option, which will disable the close-to-open behaviour.  See the <b>nfs</b> manpage for details.
 </p>
 <h4><span class="mw-headline" id="The_async_export_option">The async export option</span></h4>
 <p>Does your situation match these conditions?
@@ -298,13 +299,11 @@ For example, to set the number of threads to 32:
 </p>
 <p>This is a trickier optimisation. Make sure this is definitely the problem before spending too much time on this. The default values are usually fine for most situations.
 </p>
-<p>See <a rel="nofollow" class="external text" href="http://docstore.mik.ua/orelly/networking_2ndEd/nfs/ch07_03.htm">this excellent article</a> for information about I/O buffering in NFS. Essentially, data is accumulated into buffers before being sent. The size of the buffer will affect the way data is transmitted over the network. The Maximum Transmission Unit (MTU) of the network equipment will also affect throughput, as the buffers need to be split into MTU-sized chunks before they're sent over the network. If your buffer size is too big, the kernel or hardware may spend too much time splitting it into MTU-sized chunks. If the buffer size is too small, there will be overhead involved in sending a very large number of small packets. You can use the <b>rsize</b> and <b>wsize</b> mount options on the client to alter the buffer cache size. To achieve the best throughput, you need to experiment and discover the best values for your setup.
+<p>See <a rel="nofollow" class="external text" href="http://docstore.mik.ua/orelly/networking_2ndEd/nfs/ch07_03.htm">this excellent article</a> for information about I/O buffering in NFS. Essentially, data is accumulated into buffers before being sent. The size of the buffer will affect the way data is transmitted over the network. The Maximum Transmission Unit (MTU) of the network equipment will also affect throughput, as the buffers need to be split into MTU-sized chunks before they are sent over the network. If your buffer size is too big, the kernel or hardware may spend too much time splitting it into MTU-sized chunks. If the buffer size is too small, there will be overhead involved in sending a very large number of small packets. You can use the <b>rsize</b> and <b>wsize</b> mount options on the client to alter the buffer cache size. To achieve the best throughput, you need to experiment and discover the best values for your setup.
 </p>
 <p>It is possible to change the MTU of many network cards. If your clients are on a separate subnet (e.g. for a Beowulf cluster), it may be safe to configure all of the network cards to use a high MTU. This should be done in very-high-bandwidth environments.
 </p>
 <p>See also the <b>nfs</b> manual page for more about <b>rsize</b> and <b>wsize</b>.
-</p>
-<p><br>
 </p>
 <h2>
 <span id=".E8.B0.83.E8.AF.95"></span><span class="mw-headline" id="调试">调试</span>
@@ -457,8 +456,7 @@ FSINFO:
 PATHCONF:
 	1 ops (0%) 
 	avg bytes sent per op: 164	avg bytes received per op: 116
-	backlog wait: 0.000000 	RTT: 1.000000 	total execute time: 1.000000 (milliseconds)
-</pre>
+	backlog wait: 0.000000 	RTT: 1.000000 	total execute time: 1.000000 (milliseconds)</pre>
 <h3>
 <span id=".E5.86.85.E6.A0.B8.E6.8E.A5.E5.8F.A3"></span><span class="mw-headline" id="内核接口">内核接口</span>
 </h3>
@@ -611,7 +609,7 @@ ls -l /proc/fs/nfsd
 <ul>
 <li><a rel="nofollow" class="external text" href="https://github.com/torvalds/linux/tree/master/include/linux">https://github.com/torvalds/linux/tree/master/include/linux</a></li>
 <li><span class="plainlinks archwiki-template-man" title="$ man 8 rpcdebug"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/rpcdebug.8">rpcdebug(8)</a></span></li>
-<li><a rel="nofollow" class="external text" href="http://utcc.utoronto.ca/~cks/space/blog/linux/NFSClientDebuggingBits">http://utcc.utoronto.ca/~cks/space/blog/linux/NFSClientDebuggingBits</a></li>
+<li><a rel="nofollow" class="external text" href="https://cns.utoronto.ca/~cks/space/blog/linux/NFSClientDebuggingBits">http://utcc.utoronto.ca/~cks/space/blog/linux/NFSClientDebuggingBits</a></li>
 <li><a rel="nofollow" class="external text" href="http://www.novell.com/support/kb/doc.php?id=7011571">http://www.novell.com/support/kb/doc.php?id=7011571</a></li>
 <li><a rel="nofollow" class="external text" href="http://stromberg.dnsalias.org/~strombrg/NFS-troubleshooting-2.html">http://stromberg.dnsalias.org/~strombrg/NFS-troubleshooting-2.html</a></li>
 <li><a rel="nofollow" class="external text" href="http://www.opensubscriber.com/message/nfs@lists.sourceforge.net/7833588.html">http://www.opensubscriber.com/message/nfs@lists.sourceforge.net/7833588.html</a></li>
@@ -658,7 +656,6 @@ Method = nsswitch</pre>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../zh-CN/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (简体中文)">Pages or sections flagged with Template:Translateme (简体中文)</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
 </div>
 </div>
@@ -667,8 +664,8 @@ Method = nsswitch</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NFS_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Troubleshooting_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=629132">https://wiki.archlinux.org/index.php?title=NFS_(简体中文)/Troubleshooting_(简体中文)&amp;oldid=629132</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 August 2020, at 09:56.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NFS_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Troubleshooting_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663670">https://wiki.archlinux.org/index.php?title=NFS_(简体中文)/Troubleshooting_(简体中文)&amp;oldid=663670</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 April 2021, at 21:01.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

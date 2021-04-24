@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,8 +33,7 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p><br>
-La guida è stata realizzata basandosi su un esperienza reale di un utente, quindi il tutto è basato sulla configurazione dell'utente stesso.
+<p>La guida è stata realizzata basandosi su un esperienza reale di un utente, quindi il tutto è basato sulla configurazione dell'utente stesso.
 </p>
 <p>Immaginate questo, avete più di due reti separate da un protocollo di Virtual Lan (IEEE 802.1q) o VLAN, a cui fate accesso tramite uno switch con una linea trunk 10/100/1000 MB HD/FD (naturalmente la migliore è 1000 MB FD).
 </p>
@@ -67,23 +67,23 @@ La guida è stata realizzata basandosi su un esperienza reale di un utente, quin
 </ul>
 </div>
 
-<h3><span class="mw-headline" id="I_fatti:">I fatti:</span></h3>
+<h2><span class="mw-headline" id="I_fatti:">I fatti:</span></h2>
 <dl><dd>Abbiamo circa 4 netmask 21 ex. ognuna con 8 classi di tipo C!!! Abbiamo quindi tantissimi MAC address e altrettanti pericolosi BROADCAST.</dd></dl>
 <dl><dd>Abbiamo inoltre 30 IP pubblici in 3 gruppi</dd></dl>
 <dl><dd>E una piccola macchina ...solo per fare test.</dd></dl>
 <dl><dd>Più in la verrà aggiunga una rete di classe C con molte altre subnet.</dd></dl>
-<h1><span class="mw-headline" id="Il_lavoro">Il lavoro</span></h1>
-<h2><span class="mw-headline" id="Supporto_delle_VLAN">Supporto delle VLAN</span></h2>
+<h2><span class="mw-headline" id="Il_lavoro">Il lavoro</span></h2>
+<h3><span class="mw-headline" id="Supporto_delle_VLAN">Supporto delle VLAN</span></h3>
 <p>First, create sub-network as in page <a href="../en/VLAN.html" title="VLAN">VLAN</a>.
 </p>
-<h2><span class="mw-headline" id="Il_firewall">Il firewall</span></h2>
+<h3><span class="mw-headline" id="Il_firewall">Il firewall</span></h3>
 <p>Può essere realizzato un firewall/nat con <i>iptables</i> in maniera semplice e ci sono molte guide su questo...
 </p>
 <p>Pensate che dovrete lavorare con molto traffico, questo vuol dire un uso massivo di CPU, quindi mantenete poche regole, solo le strette necessarie.
 Accept all per default per fare NAT.
 Probabilmente è meglio favorire alcune porte, (80,443,25,110,21,20,53 etc), ricordatevi che ogni pacchetto che passa per il vostro firewall deve attraversare tutte le regole fino a che non ne trova una che lo riguarda, altrimenti cade nella politica di default.
 </p>
-<h3><span class="mw-headline" id="Il_NAT_round_robin">Il NAT round robin</span></h3>
+<h4><span class="mw-headline" id="Il_NAT_round_robin">Il NAT round robin</span></h4>
 <p>Supponiamo di avere un ip: 200.aaa.bbb.6 e il nostro gateway è 200.aaa.bbb.1. Possiamo tranquillamente mettere questi parametri di default nella nostra configurazione.
 </p>
 <p>Abbiamo detto che abbiamo 3 gruppi con 10 IP ognuno ... definiamo quindi il NEXT HOP nel nostro firewall:
@@ -105,7 +105,7 @@ iptables -t nat -A POSTROUTING -s 192.168.15.0/21  -j SNAT --to $Gr1 #ACCESS VLA
 </p>
 <p>E' importante che ogni router conosca ogni gruppo e diffonda questo via BGP (o simile) ai vicini.
 </p>
-<h3><span class="mw-headline" id="Trucchi">Trucchi</span></h3>
+<h4><span class="mw-headline" id="Trucchi">Trucchi</span></h4>
 <p>Per favorire alcune porte potreste mettere queste regole in cima alla catena di FORWARD
 </p>
 <pre>iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
@@ -129,7 +129,7 @@ iptables -A FORWARD -p tcp --dport 445 -j DROP
 iptables -A FORWARD -p udp --dport 135:139 -j DROP
 iptables -A FORWARD -p udp --dport 445 -j DROP
 </pre>
-<h2><span class="mw-headline" id="Aumentare_le_performance">Aumentare le performance</span></h2>
+<h3><span class="mw-headline" id="Aumentare_le_performance">Aumentare le performance</span></h3>
 <p>Siamo arrivate alla parte importate di questo howto.
 </p>
 <p>Abbiamo dimenticato qualcosa durante la nostra corsa
@@ -193,7 +193,7 @@ net.netfilter.nf_conntrack_max = 1048576
 </p>
 <p>Un esempio <a rel="nofollow" class="external text" href="http://carlost.890m.com/conntrack.png">qui</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">link interrotto</a> 2020-08-02]</sup>.
 </p>
-<h2><span class="mw-headline" id="Iproute2">Iproute2</span></h2>
+<h3><span class="mw-headline" id="Iproute2">Iproute2</span></h3>
 <p>Abbiamo 3 grandi accessi ad Internet!!! Questo perchè abbiamo a che fare con 3 gruppi di IP di classe C. Quindi abbiamo 3 traffici in entrata da gestire, ma solo uno in uscita!!! Il nostro gateway di default.
 </p>
 <p>Per prima cosa dobbiamo mettere delle nuove tabelle nel file <i>/etc/iproute2/rt_tables</i>
@@ -237,7 +237,7 @@ Per esempio vogliamo dare solo una classe C all'uscita con PRO_3
 </p>
 <p>Prima potreste andare su qualche sito tipo www.whatismyip.com e vedere il vostro ip attuale, rifarlo dopo un po e vedere che l'ip è cambiato ETC...
 </p>
-<h1><span class="mw-headline" id="Conclusioni">Conclusioni</span></h1>
+<h2><span class="mw-headline" id="Conclusioni">Conclusioni</span></h2>
 <p>Ora lo scrittore della guida sta usando un PC con 2G di ram, Intel Pentium 4 2.8GHz Dual e 2 NICs 1Gb (una integrata e una PCI-E), l'utilizzo della CPU non va oltre picchi all'80%...
 </p>
 </div>
@@ -250,8 +250,8 @@ Per esempio vogliamo dare solo una classe C all'uscita con PRO_3
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=High_Performance_Firewall_(Italiano)&amp;oldid=628644">https://wiki.archlinux.org/index.php?title=High_Performance_Firewall_(Italiano)&amp;oldid=628644</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 3 August 2020, at 07:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=High_Performance_Firewall_(Italiano)&amp;oldid=658399">https://wiki.archlinux.org/index.php?title=High_Performance_Firewall_(Italiano)&amp;oldid=658399</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 April 2021, at 13:51.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

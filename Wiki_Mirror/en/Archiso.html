@@ -92,15 +92,16 @@
 <ul>
 <li class="toclevel-2 tocsection-20"><a href="#Prepare_an_ISO_for_an_installation_via_SSH"><span class="tocnumber">6.1</span> <span class="toctext">Prepare an ISO for an installation via SSH</span></a></li>
 <li class="toclevel-2 tocsection-21"><a href="#Automatically_connect_to_a_Wi-Fi_network_using_iwd"><span class="tocnumber">6.2</span> <span class="toctext">Automatically connect to a Wi-Fi network using iwd</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Adjusting_the_size_of_root_partition_on_the_fly"><span class="tocnumber">6.3</span> <span class="toctext">Adjusting the size of root partition on the fly</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-22">
+<li class="toclevel-1 tocsection-23">
 <a href="#Troubleshooting"><span class="tocnumber">7</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-23"><a href="#Window_manager_freezes"><span class="tocnumber">7.1</span> <span class="toctext">Window manager freezes</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#Window_manager_freezes"><span class="tocnumber">7.1</span> <span class="toctext">Window manager freezes</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-24"><a href="#See_also"><span class="tocnumber">8</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-25"><a href="#See_also"><span class="tocnumber">8</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -152,7 +153,7 @@ Server = file://<i>/path/to/customrepo</i>
 <p>Similarly, some care is required for special configuration files that reside somewhere down the hierarchy. Missing parts of the directory structure can be simply created with <span class="plainlinks archwiki-template-man" title="$ man 1 mkdir"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mkdir.1">mkdir(1)</a></span>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> To add a file to all users home directories, place it in <code><i>archlive</i>/airootfs/etc/skel/</code>.</div>
+<strong>Tip:</strong> To add a file to the install user's home directory, place it in <code><i>archlive</i>/airootfs/root/</code>. To add a file to all other users home directories, place it in <code><i>archlive</i>/airootfs/etc/skel/</code>.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Custom files that conflict with those provided by packages will be overwritten unless a package specifies them as <a href="../en/Pacman/Pacnew_and_Pacsave.html#Package_backup_files" title="Pacman/Pacnew and Pacsave">backup files</a>.</div>
 <p>By default, <a href="../en/File_permissions_and_attributes.html" class="mw-redirect" title="Permissions">permissions</a> will be <code>644</code> for files and <code>755</code> for directories. All of them will be owned by the root user. To set different permissions or ownership for specific files and/or folders, use the <code>file_permissions</code> associative array in <code>profiledef.sh</code>. See <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/README.profile.rst">README.profile.rst</a> for details.
@@ -357,6 +358,32 @@ file_permissions=(
 </p>
 <p>Save the configuration file inside <code><i>archlive</i>/airootfs/var/lib/iwd/</code>.
 </p>
+<h3><span class="mw-headline" id="Adjusting_the_size_of_root_partition_on_the_fly">Adjusting the size of root partition on the fly</span></h3>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Explaining <i>how</i> but omitting the <i>why</i> renders the whole section useless. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Archiso">Talk:Archiso#</a>)</div>
+</div>
+<p>If you get the following error message, you may need to adjust the size of the root partition of the Archiso.
+</p>
+<pre>error: partition / too full: 63256 blocks needed, 61450 blocks free
+error: not enough free disk space
+error: failed to commit transaction (not enough free disk space) 
+Errors occurred: no packages were upgraded.
+</pre>
+<p>To adjust the size of the root partition on the live Archlinux system, hit the TAB key to edit the kernel parameters.
+Append <code>cow_spacesize=2G</code> at the end to get 2G size for the root partition.
+Press Enter to continue booting into the live system.
+You can check the size of the filesystems by running:
+</p>
+<pre>$ df -h
+</pre>
+<p>You can also adjust the root partition size on the fly by running this command:
+</p>
+<pre># mount -o remount,size=2G /run/archiso/cowspace
+</pre>
+<p>See more boot parameters <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.bootparams">here</a>
+</p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Window_manager_freezes">Window manager freezes</span></h3>
 <p>If you want to use a <a href="../en/Window_manager.html" title="Window manager">window manager</a> in the Live CD then you must add the necessary and correct <a href="../en/Xorg.html#Driver_installation" class="mw-redirect" title="Video drivers">video drivers</a>, or the WM may freeze on loading.
@@ -379,7 +406,10 @@ file_permissions=(
 <li><a href="../en/Category:Arch_projects.html" title="Category:Arch projects">Arch projects</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Sections_flagged_with_Template:Remove.html" title="Category:Sections flagged with Template:Remove">Sections flagged with Template:Remove</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Sections_flagged_with_Template:Remove.html" title="Category:Sections flagged with Template:Remove">Sections flagged with Template:Remove</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -387,8 +417,8 @@ file_permissions=(
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Archiso&amp;oldid=652673">https://wiki.archlinux.org/index.php?title=Archiso&amp;oldid=652673</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 15:17.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Archiso&amp;oldid=659959">https://wiki.archlinux.org/index.php?title=Archiso&amp;oldid=659959</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 14:58.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

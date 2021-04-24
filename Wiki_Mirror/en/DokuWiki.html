@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -34,7 +35,7 @@
 <div class="mw-parser-output">
 <p>"<a rel="nofollow" class="external text" href="https://www.dokuwiki.org/dokuwiki#">DokuWiki</a> is a standards-compliant, simple-to-use wiki which allows users to create rich documentation repositories. It provides an environment for individuals, teams and companies to create and collaborate using a simple yet powerful syntax that ensures data files remain structured and readable outside the wiki."
 </p>
-<p>"Unlimited page revisions allows restoration to any earlier page version, and with data stored in plain text files, no database is required. A powerful plugin architecture allows for extension and enhancement of the core system. See the features section for a full description of what DokuWiki has to offer."<a rel="nofollow" class="external autonumber" href="http://wiki.splitbrain.org/wiki:dokuwiki">[1]</a><sup title="Last check status: domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-29 ⓘ]</sup>
+<p>"Unlimited page revisions allows restoration to any earlier page version, and with data stored in plain text files, no database is required. A powerful plugin architecture allows for extension and enhancement of the core system. See the features section for a full description of what DokuWiki has to offer."<a rel="nofollow" class="external autonumber" href="https://www.dokuwiki.org/features">[1]</a>
 </p>
 <p>In other words, DokuWiki is a wiki written in PHP and requires no database.
 </p>
@@ -68,9 +69,9 @@
 </div>
 
 <h2><span class="mw-headline" id="Initial_notes">Initial notes</span></h2>
-<p>DokuWiki should work on any web server which supports PHP 5.6 or later.  As the requirements may change over time, you should consult the <a rel="nofollow" class="external text" href="http://www.dokuwiki.org/requirements">requirements page</a> for DokuWiki for additional details.
+<p>DokuWiki should work on any web server which supports PHP 5.6 until 7.4.x.  As the requirements may change over time, you should consult the <a rel="nofollow" class="external text" href="https://www.dokuwiki.org/requirements">requirements page</a> for DokuWiki for additional details.
 </p>
-<p>It is strongly recommend to read through the appropriate sections of <a rel="nofollow" class="external text" href="http://www.dokuwiki.org/security">DokuWiki's security page</a> for your web server.  Most popular web servers are covered but there are generic instructions as well.
+<p>It is strongly recommend to read through the appropriate sections of <a rel="nofollow" class="external text" href="https://www.dokuwiki.org/security">DokuWiki's security page</a> for your web server.  Most popular web servers are covered but there are generic instructions as well.
 </p>
 <p>The package in [community] unpacks DokuWiki at <code>/usr/share/webapps/dokuwiki</code> with the configuration files in <code>/etc/webapps/dokuwiki</code> and the data files in <code>/var/lib/dokuwiki/data</code>. It also changes the ownership of the relevant files to the "http" user. This should work fine for most popular web servers as packaged for Arch.
 </p>
@@ -81,7 +82,7 @@
 <li>Configure web server for dokuwiki (see section below)</li>
 <li>With your web browser of choice, open http://&lt;your-server&gt;/dokuwiki/install.php and continue the installation from there. For nginx the URL is http://&lt;your-server&gt;/install.php.</li>
 </ol>
-<p>Alternatively, if you would like to install from tarball, you can read from <a rel="nofollow" class="external free" href="http://www.dokuwiki.org/Install">http://www.dokuwiki.org/Install</a>.  Generally the procedure is the same as above.  Instead of using pacman, you will need to <a rel="nofollow" class="external text" href="http://www.splitbrain.org/projects/dokuwiki">download the tarball</a>, unpack it to your server's document root (e.g. <code>/srv/http/dokuwiki</code>), and chown to the appropriate user (e.g. "http").
+<p>Alternatively, if you would like to install from tarball, you can read from <a rel="nofollow" class="external free" href="https://www.dokuwiki.org/Install">https://www.dokuwiki.org/Install</a>.  Generally the procedure is the same as above.  Instead of using pacman, you will need to <a rel="nofollow" class="external text" href="http://www.splitbrain.org/projects/dokuwiki">download the tarball</a>, unpack it to your server's document root (e.g. <code>/srv/http/dokuwiki</code>), and chown to the appropriate user (e.g. "http").
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <p>If you use <a href="../en/PHP.html#Configuration" title="PHP">PHP's open_basedir</a>, you need to include the dokuwiki directories <code>/etc/webapps/dokuwiki/</code> and <code>/var/lib/dokuwiki/</code>. For example:
@@ -95,7 +96,7 @@
 </pre>
 <p>Dokuwiki needs this library for resizing images.
 </p>
-<p>Then check that you have <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=php-gd">php-gd</a></span> installed and restart <code>php-fpm.service</code>.
+<p>Then check that you have <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=php7-gd">php7-gd</a></span> installed and restart <code>php-fpm7.service</code>.
 </p>
 <h3><span class="mw-headline" id="Apache">Apache</span></h3>
 <p>The package should add the file <code>/etc/httpd/conf/extra/dokuwiki.conf</code> with the following contents:
@@ -131,7 +132,7 @@
 <p>Then finish the installation by running the <i>dokuwiki/install.php</i> script in your browser.
 </p>
 <h3><span class="mw-headline" id="lighttpd">lighttpd</span></h3>
-<p>Edit the <code>/etc/lighttpd/lighttpd.conf</code> file as per the <a rel="nofollow" class="external text" href="http://www.dokuwiki.org/install:lighttpd">dokuwiki instructions</a> (might contain updated information).
+<p>Edit the <code>/etc/lighttpd/lighttpd.conf</code> file as per the <a rel="nofollow" class="external text" href="https://www.dokuwiki.org/install:lighttpd">dokuwiki instructions</a> (might contain updated information).
 </p>
 <p>Make sure the modules <code>mod_access</code> and <code>mod_alias</code> are loaded. If not, load them by adding the following to <code>/etc/lighttpd/lighttpd.conf</code>:
 </p>
@@ -168,7 +169,7 @@ $HTTP["url"] =~ "^" + var.dokudir + "/(bin|data|inc|conf)/"  { url.access-deny =
 <pre> # systemctl restart lighttpd
 </pre>
 <h3><span class="mw-headline" id="nginx">nginx</span></h3>
-<p>Ensure that <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=php-fpm">php-fpm</a></span> is installed and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">started</a>.
+<p>Ensure that <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=php7-fpm">php7-fpm</a></span> is installed and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">started</a>.
 </p>
 <p>Add the following server block, but change the server name to your own and comment out the install.php block until you are done installing DokuWiki. This block assumes you use TLS. <a rel="nofollow" class="external autonumber" href="https://www.dokuwiki.org/install:nginx">[2]</a>
 </p>
@@ -196,7 +197,7 @@ $HTTP["url"] =~ "^" + var.dokudir + "/(bin|data|inc|conf)/"  { url.access-deny =
         location / { try_files $uri $uri/ @dokuwiki; }
         location ~ \.php$ {
             try_files $uri =404;
-            fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+            fastcgi_pass unix:/run/php-fpm7/php-fpm.sock;
             fastcgi_index index.php;
             include fastcgi.conf;
         }
@@ -224,7 +225,7 @@ $HTTP["url"] =~ "^" + var.dokudir + "/(bin|data|inc|conf)/"  { url.access-deny =
 <pre> # rm /usr/share/webapps/dokuwiki/install.php
 </pre>
 <h3><span class="mw-headline" id="Installing_plugins">Installing plugins</span></h3>
-<p>Many community created plugins can be found <a rel="nofollow" class="external text" href="http://www.dokuwiki.org/plugins">here</a>
+<p>Many community created plugins can be found <a rel="nofollow" class="external text" href="https://www.dokuwiki.org/plugins">here</a>
 </p>
 <p>They can be added through the web interface (as well as updated) through the Admin menu. Some plugins cannot be downloaded, if they go over ssl (e.g. git).
 </p>
@@ -239,24 +240,20 @@ $HTTP["url"] =~ "^" + var.dokudir + "/(bin|data|inc|conf)/"  { url.access-deny =
 <p>This may change in future releases, please consult the <a rel="nofollow" class="external text" href="https://www.dokuwiki.org/faq:backup">DokuWiki Backup FAQ</a> for verification.
 </p>
 <h2><span class="mw-headline" id="Further_reading">Further reading</span></h2>
-<p>The <a rel="nofollow" class="external text" href="http://www.dokuwiki.org/">DokuWiki main site</a> has all of the information and help that you could possibly need.
+<p>The <a rel="nofollow" class="external text" href="https://www.dokuwiki.org/">DokuWiki main site</a> has all of the information and help that you could possibly need.
 </p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Wiki_software.html" title="Category:Wiki software">Wiki software</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
-</div>
-</div>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=DokuWiki&amp;oldid=625342">https://wiki.archlinux.org/index.php?title=DokuWiki&amp;oldid=625342</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 July 2020, at 11:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=DokuWiki&amp;oldid=660915">https://wiki.archlinux.org/index.php?title=DokuWiki&amp;oldid=660915</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 20:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

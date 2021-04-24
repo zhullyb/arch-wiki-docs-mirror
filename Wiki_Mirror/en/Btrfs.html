@@ -128,7 +128,7 @@
 <li class="toclevel-2 tocsection-40"><a href="#Corruption_recovery"><span class="tocnumber">6.4</span> <span class="toctext">Corruption recovery</span></a></li>
 <li class="toclevel-2 tocsection-41"><a href="#Booting_into_snapshots"><span class="tocnumber">6.5</span> <span class="toctext">Booting into snapshots</span></a></li>
 <li class="toclevel-2 tocsection-42"><a href="#Use_Btrfs_subvolumes_with_systemd-nspawn"><span class="tocnumber">6.6</span> <span class="toctext">Use Btrfs subvolumes with systemd-nspawn</span></a></li>
-<li class="toclevel-2 tocsection-43"><a href="#Disabling_access_time_metadata"><span class="tocnumber">6.7</span> <span class="toctext">Disabling access time metadata</span></a></li>
+<li class="toclevel-2 tocsection-43"><a href="#Reducing_access_time_metadata_updates"><span class="tocnumber">6.7</span> <span class="toctext">Reducing access time metadata updates</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-44">
@@ -230,7 +230,7 @@ $ rm -rf <i>/path/to/dir</i>_old
 <p>See the man page on <span class="plainlinks archwiki-template-man" title="$ man 1 cp"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/cp.1">cp(1)</a></span> for more details on the <code>--reflink</code> flag.
 </p>
 <h3><span class="mw-headline" id="Compression">Compression</span></h3>
-<p>Btrfs supports <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/Compression">transparent and automatic compression</a>. This reduces the size of files as well as significantly increases the lifespan of flash-based media by reducing write amplification. <a rel="nofollow" class="external autonumber" href="https://fedoraproject.org/wiki/Changes/BtrfsByDefault#Compression">[1]</a><a rel="nofollow" class="external autonumber" href="https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/NTV77NFF6NDZM3QTPUM2TQZ5PCM6GOO2/">[2]</a><a rel="nofollow" class="external autonumber" href="https://pagure.io/fedora-btrfs/project/issue/36#comment-701551">[3]</a> It can also <a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=btrfs_compress_2635&amp;num=1">improve performance</a>, in some cases (e.g. single thread with heavy file I/O), while obviously harming performance in other cases (e.g. multi-threaded and/or CPU intensive tasks with large file I/O). Better performance is generally achieved with the fastest compress algorithms, <i>zstd</i> and <i>lzo</i>, and some <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs-zstd-compress">benchmarks</a> provide detailed comparisons.
+<p>Btrfs supports <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/Compression">transparent and automatic compression</a>. This reduces the size of files as well as significantly increases the lifespan of flash-based media by reducing write amplification. <a rel="nofollow" class="external autonumber" href="https://fedoraproject.org/wiki/Changes/BtrfsByDefault#Compression">[1]</a><a rel="nofollow" class="external autonumber" href="https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/NTV77NFF6NDZM3QTPUM2TQZ5PCM6GOO2/">[2]</a><a rel="nofollow" class="external autonumber" href="https://pagure.io/fedora-btrfs/project/issue/36#comment-701551">[3]</a> It can also <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs_compress_2635&amp;num=1">improve performance</a>, in some cases (e.g. single thread with heavy file I/O), while obviously harming performance in other cases (e.g. multi-threaded and/or CPU intensive tasks with large file I/O). Better performance is generally achieved with the fastest compress algorithms, <i>zstd</i> and <i>lzo</i>, and some <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs-zstd-compress">benchmarks</a> provide detailed comparisons.
 </p>
 <p>The <code>compress=<i>alg</i></code> mount option enables automatically considering every file for compression, where <code><i>alg</i></code> is either <code>zlib</code>, <code>lzo</code>, <code>zstd</code>, or <code>no</code> (for no compression). Using this option, btrfs will check if compressing the first portion of the data shrinks it.  If it does, the entire write to that file will be compressed.  If it does not, none of it is compressed.  With this option, if the first portion of the write does not shrink, no compression will be applied to the write even if the rest of the data would shrink tremendously. <a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/Compression#What_happens_to_incompressible_files.3F">[4]</a>  This is done to prevent making the disk wait to start writing until all of the data to be written is fully given to btrfs and compressed.
 </p>
@@ -343,7 +343,7 @@ To show usage and limits for a given path within a filesystem use
 <h3><span class="mw-headline" id="Commit_interval">Commit interval</span></h3>
 <p>The resolution at which data are written to the filesystem is dictated by Btrfs itself and by system-wide settings. Btrfs defaults to a 30 seconds checkpoint interval in which new data are committed to the filesystem. This can be changed by appending the <code>commit</code> mount option in <code>/etc/fstab</code> for the btrfs partition.
 </p>
-<pre>LABEL=arch64 / btrfs defaults,noatime,compress=lzo,commit=120 0 0
+<pre>LABEL=arch64 / btrfs defaults,compress=zstd,commit=120 0 0
 </pre>
 <p>System-wide settings also affect commit intervals. They include the files under <code>/proc/sys/vm/*</code> and are out-of-scope of this wiki article. The kernel documentation for them resides in <code>Documentation/sysctl/vm.txt</code>.
 </p>
@@ -531,7 +531,7 @@ To show usage and limits for a given path within a filesystem use
 </div>
 <p>CRC32 is a new instruction in Intel SSE4.2. To verify if Btrfs checksum is hardware accelerated:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep crc32c</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep crc32c</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Btrfs loaded, crc32c=crc32c-intel</pre>
 <p>If you see <code>crc32c=crc32c-generic</code>, it is probably because your root partition is Btrfs, and you will have to compile <code>crc32c-intel</code> into the kernel to make it work. Putting <code>crc32c-intel</code> into <a href="../en/Mkinitcpio.html" class="mw-redirect" title="Mkinitcpio.conf">mkinitcpio.conf</a> does <i>not</i> work.
 </p>
@@ -561,8 +561,8 @@ To show usage and limits for a given path within a filesystem use
 <h3><span class="mw-headline" id="Use_Btrfs_subvolumes_with_systemd-nspawn">Use Btrfs subvolumes with systemd-nspawn</span></h3>
 <p>See the <a href="../en/Systemd-nspawn.html#Use_Btrfs_subvolume_as_container_root" title="Systemd-nspawn">Systemd-nspawn#Use Btrfs subvolume as container root</a> and <a href="../en/Systemd-nspawn.html#Use_temporary_Btrfs_snapshot_of_container" title="Systemd-nspawn">Systemd-nspawn#Use temporary Btrfs snapshot of container</a> articles.
 </p>
-<h3><span class="mw-headline" id="Disabling_access_time_metadata">Disabling access time metadata</span></h3>
-<p>Because of CoW nature of Btrfs simply accessing files can trigger the metadata copy and writing. Disabling access time by passing <code>noatime</code> mount parameter eliminates this unexpected disk usage and increases performance. Note that few programs rely on access timestamps such as <a href="../en/Mutt.html" title="Mutt">Mutt</a>.
+<h3><span class="mw-headline" id="Reducing_access_time_metadata_updates">Reducing access time metadata updates</span></h3>
+<p>Because of the copy-on-write nature of Btrfs simply accessing files can trigger the metadata copy and writing. Reducing the frequency of access time updates may eliminate this unexpected disk usage and increase performance. See <a href="../en/Fstab.html#atime_options" title="Fstab">fstab#atime options</a> for the available options.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <p>See the <a rel="nofollow" class="external text" href="https://btrfs.wiki.kernel.org/index.php/Problem_FAQ">Btrfs Problem FAQ</a> for general troubleshooting.
@@ -635,12 +635,12 @@ You are now being dropped into an emergency shell.
 <li>
 <b>Phoronix mount option benchmarking</b>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=btrfs-mount-linux49">Linux 4.9</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=linux_314_btrfs">Linux 3.14</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=linux_btrfs_311&amp;num=1">Linux 3.11</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=MTM0OTU">Linux 3.9</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=btrfs_linux37_mounts&amp;num=1">Linux 3.7</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=linux_btrfs_options&amp;num=1">Linux 3.2</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs-mount-linux49">Linux 4.9</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=linux_314_btrfs">Linux 3.14</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=linux_btrfs_311&amp;num=1">Linux 3.11</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTM0OTU">Linux 3.9</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs_linux37_mounts&amp;num=1">Linux 3.7</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=linux_btrfs_options&amp;num=1">Linux 3.2</a></li>
 </ul>
 </li>
 <li><a rel="nofollow" class="external text" href="http://blog.erdemagaoglu.com/post/4605524309/lzo-vs-snappy-vs-lzf-vs-zlib-a-comparison-of">Lzo vs. zLib</a></li>
@@ -651,9 +651,9 @@ You are now being dropped into an emergency shell.
 <ul>
 <li><a rel="nofollow" class="external text" href="http://www.funtoo.org/wiki/BTRFS_Fun">Funtoo Wiki Btrfs Fun</a></li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=MTA0ODU">Avi Miller presenting Btrfs</a> at SCALE 10x, January 2012.</li>
+<a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTA0ODU">Avi Miller presenting Btrfs</a> at SCALE 10x, January 2012.</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=MTA4Mzc">Summary of Chris Mason's talk</a> from LFCS 2012</li>
+<a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTA4Mzc">Summary of Chris Mason's talk</a> from LFCS 2012</li>
 <li>
 <a rel="nofollow" class="external text" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=35054394c4b3cecd52577c2662c84da1f3e73525">Btrfs: stop providing a bmap operation to avoid swapfile corruptions</a> 2009-01-21</li>
 <li><a rel="nofollow" class="external text" href="http://marc.merlins.org/perso/btrfs/post_2014-03-22_Btrfs-Tips_-Doing-Fast-Incremental-Backups-With-Btrfs-Send-and-Receive.html">Doing Fast Incremental Backups With Btrfs Send and Receive</a></li>
@@ -678,8 +678,8 @@ You are now being dropped into an emergency shell.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Btrfs&amp;oldid=655958">https://wiki.archlinux.org/index.php?title=Btrfs&amp;oldid=655958</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 March 2021, at 22:21.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Btrfs&amp;oldid=663315">https://wiki.archlinux.org/index.php?title=Btrfs&amp;oldid=663315</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 10:40.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

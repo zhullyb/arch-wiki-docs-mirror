@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -71,9 +72,16 @@
 <ul>
 <li class="toclevel-2 tocsection-10"><a href="#PRoot"><span class="tocnumber">5.1</span> <span class="toctext">PRoot</span></a></li>
 <li class="toclevel-2 tocsection-11"><a href="#Fakechroot"><span class="tocnumber">5.2</span> <span class="toctext">Fakechroot</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Unshare"><span class="tocnumber">5.3</span> <span class="toctext">Unshare</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-12"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-13">
+<a href="#Troubleshooting"><span class="tocnumber">6</span> <span class="toctext">Troubleshooting</span></a>
+<ul>
+<li class="toclevel-2 tocsection-14"><a href="#arch-chroot:_/location/of/new/root_is_not_a_mountpoint._This_may_have_undesirable_side_effects."><span class="tocnumber">6.1</span> <span class="toctext">arch-chroot: /location/of/new/root is not a mountpoint. This may have undesirable side effects.</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-15"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -219,8 +227,23 @@
 <h3><span class="mw-headline" id="Fakechroot">Fakechroot</span></h3>
 <p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fakechroot">fakechroot</a></span> is a library shim which intercepts the chroot call and fakes the results. It can be used in conjunction with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fakeroot">fakeroot</a></span> to simulate a chroot as a regular user. 
 </p>
-<pre># fakechroot fakeroot chroot ~/my-chroot bash
+<pre>$ fakechroot fakeroot chroot ~/my-chroot bash
 </pre>
+<h3><span class="mw-headline" id="Unshare">Unshare</span></h3>
+<p>Unshare, part of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=util-linux">util-linux</a></span>, can be used to create a new kernel namespace. This works with the usual chroot command. For example:
+</p>
+<pre>$ unshare --map-root-user chroot ~/namespace /bin/sh
+</pre>
+<h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
+<h3>
+<span id="arch-chroot:_.2Flocation.2Fof.2Fnew.2Froot_is_not_a_mountpoint._This_may_have_undesirable_side_effects."></span><span class="mw-headline" id="arch-chroot:_/location/of/new/root_is_not_a_mountpoint._This_may_have_undesirable_side_effects.">arch-chroot: /location/of/new/root is not a mountpoint. This may have undesirable side effects.</span>
+</h3>
+<p>Upon executing <code>arch-chroot <i>/location/of/new/root</i></code> a warning is issued:
+</p>
+<pre>==&gt; WARNING: <i>/location/of/new/root</i> is not a mountpoint. This may have undesirable side effects.
+</pre>
+<p>See <span class="plainlinks archwiki-template-man" title="$ man 8 arch-chroot"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/arch-chroot.8">arch-chroot(8)</a></span> for an explanation and an example of using bind mounting to make the chroot directory a mountpoint.
+</p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul><li><a rel="nofollow" class="external text" href="https://help.ubuntu.com/community/BasicChroot">Basic Chroot</a></li></ul>
 </div>
@@ -237,8 +260,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chroot&amp;oldid=648866">https://wiki.archlinux.org/index.php?title=Chroot&amp;oldid=648866</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 January 2021, at 16:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chroot&amp;oldid=663082">https://wiki.archlinux.org/index.php?title=Chroot&amp;oldid=663082</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 18:47.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

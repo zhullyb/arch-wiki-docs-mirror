@@ -230,12 +230,12 @@
 </div>
 <p>Verifique as mensagens de kernel para o firmware sendo carregado:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep firmware</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep firmware</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[   7.148259] iwlwifi 0000:02:00.0: loaded firmware version 39.30.4.1 build 35138 op_mode iwldvm
 </pre>
 <p>Se não houver uma saída relevante, verifique as mensagens para a saída completa do módulo identificado anteriormente (<code>iwlwifi</code> neste exemplo) para identificar a mensagem relevante ou outros problemas:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep iwlwifi</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep iwlwifi</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[   12.342694] iwlwifi 0000:02:00.0: irq 44 for MSI/MSI-X
 [   12.353466] iwlwifi 0000:02:00.0: loaded firmware version 39.31.5.1 build 35138 op_mode iwldvm
 [   12.430317] iwlwifi 0000:02:00.0: CONFIG_IWLWIFI_DEBUG disabled
@@ -253,7 +253,7 @@
 <li>Veja a tabela de <a rel="nofollow" class="external text" href="https://wireless.wiki.kernel.org/en/users/drivers">drivers sem fio Linux existentes</a> e siga para a página específica do driver, que contém uma lista de dispositivos suportados. Há também uma <a rel="nofollow" class="external text" href="https://wikidevi.com/wiki/List_of_Wi-Fi_Device_IDs_in_Linux">lista de IDs de dispositivos Wi-Fi no Linux</a>.</li>
 <li>O <a rel="nofollow" class="external text" href="https://help.ubuntu.com/community/WifiDocs/WirelessCardsSupported">Wiki do Ubuntu</a> tem uma boa lista de placas sem fio e se elas são suportadas no kernel do Linux ou por um driver de espaço do usuário (inclui nome do driver)).</li>
 <li>
-<a rel="nofollow" class="external text" href="http://linux-wless.passys.nl/">Linux Wireless LAN Support</a> e a <a rel="nofollow" class="external text" href="http://www.linuxquestions.org/hcl/index.php?cat=10">Hardware Compatibility List</a><sup title="Status da última verificação: 403">[<a href="https://en.wikipedia.org/wiki/pt:Wikip%C3%A9dia:Liga%C3%A7%C3%A3o_inativa" class="extiw" title="wikipedia:pt:Wikipédia:Ligação inativa">link inativo</a> 2020-08-04 ⓘ]</sup> (HCL) do The Linux Questions também têm um bom banco de dados de hardware compatível com kernel.</li>
+<a rel="nofollow" class="external text" href="http://linux-wless.passys.nl/">Linux Wireless LAN Support</a> e a <a rel="nofollow" class="external text" href="https://web.archive.org/web/20110711100256/http://www.linuxquestions.org/hcl/index.php?cat=10">Hardware Compatibility List</a> (HCL) do The Linux Questions também têm um bom banco de dados de hardware compatível com kernel.</li>
 </ul>
 <p>Observe que alguns fornecedores fornecem produtos que podem conter conjuntos de chips diferentes, mesmo se o identificador do produto for o mesmo. Apenas o usb-id (para dispositivos USB) ou pci-id (para dispositivos PCI) é autoritativo.
 </p>
@@ -593,7 +593,7 @@
 </p>
 <p>Para configurar o <i>regdomain</i>, instale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=crda">crda</a></span> e reinicialize (para recarregar o módulo <code>cfg80211</code> e todos os drivers relacionados). Verifique o log de inicialização para certificar-se de que o CRDA esteja sendo chamado por <code>cfg80211</code>:
 </p>
-<pre>$ dmesg | grep cfg80211
+<pre># dmesg | grep cfg80211
 </pre>
 <p>O <i>regdomain</i> atual pode ser configurar para os Estados Unidos com:
 </p>
@@ -610,11 +610,11 @@
 <li>De acordo com <a rel="nofollow" class="external text" href="https://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/crda.git/tree/README">README do CRDA</a>, não é mais necessário desde o kernel v4.15, pois o kernel carrega automaticamente o banco de dados regulador do firmware. Porém <a rel="nofollow" class="external text" href="https://bugs.gentoo.org/462032#c17">também é dito</a> ser necessária uma configuração específica do kernel para que o carregamento funcione.</li>
 </ul>
 </div>
-<p>No entanto, a configuração do <i>regdomain</i> não pode alterar suas configurações. Alguns dispositivos têm um <i>regdomain</i> definido em firmware/EEPROM, que dita os limites do dispositivo, o que significa que a configuração de <i>regdomain</i> em software <a rel="nofollow" class="external text" href="http://wiki.openwrt.org/doc/howto/wireless.utilities#iw">só pode aumentar as restrições</a> , não diminui-las. Por exemplo, um dispositivo CN pode ser definido no software para o <i>regdomain</i> dos EUA, mas como o CN tem um máximo EIRP de 20dBm, o dispositivo não poderá transmitir no máximo dos EUA de 30dBm.
+<p>No entanto, a configuração do <i>regdomain</i> não pode alterar suas configurações. Alguns dispositivos têm um <i>regdomain</i> definido em firmware/EEPROM, que dita os limites do dispositivo, o que significa que a configuração de <i>regdomain</i> em software <a rel="nofollow" class="external text" href="https://wiki.openwrt.org/doc/howto/wireless.utilities#iw">só pode aumentar as restrições</a> , não diminui-las. Por exemplo, um dispositivo CN pode ser definido no software para o <i>regdomain</i> dos EUA, mas como o CN tem um máximo EIRP de 20dBm, o dispositivo não poderá transmitir no máximo dos EUA de 30dBm.
 </p>
 <p>Por exemplo, para ver se o <i>regdomain</i> está sendo configurado no firmware para um dispositivo Atheros:
 </p>
-<pre>$ dmesg | grep ath:
+<pre># dmesg | grep ath:
 </pre>
 <p>Para outros chipsets, pode ser útil pesquisar por "EEPROM", "regdomain" ou simplesmente o nome do driver de dispositivo.
 </p>
@@ -664,7 +664,7 @@
 <h3><span class="mw-headline" id="Observando_os_logs">Observando os logs</span></h3>
 <p>Uma boa primeira medida para solucionar problemas é analisar primeiro os arquivos de registro do sistema. Para não analisar manualmente todos eles, pode ajudar a abrir uma segunda janela do terminal/console e observar as mensagens dos kernels com
 </p>
-<pre>$ dmesg -w
+<pre># dmesg -w
 </pre>
 <p>ao realizar a ação, p. ex. a tentativa de associação sem fio.
 </p>
@@ -982,11 +982,11 @@ Se o seu interruptor for mecânico (a maioria é), existem muitas soluções pos
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/iwlwifi.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options iwlwifi 11n_disable=8</pre>
-<p>Não se confunda com o nome da opção, quando o valor é definido como <code>8</code>, ele não desabilita nada, mas reativa a agregação da antena de transmissão. <a rel="nofollow" class="external autonumber" href="http://forums.gentoo.org/viewtopic-t-996692.html?sid=81bdfa435c089360bdfd9368fe0339a9">[8]</a> <a rel="nofollow" class="external autonumber" href="https://bugzilla.kernel.org/show_bug.cgi?id=81571">[9]</a>
+<p>Não se confunda com o nome da opção, quando o valor é definido como <code>8</code>, ele não desabilita nada, mas reativa a agregação da antena de transmissão. <a rel="nofollow" class="external autonumber" href="https://forums.gentoo.org/viewtopic-t-996692.html?sid=81bdfa435c089360bdfd9368fe0339a9">[8]</a> <a rel="nofollow" class="external autonumber" href="https://bugzilla.kernel.org/show_bug.cgi?id=81571">[9]</a>
 </p>
 <p>Caso isso não funcione, você pode tentar desativar <a href="../en/Power_management.html#Network_interfaces" class="mw-redirect" title="Power saving">economia de energia</a> para seu adaptador sem fio.
 </p>
-<p><a rel="nofollow" class="external text" href="http://ubuntuforums.org/showthread.php?t=2183486&amp;p=12845473#post12845473">Alguns</a> nunca conseguiram que isso funcionasse. <a rel="nofollow" class="external text" href="http://ubuntuforums.org/showthread.php?t=2205733&amp;p=12935783#post12935783">Outros</a> encontraram a salvação desativando N nas configurações do roteador depois de tentar tudo. Sabe-se que esta é a única solução em mais de uma ocasião. O segundo link menciona uma opção de 5Ghz que pode valer a pena ser explorada.
+<p><a rel="nofollow" class="external text" href="https://ubuntuforums.org/showthread.php?t=2183486&amp;p=12845473#post12845473">Alguns</a> nunca conseguiram que isso funcionasse. <a rel="nofollow" class="external text" href="https://ubuntuforums.org/showthread.php?t=2205733&amp;p=12935783#post12935783">Outros</a> encontraram a salvação desativando N nas configurações do roteador depois de tentar tudo. Sabe-se que esta é a única solução em mais de uma ocasião. O segundo link menciona uma opção de 5Ghz que pode valer a pena ser explorada.
 </p>
 <p>Se o seu roteador suportar apenas modos até 802.11n, o uso de 11n_disable=0 limitará as velocidades de download e upload a ~20 Mbps (limite de 802.11g). Se você precisar de mais do que isso e sua placa suportar os modos 802.11ac e/ou 802.11ax (por exemplo, Intel® Wi-Fi 6 AX200 160MHz), considere substituir seu roteador por outro que também suporte 802.11ac e/ou 802.11ax.
 </p>
@@ -1100,7 +1100,7 @@ Se o seu interruptor for mecânico (a maioria é), existem muitas soluções pos
 </h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://wireless.wiki.kernel.org/">O projeto Linux Wireless</a></li>
-<li><a rel="nofollow" class="external text" href="http://aircrack-ng.org/doku.php?id=install_drivers">Guia de Aircrack-ng para instalação de drivers</a></li>
+<li><a rel="nofollow" class="external text" href="https://aircrack-ng.org/doku.php?id=install_drivers">Guia de Aircrack-ng para instalação de drivers</a></li>
 </ul>
 </div>
 </div>
@@ -1112,8 +1112,8 @@ Se o seu interruptor for mecânico (a maioria é), existem muitas soluções pos
 </ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 </ul>
 </div>
@@ -1123,8 +1123,8 @@ Se o seu interruptor for mecânico (a maioria é), existem muitas soluções pos
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Portugu%C3%AAs)/Wireless_(Portugu%C3%AAs)&amp;oldid=655691">https://wiki.archlinux.org/index.php?title=Network_configuration_(Português)/Wireless_(Português)&amp;oldid=655691</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 21:06.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration_(Portugu%C3%AAs)/Wireless_(Portugu%C3%AAs)&amp;oldid=663763">https://wiki.archlinux.org/index.php?title=Network_configuration_(Português)/Wireless_(Português)&amp;oldid=663763</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 06:27.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

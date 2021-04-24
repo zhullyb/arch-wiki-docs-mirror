@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -52,7 +53,7 @@
 </div>
 <p>Το <i>iptables</i> είναι ένα εργαλείο γραμμής εντολών για τη ρύθμιση του <a href="../en/Category:Firewalls.html" class="mw-redirect" title="Firewall">firewall</a> του Linux kernel, υλοποιημένο μέσα στο <a href="https://en.wikipedia.org/wiki/Netfilter" class="extiw" title="wikipedia:Netfilter">Netfilter</a> project. Ο όρος <i>iptables</i> χρησιμοποιείται επίσης συχνά όταν αναφερόμαστε στο firewall σε επίπεδο kernel. Μπορεί να παραμετροποιηθεί κατ' ευθείαν με το <i>iptables</i>, ή χρησιμοποιώντας ένα από τα πολλά <a href="../en/Category:Firewalls.html#Console_frontends" class="mw-redirect" title="Firewalls">frontends</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> και <a href="../en/Category:Firewalls.html#Graphic_frontends" class="mw-redirect" title="Firewalls">GUIs</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>. Το <i>iptables</i> χρησιμοποιείται για το <a href="https://en.wikipedia.org/wiki/IPv4" class="extiw" title="wikipedia:IPv4">IPv4</a> και το <i>ip6tables</i> για το <a href="../en/IPv6.html" title="IPv6">IPv6</a>.
 </p>
-<p>Το <a href="../en/Nftables.html" title="Nftables">nftables</a> βγήκε με <a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=MTQ5MDU">την έκδοση του Linux kernel 3.13</a>, και θα αντικαταστήσει μια μέρα το iptables ως το κύριο εργαλείο του Linux firewall.
+<p>Το <a href="../en/Nftables.html" title="Nftables">nftables</a> βγήκε με <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTQ5MDU">την έκδοση του Linux kernel 3.13</a>, και θα αντικαταστήσει μια μέρα το iptables ως το κύριο εργαλείο του Linux firewall.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -109,7 +110,7 @@
 </h2>
 <p>Το iptables χρησιμοποιείται για να επιθεωρήσει, τρποποποιήσει, προωθήσει, ανακατευθύνει και/ή απορρίψει IPv4 πακέτα. Ο κώδικας για το φιλτράρισμα των IPv4 πακέτων είναι ήδη ενσωματωμένος στον πυρήνα και οργανώνεται σε μία συλλογή από πίνακες(<i>tables</i>), ο καθένας με ένα συγκεκριμένο σκοπό. Οι πίνακες είναι φτιαγμένοι από ένα σύνολο προκαθορισμένων αλυσίδων(<i>chains</i>), και οι αλυσίδες περιέχουν κανόνες οι οποίοι διασχίζονται κατά σειρά. Κάθε κανόνας αποτελείται από ένα κατηγόρημα με πιθανά matches  και μία αντίστοιχη δράση (που ονομάζεται στόχος(<i>target</i>)) η οποία εκτελείται αν το κατηγόρημα είναι αληθές, πχ. οι καταστάσεις ταιριάζουν. Το iptables είναι το εργαλείο του χρήστη που σου επιτρέπει να δουλέψεις με αυτές τις αλυσίδες/κανόνες. Οι περισσότεροι νέοι χρήστες βρίσκουν την πολυπλοκότητα του linux IP routing αρκετά τρομακτική, αλλά στην εφαρμογή, οι πιο συχνές περιπτώσεις χρήσης (NAT και/ή βασικό Internet firewall) είναι πολύ λιγότερο περίπλοκες.
 </p>
-<p>Το κλειδί για να καταλάβει κανείς πως δουλέυει το iptables, είναι <a rel="nofollow" class="external text" href="http://www.frozentux.net/iptables-tutorial/images/tables_traverse.jpg">αυτό το διάγραμμα</a>. Η λέξη με πεζά στην κορυφή είναι ο πίνακας και η λέξη με κεφαλαία από κάτω είναι η αλυσίδα. Κάθε IP πακέτο το οποίο εισέρχεται <i>σε οποιοδήποτε network interface</i> περνάει μέσω αυτού του διαγράμματος από πάνω προς τα κάτω. Μία συχνή πηγή σύγχυσης είναι ότι τα πακέτα τα οποία εισέρχονται, πχ. από ένα internal interface, διαχειρίζονται διαφορετικά από αυτά τα οποία εισέρχονται από ένα interface που βγαίνει στο Internet. Όλα τα interfaces διαχειρίζονται το ίδιο. Εξαρτάται από το χρήστη να ορίσει κανόνες που συμπεριφέρονται διαφορετικά. Φυσικά, κάποια πακέτα προορίζονται για τοπκικές διεργασίες (local processes), ως εκ τούτου έρχονται από την κορυφή του διαγράμματος και σταματούν στο &lt;Local Process&gt;, ενώ άλλα πακέτα δημιουργούνται από τοπικές διεργασίες τα οποία ξεκινούν από το &lt;Local Process&gt; και προχωρούν προς τα κάτω δια μέσου του διαγράμματος. Μία λεπτομερής εξήγηση του πώς δουλεύει αυτό το διάγραμμα μπορεί να βρεθεί <a rel="nofollow" class="external text" href="http://www.frozentux.net/iptables-tutorial/iptables-tutorial.html#TRAVERSINGOFTABLES">εδώ</a>.
+<p>Το κλειδί για να καταλάβει κανείς πως δουλέυει το iptables, είναι <a rel="nofollow" class="external text" href="https://www.frozentux.net/iptables-tutorial/images/tables_traverse.jpg">αυτό το διάγραμμα</a>. Η λέξη με πεζά στην κορυφή είναι ο πίνακας και η λέξη με κεφαλαία από κάτω είναι η αλυσίδα. Κάθε IP πακέτο το οποίο εισέρχεται <i>σε οποιοδήποτε network interface</i> περνάει μέσω αυτού του διαγράμματος από πάνω προς τα κάτω. Μία συχνή πηγή σύγχυσης είναι ότι τα πακέτα τα οποία εισέρχονται, πχ. από ένα internal interface, διαχειρίζονται διαφορετικά από αυτά τα οποία εισέρχονται από ένα interface που βγαίνει στο Internet. Όλα τα interfaces διαχειρίζονται το ίδιο. Εξαρτάται από το χρήστη να ορίσει κανόνες που συμπεριφέρονται διαφορετικά. Φυσικά, κάποια πακέτα προορίζονται για τοπκικές διεργασίες (local processes), ως εκ τούτου έρχονται από την κορυφή του διαγράμματος και σταματούν στο &lt;Local Process&gt;, ενώ άλλα πακέτα δημιουργούνται από τοπικές διεργασίες τα οποία ξεκινούν από το &lt;Local Process&gt; και προχωρούν προς τα κάτω δια μέσου του διαγράμματος. Μία λεπτομερής εξήγηση του πώς δουλεύει αυτό το διάγραμμα μπορεί να βρεθεί <a rel="nofollow" class="external text" href="https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html#TRAVERSINGOFTABLES">εδώ</a>.
 </p>
 <p>Στην πλειοψηφία των περιπτώσεων δε θα χρειαστεί να χρησιμοποιήσετε τους πίνακες <b>raw</b>, <b>mangle</b>, ή <b>security</b> καθόλου. Έτσι, το ακόλουθο διάγραμμα απεικονίζει μία απλοποιημένη ροή πακέτων του δικτύου μέσω του <i>iptables</i>:
 </p>
@@ -163,14 +164,14 @@ Routing decision                                                  |
 <li>
 <code>mangle</code> χρησιμοποιείται για ειδικές μετατροπές πακέτων (δείτε το <a href="https://en.wikipedia.org/wiki/Mangled_packet" class="extiw" title="wikipedia:Mangled packet">Mangled packet</a>).</li>
 <li>
-<code>security</code> χρησιμοποιείται για <a href="../en/Security.html#Mandatory_access_control" title="Security">Mandatory Access Control</a> κανόνες δικτύου (πχ. SELinux -- δείτε <a rel="nofollow" class="external text" href="http://lwn.net/Articles/267140/">αυτό το άρθρο</a> για περισσότερες λεπτομέρειες).</li>
+<code>security</code> χρησιμοποιείται για <a href="../en/Security.html#Mandatory_access_control" title="Security">Mandatory Access Control</a> κανόνες δικτύου (πχ. SELinux -- δείτε <a rel="nofollow" class="external text" href="https://lwn.net/Articles/267140/">αυτό το άρθρο</a> για περισσότερες λεπτομέρειες).</li>
 </ol>
 <p>Στις περισσότερες περιπτώσεις θα χρησιμοποιήσετε μόνο δύο από αυτούς: <b>filter</b> και <b>nat</b>. Οι άλλοι πίνακες στοχεύουν σε πολύπλοκες ρυθμίσεις που περιλαμβάνουν πολλαπλά routers και routing αποφάσεις και είναι είναι πέρα από το πεδίο αυτών των εισαγωγικών παρατηρήσεων.
 </p>
 <h3>
 <span id=".CE.91.CE.BB.CF.85.CF.83.CE.AF.CE.B4.CE.B5.CF.82"></span><span class="mw-headline" id="Αλυσίδες">Αλυσίδες</span>
 </h3>
-<p>Οι πίνακες αποτελούνται από <i>αλυσίδες</i>, λίστες κανόνων που ακολουθούνται διαδοχικά. O προεπιλεγμένος πίνακας, ο <code>filter</code>, περιέχει τρεις ενσωματομένες αλυσίδες: τη <code>INPUT</code>, τη <code>OUTPUT</code> και τη <code>FORWARD</code>, που ενεργοποιούνται κατά διαφορετικές στιγμές της διαδικασίας φιλτραρίσματος πακέτων, όπως υποδικνύει το <a rel="nofollow" class="external text" href="http://www.frozentux.net/iptables-tutorial/chunkyhtml/images/tables_traverse.jpg">διάγραμμα</a>. Ο πίνακας <code>nat</code> περιέχει τις αλυσίδες <code>PREROUTING</code>, <code>POSTROUTING</code>, και <code>OUTPUT</code>.
+<p>Οι πίνακες αποτελούνται από <i>αλυσίδες</i>, λίστες κανόνων που ακολουθούνται διαδοχικά. O προεπιλεγμένος πίνακας, ο <code>filter</code>, περιέχει τρεις ενσωματομένες αλυσίδες: τη <code>INPUT</code>, τη <code>OUTPUT</code> και τη <code>FORWARD</code>, που ενεργοποιούνται κατά διαφορετικές στιγμές της διαδικασίας φιλτραρίσματος πακέτων, όπως υποδικνύει το <a rel="nofollow" class="external text" href="https://www.frozentux.net/iptables-tutorial/chunkyhtml/images/tables_traverse.jpg">διάγραμμα</a>. Ο πίνακας <code>nat</code> περιέχει τις αλυσίδες <code>PREROUTING</code>, <code>POSTROUTING</code>, και <code>OUTPUT</code>.
 </p>
 <p>Δείτε μια περιγραφή των ενσωματομένων αλυσιδών σε άλλους πίνακες στο <span class="plainlinks archwiki-template-man" title="$ man 8 iptables"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/iptables.8">iptables(8)</a></span>.
 </p>
@@ -186,7 +187,7 @@ Routing decision                                                  |
 <p>Οι στόχοι καθορίζονται με την επιλογή <code>-j</code> ή <code>--jump</code>. Μπορούν να είναι είτε αλυσίδες που ορίζει ο χρήστης (π.χ. "εάν αυτές οι προϋποθέσεις τηρούνται, πήδηξε στην επόμενη χειροκίνητα καθορισμένη αλυσίδα και συνέχισε εκεί την επεξεργασία), είτε ένας από τους ενσωματωμένους στόχους, η κάποια επέκταση αυτών. Οι ενσωματωμένοι στόχοι είναι: <code>ACCEPT</code>, <code>DROP</code>, <code>QUEUE</code> και <code>RETURN</code>. Παραδείγματα επεκτάσεων στόχων είναι οι <code>REJECT</code> και <code>LOG</code>. Εάν ο στόχος είναι ανοίκει στους ενσωματωμένους, η μοίρα του πακέτου αποφασίζεται άμεσα και η επεξεργασία του στον τρέχον πίνακα σταματά. Εάν ο στόχος είναι αλυσίδα που ορίστηκε από τον χρήστη και το πακέτο περάσει επιτυχώς από τη δεύτερη αλυσίδα, θα προχωρήσει στον επόμενο κανόνα της αυθεντικής αλυσίδας. Οι επεκτάσεις στόχων χωρίζονται "τερματικές" (ως ενσωματωμένοι στόχοι) και "μη-τερματικές" (ως αλυσίδες που ορίστηκαν από τον χρήστη), δείτε το <span class="plainlinks archwiki-template-man" title="$ man 8 iptables-extensions"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/iptables-extensions.8">iptables-extensions(8)</a></span> για λεπτομέριες.
 </p>
 <h3><span class="mw-headline" id="Traversing_Chains">Traversing Chains</span></h3>
-<p>A network packet received on any interface traverses the traffic control chains of tables in the order shown in the <a rel="nofollow" class="external text" href="http://www.frozentux.net/iptables-tutorial/chunkyhtml/images/tables_traverse.jpg">flow chart</a>.  The first routing decision involves deciding if the final destination of the packet is the local machine (in which case the packet traverses through the <code>INPUT</code> chains) or elsewhere (in which case the packet traverses through the <code>FORWARD</code> chains).  Subsequent routing decisions involve deciding what interface to assign to an outgoing packet.  At each chain in the path, every rule in that chain is evaluated in order and whenever a rule matches, the corresponding target/jump action is executed.  The 3 most commonly used targets are <code>ACCEPT</code>, <code>DROP</code>, and jump to a user-defined chain.  While built-in chains can have default policies, user-defined chains can not.  If every rule in a chain that you jumped fails to provide a complete match, the packet is dropped back into the calling chain as illustrated <a rel="nofollow" class="external text" href="http://www.frozentux.net/iptables-tutorial/images/table_subtraverse.jpg">here</a>.  If at any time a complete match is achieved for a rule with a <code>DROP</code> target, the packet is dropped and no further processing is done.  If a packet is <code>ACCEPT</code>ed within a chain, it will be <code>ACCEPT</code>ed in all superset chains also and it will not traverse any of the superset chains any further.  However, be aware that the packet will continue to traverse all other chains in other tables in the normal fashion.
+<p>A network packet received on any interface traverses the traffic control chains of tables in the order shown in the <a rel="nofollow" class="external text" href="https://www.frozentux.net/iptables-tutorial/chunkyhtml/images/tables_traverse.jpg">flow chart</a>.  The first routing decision involves deciding if the final destination of the packet is the local machine (in which case the packet traverses through the <code>INPUT</code> chains) or elsewhere (in which case the packet traverses through the <code>FORWARD</code> chains).  Subsequent routing decisions involve deciding what interface to assign to an outgoing packet.  At each chain in the path, every rule in that chain is evaluated in order and whenever a rule matches, the corresponding target/jump action is executed.  The 3 most commonly used targets are <code>ACCEPT</code>, <code>DROP</code>, and jump to a user-defined chain.  While built-in chains can have default policies, user-defined chains can not.  If every rule in a chain that you jumped fails to provide a complete match, the packet is dropped back into the calling chain as illustrated <a rel="nofollow" class="external text" href="https://www.frozentux.net/iptables-tutorial/images/table_subtraverse.jpg">here</a>.  If at any time a complete match is achieved for a rule with a <code>DROP</code> target, the packet is dropped and no further processing is done.  If a packet is <code>ACCEPT</code>ed within a chain, it will be <code>ACCEPT</code>ed in all superset chains also and it will not traverse any of the superset chains any further.  However, be aware that the packet will continue to traverse all other chains in other tables in the normal fashion.
 </p>
 <h3><span class="mw-headline" id="Modules">Modules</span></h3>
 <p>There are many modules which can be used to extend iptables such as connlimit, conntrack, limit and recent. These modules add extra functionality to allow complex filtering rules.
@@ -196,7 +197,7 @@ Routing decision                                                  |
 </p>
 <pre># systemctl start iptables
 </pre>
-<p>However, the service won't start unless it finds an <code>/etc/iptables/iptables.rules</code> file, and the Arch <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iptables">iptables</a></span> package does not come with a default iptables.rule file. So to start the service for the first time:
+<p>However, the service will not start unless it finds an <code>/etc/iptables/iptables.rules</code> file, and the Arch <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iptables">iptables</a></span> package does not come with a default iptables.rule file. So to start the service for the first time:
 </p>
 <pre># touch /etc/iptables/iptables.rules
 # systemctl start iptables
@@ -405,17 +406,17 @@ num   pkts bytes target     prot opt in     out     source               destina
 <pre>destination d_iptables { file("/var/log/iptables.log"); };
 </pre>
 <h3><span class="mw-headline" id="ulogd">ulogd</span></h3>
-<p><a rel="nofollow" class="external text" href="http://www.netfilter.org/projects/ulogd/index.html">ulogd</a> is a specialized userspace packet logging daemon for netfilter that can replace the default <code>LOG</code> target.  The package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ulogd">ulogd</a></span> is available in the <code>[community]</code> repository.
+<p><a rel="nofollow" class="external text" href="https://www.netfilter.org/projects/ulogd/index.html">ulogd</a> is a specialized userspace packet logging daemon for netfilter that can replace the default <code>LOG</code> target.  The package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ulogd">ulogd</a></span> is available in the <code>[community]</code> repository.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/iptables" class="extiw" title="wikipedia:iptables">Wikipedia article</a></li>
 <li><a href="../en/Port_knocking.html" title="Port knocking">Port knocking</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.netfilter.org/projects/iptables/index.html">Official iptables web site</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.netfilter.org/projects/iptables/index.html">Official iptables web site</a></li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.frozentux.net/iptables-tutorial/iptables-tutorial.html">iptables Tutorial 1.2.2</a> by Oskar Andreasson</li>
+<a rel="nofollow" class="external text" href="https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html">iptables Tutorial 1.2.2</a> by Oskar Andreasson</li>
 <li>
-<a rel="nofollow" class="external text" href="http://wiki.debian.org/iptables">iptables Debian</a> Debian wiki</li>
+<a rel="nofollow" class="external text" href="https://wiki.debian.org/iptables">iptables Debian</a> Debian wiki</li>
 </ul>
 </div>
 </div>
@@ -434,8 +435,8 @@ num   pkts bytes target     prot opt in     out     source               destina
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Iptables_(%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CE%AC)&amp;oldid=585441">https://wiki.archlinux.org/index.php?title=Iptables_(Ελληνικά)&amp;oldid=585441</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 October 2019, at 13:51.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Iptables_(%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CE%AC)&amp;oldid=662615">https://wiki.archlinux.org/index.php?title=Iptables_(Ελληνικά)&amp;oldid=662615</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:34.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

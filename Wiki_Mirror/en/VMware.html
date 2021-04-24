@@ -164,10 +164,7 @@
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
-<ul>
-<li>VMware has dropped support for a number of CPUs including early Intel Core i7 CPUs since version 14. Check the <a rel="nofollow" class="external text" href="https://docs.vmware.com/en/VMware-Workstation-Pro/14.0/com.vmware.ws.using.doc/GUID-BBD199AA-C346-4334-9F56-5A42F7328594.html">Processor Requirements for Host Systems</a>. If your CPU is not supported in the newer releases then you can use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vmware-workstation12/">vmware-workstation12</a></span><sup><small>AUR</small></sup>.</li>
-<li>VMware 15 or older cannot function on a host running Linux v5.8. Please use VMware 16 if you are planning on running on a host with kernel newer than 5.8.</li>
-</ul>
+<ul><li>VMware has dropped support for a number of CPUs including early Intel Core i7 CPUs since version 14. Check the <a rel="nofollow" class="external text" href="https://docs.vmware.com/en/VMware-Workstation-Pro/14.0/com.vmware.ws.using.doc/GUID-BBD199AA-C346-4334-9F56-5A42F7328594.html">Processor Requirements for Host Systems</a>. If your CPU is not supported in the newer releases then you can use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vmware-workstation12/">vmware-workstation12</a></span><sup><small>AUR</small></sup>.</li></ul>
 </div>
 <h3><span class="mw-headline" id="VMware_bundle">VMware bundle</span></h3>
 <p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the correct dependencies:
@@ -244,7 +241,7 @@
 <p><br>
 </p>
 <h3><span class="mw-headline" id="systemd_services">systemd services</span></h3>
-<p><i>(Optional)</i> Instead of using <code>/etc/init.d/vmware</code> (<code>start|stop|status|restart</code>) and <code>/usr/bin/vmware-usbarbitrator</code> directly to manage the services, you may also use <code>.service</code> files (also included <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vmware-workstation/">vmware-workstation</a></span><sup><small>AUR</small></sup> with a few differences):
+<p><i>(Optional)</i> Instead of using <code>/etc/init.d/vmware</code> (<code>start|stop|status|restart</code>) and <code>/usr/bin/vmware-usbarbitrator</code> directly to manage the services, you may also use <code>.service</code> files (<i>vmware-usbarbitrator</i> and <i>vmware-networks</i> are also included <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/vmware-workstation/">vmware-workstation</a></span><sup><small>AUR</small></sup> with a few differences):
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/vmware.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
@@ -438,7 +435,7 @@ mainmem.backing = "swap"</pre>
 <p>To improve the performance of your virtual machine, try the following tips:
 </p>
 <h4><span class="mw-headline" id="Paravirtual_SCSI_adapter">Paravirtual SCSI adapter</span></h4>
-<p><a rel="nofollow" class="external text" href="http://kb.vmware.com/kb/1010398">VMware Paravirtual SCSI (PVSCSI) adapters</a> are high-performance storage adapters for VMware ESXi that can result in greater throughput and lower CPU utilization. PVSCSI adapters are best suited for environments, where hardware or applications drive a very high amount of I/O throughput.
+<p><a rel="nofollow" class="external text" href="https://kb.vmware.com/kb/1010398">VMware Paravirtual SCSI (PVSCSI) adapters</a> are high-performance storage adapters for VMware ESXi that can result in greater throughput and lower CPU utilization. PVSCSI adapters are best suited for environments, where hardware or applications drive a very high amount of I/O throughput.
 </p>
 <p>The SCSI adapter type <code>VMware Paravirtual</code> is available in the Virtual Machine settings.
 </p>
@@ -455,7 +452,7 @@ MODULES=(... vmw_pvscsi)
 <pre>scsi0.virtualDev = "pvscsi"
 </pre>
 <h4><span class="mw-headline" id="Paravirtual_network_adapter">Paravirtual network adapter</span></h4>
-<p>VMware offers <a rel="nofollow" class="external text" href="http://kb.vmware.com/kb/1001805">multiple network adapters</a> for the guest OS.  The default adapter used is usually the <code>e1000</code> adapter, which emulates an Intel 82545EM Gigabit Ethernet NIC.  This Intel adapter is generally compatible with the built-in drivers across most operating systems, including Arch.
+<p>VMware offers <a rel="nofollow" class="external text" href="https://kb.vmware.com/kb/1001805">multiple network adapters</a> for the guest OS.  The default adapter used is usually the <code>e1000</code> adapter, which emulates an Intel 82545EM Gigabit Ethernet NIC.  This Intel adapter is generally compatible with the built-in drivers across most operating systems, including Arch.
 </p>
 <p>For <a rel="nofollow" class="external text" href="http://rickardnobel.se/vmxnet3-vs-e1000e-and-e1000-part-1/">more performance and additional features</a> (such as multiqueue support), the VMware native <code>vmxnet3</code> network adapter can be used.
 </p>
@@ -471,7 +468,7 @@ MODULES=(... vmw_pvscsi)
 <p>The new interface name can be obtained by running <code>ip link</code>.
 </p>
 <h4><span class="mw-headline" id="Virtual_machine_settings">Virtual machine settings</span></h4>
-<p>These settings could help improve the responsiveness of the virtual machine by reducing disk I/O, at the expense of using more host memory.  <a rel="nofollow" class="external text" href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1008885">Vmware's KB1008885</a> provides the following optimizations:
+<p>These settings could help improve the responsiveness of the virtual machine by reducing disk I/O, at the expense of using more host memory.  <a rel="nofollow" class="external text" href="https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1008885">Vmware's KB1008885</a> provides the following optimizations:
 </p>
 <pre>mainMem.useNamedFile = "FALSE"
 MemTrimRate = "0"
@@ -541,7 +538,7 @@ session  <i>required       pam_unix.so</i>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libxslt">libxslt</a></span> may be required for starting virtual machines.</div>
 <h3><span class="mw-headline" id="Issues_with_ALSA_output">Issues with ALSA output</span></h3>
-<p><a rel="nofollow" class="external text" href="http://bankimbhavsar.blogspot.co.nz/2011/09/hd-audio-in-vmware-fusion-4-and-vmware.html">To fix</a> sound quality issues or enabling proper HD audio output, first run:
+<p><a rel="nofollow" class="external text" href="https://bankimbhavsar.blogspot.co.nz/2011/09/hd-audio-in-vmware-fusion-4-and-vmware.html">To fix</a> sound quality issues or enabling proper HD audio output, first run:
 </p>
 <pre>$ aplay -L
 </pre>
@@ -693,7 +690,7 @@ Please make sure that the kernel module 'vmci' is loaded.
 </pre>
 <h3><span class="mw-headline" id="Guest_Issues">Guest Issues</span></h3>
 <h4><span class="mw-headline" id="Unable_to_download_VMware_Tools_for_Guests">Unable to download VMware Tools for Guests</span></h4>
-<p>To download the tools manually, visit the <a rel="nofollow" class="external text" href="http://softwareupdate.vmware.com/cds/vmw-desktop/">VMware repository</a>.
+<p>To download the tools manually, visit the <a rel="nofollow" class="external text" href="https://softwareupdate.vmware.com/cds/vmw-desktop/">VMware repository</a>.
 </p>
 <p>Navigate to: "<i>application name</i> / <i>version</i> / <i>build ID</i> / linux / packages/" and download the appropriate Tools.
 </p>
@@ -710,7 +707,7 @@ Please make sure that the kernel module 'vmci' is loaded.
 <h4>
 <span id="Guests_have_incorrect_system_clocks_or_are_unable_to_boot:_.22.5B....5DtimeTracker_user.c:234_bugNr.3D148722.22"></span><span class="mw-headline" id='Guests_have_incorrect_system_clocks_or_are_unable_to_boot:_"[...]timeTracker_user.c:234_bugNr=148722"'>Guests have incorrect system clocks or are unable to boot: "[...]timeTracker_user.c:234 bugNr=148722"</span>
 </h4>
-<p>This is due to <a rel="nofollow" class="external text" href="http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=1591">incomplete</a> support of power management features (<a href="https://en.wikipedia.org/wiki/Intel_speedstep" class="extiw" title="wikipedia:Intel speedstep">Intel SpeedStep</a> and <a href="https://en.wikipedia.org/wiki/AMD_powernow" class="extiw" title="wikipedia:AMD powernow">AMD PowerNow!</a>/<a href="https://en.wikipedia.org/wiki/Cool%27n%27Quiet" class="extiw" title="wikipedia:Cool'n'Quiet">Cool'n'Quiet</a>) in VMware Linux that vary the CPU frequency. In March 2012, with the release of <a rel="nofollow" class="external text" href="https://github.com/archlinux/svntogit-packages/commit/9abe018d91a5d8c3af7523d30b8aa73f86b680be/trunk/config.x86_64">linux 3.3-1</a> the maximum frequency <a href="../en/CPU_frequency_scaling.html#Scaling_governors" class="mw-redirect" title="CPU frequency governors">Performance</a> governor was replaced with the dynamic <i>Ondemand</i>. When the host CPU frequency changes, the Guest system clock runs too quickly or too slowly, but may also render the whole Guest unbootable.
+<p>This is due to <a rel="nofollow" class="external text" href="https://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=1591">incomplete</a> support of power management features (<a href="https://en.wikipedia.org/wiki/Intel_speedstep" class="extiw" title="wikipedia:Intel speedstep">Intel SpeedStep</a> and <a href="https://en.wikipedia.org/wiki/AMD_powernow" class="extiw" title="wikipedia:AMD powernow">AMD PowerNow!</a>/<a href="https://en.wikipedia.org/wiki/Cool%27n%27Quiet" class="extiw" title="wikipedia:Cool'n'Quiet">Cool'n'Quiet</a>) in VMware Linux that vary the CPU frequency. In March 2012, with the release of <a rel="nofollow" class="external text" href="https://github.com/archlinux/svntogit-packages/commit/9abe018d91a5d8c3af7523d30b8aa73f86b680be/trunk/config.x86_64">linux 3.3-1</a> the maximum frequency <a href="../en/CPU_frequency_scaling.html#Scaling_governors" class="mw-redirect" title="CPU frequency governors">Performance</a> governor was replaced with the dynamic <i>Ondemand</i>. When the host CPU frequency changes, the Guest system clock runs too quickly or too slowly, but may also render the whole Guest unbootable.
 </p>
 <p>To prevent this, the maximum host CPU frequency can be specified, and <a href="https://en.wikipedia.org/wiki/Time_Stamp_Counter" class="extiw" title="wikipedia:Time Stamp Counter">Time Stamp Counter</a> (TSC) disabled, in the global configuration:
 </p>
@@ -721,7 +718,7 @@ ptsc.noTSC = "TRUE" # the time stamp counter (TSC) is slow.</pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> To periodically correct the time (once per minute), in the <i>Options</i> tab of VMware Tools, enable: <i>"Time synchronization between the virtual machine and the host operating system"</i>.</div>
 <h4><span class="mw-headline" id="Networking_on_Guests_not_available_after_system_restart">Networking on Guests not available after system restart</span></h4>
-<p>This is likely due to the <code>vmnet</code> module not being loaded <a rel="nofollow" class="external autonumber" href="http://www.linuxquestions.org/questions/slackware-14/could-not-connect-ethernet0-to-virtual-network-dev-vmnet8-796095/">[2]</a>. See also the <a href="#systemd_services">#systemd services</a> section for automatic loading.
+<p>This is likely due to the <code>vmnet</code> module not being loaded <a rel="nofollow" class="external autonumber" href="https://www.linuxquestions.org/questions/slackware-14/could-not-connect-ethernet0-to-virtual-network-dev-vmnet8-796095/">[2]</a>. See also the <a href="#systemd_services">#systemd services</a> section for automatic loading.
 </p>
 <h4><span class="mw-headline" id="Strange_mouse_wheel_behavior_on_Guest">Strange mouse wheel behavior on Guest</span></h4>
 <p>This is related to the current Xorg keyboard layout on Host system. Keep primary layout (e.g., English) selected on Host while working on Guest.
@@ -774,8 +771,8 @@ ptsc.noTSC = "TRUE" # the time stamp counter (TSC) is slow.</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=VMware&amp;oldid=655520">https://wiki.archlinux.org/index.php?title=VMware&amp;oldid=655520</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 March 2021, at 20:44.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=VMware&amp;oldid=662526">https://wiki.archlinux.org/index.php?title=VMware&amp;oldid=662526</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:20.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

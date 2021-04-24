@@ -171,7 +171,7 @@
 
 <h2><span class="mw-headline" id="Introduction">Introduction</span></h2>
 <h3><span class="mw-headline" id="Legacy_Boot_Mode">Legacy Boot Mode</span></h3>
-<p>All recent Intel-based Chrome OS devices (starting with the 2013 Chromebook Pixel) feature a Legacy Boot Mode, designed to allow the user to boot Linux. Legacy Boot Mode has a dedicated firmware region, <code>RW_LEGACY</code>, which is designed to be user-writeable (hence the 'RW' notation) and is completely separate from the ChromeOS portion of the firmware (ie, it is safe to update and cannot brick the device). It is enabled by the <a rel="nofollow" class="external text" href="http://www.coreboot.org/SeaBIOS">SeaBIOS</a> payload of  <a rel="nofollow" class="external text" href="http://www.coreboot.org/">coreboot</a>, the open-source firmware used for all Chrome OS devices (with the exception of the first generation of Chromebooks and a few early ARM models).  SeaBIOS behaves like a traditional BIOS that boots into the MBR of the disk, and from there into standard bootloaders like Syslinux and GRUB.
+<p>All recent Intel-based Chrome OS devices (starting with the 2013 Chromebook Pixel) feature a Legacy Boot Mode, designed to allow the user to boot Linux. Legacy Boot Mode has a dedicated firmware region, <code>RW_LEGACY</code>, which is designed to be user-writeable (hence the 'RW' notation) and is completely separate from the ChromeOS portion of the firmware (ie, it is safe to update and cannot brick the device). It is enabled by the <a rel="nofollow" class="external text" href="https://www.coreboot.org/SeaBIOS">SeaBIOS</a> payload of  <a rel="nofollow" class="external text" href="https://www.coreboot.org/">coreboot</a>, the open-source firmware used for all Chrome OS devices (with the exception of the first generation of Chromebooks and a few early ARM models).  SeaBIOS behaves like a traditional BIOS that boots into the MBR of the disk, and from there into standard bootloaders like Syslinux and GRUB.
 </p>
 <p>Models with a Core-i based SoC (Haswell, Broadwell, Skylake, KabyLake) mostly ship with a functional Legacy Boot Mode payload; updating to a 3rd party build can provide bug fixes and additional features.  Models with an Atom-based SoC (Baytrail, Braswell, Apollolake) have Legacy Boot Mode capability, but do not ship with a RW_LEGACY/SeaBIOS payload (that part of the firmware is blank).  These models require a 3rd party RW_LEGACY firmware to be loaded for Legacy Boot Mode to be functional.
 </p>
@@ -180,7 +180,7 @@
 </h4>
 <p>One of the following approaches can be taken in order to install Arch Linux on Chrome OS devices which did not ship with SeaBIOS as part of the installed firmware:
 </p>
-<ul><li>If the device supports Legacy Boot Mode, but does not ship with a functional <code>RW_LEGACY</code> payload (or doesn't ship with one at all), one can flash a SeaBIOS payload to the <code>RW_LEGACY</code> part of the firmware. This is 100% safe, as it writes to a user-writeable area of the firmware image which is completely separate from/does not affect ChromeOS.  The easiest way to install/update the RW_LEGACY firmware on your ChromeOS device is via MrChromebox's <a href="../en/Chrome_OS_devices/Custom_firmware.html#Flashing_with_MrChromebox.27s_Firmware_Utility_Script" title="Chrome OS devices/Custom firmware">Firmware Utility Script</a>, which supports the widest range of devices and offers the most up-to-date SeaBIOS builds; one can also update the <code>RW_LEGACY</code> firmware manually with Chrome OS' <code>flashrom</code> (requires downloading/compiling your own build), or use John Lewis' <code>flash_chromebook_rom.sh</code> script (no longer supported).</li></ul>
+<ul><li>If the device supports Legacy Boot Mode, but does not ship with a functional <code>RW_LEGACY</code> payload (or does not ship with one at all), one can flash a SeaBIOS payload to the <code>RW_LEGACY</code> part of the firmware. This is 100% safe, as it writes to a user-writeable area of the firmware image which is completely separate from/does not affect ChromeOS.  The easiest way to install/update the RW_LEGACY firmware on your ChromeOS device is via MrChromebox's <a href="../en/Chrome_OS_devices/Custom_firmware.html#Flashing_with_MrChromebox.27s_Firmware_Utility_Script" title="Chrome OS devices/Custom firmware">Firmware Utility Script</a>, which supports the widest range of devices and offers the most up-to-date SeaBIOS builds; one can also update the <code>RW_LEGACY</code> firmware manually with Chrome OS' <code>flashrom</code> (requires downloading/compiling your own build), or use John Lewis' <code>flash_chromebook_rom.sh</code> script (no longer supported).</li></ul>
 <ul><li>Flash a full <a href="../en/Chrome_OS_devices/Custom_firmware.html" class="mw-redirect" title="Custom firmware for Chrome OS devices">custom firmware</a> which includes either a SeaBIOS or UEFI payload, and removes all the ChromeOS-specific parts.</li></ul>
 <ul><li>Flash the <code>BOOT_STUB</code> part of the firmware. This method replaces the stock ChromeOS payload (depthcharge) with SeaBIOS. This is theoretically a safer approach than flashing the full firmware but there might be some limitations (e.g. no support in suspend or VMX). This is the <code>Modify ROM to run SeaBIOS exclusively</code> option in John Lewis' <code>flash_chromebook_rom.sh</code> script and <code>Flash BOOT_STUB firmware</code> option in MrChromebox's.</li></ul>
 <ul><li>Take the ChrUbuntu approach which uses the Chrome OS kernel and modules.</li></ul>
@@ -235,7 +235,7 @@
 <li>Boot Arch Linux installation media and install Arch.</li>
 </ul>
 <h3><span class="mw-headline" id="Enabling_developer_mode">Enabling developer mode</span></h3>
-<p><a rel="nofollow" class="external text" href="http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/acer-c720-chromebook#TOC-Developer-Mode">Developer Mode</a> is necessary in order to access the superuser shell inside ChromeOS, which is required for making changes to the system like allow booting through SeaBIOS.
+<p><a rel="nofollow" class="external text" href="https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/acer-c720-chromebook#TOC-Developer-Mode">Developer Mode</a> is necessary in order to access the superuser shell inside ChromeOS, which is required for making changes to the system like allow booting through SeaBIOS.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> Enabling Developer Mode will wipe all of your data.</div>
@@ -289,7 +289,7 @@
 <strong>Warning:</strong> If you do not set the GBB flags, then a fully discharged or disconnected battery will reset <code>dev_boot_legacy</code> crossystem flag to its default value, removing the ability to boot in Legacy Boot Mode.  While this used to require you to recover Chrome OS and wipe your Arch Linux installation on the internal storage, the GalliumOS developers have created a set of "fixflags" recovery images, which rather than wiping internal storage, will instead simply re-set the <code>dev_boot_legacy</code> crossystem flag.  See <a rel="nofollow" class="external text" href="https://galliumos.org/fixflags">galliumos.org/fixflags</a>
 </div>
 <ul><li>Disable the hardware write protection.</li></ul>
-<p>To find the location of the hardware write-protect screw/switch/jumper and how to disable it visit the ArchWiki page for your <a href="#Chrome_OS_devices">ChromeOS device</a>. If there is no information about your device on the ArchWiki then turn to <a rel="nofollow" class="external text" href="http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices">Developer Information for ChromeOS Devices</a> and <a rel="nofollow" class="external text" href="http://www.coreboot.org/Chromebooks">coreboot's Chromebooks page</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-28 ⓘ]</sup>.
+<p>To find the location of the hardware write-protect screw/switch/jumper and how to disable it visit the ArchWiki page for your <a href="#Chrome_OS_devices">ChromeOS device</a>. If there is no information about your device on the ArchWiki then turn to <a rel="nofollow" class="external text" href="https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices">Developer Information for ChromeOS Devices</a> and <a rel="nofollow" class="external text" href="http://www.coreboot.org/Chromebooks">coreboot's Chromebooks page</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-28 ⓘ]</sup>.
 </p>
 <p>More information about the firmware protection available in <a href="../en/Chrome_OS_devices/Custom_firmware.html#Firmware_write_protection" title="Chrome OS devices/Custom firmware">Chrome OS devices/Custom firmware#Firmware write protection</a>.
 </p>
@@ -330,7 +330,7 @@ GBB_FLAG_DEFAULT_DEV_BOOT_LEGACY 0x00000400
 <ul><li>Enter the command to run either MrChromebox's or John Lewis's firmware script.</li></ul>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The reason for not posting here is to force you to visit the site and read the instructions before proceeding.</div>
-<ul><li>After the exiting the script, be sure to copy the backed up firmware to an external storage before rebooting the system (if the script doesn't provide that option for you).</li></ul>
+<ul><li>After the exiting the script, be sure to copy the backed up firmware to an external storage before rebooting the system (if the script does not provide that option for you).</li></ul>
 <p>You should now have a custom firmware installed on your device, cross your fingers and reboot.
 </p>
 <p>After flashing the firmware you can continue to <a href="#Installing_Arch_Linux">Installing Arch Linux</a>.
@@ -573,13 +573,13 @@ HandleLidSwitch=ignore</pre>
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices">Developer Information for Chrome OS Devices at the Chromium Projects site</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices">Developer Information for Chrome OS Devices at the Chromium Projects site</a></li>
 <li>
 <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=173418">BBS topic about the Acer C720</a> which include generic information on Haswell Based Chromebooks.</li>
-<li>Re-partitioning in Chrome OS <a rel="nofollow" class="external autonumber" href="http://chromeos-cr48.blogspot.co.uk/2012/04/chrubuntu-1204-now-with-double-bits.html">[18]</a>, <a rel="nofollow" class="external autonumber" href="http://goo.gl/i817v">[19]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-28 ⓘ]</sup>
+<li>Re-partitioning in Chrome OS <a rel="nofollow" class="external autonumber" href="https://chromeos-cr48.blogspot.co.uk/2012/04/chrubuntu-1204-now-with-double-bits.html">[18]</a>, <a rel="nofollow" class="external autonumber" href="http://goo.gl/i817v">[19]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-28 ⓘ]</sup>
 </li>
-<li><a rel="nofollow" class="external text" href="http://bit.ly/NewChromebooks">Brent Sullivan's the always updated list of Chrome OS devices</a></li>
-<li><a rel="nofollow" class="external text" href="http://prodct.info/chromebooks/">Google Chromebook Comparison Chart</a></li>
+<li><a rel="nofollow" class="external text" href="https://bit.ly/NewChromebooks">Brent Sullivan's the always updated list of Chrome OS devices</a></li>
+<li><a rel="nofollow" class="external text" href="https://prodct.info/chromebooks/">Google Chromebook Comparison Chart</a></li>
 </ul>
 </div>
 </div>
@@ -598,8 +598,8 @@ HandleLidSwitch=ignore</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chrome_OS_devices&amp;oldid=654672">https://wiki.archlinux.org/index.php?title=Chrome_OS_devices&amp;oldid=654672</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 21:37.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chrome_OS_devices&amp;oldid=661495">https://wiki.archlinux.org/index.php?title=Chrome_OS_devices&amp;oldid=661495</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 09:31.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

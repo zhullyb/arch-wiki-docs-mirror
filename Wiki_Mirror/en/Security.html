@@ -354,7 +354,7 @@ password required pam_unix.so use_authtok sha512 shadow</pre>
 </p>
 <p>Certain programs, like <a href="../en/Dm-crypt.html" title="Dm-crypt">dm-crypt</a>, allow the user to encrypt a loop file as a virtual volume. This is a reasonable alternative to full-disk encryption when only certain parts of the system need be secure.
 </p>
-<p>You may also encrypt a drive with the key stored in a <a href="../en/Trusted_Platform_Module.html" class="mw-redirect" title="TPM">TPM</a>, although it has had <a rel="nofollow" class="external text" href="https://tpm.fail">vulnerabilites in the past</a> and the key can be extracted by a <a rel="nofollow" class="external text" href="https://pulsesecurity.co.nz/articles/TPM-sniffing">bus sniffing attack</a>.
+<p>You may also <a href="../en/Trusted_Platform_Module.html#Data-at-rest_encryption_with_LUKS" title="Trusted Platform Module">encrypt a drive with the key stored in a TPM</a>, although it has had <a rel="nofollow" class="external text" href="https://tpm.fail">vulnerabilites in the past</a> and the key can be extracted by a <a rel="nofollow" class="external text" href="https://pulsesecurity.co.nz/articles/TPM-sniffing">bus sniffing attack</a>.
 </p>
 <h3><span class="mw-headline" id="File_systems">File systems</span></h3>
 <p>The kernel now prevents security issues related to hardlinks and symlinks if the <code>fs.protected_hardlinks</code> and <code>fs.protected_symlinks</code> sysctl switches are enabled, so there is no longer a major security benefit from separating out world-writable directories.
@@ -690,7 +690,7 @@ Randomization under memory exhaustion @0 : No randomization
 <h3><span class="mw-headline" id="ptrace_scope">ptrace scope</span></h3>
 <p>The <span class="plainlinks archwiki-template-man" title="$ man 2 ptrace"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ptrace.2">ptrace(2)</a></span> syscall provides a means by which one process (the "tracer") may observe and control the execution of another process (the "tracee"), and examine and change the tracee's memory and registers. <code>ptrace</code> is commonly used by debugging tools including <i>gdb</i>, <i>strace</i>, <i>perf</i>, <i>reptyr</i> and other debuggers. However, it also provides a means by which a malicious process can read data from and take control of other processes.
 </p>
-<p>Arch enables the <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html">Yama LSM</a> by default, which provides a <code>kernel.yama.ptrace_scope</code> <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a>. This parameter is set to <code>1</code> (restricted) by default which prevents tracers from performing a <code>ptrace</code> call on tracees outside of a restricted scope unless the tracer is privileged or has the <code>CAP_SYS_PTRACE</code> <a href="../en/Capabilities.html" title="Capabilities">capability</a>. This is a significant improvement in security compared to the classic permissions. Without this module, there is no separation between processes running as the same user (in the absence of additional security layers such as <span class="plainlinks archwiki-template-man" title="$ man 7 pid_namespaces"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/pid_namespaces.7">pid_namespaces(7)</a></span>).
+<p>Arch enables the <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html">Yama LSM</a> by default, which provides a <code>kernel.yama.ptrace_scope</code> <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a>. This parameter is set to <code>1</code> (restricted) by default which prevents tracers from performing a <code>ptrace</code> call on traces outside of a restricted scope unless the tracer is privileged or has the <code>CAP_SYS_PTRACE</code> <a href="../en/Capabilities.html" title="Capabilities">capability</a>. This is a significant improvement in security compared to the classic permissions. Without this module, there is no separation between processes running as the same user (in the absence of additional security layers such as <span class="plainlinks archwiki-template-man" title="$ man 7 pid_namespaces"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/pid_namespaces.7">pid_namespaces(7)</a></span>).
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> By default, you can still use tools which require <code>ptrace</code> by running them as privileged processes, e.g. using <a href="../en/Sudo.html" title="Sudo">sudo</a>.</div>
@@ -842,7 +842,7 @@ SupplementaryGroups=proc</pre>
 <h2><span class="mw-headline" id="Physical_security">Physical security</span></h2>
 <p>Physical access to a computer is root access given enough time and resources. However, a high <i>practical</i> level of security can be obtained by putting up enough barriers.
 </p>
-<p>An attacker can gain full control of your computer on the next boot by simply attaching a malicious IEEE 1394 (FireWire), Thunderbolt or PCI Express device as they are given full memory access.<a rel="nofollow" class="external autonumber" href="https://www.breaknenter.org/projects/inception/">[6]</a><sup title="Last check status: SSL error">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup> There is little you can do from preventing this, or modification of the hardware itself - such as flashing malicious firmware onto a drive. However, the vast majority of attackers will not be this knowledgeable and determined.
+<p>An attacker can gain full control of your computer on the next boot by simply attaching a malicious IEEE 1394 (FireWire), Thunderbolt or PCI Express device as they are given full memory access.<a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20210312083421/http://breaknenter.org/2014/09/inception-metasploit-integration/">[6]</a> There is little you can do from preventing this, or modification of the hardware itself - such as flashing malicious firmware onto a drive. However, the vast majority of attackers will not be this knowledgeable and determined.
 </p>
 <p><a href="#Data-at-rest_encryption">#Data-at-rest encryption</a> will prevent access to your data if the computer is stolen, but malicious firmware can be installed to obtain this data upon your next log in by a resourceful attacker.
 </p>
@@ -923,8 +923,6 @@ esac
 <b>Reason:</b> Copy-pasted from a 3 years old blog post. The compiler flags are specific to <a href="../en/GNU_Compiler_Collection.html" class="mw-redirect" title="GCC">GCC</a>, some are hardly security related (e.g. <code>-O2</code>, <code>-g</code>, <code>-Wall</code>). (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Security">Talk:Security#</a>)</div>
 </div>
 <table class="wikitable">
-<caption>Tabular data
-</caption>
 <tbody>
 <tr>
 <th>Flag</th>
@@ -1013,7 +1011,7 @@ esac
 </tr>
 <tr>
 <td>-Werror=format-security</td>
-<td>Reject potentially unsafe format string arguents
+<td>Reject potentially unsafe format string arguments
 </td>
 </tr>
 <tr>
@@ -1066,7 +1064,6 @@ esac
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
 <li><a href="../en/Category:Sections_flagged_with_Template:Remove.html" title="Category:Sections flagged with Template:Remove">Sections flagged with Template:Remove</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
@@ -1076,8 +1073,8 @@ esac
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Security&amp;oldid=654741">https://wiki.archlinux.org/index.php?title=Security&amp;oldid=654741</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 March 2021, at 10:19.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Security&amp;oldid=663423">https://wiki.archlinux.org/index.php?title=Security&amp;oldid=663423</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 17:17.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

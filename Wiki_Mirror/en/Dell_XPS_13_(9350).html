@@ -43,11 +43,10 @@
 <table class="wikitable" style="float: right;">
 <tbody>
 <tr>
-<td><b>Device</b></td>
-<td><b>Status</b></td>
-<td>
-<b>Modules</b>
-</td>
+<th>Device</th>
+<th>Status</th>
+<th>Modules
+</th>
 </tr>
 <tr>
 <td>Video</td>
@@ -237,7 +236,7 @@
 </div>
 
 <h2><span class="mw-headline" id="Content_adaptive_brightness_control">Content adaptive brightness control</span></h2>
-<p>In the XPS 13 the display panels (both FHD and QHD+) come with adaptive brightness embedded in the panel firmware, this "content adaptive brightness control" (usually referred to as CABC or DBC) will adjust the screen brightness depending on the content displayed on the screen and will generally be found undesirable, especially for Linux users who are likely to be switching between dark and light screen content. Dell has issued a fix for this however it is only available to run in Windows and for the QHD+ model of the laptop so this precaution should be taken before installing Linux, the FHD model of the XPS 13 (9350) cannot be fixed. This is not a problem with the panel but rather a problem with the way the panels are configured for the XPS 13, as the same panel exists in the Dell's Latitude 13 7000 series (e7370) FHD model but with CABC disabled. The fix is available directly from <a rel="nofollow" class="external text" href="http://www.dell.com/support/home/uk/en/ukdhs1/Drivers/DriversDetails?driverId=PWD5K&amp;fileId=3505631210&amp;osCode=W764&amp;productCode=xps-13-9350-laptop&amp;languageCode=en&amp;categoryId=AP">Dell</a>.
+<p>In the XPS 13 the display panels (both FHD and QHD+) come with adaptive brightness embedded in the panel firmware, this "content adaptive brightness control" (usually referred to as CABC or DBC) will adjust the screen brightness depending on the content displayed on the screen and will generally be found undesirable, especially for Linux users who are likely to be switching between dark and light screen content. Dell has issued a fix for this however it is only available to run in Windows and for the QHD+ model of the laptop so this precaution should be taken before installing Linux, the FHD model of the XPS 13 (9350) cannot be fixed. This is not a problem with the panel but rather a problem with the way the panels are configured for the XPS 13, as the same panel exists in the Dell's Latitude 13 7000 series (e7370) FHD model but with CABC disabled. The fix is available directly from <a rel="nofollow" class="external text" href="https://www.dell.com/support/home/uk/en/ukdhs1/Drivers/DriversDetails?driverId=PWD5K&amp;fileId=3505631210&amp;osCode=W764&amp;productCode=xps-13-9350-laptop&amp;languageCode=en&amp;categoryId=AP">Dell</a>.
 </p>
 <h2><span class="mw-headline" id="BIOS">BIOS</span></h2>
 <p>The most convenient way to install Arch Linux is by disabling "Secure Boot" (Secure Boot &gt; Disable). However it is possible to self-sign your kernel and boot with it enabled. For further information have a look at the <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> article.
@@ -317,13 +316,13 @@
 </p>
 <p>Edit your <code>/etc/mkinitcpio.conf</code> file:
 </p>
-<pre>   ...
-   MODULES=(... "nvme")
-   ...
+<pre>...
+MODULES=(... "nvme")
+...
 </pre>
 <p>Then update the <a href="../en/Arch_boot_process.html#initramfs" title="Arch boot process">initial ramfs</a>, e.g. for the stock Linux kernel:
 </p>
-<pre>   # mkinitcpio -p linux
+<pre># mkinitcpio -p linux
 </pre>
 <p>Replace <code>linux</code> with the image which is to be booted, e.g. <code>linux-hardened</code>, etc.
 </p>
@@ -347,7 +346,7 @@
 <h4><span class="mw-headline" id="Wireless_headset:_strange_bluetooth_behavior">Wireless headset: strange bluetooth behavior</span></h4>
 <p>If your Bluetooth behaves unstable, such as connection loss, stuttering sound. being able to connect but not to listen through it, etc. you probably need the proprietary firmware.
 </p>
-<p>The Broadcom Bluetooth firmware is not available in the kernel (the same as for the 2015 model <a rel="nofollow" class="external text" href="https://tech.sybreon.com/2015/03/15/xps13-9343-ubuntu-linux/">source</a><sup title="Last check status: too many redirects">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-22 ⓘ]</sup>), therefore you will have to retrieve it from a Windows <a rel="nofollow" class="external text" href="https://downloads.dell.com/FOLDER03272920M/1/9350_Network_Driver_XMJK7_WN32_12.0.1.720_A00.EXE">.exe</a>. You need to extract the <code>.exe</code> file with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=p7zip">p7zip</a></span> and then convert it to a <code>.hcd</code> file with <i>hex2hcd</i> from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez-utils">bluez-utils</a></span>:
+<p>The Broadcom Bluetooth firmware is not available in the kernel (the same as for the 2015 model <a rel="nofollow" class="external text" href="https://tech.sybreon.com/2015/03/15/xps13-9343-ubuntu-linux/">source</a>), therefore you will have to retrieve it from a Windows <a rel="nofollow" class="external text" href="https://downloads.dell.com/FOLDER03272920M/1/9350_Network_Driver_XMJK7_WN32_12.0.1.720_A00.EXE">.exe</a>. You need to extract the <code>.exe</code> file with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=p7zip">p7zip</a></span> and then convert it to a <code>.hcd</code> file with <i>hex2hcd</i> from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bluez-utils">bluez-utils</a></span>:
 </p>
 <pre>$ 7z x 9350_Network_Driver_XMJK7_WN32_12.0.1.720_A00.EXE
 $ cp Win32/BCM4350C5_003.006.007.0095.1703.hex ./
@@ -438,15 +437,15 @@ Change voltage settings by editing:
 <h3><span class="mw-headline" id="Remove_psmouse_errors_from_dmesg">Remove psmouse errors from dmesg</span></h3>
 <p>If <code>dmesg | grep -i psmouse</code> returns an error, but your touchpad still works, then it might be a good idea to disable <code>psmouse</code>. First create a config file:
 </p>
-<pre>   # nano /etc/modprobe.d/modprobe.conf
-   
-   blacklist psmouse
+<pre># nano /etc/modprobe.d/modprobe.conf
+
+blacklist psmouse
 </pre>
 <p>Then add this file to <code>/etc/mkinitcpio.conf</code>:
 </p>
-<pre>   ...
-   FILES=("/etc/modprobe.d/modprobe.conf")
-   ...
+<pre>...
+FILES=("/etc/modprobe.d/modprobe.conf")
+...
 </pre>
 <p>Rebuild your initial ramdisk image (see <a href="../en/Mkinitcpio.html#Image_creation_and_activation" title="Mkinitcpio">Mkinitcpio#Image creation and activation</a>).
 </p>
@@ -474,32 +473,32 @@ SOUND_POWER_SAVE_ON_BAT=300
 <p>Some people reported white hissing/crackling noises when using headphones. To get rid of them you can run <code>alsamixer</code> from  <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-utils">alsa-utils</a></span>.
 Select your soundcard with F6 and set the headset-gain to 22 (3rd lever from the left) or use the <code>amixer</code> command:
 </p>
-<pre> $ amixer -c 0 cset 'numid=10' 1
- numid=10,iface=MIXER,name='Headphone Mic Boost Volume'
-   ; type=INTEGER,access=rw---R--,values=2,min=0,max=3,step=0
-   : values=1,1
-   | dBscale-min=0.00dB,step=10.00dB,mute=0
+<pre>$ amixer -c 0 cset 'numid=10' 1
+numid=10,iface=MIXER,name='Headphone Mic Boost Volume'
+  ; type=INTEGER,access=rw---R--,values=2,min=0,max=3,step=0
+  : values=1,1
+  | dBscale-min=0.00dB,step=10.00dB,mute=0
 </pre>
 <p>Unfortunately <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a> will override the above setting every time you log in/out of your environment (or every time the PulseAudio service is restarted), even if the <code>alsa-restore.service</code> is enabled at <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> up.
 </p>
 <p>To work around this issue, edit <code>/usr/share/pulseaudio/alsa-mixer/paths/analog-input-headphone-mic.conf</code> and comment out the section <code>[Element Headphone Mic Boost]</code>:
 </p>
-<pre> ---
- #[Element Headphone Mic Boost]
- #required-any = any
- #switch = select
- #volume = merge
- #override-map.1 = all
- #override-map.2 = all-left,all-right
- ---
+<pre>---
+#[Element Headphone Mic Boost]
+#required-any = any
+#switch = select
+#volume = merge
+#override-map.1 = all
+#override-map.2 = all-left,all-right
+---
 </pre>
 <p>Similarly in <code>/usr/share/pulseaudio/alsa-mixer/paths/analog-input-internal-mic.conf</code>, comment out the same section:
 </p>
-<pre> ---
- #[Element Headphone Mic Boost]
- #switch = off
- #volume = off
- ---
+<pre>---
+#[Element Headphone Mic Boost]
+#switch = off
+#volume = off
+---
 </pre>
 <p>This will prevent PulseAudio to fiddle with the gain setting at all.
 </p>
@@ -523,12 +522,12 @@ To solve this issue you have to pass <code>model=auto</code> to the <code>snd-hd
 </p>
 <h3><span class="mw-headline" id="TPM_2.0">TPM 2.0</span></h3>
 <p>
-Originally the Dell XPS 13 (9350) shipped with TPM 1.2 - the TPM chip was configured to support the TPM Standard version 1.2. However, Dell released a <a rel="nofollow" class="external text" href="http://www.dell.com/support/home/uk/en/ukdhs1/drivers/driversdetails?driverId=RF87D">firmware update</a> (internal version 1.3.2.8, A02) for the TPM chip that converts it to support the feature set of TPM Standard version 2.0. Unfortunately, as of this moment the update cannot be applied through Linux or the BIOS direct flashing capabilities. The only way to install it seems to be to apply it through a running Windows OS. The easiest method is to run a temporary Windows installation on a USB drive, boot into it and run the update from there.  </p>
+Originally the Dell XPS 13 (9350) shipped with TPM 1.2 - the TPM chip was configured to support the TPM Standard version 1.2. However, Dell released a <a rel="nofollow" class="external text" href="https://www.dell.com/support/home/uk/en/ukdhs1/drivers/driversdetails?driverId=RF87D">firmware update</a> (internal version 1.3.2.8, A02) for the TPM chip that converts it to support the feature set of TPM Standard version 2.0. Unfortunately, as of this moment the update cannot be applied through Linux or the BIOS direct flashing capabilities. The only way to install it seems to be to apply it through a running Windows OS. The easiest method is to run a temporary Windows installation on a USB drive, boot into it and run the update from there.  </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> It should be noted that this update is reversible once applied. To revert back to TPM 1.2 by using a <a rel="nofollow" class="external text" href="http://www.dell.com/support/home/us/en/04/Drivers/DriversDetails?driverId=F3J3P">firmware update</a> It also requires that the TPM memory and configuration is completely cleared.</div>
+<strong>Note:</strong> It should be noted that this update is reversible once applied. To revert back to TPM 1.2 by using a <a rel="nofollow" class="external text" href="https://www.dell.com/support/home/us/en/04/Drivers/DriversDetails?driverId=F3J3P">firmware update</a> It also requires that the TPM memory and configuration is completely cleared.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong>  As for BIOS updates, please make sure the laptop is plugged in to a power source and that power source is stable.</div>
-<p>To install the update one can follow the instructions on the above mentioned firmware update page to clear and reset the TPM chip and initiate the update. Users intending to later use the device in Linux, can skip the last steps 11 &amp; 12 from section "Disable TPM Auto Provisioning in Windows". Another option is to just clear the TPM following <a rel="nofollow" class="external text" href="http://www.dell.com/support/article/uk/en/ukbsdt1/SLN155219/en">this guide</a> and just run the <code>.exe</code> file from Windows.
+<p>To install the update one can follow the instructions on the above mentioned firmware update page to clear and reset the TPM chip and initiate the update. Users intending to later use the device in Linux, can skip the last steps 11 &amp; 12 from section "Disable TPM Auto Provisioning in Windows". Another option is to just clear the TPM following <a rel="nofollow" class="external text" href="https://www.dell.com/support/article/uk/en/ukbsdt1/SLN155219/en">this guide</a> and just run the <code>.exe</code> file from Windows.
 </p>
 <p>Once the update succeeds, the Linux kernel should automatically recognise the newly configured TPM device and enable it automatically on next boot. To make use of the now TPM 2.0 chip a couple of packages are worth installing - <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tpm2-tss-git/">tpm2-tss-git</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tpm2-tools-git/">tpm2-tools-git</a></span><sup><small>AUR</small></sup>. To make the TSS resource manager work on boot, a handy systemd service is provided and its variants discussed <a rel="nofollow" class="external text" href="https://github.com/01org/TPM2.0-TSS/issues/321">here</a>.
 </p>
@@ -592,7 +591,7 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1579113">Arch Forum thread for XPS 13</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.dell.com/support/home/us/en/19/product-support/product/xps-13-9350-laptop/drivers">Dell XPS 13 9350 driver and firmware updates</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.dell.com/support/home/us/en/19/product-support/product/xps-13-9350-laptop/drivers">Dell XPS 13 9350 driver and firmware updates</a></li>
 <li><a rel="nofollow" class="external text" href="https://topics-cdn.dell.com/pdf/xps-13-9350-laptop_service-manual_en-us.pdf">Service Manual for Dell XPS 13 (9350)</a></li>
 </ul>
 </div>
@@ -603,7 +602,6 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
@@ -613,8 +611,8 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dell_XPS_13_(9350)&amp;oldid=654686">https://wiki.archlinux.org/index.php?title=Dell_XPS_13_(9350)&amp;oldid=654686</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 22:11.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dell_XPS_13_(9350)&amp;oldid=663294">https://wiki.archlinux.org/index.php?title=Dell_XPS_13_(9350)&amp;oldid=663294</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 09:47.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -44,16 +45,16 @@
 <li><a href="../en/Init.html" title="Init">init</a></li>
 <li><a href="../ru/Daemons.html" class="mw-redirect" title="Демоны">Демоны</a></li>
 <li><a href="../ru/Udev.html" title="Udev (Русский)">udev (Русский)</a></li>
-<li><a href="../en/Improving_performance/Boot_process.html" class="mw-redirect" title="Увеличение производительности/Процесс загрузки системы">Увеличение производительности/Процесс загрузки системы</a></li>
+<li><a href="../en/Improving_performance/Boot_process.html" title="Improving performance/Boot process">Improving performance/Boot process</a></li>
 <li><a href="../ru/Allow_users_to_shutdown.html" class="mw-redirect" title="Разрешить пользователям выключение системы">Разрешить пользователям выключение системы</a></li>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Состояние перевода:</strong> На этой странице представлен перевод статьи <a href="../en/Systemd.html" title="Systemd">systemd</a>. Дата последней синхронизации: 4 декабря 2020. Вы можете <a href="../ru/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Русский)">помочь</a> синхронизировать перевод, если в английской версии произошли <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd&amp;diff=0&amp;oldid=641947">изменения</a>.</div>
+<strong>Состояние перевода:</strong> На этой странице представлен перевод статьи <a href="../en/Systemd.html" title="Systemd">systemd</a>. Дата последней синхронизации: 15 апреля 2021. Вы можете <a href="../ru/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Русский)">помочь</a> синхронизировать перевод, если в английской версии произошли <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd&amp;diff=0&amp;oldid=659558">изменения</a>.</div>
 <p>Цитата с <a rel="nofollow" class="external text" href="https://systemd.io/">веб-страницы проекта</a>:
 </p>
 <dl><dd>
-<i>systemd</i> — набор базовых строительных кирпичиков для системы Linux. Он предоставляет диспетчер системы и служб, который выполняется с PID 1 и запускает остальную часть системы. systemd обеспечивает возможности агрессивной параллелизации, использует сокеты и активацию <a href="../en/D-Bus.html" title="D-Bus">D-Bus</a> для запускаемых служб, предлагает запуск демонов по необходимости, отслеживает процессы при помощи <a href="../en/Cgroups.html" class="mw-redirect" title="Control groups">контрольных групп</a> Linux, поддерживает монтирование и точки монтирования, а также внедряет основанную на зависимостях логику контроля процессов сложных транзакций. <i>systemd</i> поддерживает сценарии инициализации SysV и LSB и является заменой sysvinit. Другие части включают в себя демон ведения журнала, утилиты для управления базовой конфигурацией системы (имя хоста, дата, языковой стандарт), ведение списка вошедших в систему пользователей, запущенных контейнеров и виртуальных машин, системных учётных записей, каталогов и параметров среды выполнения и демонов для управления базовой конфигурацией сети, синхронизации сетевого времени, пересылки журналов и разрешения имён.</dd></dl>
+<i>systemd</i> — набор базовых строительных кирпичиков Linux-системы. Представляет собой  менеджер системы и служб, который выполняется как процесс с PID 1 и запускает остальную часть системы. systemd обеспечивает возможности агрессивной параллелизации, сокет- и <a href="../en/D-Bus.html" title="D-Bus">D-Bus</a>-активацию для запуска служб, запуск демонов по запросу, отслеживание процессов с помощью <a href="../en/Cgroups.html" title="Cgroups">контрольных групп</a> Linux, обслуживание точек (авто)монтирования, а также предлагает развитую транзакционную логику управления службами на основе зависимостей. <i>systemd</i> поддерживает сценарии инициализации SysV и LSB и работает как замена sysvinit. Среди прочих элементов и функций — демон журнала, утилиты управления базовой конфигурацией системы (имя хоста, дата, языковой стандарт), ведение списков вошедших в систему пользователей, запущенных контейнеров, виртуальных машин, системных учётных записей, каталогов и настроек времени выполнения, а также демоны для управления несложными сетевыми конфигурациями, синхронизации времени по сети, пересылки журналов и разрешения имён.</dd></dl>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Примечание:</strong> Причины перехода Arch на systemd подробно объяснены <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1149530#p1149530">на форуме</a>.
 </div>
@@ -66,324 +67,413 @@
 <li class="toclevel-1 tocsection-1">
 <a href="#%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F_systemctl"><span class="tocnumber">1</span> <span class="toctext">Основы использования systemctl</span></a>
 <ul>
-<li class="toclevel-2 tocsection-2"><a href="#%D0%90%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7_%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B"><span class="tocnumber">1.1</span> <span class="toctext">Анализ состояния системы</span></a></li>
-<li class="toclevel-2 tocsection-3">
-<a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2"><span class="tocnumber">1.2</span> <span class="toctext">Использование юнитов</span></a>
-<ul>
-<li class="toclevel-3 tocsection-4"><a href="#%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0"><span class="tocnumber">1.2.1</span> <span class="toctext">Проверка</span></a></li>
-<li class="toclevel-3 tocsection-5"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA,_%D0%BF%D0%B5%D1%80%D0%B5%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA,_%D0%BF%D0%B5%D1%80%D0%B5%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0"><span class="tocnumber">1.2.2</span> <span class="toctext">Запуск, перезапуск, перезагрузка</span></a></li>
-<li class="toclevel-3 tocsection-6"><a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA"><span class="tocnumber">1.2.3</span> <span class="toctext">Автозапуск</span></a></li>
-<li class="toclevel-3 tocsection-7"><a href="#%D0%9C%D0%B0%D1%81%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0"><span class="tocnumber">1.2.4</span> <span class="toctext">Маскировка</span></a></li>
+<li class="toclevel-2 tocsection-2"><a href="#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2"><span class="tocnumber">1.1</span> <span class="toctext">Использование юнитов</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#%D0%A3%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D0%B8%D1%82%D0%B0%D0%BD%D0%B8%D0%B5%D0%BC"><span class="tocnumber">1.2</span> <span class="toctext">Управление питанием</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-8"><a href="#%D0%A3%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D0%B8%D1%82%D0%B0%D0%BD%D0%B8%D0%B5%D0%BC"><span class="tocnumber">1.3</span> <span class="toctext">Управление питанием</span></a></li>
-</ul>
-</li>
-<li class="toclevel-1 tocsection-9">
+<li class="toclevel-1 tocsection-4">
 <a href="#%D0%9D%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2"><span class="tocnumber">2</span> <span class="toctext">Написание файлов юнитов</span></a>
 <ul>
-<li class="toclevel-2 tocsection-10"><a href="#%D0%9E%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0_%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B5%D0%B9"><span class="tocnumber">2.1</span> <span class="toctext">Обработка зависимостей</span></a></li>
-<li class="toclevel-2 tocsection-11"><a href="#%D0%A2%D0%B8%D0%BF%D1%8B_%D1%81%D0%BB%D1%83%D0%B6%D0%B1"><span class="tocnumber">2.2</span> <span class="toctext">Типы служб</span></a></li>
-<li class="toclevel-2 tocsection-12">
-<a href="#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%B5%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D0%B0%D0%BC%D0%B8_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2"><span class="tocnumber">2.3</span> <span class="toctext">Редактирование предоставленных пакетами файлов юнитов</span></a>
+<li class="toclevel-2 tocsection-5"><a href="#%D0%9E%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0_%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B5%D0%B9"><span class="tocnumber">2.1</span> <span class="toctext">Обработка зависимостей</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#%D0%A2%D0%B8%D0%BF%D1%8B_%D1%81%D0%BB%D1%83%D0%B6%D0%B1"><span class="tocnumber">2.2</span> <span class="toctext">Типы служб</span></a></li>
+<li class="toclevel-2 tocsection-7">
+<a href="#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2"><span class="tocnumber">2.3</span> <span class="toctext">Редактирование файлов юнитов</span></a>
 <ul>
-<li class="toclevel-3 tocsection-13"><a href="#%D0%97%D0%B0%D0%BC%D0%B5%D0%BD%D0%B0_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%B0"><span class="tocnumber">2.3.1</span> <span class="toctext">Замена файлов юнита</span></a></li>
-<li class="toclevel-3 tocsection-14"><a href="#Drop-in_%D1%84%D0%B0%D0%B9%D0%BB%D1%8B"><span class="tocnumber">2.3.2</span> <span class="toctext">Drop-in файлы</span></a></li>
-<li class="toclevel-3 tocsection-15"><a href="#%D0%92%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BE%D1%80%D0%B8%D0%B3%D0%B8%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D0%B8"><span class="tocnumber">2.3.3</span> <span class="toctext">Возвращение оригинальной версии</span></a></li>
-<li class="toclevel-3 tocsection-16"><a href="#%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"><span class="tocnumber">2.3.4</span> <span class="toctext">Примеры</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#%D0%97%D0%B0%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D0%B0_%D1%8E%D0%BD%D0%B8%D1%82%D0%B0"><span class="tocnumber">2.3.1</span> <span class="toctext">Замещение файла юнита</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#Drop-in_%D1%84%D0%B0%D0%B9%D0%BB%D1%8B"><span class="tocnumber">2.3.2</span> <span class="toctext">Drop-in файлы</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#%D0%9E%D1%82%D0%BA%D0%B0%D1%82_%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9"><span class="tocnumber">2.3.3</span> <span class="toctext">Откат изменений</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"><span class="tocnumber">2.3.4</span> <span class="toctext">Примеры</span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-17">
+<li class="toclevel-1 tocsection-12">
 <a href="#%D0%A6%D0%B5%D0%BB%D0%B8"><span class="tocnumber">3</span> <span class="toctext">Цели</span></a>
 <ul>
-<li class="toclevel-2 tocsection-18"><a href="#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%B8_%D0%BE_%D1%82%D0%B5%D0%BA%D1%83%D1%89%D0%B8%D1%85_%D1%86%D0%B5%D0%BB%D1%8F%D1%85"><span class="tocnumber">3.1</span> <span class="toctext">Получение информации о текущих целях</span></a></li>
-<li class="toclevel-2 tocsection-19"><a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%BE%D0%B9_%D1%86%D0%B5%D0%BB%D0%B8"><span class="tocnumber">3.2</span> <span class="toctext">Создание пользовательской цели</span></a></li>
-<li class="toclevel-2 tocsection-20"><a href="#%D0%A1%D0%BE%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B8%D0%B5_%D1%83%D1%80%D0%BE%D0%B2%D0%BD%D0%B5%D0%B9_SysV_%D1%86%D0%B5%D0%BB%D1%8F%D0%BC_systemd"><span class="tocnumber">3.3</span> <span class="toctext">Соответствие уровней SysV целям systemd</span></a></li>
-<li class="toclevel-2 tocsection-21"><a href="#%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D1%82%D0%B5%D0%BA%D1%83%D1%89%D0%B5%D0%B9_%D1%86%D0%B5%D0%BB%D0%B8"><span class="tocnumber">3.4</span> <span class="toctext">Изменение текущей цели</span></a></li>
-<li class="toclevel-2 tocsection-22"><a href="#%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D1%86%D0%B5%D0%BB%D0%B8_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8_%D0%BF%D0%BE_%D1%83%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D0%BD%D0%B8%D1%8E"><span class="tocnumber">3.5</span> <span class="toctext">Изменение цели загрузки по умолчанию</span></a></li>
-<li class="toclevel-2 tocsection-23"><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA_%D0%B2%D1%8B%D0%B1%D0%BE%D1%80%D0%B0_%D1%86%D0%B5%D0%BB%D0%B8_%D0%BF%D0%BE_%D1%83%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D0%BD%D0%B8%D1%8E"><span class="tocnumber">3.6</span> <span class="toctext">Порядок выбора цели по умолчанию</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%B8_%D0%BE_%D1%82%D0%B5%D0%BA%D1%83%D1%89%D0%B8%D1%85_%D1%86%D0%B5%D0%BB%D1%8F%D1%85"><span class="tocnumber">3.1</span> <span class="toctext">Получение информации о текущих целях</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%BE%D0%B9_%D1%86%D0%B5%D0%BB%D0%B8"><span class="tocnumber">3.2</span> <span class="toctext">Создание пользовательской цели</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#%D0%A1%D0%BE%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B8%D0%B5_%D1%83%D1%80%D0%BE%D0%B2%D0%BD%D0%B5%D0%B9_SysV_%D1%86%D0%B5%D0%BB%D1%8F%D0%BC_systemd"><span class="tocnumber">3.3</span> <span class="toctext">Соответствие уровней SysV целям systemd</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D1%82%D0%B5%D0%BA%D1%83%D1%89%D0%B5%D0%B9_%D1%86%D0%B5%D0%BB%D0%B8"><span class="tocnumber">3.4</span> <span class="toctext">Изменение текущей цели</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D1%86%D0%B5%D0%BB%D0%B8_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8_%D0%BF%D0%BE_%D1%83%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D0%BD%D0%B8%D1%8E"><span class="tocnumber">3.5</span> <span class="toctext">Изменение цели загрузки по умолчанию</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA_%D0%B2%D1%8B%D0%B1%D0%BE%D1%80%D0%B0_%D1%86%D0%B5%D0%BB%D0%B8_%D0%BF%D0%BE_%D1%83%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D0%BD%D0%B8%D1%8E"><span class="tocnumber">3.6</span> <span class="toctext">Порядок выбора цели по умолчанию</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-19">
+<a href="#%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%B5%D0%BD%D1%82%D1%8B_systemd"><span class="tocnumber">4</span> <span class="toctext">Компоненты systemd</span></a>
+<ul>
+<li class="toclevel-2 tocsection-20">
+<a href="#systemd.mount_%E2%80%94_%D0%BC%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"><span class="tocnumber">4.1</span> <span class="toctext">systemd.mount — монтирование</span></a>
+<ul>
+<li class="toclevel-3 tocsection-21"><a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_GPT-%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%B0"><span class="tocnumber">4.1.1</span> <span class="toctext">Автомонтирование GPT-раздела</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-22"><a href="#systemd-sysvcompat"><span class="tocnumber">4.2</span> <span class="toctext">systemd-sysvcompat</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#systemd-tmpfiles_%E2%80%94_%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D1%8B"><span class="tocnumber">4.3</span> <span class="toctext">systemd-tmpfiles — временные файлы</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-24">
-<a href="#%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%B5%D0%BD%D1%82%D1%8B_systemd"><span class="tocnumber">4</span> <span class="toctext">Компоненты systemd</span></a>
-<ul>
-<li class="toclevel-2 tocsection-25">
-<a href="#systemd.mount_%E2%80%94_%D0%BC%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"><span class="tocnumber">4.1</span> <span class="toctext">systemd.mount — монтирование</span></a>
-<ul>
-<li class="toclevel-3 tocsection-26"><a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2_GPT"><span class="tocnumber">4.1.1</span> <span class="toctext">Автомонтирование разделов GPT</span></a></li>
-</ul>
-</li>
-<li class="toclevel-2 tocsection-27"><a href="#systemd-sysvcompat"><span class="tocnumber">4.2</span> <span class="toctext">systemd-sysvcompat</span></a></li>
-<li class="toclevel-2 tocsection-28"><a href="#systemd-tmpfiles_%E2%80%94_%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D1%8B"><span class="tocnumber">4.3</span> <span class="toctext">systemd-tmpfiles — временные файлы</span></a></li>
-</ul>
-</li>
-<li class="toclevel-1 tocsection-29">
 <a href="#%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%8B_%D0%B8_%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8"><span class="tocnumber">5</span> <span class="toctext">Советы и рекомендации</span></a>
 <ul>
-<li class="toclevel-2 tocsection-30"><a href="#%D0%9F%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B_%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_%D1%81_%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%BC_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%BE%D0%BC"><span class="tocnumber">5.1</span> <span class="toctext">Программы настройки с графическим интерфейсом</span></a></li>
-<li class="toclevel-2 tocsection-31"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BE%D0%B2_%D0%BF%D0%BE%D1%81%D0%BB%D0%B5_%D0%BF%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BA_%D1%81%D0%B5%D1%82%D0%B8"><span class="tocnumber">5.2</span> <span class="toctext">Запуск сервисов после подключения к сети</span></a></li>
-<li class="toclevel-2 tocsection-32"><a href="#%D0%92%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2_%D0%BF%D0%BE_%D1%83%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D0%BD%D0%B8%D1%8E"><span class="tocnumber">5.3</span> <span class="toctext">Включение установленных юнитов по умолчанию</span></a></li>
-<li class="toclevel-2 tocsection-33"><a href="#%D0%9F%D0%B5%D1%81%D0%BE%D1%87%D0%BD%D0%B8%D1%86%D0%B0_%D0%B4%D0%BB%D1%8F_%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9"><span class="tocnumber">5.4</span> <span class="toctext">Песочница для приложений</span></a></li>
-<li class="toclevel-2 tocsection-34"><a href="#%D0%A3%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BE_%D0%BD%D0%B5%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D1%8E%D1%89%D0%B8%D1%85_%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0%D1%85"><span class="tocnumber">5.5</span> <span class="toctext">Уведомление о неработающих службах</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#%D0%9F%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B_%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_%D1%81_%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%BC_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%BE%D0%BC"><span class="tocnumber">5.1</span> <span class="toctext">Программы настройки с графическим интерфейсом</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BE%D0%B2_%D0%BF%D0%BE%D1%81%D0%BB%D0%B5_%D0%BF%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BA_%D1%81%D0%B5%D1%82%D0%B8"><span class="tocnumber">5.2</span> <span class="toctext">Запуск сервисов после подключения к сети</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#%D0%92%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2_%D0%BF%D0%BE_%D1%83%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D0%BD%D0%B8%D1%8E"><span class="tocnumber">5.3</span> <span class="toctext">Включение установленных юнитов по умолчанию</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#%D0%9F%D0%B5%D1%81%D0%BE%D1%87%D0%BD%D0%B8%D1%86%D0%B0_%D0%B4%D0%BB%D1%8F_%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9"><span class="tocnumber">5.4</span> <span class="toctext">Песочница для приложений</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#%D0%A3%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BE_%D0%BD%D0%B5%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D1%8E%D1%89%D0%B8%D1%85_%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0%D1%85"><span class="tocnumber">5.5</span> <span class="toctext">Уведомление о неработающих службах</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-35">
+<li class="toclevel-1 tocsection-30">
 <a href="#%D0%A0%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC"><span class="tocnumber">6</span> <span class="toctext">Решение проблем</span></a>
 <ul>
-<li class="toclevel-2 tocsection-36"><a href="#%D0%9D%D0%B5%D1%83%D0%B4%D0%B0%D1%87%D0%BD%D0%BE_%D0%B7%D0%B0%D0%BF%D1%83%D1%89%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5_%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B"><span class="tocnumber">6.1</span> <span class="toctext">Неудачно запущенные службы</span></a></li>
-<li class="toclevel-2 tocsection-37"><a href="#%D0%94%D0%B8%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D0%B0_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B"><span class="tocnumber">6.2</span> <span class="toctext">Диагностика загрузки системы</span></a></li>
-<li class="toclevel-2 tocsection-38"><a href="#%D0%94%D0%B8%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D0%B0_%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B"><span class="tocnumber">6.3</span> <span class="toctext">Диагностика службы</span></a></li>
-<li class="toclevel-2 tocsection-39"><a href="#%D0%92%D1%8B%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5/%D0%BF%D0%B5%D1%80%D0%B5%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0_%D0%BF%D1%80%D0%BE%D0%B8%D1%81%D1%85%D0%BE%D0%B4%D1%8F%D1%82_%D1%83%D0%B6%D0%B0%D1%81%D0%BD%D0%BE_%D0%B4%D0%BE%D0%BB%D0%B3%D0%BE"><span class="tocnumber">6.4</span> <span class="toctext">Выключение/перезагрузка происходят ужасно долго</span></a></li>
-<li class="toclevel-2 tocsection-40"><a href="#%D0%9F%D0%BE-%D0%B2%D0%B8%D0%B4%D0%B8%D0%BC%D0%BE%D0%BC%D1%83,_%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%D1%8B_%D1%81_%D0%BA%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%BC_%D1%81%D1%80%D0%BE%D0%BA%D0%BE%D0%BC_%D0%B6%D0%B8%D0%B7%D0%BD%D0%B8_%D0%BD%D0%B5_%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D1%8F%D1%8E%D1%82_%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B5%D0%B9_%D0%B2_%D0%BB%D0%BE%D0%B3%D0%B0%D1%85"><span class="tocnumber">6.5</span> <span class="toctext">По-видимому, процессы с кратким сроком жизни не оставляют записей в логах</span></a></li>
-<li class="toclevel-2 tocsection-41"><a href="#%D0%92%D1%80%D0%B5%D0%BC%D1%8F_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B_%D1%83%D0%B2%D0%B5%D0%BB%D0%B8%D1%87%D0%B8%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F_%D1%81_%D1%82%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%D0%BC_%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8"><span class="tocnumber">6.6</span> <span class="toctext">Время загрузки системы увеличивается с течением времени</span></a></li>
-<li class="toclevel-2 tocsection-42"><a href="#systemd-tmpfiles-setup.service_%D0%BD%D0%B5_%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%D0%B0%D0%B5%D1%82%D1%81%D1%8F_%D0%B2%D0%BE_%D0%B2%D1%80%D0%B5%D0%BC%D1%8F_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8"><span class="tocnumber">6.7</span> <span class="toctext">systemd-tmpfiles-setup.service не запускается во время загрузки</span></a></li>
-<li class="toclevel-2 tocsection-43"><a href="#%D0%9E%D1%82%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_emergency_mode_%D0%BD%D0%B0_%D1%83%D0%B4%D0%B0%D0%BB%D1%91%D0%BD%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B5"><span class="tocnumber">6.8</span> <span class="toctext">Отключение emergency mode на удалённой машине</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#%D0%9D%D0%B5%D1%83%D0%B4%D0%B0%D1%87%D0%BD%D0%BE_%D0%B7%D0%B0%D0%BF%D1%83%D1%89%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5_%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B"><span class="tocnumber">6.1</span> <span class="toctext">Неудачно запущенные службы</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#%D0%94%D0%B8%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D0%B0_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B"><span class="tocnumber">6.2</span> <span class="toctext">Диагностика загрузки системы</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#%D0%94%D0%B8%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D0%B0_%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B"><span class="tocnumber">6.3</span> <span class="toctext">Диагностика службы</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#%D0%92%D1%8B%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5/%D0%BF%D0%B5%D1%80%D0%B5%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0_%D0%BF%D1%80%D0%BE%D0%B8%D1%81%D1%85%D0%BE%D0%B4%D1%8F%D1%82_%D1%83%D0%B6%D0%B0%D1%81%D0%BD%D0%BE_%D0%B4%D0%BE%D0%BB%D0%B3%D0%BE"><span class="tocnumber">6.4</span> <span class="toctext">Выключение/перезагрузка происходят ужасно долго</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#%D0%9F%D0%BE-%D0%B2%D0%B8%D0%B4%D0%B8%D0%BC%D0%BE%D0%BC%D1%83,_%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%D1%8B_%D1%81_%D0%BA%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%BC_%D1%81%D1%80%D0%BE%D0%BA%D0%BE%D0%BC_%D0%B6%D0%B8%D0%B7%D0%BD%D0%B8_%D0%BD%D0%B5_%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D1%8F%D1%8E%D1%82_%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B5%D0%B9_%D0%B2_%D0%BB%D0%BE%D0%B3%D0%B0%D1%85"><span class="tocnumber">6.5</span> <span class="toctext">По-видимому, процессы с кратким сроком жизни не оставляют записей в логах</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#%D0%92%D1%80%D0%B5%D0%BC%D1%8F_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B_%D1%83%D0%B2%D0%B5%D0%BB%D0%B8%D1%87%D0%B8%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F_%D1%81_%D1%82%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%D0%BC_%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8"><span class="tocnumber">6.6</span> <span class="toctext">Время загрузки системы увеличивается с течением времени</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#systemd-tmpfiles-setup.service_%D0%BD%D0%B5_%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%D0%B0%D0%B5%D1%82%D1%81%D1%8F_%D0%B2%D0%BE_%D0%B2%D1%80%D0%B5%D0%BC%D1%8F_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8"><span class="tocnumber">6.7</span> <span class="toctext">systemd-tmpfiles-setup.service не запускается во время загрузки</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#%D0%9E%D1%82%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_emergency_mode_%D0%BD%D0%B0_%D1%83%D0%B4%D0%B0%D0%BB%D1%91%D0%BD%D0%BD%D0%BE%D0%B9_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B5"><span class="tocnumber">6.8</span> <span class="toctext">Отключение emergency mode на удалённой машине</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-44"><a href="#%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D0%B8%D1%82%D0%B5_%D1%82%D0%B0%D0%BA%D0%B6%D0%B5"><span class="tocnumber">7</span> <span class="toctext">Смотрите также</span></a></li>
+<li class="toclevel-1 tocsection-39"><a href="#%D0%A1%D0%BC%D0%BE%D1%82%D1%80%D0%B8%D1%82%D0%B5_%D1%82%D0%B0%D0%BA%D0%B6%D0%B5"><span class="tocnumber">7</span> <span class="toctext">Смотрите также</span></a></li>
 </ul>
 </div>
 
 <h2>
 <span id=".D0.9E.D1.81.D0.BD.D0.BE.D0.B2.D1.8B_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D1.8F_systemctl"></span><span class="mw-headline" id="Основы_использования_systemctl">Основы использования systemctl</span>
 </h2>
-<p>Главная команда для мониторинга и управления systemd — <i>systemctl</i>. Некоторые из вариантов её использования связаны с изучением состояния системы и управлением системой и службами. Подробнее смотрите руководство  <span class="plainlinks archwiki-template-man" title="$ man 1 systemctl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemctl.1">systemctl(1)</a></span>.
+<p>Главная команда для работы с systemd — <i>systemctl</i>. Она позволяет (среди прочего) отлеживать состояние системы и управлять системой и службами. Подробнее см. <span class="plainlinks archwiki-template-man" title="$ man 1 systemctl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemctl.1">systemctl(1)</a></span>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Совет:</strong> 
 <ul>
-<li>Чтобы управлять systemd на удаленной машине, выполняйте команды systemd с ключом <code>-H <i>пользователь</i>@<i>хост</i></code>. В этом случае для соединения с удаленным процессом systemd будет использоваться <a href="../ru/OpenSSH.html" title="OpenSSH (Русский)">SSH</a>.</li>
-<li>В <a href="../ru/KDE.html#KDE_Plasma" title="KDE (Русский)">Plasma</a> для systemctl разработан графический интерфейс <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-kcm/">systemd-kcm</a></span><sup><small>AUR</small></sup>.</li>
+<li>Для управления systemd на удалённой машине команды необходимо выполнять с ключом <code>-H <i>пользователь</i>@<i>хост</i></code>. Соединение с удалённым процессом systemd будет установлено через <a href="../ru/OpenSSH.html" title="OpenSSH (Русский)">SSH</a>.</li>
+<li>В <a href="../ru/KDE.html#KDE_Plasma" title="KDE (Русский)">Plasma</a> для systemctl разработан графический интерфейс <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-kcm/">systemd-kcm</a></span><sup><small>AUR</small></sup>. После установки соответствующий модуль появится в разделе <i>System administration</i>.</li>
 </ul>
 </div>
-<h3>
-<span id=".D0.90.D0.BD.D0.B0.D0.BB.D0.B8.D0.B7_.D1.81.D0.BE.D1.81.D1.82.D0.BE.D1.8F.D0.BD.D0.B8.D1.8F_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B"></span><span class="mw-headline" id="Анализ_состояния_системы">Анализ состояния системы</span>
-</h3>
-<p>Показать <b>состояние системы</b>:
-</p>
-<pre>$ systemctl status
-</pre>
-<p><b>Список запущенных</b> юнитов:
-</p>
-<pre>$ systemctl
-</pre>
-<p>или:
-</p>
-<pre>$ systemctl list-units
-</pre>
-<p><b>Список неудач</b> — список юнитов, запуск которых не удался:
-</p>
-<pre>$ systemctl --failed
-</pre>
-<p>Файлы юнитов находятся в каталогах <code>/usr/lib/systemd/system/</code> и <code>/etc/systemd/system/</code> (второй каталог имеет приоритет). <b>Список установленных</b> файлов юнитов можно узнать командой:
-</p>
-<pre>$ systemctl list-unit-files
-</pre>
-<p>Показать cgroup slice, занимаемую память и родителя процесса по его PID:
-</p>
-<pre>$ systemctl status <i>pid</i>
-</pre>
 <h3>
 <span id=".D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2"></span><span class="mw-headline" id="Использование_юнитов">Использование юнитов</span>
 </h3>
 <p>Юнитами могут быть, например, службы (<i>.service</i>), точки монтирования (<i>.mount</i>), устройства (<i>.device</i>) или сокеты (<i>.socket</i>).
 </p>
-<p>При использовании systemctl обычно нужно указывать полное имя файла юнита, включая суффикс, например <code>sshd.socket</code>. Но есть несколько возможных сокращений:
+<p>При работе с systemctl обычно необходимо указывать полное имя юнита с суффиксом, например, <code>sshd.socket</code>. Существует несколько возможных сокращений:
 </p>
 <ul>
-<li>Если суффикс не указать, systemctl предполагает, что это <i>.service</i>. Например, <code>netctl</code> и <code>netctl.service</code> будут трактоваться одинаково.</li>
-<li>Точки монтирования автоматически преобразуются в юнит <i>.mount</i>. Например, указание <code>/home</code> равнозначно <code>home.mount</code>.</li>
-<li>Как и точки монтирования, имена устройств автоматически преобразуются в юнит <i>.device</i>, поэтому указание <code>/dev/sda2</code> соответствует юниту <code>dev-sda2.device</code>.</li>
+<li>Если суффикс не указан, systemctl предполагает, что это <i>.service</i>. Например, <code>netctl</code> равнозначно <code>netctl.service</code>.</li>
+<li>Точки монтирования автоматически преобразуются в юнит <i>.mount</i>. Например, <code>/home</code> равнозначно <code>home.mount</code>.</li>
+<li>Аналогично точкам монтрования, имена устройств автоматически преобразуются в юнит <i>.device</i>. Например, <code>/dev/sda2</code> равнозначно <code>dev-sda2.device</code>.</li>
 </ul>
-<p>Подробнее смотрите руководство <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5">systemd.unit(5)</a></span>.
+<p>Подробнее см. <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5">systemd.unit(5)</a></span>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Примечание:</strong> Некоторые юниты содержат в названии символ <code>@</code> (например, <code>название@<i>строка</i>.service</code>). Это означает, что они являются <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects/instances.html">экземплярами</a> юнита-шаблона, настоящее имя которого не содержит части <code><i>строка</i></code> (т.е. <code>название@.service</code>). Часть <code><i>строка</i></code> называется идентификатором экземпляра и является аргументом, передаваемым юниту-шаблону при вызове команды systemctl: в файле юнита идентификатор заменит указание <code>%i</code>.
-<p>Если говорить точнее, systemd сначала попытается найти юнит, название которого полностью совпадёт с <code>имя@строка.суффикс</code>, и лишь в случае неудачи создаст экземпляр шаблона <code>имя@.суффикс</code>. Тем не менее, такие "конфликты" довольно редки, так как по соглашению символ <code>@</code> используется только в названиях юнитов-шаблонов. Также помните, что вызвать юнит-шаблон без идентификатора экземпляра не получится, поскольку в этом случае нечем будет заменить спецификатор <code>%i</code>.
+<strong>Примечание:</strong> Некоторые юниты содержат в названии символ <code>@</code> (вида <code>название@<i>строка</i>.service</code>). Это т.н. <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects/instances.html">экземпляры</a> юнита-шаблона, настоящее имя которого не содержит части <code><i>строка</i></code> (т.е. имеет вид <code>название@.service</code>). <code><i>строка</i></code> называется идентификатором экземпляра и передаётся юниту-шаблону в качестве аргумента при вызове systemctl: в файле юнита идентификатор заменит спецификатор <code>%i</code>.
+<p>Если говорить точнее, systemd сначала попытается найти юнит, название которого полностью совпадёт с <code>название@<i>строка</i>.суффикс</code>, и лишь в случае неудачи создаст экземпляр шаблона <code>название@.суффикс</code>. Тем не менее, такие "конфликты" довольно редки, так как по соглашению символ <code>@</code> должен использоваться только в названиях юнитов-шаблонов. Также помните, что вызвать юнит-шаблон без идентификатора экземпляра не получится, поскольку в этом случае нечего будет подставить вместо спецификатора <code>%i</code>.
 </p>
 </div>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Совет:</strong> 
 <ul>
-<li>Большинство команд ниже также будут работать, если указать несколько юнитов, см. <span class="plainlinks archwiki-template-man" title="$ man 1 systemctl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemctl.1">systemctl(1)</a></span>.</li>
-<li>Опция <code>--now</code> может использоваться в командах <code>enable</code>, <code>disable</code> и <code>mask</code>, чтобы соответственно запустить, остановить или маскировать указанный юнит сразу при выполнении команды, а не после перезагрузки.</li>
-<li>Пакеты могут содержать собственные юниты для различных целей. Если вы только что установили пакет, воспользуйтесь командой <code>pacman -Qql <i>название_пакета</i> | grep -Fe .service -e .socket</code>, чтобы их найти.</li>
+<li>Большинство команд ниже также будут работать, если указать несколько юнитов; подробнее см. <span class="plainlinks archwiki-template-man" title="$ man 1 systemctl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemctl.1">systemctl(1)</a></span>.</li>
+<li>Опция <code>--now</code> в командах <code>enable</code>, <code>disable</code> и <code>mask</code> соответственно запускает, останавливает или маскировует указанный юнит сразу при выполнении команды, а не после перезагрузки.</li>
+<li>Пакеты могут содержать собственные юниты для различных целей. Если вы только что установили пакет, выполните <code>pacman -Qql <i>название_пакета</i> | grep -Fe .service -e .socket</code>, чтобы их найти.</li>
 </ul>
 </div>
-<h4>
-<span id=".D0.9F.D1.80.D0.BE.D0.B2.D0.B5.D1.80.D0.BA.D0.B0"></span><span class="mw-headline" id="Проверка">Проверка</span>
-</h4>
-<p>Показать связанную с юнитом <b>страницу руководства</b> (если юнит её предоставляет):
-</p>
-<pre>$ systemctl help <i>юнит</i>
-</pre>
-<p>Показать <b>статус</b> юнита, в том числе работает он в данный момент или нет:
-</p>
-<pre>$ systemctl status <i>юнит</i>
-</pre>
-<p><b>Проверить</b>, добавлен ли юнит в автозапуск:
-</p>
-<pre>$ systemctl is-enabled <i>юнит</i>
-</pre>
-<h4>
-<span id=".D0.97.D0.B0.D0.BF.D1.83.D1.81.D0.BA.2C_.D0.BF.D0.B5.D1.80.D0.B5.D0.B7.D0.B0.D0.BF.D1.83.D1.81.D0.BA.2C_.D0.BF.D0.B5.D1.80.D0.B5.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B0"></span><span class="mw-headline" id="Запуск,_перезапуск,_перезагрузка">Запуск, перезапуск, перезагрузка</span>
-</h4>
-<p>Незамедлительно <b>запустить</b> юнит:
-</p>
-<pre># systemctl start <i>юнит</i>
-</pre>
-<p>Незамедлительно <b>остановить</b> юнит:
-</p>
-<pre># systemctl stop <i>юнит</i>
-</pre>
-<p><b>Перезапустить</b> юнит:
-</p>
-<pre># systemctl restart <i>юнит</i>
-</pre>
-<p><b>Перезагрузить</b> юнит с новыми настройками:
-</p>
-<pre># systemctl reload <i>юнит</i>
-</pre>
-<p><b>Перезагрузить менеджер настроек</b> systemd, просканировав систему на наличие новых или изменённых юнитов:
-</p>
-<pre># systemctl daemon-reload
-</pre>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Примечание:</strong> Эта команда перезагружает только настройки systemd и не просит юниты перезагрузить их собственные настройки; в последнем случае необходимо использовать команду <i>reload</i> (см. выше).
-</div>
-<h4>
-<span id=".D0.90.D0.B2.D1.82.D0.BE.D0.B7.D0.B0.D0.BF.D1.83.D1.81.D0.BA"></span><span class="mw-headline" id="Автозапуск">Автозапуск</span>
-</h4>
-<p><b>Добавить</b> юнит в автозапуск:
-</p>
-<pre># systemctl enable <i>юнит</i>
-</pre>
-<p><b>Добавить</b> юнит в автозапуск и <b>запустить</b> незамедлительно:
-</p>
-<pre># systemctl enable --now <i>юнит</i>
-</pre>
-<p><b>Удалить</b> юнит из автозапуска:
-</p>
-<pre># systemctl disable <i>юнит</i>
-</pre>
-<h4>
-<span id=".D0.9C.D0.B0.D1.81.D0.BA.D0.B8.D1.80.D0.BE.D0.B2.D0.BA.D0.B0"></span><span class="mw-headline" id="Маскировка">Маскировка</span>
-</h4>
-<p><b>Маскировать</b> юнит, чтобы сделать невозможным его запуск (как вручную, так и в качестве зависимости, что делает маскировку несколько опасной): 
-</p>
-<pre># systemctl mask <i>юнит</i> 
-</pre>
-<p><b>Снять маскировку</b> юнита: 
-</p>
-<pre># systemctl unmask <i>юнит</i>
-</pre>
+<table class="wikitable">
+<tbody>
+<tr>
+<th>Действие</th>
+<th>Команда</th>
+<th>Примечание
+</th>
+</tr>
+<tr>
+<th colspan="3">Анализ состояния системы
+</th>
+</tr>
+<tr>
+<td>Показать <b>состояние системы</b>
+</td>
+<td><code>$ systemctl status</code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<b>Список запущенных</b> юнитов</td>
+<td>
+<code>$ systemctl</code> или<br><code>$ systemctl list-units</code>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>Список юнитов, запустить которые <b>не удалось</b>
+</td>
+<td><code>$ systemctl --failed</code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<b>Список установленных</b> файлов юнитов<sup>1</sup>
+</td>
+<td><code>$ systemctl list-unit-files</code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<b>Показать информацию о процессе</b> по его PID</td>
+<td><code>$ systemctl status <i>pid</i></code></td>
+<td>
+<a href="../en/Cgroups.html" title="Cgroups">cgroup slice</a>, занимаемая память и родительский процесс
+</td>
+</tr>
+<tr>
+<th colspan="3">Состояние юнита
+</th>
+</tr>
+<tr>
+<td>Показать связанную с юнитом <b>страницу руководства</b>
+</td>
+<td><code>$ systemctl help <i>юнит</i></code></td>
+<td>если юнит её предоставляет
+</td>
+</tr>
+<tr>
+<td>Показать <b>состояние юнита</b>
+</td>
+<td><code>$ systemctl status <i>юнит</i></code></td>
+<td>в т. ч. работает ли он в данный момент
+</td>
+</tr>
+<tr>
+<td>
+<b>Проверить</b>, добавлен ли юнит в автозапуск</td>
+<td><code>$ systemctl is-enabled <i>юнит</i></code></td>
+<td>
+</td>
+</tr>
+<tr>
+<th colspan="3">Запуск, перезапуск, перезагрузка юнита
+</th>
+</tr>
+<tr>
+<td>Незамедлительно <b>запустить</b> юнит</td>
+<td><code># systemctl start <i>юнит</i></code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>Незамедлительно <b>остановить</b> юнит</td>
+<td><code># systemctl stop <i>юнит</i></code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<b>Перезапустить</b> юнит</td>
+<td><code># systemctl restart <i>юнит</i></code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<b>Перезагрузить</b> юнит с новыми настройками</td>
+<td><code># systemctl reload <i>юнит</i></code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<b>Перезагрузить настройки systemd</b><sup>2</sup>
+</td>
+<td><code># systemctl daemon-reload</code></td>
+<td>сканировать систему на наличие новых или изменённых юнитов
+</td>
+</tr>
+<tr>
+<th colspan="3">Включение юнита (автозапуск)
+</th>
+</tr>
+<tr>
+<td>
+<b>Включить</b> юнит (т.е. добавить его в автозапуск)</td>
+<td><code># systemctl enable <i>юнит</i></code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<b>Включить</b> юнит и сразу <b>запустить</b>
+</td>
+<td><code># systemctl enable --now <i>юнит</i></code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<b>Отключить</b> юнит</td>
+<td><code># systemctl disable <i>юнит</i></code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<b>Включить</b> юнит <b>заново</b><sup>3</sup>
+</td>
+<td><code># systemctl reenable <i>юнит</i></code></td>
+<td>т.е. отключить и снова включить
+</td>
+</tr>
+<tr>
+<th colspan="3">Маскировка юнита
+</th>
+</tr>
+<tr>
+<td>
+<b>Замаскировать</b> юнит, сделав невозможным его запуск<sup>4</sup>
+</td>
+<td><code># systemctl mask <i>юнит</i></code></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<b>Снять маскировку</b> юнита</td>
+<td><code># systemctl unmask <i>юнит</i></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>В руководстве <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5#UNIT_FILE_LOAD_PATH">systemd.unit(5) § UNIT FILE LOAD PATH</a></span> приведён перечень каталогов, в которых могут храниться файлы юнитов.</li>
+<li>Перезагружаются только настройки systemd, но не юнитов. Для юнитов необходимо использовать команду <i>reload</i>.</li>
+<li>Например, если раздел <code>[Install]</code> изменился с момента последнего включения.</li>
+<li>Как вручную, так и по зависимости, что делает маскировку несколько опасной.</li>
+</ol>
 <h3>
 <span id=".D0.A3.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BF.D0.B8.D1.82.D0.B0.D0.BD.D0.B8.D0.B5.D0.BC"></span><span class="mw-headline" id="Управление_питанием">Управление питанием</span>
 </h3>
-<p>Для управления питанием от имени непривилегированного пользователя необходим <a href="../en/Polkit.html" class="mw-redirect" title="Polkit (Русский)">polkit</a>. Если вы находитесь в локальной пользовательской сессии <i>systemd-logind</i> и нет других активных сессий, приведенные ниже команды сработают, даже если они будут выполнены не от root. В противном случае (например, если другой пользователь вошел в систему в tty), systemd автоматически запросит у вас пароль суперпользователя.
+<p>Для управления питанием от имени непривилегированного пользователя необходим <a href="../en/Polkit.html" class="mw-redirect" title="Polkit (Русский)">polkit</a>. Если вы находитесь в локальном пользовательском сеансе <i>systemd-logind</i> и нет других активных сеансов, приведенные ниже команды сработают, даже если будут выполнены не от root. В противном случае (например, другой пользователь вошел в систему через tty) systemd автоматически запросит у вас пароль суперпользователя.
 </p>
-<p>Завершить работу и перезагрузить систему:
-</p>
-<pre>$ systemctl reboot
-</pre>
-<p>Завершить работу и выключить компьютер (с отключением питания):
-</p>
-<pre>$ systemctl poweroff
-</pre>
-<p>Перевести систему в ждущий режим:
-</p>
-<pre>$ systemctl suspend
-</pre>
-<p>Перевести систему в спящий режим:
-</p>
-<pre>$ systemctl hibernate
-</pre>
-<p>Перевести систему в режим гибридного сна (или suspend-to-both):
-</p>
-<pre>$ systemctl hybrid-sleep
-</pre>
+<table class="wikitable">
+<tbody>
+<tr>
+<th>Действие</th>
+<th>Команда
+</th>
+</tr>
+<tr>
+<td>Завершить работу и перезагрузить систему</td>
+<td>
+<code>$ systemctl reboot</code>
+</td>
+</tr>
+<tr>
+<td>Завершить работу и выключить компьютер</td>
+<td>
+<code>$ systemctl poweroff</code>
+</td>
+</tr>
+<tr>
+<td>Перевести систему в ждущий режим</td>
+<td>
+<code>$ systemctl suspend</code>
+</td>
+</tr>
+<tr>
+<td>Перевести систему в спящий режим</td>
+<td>
+<code>$ systemctl hibernate</code>
+</td>
+</tr>
+<tr>
+<td>Перевести систему в режим гибридного сна (suspend-to-both)</td>
+<td>
+<code>$ systemctl hybrid-sleep</code>
+</td>
+</tr>
+</tbody>
+</table>
 <h2>
 <span id=".D0.9D.D0.B0.D0.BF.D0.B8.D1.81.D0.B0.D0.BD.D0.B8.D0.B5_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2"></span><span class="mw-headline" id="Написание_файлов_юнитов">Написание файлов юнитов</span>
 </h2>
-<p>Синтаксис файлов юнитов systemd (см. <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5">systemd.unit(5)</a></span>) вдохновлён <a href="../ru/Desktop_entries.html" title="Desktop entries (Русский)">файлами .desktop XDG Desktop Entry Specification</a>, а они, в свою очередь — <a href="https://en.wikipedia.org/wiki/ru:.ini" class="extiw" title="wikipedia:ru:.ini">файлами .ini Microsoft Windows</a>. Файлы юнитов загружаются из разных мест (чтобы увидеть полный список, запустите <code>systemctl show --property=UnitPath</code>), основные из них перечислены ниже (в порядке увеличения приоритета):
+<p>Синтаксис файлов юнитов systemd (см. <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5">systemd.unit(5)</a></span>) вдохновлён <a href="../ru/Desktop_entries.html" title="Desktop entries (Русский)">desktop-файлами</a> XDG Desktop Entry Specification, а они, в свою очередь, основаны на синтаксисе <a href="https://en.wikipedia.org/wiki/ru:.ini" class="extiw" title="wikipedia:ru:.ini">файлов .ini</a> Microsoft Windows. Файлы юнитов загружаются из целого ряда мест (команда <code>systemctl show --property=UnitPath</code> выведет полный список), ключевыми из которых являются следующие (в порядке увеличения приоритета):
 </p>
 <ul>
 <li>
-<code>/usr/lib/systemd/system/</code>: юниты, предоставляемые пакетами при их установке;</li>
+<code>/usr/lib/systemd/system/</code>: юниты, добавленные пакетами при установке;</li>
 <li>
-<code>/etc/systemd/system/</code>: юниты, устанавливаемые системным администратором.</li>
+<code>/etc/systemd/system/</code>: юниты, созданные системным администратором.</li>
 </ul>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Примечание:</strong> 
 <ul>
-<li>При запуске systemd в <a href="../ru/1f5394a42ce1ed8bac6cd0b28f1245e6.html#%D0%9A%D0%B0%D0%BA_%D1%8D%D1%82%D0%BE_%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%B5%D1%82" class="mw-redirect" title="Systemd/Пользователь">пользовательском режиме</a> используются совершенно другие пути загрузки.</li>
-<li>Названия юнитов могут содержать только буквы и цифры ASCII, нижнее подчёркивание и точки. Другие символы должны быть экранированы в C-стиле "\x2d" или использоваться в рамках определённой семантики ('@', '-'). Подробнее смотрите <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5">systemd.unit(5)</a></span> и <span class="plainlinks archwiki-template-man" title="$ man 1 systemd-escape"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-escape.1">systemd-escape(1)</a></span>.</li>
+<li>При запуске systemd в <a href="../ru/1f5394a42ce1ed8bac6cd0b28f1245e6.html#%D0%9A%D0%B0%D0%BA_%D1%8D%D1%82%D0%BE_%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%B5%D1%82" class="mw-redirect" title="Systemd/Пользователь">пользовательском режиме</a> пути загрузки будут отличаться.</li>
+<li>Названия юнитов могут содержать только буквы и цифры ASCII-набора, подчёркивания и точки. Другие символы должны быть экранированы в C-стиле ("\x2d") или использоваться исключительно в рамках определённой семантики ('@', '-'). Подробнее см. <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.unit.5">systemd.unit(5)</a></span> и <span class="plainlinks archwiki-template-man" title="$ man 1 systemd-escape"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-escape.1">systemd-escape(1)</a></span>.</li>
 </ul>
 </div>
-<p>При создании собственных файлов за образец можно взять юниты установленных пакетов или примеры из <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.service"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.service.5#EXAMPLES">systemd.service(5) § EXAMPLES</a></span>. 
+<p>При создании собственных юнитов за образец можно взять юниты установленных пакетов или примеры из <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.service"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.service.5#EXAMPLES">systemd.service(5) § EXAMPLES</a></span>. 
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Совет:</strong> Как и обычно, вы можете добавлять комментарии, предваряемые символом <code>#</code>, но только на отдельных строках. Не используйте комментарии в конце строки, после параметров systemd, иначе юнит не будет работать.
+<strong>Совет:</strong> Комментарии в файлах юнитов должны начинаться с символа <code>#</code> и размещаться на отдельной строке. Не используйте комментарии в конце строки, после параметров <i>systemd</i>, иначе юнит не будет работать.
 </div>
 <h3>
 <span id=".D0.9E.D0.B1.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D0.B0_.D0.B7.D0.B0.D0.B2.D0.B8.D1.81.D0.B8.D0.BC.D0.BE.D1.81.D1.82.D0.B5.D0.B9"></span><span class="mw-headline" id="Обработка_зависимостей">Обработка зависимостей</span>
 </h3>
-<p>В systemd зависимости могут быть определены правильным построением файлов юнитов. Простой пример — юниту <i>A</i> требуется, чтобы юнит <i>B</i> был запущен перед запуском самого юнита <i>A</i>. В этом случае добавьте строки <code>Requires=<i>B</i></code> и <code>After=<i>B</i></code> в раздел <code>[Unit]</code> юнит-файла <i>A</i>. Если подобная зависимость не является обязательной, вместо этих строк укажите <code>Wants=<i>B</i></code> и <code>After=<i>B</i></code> соответственно. Обратите внимание, что <code>Wants=</code> и <code>Requires=</code> не подразумевают <code>After=</code>, что означает, что если <code>After=</code> не указано, то юниты будут запущены параллельно.
+<p>В <i>systemd</i> зависимости определяются правильным построением файлов юнитов. Простой пример — юниту <i>A</i> требуется, чтобы юнит <i>B</i> был запущен перед запуском самого юнита <i>A</i>. Для этого добавьте строки <code>Requires=<i>B</i></code> и <code>After=<i>B</i></code> в раздел <code>[Unit]</code> юнит-файла <i>A</i>. Если зависимость является необязательной, укажите <code>Wants=<i>B</i></code> и <code>After=<i>B</i></code> соответственно. Обратите внимание, что <code>Wants=</code> и <code>Requires=</code> не подразумевают <code>After=</code>. Если <code>After=</code> не указать, то юниты будут запущены параллельно.
 </p>
-<p>Обычно зависимости указываются в файлах служб, а не в целевых (<i>.target</i>) юнитах. Например, <code>network.target</code> потребуется любой службе, которая связана с настройкой сетевых интерфейсов, поэтому в любом случае определите загрузку вашего пользовательского юнита после запуска <code>network.target</code>.
+<p>Зависимости обычно указываются для служб, но не для <a href="#%D0%A6%D0%B5%D0%BB%D0%B8">целей</a>. Так, цель <code>network.target</code> будет "подтянута" ещё на этапе настройки сетевых интерфейсов одной из соответствующих служб, и можно спокойно указывать эту цель как зависимость в пользовательской службе, поскольку <code>network.target</code> будет запущена в любом случае.
 </p>
 <h3>
 <span id=".D0.A2.D0.B8.D0.BF.D1.8B_.D1.81.D0.BB.D1.83.D0.B6.D0.B1"></span><span class="mw-headline" id="Типы_служб">Типы служб</span>
 </h3>
-<p>Есть несколько типов запуска служб, которые нужно иметь в виду при написании файла службы. Тип определяется параметром <code>Type=</code> в разделе <code>[Service]</code>:
+<p>Службы различаются по типу запуска, и это следует учитывать при написании юнитов. Тип определяется параметром <code>Type=</code> в разделе <code>[Service]</code>:
 </p>
 <ul>
 <li>
-<code>Type=simple</code> (по умолчанию): systemd запустит эту службу незамедлительно. Процесс при этом не должен разветвляться (fork). Не используйте этот тип, если другие службы зависят от этой в плане очередности запуска. Исключение — активация сокета.</li>
+<code>Type=simple</code> (по умолчанию): <i>systemd</i> запустит эту службу незамедлительно. Процесс при этом не должен разветвляться (fork). Если после данной службы должны запускаться другие, то этот тип использовать не стоит (исключение — служба использует сокетную активацию).</li>
 <li>
-<code>Type=forking</code>: systemd считает службу запущенной после того, как процесс разветвляется с завершением родительского процесса. Используйте данный тип для запуска классических демонов за исключением тех случаев, когда в таком поведении процесса нет необходимости. Вам следует также указать <code>PIDFile=</code>, чтобы systemd мог отслеживать основной процесс.</li>
+<code>Type=forking</code>: <i>systemd</i> считает службу запущенной после того, как процесс разветвляется с завершением родительского процесса. Используется для запуска классических демонов за исключением тех случаев, когда в таком поведении процесса нет необходимости. Укажите параметр <code>PIDFile=</code>, чтобы <i>systemd</i> мог отслеживать основной процесс.</li>
 <li>
-<code>Type=oneshot</code>: удобен для скриптов, которые выполняют одно задание и завершаются. При необходимости можно задать параметр <code>RemainAfterExit=yes</code>, чтобы systemd считал процесс активным даже после его завершения.</li>
+<code>Type=oneshot</code>: удобен для сценариев, которые выполняют одно задание и завершаются. Если задать параметр <code>RemainAfterExit=yes</code>, то <i>systemd</i> будет считать процесс активным даже после его завершения.</li>
 <li>
-<code>Type=notify</code>: идентичен параметру <code>Type=simple</code>, но с той оговоркой, что демон пошлет systemd сигнал о своей готовности. Эталонная реализация данного уведомления представлена в <i>libsystemd-daemon.so</i>.</li>
+<code>Type=notify</code>: идентичен параметру <code>Type=simple</code>, но с уточнением, что демон пошлет <i>systemd</i> сигнал готовности. Реализация уведомления находится в библиотеке <i>libsystemd-daemon.so</i>.</li>
 <li>
-<code>Type=dbus</code>: служба считается находящейся в состоянии готовности, когда указанный параметр <code>BusName</code> появляется в системной шине DBus.</li>
+<code>Type=dbus</code>: служба считается находящейся в состоянии готовности после появления указанного <code>BusName</code> в системной шине DBus.</li>
 <li>
-<code>Type=idle</code>: systemd отложит выполнение двоичного файла службы до момента выполнения всех остальных задач. В остальном поведение аналогично <code>Type=simple</code>.</li>
+<code>Type=idle</code>: <i>systemd</i> отложит выполнение двоичного файла службы до окончания запуска остальных ("более срочных") задач. В остальном поведение аналогично <code>Type=simple</code>.</li>
 </ul>
-<p>Подробнее о параметре <code>Type</code> смотрите <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.service"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.service.5#OPTIONS">systemd.service(5) § OPTIONS</a></span>.
+<p>Подробнее о параметре <code>Type</code> см. <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.service"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.service.5#OPTIONS">systemd.service(5) § OPTIONS</a></span>.
 </p>
 <h3>
-<span id=".D0.A0.D0.B5.D0.B4.D0.B0.D0.BA.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BF.D1.80.D0.B5.D0.B4.D0.BE.D1.81.D1.82.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.BD.D1.8B.D1.85_.D0.BF.D0.B0.D0.BA.D0.B5.D1.82.D0.B0.D0.BC.D0.B8_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2"></span><span class="mw-headline" id="Редактирование_предоставленных_пакетами_файлов_юнитов">Редактирование предоставленных пакетами файлов юнитов</span>
+<span id=".D0.A0.D0.B5.D0.B4.D0.B0.D0.BA.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2"></span><span class="mw-headline" id="Редактирование_файлов_юнитов">Редактирование файлов юнитов</span>
 </h3>
-<p>Не стоит редактировать юнит-файлы пакетов напрямую, так как это приведёт к конфликтам с pacman. Есть два безопасных способа редактирования: создать новый файл, который полностью <a href="#%D0%97%D0%B0%D0%BC%D0%B5%D0%BD%D0%B0_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%B0">заменит</a> оригинальный, или создать <a href="#Drop-in_%D1%84%D0%B0%D0%B9%D0%BB%D1%8B">drop-in файл</a>, который применяется поверх оригинального файла из пакета. В обоих методах, в конце нужно перезагрузить юнит, чтобы изменения применились. Это выполняется либо путем редактирования блока с помощью команды <code>systemctl edit</code>, которая автоматически перезагружает юнит, либо перезагрузкой всех юнитов командой:
+<p>Не стоит редактировать юнит-файлы пакетов напрямую, так как это приведёт к конфликтам с pacman. Есть два безопасных способа редактирования: создать новый файл, который полностью <a href="#%D0%97%D0%B0%D0%BC%D0%B5%D1%89%D0%B5%D0%BD%D0%B8%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D0%B0_%D1%8E%D0%BD%D0%B8%D1%82%D0%B0">заменит</a> оригинальный, или создать <a href="#Drop-in_%D1%84%D0%B0%D0%B9%D0%BB%D1%8B">drop-in файл</a>, который будет применяться поверх оригинального юнита. В обоих случаях после редактирования необходимо перезагрузить юнит, чтобы изменения вступили в силу. Это выполняется либо путем редактирования блока с помощью команды <code>systemctl edit</code>, которая автоматически перезагружает юнит, либо перезагрузкой всех юнитов командой:
 </p>
 <pre># systemctl daemon-reload
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Совет:</strong> 
 <ul>
-<li>Вы можете использовать <i>systemd-delta</i>, чтобы увидеть, какие файлы юнитов были переопределены и что конкретно было изменено.</li>
-<li>Используйте <code>systemctl cat <i>юнит</i></code> для посмотра содержимого файлов юнитов и связанных с ними drop-in сниппетов.</li>
+<li>С помощью <i>systemd-delta</i> можно узнать, какие файлы юнитов были переопределены и что конкретно было изменено.</li>
+<li>Команда <code>systemctl cat <i>юнит</i></code> позволит просмотреть содержимое файла юнита и связанных с ним drop-in сниппетов.</li>
 </ul>
 </div>
 <h4>
-<span id=".D0.97.D0.B0.D0.BC.D0.B5.D0.BD.D0.B0_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.B0"></span><span class="mw-headline" id="Замена_файлов_юнита">Замена файлов юнита</span>
+<span id=".D0.97.D0.B0.D0.BC.D0.B5.D1.89.D0.B5.D0.BD.D0.B8.D0.B5_.D1.84.D0.B0.D0.B9.D0.BB.D0.B0_.D1.8E.D0.BD.D0.B8.D1.82.D0.B0"></span><span class="mw-headline" id="Замещение_файла_юнита">Замещение файла юнита</span>
 </h4>
-<p>Чтобы полностью заменить файл юнита <code>/usr/lib/systemd/system/<i>юнит</i></code>, создайте файл с таким же именем <code>/etc/systemd/system/<i>юнит</i></code> и перезапустите юнит для обновления символических ссылок:
+<p>Чтобы полностью заместить файл юнита <code>/usr/lib/systemd/system/<i>юнит</i></code>, создайте файл с таким же именем <code>/etc/systemd/system/<i>юнит</i></code> и <a href="#%D0%90%D0%B2%D1%82%D0%BE%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA">включите юнит заново</a> для обновления символических ссылок.
 </p>
-<pre># systemctl reenable <i>юнит</i>
-</pre>
-<p>В качестве альтернативы, можно выполнить:
+<p>Альтернативный способ:
 </p>
 <pre># systemctl edit --full <i>юнит</i>
 </pre>
-<p>Эта команда откроет файл <code>/etc/systemd/system/<i>юнит</i></code> в вашем текстовом редакторе (если файл ещё не существует, будет скопирован оригинальный файл из пакета в качестве основы) и автоматически перезагрузит его, когда вы закончите редактирование.
+<p>Эта команда откроет файл <code>/etc/systemd/system/<i>юнит</i></code> в текстовом редакторе (если файл ещё не существует, будет скопирован оригинал) и автоматически перезагрузит юнит после завершения редактирования.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Примечание:</strong> Pacman не обновит заменённые файлы юнита, в отличие от оригинальных, которые обновятся. Так что этот метод может сделать обслуживание системы более сложным. По этой причине рекомендуется подход, описанный в следующем разделе.
+<strong>Примечание:</strong> Новые изменённые юниты продолжат работать даже после того, как pacman обновит оригинальные юниты в будущем. Это может усложнить обслуживание системы, поэтому предпочтительнее использовать подход, описанный в следующем разделе.
 </div>
 <h4>
 <span id="Drop-in_.D1.84.D0.B0.D0.B9.D0.BB.D1.8B"></span><span class="mw-headline" id="Drop-in_файлы">Drop-in файлы</span>
@@ -394,15 +484,15 @@
 </p>
 <pre># systemctl edit <i>юнит</i>
 </pre>
-<p>Она откроет <code>/etc/systemd/system/<i>юнит</i>.d/override.conf</code> в вашем текстовом редакторе (файл будет создан, если его ещё нет) и автоматически перезапустит юнит, когда вы закончите редактирование.
+<p>Команда откроет <code>/etc/systemd/system/<i>юнит</i>.d/override.conf</code> в текстовом редакторе (файл будет создан, если его ещё нет) и автоматически перезапустит юнит после завершения редактирования.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Примечание:</strong> Не все опции могут быть заменены в drop-in файле. Например, для изменения опции <code>Conflicts=</code> понадобится создать полную замену файла юнита, как описано в предыдущем разделе.
+<strong>Примечание:</strong> Не все опции могут быть заменены в drop-in файле. Например, для изменения опции <code>Conflicts=</code> <a rel="nofollow" class="external text" href="https://lists.freedesktop.org/archives/systemd-devel/2017-June/038976.html">придётся создать</a> полную замену файла юнита (см. предыдущий раздел).
 </div>
 <h4>
-<span id=".D0.92.D0.BE.D0.B7.D0.B2.D1.80.D0.B0.D1.89.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BE.D1.80.D0.B8.D0.B3.D0.B8.D0.BD.D0.B0.D0.BB.D1.8C.D0.BD.D0.BE.D0.B9_.D0.B2.D0.B5.D1.80.D1.81.D0.B8.D0.B8"></span><span class="mw-headline" id="Возвращение_оригинальной_версии">Возвращение оригинальной версии</span>
+<span id=".D0.9E.D1.82.D0.BA.D0.B0.D1.82_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.D0.B8.D0.B9"></span><span class="mw-headline" id="Откат_изменений">Откат изменений</span>
 </h4>
-<p>Чтобы отменить все изменения, сделанные с помощью <code>systemctl edit</code>, воспользуйтесь командой:
+<p>Отменить все изменения, сделанные с помощью <code>systemctl edit</code>, можно командой:
 </p>
 <pre># systemctl revert <i>юнит</i>
 </pre>
@@ -421,9 +511,9 @@ After=<i>новая зависимость</i></pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
 ExecStart=
 ExecStart=<i>новая команда</i></pre>
-<p>Обратите внимание, что <code>ExecStart</code> нужно очистить перед прописыванием нового значения <a rel="nofollow" class="external autonumber" href="https://bugzilla.redhat.com/show_bug.cgi?id=756787#c9">[1]</a>. Это относится ко всем опциям, которые позволяют прописать несколько значений, например <code>OnCalendar</code> в таймерах.
+<p>Обратите внимание, что <code>ExecStart</code> необходимо очистить перед присвоением нового значения <a rel="nofollow" class="external autonumber" href="https://bugzilla.redhat.com/show_bug.cgi?id=756787#c9">[1]</a>. Это относится ко всем параметрам, которые позволяют прописать несколько значений, вроде <code>OnCalendar</code> в таймерах.
 </p>
-<p>Пример для автоматического перезапуска службы:
+<p>Пример настройки автоматического перезапуска службы:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/<i>юнит</i>.d/restart.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
@@ -581,11 +671,11 @@ Created symlink /etc/systemd/system/default.target -&gt; /usr/lib/systemd/system
 <p>Примером этих опций может быть т.н. <i>автомонтирование</i> (здесь имеется в виду не автоматическое монтирование во время загрузки, а монтирование при появлении запроса от устройства). Подробнее смотрите <a href="../ru/Fstab.html#%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5_%D0%BC%D0%BE%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%81_systemd" title="Fstab (Русский)">fstab#Автоматическое монтирование с systemd</a>.
 </p>
 <h4>
-<span id=".D0.90.D0.B2.D1.82.D0.BE.D0.BC.D0.BE.D0.BD.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D1.80.D0.B0.D0.B7.D0.B4.D0.B5.D0.BB.D0.BE.D0.B2_GPT"></span><span class="mw-headline" id="Автомонтирование_разделов_GPT">Автомонтирование разделов GPT</span>
+<span id=".D0.90.D0.B2.D1.82.D0.BE.D0.BC.D0.BE.D0.BD.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_GPT-.D1.80.D0.B0.D0.B7.D0.B4.D0.B5.D0.BB.D0.B0"></span><span class="mw-headline" id="Автомонтирование_GPT-раздела">Автомонтирование GPT-раздела</span>
 </h4>
 <p>Для дисков с <a href="../ru/Partitioning.html#%D0%A2%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0_%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2_GUID" class="mw-redirect" title="GPT (Русский)">GPT</a>-разметкой утилита <span class="plainlinks archwiki-template-man" title="$ man 8 systemd-gpt-auto-generator"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd-gpt-auto-generator.8">systemd-gpt-auto-generator(8)</a></span> будет автоматически монтировать разделы в соответствии с <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Discoverable Partitions Specification</a>, поэтому их можно не указывать в файле <code>/etc/fstab</code>.
 </p>
-<p>Для автоматического монтирования <a href="../ru/EFI_system_partition.html" title="EFI system partition (Русский)">EFI-раздела</a> загрузчик должен задать EFI-переменную <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_INTERFACE/">LoaderDevicePartUUID</a>. На данный момент это делает только <a href="../ru/Systemd-boot.html" title="Systemd-boot (Русский)">systemd-boot</a>.
+<p>Для автоматического монтирования <a href="../ru/EFI_system_partition.html" title="EFI system partition (Русский)">EFI-раздела</a> загрузчик должен задать EFI-переменную <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_INTERFACE/">LoaderDevicePartUUID</a>. Эта возможность поддерживается в <a href="../ru/Systemd-boot.html" title="Systemd-boot (Русский)">systemd-boot</a>, а также в <a href="../en/REFInd.html#LoaderDevicePartUUID" title="REFInd">rEFInd</a> (по умолчанию отключена).
 </p>
 <p>Для автомонтирования разделов <code>/var</code> и <code>/var/tmp</code> их PARTUUID должен совпадать с хэш-суммой SHA256 HMAC, вычисленной на основании UUID типа раздела. В качестве ключа хэша используется machine ID. Необходимый PARTUUID можно получить командой:
 </p>
@@ -656,12 +746,28 @@ After=network-online.target
 <p>Также должна быть включена служба ожидания сети того приложения, которое управляет сетью; только тогда <code>network-online.target</code> будет соответствовать состоянию сети.
 </p>
 <ul>
-<li>В <a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a> служба <code>NetworkManager-wait-online.service</code> включается вместе с <code>NetworkManager.service</code>. Проверить состояние службы можно командой <code>systemctl is-enabled NetworkManager-wait-online.service</code>. Если служба не включена, то <a href="../ru/Systemd.html#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Включите">включите</a> <code>NetworkManager.service</code> ещё раз.</li>
+<li>В <a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a> служба <code>NetworkManager-wait-online.service</code> включается вместе с <code>NetworkManager.service</code>. Проверить состояние службы можно командой <code>systemctl is-enabled NetworkManager-wait-online.service</code>. Если служба не включена, то <a href="../ru/Systemd.html#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Перезапустите">перезапустите</a> <code>NetworkManager.service</code> ещё раз.</li>
 <li>В случае <a href="../en/Netctl.html" class="mw-redirect" title="Netctl (Русский)">netctl</a> <a href="../ru/Systemd.html#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Включите">включите</a> службу <code>netctl-wait-online.service</code>.</li>
-<li>Для пользователей <a href="../ru/Systemd-networkd.html" title="Systemd-networkd (Русский)">systemd-networkd</a> юнит <code>systemd-networkd-wait-online.service</code> включается вместе со службой <code>systemd-networkd.service</code>; проверьте это командой <code>systemctl is-enabled systemd-networkd-wait-online.service</code>.</li>
+<li>Для пользователей <a href="../ru/Systemd-networkd.html" title="Systemd-networkd (Русский)">systemd-networkd</a> юнит <code>systemd-networkd-wait-online.service</code> включается вместе со службой <code>systemd-networkd.service</code>; проверьте это командой <code>systemctl is-enabled systemd-networkd-wait-online.service</code>. Если нет, то <a href="../ru/Systemd.html#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Перезапустите">перезапустите</a> <code>systemd-networkd.service</code>.</li>
 </ul>
 <p>Подробнее можно почитать в systemd wiki: <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget/">Running services after the network is up</a>.
 </p>
+<p>Если служба отправляет DNS-запросы, она должна запускаться также после <code>nss-lookup.target</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/<i>foo</i>.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
+...
+Wants=network-online.target
+After=network-online.target nss-lookup.target
+...</pre>
+<p>Подробнее см. <span class="plainlinks archwiki-template-man" title="$ man 7 systemd.special"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.special.7">systemd.special(7)</a></span>.
+</p>
+<p>Чтобы цель <code>nss-lookup.target</code> работала как положено, должна быть служба, которая запускает её параметром <code>Wants=nss-lookup.target</code> и размещает себя <i>перед</i> ней (<code>Before=nss-lookup.target</code>). Обычно это выполняет локальный <a href="../ru/Domain_name_resolution.html#DNS-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D1%8B" title="Domain name resolution (Русский)">DNS-распознаватель</a>.
+</p>
+<p>Чтобы узнать, какие службы зависят от <code>nss-lookup.target</code>, выполните:
+</p>
+<pre>$ systemctl list-dependencies --reverse nss-lookup.target
+</pre>
 <h3>
 <span id=".D0.92.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D1.83.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BB.D0.B5.D0.BD.D0.BD.D1.8B.D1.85_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2_.D0.BF.D0.BE_.D1.83.D0.BC.D0.BE.D0.BB.D1.87.D0.B0.D0.BD.D0.B8.D1.8E"></span><span class="mw-headline" id="Включение_установленных_юнитов_по_умолчанию">Включение установленных юнитов по умолчанию</span>
 </h3>
@@ -781,9 +887,8 @@ Environment=SYSTEMD_LOG_LEVEL=debug
 </h3>
 <p>Вам может понадобиться отключить emergency mode на удалённой машине, например на виртуальных машинах Azure или Google Cloud. Это связано с тем, что в случае ухода системы в emergency mode она отключится от сети и лишит вас возможности подключения к ней.
 </p>
-<pre># systemctl mask emergency.service
-# systemctl mask emergency.target
-</pre>
+<p>Для отключения этого режима <a href="#%D0%9C%D0%B0%D1%81%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0">замаскируйте</a> <code>emergency.service</code> и <code>emergency.target</code>.
+</p>
 <h2>
 <span id=".D0.A1.D0.BC.D0.BE.D1.82.D1.80.D0.B8.D1.82.D0.B5_.D1.82.D0.B0.D0.BA.D0.B6.D0.B5"></span><span class="mw-headline" id="Смотрите_также">Смотрите также</span>
 </h2>
@@ -836,8 +941,8 @@ Environment=SYSTEMD_LOG_LEVEL=debug
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=643284">https://wiki.archlinux.org/index.php?title=Systemd_(Русский)&amp;oldid=643284</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 December 2020, at 12:16.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=659995">https://wiki.archlinux.org/index.php?title=Systemd_(Русский)&amp;oldid=659995</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 15:18.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

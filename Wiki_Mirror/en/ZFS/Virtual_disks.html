@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -44,53 +45,53 @@
 <p>The examples in this article are shown with a set of virtual discs known in ZFS terms as VDEVs. Users may create their VDEVs either on an existing physical disk or in tmpfs (RAMdisk) depending on the amount of free memory on the system.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Using a file as a VDEV is a great method to play with ZFS but isn't viable strategy for storing "real" data.</div>
+<strong>Note:</strong> Using a file as a VDEV is a great method to play with ZFS but is not viable strategy for storing "real" data.</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#Install_the_ZFS_Family_of_Packages"><span class="tocnumber">1</span> <span class="toctext">Install the ZFS Family of Packages</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#Install_the_ZFS_family_of_packages"><span class="tocnumber">1</span> <span class="toctext">Install the ZFS family of packages</span></a></li>
 <li class="toclevel-1 tocsection-2">
-<a href="#Creating_and_Destroying_Zpools"><span class="tocnumber">2</span> <span class="toctext">Creating and Destroying Zpools</span></a>
+<a href="#Creating_and_destroying_Zpools"><span class="tocnumber">2</span> <span class="toctext">Creating and destroying Zpools</span></a>
 <ul>
 <li class="toclevel-2 tocsection-3"><a href="#Mirror"><span class="tocnumber">2.1</span> <span class="toctext">Mirror</span></a></li>
 <li class="toclevel-2 tocsection-4"><a href="#RAIDZ1"><span class="tocnumber">2.2</span> <span class="toctext">RAIDZ1</span></a></li>
 <li class="toclevel-2 tocsection-5"><a href="#RAIDZ2_and_RAIDZ3"><span class="tocnumber">2.3</span> <span class="toctext">RAIDZ2 and RAIDZ3</span></a></li>
-<li class="toclevel-2 tocsection-6"><a href="#Linear_Span"><span class="tocnumber">2.4</span> <span class="toctext">Linear Span</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Linear_span"><span class="tocnumber">2.4</span> <span class="toctext">Linear span</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-7"><a href="#Creating_and_Destroying_Datasets"><span class="tocnumber">3</span> <span class="toctext">Creating and Destroying Datasets</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="#Creating_and_destroying_datasets"><span class="tocnumber">3</span> <span class="toctext">Creating and destroying datasets</span></a></li>
 <li class="toclevel-1 tocsection-8">
-<a href="#Displaying_and_Setting_Properties"><span class="tocnumber">4</span> <span class="toctext">Displaying and Setting Properties</span></a>
+<a href="#Displaying_and_setting_properties"><span class="tocnumber">4</span> <span class="toctext">Displaying and setting properties</span></a>
 <ul>
-<li class="toclevel-2 tocsection-9"><a href="#Show_Properties"><span class="tocnumber">4.1</span> <span class="toctext">Show Properties</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Show_properties"><span class="tocnumber">4.1</span> <span class="toctext">Show properties</span></a></li>
 <li class="toclevel-2 tocsection-10"><a href="#Modify_properties"><span class="tocnumber">4.2</span> <span class="toctext">Modify properties</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-11"><a href="#Add_Content_to_the_Zpool_and_Query_Compression_Performance"><span class="tocnumber">5</span> <span class="toctext">Add Content to the Zpool and Query Compression Performance</span></a></li>
-<li class="toclevel-1 tocsection-12"><a href="#Simulate_a_Disk_Failure_and_Rebuild_the_Zpool"><span class="tocnumber">6</span> <span class="toctext">Simulate a Disk Failure and Rebuild the Zpool</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#Add_content_to_the_Zpool_and_query_compression_performance"><span class="tocnumber">5</span> <span class="toctext">Add content to the Zpool and query compression performance</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#Simulate_a_disk_failure_and_rebuild_the_Zpool"><span class="tocnumber">6</span> <span class="toctext">Simulate a disk failure and rebuild the Zpool</span></a></li>
 <li class="toclevel-1 tocsection-13">
-<a href="#Snapshots_and_Recovering_Deleted_Files"><span class="tocnumber">7</span> <span class="toctext">Snapshots and Recovering Deleted Files</span></a>
+<a href="#Snapshots_and_recovering_deleted_files"><span class="tocnumber">7</span> <span class="toctext">Snapshots and recovering deleted files</span></a>
 <ul>
 <li class="toclevel-2 tocsection-14"><a href="#Time_0"><span class="tocnumber">7.1</span> <span class="toctext">Time 0</span></a></li>
 <li class="toclevel-2 tocsection-15"><a href="#Time_+1"><span class="tocnumber">7.2</span> <span class="toctext">Time +1</span></a></li>
 <li class="toclevel-2 tocsection-16"><a href="#Time_+2"><span class="tocnumber">7.3</span> <span class="toctext">Time +2</span></a></li>
 <li class="toclevel-2 tocsection-17"><a href="#Time_+3"><span class="tocnumber">7.4</span> <span class="toctext">Time +3</span></a></li>
 <li class="toclevel-2 tocsection-18"><a href="#Time_+4"><span class="tocnumber">7.5</span> <span class="toctext">Time +4</span></a></li>
-<li class="toclevel-2 tocsection-19"><a href="#Listing_Snapshots"><span class="tocnumber">7.6</span> <span class="toctext">Listing Snapshots</span></a></li>
-<li class="toclevel-2 tocsection-20"><a href="#Deleting_Snapshots"><span class="tocnumber">7.7</span> <span class="toctext">Deleting Snapshots</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Listing_snapshots"><span class="tocnumber">7.6</span> <span class="toctext">Listing snapshots</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#Deleting_snapshots"><span class="tocnumber">7.7</span> <span class="toctext">Deleting snapshots</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-21"><a href="#Troubleshooting"><span class="tocnumber">8</span> <span class="toctext">Troubleshooting</span></a></li>
 </ul>
 </div>
 
-<h2><span class="mw-headline" id="Install_the_ZFS_Family_of_Packages">Install the ZFS Family of Packages</span></h2>
+<h2><span class="mw-headline" id="Install_the_ZFS_family_of_packages">Install the ZFS family of packages</span></h2>
 <p>Due to differences in licencing, ZFS bins and kernel modules are easily distributed from source, but no-so-easily packaged as pre-compiled sets.  The requisite packages are available in the AUR and in an unofficial repo.  Details are provided on the <a href="../../en/ZFS.html#Installation" title="ZFS">ZFS#Installation</a> article.
 </p>
-<h2><span class="mw-headline" id="Creating_and_Destroying_Zpools">Creating and Destroying Zpools</span></h2>
+<h2><span class="mw-headline" id="Creating_and_destroying_Zpools">Creating and destroying Zpools</span></h2>
 <p>Management of ZFS is pretty simplistic with only two utils needed:
 </p>
 <ul>
@@ -147,7 +148,7 @@ errors: No known data errors
 <li>RAIDZ2 should use four (2+2), six (4+2), ten (8+2), or eighteen (16+2) disks.</li>
 <li>RAIDZ3 should use five (2+3), seven (4+3), eleven (8+3), or nineteen (16+3) disks.</li>
 </ul>
-<h3><span class="mw-headline" id="Linear_Span">Linear Span</span></h3>
+<h3><span class="mw-headline" id="Linear_span">Linear span</span></h3>
 <p>This setup is for a JBOD, good for 3 or less drives normally, where space is still a concern and you are not ready to move to full features of ZFS yet because of it.  RaidZ will be your better bet once you achieve enough space to satisfy, since this setup is NOT taking advantage of the full features of ZFS, but has its roots safely set in a beginning array that will suffice for years until you build up your hard drive collection.  
 </p>
 <p>Assemble the Linear Span:
@@ -168,7 +169,7 @@ config:
 
 errors: No known data errors
 </pre>
-<h2><span class="mw-headline" id="Creating_and_Destroying_Datasets">Creating and Destroying Datasets</span></h2>
+<h2><span class="mw-headline" id="Creating_and_destroying_datasets">Creating and destroying datasets</span></h2>
 <p>An example creating child datasets and using compression:
 </p>
 <ul><li>create the datasets</li></ul>
@@ -181,10 +182,10 @@ errors: No known data errors
 </pre>
 <p>Note, there is a huge advantage(file deletion) for making a 3 level dataset.  If you have large amounts of data, by separating by datasets, its easier to destroy a dataset than to try and wait for recursive file removal to complete.
 </p>
-<h2><span class="mw-headline" id="Displaying_and_Setting_Properties">Displaying and Setting Properties</span></h2>
+<h2><span class="mw-headline" id="Displaying_and_setting_properties">Displaying and setting properties</span></h2>
 <p>Without specifying them in the creation step, users can set properties of their zpools at any time after its creation using <code>/usr/bin/zfs</code>.
 </p>
-<h3><span class="mw-headline" id="Show_Properties">Show Properties</span></h3>
+<h3><span class="mw-headline" id="Show_properties">Show properties</span></h3>
 <p>To see the current properties of a given zpool:
 </p>
 <pre># zfs get all zpool
@@ -202,7 +203,7 @@ zpool  atime        off       local
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> This option like many others can be toggled off when creating the zpool as well by appending the following to the creation step: -O atime-off</div>
-<h2><span class="mw-headline" id="Add_Content_to_the_Zpool_and_Query_Compression_Performance">Add Content to the Zpool and Query Compression Performance</span></h2>
+<h2><span class="mw-headline" id="Add_content_to_the_Zpool_and_query_compression_performance">Add content to the Zpool and query compression performance</span></h2>
 <p>Fill the zpool with files.  For this example, first enable compression.  ZFS uses many compression types, including, lzjb, gzip, gzip-N, zle, and lz4.  Using a setting of simply 'on' will call the default algorithm (lzjb) but lz4 is a nice alternative.  See the zfs man page for more.
 </p>
 <pre># zfs set compression=lz4 zpool
@@ -218,7 +219,7 @@ $ tar xJf linux-3.11.tar.xz -C /zpool
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">NAME      PROPERTY       VALUE  SOURCE
 zpool  compressratio  2.32x  -
 </pre>
-<h2><span class="mw-headline" id="Simulate_a_Disk_Failure_and_Rebuild_the_Zpool">Simulate a Disk Failure and Rebuild the Zpool</span></h2>
+<h2><span class="mw-headline" id="Simulate_a_disk_failure_and_rebuild_the_Zpool">Simulate a disk failure and rebuild the Zpool</span></h2>
 <p>To simulate catastrophic disk failure (i.e. one of the HDDs in the zpool stops functioning), zero out one of the VDEVs.
 </p>
 <pre>$ dd if=/dev/zero of=/scratch/2.img bs=4M count=1 2&gt;/dev/null
@@ -258,7 +259,7 @@ config:
 
 errors: No known data errors
 </pre>
-<p>Since we zeroed out one of our VDEVs, let's simulate adding a new 2G HDD by creating a new image file and adding it to the zpool:
+<p>Since we zeroed out one of our VDEVs, let us simulate adding a new 2G HDD by creating a new image file and adding it to the zpool:
 </p>
 <pre>$ truncate -s 2G /scratch/new.img
 # zpool replace zpool /scratch/2.img /scratch/new.img
@@ -280,7 +281,7 @@ config:
 
 errors: No known data errors
 </pre>
-<h2><span class="mw-headline" id="Snapshots_and_Recovering_Deleted_Files">Snapshots and Recovering Deleted Files</span></h2>
+<h2><span class="mw-headline" id="Snapshots_and_recovering_deleted_files">Snapshots and recovering deleted files</span></h2>
 <p>Since ZFS is a copy-on-write filesystem, every file exists the second it is written.  Saving changes to the very same file actually creates another copy of that file (plus the changes made).  Snapshots can take advantage of this fact and allow users access to older versions of files provided a snapshot has been taken.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -317,9 +318,9 @@ errors: No known data errors
 <h3><span class="mw-headline" id="Time_0">Time 0</span></h3>
 <p>Add some files to the new dataset (/zpool/docs):
 </p>
-<pre>$ wget -O /zpool/docs/Moby_Dick.txt  <a rel="nofollow" class="external free" href="http://www.gutenberg.org/ebooks/2701.txt.utf-8">http://www.gutenberg.org/ebooks/2701.txt.utf-8</a>
-$ wget -O /zpool/docs/War_and_Peace.txt <a rel="nofollow" class="external free" href="http://www.gutenberg.org/ebooks/2600.txt.utf-8">http://www.gutenberg.org/ebooks/2600.txt.utf-8</a>
-$ wget -O /zpool/docs/Beowulf.txt <a rel="nofollow" class="external free" href="http://www.gutenberg.org/ebooks/16328.txt.utf-8">http://www.gutenberg.org/ebooks/16328.txt.utf-8</a>
+<pre>$ wget -O /zpool/docs/Moby_Dick.txt  <a rel="nofollow" class="external free" href="https://www.gutenberg.org/ebooks/2701.txt.utf-8">https://www.gutenberg.org/ebooks/2701.txt.utf-8</a>
+$ wget -O /zpool/docs/War_and_Peace.txt <a rel="nofollow" class="external free" href="https://www.gutenberg.org/ebooks/2600.txt.utf-8">https://www.gutenberg.org/ebooks/2600.txt.utf-8</a>
+$ wget -O /zpool/docs/Beowulf.txt <a rel="nofollow" class="external free" href="https://www.gutenberg.org/ebooks/16328.txt.utf-8">https://www.gutenberg.org/ebooks/16328.txt.utf-8</a>
 </pre>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># zfs list</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">NAME           USED  AVAIL  REFER  MOUNTPOINT
@@ -353,9 +354,9 @@ zpool/docs@001      0      -  4.92M  -
 <h3>
 <span id="Time_.2B2"></span><span class="mw-headline" id="Time_+2">Time +2</span>
 </h3>
-<p>Now let's add some additional content and create a new snapshot:
+<p>Now let us add some additional content and create a new snapshot:
 </p>
-<pre>$ wget -O /zpool/docs/Les_Mis.txt <a rel="nofollow" class="external free" href="http://www.gutenberg.org/ebooks/135.txt.utf-8">http://www.gutenberg.org/ebooks/135.txt.utf-8</a>
+<pre>$ wget -O /zpool/docs/Les_Mis.txt <a rel="nofollow" class="external free" href="https://www.gutenberg.org/ebooks/135.txt.utf-8">https://www.gutenberg.org/ebooks/135.txt.utf-8</a>
 # zfs snapshot zpool/docs@002
 </pre>
 <p>Generate the new list to see how the space has changed:
@@ -370,7 +371,7 @@ zpool/docs@002      0      -  8.17M  -
 <h3>
 <span id="Time_.2B3"></span><span class="mw-headline" id="Time_+3">Time +3</span>
 </h3>
-<p>Now let's simulate an accidental overwrite of a file and subsequent data loss:
+<p>Now let us simulate an accidental overwrite of a file and subsequent data loss:
 </p>
 <pre>$ echo "this book sucks" &gt; /zpool/docs/War_and_Peace.txt
 </pre>
@@ -441,13 +442,13 @@ zpool/docs@002  25.5K      -  8.17M  -
 zpool/docs@003   155K      -  5.04M  -
 zpool/docs@004      0      -  8.17M  -
 </pre>
-<h3><span class="mw-headline" id="Listing_Snapshots">Listing Snapshots</span></h3>
+<h3><span class="mw-headline" id="Listing_snapshots">Listing snapshots</span></h3>
 <p>Note, this simple but important command is missing frequently from other articles on the subject, so its worth mention.
 </p>
 <p>To list any snapshots on your system, run the following command
 </p>
 <pre>$ zfs list -t snapshot</pre>
-<h3><span class="mw-headline" id="Deleting_Snapshots">Deleting Snapshots</span></h3>
+<h3><span class="mw-headline" id="Deleting_snapshots">Deleting snapshots</span></h3>
 <p>The limit to the number of snapshots users can save is 2^64. User can delete a snapshot like so:
 </p>
 <pre># zfs destroy zpool/docs@001
@@ -480,8 +481,8 @@ zpool/docs@004      0      -  8.17M  -
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ZFS/Virtual_disks&amp;oldid=570188">https://wiki.archlinux.org/index.php?title=ZFS/Virtual_disks&amp;oldid=570188</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 30 March 2019, at 11:17.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ZFS/Virtual_disks&amp;oldid=662661">https://wiki.archlinux.org/index.php?title=ZFS/Virtual_disks&amp;oldid=662661</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:41.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

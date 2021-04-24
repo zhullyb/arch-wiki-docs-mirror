@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -289,7 +290,7 @@ WantedBy=default.target
 <p>К сожалению, чтобы иметь возможность запускать xorg в непривилегированном режиме, он должен запускаться внутри сеанса. Итак, в данный момент недостаток запуска xorg в качестве пользовательской службы заключается в том, что он должен запускаться с привилегиями суперпользователя (как до 1.16) и не может использовать преимущества непривилегированного режима, представленного в 1.16.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Примечание:</strong> Это не является фундаментальным ограничением, налагаемым logind, но причина, по-видимому, заключается в том, что xorg нужно знать, какой сеанс взять на себя, и сейчас он получает эту информацию, вызывая <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/logind">logind</a>'s <code>GetSessionByPID</code> используя свой собственный pid в качестве аргумента. Смотрите <a rel="nofollow" class="external text" href="http://lists.x.org/archives/xorg-devel/2014-February/040476.html">this thread</a> и <a rel="nofollow" class="external text" href="https://cgit.freedesktop.org/xorg/xserver/tree/hw/xfree86/os-support/linux/systemd-logind.c">xorg sources</a>. Кажется вероятным, что xorg можно изменить, чтобы получить сеанс от tty, к которому он подключен, и затем он мог бы работать непривилегированным из пользовательской службы вне сеанса.</div>
+<strong>Примечание:</strong> Это не является фундаментальным ограничением, налагаемым logind, но причина, по-видимому, заключается в том, что xorg нужно знать, какой сеанс взять на себя, и сейчас он получает эту информацию, вызывая <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/logind">logind</a>'s <code>GetSessionByPID</code> используя свой собственный pid в качестве аргумента. Смотрите <a rel="nofollow" class="external text" href="https://lists.x.org/archives/xorg-devel/2014-February/040476.html">this thread</a> и <a rel="nofollow" class="external text" href="https://cgit.freedesktop.org/xorg/xserver/tree/hw/xfree86/os-support/linux/systemd-logind.c">xorg sources</a>. Кажется вероятным, что xorg можно изменить, чтобы получить сеанс от tty, к которому он подключен, и затем он мог бы работать непривилегированным из пользовательской службы вне сеанса.</div>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Важно:</strong> В xorg 1.18  активация сокета, кажется, сломана. Клиент, вызывающий активацию, зависает. Смотрите вышестоящий отчет об ошибках <a rel="nofollow" class="external autonumber" href="https://gitlab.freedesktop.org/xorg/xserver/issues/491">[4]</a>. В качестве временного обходного пути вы можете запустить сервер xorg без активации сокета, убедившись, что клиенты подключаются после задержки, поэтому сервер полностью запускается. Кажется, нет никакого удобного механизма, чтобы получить уведомление о запуске для X сервера.</div>
 <p>Вот как запустить xorg из пользовательского сервиса:
@@ -449,8 +450,8 @@ WantedBy=wm.target
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)/User_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=645597">https://wiki.archlinux.org/index.php?title=Systemd_(Русский)/User_(Русский)&amp;oldid=645597</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 December 2020, at 13:36.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)/User_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=662425">https://wiki.archlinux.org/index.php?title=Systemd_(Русский)/User_(Русский)&amp;oldid=662425</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:06.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

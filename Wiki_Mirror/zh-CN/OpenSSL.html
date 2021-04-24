@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,7 +36,7 @@
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> 2015年5月发布的对OpenSSL协议使用情况的合作研究显示，SSL连接存在风险(<a rel="nofollow" class="external free" href="https://weakdh.org/">https://weakdh.org/</a> Logjam attack)。有关建议的服务器端配置，请参阅：<a rel="nofollow" class="external free" href="https://weakdh.org/sysadmin.html">https://weakdh.org/sysadmin.html</a>
 </div>
-<p><a rel="nofollow" class="external text" href="http://www.openssl.org">OpenSSL</a>是SSL和TLS协议的开源实现，在OpenSSL（Apache License 1.0）和SSLeay（4-clause BSD）下拥有双重开源许可证。在各种平台上得到支持：BSD,Linux,OpenVMS,Solaris,Windows。 可以免费用于个人和商业用途。基于早期的SSLeay库。OpenSSL 1.0.0版发布于2010年3月29日。
+<p><a rel="nofollow" class="external text" href="https://www.openssl.org">OpenSSL</a>是SSL和TLS协议的开源实现，在OpenSSL（Apache License 1.0）和SSLeay（4-clause BSD）下拥有双重开源许可证。在各种平台上得到支持：BSD,Linux,OpenVMS,Solaris,Windows。 可以免费用于个人和商业用途。基于早期的SSLeay库。OpenSSL 1.0.0版发布于2010年3月29日。
 </p>
 <p>Arch Linux已默认安装<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openssl">openssl</a></span>（作为<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=coreutils">coreutils</a></span>的依赖）。
 </p>
@@ -147,7 +148,7 @@
 </div>
 <p>Settings related to generating keys, requests and self-signed certificates.
 </p>
-<p>The req section is responsible for the DN prompts. A general misconception is the <i>Common Name</i> (CN) prompt, which suggests that it should have the user's proper name as a value. End-user certificates need to have the <b>machine hostname</b> as CN, whereas CA should <i>not</i> have a valid TLD, so that there is no chance that, between the possible combinations of certified end-users' CN and the CA certificate's, there is a match that could be misinterpreted by some software as meaning that the end-user certificate is self-signed. Some CA certificates do not even have a CN, such as <a rel="nofollow" class="external text" href="http://www.equifax.com">Equifax</a>:
+<p>The req section is responsible for the DN prompts. A general misconception is the <i>Common Name</i> (CN) prompt, which suggests that it should have the user's proper name as a value. End-user certificates need to have the <b>machine hostname</b> as CN, whereas CA should <i>not</i> have a valid TLD, so that there is no chance that, between the possible combinations of certified end-users' CN and the CA certificate's, there is a match that could be misinterpreted by some software as meaning that the end-user certificate is self-signed. Some CA certificates do not even have a CN, such as <a rel="nofollow" class="external text" href="https://www.equifax.com">Equifax</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ openssl x509 -subject -noout &lt; /etc/ssl/certs/Equifax_Secure_CA.pem</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">subject= /C=US/O=Equifax/OU=Equifax Secure Certificate Authority</pre>
@@ -210,13 +211,13 @@ dynamic_path = /usr/lib/engines/libgost.so
 default_algorithms = ALL
 CRYPT_PARAMS = id-Gost28147-89-CryptoPro-A-ParamSet
 </pre>
-<p>The official <a rel="nofollow" class="external text" href="http://ftp.netbsd.org/pub/NetBSD/NetBSD-current/src/crypto/external/bsd/openssl/dist/engines/ccgost/README.gost">README.gost</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup> should contain more examples on this.
+<p>The official <a rel="nofollow" class="external text" href="http://ftp.netbsd.org/pub/NetBSD/NetBSD-current/src/crypto/external/bsd/openssl.old/dist/engines/ccgost/README.gost">README.gost</a> should contain more examples on this.
 </p>
 <h2>
 <span id=".E7.94.9F.E6.88.90.E7.A7.81.E9.92.A5"></span><span class="mw-headline" id="生成私钥">生成私钥</span>
 </h2>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openssl">openssl</a></span> package doesn't properly safeguard the <code>/etc/ssl/private/</code> directory like most other distributions do, see <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/43059">FS#43059</a>.</div>
+<strong>Warning:</strong> The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openssl">openssl</a></span> package does not properly safeguard the <code>/etc/ssl/private/</code> directory like most other distributions do, see <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/43059">FS#43059</a>.</div>
 <p>Before generating the key, make a secure directory to host it:
 </p>
 <pre>$ mkdir -m0700 private
@@ -359,8 +360,8 @@ sign:	${CADEPS} ${item}
 <li>
 <a href="https://en.wikipedia.org/wiki/OpenSSL" class="extiw" title="wikipedia:OpenSSL">Wikipedia page</a> on OpenSSL, with background information.</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.openssl.org">OpenSSL</a> project page.</li>
-<li><a rel="nofollow" class="external text" href="http://www.freebsd.org/doc/en/books/handbook/openssl.html">FreeBSD Handbook</a></li>
+<a rel="nofollow" class="external text" href="https://www.openssl.org">OpenSSL</a> project page.</li>
+<li><a rel="nofollow" class="external text" href="https://www.freebsd.org/doc/en/books/handbook/openssl.html">FreeBSD Handbook</a></li>
 <li><a rel="nofollow" class="external text" href="http://www.akadia.com/services/ssh_test_certificate.html">Step-by-step guide to create a signed SSL certificate</a></li>
 <li><a rel="nofollow" class="external text" href="https://jamielinux.com/docs/openssl-certificate-authority/">OpenSSL Certificate Authority</a></li>
 <li>
@@ -379,7 +380,6 @@ sign:	${CADEPS} ${item}
 <li><a href="../en/Category:Sections_flagged_with_Template:Remove.html" title="Category:Sections flagged with Template:Remove">Sections flagged with Template:Remove</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
 </ul>
@@ -390,8 +390,8 @@ sign:	${CADEPS} ${item}
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenSSL_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=646977">https://wiki.archlinux.org/index.php?title=OpenSSL_(简体中文)&amp;oldid=646977</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:20.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenSSL_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663507">https://wiki.archlinux.org/index.php?title=OpenSSL_(简体中文)&amp;oldid=663507</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 19:14.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

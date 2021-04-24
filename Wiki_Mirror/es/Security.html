@@ -473,7 +473,7 @@ password required pam_unix.so use_authtok sha512 shadow</pre>
 <h4>
 <span id="Denegar_el_inicio_de_sesi.C3.B3n_en_SSH"></span><span class="mw-headline" id="Denegar_el_inicio_de_sesión_en_SSH">Denegar el inicio de sesión en SSH</span>
 </h4>
-<p>Aunque se permita el inicio de sesión como root a usuarios locales, siempre es una buena práctica <a href="../en/OpenSSH.html#Deny" title="OpenSSH">denegar el inicio de sesión de root en SSH</a>. El propósito es disponer de una capa más de seguridad ante la posibilidad de que puedan comprometer el sistema de forma remota. 
+<p>Aunque se permita el inicio de sesión como root a usuarios locales, siempre es una buena práctica <a href="../en/OpenSSH.html#Deny" title="OpenSSH">denegar el inicio de sesión de root en SSH</a>. El propósito es disponer de una capa más de seguridad ante la posibilidad de que puedan comprometer el sistema de forma remota.
 </p>
 <h4>
 <span id="Restringir_el_inicio_de_sesi.C3.B3n_con_access.conf"></span><span class="mw-headline" id="Restringir_el_inicio_de_sesión_con_access.conf">Restringir el inicio de sesión con access.conf</span>
@@ -665,7 +665,7 @@ Randomization under memory exhaustion @0 : No randomization
 <li>También puede dar problemas con <a href="../es/D-Bus.html" title="D-Bus (Español)">D-Bus (Español)</a>, <a href="../es/PulseAudio.html" title="PulseAudio (Español)">PulseAudio (Español)</a> y <a href="../es/Bluetooth.html" title="Bluetooth (Español)">bluetooth (Español)</a> utilizando <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd">systemd</a></span> &gt; 237.64-1.</li>
 </ul>
 </div>
-<p>Un usuario que no sea root puede ver sus procesos y los de otros usuarios en <code>/proc</code>. Como esta situación puede producir riesgos de seguridad, el kernel puede hacer que un usuario que no sea root solo pueda ver sus procesos o ninguno en <code>/proc</code>. Esto es posible mediante el montaje de <code>proc</code> con las opciones <code>hidepid=</code> y <code>gid=</code>. Estas opciones están documentadas <a rel="nofollow" class="external text" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/filesystems/proc.txt#n2014">aquí</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-04]</sup>.
+<p>Un usuario que no sea root puede ver sus procesos y los de otros usuarios en <code>/proc</code>. Como esta situación puede producir riesgos de seguridad, el kernel puede hacer que un usuario que no sea root solo pueda ver sus procesos o ninguno en <code>/proc</code>. Esto es posible mediante el montaje de <code>proc</code> con las opciones <code>hidepid=</code> y <code>gid=</code>. Estas opciones están documentadas <a rel="nofollow" class="external autonumber" href="https://www.kernel.org/doc/html/latest/filesystems/proc.html">[2]</a>.
 </p>
 <p>El uso de estas opciones hace que un intruso no pueda obtener información sobre otros usuarios y los procesos que tengan activos, como por ejemplo si un demonio se ejecuta con privilegios elevados o si algún usuario está ejecutando algún programa vulnerable o sensible. Además, estas opciones evitan que un intruso acceda a información sensible que pueda estar contenida en los argumentos de programas que no han tenido en cuenta criterios básicos de seguridad.
 </p>
@@ -739,7 +739,7 @@ SupplementaryGroups=proc</pre>
 <p><a href="../en/Firejail.html" title="Firejail">Firejail</a> es una herramienta para aislar aplicaciones y servidores fácil de utilizar. Se recomienda su uso para navegadores web, aplicaciones con conexión a Internet, así como para cualquier servidor en producción.
 </p>
 <h3><span class="mw-headline" id="bubblewrap">bubblewrap</span></h3>
-<p><a href="../en/Bubblewrap.html" title="Bubblewrap">bubblewrap</a> es una herramienta para aislar aplicaciones desarrollada por <a href="https://en.wikipedia.org/wiki/Flatpak" class="extiw" title="wikipedia:Flatpak">Flatpak</a> que tiene menor impacto en la instalación que Firejail. Aunque bubblewrap no tiene ciertas funcionalidades como el uso de listas de rutas de archivo permitidas, proporciona otras como puntos de montaje enlazados o la creación de espacios de nombres para user/IPC/PID/network/cgroup. La herramienta bubblewrap puede aislar aplicaciones de forma simple o <a rel="nofollow" class="external text" href="https://github.com/projectatomic/bubblewrap/blob/master/demos/bubblewrap-shell.sh">compleja</a>. Para facilitar el uso de bubblewrap a la hora de aislar ciertas aplicaciones conocidas hay disponible una colección de scripts aquí<a rel="nofollow" class="external autonumber" href="https://github.com/valoq/bwscripts">[2]</a>.
+<p><a href="../en/Bubblewrap.html" title="Bubblewrap">bubblewrap</a> es una herramienta para aislar aplicaciones desarrollada por <a href="https://en.wikipedia.org/wiki/Flatpak" class="extiw" title="wikipedia:Flatpak">Flatpak</a> que tiene menor impacto en la instalación que Firejail. Aunque bubblewrap no tiene ciertas funcionalidades como el uso de listas de rutas de archivo permitidas, proporciona otras como puntos de montaje enlazados o la creación de espacios de nombres para user/IPC/PID/network/cgroup. La herramienta bubblewrap puede aislar aplicaciones de forma simple o <a rel="nofollow" class="external text" href="https://github.com/projectatomic/bubblewrap/blob/master/demos/bubblewrap-shell.sh">compleja</a>. Para facilitar el uso de bubblewrap a la hora de aislar ciertas aplicaciones conocidas hay disponible una colección de scripts aquí<a rel="nofollow" class="external autonumber" href="https://github.com/valoq/bwscripts">[3]</a>.
 </p>
 <h3>
 <span id="Jaulas_root_.28chroots.29"></span><span class="mw-headline" id="Jaulas_root_(chroots)">Jaulas root (chroots)</span>
@@ -793,7 +793,7 @@ SupplementaryGroups=proc</pre>
 <p>Normalmente los proxies se utilizan como una capa extra entre aplicaciones y la red, filtrando datos desde orígenes desconocidos. Un proxy pequeño que se ejecute con privilegios bajos tiene mucho menos riesgo que una aplicación compleja que utilice los privilegios de un usuario final.
 </p>
 <p>Por ejemplo, un servidor DNS utiliza las librerías <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span>, y si estas librerías tuvieran un bug de forma que un atacante pudiera aprovecharse de él y comprometer el servidor DNS, cualquier cliente DNS que se ejecute con privilegios de root y realice consultas DNS al servidor DNS comprometido, podría aceptar respuestas "envenedadas" y ser comprometido a su vez, produciendo por ejemplo la ejecución remota de código. Esta situación puede evitarse mediante la instalación de un servidor de caché DNS como <a href="../es/Dnsmasq.html" title="Dnsmasq (Español)">dnsmasq (Español)</a>, que actuaría como proxy o intermediario entre los clientes DNS y los servidores DNS.
-<a rel="nofollow" class="external autonumber" href="https://googleonlinesecurity.blogspot.it/2016/02/cve-2015-7547-glibc-getaddrinfo-stack.html">[3]</a>
+<a rel="nofollow" class="external autonumber" href="https://googleonlinesecurity.blogspot.it/2016/02/cve-2015-7547-glibc-getaddrinfo-stack.html">[4]</a>
 </p>
 <h3>
 <span id="Gesti.C3.B3n_de_certificados_SSL"></span><span class="mw-headline" id="Gestión_de_certificados_SSL">Gestión de certificados SSL</span>
@@ -836,7 +836,7 @@ SupplementaryGroups=proc</pre>
 <h2><span class="mw-headline" id="Seguridad_perimetral">Seguridad perimetral</span></h2>
 <p>Alguien con tiempo y los recursos suficientes puede obtener acceso como root a un ordenador. Implementando las barreras físicas suficientes puede conseguirse un nivel <i>práctico</i> de seguridad para evitarlo.
 </p>
-<p>Un atacante puede tomar control total de un ordenador conectando un dispositvo malicioso a él como un IEEE 1394 (Firewire) o una tarjeta PCI Express o Thunderbolt con acceso total a la memoria. Poco se puede hacer contra esto excepto actualizar firmwares maliciosos contenidos en memorias flash. <a rel="nofollow" class="external autonumber" href="https://www.breaknenter.org/projects/inception/">[4]</a> En cualquier caso la mayor parte de los atacantes no suelen tener determinación y conocimiento suficiente cómo para realizar este tipo de operaciones maliciosas.
+<p>Un atacante puede tomar control total de un ordenador conectando un dispositvo malicioso a él como un IEEE 1394 (Firewire) o una tarjeta PCI Express o Thunderbolt con acceso total a la memoria. Poco se puede hacer contra esto excepto actualizar firmwares maliciosos contenidos en memorias flash. <a rel="nofollow" class="external autonumber" href="https://www.breaknenter.org/projects/inception/">[5]</a> En cualquier caso la mayor parte de los atacantes no suelen tener determinación y conocimiento suficiente cómo para realizar este tipo de operaciones maliciosas.
 </p>
 <p>El <a href="#Cifrado_de_discos">#Cifrado de discos</a> hace que los datos de un disco duro de un ordenador no estén accesibles en caso de robo del ordenador. No obstante aunque un disco duro esté cifrado, un atacante ingenioso puede utilizar un firmware malicioso en el próximo inicio de sesión para obtener los datos sin cifrar del disco duro.
 </p>
@@ -900,9 +900,7 @@ esac
 <li><a rel="nofollow" class="external text" href="https://github.com/lfit/itpol/blob/master/linux-workstation-security.md">Linux Foundation: Linux workstation security checklist</a></li>
 <li><a rel="nofollow" class="external text" href="https://www.privacytools.io/">privacytools.io Privacy Resources</a></li>
 <li><a rel="nofollow" class="external text" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/">Red Hat Enterprise Linux 7 Security Guide</a></li>
-<li>
-<a rel="nofollow" class="external text" href="https://www.debian.org/doc/manuals/securing-debian-howto/securing-debian-howto.en.pdf">Securing Debian Manual (PDF)</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">enlace roto</a> 2020-08-04]</sup>
-</li>
+<li><a rel="nofollow" class="external text" href="https://www.debian.org/doc/manuals/securing-debian-manual/index.en.html">Securing Debian Manual</a></li>
 <li><a rel="nofollow" class="external text" href="https://web.archive.org/web/20140220055801/http://crunchbang.org:80/forums/viewtopic.php?id=24722">The paranoid #! Security Guide</a></li>
 </ul>
 </div>
@@ -927,8 +925,8 @@ esac
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Security_(Espa%C3%B1ol)&amp;oldid=638620">https://wiki.archlinux.org/index.php?title=Security_(Español)&amp;oldid=638620</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Security_(Espa%C3%B1ol)&amp;oldid=663425">https://wiki.archlinux.org/index.php?title=Security_(Español)&amp;oldid=663425</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 17:19.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

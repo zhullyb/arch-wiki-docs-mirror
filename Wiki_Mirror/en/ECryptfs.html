@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -326,9 +327,10 @@ Inserted auth tok with sig [78c6f0645fe62da0] into the user session keyring
 </p>
 <p>As an alternative to a plain passphrase, you can use a "wrapped passphrase", where the files are encrypted using a randomly generated key, which is itself encrypted with your passphrase and stored in a file. In this case, you can change your passphrase by unwrapping the key file with your old passphrase and rewrapping it using your new passphrase. 
 </p>
-<p>In the following we <a rel="nofollow" class="external text" href="https://stackoverflow.com/a/3980713">prompt</a> for the wrapping passphrase and do a generation similar to the <a rel="nofollow" class="external text" href="http://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/view/head:/src/utils/ecryptfs-setup-private#L96">source</a> and then use <i>ecryptfs-wrap-passphrase</i> to wrap it with the given password to <code>~/.ecryptfs/wrapped-passphrase</code>:
+<p>In the following we <a rel="nofollow" class="external text" href="https://stackoverflow.com/a/3980713">prompt</a> for the wrapping passphrase and do a generation similar to the <a rel="nofollow" class="external text" href="https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/view/head:/src/utils/ecryptfs-setup-private#L96">source</a> and then use <i>ecryptfs-wrap-passphrase</i> to wrap it with the given password to <code>~/.ecryptfs/wrapped-passphrase</code>:
 </p>
-<pre>$ ( stty -echo; printf "Passphrase: " 1&gt;&amp;2; read PASSWORD; stty echo; echo $PASSWORD; ) | xargs printf "%s\n%s" $(od -x -N 100 --width=30 /dev/random | head -n 1 | sed "s/^0000000//" | sed "s/\s*//g") | ecryptfs-wrap-passphrase /home/<i>username</i>/.ecryptfs/wrapped-passphrase
+<pre>$ touch ~/.ecryptfs/wrapped-passphrase ##otherwise the following command fails.
+$ ( stty -echo; printf "Passphrase: " 1&gt;&amp;2; read PASSWORD; stty echo; echo $PASSWORD; ) | xargs printf "%s\n%s" $(od -x -N 100 --width=30 /dev/random | head -n 1 | sed "s/^0000000//" | sed "s/\s*//g") | ecryptfs-wrap-passphrase /home/<i>username</i>/.ecryptfs/wrapped-passphrase
 </pre>
 <p>Do not use a passphrase with more than 64 characters as this will result in an error later when using <code>ecryptfs-insert-wrapped-passphrase-into-keyring</code>.
 </p>
@@ -559,7 +561,7 @@ $ ln -s ~/Private/mozilla ~/.mozilla
 <li>
 <a rel="nofollow" class="external text" href="http://sysphere.org/~anrxc/j/articles/ecryptfs/index.html">eCryptfs and $HOME</a> by Adrian C. (anrxc) - Article with installation instructions and discussion of eCryptfs usage</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.chromium.org/chromium-os/chromiumos-design-docs/protecting-cached-user-data">Chromium data protection</a> (November 2009) - Design document detailing encryption options for Chromium OS, including explanation on its eCryptfs usage</li>
+<a rel="nofollow" class="external text" href="https://www.chromium.org/chromium-os/chromiumos-design-docs/protecting-cached-user-data">Chromium data protection</a> (November 2009) - Design document detailing encryption options for Chromium OS, including explanation on its eCryptfs usage</li>
 <li>
 <a rel="nofollow" class="external text" href="http://ecryptfs.sourceforge.net/ecryptfs.pdf">eCryptfs design</a> by Michael Halcrow (May 2005) - Original design document detailing and discussing eCryptfs</li>
 </ul>
@@ -583,8 +585,8 @@ $ ln -s ~/Private/mozilla ~/.mozilla
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ECryptfs&amp;oldid=646491">https://wiki.archlinux.org/index.php?title=ECryptfs&amp;oldid=646491</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 December 2020, at 13:21.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ECryptfs&amp;oldid=660956">https://wiki.archlinux.org/index.php?title=ECryptfs&amp;oldid=660956</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 21:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

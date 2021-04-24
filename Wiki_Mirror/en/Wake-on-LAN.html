@@ -84,18 +84,24 @@
 <a href="#Troubleshooting"><span class="tocnumber">5</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
 <li class="toclevel-2 tocsection-21">
-<a href="#Wake-up_after_shutdown"><span class="tocnumber">5.1</span> <span class="toctext">Wake-up after shutdown</span></a>
+<a href="#NetworkManager_2"><span class="tocnumber">5.1</span> <span class="toctext">NetworkManager</span></a>
 <ul>
-<li class="toclevel-3 tocsection-22"><a href="#Fix_using_BIOS_Settings"><span class="tocnumber">5.1.1</span> <span class="toctext">Fix using BIOS Settings</span></a></li>
-<li class="toclevel-3 tocsection-23"><a href="#Fix_by_Kernel_quirks"><span class="tocnumber">5.1.2</span> <span class="toctext">Fix by Kernel quirks</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#Network_adapter_is_still_powered_off_on_shutdown"><span class="tocnumber">5.1.1</span> <span class="toctext">Network adapter is still powered off on shutdown</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-24"><a href="#Battery_draining_problem"><span class="tocnumber">5.2</span> <span class="toctext">Battery draining problem</span></a></li>
-<li class="toclevel-2 tocsection-25"><a href="#Realtek"><span class="tocnumber">5.3</span> <span class="toctext">Realtek</span></a></li>
-<li class="toclevel-2 tocsection-26"><a href="#alx_driver_support"><span class="tocnumber">5.4</span> <span class="toctext">alx driver support</span></a></li>
+<li class="toclevel-2 tocsection-23">
+<a href="#Wake-up_after_shutdown"><span class="tocnumber">5.2</span> <span class="toctext">Wake-up after shutdown</span></a>
+<ul>
+<li class="toclevel-3 tocsection-24"><a href="#Fix_using_BIOS_Settings"><span class="tocnumber">5.2.1</span> <span class="toctext">Fix using BIOS Settings</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#Fix_by_Kernel_quirks"><span class="tocnumber">5.2.2</span> <span class="toctext">Fix by Kernel quirks</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-27"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#Battery_draining_problem"><span class="tocnumber">5.3</span> <span class="toctext">Battery draining problem</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#Realtek"><span class="tocnumber">5.4</span> <span class="toctext">Realtek</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#alx_driver_support"><span class="tocnumber">5.5</span> <span class="toctext">alx driver support</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-29"><a href="#See_also"><span class="tocnumber">6</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -262,7 +268,7 @@ In this scenario, the external IP address of the router must be known. Keep in m
 </p>
 <ul>
 <li>Forward a different port to each target machine. This requires any target machine to have a static IP address on its LAN.</li>
-<li>Forward a single port to the <a href="https://en.wikipedia.org/wiki/Broadcast_address" class="extiw" title="wikipedia:Broadcast address">broadcast address</a>. Most routers do not allow to forward to broadcast, however if you can get shell access to your router, through telnet, ssh, serial cable or other mean, run the command: <pre>$ ip neighbor add 192.168.1.254 lladdr FF:FF:FF:FF:FF:FF dev net0</pre> This example assumes the network is <i>192.168.1.0/24</i> and uses <i>net0</i> as network interface. Now, forward UDP port 9 to 192.168.1.254. This solution was successfully tested on a Linksys WRT54G running <a href="https://en.wikipedia.org/wiki/Tomato_(firmware)" class="extiw" title="wikipedia:Tomato (firmware)">Tomato</a>, and on the Verizon FIOS ActionTec router. For notes on how to do it on a router with <a href="https://en.wikipedia.org/wiki/DD-WRT" class="extiw" title="wikipedia:DD-WRT">DD-WRT</a> firmware, see <a rel="nofollow" class="external text" href="http://www.dd-wrt.com/wiki/index.php/WOL#Remote_Wake_On_LAN_via_Port_Forwarding">this tutorial</a> and for a router with <a href="https://en.wikipedia.org/wiki/OpenWrt" class="extiw" title="wikipedia:OpenWrt">OpenWrt</a> firmware, see <a rel="nofollow" class="external text" href="https://openwrt.org/docs/guide-user/services/w_o_l/wol">this tutorial</a>.</li>
+<li>Forward a single port to the <a href="https://en.wikipedia.org/wiki/Broadcast_address" class="extiw" title="wikipedia:Broadcast address">broadcast address</a>. Most routers do not allow to forward to broadcast, however if you can get shell access to your router, through telnet, ssh, serial cable or other mean, run the command: <pre>$ ip neighbor add 192.168.1.254 lladdr FF:FF:FF:FF:FF:FF dev net0</pre> This example assumes the network is <i>192.168.1.0/24</i> and uses <i>net0</i> as network interface. Now, forward UDP port 9 to 192.168.1.254. This solution was successfully tested on a Linksys WRT54G running <a href="https://en.wikipedia.org/wiki/Tomato_(firmware)" class="extiw" title="wikipedia:Tomato (firmware)">Tomato</a>, and on the Verizon FIOS ActionTec router. For notes on how to do it on a router with <a href="https://en.wikipedia.org/wiki/DD-WRT" class="extiw" title="wikipedia:DD-WRT">DD-WRT</a> firmware, see <a rel="nofollow" class="external text" href="https://www.dd-wrt.com/wiki/index.php/WOL#Remote_Wake_On_LAN_via_Port_Forwarding">this tutorial</a> and for a router with <a href="https://en.wikipedia.org/wiki/OpenWrt" class="extiw" title="wikipedia:OpenWrt">OpenWrt</a> firmware, see <a rel="nofollow" class="external text" href="https://openwrt.org/docs/guide-user/services/w_o_l/wol">this tutorial</a>.</li>
 </ul>
 <p>In any case, run the following command from the source computer to trigger wake-up:
 </p>
@@ -312,6 +318,14 @@ case $input1 in
     ;;
 esac</pre>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
+<h3><span class="mw-headline" id="NetworkManager_2">NetworkManager</span></h3>
+<h5><span class="mw-headline" id="Network_adapter_is_still_powered_off_on_shutdown">Network adapter is still powered off on shutdown</span></h5>
+<p>Setting auto negotiation to <code>yes</code> may help if WOL is configured through <i>nmcli</i> and network adapter is still powered off on shutdown.
+</p>
+<p>Set it using:
+</p>
+<pre># nmcli c modify "wired1" 802-3-ethernet.auto-negotiate yes
+</pre>
 <h3><span class="mw-headline" id="Wake-up_after_shutdown">Wake-up after shutdown</span></h3>
 <p>It is known that some motherboards are affected by a bug that can cause immediate or random wake-up after a <i>shutdown</i> whenever the BIOS WoL feature is enabled (as discussed in <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=173648">this thread</a> for example).
 </p>
@@ -334,7 +348,7 @@ This activates the following quirks:
 <li><code>XHCI_SPURIOUS_WAKEUP</code></li>
 </ul>
 <h3><span class="mw-headline" id="Battery_draining_problem">Battery draining problem</span></h3>
-<p>Some laptops have a battery draining problem after shutdown <a rel="nofollow" class="external autonumber" href="http://ubuntuforums.org/archive/index.php/t-1729782.html">[1]</a>. This might be caused by enabled WOL. To solve this problem, disable it by using ethtool as mentioned above.
+<p>Some laptops have a battery draining problem after shutdown <a rel="nofollow" class="external autonumber" href="https://ubuntuforums.org/archive/index.php/t-1729782.html">[1]</a>. This might be caused by enabled WOL. To solve this problem, disable it by using ethtool as mentioned above.
 </p>
 <pre># ethtool -s net0 wol d
 </pre>
@@ -347,12 +361,12 @@ This activates the following quirks:
 <p>For the <code>r8168</code> module you might need to set the <code>s5wol=1</code> <a href="../en/Kernel_module.html#Setting_module_options" class="mw-redirect" title="Kernel modules">module option</a> to enable the wake on LAN functionality.
 </p>
 <h3><span class="mw-headline" id="alx_driver_support">alx driver support</span></h3>
-<p>For some newer Atheros-based NICs (such as Atheros AR8161 and Killer E2500), WOL support has been disabled in the mainline <code>alx</code> module due to a bug causing unintentional wake-up (see <a rel="nofollow" class="external text" href="http://www.spinics.net/lists/netdev/msg242477.html">this patch discussion</a>). A patch can be applied (or installed as a <a href="../en/Dynamic_Kernel_Module_Support.html" class="mw-redirect" title="Dkms">dkms</a> module) which both restores WOL support and fixes the underlying bug, as outlined in <a rel="nofollow" class="external text" href="https://bugzilla.kernel.org/show_bug.cgi?id=61651">this thread</a>.
+<p>For some newer Atheros-based NICs (such as Atheros AR8161 and Killer E2500), WOL support has been disabled in the mainline <code>alx</code> module due to a bug causing unintentional wake-up (see <a rel="nofollow" class="external text" href="https://www.spinics.net/lists/netdev/msg242477.html">this patch discussion</a>). A patch can be applied (or installed as a <a href="../en/Dynamic_Kernel_Module_Support.html" class="mw-redirect" title="Dkms">dkms</a> module) which both restores WOL support and fixes the underlying bug, as outlined in <a rel="nofollow" class="external text" href="https://bugzilla.kernel.org/show_bug.cgi?id=61651">this thread</a>.
 </p>
 <p>See also the pre-patched sources in <a rel="nofollow" class="external autonumber" href="https://github.com/Snugface/alx">[2]</a>.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
-<ul><li><a rel="nofollow" class="external text" href="http://www.depicus.com/wake-on-lan/woli.aspx">Wake-On-Lan</a></li></ul>
+<ul><li><a rel="nofollow" class="external text" href="https://www.depicus.com/wake-on-lan/woli.aspx">Wake-On-Lan</a></li></ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
@@ -363,8 +377,8 @@ This activates the following quirks:
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Wake-on-LAN&amp;oldid=652269">https://wiki.archlinux.org/index.php?title=Wake-on-LAN&amp;oldid=652269</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 February 2021, at 04:07.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Wake-on-LAN&amp;oldid=663929">https://wiki.archlinux.org/index.php?title=Wake-on-LAN&amp;oldid=663929</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 24 April 2021, at 14:12.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

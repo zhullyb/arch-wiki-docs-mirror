@@ -83,9 +83,10 @@
 </ul>
 </li>
 <li class="toclevel-2 tocsection-22"><a href="#Displays_disconnect_at_random_intervals_when_using_the_Dell_D6000_docking_station"><span class="tocnumber">3.9</span> <span class="toctext">Displays disconnect at random intervals when using the Dell D6000 docking station</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#Only_1_Display_is_recognized_after_boot"><span class="tocnumber">3.10</span> <span class="toctext">Only 1 Display is recognized after boot</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-23"><a href="#See_Also"><span class="tocnumber">4</span> <span class="toctext">See Also</span></a></li>
+<li class="toclevel-1 tocsection-24"><a href="#See_Also"><span class="tocnumber">4</span> <span class="toctext">See Also</span></a></li>
 </ul>
 </div>
 
@@ -101,9 +102,9 @@
 <span id="USB_3.0_DL-6xxx.2C_DL-5xxx.2C_DL-41xx.2C_DL-3xxx_Devices"></span><span class="mw-headline" id="USB_3.0_DL-6xxx,_DL-5xxx,_DL-41xx,_DL-3xxx_Devices">USB 3.0 DL-6xxx, DL-5xxx, DL-41xx, DL-3xxx Devices</span>
 </h3>
 <ol>
-<li>Install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/displaylink/">displaylink</a></span><sup><small>AUR</small></sup> driver. It allows configuring DisplayLink monitors using <a href="../en/Xrandr.html" title="Xrandr">Xrandr</a> in the same manner as the <code>udl</code> driver.</li>
+<li>Install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/displaylink/">displaylink</a></span><sup><small>AUR</small></sup> driver. For X11 it allows configuring DisplayLink monitors using <a href="../en/Xrandr.html" title="Xrandr">Xrandr</a> in the same manner as the <code>udl</code> driver; for Wayland no configuration is necessary.</li>
 <li>Enable <code>displaylink.service</code>.</li>
-<li>Use the "modesetting" driver with AccelMethod "none" and MatchDriver "evdi".</li>
+<li>For X11 use the "modesetting" driver with AccelMethod "none" and MatchDriver "evdi".</li>
 </ol>
 <p>Create a file with the following content:
 </p>
@@ -322,6 +323,9 @@ EndSection
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">### Automatically suspend sinks/sources that become idle for too long
 # load-module module-suspend-on-idle
 </pre>
+<h3><span class="mw-headline" id="Only_1_Display_is_recognized_after_boot">Only 1 Display is recognized after boot</span></h3>
+<p>In case multiple displays are connected to a DisplayLink Docking station, but only 1 is recognized after bootup, a possible fix is to force evdi to search for multiple displays at boot by adding the <code>evdi</code> module to <code>/etc/modules-load.d/evdi.conf</code> and <code>"options evdi initial_device_count=2"</code> to <code>/etc/modprobe.d/dkms.conf</code>
+</p>
 <h2><span class="mw-headline" id="See_Also">See Also</span></h2>
 <ul>
 <li>
@@ -339,8 +343,8 @@ EndSection
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=DisplayLink&amp;oldid=652559">https://wiki.archlinux.org/index.php?title=DisplayLink&amp;oldid=652559</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 February 2021, at 09:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=DisplayLink&amp;oldid=663051">https://wiki.archlinux.org/index.php?title=DisplayLink&amp;oldid=663051</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 11:43.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -777,7 +778,7 @@ NumCPUs 2                                         ## Запуск в двух п
 </p>
 <p><code>AvoidDiskWrites 1</code> уменьшает количество записей на диск и износ SSD. <code>DisableAllSwap 1</code> заблокирует все текущие и будущие страницы памяти, чтобы её нельзя было выгрузить.
 </p>
-<p>Если команда <code>grep aes /proc/cpuinfo</code> возвращает какой-то результат, то ваш CPU поддерживает AES-инструкции. Если соответствующий модуль был загружен (<code>lsmod | grep aes</code>), то параметр <code>HardwareAccel 1</code> включит встроенное аппаратное ускорение шифрования <a rel="nofollow" class="external autonumber" href="http://www.torservers.net/wiki/setup/server#aes-ni_crypto_acceleration">[6]</a>.
+<p>Если команда <code>grep aes /proc/cpuinfo</code> возвращает какой-то результат, то ваш CPU поддерживает AES-инструкции. Если соответствующий модуль был загружен (<code>lsmod | grep aes</code>), то параметр <code>HardwareAccel 1</code> включит встроенное аппаратное ускорение шифрования <a rel="nofollow" class="external autonumber" href="https://www.torservers.net/wiki/setup/server#aes-ni_crypto_acceleration">[6]</a>.
 </p>
 <p><code>ORPort 443</code>, <code>DirPort 80</code> и <code>DisableAllSwap 1</code> требуют запуска службы Tor от root, как описано в разделе <a href="#%D0%9F%D1%80%D0%B8%D0%B2%D0%B8%D0%BB%D0%B5%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5_%D0%BF%D0%BE%D1%80%D1%82%D1%8B">#Привилегированные порты</a>.
 </p>
@@ -830,7 +831,7 @@ COMMIT
 <p><code>-A INPUT -i lo -j ACCEPT</code> разрешает входящие соединения на петлевой интерфейс.
 </p>
 <h5><span class="mw-headline" id="Haveged">Haveged</span></h5>
-<p>В статье <a href="../ru/Haveged.html" title="Haveged (Русский)">Haveged</a> описано, как определить, генерирует ли ваша система достаточно энтропии для управления большим количеством OpenSSL соединений; документация и советы: <a rel="nofollow" class="external autonumber" href="http://www.issihosts.com/haveged/">[7]</a>, <a rel="nofollow" class="external autonumber" href="http://www.digitalocean.com/community/tutorials/how-to-setup-additional-entropy-for-cloud-servers-using-haveged">[8]</a>.
+<p>В статье <a href="../ru/Haveged.html" title="Haveged (Русский)">Haveged</a> описано, как определить, генерирует ли ваша система достаточно энтропии для управления большим количеством OpenSSL соединений; документация и советы: <a rel="nofollow" class="external autonumber" href="http://www.issihosts.com/haveged/">[7]</a>, <a rel="nofollow" class="external autonumber" href="https://www.digitalocean.com/community/tutorials/how-to-setup-additional-entropy-for-cloud-servers-using-haveged">[8]</a>.
 </p>
 <h5><span class="mw-headline" id="pdnsd">pdnsd</span></h5>
 <div class="archwiki-template-box archwiki-template-box-warning">
@@ -900,7 +901,7 @@ listen-address=127.0.0.1
 </pre>
 <p><a href="../ru/Systemd.html#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Запустите">Запустите</a> демон dnsmasq.
 </p>
-<p>Наконец, если вы используете <a href="../en/Dhcpcd.html" title="Dhcpcd">dhcpcd</a>, укажите ему не изменять настройки в файле <code>resolv.conf</code>:
+<p>Наконец, если вы используете <a href="../ru/Dhcpcd.html" title="Dhcpcd (Русский)">dhcpcd</a>, укажите ему не изменять настройки в файле <code>resolv.conf</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/dhcpcd.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">nohook resolv.conf
@@ -922,7 +923,7 @@ $ torsocks wget -qO- <a rel="nofollow" class="external free" href="https://check
 </h2>
 <p>В некоторых случаях более безопасно (и часто проще) выполнить сквозную "торифицикацию" всей системы вместо настройки отдельных приложений на использование SOCKS-порта Tor и отслеживания утечек DNS. Для полной торификации сетевой экран <a href="../ru/Iptables.html" title="Iptables (Русский)">iptables</a> настраивают на пересылку всех исходящих пакетов (помимо собственно трафика Tor) на <i>TransPort</i>. В этом случае приложения не нужно настраивать для работы через Tor, хотя работа через <i>SocksPort</i> всё ещё возможна. Торификация также работает и для DNS (<i>DNSPort</i>), но при этом нужно учитывать, что Tor поддерживает только протокол TCP, и, за исключением DNS-запросов, UDP-пакеты через Tor посылаться не могут. Следовательно, они должны блокироваться для предотвращения утечек.
 </p>
-<p>Торификация через iptables даёт сравнительно надёжную защиту, но она не является полноценной заменой приложениям виртуализированной торификации вроде Whonix или TorVM <a rel="nofollow" class="external autonumber" href="https://www.whonix.org/wiki/Comparison_with_Others">[9]</a>. Торификация также не позволяет скрыть отпечаток браузера (fingerprint), поэтому рекомендуется воспользоваться "амнезийным" решением вроде <a rel="nofollow" class="external text" href="http://tails.boum.org/">Tails</a>. Приложения всё ещё могут узнать имя хоста, MAC-адрес, серийный номер, временную зону вашего компьютера и другие данные, а с root-привилегиями смогут даже отключить сетевой экран целиком. Другими словами, полная торификация через iptables защищает от случайных соединений и DNS-утечек неправильно настроенного программного обеспечения, но не от вредоносных программ или ПО с серьёзными уязвимостями.
+<p>Торификация через iptables даёт сравнительно надёжную защиту, но она не является полноценной заменой приложениям виртуализированной торификации вроде Whonix или TorVM <a rel="nofollow" class="external autonumber" href="https://www.whonix.org/wiki/Comparison_with_Others">[9]</a>. Торификация также не позволяет скрыть отпечаток браузера (fingerprint), поэтому рекомендуется воспользоваться "амнезийным" решением вроде <a rel="nofollow" class="external text" href="https://tails.boum.org/">Tails</a>. Приложения всё ещё могут узнать имя хоста, MAC-адрес, серийный номер, временную зону вашего компьютера и другие данные, а с root-привилегиями смогут даже отключить сетевой экран целиком. Другими словами, полная торификация через iptables защищает от случайных соединений и DNS-утечек неправильно настроенного программного обеспечения, но не от вредоносных программ или ПО с серьёзными уязвимостями.
 </p>
 <p>При работе через <a href="https://en.wikipedia.org/wiki/ru:%D0%9F%D1%80%D0%BE%D0%BA%D1%81%D0%B8-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80#.D0.92.D0.B8.D0.B4.D1.8B_.D0.BF.D1.80.D0.BE.D0.BA.D1.81.D0.B8-.D1.81.D0.B5.D1.80.D0.B2.D0.B5.D1.80.D0.BE.D0.B2" class="extiw" title="wikipedia:ru:Прокси-сервер">прозрачный прокси-сервер</a> можно запустить сеанс Tor дважды, на клиенте и на прокси, в режиме "Tor поверх Tor". Такая схема работы обладает непредсказуемым поведением и потенциально небезопасна. В теории, трафик пользователя будет выполнять шесть прыжков вместо обычных трёх, но нет никакой гарантии, что дополнительные прыжки не совпадут с тремя изначальными — например, в другом порядке. Разработчики Tor Project считают, что это небезопасно <a rel="nofollow" class="external autonumber" href="https://2019.www.torproject.org/docs/faq.html.en#ChoosePathLength">[10]</a>, <a rel="nofollow" class="external autonumber" href="https://trac.torproject.org/projects/tor/wiki/doc/TorifyHOWTO#ToroverTor">[11]</a>.
 </p>
@@ -993,7 +994,7 @@ COMMIT
 </pre>
 <p>Убедитесь, что Tor работает, и <a href="../ru/Systemd.html#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Запустите/включите">запустите/включите</a> службы <code>iptables</code> и <code>ip6tables</code>.
 </p>
-<p>При необходимости можно <a href="../ru/Systemd.html#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%B5%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D0%B0%D0%BC%D0%B8_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Отредактируйте">добавить указания</a> <code>Requires=iptables.service</code> и <code>Requires=ip6tables.service</code> к любому юниту systemd, чтобы выбранный процесс запускался строго после включения межсетевого экрана.
+<p>При необходимости можно <a href="../ru/Systemd.html#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Отредактируйте">добавить указания</a> <code>Requires=iptables.service</code> и <code>Requires=ip6tables.service</code> к любому юниту systemd, чтобы выбранный процесс запускался строго после включения межсетевого экрана.
 </p>
 <h2>
 <span id=".D0.A1.D0.BE.D0.B2.D0.B5.D1.82.D1.8B_.D0.B8_.D1.80.D0.B5.D0.BA.D0.BE.D0.BC.D0.B5.D0.BD.D0.B4.D0.B0.D1.86.D0.B8.D0.B8"></span><span class="mw-headline" id="Советы_и_рекомендации">Советы и рекомендации</span>
@@ -1108,8 +1109,8 @@ Type=simple
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tor_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=643255">https://wiki.archlinux.org/index.php?title=Tor_(Русский)&amp;oldid=643255</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 December 2020, at 11:10.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tor_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=662464">https://wiki.archlinux.org/index.php?title=Tor_(Русский)&amp;oldid=662464</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:13.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -122,7 +123,7 @@
 <p>Não se esqueça de checar <a href="../en/Hardware_video_acceleration.html" title="Hardware video acceleration">Hardware video acceleration</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Existe uma discussão (<a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=Ubuntu-Debian-Abandon-Intel-DDX">Debian &amp; Ubuntu</a>, <a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=Fedora-Xorg-Intel-DDX-Switch">Fedora</a>, <a rel="nofollow" class="external text" href="https://community.kde.org/Plasma/5.9_Errata#Intel_GPUs">KDE</a>) em que alguns não recomendam instalar o driver <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-intel">xf86-video-intel</a></span>, deixando apenas o modesetting driver para a quarta geração em diante das GPUs. Veja <a rel="nofollow" class="external autonumber" href="https://www.reddit.com/r/archlinux/comments/4cojj9/it_is_probably_time_to_ditch_xf86videointel/">[1]</a>, <a rel="nofollow" class="external autonumber" href="http://www.phoronix.com/scan.php?page=article&amp;item=intel-modesetting-2017&amp;num=1">[2]</a>, <a href="../pt/Xorg.html#Instala%C3%A7%C3%A3o" title="Xorg (Português)">Xorg#Instalação</a>, e <span class="plainlinks archwiki-template-man" title="$ man 4 modesetting"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/modesetting.4">modesetting(4)</a></span>. Entretanto, o driver modesetting pode também causar alguns problemas <a rel="nofollow" class="external text" href="https://bugs.chromium.org/p/chromium/issues/detail?id=370022">Chromium Issue 370022</a>. Além disso, o driver modesetting não será beneficiado pelo firmware Intel GuC / HuC / DMC.</div>
+<strong>Nota:</strong> Existe uma discussão (<a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Ubuntu-Debian-Abandon-Intel-DDX">Debian &amp; Ubuntu</a>, <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Fedora-Xorg-Intel-DDX-Switch">Fedora</a>, <a rel="nofollow" class="external text" href="https://community.kde.org/Plasma/5.9_Errata#Intel_GPUs">KDE</a>) em que alguns não recomendam instalar o driver <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-intel">xf86-video-intel</a></span>, deixando apenas o modesetting driver para a quarta geração em diante das GPUs. Veja <a rel="nofollow" class="external autonumber" href="https://www.reddit.com/r/archlinux/comments/4cojj9/it_is_probably_time_to_ditch_xf86videointel/">[1]</a>, <a rel="nofollow" class="external autonumber" href="https://www.phoronix.com/scan.php?page=article&amp;item=intel-modesetting-2017&amp;num=1">[2]</a>, <a href="../pt/Xorg.html#Instala%C3%A7%C3%A3o" title="Xorg (Português)">Xorg#Instalação</a>, e <span class="plainlinks archwiki-template-man" title="$ man 4 modesetting"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/modesetting.4">modesetting(4)</a></span>. Entretanto, o driver modesetting pode também causar alguns problemas <a rel="nofollow" class="external text" href="https://bugs.chromium.org/p/chromium/issues/detail?id=370022">Chromium Issue 370022</a>. Além disso, o driver modesetting não será beneficiado pelo firmware Intel GuC / HuC / DMC.</div>
 <h2><span class="mw-headline" id="Carregando">Carregando</span></h2>
 <p>O Intel kernel module carrega automaticamente na inicialização do sistema
 </p>
@@ -152,7 +153,7 @@
 </p>
 <p>Você pode verificar se ambos estão ativados usando <a href="../pt/Core_utilities.html#Essenciais" class="mw-redirect" title="Dmesg (Português)">dmesg</a>:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[drm] HuC: Loaded firmware i915/kbl_huc_ver02_00_1810.bin (version 2.0)
 [drm] GuC: Loaded firmware i915/kbl_guc_ver9_39.bin (version 9.39)
 i915 0000:00:02.0: GuC firmware version 9.39
@@ -226,11 +227,11 @@ Para conhecer todas as opções que podem ser adicionadas ao driver, veja a man 
 </pre>
 <p>A ativação da compressão do buffer de quadros em CPUs anteriores ao Sandy Bridge resulta em mensagens de erro infinitas:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[ 2360.475430] [drm] not enough stolen space for compressed buffer (need 4325376 bytes), disabling
 [ 2360.475437] [drm] hint: you may be able to increase stolen memory size in the BIOS to avoid this
 </pre>
-A solução é desabilitar a compactação do buffer de quadros, o que aumentará imperceptivelmente o consumo de energia (em torno de 0,06 W). Para desabilitá-lo, adicione <code>i915.enable_fbc=0</code> aos parâmetros da linha do kernel. Mais informações sobre os resultados da compressão desativada podem ser encontradas <a rel="nofollow" class="external text" href="http://kernel.ubuntu.com/~cking/power-benchmarking/background-colour-and-framebuffer-compression/">aqui</a>.</div>
+A solução é desabilitar a compactação do buffer de quadros, o que aumentará imperceptivelmente o consumo de energia (em torno de 0,06 W). Para desabilitá-lo, adicione <code>i915.enable_fbc=0</code> aos parâmetros da linha do kernel. Mais informações sobre os resultados da compressão desativada podem ser encontradas <a rel="nofollow" class="external text" href="https://kernel.ubuntu.com/~cking/power-benchmarking/background-colour-and-framebuffer-compression/">aqui</a>.</div>
 <h3><span class="mw-headline" id="Fastboot">Fastboot</span></h3>
 <p>O objetivo do Intel Fastboot é preservar o buffer de quadros como configurado pelo BIOS ou <a href="../pt/Arch_boot_process.html#Gerenciador_de_boot" class="mw-redirect" title="Gerenciador de boot">gerenciador de boot</a> para evitar qualquer oscilação até que o <a href="../pt/Xorg.html" title="Xorg (Português)">Xorg</a> tenha iniciado <a rel="nofollow" class="external autonumber" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTEwNzc">[3]</a>.
 </p>
@@ -378,11 +379,11 @@ acpi_osi=
 </h3>
 <p>Habilitando a compressão do frame buffer em CPUs pré Sandy Bridge resulta em incontáveis mensagens de erro:
 </p>
-<pre>$ dmesg |tail 
+<pre># dmesg |tail 
 [ 2360.475430] [drm] not enough stolen space for compressed buffer (need 4325376 bytes), disabling
 [ 2360.475437] [drm] hint: you may be able to increase stolen memory size in the BIOS to avoid this
 </pre>
-<p>The solution is to disable frame buffer compression which will imperceptibly increase power consumption (around 0.06 W). In order to disable it add <code>i915.enable_fbc=0</code> to the kernel line parameters. More information on the results of disabled compression can be found <a rel="nofollow" class="external text" href="http://kernel.ubuntu.com/~cking/power-benchmarking/background-colour-and-framebuffer-compression/">here</a>.
+<p>The solution is to disable frame buffer compression which will imperceptibly increase power consumption (around 0.06 W). In order to disable it add <code>i915.enable_fbc=0</code> to the kernel line parameters. More information on the results of disabled compression can be found <a rel="nofollow" class="external text" href="https://kernel.ubuntu.com/~cking/power-benchmarking/background-colour-and-framebuffer-compression/">here</a>.
 </p>
 <h3>
 <span id="Corrup.C3.A7.C3.A3o.2FFalta_de_Resposta_no_Chromium_e_Firefox"></span><span class="mw-headline" id="Corrupção/Falta_de_Resposta_no_Chromium_e_Firefox">Corrupção/Falta de Resposta no Chromium e Firefox</span>
@@ -476,8 +477,8 @@ EndSection
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Intel_graphics_(Portugu%C3%AAs)&amp;oldid=631208">https://wiki.archlinux.org/index.php?title=Intel_graphics_(Português)&amp;oldid=631208</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 11 August 2020, at 20:17.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Intel_graphics_(Portugu%C3%AAs)&amp;oldid=663746">https://wiki.archlinux.org/index.php?title=Intel_graphics_(Português)&amp;oldid=663746</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 06:15.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

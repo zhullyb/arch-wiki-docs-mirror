@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -134,33 +135,28 @@
 <b>site</b> refers to <b>system-wide</b> in R Documentation</li>
 </ul>
 </div>
-<p>Run <code>?Startup</code> to read the documentation about system file  configuration, <code>help()</code> for the on-line help,<code>help.start()</code> for the HTML browser interface to help, <code>demo()</code> for some demos and <code>q()</code> to close the session and quit.
+<p>Run <code>?Startup</code> to read the documentation about system file  configuration, <code>help()</code> for the on-line help, <code>help.start()</code> for the HTML browser interface to help, <code>demo()</code> for some demos and <code>q()</code> to close the session and quit.
 </p>
-<p>When closing the session, you will be prompted : <code>Save workspace Image ?[y/n/c]</code>. The <i>workspace</i> is your current working environment and include any user-defined objects, functions. The saved image is stored in <code>.RData</code> format and will be automatically reloaded the next time <code>R</code> is started. You can manually save the workspace at any time in the session with the <code>save.image(image.RData)</code> command, save as many images as you want (eg : <i>image1.RData</i>, <i>image2.RData</i>). You can load image with the <code>load.image(image.RData)</code> command at any time of your session.
+<p>When closing the session, you will be prompted: <code>Save workspace Image ?[y/n/c]</code>. The <i>workspace</i> is your current working environment and include any user-defined objects, functions. The saved image is stored in <code>.RData</code> format and will be automatically reloaded the next time <code>R</code> is started. You can manually save the workspace at any time in the session with the <code>save.image(image.RData)</code> command, save as many images as you want (eg: <i>image1.RData</i>, <i>image2.RData</i>). You can load image with the <code>load.image(image.RData)</code> command at any time of your session.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong>  
 <ul>
-<li>Tired of R's verbose startup message ? Then start R with the <code>--quiet</code> command-line option (<code>$ R --quiet</code>). You can add <code>alias R="R --quiet"</code> in one of your <a href="../en/Autostarting.html" class="mw-redirect" title="Startup files">Startup files</a>.</li>
+<li>Tired of R's verbose startup message? Then start R with the <code>--quiet</code> command-line option (<code>$ R --quiet</code>). You can add <code>alias R="R --quiet"</code> in one of your <a href="../en/Autostarting.html" class="mw-redirect" title="Startup files">Startup files</a>.</li>
 <li>Running R from the command line will set R's working directory to the current directory. Opening the R GUI will set R's working directory to $HOME, unless explicitly defined in your configuration files (<code>.Renviron</code> or <code>.Rprofile</code>).</li>
 </ul>
 </div>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
-<p>Whenever R starts, its configuration is controlled by several files.
-Please refer to <a rel="nofollow" class="external text" href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html">Initialization at Start of an R Session</a> to get a detailed understanding of startup process.
+<p>Whenever R starts, its configuration is controlled by several files. Please refer to <a rel="nofollow" class="external text" href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html">Initialization at Start of an R Session</a> to get a detailed understanding of startup process.
 </p>
 <h3><span class="mw-headline" id="Environment">Environment</span></h3>
-<p>R first loads <b>site</b> and <b>user</b> environment variable files.
-The name of the site file is controlled by the <a href="../en/Environment_variables.html" title="Environment variables">Environment variables</a> <code>R_ENVIRON</code> if it exists, and defaults to <code>/etc/R/Renviron</code>.
-The name of the user file is specified by <code>R_ENVIRON_USER</code>.
-If that is unset, it defaults to <code>.Renviron</code> in the current working directory if it exists, or <code>~/.Renviron</code> otherwise.
+<p>R first loads <b>site</b> and <b>user</b> environment variable files. The name of the site file is controlled by the <a href="../en/Environment_variables.html" title="Environment variables">Environment variables</a> <code>R_ENVIRON</code> if it exists, and defaults to <code>/etc/R/Renviron</code>. The name of the user file is specified by <code>R_ENVIRON_USER</code>. If that is unset, it defaults to <code>.Renviron</code> in the current working directory if it exists, or <code>~/.Renviron</code> otherwise.
 </p>
 <p>The most important variables can be found on <a rel="nofollow" class="external text" href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/EnvVar.html">Environment Variables R Documentation</a>.
 </p>
 <p>You may disable loading environment files with <code>--no-environ</code>
 </p>
-<p>Lines in the <code>Renviron</code> file should be either comment lines starting with <code>#</code> or lines of the form <code>name=value</code>.
-Here is a very basic <code>.Renviron</code>:
+<p>Lines in the <code>Renviron</code> file should be either comment lines starting with <code>#</code> or lines of the form <code>name=value</code>. Here is a very basic <code>.Renviron</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">.Renviron</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">R_HOME_USER = /path/to/your/r/directory
@@ -172,22 +168,17 @@ MYSQL_HOME = /var/lib/mysql</pre>
 </p>
 <pre>&gt; Sys.setenv(TZ="Europe/London")</pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> 
-<p>Typically, R will throw 'out of memory' errors once it has exhausted your system's physical memory.
-Set the "maximal vector heap size" (<code>R_MAX_VSIZE</code>) environmental variable in your <code>.Renviron</code> file to enable R to use more of your system's total (physical + virtual) available memory.
-The value set may either be a numerical value providing the number of bytes, e.g. <code>16000000000</code>, or a numerical value suffixed by ISO units, e.g. <code>16GB</code>.
-</p>
+<strong>Tip:</strong> Typically, R will throw 'out of memory' errors once it has exhausted your system's physical memory. Set the "maximal vector heap size" (<code>R_MAX_VSIZE</code>) environmental variable in your <code>.Renviron</code> file to enable R to use more of your system's total (physical + virtual) available memory. The value set may either be a numerical value providing the number of bytes, e.g. <code>16000000000</code>, or a numerical value suffixed by ISO units, e.g. <code>16GB</code>.
 </div>
 <h3><span class="mw-headline" id="Profile">Profile</span></h3>
-<p>R then loads a <code>.Rprofile</code> file, which contains R code that is executed.
-These files are read in the following order of preference (only one file is loaded):
+<p>R then loads a <code>.Rprofile</code> file, which contains R code that is executed. These files are read in the following order of preference (only one file is loaded):
 </p>
-<p>1. A file specified by the environment variable <code>R_PROFILE_USER</code>.
-</p>
-<p>2. A <code>.Rprofile</code> file in the current working directory.
-</p>
-<p>3. <code>$HOME/.Rprofile</code>.
-</p>
+<ol>
+<li>A file specified by the environment variable <code>R_PROFILE_USER</code>.</li>
+<li>A <code>.Rprofile</code> file in the current working directory.</li>
+<li>
+<code>$HOME/.Rprofile</code>.</li>
+</ol>
 <p>A <code>.Rprofile</code> file can contain arbitrary R code, though best practice suggests that one should not load packages at startup, or execute any code that would hinder package upgrades and reproducibility.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.Rprofile</pre>
@@ -199,47 +190,44 @@ These files are read in the following order of preference (only one file is load
 
 options(digits = 12)                                          # Number of digits to print. Default is 7, max is 15
 options(scipen = 2)                                           # Penalty applied to inhibit the use of scientific notation
-options(show.signif.stars = FALSE)                            # Don't show stars indicating statistical significance in model outputs
+options(show.signif.stars = FALSE)                            # Do not show stars indicating statistical significance in model outputs
 local({
   n &lt;- parallel::detectCores()                                # Detect number of CPU cores
   options(Ncpus = n)                                          # Parallel package installation in install.packages()
   options(mc.cores =  n)                                      # Parallel apply-type functions via 'parallel' package
 })
 error &lt;- quote(dump.frames("${R_HOME_USER}/testdump", TRUE))  # Post-mortem debugging facilities</pre>
-<p>You can add more <a rel="nofollow" class="external text" href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/options.html">global options</a> to customize your R environment.
-See this <a rel="nofollow" class="external text" href="https://stackoverflow.com/questions/1189759/expert-r-users-whats-in-your-rprofile">post</a> for more examples of user configurations.
+<p>You can add more <a rel="nofollow" class="external text" href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/options.html">global options</a> to customize your R environment. See this <a rel="nofollow" class="external text" href="https://stackoverflow.com/questions/1189759/expert-r-users-whats-in-your-rprofile">post</a> for more examples of user configurations.
 </p>
 <h3><span class="mw-headline" id="Locale">Locale</span></h3>
 <p>Aspects of the <a href="../en/Locale.html" title="Locale">Locale</a> are accessed by the functions <code>Sys.getlocale</code> and <code>Sys.localeconv</code> within the R session. Locales will be the one defined in your system.
 </p>
 <h2><span class="mw-headline" id="Managing_R_packages">Managing R packages</span></h2>
-<p>There are many add-on R packages, which can be browsed on <a rel="nofollow" class="external text" href="http://cran.r-project.org/web/packages/available_packages_by_date.html">The R Website.</a>.
+<p>There are many add-on R packages which can be browsed on <a rel="nofollow" class="external text" href="https://cran.r-project.org/web/packages/available_packages_by_date.html">The R Website</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong>  
 Some R packages link to files provided by system packages. These packages will need to be reinstalled when these files are updated.</div>
 <h3><span class="mw-headline" id="With_pacman">With pacman</span></h3>
-<p>There are some packages available on the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> with the prefix <code>r-</code>. You can mix and match installing R packages with pacman and through R (below), but if you do so you should let pacman manage system packages (those that reside at <code>/usr/lib/R/library</code>, and let R manage user-installed packages elsewhere (e.g. <code>~/R/library</code>).
+<p>There are some packages available on the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> with the prefix <i>r-</i>. You can mix and match installing R packages with <i>pacman</i> and through R (below), but if you do so, you should let <i>pacman</i> manage system packages (those that reside at <code>/usr/lib/R/library</code>) and let R manage user-installed packages elsewhere (e.g. <code>~/R/library</code>).
 </p>
 <h3><span class="mw-headline" id="With_R">With R</span></h3>
-<p>Packages can be installed from within R using the <code>install.packages(c("pkgname"))</code> command. You should use a local library and let pacman manage files that reside under <code>/usr/lib/R/library</code>.
+<p>Packages can be installed from within R using the <code>install.packages(c("pkgname"))</code> command. You should use a local library and let <i>pacman</i> manage files that reside under <code>/usr/lib/R/library</code>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
 <ul><li>
 <code>install.packages()</code> requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tk">tk</a></span> to be <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">installed</a> for selecting mirrors. Try installing this package if you see:</li></ul>
-<p><code>Error: .onLoad failed in loadNamespace() for 'tcltk', details (...) </code>
-</p>
+<dl><dd><pre>Error: .onLoad failed in loadNamespace() for 'tcltk', details (...)</pre></dd></dl>
 <ul><li>Alternatively, you can disable graphical pop-ups like this by running:</li></ul>
-<p><code>&gt; options(menu.graphics=FALSE)</code>
-</p>
-<p>to make this change more permanent add the above line to your Rprofile.
-</p>
+<dl><dd><pre>&gt; options(menu.graphics=FALSE)</pre></dd></dl>
+<dl><dd>To make this change permanent, add the above command to your Rprofile.</dd></dl>
 </div> 
 <p>Within your R session, run this command to check that your user library exists and is set correctly:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">&gt; Sys.getenv("R_LIBS_USER")</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[1] "/path/to/directory/R/packages"</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[1] "/path/to/directory/R/packages"
+</pre>
 <p>Alternatively, you may install from the command line like so:
 </p>
 <pre>$ R CMD INSTALL -l $R_LIBS_USER <i>pkg1 pkg2 ...</i></pre>
@@ -253,13 +241,12 @@ Some R packages link to files provided by system packages. These packages will n
 </pre>
 <p>Or when you also need to select a specific mirror (<a rel="nofollow" class="external free" href="https://cran.r-project.org/mirrors.html">https://cran.r-project.org/mirrors.html</a>) to download the packages from (changing the URL as needed):
 </p>
-<pre>&gt; update.packages(ask=FALSE, checkBuilt=TRUE, repos="<a rel="nofollow" class="external free" href="https://cran.ma.imperial.ac.uk/">https://cran.ma.imperial.ac.uk/</a>")
+<pre>&gt; update.packages(ask=FALSE, checkBuilt=TRUE, repos="https://cran.ma.imperial.ac.uk/")
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> upgrading packages from your R session can quickly be a pain if you have too many loaded packages at start up. For packages to be upgraded, they cannot be loaded, so do not load packages from your Rprofile.
-</div>
+<strong>Tip:</strong> Upgrading packages from your R session can quickly be a pain if you have too many loaded packages at start up. For packages to be upgraded, they cannot be loaded, so do not load packages from your Rprofile.</div>
 <h5><span class="mw-headline" id="Within_a_shell">Within a shell</span></h5>
-<p>You can use <code>Rscript</code>, which comes with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=r">r</a></span> to update packages from a shell:
+<p>You can use <code>Rscript</code>, which comes with <i>r</i> to update packages from a shell:
 </p>
 <pre>$ Rscript -e "update.packages()"</pre>
 <h3><span class="mw-headline" id="Makevars">Makevars</span></h3>
@@ -272,7 +259,7 @@ CXXFLAGS=-O3 -Wall -pedantic -march=native -mtune=native -pipe</pre>
 <p>R does not include a point-and-click graphical user interface for statistics or data manipulation. However, third-party user interfaces for R are available, such as R Commander and Rattle.
 </p>
 <h3><span class="mw-headline" id="R_Commander_frontend">R Commander frontend</span></h3>
-<p>R Commander is a popular user interface to R. There is no Arch Linux package available to install R Commander, but it is an R package so it can be installed easily from within R.  R Commander requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tk">tk</a></span> to be <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">installed</a>.
+<p>R Commander is a popular user interface to R. There is no Arch Linux package available to install R Commander, but it is an R package so it can be installed easily from within R. R Commander requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tk">tk</a></span> to be <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">installed</a>.
 </p>
 <p>To install R Commander, run <code>R</code> from the command line. Then type:
 </p>
@@ -311,9 +298,9 @@ CXXFLAGS=-O3 -Wall -pedantic -march=native -mtune=native -pipe</pre>
 <h3><span class="mw-headline" id="RStudio_IDE">RStudio IDE</span></h3>
 <p>RStudio an open-source R IDE. It includes many modern conveniences such as parentheses matching, tab-completion, tool-tip help popups, and a spreadsheet-like data viewer.
 </p>
-<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/rstudio-desktop-bin/">rstudio-desktop-bin</a></span><sup><small>AUR</small></sup> (binary version from the RStudio project website) or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/rstudio-desktop-git/">rstudio-desktop-git</a></span><sup><small>AUR</small></sup> (development version) from <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>.
+<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/rstudio-desktop-bin/">rstudio-desktop-bin</a></span><sup><small>AUR</small></sup> (binary version from the RStudio project website) or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/rstudio-desktop-git/">rstudio-desktop-git</a></span><sup><small>AUR</small></sup> (development version) from the AUR or from the <a href="../en/Unofficial_user_repositories.html" class="mw-redirect" title="Unofficial user repository">unofficial user repository</a> for RStudio IDE packages, <a href="../en/Unofficial_user_repositories.html#rstudio" title="Unofficial user repositories">rstudio</a>.
 </p>
-<p>The R library path is often configured with the R_LIBS environment variable. RStudio ignores this, so the user must set R_LIBS_USER in <code>~/.Renviron</code>, as documented above.
+<p>The R library path is often configured with the <code>R_LIBS</code> environment variable. RStudio ignores this, so the user must set <code>R_LIBS_USER</code> in <code>~/.Renviron</code>, as documented above.
 </p>
 <h3><span class="mw-headline" id="RStudio_server">RStudio server</span></h3>
 <p>RStudio Server enables you to provide a browser based interface to a version of R running on a remote Linux server.
@@ -326,7 +313,7 @@ CXXFLAGS=-O3 -Wall -pedantic -march=native -mtune=native -pipe</pre>
 <p><a href="../en/Emacs.html" title="Emacs">Emacs</a> users can interact with R via the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/emacs-ess/">emacs-ess</a></span><sup><small>AUR</small></sup> package.
 </p>
 <h3><span class="mw-headline" id="Nvim-R">Nvim-R</span></h3>
-<p>The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvim-r/">nvim-r</a></span><sup><small>AUR</small></sup> package allows <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=vim">vim</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=neovim">neovim</a></span> users to code in R, including editing and rendering of R markdown (Rmd) files, execution of R code in a separate pane, inspection of variables, and integrated help panes.
+<p>The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvim-r/">nvim-r</a></span><sup><small>AUR</small></sup> package allows <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=vim">vim</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=neovim">neovim</a></span> users to code in R, including editing and rendering of R markdown (<i>.Rmd</i>) files, execution of R code in a separate pane, inspection of variables, and integrated help panes.
 </p>
 <h3><span class="mw-headline" id="Cantor">Cantor</span></h3>
 <p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cantor">cantor</a></span> is a notebook application developed by KDE that includes support for R.
@@ -348,18 +335,17 @@ CXXFLAGS=-O3 -Wall -pedantic -march=native -mtune=native -pipe</pre>
 <li><a rel="nofollow" class="external free" href="http://nghiaho.com/?p=1726">http://nghiaho.com/?p=1726</a></li>
 </ul>
 <h4><span class="mw-headline" id="OpenBLAS">OpenBLAS</span></h4>
-<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openblas">openblas</a></span> can replace the reference <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=blas">blas</a></span>. If you are using the regular <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=r">r</a></span> package from [extra] no further configuration is needed; R is configured to use the system BLAS and will use OpenBLAS once it is installed.
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openblas">openblas</a></span> can replace the reference <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=blas">blas</a></span>. If you are using the regular <i>r</i> package from the <a href="../en/Official_repositories.html#extra" class="mw-redirect" title="Extra">extra</a> repository, no further configuration is needed; R is configured to use the system BLAS and will use OpenBLAS once it is installed.
 </p>
 <h4><span class="mw-headline" id="Intel_MKL">Intel MKL</span></h4>
-<p><b>If your processors are Intel</b>, you can use the <a rel="nofollow" class="external text" href="http://software.intel.com/en-us/intel-mkl">Intel math Kernel Library</a>. The <b>MKL</b>, beyond the capabilities of multithreading, also has specific optimizations for Intel processors. Keep in mind that they can <a rel="nofollow" class="external text" href="http://blog.revolutionanalytics.com/2015/10/edge-cases-in-using-the-intel-mkl-and-parallel-programming.html">potentially interfere with the standard R functionality for parallel processing</a>.
+<p><b>If your processors are Intel</b>, you can use the <a rel="nofollow" class="external text" href="https://software.intel.com/en-us/intel-mkl">Intel math Kernel Library</a>. The <b>MKL</b>, beyond the capabilities of multithreading, also has specific optimizations for Intel processors. Keep in mind that they can <a rel="nofollow" class="external text" href="http://blog.revolutionanalytics.com/2015/10/edge-cases-in-using-the-intel-mkl-and-parallel-programming.html">potentially interfere with the standard R functionality for parallel processing</a>.
 </p>
-<p>Please first <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=intel-mkl">intel-mkl</a></span> package available from <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>, then the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/r-mkl/">r-mkl</a></span><sup><small>AUR</small></sup> package.
+<p>Please first install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=intel-mkl">intel-mkl</a></span>, then the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/r-mkl/">r-mkl</a></span><sup><small>AUR</small></sup> package.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
-<ul><li>if you install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/r-mkl/">r-mkl</a></span><sup><small>AUR</small></sup> with <b>R</b> already installed, you will be prompted to remove <b>R</b>. Once <b>r-mkl</b> is installed, please run on <b>R</b> console the following command :</li></ul>
-<p><code>&gt; update.packages(checkBuilt=TRUE)</code>
-</p>
+<ul><li>if you install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/r-mkl/">r-mkl</a></span><sup><small>AUR</small></sup> with <b>R</b> already installed, you will be prompted to remove <b>R</b>. Once <b>r-mkl</b> is installed, please run on <b>R</b> console the following command:</li></ul>
+<dl><dd><pre>&gt; update.packages(checkBuilt=TRUE)</pre></dd></dl>
 <ul><li>here are elapsed time in sec from computing 15 tests with default GCC build and icc/MKL build: <i>274.93 sec</i> for GCC build, <i>21.01 sec</i> for icc/MKL build. See <a rel="nofollow" class="external text" href="https://stat.ethz.ch/pipermail/r-help/2014-September/421574.html">this post</a> for more information.</li></ul>
 </div>
 <h4><span class="mw-headline" id="Intel_Advisor">Intel Advisor</span></h4>
@@ -424,8 +410,8 @@ attach(.env, warn.conflicts = FALSE)</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=R&amp;oldid=642800">https://wiki.archlinux.org/index.php?title=R&amp;oldid=642800</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 29 November 2020, at 12:53.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=R&amp;oldid=663904">https://wiki.archlinux.org/index.php?title=R&amp;oldid=663904</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 24 April 2021, at 02:27.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

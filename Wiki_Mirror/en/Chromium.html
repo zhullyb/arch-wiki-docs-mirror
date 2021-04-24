@@ -204,44 +204,28 @@
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
 <ul>
-<li>There is no official support from Chromium or Arch Linux for this feature <a rel="nofollow" class="external autonumber" href="https://chromium.googlesource.com/chromium/src/+/master/docs/gpu/vaapi.md#vaapi-on-linux">[3]</a>, but you may ask for help in <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=244031">the dedicated forum thread</a>.</li>
-<li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=chromium">chromium</a></span> from official repositories is compiled with VA-API support.</li>
-<li>For proprietary NVIDIA support, installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libva-vdpau-driver-chromium/">libva-vdpau-driver-chromium</a></span><sup><small>AUR</small></sup> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libva-vdpau-driver-vp9-git/">libva-vdpau-driver-vp9-git</a></span><sup><small>AUR</small></sup> is required.</li>
+<li>There is no official support from Chromium or Arch Linux for this feature <a rel="nofollow" class="external autonumber" href="https://chromium.googlesource.com/chromium/src/+/master/docs/gpu/vaapi.md#vaapi-on-linux">[3]</a>. However, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=chromium">chromium</a></span> from official repositories is compiled with VA-API support and you may ask for help in <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=244031">the dedicated forum thread</a>.</li>
 <li>Wayland is not supported.</li>
-<li>To use VA-API on XWayland, use the <code>--use-gl=egl</code> flag. Currently exhibits choppiness <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/67035">FS#67035</a>. It could be solved by enabling <a href="#Native_Wayland_support">#Native Wayland support</a>.</li>
-<li>To use VA-API on Xorg, use the <code>--use-gl=desktop</code> flag.</li>
-<li>Starting in Chromium 86, there will be support for VA-API when using the ANGLE gl renderer. Use the <code>--enable-accelerated-video-decode</code> to enable it on an Intel GPU.</li>
-<li>As of Chromium 89 <code>--enable-features=VaapiVideoDecoder</code> may be required for VA-API to work.</li>
-</ul>
-</div>
-<p>Before trying VA-API support in Chromium, be sure to:
-</p>
-<ul>
-<li>Install correct VA-API driver for your video card and verify VA-API has been enabled and working correctly, see <a href="../en/Hardware_video_acceleration.html" title="Hardware video acceleration">Hardware video acceleration</a>;</li>
-<li>One may need to <a href="#Force_GPU_acceleration">#Force GPU acceleration</a> as Chromium uses a GPU blocklist by default;</li>
-<li>Check <code>chrome://gpu</code> <i>Video Decode</i> field.</li>
 <li>Test on a large enough video. Starting with version 86, Chromium on desktop <a rel="nofollow" class="external text" href="https://bugs.chromium.org/p/chromium/issues/detail?id=684792">will only accelerate videos larger than 720p</a>.</li>
 </ul>
-<p>To check if it's working play a video which is using a codec supported by your VA-API driver (<i>vainfo</i> tells you which codecs are supported, but chrome will only support VP9 and h264):
+</div>
+<p>To enable VA-API support in Chromium:
 </p>
 <ul>
-<li>With the Media Internals tab: Go to <code>chrome://media-internals/</code> and check <i>video_decoder</i> field:
-<ul>
-<li>Hardware accelerated: <i>MojoVideoDecoder</i>, <i>GpuVideoDecoder</i>.</li>
-<li>In-software decoding: <i>VpxVideoDecoder</i>, <i>FFmpegVideoDecoder</i>, <i>Dav1dVideoDecoder</i>.</li>
+<li>Install the correct VA-API driver for your video card and verify VA-API has been enabled and working correctly, see <a href="../en/Hardware_video_acceleration.html" title="Hardware video acceleration">Hardware video acceleration</a>. For proprietary NVIDIA support, installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libva-vdpau-driver-chromium/">libva-vdpau-driver-chromium</a></span><sup><small>AUR</small></sup> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libva-vdpau-driver-vp9-git/">libva-vdpau-driver-vp9-git</a></span><sup><small>AUR</small></sup> is required.</li>
+<li>
+<code>--enable-features=VaapiVideoDecoder</code> is required for VA-API to work regardless of the GL drivers chosen.</li>
+<li>When using Google's ANGLE driver (the default), use the <code>--enable-accelerated-video-decode</code> flag.</li>
+<li>To use system OpenGL APIs be sure to <a href="#Force_GPU_acceleration">#Force GPU acceleration</a> as Chromium uses a GPU blocklist by default. Only <code>--ignore-gpu-blocklist</code> is enough for our purposes.</li>
+<li>To use system drivers on XWayland, use the <code>--use-gl=egl</code> flag. Currently exhibits choppiness <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/67035">FS#67035</a>. On Xorg, use the <code>--use-gl=desktop</code> flag. The <code>--enable-accelerated-video-decode</code> flag is unnecessary when using the system drivers.</li>
 </ul>
-</li>
-<li>With Chrome DevTools:
+<p>To check if it's working play a video which is using a codec supported by your VA-API driver (<i>vainfo</i> tells you which codecs are supported, but Chromium will only support VP9 and h264):
+</p>
 <ul>
 <li>Open the DevTools by pressing <code>Ctrl+Shift+I</code> or on the <i>Inspect</i> button of the context (right-click) menu</li>
-<li>(Version 84 and below only) Enable the media inspection experiment: <i>Settings</i> (<code>F1</code> or menu) <i>&gt; Experiments &gt; Media Element Inspection</i>
-</li>
-<li>Add the Media inspection tab: <i>menu &gt; More tools &gt; Media</i>
+<li>Add the Media inspection tab: <i>Hamburger menu &gt; More tools &gt; Media</i>
 </li>
 <li>In the newly opened Media tab, look at the hardware decoder state of the video decoder</li>
-</ul>
-</li>
 </ul>
 <p>To reduce CPU usage while watching YouTube where VP8/VP9 hardware decoding is not available use the <a rel="nofollow" class="external text" href="https://chrome.google.com/webstore/detail/h264ify/aleakchihdccplidncghkekgioiakgal">h264ify</a> or <a rel="nofollow" class="external text" href="https://chrome.google.com/webstore/detail/enhanced-h264ify/omkfmpieigblcllmkgbflkikinpkodlk">enhanced-h264ify</a> extension.
 </p>
@@ -665,8 +649,8 @@ Keep in mind it might be a little choppy <a rel="nofollow" class="external text"
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chromium&amp;oldid=654673">https://wiki.archlinux.org/index.php?title=Chromium&amp;oldid=654673</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 21:39.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chromium&amp;oldid=658630">https://wiki.archlinux.org/index.php?title=Chromium&amp;oldid=658630</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 April 2021, at 19:40.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,8 +33,7 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p><br>
-<b>Tor</b> (<a href="/index.php?title=J%C4%99zyk_angielski&amp;action=edit&amp;redlink=1" class="new" title="Język angielski (page does not exist)">ang.</a> <b>The Onion Router</b>) – wirtualna sieć komputerowa implementująca trasowanie cebulowe drugiej generacji. Sieć zapobiega analizie ruchu sieciowego i w konsekwencji zapewnia użytkownikom prawie anonimowy dostęp do zasobów Internet
+<p><b>Tor</b> (<a href="/index.php?title=J%C4%99zyk_angielski&amp;action=edit&amp;redlink=1" class="new" title="Język angielski (page does not exist)">ang.</a> <b>The Onion Router</b>) – wirtualna sieć komputerowa implementująca trasowanie cebulowe drugiej generacji. Sieć zapobiega analizie ruchu sieciowego i w konsekwencji zapewnia użytkownikom prawie anonimowy dostęp do zasobów Internet
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -248,8 +248,6 @@ User=root
 ExecStart=
 ExecStart=/usr/bin/sh -c "chroot --userspec=tor:tor /opt/torchroot /usr/bin/tor -f /etc/tor/torrc"
 KillSignal=SIGINT</pre>
-<p><br>
-</p>
 <h2><span class="mw-headline" id="Uruchamianie_Tora_w_kontenerze_systemd-nspawn_z_wirtualnym_interfejsem_sieciowym">Uruchamianie Tora w kontenerze systemd-nspawn z wirtualnym interfejsem sieciowym</span></h2>
 <p>W tym przykładzie utworzymy kontener <a href="../en/Systemd-nspawn.html" title="Systemd-nspawn">systemd-nspawn</a> o nazwie <code>tor-exit</code> z wirtualnym interfejsem sieciowym macvlan.
 </p>
@@ -485,7 +483,7 @@ Zezwalaj na cały ruch:
 <h4>
 <span id=".2B100Mbps_Exit_Relay_configuration_example"></span><span class="mw-headline" id="+100Mbps_Exit_Relay_configuration_example">+100Mbps Exit Relay configuration example</span>
 </h4>
-<p>If you run a fast exit relay (+100Mbps) with <code>ORPort 443</code> and <code>DirPort 80</code> (as recommended in <a rel="nofollow" class="external text" href="http://www.torproject.org/docs/tor-relay-debian.html.en#after">Configuring a Tor relay on Debian/Ubuntu</a>) the following configuration changes might serve as inspiration to setup Tor alongside <a href="../en/Iptables.html" title="Iptables">iptables</a> firewall, <a href="../en/Haveged.html" title="Haveged">Haveged</a> to increase system entropy and <a href="../en/Pdnsd.html" title="Pdnsd">pdnsd</a> as DNS cache. It is important to <i>first</i> read <a rel="nofollow" class="external text" href="http://www.torproject.org/docs/tor-relay-debian.html.en#after">Configuring a Tor relay on Debian/Ubuntu</a>. 
+<p>If you run a fast exit relay (+100Mbps) with <code>ORPort 443</code> and <code>DirPort 80</code> (as recommended in <a rel="nofollow" class="external text" href="https://www.torproject.org/docs/tor-relay-debian.html.en#after">Configuring a Tor relay on Debian/Ubuntu</a>) the following configuration changes might serve as inspiration to setup Tor alongside <a href="../en/Iptables.html" title="Iptables">iptables</a> firewall, <a href="../en/Haveged.html" title="Haveged">Haveged</a> to increase system entropy and <a href="../en/Pdnsd.html" title="Pdnsd">pdnsd</a> as DNS cache. It is important to <i>first</i> read <a rel="nofollow" class="external text" href="https://www.torproject.org/docs/tor-relay-debian.html.en#after">Configuring a Tor relay on Debian/Ubuntu</a>. 
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> See <a href="#Running_Tor_in_a_systemd-nspawn_container_with_a_virtual_network_interface">#Running Tor in a systemd-nspawn container with a virtual network interface</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> for instructions to install Tor in a <code>systemd-nspawn</code> container. <a href="../en/Haveged.html" title="Haveged">Haveged</a> should be installed on the container host.</div>
@@ -556,8 +554,7 @@ HardwareAccel 1                                   ## Look for OpenSSL hardware c
 NumCPUs 2                                         ## Only start two threads</pre>
 <p>Ta konfiguracja jest oparta na <a rel="nofollow" class="external text" href="https://www.torproject.org/docs/tor-manual.html.en">Tor Manual</a>. 
 </p>
-<p><br>
-Tor domyślnie otwiera proxy soks dla portu 9050 - nawet jeśli go nie skonfigurujesz. Ustaw <code>SocksPort 0</code>, jeśli planujesz uruchomić Tor tylko jako przekaźnik, i nie nawiązywać żadnych lokalnych połączeń aplikacji.
+<p>Tor domyślnie otwiera proxy soks dla portu 9050 - nawet jeśli go nie skonfigurujesz. Ustaw <code>SocksPort 0</code>, jeśli planujesz uruchomić Tor tylko jako przekaźnik, i nie nawiązywać żadnych lokalnych połączeń aplikacji.
 </p>
 <p><code>Log notice stdout</code> zmienia logowanie na standardowe wyjście, które jest także domyślnym ustawieniem Tora.
 <code>ControlPort 9051</code>, <code>CookieAuthentication 1</code> i <code>DisableDebuggerAttachment 0</code> pozwala <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/arm/">arm</a></span><sup><small>AUR</small></sup> aby połączyć się z Torem i wyświetlić połączenia.
@@ -569,7 +566,7 @@ Tor domyślnie otwiera proxy soks dla portu 9050 - nawet jeśli go nie skonfigur
 <p><code>AvoidDiskWrites 1</code> redukuje zapisy dysku i zużycie SSD.
 <code>DisableAllSwap 1</code> "spróbuje zablokować wszystkie obecne i przyszłe strony pamięci, aby pamięć nie mogła być stronicowana". 
 </p>
-<p>Jeśli <code># cat /proc/cpuinfo </code> zwraca, że twój procesor obsługuje instrukcje AES i <code># lsmod </code> zwraca, że moduł jest załadowany, możesz określić <code>HardwareAccel 1</code> która próbuje "użyć wbudowanej (statycznej) akceleracji sprzętowej kryptografii, gdy jest dostępna", zobacz <a rel="nofollow" class="external text" href="http://www.torservers.net/wiki/setup/server#aes-ni_crypto_acceleration">http://www.torservers.net/wiki/setup/server#aes-ni_crypto_acceleration</a>.
+<p>Jeśli <code># cat /proc/cpuinfo </code> zwraca, że twój procesor obsługuje instrukcje AES i <code># lsmod </code> zwraca, że moduł jest załadowany, możesz określić <code>HardwareAccel 1</code> która próbuje "użyć wbudowanej (statycznej) akceleracji sprzętowej kryptografii, gdy jest dostępna", zobacz <a rel="nofollow" class="external text" href="https://www.torservers.net/wiki/setup/server#aes-ni_crypto_acceleration">http://www.torservers.net/wiki/setup/server#aes-ni_crypto_acceleration</a>.
 </p>
 <p><code>ORPort 443</code>, <code>DirPort 80</code> i <code>DisableAllSwap 1</code> wymaga uruchomienia usługi Tora jako <code>root</code> as described in <a href="#Uruchom_tor.service_jako_root,_aby_powi%C4%85za%C4%87_Tora_z_portami_uprzywilejowanymi">#Uruchom tor.service jako root, aby powiązać Tora z portami uprzywilejowanymi</a>.
 Użyj <code>User tor</code> opcja właściwego zmniejszenia uprawnień Tora.
@@ -619,7 +616,7 @@ COMMIT</pre>
 <p><code>-A INPUT -i lo -j ACCEPT</code> Pozwala wszystkie połączenia na interfejsie loopback.
 </p>
 <h5><span class="mw-headline" id="Haveged">Haveged</span></h5>
-<p>Zobacz Haveged, aby zdecydować, czy twój system generuje wystarczającą entropię, aby obsłużyć wiele połączeń OpenSSL, patrz <a rel="nofollow" class="external text" href="http://www.issihosts.com/haveged/">haveged - A simple entropy daemon</a> i <a rel="nofollow" class="external text" href="http://www.digitalocean.com/community/tutorials/how-to-setup-additional-entropy-for-cloud-servers-using-haveged">how-to-setup-additional-entropy-for-cloud-servers-using-haveged</a> do dokumentacji.
+<p>Zobacz Haveged, aby zdecydować, czy twój system generuje wystarczającą entropię, aby obsłużyć wiele połączeń OpenSSL, patrz <a rel="nofollow" class="external text" href="http://www.issihosts.com/haveged/">haveged - A simple entropy daemon</a> i <a rel="nofollow" class="external text" href="https://www.digitalocean.com/community/tutorials/how-to-setup-additional-entropy-for-cloud-servers-using-haveged">how-to-setup-additional-entropy-for-cloud-servers-using-haveged</a> do dokumentacji.
 </p>
 <h5><span class="mw-headline" id="pdnsd">pdnsd</span></h5>
 <div class="archwiki-template-box archwiki-template-box-warning">
@@ -707,8 +704,6 @@ listen-address=127.0.0.1
 <pre>$ torsocks elinks checkip.dyndns.org
 $ torsocks wget -qO- <a rel="nofollow" class="external free" href="https://check.torproject.org/">https://check.torproject.org/</a> | grep -i congratulations
 </pre>
-<p><br>
-</p>
 <h2><span class="mw-headline" id="Transparent_Torification">Transparent Torification</span></h2>
 <p>W niektórych przypadkach bezpieczniej i często łatwiej jest w przejrzysty sposób toralizować cały system, zamiast konfigurować poszczególne aplikacje do korzystania z portu soks Tor'a, nie wspominając o zapobieganiu wyciekom DNS. Transparentną toryfikację można przeprowadzić za pomocą <a href="../en/Iptables.html" title="Iptables">iptables</a> w taki sposób, że wszystkie pakiety wychodzące są przekierowywane przez <i>TransPort</i> Tora, z wyjątkiem ruchu samego Tora. Po zainstalowaniu aplikacje nie muszą być skonfigurowane do korzystania z Tora, przez Tor <i>SocksPort</i> będzie nadal działać. Działa to również dla DNS za pośrednictwem <i>DNSPort</i> Tora, ale zdajemy sobie sprawę, że Tor obsługuje tylko TCP, więc pakiety UDP inne niż DNS nie mogą być wysyłane przez Tora i dlatego muszą być całkowicie zablokowane, aby zapobiec wyciekom. Użycie iptables do przezroczystego toryfikowania systemu zapewnia porównywalnie silną ochronę przed wyciekami, ale nie zastępuje zwirtualizowanych aplikacji torowania, takich jak Whonix lub TorVM <a rel="nofollow" class="external autonumber" href="https://www.whonix.org/wiki/Comparison_with_Others">[4]</a>. Przezroczysta torifikacja również nie będzie chroniła przed atakami odcisków palców we własnym zakresie, dlatego zaleca się używanie jej w połączeniu z przeglądarką Tor (przeszukaj AUR dla wersji, którą chcesz: <a rel="nofollow" class="external free" href="https://aur.archlinux.org/packages/?K=tor-browser">https://aur.archlinux.org/packages/?K=tor-browser</a>) Aplikacje nadal mogą użyć się nazwy komputera, adresu MAC, numeru seryjnego, strefy czasowej itp., A te z uprawnieniami root mogą całkowicie wyłączyć zaporę. Innymi słowy, przezroczysta toryfikator z iptables chroni przed przypadkowymi połączeniami i wyciekami DNS przez źle skonfigurowane oprogramowanie, nie jest wystarczająca do ochrony przed złośliwym oprogramowaniem lub oprogramowaniem o poważnych lukach w zabezpieczeniach.
 </p>
@@ -788,9 +783,9 @@ COMMIT
 <h2>
 <span id="Porady_i_wskaz.C3.B3wki"></span><span class="mw-headline" id="Porady_i_wskazówki">Porady i wskazówki</span>
 </h2>
-<h4>
+<h3>
 <span id="Mo.C5.BCliwo.C5.9Bci_j.C4.85dra"></span><span class="mw-headline" id="Możliwości_jądra">Możliwości jądra</span>
-</h4>
+</h3>
 <p>Jeśli chcesz uruchomić tor jako użytkownik inny niż root i użyć portu niższego niż 1024, możesz użyć funkcji jądra, aby umożliwić {{ic|/usr/bin/tor} powiązanie z portami niższymi niż 1024:
 </p>
 <pre># setcap CAP_NET_BIND_SERVICE=+eip /usr/bin/tor
@@ -881,8 +876,8 @@ Type=simple
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tor_(Polski)&amp;oldid=635254">https://wiki.archlinux.org/index.php?title=Tor_(Polski)&amp;oldid=635254</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 September 2020, at 05:17.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tor_(Polski)&amp;oldid=662463">https://wiki.archlinux.org/index.php?title=Tor_(Polski)&amp;oldid=662463</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:13.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

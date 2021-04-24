@@ -111,11 +111,11 @@
 <p>The next step is to port the current needed actions and configuration performed in the various Bash initialization scripts, namely <code>/etc/profile</code>, <code>~/.bash_profile</code>, <code>/etc/bash.bashrc</code> and <code>~/.bashrc</code>, into the fish framework.
 </p>
 <p>In particular, the content of the <code>$PATH</code> environment variable, once directly logged under fish, should be checked and adjusted to one's need. In fish, <code>$PATH</code> is defined as a <i>global environment variable</i>: it has a <i>global</i> scope across all functions, it is lost upon reboot and it is an <i>environment variable</i> which means it is exported to child processes.
-The recommended way of adding permanently additional locations to the path is by assigning them to the <code>fish_user_paths</code> universal variable. This variable is automatically added to <code>$PATH</code> and is preserved across restarts of the shell. For example by setting:
+The recommended way of adding additional locations to the path is by calling the <a rel="nofollow" class="external text" href="https://fishshell.com/docs/current/cmds/fish_add_path.html">fish_add_path</a> command from <code>config.fish</code>.  For example:
 </p>
-<pre>$ set -U fish_user_paths <i>/first/path</i> <i>/second/path</i> <i>/third/one</i>
+<pre>$ fish_add_path -p <i>/first/path</i> <i>/second/path</i> <i>/third/one</i>
 </pre>
-<p>These three locations will be permanently prepended to the path. This is an easy way to complement the path without the need to add any instruction in scripts.
+<p>These three locations will be prepended to the path.
 </p>
 <h3><span class="mw-headline" id="Setting_fish_as_interactive_shell_only">Setting fish as interactive shell only</span></h3>
 <p>Not setting fish as system wide or user default allows the current Bash scripts to run on startup. It ensures the current user's environment variables are unchanged and are exported to fish which then runs as a Bash child. Below are several ways of running fish in interactive mode without setting it as the default shell.
@@ -301,7 +301,7 @@ $ funcsave lsl
 </pre>
 <p>Since fish version 3.0, alias support --save(-s) option.
 </p>
-<pre>$ alias -s lsl "ls-l"
+<pre>$ alias -s lsl "ls -l"
 </pre>
 <p>This will create the function:
 </p>
@@ -338,8 +338,8 @@ end
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fish&amp;oldid=656058">https://wiki.archlinux.org/index.php?title=Fish&amp;oldid=656058</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 25 March 2021, at 20:45.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fish&amp;oldid=661200">https://wiki.archlinux.org/index.php?title=Fish&amp;oldid=661200</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 13:02.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -117,10 +117,10 @@ root   (hd0,2)
 kernel /boot/vmlinuz-linux root=/dev/sda3 ro i8042.nomux=1 i8042.reset nomodeset quiet vga=0
 initrd /boot/initramfs-linux.img</pre>
 <h3><span class="mw-headline" id="Graphics">Graphics</span></h3>
-<p>This model has the a6-3400m apu with an integrated radeon HD 6520g. This is problematic during the livecd install. If you do not hit tab at the arch boot screen and add "radeon.modeset=0" to the kernel line, you will end up with a black screen. After install, use the proprietary Catalyst driver if you want to make best use of the 3D support. As of 1/26/2012, the opensource driver has support for the gpu. The 2D support is better, especially for KDE effects. Under Catalyst, having parts of the plasma desktop become unresponsive for the entirety of the session, even after restart, is a known bug. Also, for sleep to work under catalyst, you must add the nomodeset and vga=0 options to grub, as shown above. This isn't required for the opensource driver. Sleep works more smoothly, and the console can use framebuffer support with KMS. For a smoother experience, xf86-video-ati is a better choice, but for opencl and better gaming support use catalyst. 
+<p>This model has the a6-3400m apu with an integrated radeon HD 6520g. This is problematic during the livecd install. If you do not hit tab at the arch boot screen and add "radeon.modeset=0" to the kernel line, you will end up with a black screen. After install, use the proprietary Catalyst driver if you want to make best use of the 3D support. As of 1/26/2012, the opensource driver has support for the gpu. The 2D support is better, especially for KDE effects. Under Catalyst, having parts of the plasma desktop become unresponsive for the entirety of the session, even after restart, is a known bug. Also, for sleep to work under catalyst, you must add the nomodeset and vga=0 options to grub, as shown above. This is not required for the opensource driver. Sleep works more smoothly, and the console can use framebuffer support with KMS. For a smoother experience, xf86-video-ati is a better choice, but for opencl and better gaming support use catalyst.
 </p>
 <h3><span class="mw-headline" id="Audio">Audio</span></h3>
-<p>Alsa does not work. The central speaker, PCM, won't show up under alsa until pulseaudio is installed. Pulseaudio works perfectly with the audio system, even enabling mic input without a hitch. If you hear no sound, don't panic. Pulseaudio in later versions will automatically set the hmdi port as the default audio output. The solution is to go in and change the sound output on a single application that should be playing sound to the non-hdmi card. Pulseaudio learns quickly. 
+<p>Alsa does not work. The central speaker, PCM, will not show up under alsa until pulseaudio is installed. Pulseaudio works perfectly with the audio system, even enabling mic input without a hitch. If you hear no sound, do not panic. Pulseaudio in later versions will automatically set the hmdi port as the default audio output. The solution is to go in and change the sound output on a single application that should be playing sound to the non-hdmi card. Pulseaudio learns quickly. 
 </p>
 <p>Vlc and skype have a known problem with pulseaudio on this soundcard. The scheduling leads to a "crackling" noise. To fix this, 
 </p>
@@ -128,21 +128,21 @@ initrd /boot/initramfs-linux.img</pre>
 </p>
 <pre> load-module module-udev-detect tsched=0
 </pre>
-<p>All credit to heftig in the forums. 
+<p>All credit to heftig in the forums.
 </p>
 <h3><span class="mw-headline" id="Webcam">Webcam</span></h3>
-<p>It is a v4l2 webcam, works perfectly. 
+<p>It is a v4l2 webcam, works perfectly.
 </p>
 <h3>
 <span id="Hibernate.2FSuspend"></span><span class="mw-headline" id="Hibernate/Suspend">Hibernate/Suspend</span>
 </h3>
-<p>There is a problem in which trying to sleep will cause a black screen, followed by flickers which persist until an acpi poweroff. Upon booting, the laptop will not make it to the bios until the battery and charger are removed. The fix for this is documented at <a rel="nofollow" class="external free" href="http://thecodecentral.com/2011/01/18/fix-ubuntu-10-10-suspendhibernate-not-working-bug">http://thecodecentral.com/2011/01/18/fix-ubuntu-10-10-suspendhibernate-not-working-bug</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup>
+<p>There is a problem in which trying to sleep will cause a black screen, followed by flickers which persist until an acpi poweroff. Upon booting, the laptop will not make it to the bios until the battery and charger are removed. The fix for this is documented at <a rel="nofollow" class="external free" href="https://web.archive.org/web/20160722103700/http://thecodecentral.com/2011/01/18/fix-ubuntu-10-10-suspendhibernate-not-working-bug">https://web.archive.org/web/20160722103700/http://thecodecentral.com/2011/01/18/fix-ubuntu-10-10-suspendhibernate-not-working-bug</a>
 </p>
 <p>Step 1: Create a file at /etc/pm/sleep.d/20_custom-ehci_hcd, with the following code:
 </p>
 <pre>#!/bin/sh
 #inspired by <a rel="nofollow" class="external free" href="http://art.ubuntuforums.org/showpost.php?p=9744970&amp;postcount=19">http://art.ubuntuforums.org/showpost.php?p=9744970&amp;postcount=19</a>
-#...and <a rel="nofollow" class="external free" href="http://thecodecentral.com/2011/01/18/fix-ubuntu-10-10-suspendhibernate-not-working-bug">http://thecodecentral.com/2011/01/18/fix-ubuntu-10-10-suspendhibernate-not-working-bug</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup>    
+#...and <a rel="nofollow" class="external free" href="https://web.archive.org/web/20160722103700/http://thecodecentral.com/2011/01/18/fix-ubuntu-10-10-suspendhibernate-not-working-bug">https://web.archive.org/web/20160722103700/http://thecodecentral.com/2011/01/18/fix-ubuntu-10-10-suspendhibernate-not-working-bug</a>    
 # tidied by tqzzaa :)
 
 VERSION=1.1
@@ -203,7 +203,6 @@ Make this file executable with this command:
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 </ul>
 </div>
 </div>
@@ -212,8 +211,8 @@ Make this file executable with this command:
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Toshiba_Satellite_L775D_S7340&amp;oldid=655158">https://wiki.archlinux.org/index.php?title=Toshiba_Satellite_L775D_S7340&amp;oldid=655158</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 March 2021, at 20:04.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Toshiba_Satellite_L775D_S7340&amp;oldid=662888">https://wiki.archlinux.org/index.php?title=Toshiba_Satellite_L775D_S7340&amp;oldid=662888</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 18:44.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

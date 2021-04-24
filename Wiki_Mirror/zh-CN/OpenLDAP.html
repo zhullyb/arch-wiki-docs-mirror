@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -79,7 +80,7 @@
 <ul>
 <li class="toclevel-2 tocsection-13"><a href="#%E6%A3%80%E6%9F%A5%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%A4%E8%AF%81"><span class="tocnumber">4.1</span> <span class="toctext">检查客户端认证</span></a></li>
 <li class="toclevel-2 tocsection-14"><a href="#LDAP%E6%9C%8D%E5%8A%A1%E7%AA%81%E7%84%B6%E5%81%9C%E6%AD%A2"><span class="tocnumber">4.2</span> <span class="toctext">LDAP服务突然停止</span></a></li>
-<li class="toclevel-2 tocsection-15"><a href="#LDAP_Server_Doesn't_Start"><span class="tocnumber">4.3</span> <span class="toctext">LDAP Server Doesn't Start</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#LDAP_Server_Does_not_Start"><span class="tocnumber">4.3</span> <span class="toctext">LDAP Server Does not Start</span></a></li>
 </ul>
 </li>
 <li class="toclevel-1 tocsection-16"><a href="#%E5%8F%82%E9%98%85"><span class="tocnumber">5</span> <span class="toctext">参阅</span></a></li>
@@ -111,7 +112,7 @@ rootdn     "cn=root,dc=example,dc=com"
 <pre># sed -i "/rootpw/ d" /etc/openldap/slapd.conf #find the line with rootpw and delete it
 # echo "rootpw    $(slappasswd)" &gt;&gt; /etc/openldap/slapd.conf  # 添加一行包含经由 slappasswd 哈希化的口令行
 </pre>
-<p>在 <code>slapd.conf</code> 头部添加一些 <a rel="nofollow" class="external text" href="http://www.openldap.org/doc/admin24/schema.html">schemas</a>:
+<p>在 <code>slapd.conf</code> 头部添加一些 <a rel="nofollow" class="external text" href="https://www.openldap.org/doc/admin24/schema.html">schemas</a>:
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> currently missing: cp /usr/share/doc/samba/examples/LDAP/samba.schema /etc/openldap/schema</div>
@@ -120,7 +121,7 @@ include         /etc/openldap/schema/inetorgperson.schema
 include         /etc/openldap/schema/nis.schema
 #include         /etc/openldap/schema/samba.schema
 </pre>
-<p>可能需要在 <code>slapd.conf</code> 底部加入一些常用的 <a rel="nofollow" class="external text" href="http://www.openldap.org/doc/admin24/tuning.html#Indexes">indexes</a>:
+<p>可能需要在 <code>slapd.conf</code> 底部加入一些常用的 <a rel="nofollow" class="external text" href="https://www.openldap.org/doc/admin24/tuning.html#Indexes">indexes</a>:
 </p>
 <pre>index   uid             pres,eq
 index   mail            pres,sub,eq
@@ -217,7 +218,7 @@ description: Directory Manager
 <span id=".E5.9F.BA.E4.BA.8E_TLS_.E7.9A.84_OpenLDAP"></span><span class="mw-headline" id="基于_TLS_的_OpenLDAP">基于 TLS 的 OpenLDAP</span>
 </h3>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> <a rel="nofollow" class="external text" href="http://www.openldap.org/doc/admin24/">官方文档</a>比本节内容更加完整实用。</div>
+<strong>注意：</strong> <a rel="nofollow" class="external text" href="https://www.openldap.org/doc/admin24/">官方文档</a>比本节内容更加完整实用。</div>
 <p>如果通过网络访问 OpenLDAP 服务器，尤其是当你的服务器上保存有敏感数据时，明文传输这些数据存在被他人嗅探的风险。If you access the OpenLDAP server over the network and especially if you have sensitive data stored on the server you run the risk of someone sniffing your data which is sent clear-text. 
 下面章节将指导你如何设置 LDAP 服务器与客户端之间的 SSL 连接以加密传输数据。The next part will guide you on how to setup an SSL connection between the LDAP server and the client so the data will be sent encrypted.
 </p>
@@ -236,7 +237,7 @@ To create a <i>self-signed</i> certificate, type the following:
 </pre>
 <p>You will be prompted for information about your LDAP server. Much of the information can be left blank. The most important information is the common name. This must be set to the DNS name of your LDAP server. If your LDAP server's IP address resolves to example.org but its server certificate shows a CN of bad.example.org, LDAP clients will reject the certificate and will be unable to negotiate TLS connections (apparently the results are wholly unpredictable).
 </p>
-<p>Now that the certificate files have been created copy them to <code>/etc/openldap/ssl/</code> (create this directory if it doesn't exist) and secure them. 
+<p>Now that the certificate files have been created copy them to <code>/etc/openldap/ssl/</code> (create this directory if it does not exist) and secure them. 
 <code>slapdcert.pem</code> must be world readable because it contains the public key. <code>slapdkey.pem</code> on the other hand should only be readable for the ldap user for security reasons:
 </p>
 <pre># mv slapdcert.pem slapdkey.pem /etc/openldap/ssl/
@@ -285,7 +286,7 @@ Create the override unit:
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">systemctl edit slapd.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
 ExecStart=/usr/bin/slapd -u ldap -g ldap -h "ldaps:///"</pre>
-<p>Localhost connections don't need to use SSL. So, if you want to access the server locally you should change the <code>ExecStart</code> line to:
+<p>Localhost connections do not need to use SSL. So, if you want to access the server locally you should change the <code>ExecStart</code> line to:
 </p>
 <pre>ExecStart=/usr/bin/slapd -u ldap -g ldap -h "ldap://127.0.0.1 ldaps:///"
 </pre>
@@ -294,7 +295,7 @@ ExecStart=/usr/bin/slapd -u ldap -g ldap -h "ldaps:///"</pre>
 <p>If <code>slapd</code> started successfully you can enable it.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If you created a self-signed certificate above, be sure to add <code>TLS_REQCERT allow</code> to <code>/etc/openldap/ldap.conf</code> on the client, or it won't be able connect to the server.</div>
+<strong>Note:</strong> If you created a self-signed certificate above, be sure to add <code>TLS_REQCERT allow</code> to <code>/etc/openldap/ldap.conf</code> on the client, or it will not be able connect to the server.</div>
 <h2>
 <span id=".E4.B8.8B.E4.B8.80.E6.AD.A5"></span><span class="mw-headline" id="下一步">下一步</span>
 </h2>
@@ -310,7 +311,7 @@ ExecStart=/usr/bin/slapd -u ldap -g ldap -h "ldaps:///"</pre>
 <h3>
 <span id=".E6.A3.80.E6.9F.A5.E5.AE.A2.E6.88.B7.E7.AB.AF.E8.AE.A4.E8.AF.81"></span><span class="mw-headline" id="检查客户端认证">检查客户端认证</span>
 </h3>
-<p>If you can't connect to your server for non-secure authentication
+<p>If you cannot connect to your server for non-secure authentication
 </p>
 <pre>$ ldapsearch -x -H ldap://ldaservername:389 -D cn=Manager,dc=example,dc=exampledomain
 </pre>
@@ -327,9 +328,7 @@ ExecStart=/usr/bin/slapd -u ldap -g ldap -h "ldaps:///"</pre>
 </pre>
 <p>to allow slapd write access to its data directory as the user "ldap".
 </p>
-<h3>
-<span id="LDAP_Server_Doesn.27t_Start"></span><span class="mw-headline" id="LDAP_Server_Doesn't_Start">LDAP Server Doesn't Start</span>
-</h3>
+<h3><span class="mw-headline" id="LDAP_Server_Does_not_Start">LDAP Server Does not Start</span></h3>
 <p>Try starting the server from the command line with debugging output enabled:
 </p>
 <pre># slapd -u ldap -g ldap -h ldaps://ldaservername:636 -d Config,Stats
@@ -338,7 +337,7 @@ ExecStart=/usr/bin/slapd -u ldap -g ldap -h "ldaps:///"</pre>
 <span id=".E5.8F.82.E9.98.85"></span><span class="mw-headline" id="参阅">参阅</span>
 </h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://www.openldap.org/doc/admin24/">Official OpenLDAP Software 2.4 Administrator's Guide</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.openldap.org/doc/admin24/">Official OpenLDAP Software 2.4 Administrator's Guide</a></li>
 <li>
 <a href="../en/PhpLDAPadmin.html" title="PhpLDAPadmin">phpLDAPadmin</a> is a web interface tool in the style of phpMyAdmin.</li>
 <li><a href="../en/LDAP_authentication.html" title="LDAP authentication">LDAP authentication</a></li>
@@ -355,8 +354,8 @@ ExecStart=/usr/bin/slapd -u ldap -g ldap -h "ldaps:///"</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenLDAP_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=625650">https://wiki.archlinux.org/index.php?title=OpenLDAP_(简体中文)&amp;oldid=625650</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 July 2020, at 06:37.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenLDAP_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663123">https://wiki.archlinux.org/index.php?title=OpenLDAP_(简体中文)&amp;oldid=663123</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 21:34.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -155,22 +155,21 @@ done
 <ol>
 <li><div>如果你在 Ubuntu 9.10's LiveCD (或其他版本)安裝, 你不能只需要那些 pacman 檔案 (shared libs) 去用 pacman。 用 <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=759166">這裡</a>談到的 Lucky 腳本去為你拿或安裝！
 </div></li>
-<li><div>Alternatively, you can instead turn these tarballs into packages for your distribution with the <a rel="nofollow" class="external text" href="http://kitenet.net/~joey/code/alien/">alien</a> tool. See the man page of the tool for instructions. The packages created that way may be installed into your host distribution using the usual package management tools available there. This approach offers the best integration into the host linux environment. For a debian package based system this is done with the following commands:
+<li><div>Alternatively, you can instead turn these tarballs into packages for your distribution with the <a rel="nofollow" class="external text" href="https://kitenet.net/~joey/code/alien/">alien</a> tool. See the man page of the tool for instructions. The packages created that way may be installed into your host distribution using the usual package management tools available there. This approach offers the best integration into the host linux environment. For a debian package based system this is done with the following commands:
 <pre>cd /tmp/archlinux
 alien -d pacman-3.3.3-1-i686.pkg.tar.gz
 alien -d pacman-mirrorlist-20101223-1-any.pkg.tar.gz
 </pre>
-<p><br>
-RPM based systems will need to replace the parameter "-d" with "-r".
+<p>RPM based systems will need to replace the parameter "-d" with "-r".
 </p>
 <p>These distribution packages can then get installed using the normal package management tools of the host linux environment.
 </p>
 </div></li>
 <li><div>
-<p>Under Fedora 12, I wasn't able to install pacman with any of the other methods, but with the nice script at <a rel="nofollow" class="external free" href="https://bbs.archlinux.org/viewtopic.php?pid=734336#p734336">https://bbs.archlinux.org/viewtopic.php?pid=734336#p734336</a> it will download and install it for you. Worked wonderfully for me.
+<p>Under Fedora 12, I was not able to install pacman with any of the other methods, but with the nice script at <a rel="nofollow" class="external free" href="https://bbs.archlinux.org/viewtopic.php?pid=734336#p734336">https://bbs.archlinux.org/viewtopic.php?pid=734336#p734336</a> it will download and install it for you. Worked wonderfully for me.
 </p>
 </div></li>
-<li><div>On <a rel="nofollow" class="external text" href="http://gentoo.org/">Gentoo</a>: First Install the <a rel="nofollow" class="external text" href="http://overlays.gentoo.org/proj/sunrise/">sunrise overlay</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-02 ⓘ]</sup>. Then unmask pacman by adding <tt>sys-apps/pacman</tt> to <tt>/etc/portage/package.keywords</tt>. Now just run <tt>emerge -av pacman</tt>.
+<li><div>On <a rel="nofollow" class="external text" href="https://gentoo.org/">Gentoo</a>: First Install the <a rel="nofollow" class="external text" href="http://overlays.gentoo.org/proj/sunrise/">sunrise overlay</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-02 ⓘ]</sup>. Then unmask pacman by adding <code>sys-apps/pacman</code> to <code>/etc/portage/package.keywords</code>. Now just run <code>emerge -av pacman</code>.
 <p>There is also a <a rel="nofollow" class="external text" href="http://ohnopub.net/~ohnobinki/gentoo/arch/">more detailed tutorial</a>.
 </p>
 </div></li>
@@ -184,7 +183,7 @@ RPM based systems will need to replace the parameter "-d" with "-r".
 </h3>
 <p>Configure your /etc/pacman.conf to your liking, and remove unnecessary mirrors from /etc/pacman.d/mirrorlist. Also, enabling at least a few mirrors might become necessary, as you may experience errors during syncing if you have no mirror set. You may want to manually resolve DNS in the /etc/pacman.d/mirrorlist, because pacman for i686 may not be able to get address information on x86_64 systems.
 </p>
-<p>If you're installing from a LiveCD, and you have a system with a low amount of combined RAM and swap (&lt; 1 GB), be sure to set the cachedir in /etc/pacman.conf to be in the new Arch partition (e.g. <code>/newarch/var/cache/pacman/pkg</code>).   Otherwise you could exhaust memory between the overhead of the existing distro and downloading necessary packages to install.
+<p>If you are installing from a LiveCD, and you have a system with a low amount of combined RAM and swap (&lt; 1 GB), be sure to set the cachedir in /etc/pacman.conf to be in the new Arch partition (e.g. <code>/newarch/var/cache/pacman/pkg</code>).   Otherwise you could exhaust memory between the overhead of the existing distro and downloading necessary packages to install.
 </p>
 <h2>
 <span id=".E8.A8.AD.E5.AE.9A_target_.E7.B3.BB.E7.B5.B1"></span><span class="mw-headline" id="設定_target_系統">設定 target 系統</span>
@@ -192,7 +191,7 @@ RPM based systems will need to replace the parameter "-d" with "-r".
 <h3>
 <span id=".E6.BA.96.E5.82.99.E5.88.86.E5.89.B2.E7.B5.A6_Arch_.E4.BD.BF.E7.94.A8"></span><span class="mw-headline" id="準備分割給_Arch_使用">準備分割給 Arch 使用</span>
 </h3>
-<p>You don't <i>have to</i> install Arch on a separate partition. You could instead build up a root filesystem in a normal directory, and then create a master tarball from it, or transfer it across the network.
+<p>You do not <i>have to</i> install Arch on a separate partition. You could instead build up a root filesystem in a normal directory, and then create a master tarball from it, or transfer it across the network.
 </p>
 <p>However, most users will want to be installing Arch onto its own partition.
 </p>
@@ -234,7 +233,7 @@ RPM based systems will need to replace the parameter "-d" with "-r".
 </p>
 <pre># pacman -S base -r /newarch
 </pre>
-<p><b>NOTE:</b> The -r parameter doesn't change the location of Pacman's cache directory. If you don't want Pacman's cache to be created in your host distro, supply another location with --cachedir, or modify pacman.conf as described <a href="#Configure_the_host_system">above</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.
+<p><b>NOTE:</b> The -r parameter does not change the location of Pacman's cache directory. If you do not want Pacman's cache to be created in your host distro, supply another location with --cachedir, or modify pacman.conf as described <a href="#Configure_the_host_system">above</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.
 </p>
 <h3>
 <span id=".E6.BA.96.E5.82.99_.2Fdev_nodes"></span><span class="mw-headline" id="準備_/dev_nodes">準備 /dev nodes</span>
@@ -275,7 +274,7 @@ rm zero ; mknod -m 666 zero c 1 5
 mount -t sysfs sys /newarch/sys
 mount -o bind /dev /newarch/dev
 </pre>
-<p>If you have a separate <code>/boot</code> partition, you'll probably need to mount that too. See <a href="../en/Chroot.html" class="mw-redirect" title="Change root">Change root</a> for more details.
+<p>If you have a separate <code>/boot</code> partition, you will probably need to mount that too. See <a href="../en/Chroot.html" class="mw-redirect" title="Change root">Change root</a> for more details.
 </p>
 <p>When everything is prepared, chroot into the new filesystem: 
 </p>
@@ -346,7 +345,7 @@ grub&gt; quit
 <h3><span class="mw-headline" id="Kernel_Panic">Kernel Panic</span></h3>
 <p>如果在重開機到你的新系統時遇到 kernel panic 說 console 打不開： 
 </p>
-<pre>kinit: couldn't open console, no such file... 
+<pre>kinit: couldn't open console, no such file...  
 </pre>
 <p>這表示你沒有跟著前面的步驟做。在開頭準備的地方照著步驟來產生basic device nodes。
 </p>
@@ -355,7 +354,7 @@ grub&gt; quit
 </h3>
 <p>If when you reboot into your new system you get a error messages like this: 
 </p>
-<pre>Root device '/dev/sda1' doesn't exist, attempting to create it... etc. 
+<pre>Root device '/dev/sda1' doesn't exist, attempting to create it... etc.
 </pre>
 <p>This means the drives are showing up as "hda1" instead of "sda1" In which case change your GRUB or LILO settings to use "hd??" or try the following. 
 </p>
@@ -365,11 +364,11 @@ grub&gt; quit
 </pre>
 <p>If you are using LVM make sure you add "lvm2" in the HOOKS line. Regenerate your initrd as above.
 </p>
-<p>If you're installing to a device that needs PATA hook make sure it's located before autodetect hook in mkinitcpio.conf.
+<p>If you are installing to a device that needs PATA hook make sure it's located before autodetect hook in mkinitcpio.conf.
 </p>
-<h1>
+<h2>
 <span id=".E5.8F.A6.E4.B8.80.E5.80.8B.E6.96.B9.E6.B3.95:_.E7.94.A8_Arch_.E6.98.A0.E5.83.8F.E6.AA.94.E5.BE.9E.E5.B7.B2.E6.9C.89.E7.9A.84_Linux_.E5.AE.89.E8.A3.9D"></span><span class="mw-headline" id="另一個方法:_用_Arch_映像檔從已有的_Linux_安裝">另一個方法: 用 Arch 映像檔從已有的 Linux 安裝</span>
-</h1>
+</h2>
 <h3><span class="mw-headline" id="Preparing_the_Installation_Environment">Preparing the Installation Environment</span></h3>
 <p>You can grab whatever image from Arch's Download Page and get the content of image by mount loopback:
 </p>
@@ -407,7 +406,7 @@ $ mount -t sysfs sys /mnt/squashfs-root/sys
 $ mount -o bind /dev /mnt/squashfs-root/dev 
 $ chroot /mnt/squashfs-root /bin/bash
 </pre>
-<p>Now you're inside the new installation's filesystem. If you're going to use core-pkgs.sqfs, mount it now:
+<p>Now you are inside the new installation's filesystem. If you are going to use core-pkgs.sqfs, mount it now:
 </p>
 <pre>$ mkdir -p /src/core/pkg
 $ mount -o loop -t squashfs core-pkgs.sqfs /src/core/pkg 
@@ -419,8 +418,7 @@ $ mount -o loop -t squashfs core-pkgs.sqfs /src/core/pkg
 <p>and you can install Arch as normal (from CD or Internet) with the notice:
 </p>
 <ul><li>Your target partition must not using by host system</li></ul>
-<p><br>
-After installing Arch from chroot's environment, you can remove any squashfs-root directory and exit the chroot:
+<p>After installing Arch from chroot's environment, you can remove any squashfs-root directory and exit the chroot:
 </p>
 <pre>$ umount /src/core/pkg
 $ exit
@@ -467,8 +465,8 @@ $ chroot /mnt/arch /bin/bash
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_from_existing_Linux_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)&amp;oldid=652707">https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_from_existing_Linux_(正體中文)&amp;oldid=652707</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 February 2021, at 03:56.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_from_existing_Linux_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)&amp;oldid=661577">https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_from_existing_Linux_(正體中文)&amp;oldid=661577</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 11:07.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

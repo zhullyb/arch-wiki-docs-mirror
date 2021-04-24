@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -111,7 +112,7 @@
 <p>E' possibile trovare un PKGBUILD d'esempio in <code>/usr/share/pacman/PKGBUILD-perl.proto</code>, fornito dal pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=abs">abs</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>.
 </p>
 <h2><span class="mw-headline" id="Automatizzazione">Automatizzazione</span></h2>
-<p>Poichè Perl si basa su <a rel="nofollow" class="external text" href="http://www.cpan.org/">CPAN</a>, esistono alcuni script che eseguono quanto scritto sopra automaticamente, risparmiandovi dallo scrivere i PKGBUILD a mano.
+<p>Poichè Perl si basa su <a rel="nofollow" class="external text" href="https://www.cpan.org/">CPAN</a>, esistono alcuni script che eseguono quanto scritto sopra automaticamente, risparmiandovi dallo scrivere i PKGBUILD a mano.
 </p>
 <p>CPANPLUS (disponibile come <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=perl-cpanplus-dist-arch">perl-cpanplus-dist-arch</a></span> nel repository [community]), è un plugin a CPAN che pacchettizza al volo i moduli installati tramite lo stesso. E' possibile consultare la documentazione online all'indirizzo: <a rel="nofollow" class="external free" href="https://metacpan.org/release/CPANPLUS-Dist-Arch">https://metacpan.org/release/CPANPLUS-Dist-Arch</a>
 </p>
@@ -150,7 +151,7 @@ WriteMakeFile(
 <p>Ad esempio, la distribuzione CPANPLUS verifica quali plugin del modulo <code>CPANPLUS::Dist</code> sono stati installati. Se vengono rilevati plugins per la versione di CPANPLUS correntemente installata sul sistema, essi vengono aggiunti ai prerequisiti della nuova versione di CPANPLUS. Fortunatamente per il pacchettizzatore Perl, la maggior parte delle dipendenze sono statiche come nell'esempio sopra citato, che richiede il modulo <code>POSIX</code> alla versione minima <code>0.01</code>.
 </p>
 <h3><span class="mw-headline" id="Informazioni_Metadata">Informazioni Metadata</span></h3>
-<p>I file Meta contengono informazioni relative ad una specifica distribuzione, come nome, autore, descrizione astratta e moduli richiesti. Precedentemente, venivano utilizzati dei files nel formato YAML (<code>META.yml</code>), ma recentemente è stato completato il passaggio al formato JSON (<code>META.json</code>). Questi files possono essere modificati a mano, anche se vengono solitamente generati dagli script <code>Makefile.PL</code> o <code>Build.PL</code> quando si pacchettizza una distribuzione per il rilascio. L'ultima versione della specifica è descritta nella relativa <a rel="nofollow" class="external text" href="http://search.cpan.org/perldoc?CPAN::Meta::Spec">documentazione online</a>
+<p>I file Meta contengono informazioni relative ad una specifica distribuzione, come nome, autore, descrizione astratta e moduli richiesti. Precedentemente, venivano utilizzati dei files nel formato YAML (<code>META.yml</code>), ma recentemente è stato completato il passaggio al formato JSON (<code>META.json</code>). Questi files possono essere modificati a mano, anche se vengono solitamente generati dagli script <code>Makefile.PL</code> o <code>Build.PL</code> quando si pacchettizza una distribuzione per il rilascio. L'ultima versione della specifica è descritta nella relativa <a rel="nofollow" class="external text" href="https://search.cpan.org/perldoc?CPAN::Meta::Spec">documentazione online</a>
 </p>
 <p>Si ricordi che le dipendenze possono essere cambiate a runtime! Per questo motivo, viene generato un altro file contenente i metadata dopo aver eseguito gli script di pacchettizzazione. Il file è chiamato <code>MYMETA.json</code> e contiene i cambiamenti effettuati a runtime dallo script; quindi potrebbe differire dal file meta generato durante la pacchettizzazione per CPAN.
 </p>
@@ -217,7 +218,7 @@ WriteMakeFile(
 <dt>Build script</dt>
 <dd><code>MakeFile.PL</code></dd>
 <dt>CPAN Link</dt>
-<dd><a rel="nofollow" class="external free" href="http://search.cpan.org/dist/ExtUtils-MakeMaker">http://search.cpan.org/dist/ExtUtils-MakeMaker</a></dd>
+<dd><a rel="nofollow" class="external free" href="https://search.cpan.org/dist/ExtUtils-MakeMaker">https://search.cpan.org/dist/ExtUtils-MakeMaker</a></dd>
 </dl>
 <p>Il primo, e più vecchio è sicuramente <code>ExtUtils::MakeMaker</code>. Il principale svantaggio di questo sistema, è che richiede l'utility <code>make</code> affinché possa compilare ed installare il tutto. Benchè questo non sia un grande problema su un sistema Linux, può diventare problematico per utenti Windows!
 La comunità Perl sta cercando di incoraggiare l'uso di moduli più nuovi, che non hanno questo problema.
@@ -227,7 +228,7 @@ La comunità Perl sta cercando di incoraggiare l'uso di moduli più nuovi, che n
 <dt>Build Script</dt>
 <dd><code>Build.PL</code></dd>
 <dt>CPAN Link</dt>
-<dd><a rel="nofollow" class="external free" href="http://search.cpan.org/dist/Module-Build">http://search.cpan.org/dist/Module-Build</a></dd>
+<dd><a rel="nofollow" class="external free" href="https://search.cpan.org/dist/Module-Build">https://search.cpan.org/dist/Module-Build</a></dd>
 </dl>
 <p>Il vantaggio principale derivante dall'uso di questo modulo, è che usa solamente perl e perciò non richiede l'utility <code>make</code> per funzionare. Un tempo, la sua installazione era abbastanza difficoltosa, poichè non era possibile eseguire il build script senza averlo prima installato.
 Ad oggi, ciò non rappresenta più un problema, visto <code>Module::Build</code> fa parte dei core modules.
@@ -237,7 +238,7 @@ Ad oggi, ciò non rappresenta più un problema, visto <code>Module::Build</code>
 <dt>Build Script</dt>
 <dd><code>Makefile.PL</code></dd>
 <dt>CPAN Link</dt>
-<dd><a rel="nofollow" class="external free" href="http://search.cpan.org/dist/Module-Install">http://search.cpan.org/dist/Module-Install</a></dd>
+<dd><a rel="nofollow" class="external free" href="https://search.cpan.org/dist/Module-Install">https://search.cpan.org/dist/Module-Install</a></dd>
 </dl>
 <p>Di recente introduzione, <code>Module::Install</code> richiede che <code>make</code> sia installato per funzionare. È stato scritto per essere un sostituto naturale di <code>ExtUtils::MakeMaker</code>, oltre che per compensare ad alcune delle sue mancanze.
 </p>
@@ -336,8 +337,8 @@ build() {
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Perl_package_guidelines_(Italiano)&amp;oldid=619908">https://wiki.archlinux.org/index.php?title=Perl_package_guidelines_(Italiano)&amp;oldid=619908</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 June 2020, at 09:47.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Perl_package_guidelines_(Italiano)&amp;oldid=662199">https://wiki.archlinux.org/index.php?title=Perl_package_guidelines_(Italiano)&amp;oldid=662199</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 20:30.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -41,7 +42,7 @@
 <li><a href="../en/PhpMyAdmin.html" title="PhpMyAdmin">phpMyAdmin</a></li>
 </ul>
 </div>
-<p><a rel="nofollow" class="external text" href="http://wordpress.org">WordPress</a> is a free and open source content management system (<a href="https://en.wikipedia.org/wiki/Content_management_system" class="extiw" title="wikipedia:Content management system">CMS</a>) created by <a href="https://en.wikipedia.org/wiki/Matt_Mullenweg" class="extiw" title="wikipedia:Matt Mullenweg">Matt Mullenweg</a> and first released in 2003. WordPress has a vast and vibrant community that provides tens of thousands of free plugins and themes to allow the user to easily customize the appearance and function of their WordPress CMS. WordPress is licensed under the GPLv2.
+<p><a rel="nofollow" class="external text" href="https://wordpress.org">WordPress</a> is a free and open source content management system (<a href="https://en.wikipedia.org/wiki/Content_management_system" class="extiw" title="wikipedia:Content management system">CMS</a>) created by <a href="https://en.wikipedia.org/wiki/Matt_Mullenweg" class="extiw" title="wikipedia:Matt Mullenweg">Matt Mullenweg</a> and first released in 2003. WordPress has a vast and vibrant community that provides tens of thousands of free plugins and themes to allow the user to easily customize the appearance and function of their WordPress CMS. WordPress is licensed under the GPLv2.
 </p>
 <p>The biggest feature of WordPress is its ease in configuration and administration. <a rel="nofollow" class="external text" href="https://wordpress.org/support/article/how-to-install-wordpress/">Setting up a WordPress site takes five minutes</a>. The WordPress administration panel allows users to easily configure almost every aspect of their website including fetching and installing plugins and themes. WordPress provides effortless automatic updates.
 </p>
@@ -112,7 +113,7 @@
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> While it is easier to let pacman manage updating your WordPress install, this is not necessary. WordPress has functionality built-in for managing updates, themes, and plugins. If you decide to install the official community package, you will not be able to install plugins and themes using the WordPress admin panel without a needlessly complex permissions setup, or logging into FTP as root. pacman does not delete the WordPress install directory when uninstalling it from your system regardless of whether or not you have added data to the directory manually or otherwise.</div>
 <h3><span class="mw-headline" id="Manual_install">Manual install</span></h3>
-<p>Go to <a rel="nofollow" class="external text" href="http://wordpress.org/download/">wordpress.org</a> and download the latest version of WordPress and extract it to your webserver directory. Give the directory enough permissions to allow your FTP user to write to the directory (used by WordPress).
+<p>Go to <a rel="nofollow" class="external text" href="https://wordpress.org/download/">wordpress.org</a> and download the latest version of WordPress and extract it to your webserver directory. Give the directory enough permissions to allow your FTP user to write to the directory (used by WordPress).
 </p>
 <pre>cd /srv/http/<i>whatever</i>
 wget https://wordpress.org/latest.tar.gz
@@ -167,7 +168,7 @@ tar xvzf latest.tar.gz
 <p>Now restart <code>httpd.service</code> (Apache) using <a href="../en/Systemd.html#Using_units" title="Systemd">systemd</a>.
 </p>
 <h3><span class="mw-headline" id="Configure_MySQL">Configure MySQL</span></h3>
-<p>MySQL can be configured using a plethora of tools, but the most common are the command-line or <a rel="nofollow" class="external text" href="http://www.phpmyadmin.net/home_page/index.php">phpMyAdmin</a>.
+<p>MySQL can be configured using a plethora of tools, but the most common are the command-line or <a rel="nofollow" class="external text" href="https://www.phpmyadmin.net/home_page/index.php">phpMyAdmin</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> Make sure <a href="../en/MariaDB.html" title="MariaDB">MariaDB</a> is installed and configured correctly. At a minimum, follow the <a href="../en/MariaDB.html#Installation" title="MariaDB">installation instructions</a> for Arch Linux.</div>
@@ -231,8 +232,8 @@ steps:
 <ul>
 <li><a rel="nofollow" class="external text" href="https://wordpress.org/themes/">Official WordPress theme website</a></li>
 <li><a rel="nofollow" class="external text" href="http://www.smashingmagazine.com/">Smashing Magazine</a></li>
-<li><a rel="nofollow" class="external text" href="http://thethemefoundry.com/">The Theme Factory</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.woothemes.com/">Woo Themes</a></li>
+<li><a rel="nofollow" class="external text" href="https://thethemefoundry.com/">The Theme Factory</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.woothemes.com/">Woo Themes</a></li>
 </ul>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> One can use WordPress' admin interface to install plugins and themes. To do this, make the user that serves WordPress the <a href="../en/File_permissions_and_attributes.html#Changing_permissions" title="File permissions and attributes">owner</a> of your WordPress directory. For <a href="../en/Apache_HTTP_Server.html#Advanced_options" title="Apache HTTP Server">Apache</a> this user is normally http.</div>
@@ -280,11 +281,19 @@ rm MyTheme.zip
 <p>Another option is changing a value in the database table of your WordPress, specifically the wp_options table. The fix is to change the siteurl option to point directly to the domain name and not "localhost".
 </p>
 <h3><span class="mw-headline" id="Plugins_are_unable_to_install:_Could_not_create_directory">Plugins are unable to install: Could not create directory</span></h3>
-<p>Your WordPress site need appropriate permissions to your local files. It doesn't have the permissions to create files/directory. Apache with Arch uses the user `http`.
+<p>Your WordPress site need appropriate permissions to your local files. It does not have the permissions to create files/directory. Apache with Arch uses the user `http`.
 </p>
 <p>To give the appropriate permissions run the following command:
 </p>
 <pre>$ chown -R http:http your-wordpress-directory/wp-content</pre>
+<p>In addition, if you use an nginx setup with php-fpm (as of version 7.4), you need to override the php-fpm systemd unit file, as php-fpm is hardened, making /usr read-only. Run the following command:
+</p>
+<pre>$ systemctl edit php-fpm.service</pre>
+<p>Add the following lines to the file:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># override.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
+ReadWritePaths=/usr/share/webapps/wordpress</pre>
 <h3><span class="mw-headline" id="Cannot_save_plugins_to_localhost">Cannot save plugins to localhost</span></h3>
 <p>WordPress uses by default only a ftp server to download plugins. In order to also download them locally append the following config:
 </p>
@@ -302,7 +311,7 @@ rm MyTheme.zip
 <h3>
 <span id="Call_to_undefined_function_mysql_connect.28.29"></span><span class="mw-headline" id="Call_to_undefined_function_mysql_connect()">Call to undefined function mysql_connect()</span>
 </h3>
-<p>You can usually see this error if you're using mysql/mariadb with php&gt;=7.0.0 and have debug enabled in wordpress config.
+<p>You can usually see this error if you are using mysql/mariadb with php&gt;=7.0.0 and have debug enabled in wordpress config.
 </p>
 <p>This issue can be solved by uncommenting the following line in <code>/etc/php/php.ini</code>:
 </p>
@@ -324,8 +333,8 @@ rm MyTheme.zip
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Wordpress&amp;oldid=645839">https://wiki.archlinux.org/index.php?title=Wordpress&amp;oldid=645839</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 December 2020, at 01:29.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Wordpress&amp;oldid=662596">https://wiki.archlinux.org/index.php?title=Wordpress&amp;oldid=662596</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:30.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

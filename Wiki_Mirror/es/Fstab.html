@@ -112,7 +112,7 @@ UUID=b411dc99-f0a0-4c87-9e05-184977be8539 /home ext4   noatime   0      2</pre>
 <li>
 <code>&lt;options&gt;</code> las opciones de montaje asociadas; véase <span class="plainlinks archwiki-template-man" title="$ man 8 mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mount.8#FILESYSTEM-INDEPENDENT_MOUNT_OPTIONS">mount(8) § FILESYSTEM-INDEPENDENT_MOUNT_OPTIONS</a></span> y <span class="plainlinks archwiki-template-man" title="$ man 5 ext4"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ext4.5#MOUNT_OPTIONS">ext4(5) § MOUNT_OPTIONS</a></span>.</li>
 <li>
-<code>&lt;dump&gt;</code> es comprobado por la utilidad <span class="plainlinks archwiki-template-man" title="$ man 8 dump"><a rel="nofollow" class="external text" href="http://linux.die.net/man/8/dump">dump(8)</a></span>. Este campo suele estar configurado como <code>0</code>, lo que desactiva la comprobación.</li>
+<code>&lt;dump&gt;</code> es comprobado por la utilidad <span class="plainlinks archwiki-template-man" title="$ man 8 dump"><a rel="nofollow" class="external text" href="https://linux.die.net/man/8/dump">dump(8)</a></span>. Este campo suele estar configurado como <code>0</code>, lo que desactiva la comprobación.</li>
 <li>
 <code>&lt;fsck&gt;</code> establece el orden de las comprobaciones del sistema de archivos en el momento del arranque; véase <span class="plainlinks archwiki-template-man" title="$ man 8 fsck"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsck.8">fsck(8)</a></span>. Para el dispositivo raíz debe ser <code>1</code>. Para otras particiones debe ser <code>2</code>, o <code>0</code> para desactivar la comprobación.</li>
 </ul>
@@ -205,7 +205,7 @@ PARTUUID=039b6c1c-7553-4455-9537-1befbc9fbc5b none  swap   defaults  0      0</p
 Este método puede ser relevante si uno tiene, por ejemplo, una partición <code>/home</code> significativamente grande.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Esto hará que el sistema de archivos sea del tipo <code>autofs</code>, el cual es ignorado por <a href="../es/Mlocate.html" title="Mlocate (Español)">mlocate</a> por defecto.</div>
+<strong>Nota:</strong> Esto hará que el sistema de archivos sea del tipo <code>autofs</code>, el cual es ignorado por <a href="../es/Locate.html" class="mw-redirect" title="Mlocate (Español)">mlocate</a> por defecto.</div>
 <h4><span class="mw-headline" id="Sistema_de_archivos_remoto">Sistema de archivos remoto</span></h4>
 <p>Lo mismo se aplica a los montajes de sistemas de archivos remotos. Si se desea que se monten sólo al acceder a ellos, se tendrán que usar los parámetros <code>noauto,x-systemd.automount</code>. Además, puede utilizar la opción <code>x-systemd.mount-timeout=</code> para especificar el tiempo que systemd debe esperar a que termine la orden de montaje. Además, la opción <code>_netdev</code> asegura que systemd entienda que el montaje depende de la red y lo ordene después de que la red esté en línea.
 </p>
@@ -245,7 +245,7 @@ Este método puede ser relevante si uno tiene, por ejemplo, una partición <code
 <ul><li>La opción <code>strictatime</code> actualiza el tiempo de acceso de los archivos cada vez que se accede a ellos. Esto es más útil cuando Linux se utiliza para servidores, pues no tiene mucho sentido para uso de escritorio. El inconveniente de la opción <code>strictatime</code> es que incluso la lectura de un archivo desde la caché de páginas (lectura desde la memoria en lugar de la unidad de disco) seguirá dando lugar a una escritura.</li></ul>
 <ul><li>La opción <code>noatime</code> desactiva por completo la escritura de los tiempos de acceso a los archivos en la unidad cada vez que se lee un archivo. Esto funciona bien para casi todas las aplicaciones, excepto para aquellas que necesitan saber si un archivo ha sido leído desde la última vez que fue modificado. La información del tiempo de escritura a un archivo continuará actualizándose cada vez que se escriba en el archivo con esta opción activada.</li></ul>
 <ul><li>La opción <code>nodiratime</code> desactiva la escritura de los tiempos de acceso a los archivos sólo para los directorios, mientras que otros archivos siguen recibiendo los tiempos de acceso. <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> <code>noatime</code> implica <code>nodiratime</code>. <a rel="nofollow" class="external text" href="http://lwn.net/Articles/244941/">No es necesario especificar ambos</a>.</div>
+<strong>Nota:</strong> <code>noatime</code> implica <code>nodiratime</code>. <a rel="nofollow" class="external text" href="https://lwn.net/Articles/244941/">No es necesario especificar ambos</a>.</div>
 </li></ul>
 <ul><li>
 <code>relatime</code> actualiza el tiempo de acceso, pero solamente si el tiempo de acceso anterior fue inferior al tiempo de modificación o cambio actual. Además, desde Linux 2.6.30, la hora de acceso siempre se actualiza si la hora de acceso anterior era superior a las 24 horas. Esta opción se utiliza cuando se especifica la opción <code>defaults</code>, la opción <code>atime</code> (que significa utilizar el valor por defecto del kernel, que es <code>relatime</code>; véase <span class="plainlinks archwiki-template-man" title="$ man 8 mount"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mount.8">mount(8)</a></span> y <a href="https://en.wikipedia.org/wiki/Stat_(system_call)#Criticism_of_atime" class="extiw" title="wikipedia:Stat (system call)">wikipedia:Stat (system call)#Criticism of atime</a>) o ninguna opción.</li></ul>
@@ -292,8 +292,8 @@ Este método puede ser relevante si uno tiene, por ejemplo, una partición <code
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fstab_(Espa%C3%B1ol)&amp;oldid=652252">https://wiki.archlinux.org/index.php?title=Fstab_(Español)&amp;oldid=652252</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 13 February 2021, at 21:47.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fstab_(Espa%C3%B1ol)&amp;oldid=661153">https://wiki.archlinux.org/index.php?title=Fstab_(Español)&amp;oldid=661153</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 11:27.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

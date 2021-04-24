@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -41,6 +42,7 @@
 <li><a href="../en/PC_speaker.html" title="PC speaker">PC speaker</a></li>
 <li><a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a></li>
 <li><a href="../en/Open_Sound_System.html" title="Open Sound System">Open Sound System</a></li>
+<li><a href="../en/List_of_applications/Multimedia.html#Volume_control" title="List of applications/Multimedia">List of applications/Multimedia#Volume control</a></li>
 </ul>
 </div>
 <p>The <a href="https://en.wikipedia.org/wiki/Advanced_Linux_Sound_Architecture" class="extiw" title="wikipedia:Advanced Linux Sound Architecture">Advanced Linux Sound Architecture</a> (<b>ALSA</b>) provides kernel driven sound card drivers. It replaces the original Open Sound System (OSS).
@@ -158,7 +160,7 @@
 <h3><span class="mw-headline" id="User_privileges">User privileges</span></h3>
 <p>Usually, local users have permission to play audio and change mixer levels.
 </p>
-<p>To allow remote users to use ALSA, you need to <a href="../en/Users_and_groups.html#Group_management" title="Users and groups">add</a> those users to the <code>audio</code> group, however this is not recommended by default (see note below). 
+<p>To allow remote users to use ALSA, you need to <a href="../en/Users_and_groups.html#Group_management" title="Users and groups">add</a> those users to the <code>audio</code> group, however this is not recommended by default (see note below).
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Adding users to the <code>audio</code> group allows direct access to devices. Keep in mind, that this allows applications to exclusively reserve output devices. This may break software mixing or fast-user-switching on multi-seat systems. Therefore, adding a user to the <code>audio</code> group is <b>not</b> recommended by default; unless you specifically need to <a rel="nofollow" class="external autonumber" href="https://wiki.ubuntu.com/Audio/TheAudioGroup">[1]</a>.</div>
@@ -198,7 +200,7 @@
 <p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sof-firmware">sof-firmware</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-ucm-conf">alsa-ucm-conf</a></span> are required for few newer laptop models (end of 2019/2020) which implement their drivers with firmware provided by the <a rel="nofollow" class="external text" href="https://www.sofproject.org/">Sound Open Firmware</a> project.
 </p>
 <h2><span class="mw-headline" id="Unmuting_the_channels">Unmuting the channels</span></h2>
-<p>By default ALSA has all channels muted. Those have to be unmuted manually. 
+<p>By default ALSA has all channels muted. Those have to be unmuted manually.
 </p>
 <h3><span class="mw-headline" id="Unmute_with_amixer">Unmute with amixer</span></h3>
 <p>Unmuting the sound card's master volume can be done by using <i>amixer</i>:
@@ -214,7 +216,7 @@ $ amixer sset Headphone unmute
 </pre>
 <p>The <code>MM</code> label below a channel indicates that the channel is muted, and <code>OO</code> indicates that it is open.
 </p>
-<p>Scroll to the <code>Master</code> and <code>PCM</code> channels with the <code>←</code> and <code>→</code> keys and unmute them by pressing the <code>m</code> key. 
+<p>Scroll to the <code>Master</code> and <code>PCM</code> channels with the <code>←</code> and <code>→</code> keys and unmute them by pressing the <code>m</code> key.
 </p>
 <p>Use the <code>↑</code> key to increase the volume and obtain a value of <code>0</code> dB gain. The gain can be found in the upper left next to the <code>Item:</code> field.
 </p>
@@ -239,7 +241,7 @@ $ amixer sset Headphone unmute
 </p>
 <pre>$ speaker-test -c 8
 </pre>
-<p>If audio is being outputted to the wrong device, try manually specifying it with the  argument <code>-D</code>. 
+<p>If audio is being outputted to the wrong device, try manually specifying it with the  argument <code>-D</code>.
 </p>
 <pre>$ speaker-test -D default:PCH -c 8
 </pre>
@@ -574,7 +576,7 @@ crw-rw----  1 root audio 116, 33 Apr  8 14:17 timer</pre>
 <h3>
 <span id="Getting_S.2FPDIF_output"></span><span class="mw-headline" id="Getting_S/PDIF_output">Getting S/PDIF output</span>
 </h3>
-<p><a href="https://en.wikipedia.org/wiki/S/PDIF" class="extiw" title="wikipedia:S/PDIF">S/PDIF</a> is a digital audio interface often used to connect a computer to a digital amplifier (such as a home theatre with 5.1/7.1 surround sound). 
+<p><a href="https://en.wikipedia.org/wiki/S/PDIF" class="extiw" title="wikipedia:S/PDIF">S/PDIF</a> is a digital audio interface often used to connect a computer to a digital amplifier (such as a home theatre with 5.1/7.1 surround sound).
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> With some soundcards this disables analog sound output  (eg. Sound Blaster Audigy 2).</div>
@@ -590,7 +592,7 @@ crw-rw----  1 root audio 116, 33 Apr  8 14:17 timer</pre>
 <h4>
 <span id="Using_ALSAEqual_.28provides_UI.29"></span><span class="mw-headline" id="Using_ALSAEqual_(provides_UI)">Using ALSAEqual (provides UI)</span>
 </h4>
-<p>Install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/alsaequal/">alsaequal</a></span><sup><small>AUR</small></sup> package. Also install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lib32-alsaequal/">lib32-alsaequal</a></span><sup><small>AUR</small></sup> for 32-bit application support. 
+<p>Install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/alsaequal/">alsaequal</a></span><sup><small>AUR</small></sup> package. Also install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lib32-alsaequal/">lib32-alsaequal</a></span><sup><small>AUR</small></sup> for 32-bit application support.
 </p>
 <p>After installing the package, add the following to your ALSA configuration file:
 </p>
@@ -644,6 +646,8 @@ so if you want to use ALSAEqual with <a href="../en/Music_Player_Daemon.html" cl
 </p>
 <pre>$ alsaequal-mgr load foo
 </pre>
+<p>This however only restores <code>~/.alsaequal.bin</code>. You then have to update the equalizer by <code>alsamixer -D equal</code>.
+</p>
 <p>You can thus create different equalizer states for games, movies, music genres, VoIP apps, etc. and reload them as necessary.
 </p>
 <p>See the <a rel="nofollow" class="external text" href="http://xyne.archlinux.ca/projects/alsaequal-mgr/">project page</a> and the help message for more options.
@@ -767,7 +771,7 @@ pcm.!surround40 {
     slave.pcm "default"
 }</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> This might not be enough to make downmixing working, see <a rel="nofollow" class="external autonumber" href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=541786">[7]</a>. So, you might also need to add <code>pcm.!default "plug:surround51"</code> or <code>pcm.!default "plug:surround40"</code>. Only one <code>vdownmix</code> plug can be used; if you have 7.1 channels, you will need to use <code>surround71</code> instead the configuration above. A good example, which includes a configuration that makes both <code>vdownmix</code> and <code>dmix</code> working, can be found in <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=167275">[8]</a>.</div>
+<strong>Note:</strong> This might not be enough to make downmixing working, see <a rel="nofollow" class="external autonumber" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=541786">[7]</a>. So, you might also need to add <code>pcm.!default "plug:surround51"</code> or <code>pcm.!default "plug:surround40"</code>. Only one <code>vdownmix</code> plug can be used; if you have 7.1 channels, you will need to use <code>surround71</code> instead the configuration above. A good example, which includes a configuration that makes both <code>vdownmix</code> and <code>dmix</code> working, can be found in <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=167275">[8]</a>.</div>
 <h2><span class="mw-headline" id="Dmix">Dmix</span></h2>
 <p>Mixing enables multiple applications to output sound at the same time. Most discrete sound cards support hardware mixing, which is enabled by default if available. Integrated motherboard sound cards (such as Intel HD Audio), usually do not support hardware mixing. On such cards, software mixing is done by an ALSA plugin called <code>dmix</code>. This feature is enabled automatically if hardware mixing is unavailable.
 </p>
@@ -839,12 +843,12 @@ pcm.!surround40 {
 <p>In the  hw:R,W,N format R is your virtual card device number, W 1 recording devices 0 for writing, N is your sub device you can use all the virtual devices available and play/stop using applications like mplayer:
 </p>
 <pre>mplayer -ao alsa:device=hw=1,0,0 fileA
-mplayer -ao alsa:device=hw=1,0,1 fileB 
+mplayer -ao alsa:device=hw=1,0,1 fileB
 </pre>
 <p>Another thing you could do with this approach, is using festival to generate a voice into a recording stream using an script like this:
 </p>
 <pre>#!/bin/bash
-echo $1|iconv -f utf-8 -t iso-8859-1| text2wave  &gt; "_tmp_.wav";   
+echo $1|iconv -f utf-8 -t iso-8859-1| text2wave  &gt; "_tmp_.wav";
 mplayer -ao alsa:device=hw=2,0,0 "_tmp.wav";
 rm "_tmp.wav";
 </pre>
@@ -898,8 +902,8 @@ Tested with Gigabyte Aero15 2017 (P65 Model), with ALC255 and set model to <code
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture&amp;oldid=644669">https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture&amp;oldid=644669</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 11 December 2020, at 14:07.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture&amp;oldid=660299">https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture&amp;oldid=660299</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 21:30.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

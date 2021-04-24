@@ -213,7 +213,7 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p>NetworkManager can be <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">installed</a> with the package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=networkmanager">networkmanager</a></span>, which contains a daemon, a command line interface (<code>nmcli</code>) and a curses‐based interface (<code>nmtui</code>). 
+<p>NetworkManager can be <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">installed</a> with the package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=networkmanager">networkmanager</a></span>, which contains a daemon, a command line interface (<code>nmcli</code>) and a curses‐based interface (<code>nmtui</code>).
 </p>
 <h3><span class="mw-headline" id="Enable_NetworkManager">Enable NetworkManager</span></h3>
 <p>After installation, you should <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> <code>NetworkManager.service</code>. Once the NetworkManager daemon is started, it will automatically connect to any available "system connections" that have already been configured. Any "user connections" or unconfigured connections will need <i>nmcli</i> or an applet to configure and connect.
@@ -230,7 +230,13 @@
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> You must ensure that no other service that wants to configure the network is running; in fact, multiple networking services will conflict. You can find a list of the currently running services with <code>systemctl --type=service</code> and then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Stop">stop</a> them. See <a href="#Configuration">#Configuration</a> to enable the NetworkManager service.</div>
 <h3><span class="mw-headline" id="Mobile_broadband_support">Mobile broadband support</span></h3>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=modemmanager">modemmanager</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mobile-broadband-provider-info">mobile-broadband-provider-info</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=usb_modeswitch">usb_modeswitch</a></span> packages for mobile broadband connection support. See <a href="../en/USB_3G_Modem.html#NetworkManager" title="USB 3G Modem">USB 3G Modem#NetworkManager</a> for details.
+<p>NetworkManager uses <a href="../en/Mobile_broadband_modem.html#ModemManager" class="mw-redirect" title="ModemManager">ModemManager</a> for mobile broadband connection support.
+</p>
+<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=modemmanager">modemmanager</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=usb_modeswitch">usb_modeswitch</a></span>. Afterwards <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>ModemManager.service</code>.
+</p>
+<p>It may necessary to <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>NetworkManager.service</code> for it to detect ModemManager. After you restart it, re-plug the modem again and it should be recognized. 
+</p>
+<p>Add connections from a front-end (e.g. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nm-connection-editor">nm-connection-editor</a></span>) and select mobile broadband as the connection type. After selecting your ISP and billing plan, <a href="https://en.wikipedia.org/wiki/Access_Point_Name" class="extiw" title="wikipedia:Access Point Name">APN</a> and other settings should be filled in automatically using information from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mobile-broadband-provider-info">mobile-broadband-provider-info</a></span>.
 </p>
 <h3>
 <span id="PPPoE_.2F_DSL_support"></span><span class="mw-headline" id="PPPoE_/_DSL_support">PPPoE / DSL support</span>
@@ -449,7 +455,7 @@ killall nm-applet
 <p>See also <a href="../en/Proxy_server.html" class="mw-redirect" title="Proxy settings">Proxy settings</a>.
 </p>
 <h3><span class="mw-headline" id="Checking_connectivity">Checking connectivity</span></h3>
-<p>NetworkManager can try to reach a page on Internet when connecting to a network. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=networkmanager">networkmanager</a></span> is configured by default in <code>/usr/lib/NetworkManager/conf.d/20-connectivity.conf</code> to check connectivity to ping.archlinux.org. To use a different webserver or disable connectivity checking create <code>/etc/NetworkManager/conf.d/20-connectivity.conf</code>, see <span class="plainlinks archwiki-template-man" title="$ man 5 NetworkManager.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/NetworkManager.conf.5#CONNECTIVITY_SECTION">NetworkManager.conf(5) § CONNECTIVITY SECTION</a></span>. Below is an example of using GNOME servers (it does not require the use of <a href="../en/GNOME.html" title="GNOME">GNOME</a>):
+<p>NetworkManager can try to reach a webserver after connecting to a network in order to determine if it is e.g behind a captive portal. The default host (configured in <code>/usr/lib/NetworkManager/conf.d/20-connectivity.conf</code>) is <a rel="nofollow" class="external text" href="https://ping.archlinux.org">ping.archlinux.org</a>. To use a different webserver or to disable connectivity checking, create <code>/etc/NetworkManager/conf.d/20-connectivity.conf</code>, see <span class="plainlinks archwiki-template-man" title="$ man 5 NetworkManager.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/NetworkManager.conf.5#CONNECTIVITY_SECTION">NetworkManager.conf(5) § CONNECTIVITY SECTION</a></span>. Below is an example of using GNOME servers (it does not require the use of <a href="../en/GNOME.html" title="GNOME">GNOME</a>):
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/NetworkManager/conf.d/20-connectivity.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[connectivity]
@@ -642,15 +648,7 @@ servers=::1,127.0.0.1</pre>
 <h4>
 <span id=".2Fetc.2Fresolv.conf"></span><span class="mw-headline" id="/etc/resolv.conf">/etc/resolv.conf</span>
 </h4>
-<p>NetworkManager's <code>/etc/resolv.conf</code> management mode is configured with the <code>main.rc-manager</code> setting. The default <code>auto</code> mode chooses how <code>/etc/resolv.conf</code> is managed in the following order:
-</p>
-<ul>
-<li>If <code>/etc/resolv.conf</code> is <a href="../en/File_permissions_and_attributes.html#File_attributes" title="File permissions and attributes">immutable</a>, then the file <a href="#Unmanaged_/etc/resolv.conf">is not touched at all</a>. This is the equivalent of <code>main.rc-manager=unmanaged</code>.</li>
-<li>If <code>/etc/resolv.conf</code> is a symlink to <code>/run/systemd/resolve/stub-resolv.conf</code>, <code>/run/systemd/resolve/resolv.conf</code> or <code>/usr/lib/systemd/resolv.conf</code>, then <a href="#systemd-resolved">systemd-resolved is used</a>. This is the equivalent of <code>main.rc-manager=systemd-resolved</code>.</li>
-<li>If <code>/usr/bin/resolvconf</code> exists, then <a href="#Use_openresolv">resolvconf is used</a>. This is the equivalent of <code>main.rc-manager=resolvconf</code>.</li>
-<li>If <code>/etc/resolv.conf</code> is a regular file, then NetworkManager writes to it directly. This is the equivalent of <code>main.rc-manager=file</code>.</li>
-</ul>
-<p>Further details are provided in the <span class="plainlinks archwiki-template-man" title="$ man 5 NetworkManager.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/NetworkManager.conf.5">NetworkManager.conf(5)</a></span> man page.
+<p>NetworkManager's <code>/etc/resolv.conf</code> management mode is configured with the <code>main.rc-manager</code> setting. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=networkmanager">networkmanager</a></span> sets it to <code>symlink</code> as apposed to the upstream default <code>auto</code>. The setting and its values are documented in the <span class="plainlinks archwiki-template-man" title="$ man 5 NetworkManager.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/NetworkManager.conf.5">NetworkManager.conf(5)</a></span> man page.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> Using openresolv allows NetworkManager to coexists with other <i>resolvconf</i> supporting software or, for example, to run a local DNS caching and split-DNS resolver for which openresolv has a <a href="../en/Openresolv.html#Subscribers" title="Openresolv">subscriber</a>. Note that conditional forwarding is <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/NetworkManager/NetworkManager/issues/153">not yet fully supported</a> when using NetworkManager with openresolv.</div>
@@ -679,8 +677,6 @@ dns=none</pre>
 <p>After that <code>/etc/resolv.conf</code> might be a broken symlink that you will need to remove. Then, just create a new <code>/etc/resolv.conf</code> file.
 </p>
 <h5><span class="mw-headline" id="Use_openresolv">Use openresolv</span></h5>
-<div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> NetworkManager will automatically use <i>resolvconf</i> unless <code>/etc/resolv.conf</code> is immutable or a symlink to one of systemd-resolved's <code>resolv.conf</code> files.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> NetworkManager does not support using systemd-resolved's <i>resolvconf</i> interface (<span class="plainlinks archwiki-template-man" title="$ man 1 resolvectl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/resolvectl.1#COMPATIBILITY_WITH_RESOLVCONF(8)">resolvectl(1) § COMPATIBILITY WITH RESOLVCONF(8)</a></span>) which is provided by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd-resolvconf">systemd-resolvconf</a></span>.
 <ul>
@@ -688,7 +684,7 @@ dns=none</pre>
 <li>Make sure the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd-resolvconf">systemd-resolvconf</a></span> package is not installed when systemd-resolved is not used. Unless <code>systemd-resolved.service</code> started, it will break all networking software (not just NetworkManager) that use resolvconf.</li>
 </ul>
 </div>
-<p>To explicitly configure NetworkManager to use <a href="../en/Openresolv.html" title="Openresolv">openresolv</a>, set <code>main.rc-manager=resolvconf</code> with a configuration file in <code>/etc/NetworkManager/conf.d/</code>:
+<p>To configure NetworkManager to use <a href="../en/Openresolv.html" title="Openresolv">openresolv</a>, set <code>main.rc-manager=resolvconf</code> with a configuration file in <code>/etc/NetworkManager/conf.d/</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/NetworkManager/conf.d/rc-manager.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[main]
@@ -1168,7 +1164,7 @@ $ ip netns exec <i>MY_NAMESPACE</i> killall NetworkManager
 <p>Where <code><i>aa:bb:cc:dd:ee:ff</i></code> is the MAC address of this NIC. The MAC address can be found using the <code>ip link show <i>interface</i></code> command from the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iproute2">iproute2</a></span> package.
 </p>
 <h3><span class="mw-headline" id="3G_modem_not_detected">3G modem not detected</span></h3>
-<p>See <a href="../en/USB_3G_Modem.html#NetworkManager" title="USB 3G Modem">USB 3G Modem#NetworkManager</a>.
+<p>See <a href="../en/Mobile_broadband_modem.html#NetworkManager" class="mw-redirect" title="USB 3G Modem">USB 3G Modem#NetworkManager</a>.
 </p>
 <h3><span class="mw-headline" id="Switching_off_WLAN_on_laptops">Switching off WLAN on laptops</span></h3>
 <p>Sometimes NetworkManager will not work when you disable your Wi-Fi adapter with a switch on your laptop and try to enable it again afterwards. This is often a problem with <i>rfkill</i>. To check if the driver notifies <i>rfkill</i> about the wireless adapter's status, use:
@@ -1285,7 +1281,7 @@ Environment="DISPLAY=:0.0"</pre>
 <p>Currently the tray icons of nm-applet are drawn on top of one another, i.e. the icon displaying wireless strength might show on top of the icon indicating no wired connection.
 This is apparently a GTK3 bug/problem: <a rel="nofollow" class="external free" href="https://gitlab.gnome.org/GNOME/gtk/issues/1280">https://gitlab.gnome.org/GNOME/gtk/issues/1280</a> .
 </p>
-<p>A patched version of GTK3 exists in AUR, which apparently fixes the tray icon bug: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gtk3-mushrooms/">gtk3-mushrooms</a></span><sup><small>AUR</small></sup> .
+<p>A patched version of GTK3 exists in AUR, which apparently fixes the tray icon bug: <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gtk3-classic/">gtk3-classic</a></span><sup><small>AUR</small></sup>.
 </p>
 <h3><span class="mw-headline" id="Unit_dbus-org.freedesktop.resolve1.service_not_found">Unit dbus-org.freedesktop.resolve1.service not found</span></h3>
 <p>If <code>systemd-resolved.service</code> is not started, NetworkManager will try to start it using D-Bus and fail:
@@ -1315,6 +1311,11 @@ systemd-resolved=false</pre>
 <pre>$ nmcli connection delete <i>SSID</i>
 $ nmcli device wifi connect <i>SSID</i> password <i>password</i>
 </pre>
+<p>You can also try disabling MAC address randomization:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/NetworkManager/conf.d/wifi_rand_mac.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[device]
+wifi.scan-rand-mac-address=no</pre>
 <h3><span class="mw-headline" id="WPA_Enterprise_connection_with_NetworkManager">WPA Enterprise connection with NetworkManager</span></h3>
 <p>If you try to connect to an WPA Enterprise network like 'eduroam' with NetworkManager with the <a href="../en/Iwd.html" title="Iwd">iwd</a> backend then you will get the following error from NetworkManager:
 </p>
@@ -1356,8 +1357,8 @@ $ nmcli device wifi connect <i>SSID</i> password <i>password</i>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NetworkManager&amp;oldid=654622">https://wiki.archlinux.org/index.php?title=NetworkManager&amp;oldid=654622</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 17:34.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=NetworkManager&amp;oldid=663538">https://wiki.archlinux.org/index.php?title=NetworkManager&amp;oldid=663538</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 22:16.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

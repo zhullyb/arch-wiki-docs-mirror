@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -43,7 +44,7 @@
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>翻译状态：</strong>本文是 <a href="../en/QEMU.html" title="QEMU">QEMU</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2021-1-14。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=QEMU&amp;diff=0&amp;oldid=648898">更改</a>，则您可以帮助同步翻译。</div>
-<p>来自 <a rel="nofollow" class="external text" href="http://wiki.qemu.org/Main_Page">QEMU 关于页面</a>：“Qemu”是一个广泛使用的开源计算机模拟器和虚拟机。"
+<p>来自 <a rel="nofollow" class="external text" href="https://wiki.qemu.org/Main_Page">QEMU 关于页面</a>：“Qemu”是一个广泛使用的开源计算机模拟器和虚拟机。"
 </p>
 <p>当作为模拟器时，可以在一种架构（如x86 PC）下运行另一种架构（如ARM）下的操作系统和程序。通过使用动态转换，它可以获得非常好的性能。
 </p>
@@ -814,8 +815,7 @@ $((start+size)) $((disksize-start-size)) zero" | dmsetup create qemu
 </p>
 <p>按下 <code>R</code> 返回主界面。
 </p>
-<p><br>
-按下 <code>P</code> 并检查柱面大小为16K。
+<p>按下 <code>P</code> 并检查柱面大小为16K。
 </p>
 <p>现在，来创建与 <code>/dev/hda<i>N</i></code> 对应的主分区。 设置它的起始地址为柱面2， 结束地址在磁盘的末端（注意现在的柱面编号已经与进入fdisk时的编号不同了）。
 </p>
@@ -850,8 +850,7 @@ nbd-server \
     -p wrapper.pid \
     "$@"
 </pre>
-<p><br>
-<code>.0</code> and <code>.1</code> 这两个后缀名是关键，名字的其他其他部分都可以更改。在运行上面的脚本（有可能需要以root身份运行，保证nbd-server能够去访问该分区）后，你可以用如下命令启动QEMU：
+<p><code>.0</code> and <code>.1</code> 这两个后缀名是关键，名字的其他其他部分都可以更改。在运行上面的脚本（有可能需要以root身份运行，保证nbd-server能够去访问该分区）后，你可以用如下命令启动QEMU：
 </p>
 <pre>qemu-system-x86_64 -drive file=nbd:127.713705:10809:exportname=wrap <i>[...]</i>
 </pre>
@@ -989,7 +988,7 @@ allow <i>bridge1</i>
 <span id=".E6.89.8B.E5.B7.A5.E5.88.9B.E5.BB.BA.E7.BD.91.E6.A1.A5"></span><span class="mw-headline" id="手工创建网桥">手工创建网桥</span>
 </h4>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>提示：</strong> 自QEMU 1.1起，<a rel="nofollow" class="external text" href="http://wiki.qemu.org/Features/HelperNetworking">network bridge helper</a>可以为您设置tun/tap，而无需其他脚本。 请参阅<a href="#Bridged_networking_using_qemu-bridge-helper">#Bridged networking using qemu-bridge-helper</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>。</div>
+<strong>提示：</strong> 自QEMU 1.1起，<a rel="nofollow" class="external text" href="https://wiki.qemu.org/Features/HelperNetworking">network bridge helper</a>可以为您设置tun/tap，而无需其他脚本。 请参阅<a href="#Bridged_networking_using_qemu-bridge-helper">#Bridged networking using qemu-bridge-helper</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>。</div>
 <p>下面介绍如何将虚拟机连接到主机接口，如<code>eth0</code>，这可能是最常见的配置。这种配置使虚拟机看起来直接位于外部网络，与物理主机位于同一以太网段。
 </p>
 <p>我们将用桥适配器替换普通的以太网适配器，然后将普通的以太网适配器绑定到它。
@@ -1352,18 +1351,18 @@ WantedBy=multi-user.target
 </p>
 <p>若要在客户机上启用3D加速，那么需要用<code>-vga virtio</code>选项选择此vga，并用<code>-display sdl,gl=on</code>或<code>-display gtk,gl=on</code>在显示设备上启用opengl上下文，这两个选项分别适用于sdl输出和gtk输出。如果配置成功了，那么在客户机的kernel log里可以看到：
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep drm </pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep drm </pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[drm] pci: virtio-vga detected
 [drm] virgl 3d acceleration enabled
 </pre>
 <h3><span class="mw-headline" id="cirrus">cirrus</span></h3>
-<p>cirrus是<a rel="nofollow" class="external text" href="http://wiki.qemu.org/ChangeLog/2.2#VGA">2.2之前</a>默认的图形选项，<a rel="nofollow" class="external text" href="https://www.kraxel.org/blog/2014/10/qemu-using-cirrus-considered-harmful/">不应当</a>在现代操作系统中使用它。
+<p>cirrus是<a rel="nofollow" class="external text" href="https://wiki.qemu.org/ChangeLog/2.2#VGA">2.2之前</a>默认的图形选项，<a rel="nofollow" class="external text" href="https://www.kraxel.org/blog/2014/10/qemu-using-cirrus-considered-harmful/">不应当</a>在现代操作系统中使用它。
 </p>
 <h3><span class="mw-headline" id="none">none</span></h3>
 <p>这就像一台完全没有VGA卡的PC，无法通过<code>-vnc</code>访问它。另外，这种情况与使用<code>-nographic</code>选项不同，<code>-nographic</code>会让QEMU模拟VGA卡，只是关闭了SDL输出。
 </p>
 <h2><span class="mw-headline" id="SPICE">SPICE</span></h2>
-<p><a rel="nofollow" class="external text" href="http://spice-space.org/">SPICE project</a>旨在为用户提供一种完全开源的方式，无缝地对虚拟机进行远程访问。
+<p><a rel="nofollow" class="external text" href="https://www.spice-space.org/">SPICE project</a>旨在为用户提供一种完全开源的方式，无缝地对虚拟机进行远程访问。
 </p>
 <h3><span class="mw-headline" id="Enabling_SPICE_support_on_the_host">Enabling SPICE support on the host</span></h3>
 <p>下面是一个启用SPICE作为远程桌面协议的例子，并支持复制和粘贴操作：
@@ -1401,7 +1400,7 @@ WantedBy=multi-user.target
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://www.spice-space.org/">https://www.spice-space.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=spice-gtk">spice-gtk</a></span>
 </dd></dl>
-<p>若需要能在智能手机上运行的客户端，或者其他平台的客户端，参照<a rel="nofollow" class="external text" href="http://www.spice-space.org/download.html">spice-space download</a>中的<i>Other clients</i>章节。
+<p>若需要能在智能手机上运行的客户端，或者其他平台的客户端，参照<a rel="nofollow" class="external text" href="https://www.spice-space.org/download.html">spice-space download</a>中的<i>Other clients</i>章节。
 </p>
 <h4>
 <span id=".E6.89.8B.E5.8A.A8.E5.BC.80.E5.90.AFSPICE.E5.AE.A2.E6.88.B7.E7.AB.AF"></span><span class="mw-headline" id="手动开启SPICE客户端">手动开启SPICE客户端</span>
@@ -1426,7 +1425,7 @@ WantedBy=multi-user.target
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-qxl">xf86-video-qxl</a></span>: Xorg X11 qxl视频驱动</li>
 </ul>
-<p>对于<b>其它的操作系统</b>客户机, 参照<a rel="nofollow" class="external text" href="http://www.spice-space.org/download.html">spice-space download</a>的<i>Guest</i>章节。
+<p>对于<b>其它的操作系统</b>客户机, 参照<a rel="nofollow" class="external text" href="https://www.spice-space.org/download.html">spice-space download</a>的<i>Guest</i>章节。
 </p>
 <h3>
 <span id=".E5.BC.80.E5.90.AFSPICE.E5.8F.A3.E4.BB.A4.E9.AA.8C.E8.AF.81"></span><span class="mw-headline" id="开启SPICE口令验证">开启SPICE口令验证</span>
@@ -1565,7 +1564,7 @@ WantedBy=multi-user.target
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong>  当在<code>/etc/fstab</code>和bootloader中通过<a href="../en/Persistent_block_device_naming.html#by-uuid" class="mw-redirect" title="UUID">UUID</a>引用磁盘时，不需要执行任何操作。</div>
-<p>关于使用KVM进行半虚拟化的更多信息，可以参考<a rel="nofollow" class="external text" href="http://www.linux-kvm.org/page/Boot_from_virtio_block_device">Boot_from_virtio_block_device</a>。
+<p>关于使用KVM进行半虚拟化的更多信息，可以参考<a rel="nofollow" class="external text" href="https://www.linux-kvm.org/page/Boot_from_virtio_block_device">Boot_from_virtio_block_device</a>。
 </p>
 <p>您可以安装<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=qemu-guest-agent">qemu-guest-agent</a></span>来实现对QMP命令的支持，从而增强管理程序的管理能力。安装完成后，您需要启动<code>qemu-guest-agent.service</code>。
 </p>
@@ -1594,7 +1593,7 @@ WantedBy=multi-user.target
 </p>
 <ul>
 <li>Select the option <i>Load Drivers</i>.</li>
-<li>Uncheck the box for <i>Hide drivers that aren't compatible with this computer's hardware</i>.</li>
+<li>Uncheck the box for <i>Hide drivers that are not compatible with this computer's hardware</i>.</li>
 <li>Click the browse button and open the CDROM for the virtio iso, usually named "virtio-win-XX".</li>
 <li>Now browse to <code>E:\viostor\[your-os]\amd64</code>, select it, and confirm.</li>
 </ul>
@@ -1848,7 +1847,7 @@ virtio_balloon_load="YES"</pre>
 </ul>
 <pre>$ qemu-system-x86_64 -drive id=disk,file=<i>disk_image</i>,if=none -device ich9-ahci,id=ahci -device ide-drive,drive=disk,bus=ahci.0
 </pre>
-<p>参阅 <a rel="nofollow" class="external free" href="http://www.linux-kvm.org/page/Tuning_KVM">http://www.linux-kvm.org/page/Tuning_KVM</a> 获取更多信息
+<p>参阅 <a rel="nofollow" class="external free" href="https://www.linux-kvm.org/page/Tuning_KVM">https://www.linux-kvm.org/page/Tuning_KVM</a> 获取更多信息
 </p>
 <h3>
 <span id=".E5.BC.80.E6.9C.BA.E6.97.B6.E5.90.AF.E5.8A.A8QEMU.E8.99.9A.E6.8B.9F.E6.9C.BA"></span><span class="mw-headline" id="开机时启动QEMU虚拟机">开机时启动QEMU虚拟机</span>
@@ -2102,7 +2101,7 @@ qemu-alpha    qemu-armeb  qemu-m68k  qemu-mips	      qemu-ppc	   qemu-ppc64abi32
 <h3>
 <span id=".E4.BD.BF.E7.94.A8VNC.E6.97.B6.E9.94.AE.E7.9B.98.E5.87.BA.E7.8E.B0.E9.97.AE.E9.A2.98"></span><span class="mw-headline" id="使用VNC时键盘出现问题">使用VNC时键盘出现问题</span>
 </h3>
-<p>使用VNC时，您可能会遇到链接中所描述的键盘问题（详细信息）<a rel="nofollow" class="external text" href="https://www.berrange.com/posts/2010/07/04/more-than-you-or-i-ever-wanted-to-know-about-virtual-keyboard-handling/">here</a>。 解决的方法是不使用QEMU的 <code>-k</code> 选项, 并使用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gtk-vnc">gtk-vnc</a></span> 的 <code>gvncviewer</code> 。另请参见在libvirt邮件列表中发布的<a rel="nofollow" class="external text" href="http://www.mail-archive.com/libvir-list@redhat.com/msg13340.html">消息</a>。
+<p>使用VNC时，您可能会遇到链接中所描述的键盘问题（详细信息）<a rel="nofollow" class="external text" href="https://www.berrange.com/posts/2010/07/04/more-than-you-or-i-ever-wanted-to-know-about-virtual-keyboard-handling/">here</a>。 解决的方法是不使用QEMU的 <code>-k</code> 选项, 并使用 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gtk-vnc">gtk-vnc</a></span> 的 <code>gvncviewer</code> 。另请参见在libvirt邮件列表中发布的<a rel="nofollow" class="external text" href="https://www.mail-archive.com/libvir-list@redhat.com/msg13340.html">消息</a>。
 </p>
 <h3>
 <span id=".E9.94.AE.E7.9B.98.E5.83.8F.E5.9D.8F.E4.BA.86.E4.B8.80.E6.A0.B7.E6.88.96.E8.80.85.E6.96.B9.E5.90.91.E9.94.AE.E4.B8.8D.E8.B5.B7.E4.BD.9C.E7.94.A8"></span><span class="mw-headline" id="键盘像坏了一样或者方向键不起作用">键盘像坏了一样或者方向键不起作用</span>
@@ -2247,15 +2246,15 @@ options kvm ignore_msrs=1
 <span id=".E5.8F.82.E9.98.85"></span><span class="mw-headline" id="参阅">参阅</span>
 </h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://qemu.org">Official QEMU website</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.linux-kvm.org">Official KVM website</a></li>
+<li><a rel="nofollow" class="external text" href="https://qemu.org">Official QEMU website</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.linux-kvm.org">Official KVM website</a></li>
 <li><a rel="nofollow" class="external text" href="http://qemu.weilnetz.de/qemu-doc.html">QEMU Emulator User Documentation</a></li>
 <li><a href="https://en.wikibooks.org/wiki/QEMU" class="extiw" title="wikibooks:QEMU">QEMU Wikibook</a></li>
 <li>
 <a rel="nofollow" class="external text" href="http://alien.slackbook.org/dokuwiki/doku.php?id=slackware:qemu">Hardware virtualization with QEMU</a> by AlienBOB (last updated in 2008)</li>
 <li>
 <a rel="nofollow" class="external text" href="http://blog.falconindy.com/articles/build-a-virtual-army.html">Building a Virtual Army</a> by Falconindy</li>
-<li><a rel="nofollow" class="external text" href="http://git.qemu.org/?p=qemu.git;a=tree;f=docs">Lastest docs</a></li>
+<li><a rel="nofollow" class="external text" href="https://git.qemu.org/?p=qemu.git;a=tree;f=docs">Lastest docs</a></li>
 <li><a rel="nofollow" class="external text" href="http://qemu.weilnetz.de/">QEMU on Windows</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Qemu" class="extiw" title="wikipedia:Qemu">Wikipedia</a></li>
 <li><a href="https://wiki.debian.org/QEMU" class="extiw" title="debian:QEMU">Debian Wiki - QEMU</a></li>
@@ -2287,8 +2286,8 @@ options kvm ignore_msrs=1
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=QEMU_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=649101">https://wiki.archlinux.org/index.php?title=QEMU_(简体中文)&amp;oldid=649101</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 January 2021, at 02:51.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=QEMU_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663825">https://wiki.archlinux.org/index.php?title=QEMU_(简体中文)&amp;oldid=663825</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 17:10.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -366,7 +366,7 @@ skip-networking
 </p>
 <pre>$ zcat all_databases.sql.gz | mysql -u root -p
 </pre>
-<p>This will recreate and repopulate all the databases previously backed up (see <a rel="nofollow" class="external text" href="https://stackoverflow.com/questions/23180963/restore-all-mysql-database-from-a-all-database-sql-gz-file#comment35453351_23180977">this</a> or <a rel="nofollow" class="external text" href="http://www.linuxquestions.org/questions/linux-server-73/how-to-restore-mysqldump-all-databases-backup-892922/">this</a>).
+<p>This will recreate and repopulate all the databases previously backed up (see <a rel="nofollow" class="external text" href="https://stackoverflow.com/questions/23180963/restore-all-mysql-database-from-a-all-database-sql-gz-file#comment35453351_23180977">this</a> or <a rel="nofollow" class="external text" href="https://www.linuxquestions.org/questions/linux-server-73/how-to-restore-mysqldump-all-databases-backup-892922/">this</a>).
 </p>
 <h3><span class="mw-headline" id="Non-interactive">Non-interactive</span></h3>
 <p>If you want to setup non-interactive backup script for use in <a href="../en/Cron.html" title="Cron">cron</a> jobs or <a href="../en/Systemd/Timers.html" class="mw-redirect" title="Systemd/cron functionality">systemd timers</a>, see <a rel="nofollow" class="external text" href="https://dev.mysql.com/doc/refman/5.6/en/option-files.html">option files</a> and <a rel="nofollow" class="external text" href="https://stackoverflow.com/a/9293090">this illustration</a> for <i>mysqldump</i>.
@@ -389,7 +389,7 @@ mysqldump --single-transaction --flush-logs --master-data=2 --all-databases \
  | gzip &gt; $THISDIR/db_backup.gz
 echo 'purge master logs before date_sub(now(), interval 7 day);' | mysql
 </pre>
-<p>See also the official <code>mysqldump</code> page in the <a rel="nofollow" class="external text" href="http://dev.mysql.com/doc/refman/5.6/en/mysqldump.html">MySQL</a> and <a rel="nofollow" class="external text" href="https://mariadb.com/kb/en/mariadb/documentation/clients-and-utilities/backup-restore-and-import/mysqldump">MariaDB</a> manuals.
+<p>See also the official <code>mysqldump</code> page in the <a rel="nofollow" class="external text" href="https://dev.mysql.com/doc/refman/5.6/en/mysqldump.html">MySQL</a> and <a rel="nofollow" class="external text" href="https://mariadb.com/kb/en/mariadb/documentation/clients-and-utilities/backup-restore-and-import/mysqldump">MariaDB</a> manuals.
 </p>
 <h3><span class="mw-headline" id="Holland_Backup">Holland Backup</span></h3>
 <p>A python-based software package named <a rel="nofollow" class="external text" href="http://hollandbackup.org/">Holland Backup</a> is available in <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> to automate all of the backup work. It supports direct mysqldump, LVM snapshots to tar files (mysqllvm), LVM snapshots with mysqldump (mysqldump-lvm), and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xtrabackup">xtrabackup</a></span> methods to extract the data. The Holland framework supports a multitude of options and is highly configurable to address almost any backup situation.
@@ -409,22 +409,22 @@ echo 'purge master logs before date_sub(now(), interval 7 day);' | mysql
 <h3><span class="mw-headline" id="Reset_the_root_password">Reset the root password</span></h3>
 <ol>
 <li>Stop <code>mariadb.service</code>.</li>
-<li>Start the mysqld server with safety features: <pre># mysqld_safe --skip-grant-tables &amp;</pre>
+<li>Start the mysqld server with safety features: <pre># mysqld_safe --skip-grant-tables --skip-networking &amp;</pre>
 </li>
 <li>Connect to it: <pre># mysql -u root</pre>
 </li>
 <li>Change root password: <pre>MariaDB [(none)]&gt; use mysql
 MariaDB [mysql]&gt; flush privileges;
-MariaDB [mysql]&gt; set password for 'root'@'localhost' = password('MyNewPass');
+MariaDB [mysql]&gt; ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
 MariaDB [mysql]&gt; exit
 </pre>
 </li>
-<li>Kill running mysqld* processes: <pre># killall -r -9 "mysqld.*"</pre>
+<li>Kill running mysqld* processes: <pre># kill $(cat /var/lib/mysql/$HOSTNAME.pid)</pre>
 </li>
 <li>Start <code>mariadb.service</code>.</li>
 </ol>
 <h3><span class="mw-headline" id="Check_and_repair_all_tables">Check and repair all tables</span></h3>
-<p>Check and auto repair all tables in all databases, <a rel="nofollow" class="external text" href="http://dev.mysql.com/doc/refman/5.7/en/mysqlcheck.html">see more</a>:
+<p>Check and auto repair all tables in all databases, <a rel="nofollow" class="external text" href="https://dev.mysql.com/doc/refman/5.7/en/mysqlcheck.html">see more</a>:
 </p>
 <pre># mysqlcheck -A --auto-repair -u root -p
 </pre>
@@ -530,8 +530,8 @@ LimitNOFILE=8192</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MariaDB&amp;oldid=654959">https://wiki.archlinux.org/index.php?title=MariaDB&amp;oldid=654959</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 March 2021, at 22:44.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MariaDB&amp;oldid=661864">https://wiki.archlinux.org/index.php?title=MariaDB&amp;oldid=661864</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 14:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

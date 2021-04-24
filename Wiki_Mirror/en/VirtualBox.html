@@ -521,7 +521,7 @@ $ rm <i>old.vdi</i>
   &lt;Image uuid="<i>{670157e5-8bd4-4f7b-8b96-9ee412a712b5}</i>"/&gt;
 &lt;/AttachedDevice&gt;</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If you do not know the GUID of the drive you want to add, you can use the <code>VBoxManage showhdinfo <i>file</i></code>. If you previously used <code>VBoxManage clonehd</code> to copy/convert your virtual disk, this command should have outputted the GUID just after the copy/conversion completed. Using a random GUID does not work, as each <a rel="nofollow" class="external text" href="http://www.virtualbox.org/manual/ch05.html#cloningvdis">UUID is stored inside each disk image</a>.</div>
+<strong>Note:</strong> If you do not know the GUID of the drive you want to add, you can use the <code>VBoxManage showhdinfo <i>file</i></code>. If you previously used <code>VBoxManage clonehd</code> to copy/convert your virtual disk, this command should have outputted the GUID just after the copy/conversion completed. Using a random GUID does not work, as each <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch05.html#cloningvdis">UUID is stored inside each disk image</a>.</div>
 <h4><span class="mw-headline" id="Transfer_between_Linux_host_and_other_OS">Transfer between Linux host and other OS</span></h4>
 <p>The information about path to harddisks and the snapshots is stored between <code>&lt;HardDisks&gt; .... &lt;/HardDisks&gt;</code> tags in the file with the <i>.vbox</i> extension. You can edit them manually or use this script where you will need change only the path or use defaults, assumed that <i>.vbox</i> is in the same directory with a virtual harddisk and the snapshots folder. It will print out new configuration to stdout.
 </p>
@@ -548,7 +548,7 @@ else print $0}' "$Filename"</pre>
 </ul>
 </div>
 <h3><span class="mw-headline" id="Clone_a_virtual_disk_and_assigning_a_new_UUID_to_it">Clone a virtual disk and assigning a new UUID to it</span></h3>
-<p>UUIDs are widely used by VirtualBox. Each virtual machines and each virtual disk of a virtual machine must have a different UUID. When you launch a virtual machine in VirtualBox, VirtualBox will keep track of all UUIDs of your virtual machine instance. See the <a rel="nofollow" class="external text" href="http://www.virtualbox.org/manual/ch08.html#vboxmanage-list">VBoxManage list</a> to list the items registered with VirtualBox.
+<p>UUIDs are widely used by VirtualBox. Each virtual machines and each virtual disk of a virtual machine must have a different UUID. When you launch a virtual machine in VirtualBox, VirtualBox will keep track of all UUIDs of your virtual machine instance. See the <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-list">VBoxManage list</a> to list the items registered with VirtualBox.
 </p>
 <p>If you cloned a virtual disk manually by copying the virtual disk file, you will need to assign a new UUID to the cloned virtual drive if you want to use the disk in the same virtual machine or even in another (if that one has already been opened, and thus registered, with VirtualBox).
 </p>
@@ -557,7 +557,7 @@ else print $0}' "$Filename"</pre>
 <pre>$ VBoxManage internalcommands sethduuid <i>/path/to/disk.vdi</i>
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> To avoid copying the virtual disk and assigning a new UUID to your file manually you can use <a rel="nofollow" class="external text" href="http://www.virtualbox.org/manual/ch08.html#vboxmanage-clonevdi">VBoxManage clonehd</a>.</div>
+<strong>Tip:</strong> To avoid copying the virtual disk and assigning a new UUID to your file manually you can use <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-clonevdi">VBoxManage clonehd</a>.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The commands above support all <a href="#Formats_supported_by_VirtualBox">virtual disk formats supported by VirtualBox</a>.</div>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
@@ -579,7 +579,7 @@ else print $0}' "$Filename"</pre>
 </p>
 <ul>
 <li>
-<i><a rel="nofollow" class="external text" href="http://www.parallels.com/products/transporter">Parallels Transporter</a></i> which is non free, is a product from Parallels Inc. This solution basically consists in an piece of software called <i>agent</i> that will be installed in the guest you want to import/convert. Then, Parallels Transporter, <u>which only works on OS X</u>, will create a virtual machine from that <i>agent</i> which is contacted either by USB or Ethernet network.</li>
+<i><a rel="nofollow" class="external text" href="https://www.parallels.com/products/transporter">Parallels Transporter</a></i> which is non free, is a product from Parallels Inc. This solution basically consists in an piece of software called <i>agent</i> that will be installed in the guest you want to import/convert. Then, Parallels Transporter, <u>which only works on OS X</u>, will create a virtual machine from that <i>agent</i> which is contacted either by USB or Ethernet network.</li>
 <li>
 <i><a rel="nofollow" class="external text" href="https://www.vmware.com/products/converter/">VMware vCenter Converter</a></i> which is free upon registration on the VMware webiste, works nearly the same way as Parallels Transporter, but the piece of software that will gather the data to create the virtual machine only works on a Windows platform.</li>
 </ul>
@@ -867,7 +867,7 @@ $ VBoxManage storageattach <i>VM_name</i> --storagectl "SATA Controller" --port 
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> For <a href="../en/Xorg.html" title="Xorg">Xorg</a> to work in natively and in the virtual machine, since obviously it will be using different drivers, it is best if there is no <code>/etc/X11/xorg.conf</code>, so Xorg will pick up everything it needs on the fly. However, if you really do need your own Xorg configuration, maybe is it worth to set your default systemd target to <code>multi-user.target</code> with <code>systemctl isolate graphical.target</code> as root (more details at <a href="../en/Systemd.html#Targets" title="Systemd">Systemd#Targets</a> and <a href="../en/Systemd.html#Change_current_target" title="Systemd">Systemd#Change current target</a>). In that way, the graphical interface is disabled (i.e. Xorg is not launched) and after you logged in, you can <code>startx</code>} manually with a custom <code>xorg.conf</code>.</div>
 <h3><span class="mw-headline" id="Install_a_native_Arch_Linux_system_from_VirtualBox">Install a native Arch Linux system from VirtualBox</span></h3>
-<p>In some cases it may be useful to install a native Arch Linux system while running another operating system: one way to accomplish this is to perform the installation through VirtualBox on a <a rel="nofollow" class="external text" href="http://www.virtualbox.org/manual/ch09.html#rawdisk">raw disk</a>. If the existing operating system is Linux based, you may want to consider following <a href="../en/Install_Arch_Linux_from_existing_Linux.html" class="mw-redirect" title="Install from existing Linux">Install from existing Linux</a> instead.
+<p>In some cases it may be useful to install a native Arch Linux system while running another operating system: one way to accomplish this is to perform the installation through VirtualBox on a <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch09.html#rawdisk">raw disk</a>. If the existing operating system is Linux based, you may want to consider following <a href="../en/Install_Arch_Linux_from_existing_Linux.html" class="mw-redirect" title="Install from existing Linux">Install from existing Linux</a> instead.
 </p>
 <p>This scenario is very similar to <a href="#Run_a_native_Arch_Linux_installation_inside_VirtualBox">#Run a native Arch Linux installation inside VirtualBox</a>, but will follow those steps in a different order: start by <a href="#Create_a_raw_disk_.vmdk_image">#Create a raw disk .vmdk image</a>, then <a href="#Create_the_VM_configuration_file">#Create the VM configuration file</a>.
 </p>
@@ -932,7 +932,7 @@ $ VBoxManage setextradata "MyMacVM" VBoxInternal2/EfiGopMode 4
 <ul><li>Disable any AGP device driver (only outdated Windows versions): If you have the files <code>agp440.sys</code> or <code>intelppm.sys</code> inside the <code>C:\Windows\SYSTEM32\drivers\</code> directory, remove it. As VirtualBox uses a PCI virtual graphic card, this can cause problems when this AGP driver is used.</li></ul>
 <ul><li>Create a Windows recovery disk: In the following steps, if things turn bad, you will need to repair your Windows installation. Make sure you have an install media at hand, or create one with <i>Create a recovery disk</i> from Vista SP1, <i>Create a system repair disc</i> on Windows 7 or <i>Create a recovery drive</i> on Windows 8.x).</li></ul>
 <h4><span class="mw-headline" id="Using_Disk2vhd_to_clone_Windows_partition">Using Disk2vhd to clone Windows partition</span></h4>
-<p>Boot into Windows, clean up the installation (with <a rel="nofollow" class="external text" href="http://www.piriform.com/ccleaner">CCleaner</a> for example), use <a rel="nofollow" class="external text" href="https://technet.microsoft.com/en-us/library/ee656415.aspx">disk2vhd</a> tool to create a VHD image. Include a reserved system partition (if present) and the actual Windows partition (usually disk C:). The size of Disk2vhd-created image will be the sum of the actual files on the partition (used space), not the size of a whole partition. If all goes well, the image should just boot in a VM and you will not have to go through the hassle with MBR and Windows bootloader, as in the case of cloning an entire partition.
+<p>Boot into Windows, clean up the installation (with <a rel="nofollow" class="external text" href="https://www.piriform.com/ccleaner">CCleaner</a> for example), use <a rel="nofollow" class="external text" href="https://technet.microsoft.com/en-us/library/ee656415.aspx">disk2vhd</a> tool to create a VHD image. Include a reserved system partition (if present) and the actual Windows partition (usually disk C:). The size of Disk2vhd-created image will be the sum of the actual files on the partition (used space), not the size of a whole partition. If all goes well, the image should just boot in a VM and you will not have to go through the hassle with MBR and Windows bootloader, as in the case of cloning an entire partition.
 </p>
 <h4>
 <span id="Tasks_on_GNU.2FLinux"></span><span class="mw-headline" id="Tasks_on_GNU/Linux">Tasks on GNU/Linux</span>
@@ -959,9 +959,9 @@ $ VBoxManage setextradata "MyMacVM" VBoxInternal2/EfiGopMode 4
 </li></ul>
 <ul><li>Create your virtual machine configuration file and use the virtual disk created previously as the main virtual hard disk.</li></ul>
 <ul><li>Try to boot your Windows VM, it may just work.  First though remove and repair disks from the boot process as it may interfere (and likely will) booting into safe-mode.</li></ul>
-<ul><li>Attempt to boot your Windows virtual machine in safe mode (press the F8 key before the Windows logo shows up)... if running into boot issues, read <a href="#Fix_MBR_and_Microsoft_bootloader">#Fix MBR and Microsoft bootloader</a>.  In safe-mode, drivers will be installed likely by the Windows plug-and-play detection mechanism <a rel="nofollow" class="external text" href="http://i.imgur.com/hh1RrSp.png">view</a>.  Additionally, install the VirtualBox Guest Additions via the menu <i>Devices</i> &gt; <i>Insert Guest Additions CD image...</i>. If a new disk dialog does not appear, navigate to the CD drive and start the installer manually.</li></ul>
+<ul><li>Attempt to boot your Windows virtual machine in safe mode (press the F8 key before the Windows logo shows up)... if running into boot issues, read <a href="#Fix_MBR_and_Microsoft_bootloader">#Fix MBR and Microsoft bootloader</a>.  In safe-mode, drivers will be installed likely by the Windows plug-and-play detection mechanism <a rel="nofollow" class="external text" href="https://i.imgur.com/hh1RrSp.png">view</a>.  Additionally, install the VirtualBox Guest Additions via the menu <i>Devices</i> &gt; <i>Insert Guest Additions CD image...</i>. If a new disk dialog does not appear, navigate to the CD drive and start the installer manually.</li></ul>
 <ul><li>You should finally have a working Windows virtual machine. Do not forget to read the <a href="#Known_limitations">#Known limitations</a>.</li></ul>
-<ul><li>Performance tip: according to <a rel="nofollow" class="external text" href="http://www.virtualbox.org/manual/ch05.html#harddiskcontrollers">VirtualBox manual</a>, SATA controller has a better performance than IDE. If you cannot boot Windows off virtual SATA controller right away, it is probably due to the lack of SATA drivers. Attach virtual disk to IDE controller, create an empty SATA controller and boot the VM - Windows should automatically install SATA drivers for the controller. You can then shutdown VM, detach virtual disk from IDE controller and attach it to SATA controller instead.</li></ul>
+<ul><li>Performance tip: according to <a rel="nofollow" class="external text" href="https://www.virtualbox.org/manual/ch05.html#harddiskcontrollers">VirtualBox manual</a>, SATA controller has a better performance than IDE. If you cannot boot Windows off virtual SATA controller right away, it is probably due to the lack of SATA drivers. Attach virtual disk to IDE controller, create an empty SATA controller and boot the VM - Windows should automatically install SATA drivers for the controller. You can then shutdown VM, detach virtual disk from IDE controller and attach it to SATA controller instead.</li></ul>
 <h4><span class="mw-headline" id="Fix_MBR_and_Microsoft_bootloader">Fix MBR and Microsoft bootloader</span></h4>
 <p>If your Windows virtual machine refuses to boot, you may need to apply the following modifications to your virtual machine.
 </p>
@@ -971,7 +971,7 @@ $ VBoxManage setextradata "MyMacVM" VBoxInternal2/EfiGopMode 4
 Command (m for help): a
 Partition number (''1-3'', default ''3''): ''1''</pre></dd></dl>
 <ul><li>Write the updated partition table to the disk (this will recreate the MBR) using the <code>m</code> command inside <code>fdisk</code>.</li></ul>
-<ul><li>Use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=testdisk">testdisk</a></span> (see <a rel="nofollow" class="external text" href="http://www.cgsecurity.org/index.html?testdisk.html">here</a> for details) to add a generic MBR:</li></ul>
+<ul><li>Use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=testdisk">testdisk</a></span> (see <a rel="nofollow" class="external text" href="https://www.cgsecurity.org/index.html?testdisk.html">here</a> for details) to add a generic MBR:</li></ul>
 <dl><dd><pre># testdisk &gt; <i>Disk /dev/sda...</i> &gt; [Proceed] &gt;  [Intel] Intel/PC partition &gt; [MBR Code] Write TestDisk MBR to first sector &gt; Write a new copy of MBR code to first sector? (Y/n) &gt; Y &gt; Write a new copy of MBR code, confirm? (Y/N) &gt; A new copy of MBR code has been written. You have to reboot for the change to take effect. &gt; [OK]</pre></dd></dl>
 <ul><li>With the new MBR and updated partition table, your Windows virtual machine should be able to boot. If you are still encountering issues, boot your Windows recovery disk from on of the previous step, and inside your Windows RE environment, execute the commands <a rel="nofollow" class="external text" href="https://support.microsoft.com/kb/927392">described here</a>.</li></ul>
 <h4><span class="mw-headline" id="Known_limitations">Known limitations</span></h4>
@@ -1380,8 +1380,8 @@ To not affect the other Qt applications (which usually work well with Wayland), 
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=VirtualBox&amp;oldid=655767">https://wiki.archlinux.org/index.php?title=VirtualBox&amp;oldid=655767</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 March 2021, at 11:12.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=VirtualBox&amp;oldid=662551">https://wiki.archlinux.org/index.php?title=VirtualBox&amp;oldid=662551</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -117,7 +117,7 @@ Note:  This will only show up when hotsyncing.  If it times out, retry.
 <p>By default J-Pilot uses the <code>usb:</code> pseudo device, do not change it.
 </p>
 <p>This setting makes use of the <code>/dev/bus/usb/</code> file system.
-If your user is in the group owning <i>files</i> in this file system that's the only configuration you'll need. (In mine is vboxusers but it's very unlikely it's the default...)
+If your user is in the group owning <i>files</i> in this file system that's the only configuration you will need. (In mine is vboxusers but it's very unlikely it's the default...)
 </p>
 <p>Just press Sync button in J-Pilot and then hotsync in your Palm.
 </p>
@@ -153,13 +153,13 @@ There are no special conduits in the standard Jpilot, such as Documents-To-Go, s
 </div>
 <p>Palm devices come with built-in networking capabilities, as well as Bluetooth. If you also own a laptop, or have a USB Bluetooth adaptor, syncing over bluetooth, while being noticeably slower, is probably more convenient than keeping your sync cable handy.
 </p>
-<p>First, of course, you have to have bluetooth set up. <a href="../en/Bluetooth.html" title="Bluetooth">Bluetooth</a> provides the arch-specific guide to that, its currently quite short, but I had no problems following it. Of course, there's also the forums to ask for help.
+<p>First, of course, you have to have bluetooth set up. <a href="../en/Bluetooth.html" title="Bluetooth">Bluetooth</a> provides the arch-specific guide to that, its currently quite short, but I had no problems following it. Of course, there is also the forums to ask for help.
 </p>
-<p>Next, there's the actual setup for syncing. Basically, this involves setting up a small LAN over Bluetooth connection. I did this following the guide in <a rel="nofollow" class="external autonumber" href="https://lindajane.wordpress.com/2008/11/02/palm-centro-hotsync-via-bluetooth-on-ubuntu-810-intrepid-ibex/">[1]</a>, the author of which followed the guide in <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20150906212522/http://howto.pilot-link.org/bluesync/index.html">[2]</a>. Anyway, on to the real information.
+<p>Next, there is the actual setup for syncing. Basically, this involves setting up a small LAN over Bluetooth connection. I did this following the guide in <a rel="nofollow" class="external autonumber" href="https://lindajane.wordpress.com/2008/11/02/palm-centro-hotsync-via-bluetooth-on-ubuntu-810-intrepid-ibex/">[1]</a>, the author of which followed the guide in <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20150906212522/http://howto.pilot-link.org/bluesync/index.html">[2]</a>. Anyway, on to the real information.
 </p>
-<p>First we'd need to pair the Palm and your PC. If you're using Bluez, then use blueman-manager to search for your Palm (make sure bluetooth is turned on and not hidden), then pair them (the button is labeled 'bond', for some reason or other). You'd need to type in a verification pass-key. Alternatively, from the palm, search for your PC's bluetooth and set it as a trusted device.
+<p>First we would need to pair the Palm and your PC. If you are using Bluez, then use blueman-manager to search for your Palm (make sure bluetooth is turned on and not hidden), then pair them (the button is labeled 'bond', for some reason or other). You would need to type in a verification pass-key. Alternatively, from the palm, search for your PC's bluetooth and set it as a trusted device.
 </p>
-<p>Next, on your Palm, go to Preferences-&gt;Connection and create a new connection, name it "Laptop Bluetooth" or whatever you like, set it to connect to a PC via Bluetooth, and select your PC from the list below. Next, you have to actually setup the network, going through Prefences-&gt;Network, create a new network, naming it again anything you want (I use "Linux"), select the connection you just created, and leave the user name and password blank (you could put something here, you'd need to change the following steps accordingly though).
+<p>Next, on your Palm, go to Preferences-&gt;Connection and create a new connection, name it "Laptop Bluetooth" or whatever you like, set it to connect to a PC via Bluetooth, and select your PC from the list below. Next, you have to actually setup the network, going through Prefences-&gt;Network, create a new network, naming it again anything you want (I use "Linux"), select the connection you just created, and leave the user name and password blank (you could put something here, you would need to change the following steps accordingly though).
 </p>
 <p>To set up your PC, first create the file /etc/ppp/peers/dun, with these contents:-
 </p>
@@ -174,7 +174,7 @@ debug
 </p>
 <pre>mylogin * mypassword *
 </pre>
-<p>In a terminal, run dund as root (prefix with sudo if you're not logged in as root). You would need to make sure the bluetooth daemon is already started at this point.
+<p>In a terminal, run dund as root (prefix with sudo if you are not logged in as root). You would need to make sure the bluetooth daemon is already started at this point.
 </p>
 <pre>dund --nodetach --listen --persist --msdun call dun
 </pre>
@@ -197,12 +197,12 @@ Connection Setup -&gt; select the connection you previously created (Laptop Blue
 <h2><span class="mw-headline" id="Palm_Centro">Palm Centro</span></h2>
 <p>The <code>visor</code> module does not currently work with the Palm Centro.  It is not needed, as newer software accesses the Centro through libusb.  To make the Palm work under Arch, <a href="../en/Kernel_module.html#Blacklisting" class="mw-redirect" title="Blacklist">blacklist</a> the <i>visor</i> module. You may have to reboot for this change to take effect.
 </p>
-<p>When udev creates a device node for the Centro, it by default assigns it owner and group to root.  You need to create a non-root group for udev to use for this device and make sure you're a member:
+<p>When udev creates a device node for the Centro, it by default assigns it owner and group to root.  You need to create a non-root group for udev to use for this device and make sure you are a member:
 </p>
 <pre>groupadd palm
 usermod -a -G palm &lt;your_username&gt;
 </pre>
-<p>You'll need to logout and re-login for the new group assignment to take effect.  After you do, you should see <code>palm</code> in the list of groups when you run the <code>groups</code> command.
+<p>You will need to logout and re-login for the new group assignment to take effect.  After you do, you should see <code>palm</code> in the list of groups when you run the <code>groups</code> command.
 </p>
 <p>You now need to tell udev how to assign the Centro to the group <code>palm</code> when it is attached.  Create a file called <code>/etc/udev/rules.d/55-palm-centro.rules</code>
 </p>
@@ -214,7 +214,7 @@ NAME="bus/usb/$env{BUSNUM}/$env{DEVNUM}", MODE="0664", GROUP="palm"
 </p>
 <pre>find /dev -group palm
 </pre>
-<p>The device name doesn't really matter, as libusb will find it when needed.
+<p>The device name does not really matter, as libusb will find it when needed.
 </p>
 <p>To sync the device, if using jpilot, simply specify <code>usb:</code> as the serial port in preferences.
 </p>
@@ -255,8 +255,8 @@ NAME="bus/usb/$env{BUSNUM}/$env{DEVNUM}", MODE="0664", GROUP="palm"
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Palm&amp;oldid=654987">https://wiki.archlinux.org/index.php?title=Palm&amp;oldid=654987</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 March 2021, at 00:58.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Palm&amp;oldid=660424">https://wiki.archlinux.org/index.php?title=Palm&amp;oldid=660424</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 22:14.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

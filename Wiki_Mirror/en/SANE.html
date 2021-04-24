@@ -113,7 +113,7 @@
 </p>
 <pre>$ scanimage -L
 </pre>
-<p>If that fails, run the command again as root to check for permission problems. If that fails as well, check that your scanner is plugged into the computer. You also might have to unplug/plug your scanner for <code>/usr/lib/udev/rules.d/49-sane.rules</code> to recognize your scanner.
+<p>If that fails, run the command again as root to check for permission problems. If that fails as well, check that your scanner is plugged into the computer. You also might have to unplug/plug your scanner for <code>/usr/lib/udev/rules.d/65-sane.rules</code> to recognize your scanner.
 </p>
 <p>Now you can see if it actually works
 </p>
@@ -230,6 +230,12 @@ localhost
 </pre>
 <p>If you use <a href="../en/Iptables.html" title="Iptables">iptables</a>, <a href="../en/Kernel_module.html" class="mw-redirect" title="Kernel modules">insert</a> the <code>nf_conntrack_sane</code> module to let the firewall track <code>saned</code> connections.
 </p>
+<p>Conntrack helper seems to be disabled by default.<a rel="nofollow" class="external autonumber" href="https://home.regit.org/wp-content/uploads/2011/11/secure-conntrack-helpers.html">[2]</a> You can activate it with 
+</p>
+<pre># echo 1 &gt; /proc/sys/net/netfilter/nf_conntrack_helper  
+</pre>
+<p>To configure this permanently, set the <code>nf_conntrack_helper=1</code> option for the <code>nf_conntrack</code> module, see <a href="../en/Kernel_module.html#Using_files_in_/etc/modprobe.d/" title="Kernel module">Kernel module#Using files in /etc/modprobe.d/</a>.
+</p>
 <p>Now <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> <code>saned.socket</code>. Your scanner is now available over the network. For more information, see <span class="plainlinks archwiki-template-man" title="$ man 8 saned"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/saned.8">saned(8)</a></span>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -286,7 +292,7 @@ epson
 <h4>
 <span id="Communication_via_xHCI_not_working_.28older_scanner_models.29"></span><span class="mw-headline" id="Communication_via_xHCI_not_working_(older_scanner_models)">Communication via xHCI not working (older scanner models)</span>
 </h4>
-<p>Some older scanner models do not work when connected via an USB3 port. If you experience this issue, try setting the <code>SANE_USB_WORKAROUND=1</code> <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a> before starting your frontend.<a rel="nofollow" class="external autonumber" href="https://lists.alioth.debian.org/pipermail/sane-announce/2017/000036.html">[2]</a><a rel="nofollow" class="external autonumber" href="https://anonscm.debian.org/cgit/sane/sane-backends.git/commit/?id=1207ce5a40664c04b934bd0a6babbc1575361356">[3]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-02 ⓘ]</sup>
+<p>Some older scanner models do not work when connected via an USB3 port. If you experience this issue, try setting the <code>SANE_USB_WORKAROUND=1</code> <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a> before starting your frontend.<a rel="nofollow" class="external autonumber" href="https://lists.alioth.debian.org/pipermail/sane-announce/2017/000036.html">[3]</a><a rel="nofollow" class="external autonumber" href="https://anonscm.debian.org/cgit/sane/sane-backends.git/commit/?id=1207ce5a40664c04b934bd0a6babbc1575361356">[4]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-02 ⓘ]</sup>
 </p>
 <p>If that does not work, try one of the following workarounds:
 </p>
@@ -316,9 +322,9 @@ epson
 <div>
 <b>Reason:</b> The user should not need to be in the scanner group (see <a href="../en/Users_and_groups.html#Pre-systemd_groups" title="Users and groups">Users and groups#Pre-systemd groups</a>) (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:SANE">Talk:SANE#</a>)</div>
 </div>
-<p>If your USB device is listed with <code>scanimage -L</code> but launching the test <code>scanimage pixma:04A9173E_11DAD1 --format=tiff --output-file test.tiff</code> always return the 'Device busy' error, you might try to add your username to the scanner group <code>usermod -a -G scanner yourusername</code> then blacklist the <code>usblp</code> kernel module by writing <code>blacklist usblp</code> in <code>/etc/modprobe.d/no-usblp.conf</code> (it prevents <code>usblp</code> from loading to support scanning, not needed by xsane and related tools, might also <a href="../en/CUPS/Troubleshooting.html#Conflict_with_usblp" title="CUPS/Troubleshooting">conflict with CUPS</a>). Reboot to finish. <a rel="nofollow" class="external autonumber" href="http://cromwell-intl.com/linux/canon-pixma-printer-scanner.html">[4]</a>
+<p>If your USB device is listed with <code>scanimage -L</code> but launching the test <code>scanimage pixma:04A9173E_11DAD1 --format=tiff --output-file test.tiff</code> always return the 'Device busy' error, you might try to add your username to the scanner group <code>usermod -a -G scanner yourusername</code> then blacklist the <code>usblp</code> kernel module by writing <code>blacklist usblp</code> in <code>/etc/modprobe.d/no-usblp.conf</code> (it prevents <code>usblp</code> from loading to support scanning, not needed by xsane and related tools, might also <a href="../en/CUPS/Troubleshooting.html#Conflict_with_usblp" title="CUPS/Troubleshooting">conflict with CUPS</a>). Reboot to finish. <a rel="nofollow" class="external autonumber" href="http://cromwell-intl.com/linux/canon-pixma-printer-scanner.html">[5]</a>
 </p>
-<p>In addition to this, some Cannon printers return "device busy" if the scan mode is set to "Computer". Setting this to the "Remote Scanner" mode should fix the issue.<a rel="nofollow" class="external autonumber" href="https://alioth-lists.debian.net/pipermail/sane-devel/2014-March/032169.html">[5]</a>
+<p>In addition to this, some Cannon printers return "device busy" if the scan mode is set to "Computer". Setting this to the "Remote Scanner" mode should fix the issue.<a rel="nofollow" class="external autonumber" href="https://alioth-lists.debian.net/pipermail/sane-devel/2014-March/032169.html">[6]</a>
 </p>
 <h3><span class="mw-headline" id="Permission_problem">Permission problem</span></h3>
 <p>With systemd, the <code>scanner</code> and <code>lp</code> groups are deprecated. No need to add your user to those groups. See <a href="../en/Users_and_groups.html#Pre-systemd_groups" title="Users and groups">Users and groups#Pre-systemd groups</a> for detail.
@@ -342,7 +348,7 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 </p>
 <p>Now open <code>/usr/lib/udev/rules.d/49-sane.rules</code> and see if there is there is a line with the <i>vendorID</i> and <i>productID</i> of your scanner. If there is not any, create the new file <code>/etc/udev/rules.d/49-sane-missing-scanner.rules</code>, with the following contents:
 </p>
-<pre>ATTRS{idVendor}=="<b>vendorID</b>", ATTRS{idProduct}=="<b>productID</b>", MODE="0664", GROUP="scanner", ENV{libsane_matched}="yes"
+<pre>ATTRS{idVendor}=="<b>vendorID</b>", ATTRS{idProduct}=="<b>productID</b>", MODE="0664", GROUP="lp", ENV{libsane_matched}="yes"
 </pre>
 <p>Save the file, plug out and back in your scanner and the file permissions should be now correct.
 </p>
@@ -383,8 +389,8 @@ usb 0x03f0 0x2504
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SANE&amp;oldid=655035">https://wiki.archlinux.org/index.php?title=SANE&amp;oldid=655035</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 March 2021, at 15:05.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=SANE&amp;oldid=658517">https://wiki.archlinux.org/index.php?title=SANE&amp;oldid=658517</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 April 2021, at 06:41.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

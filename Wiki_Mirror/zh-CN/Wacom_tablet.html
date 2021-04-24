@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -215,7 +216,7 @@ Bus 002 Device 007: ID 056a:0062 Wacom Co., Ltd
 <span id="Xorg.E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="Xorg配置">Xorg配置</span>
 </h4>
 <p>In either case, dynamic or static setup you got now one or two files in <code>/dev/input/</code> which refer to the correct input event devices of your tablet. All that is left to do is add the relevant information to <code>/etc/X11/xorg.conf</code>, or a dedicated file under  <code>/etc/X11/xorg.conf.d/</code>.
-The exact configuration depends on your tablet's features of course. <code>xsetwacom --list devices</code> might give helpful information on what <i>InputDevice</i> sections are needed for your tablet.
+The exact configuration depends on your tablets features of course. <code>xsetwacom --list devices</code> might give helpful information on what <i>InputDevice</i> sections are needed for your tablet.
 </p>
 <p>An example configuration for a <i>Volito2</i> might look like this
 </p>
@@ -403,7 +404,7 @@ xsetwacom --set "$pad"    Rotate $1</pre>
 <h5>
 <span id=".E8.8E.B7.E5.8F.96.E6.8C.89.E9.92.AEID"></span><span class="mw-headline" id="获取按钮ID">获取按钮ID</span>
 </h5>
-<p>Sometimes it needs some trial&amp;error to find the correct button IDs. For me they even differ for <code>xsetwacom</code> and the <code>xorg.conf</code> configuration. Very helpful tools are <code>xev</code> or <code>xbindkeys -mk</code>. An easy way to proceed is to temporarily assign keystrokes to your tablet's buttons like this:
+<p>Sometimes it needs some trial&amp;error to find the correct button IDs. For me they even differ for <code>xsetwacom</code> and the <code>xorg.conf</code> configuration. Very helpful tools are <code>xev</code> or <code>xbindkeys -mk</code>. An easy way to proceed is to temporarily assign keystrokes to your tablets buttons like this:
 </p>
 <pre> $ xsetwacom --set "Wacom Bamboo 16FG 4x5 Finger pad" Button 1 'key a'
  $ xsetwacom --set "Wacom Bamboo 16FG 4x5 Finger pad" Button 2 'key b'
@@ -470,7 +471,7 @@ xsetwacom --set "$pad"    Rotate $1</pre>
 <p>Mapping custom commands to the buttons is a little bit tricky but actually very simple. First, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xbindkeys">xbindkeys</a></span>.
 </p>
 <p>To get well defined button codes add the following to your permanent configuration file, e.g. <code>/etc/X11/xorg.conf.d/52-wacom-options.conf</code>
-in the InputClass section of your <b>pad</b> device. Map the tablet's buttons to some unused button ids.
+in the InputClass section of your <b>pad</b> device. Map the tablets buttons to some unused button ids.
 </p>
 <pre> # Setting up buttons (preferably choose the correct button order, so the topmost key is mapped to 10 and so on)
  Option "Button1" "10"
@@ -512,7 +513,7 @@ ACTION=="add", SUBSYSTEM=="hid", DRIVERS=="wacom", RUN+="/usr/bin/sh -c 'chown :
 <pre>Option "TwinView" "horizontal"
 </pre>
 <p>To all of your Wacom-InputDevice entries in the <code>xorg.conf</code> file.
-You may read more about that <a rel="nofollow" class="external text" href="http://ubuntuforums.org/showthread.php?t=640898">HERE</a>
+You may read more about that <a rel="nofollow" class="external text" href="https://ubuntuforums.org/showthread.php?t=640898">HERE</a>
 </p>
 <h5>
 <span id=".E4.B8.B4.E6.97.B6TwinView.E8.AE.BE.E7.BD.AE"></span><span class="mw-headline" id="临时TwinView设置">临时TwinView设置</span>
@@ -558,9 +559,9 @@ WALTOP International Corp. Slim Tablet stylus   id: <b>12</b>  type: STYLUS
 </p>
 <p>Alternatively, you can use <a rel="nofollow" class="external text" href="https://bitbucket.org/denilsonsa/small_scripts/src/3380435f92646190f860b87f566a39d0e215034c/xsetwacom_my_preferences.sh?at=default">this bash script</a> to quickly map the tablet to one of your screens (or the entire desktop) and fix the aspect ratio.
 </p>
-<p>In case <b>xsetwacom</b> doesn't work, you can try <b>xinput</b>.
+<p>In case <b>xsetwacom</b> does not work, you can try <b>xinput</b>.
 </p>
-<p>First, you need to find your tablet's ID.
+<p>First, you need to find your tablets ID.
 </p>
 <pre>$ xinput list
 </pre>
@@ -586,14 +587,14 @@ WALTOP International Corp. Slim Tablet stylus   id: <b>12</b>  type: STYLUS
     ↳ ThinkPad Extra Buttons                    id=18   [slave  keyboard (3)]
     ↳ USB Keyboard                              id=19   [slave  keyboard (3)]
 </pre>
-<p>This mean, my tablet's ID is <b>20</b>. Now we map it with <b>VGA-0</b> screen:
+<p>This mean, my tablets ID is <b>20</b>. Now we map it with <b>VGA-0</b> screen:
 </p>
 <pre>$ xinput map-to-output 20 VGA-0
 </pre>
 <h3>
 <span id=".E5.8E.8B.E5.8A.9B.E6.9B.B2.E7.BA.BF"></span><span class="mw-headline" id="压力曲线">压力曲线</span>
 </h3>
-<p>Use <a rel="nofollow" class="external text" href="http://linuxwacom.sourceforge.net/misc/bezier.html">Wacom Pressure Demo</a><sup title="最后检查状态：403">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-06 ⓘ]</sup> to find P1=red (eg. 50,0), P2=purple (eg. 100,80) and Threshold=green (eg. 27) of your desired curve. The x-axis is the input pressure you apply to the pen; the y-axis is the output pressure the application is given. (<a rel="nofollow" class="external text" href="http://250kb.de/u/150207/p/FoS1SiXuZQRP.png">example curve</a>)
+<p>Use <a rel="nofollow" class="external text" href="https://web.archive.org/web/20180318103411/http://linuxwacom.sourceforge.net/misc/bezier.html">Wacom Pressure Demo</a> to find P1=red (eg. 50,0), P2=purple (eg. 100,80) and Threshold=green (eg. 27) of your desired curve. The x-axis is the input pressure you apply to the pen; the y-axis is the output pressure the application is given. (<a rel="nofollow" class="external text" href="http://250kb.de/u/150207/p/FoS1SiXuZQRP.png">example curve</a>)
 </p>
 <p>You can immediately test your desired values for your device (eg. "Wacom Intuos4 6x9 stylus") with
 </p>
@@ -615,7 +616,7 @@ WALTOP International Corp. Slim Tablet stylus   id: <b>12</b>  type: STYLUS
 </p>
 <pre>   xsetwacom --get "device name or ID" Area
 </pre>
-<p>After this you can figure out your tablet's resolution by dividing the values with the ratio <b>11.25</b> (so <b>21600/11.25=1920</b> and <b>13500/11.25=1200</b>), so to convert this to <b>1920x1080</b> (<b>16:9</b>) resolution, do <b>1080*11.25=12150</b> then to set the proportions with xsetwacom:
+<p>After this you can figure out your tablets resolution by dividing the values with the ratio <b>11.25</b> (so <b>21600/11.25=1920</b> and <b>13500/11.25=1200</b>), so to convert this to <b>1920x1080</b> (<b>16:9</b>) resolution, do <b>1080*11.25=12150</b> then to set the proportions with xsetwacom:
 </p>
 <pre>   xsetwacom --set "device name or ID" Area 0 0 21600 12150
 </pre>
@@ -627,11 +628,11 @@ WALTOP International Corp. Slim Tablet stylus   id: <b>12</b>  type: STYLUS
 <p>(An alternative formula would would be aspect ratio multiplied by <b>1350</b>. So <b>16:9</b> is <b>16*1350=21600</b> and <b>9*1350=12150</b>)
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> There is also a KeepShape option which reportedly should do this automatically but it does not seem to work, which is why we have to do it the hard way. I do not know whether these values should be kept the same or increased on a bigger resolution monitor, but I highly suspect that they should be kept the same (e.g. the values are relative to the tablet's resolution, not the monitor's resolution; the important part is that the aspect ratio is correct, not that the resolution is a match)</div>
+<strong>Note:</strong> There is also a KeepShape option which reportedly should do this automatically but it does not seem to work, which is why we have to do it the hard way. I do not know whether these values should be kept the same or increased on a bigger resolution monitor, but I highly suspect that they should be kept the same (e.g. the values are relative to the tablets resolution, not the monitor's resolution; the important part is that the aspect ratio is correct, not that the resolution is a match)</div>
 <h3>
 <span id=".E4.BD.BF.E7.94.A8kcm-wacomtablet"></span><span class="mw-headline" id="使用kcm-wacomtablet">使用kcm-wacomtablet</span>
 </h3>
-<p>The KDE configuration module <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=kcm-wacomtablet">kcm-wacomtablet</a></span> (or if you're on Plasma 5, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/kcm-wacomtablet-frameworks-git/">kcm-wacomtablet-frameworks-git</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：package not found]</sup>) supports easy configuration of the tablet through a graphical user interface, allowing for different profiles and proper hotplugging support. It will auto-detect the type of your tablet, and load your configuration profile automatically when the tablet is plugged in.
+<p>The KDE configuration module <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=kcm-wacomtablet">kcm-wacomtablet</a></span> (or if you are on Plasma 5, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/kcm-wacomtablet-frameworks-git/">kcm-wacomtablet-frameworks-git</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：package not found]</sup>) supports easy configuration of the tablet through a graphical user interface, allowing for different profiles and proper hotplugging support. It will auto-detect the type of your tablet, and load your configuration profile automatically when the tablet is plugged in.
 </p>
 <h2>
 <span id=".E9.92.88.E5.AF.B9.E7.89.B9.E5.AE.9A.E5.BA.94.E7.94.A8.E7.A8.8B.E5.BA.8F.E7.9A.84.E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="针对特定应用程序的配置">针对特定应用程序的配置</span>
@@ -652,13 +653,13 @@ WALTOP International Corp. Slim Tablet stylus   id: <b>12</b>  type: STYLUS
 </li>
 </ul>
 <h3><span class="mw-headline" id="GIMP">GIMP</span></h3>
-<p>To enabled proper usage, and pressure sensitive painting in <a rel="nofollow" class="external text" href="http://www.gimp.org">GIMP</a>, just go to <i>Edit → Input Devices</i>. Now for each of your <i>eraser</i>, <i>stylus</i>, and <i>cursor</i> <b>devices</b>, set the <b>mode</b> to <i>Screen</i>, and remember to save.
+<p>To enabled proper usage, and pressure sensitive painting in <a rel="nofollow" class="external text" href="https://www.gimp.org">GIMP</a>, just go to <i>Edit → Input Devices</i>. Now for each of your <i>eraser</i>, <i>stylus</i>, and <i>cursor</i> <b>devices</b>, set the <b>mode</b> to <i>Screen</i>, and remember to save.
 </p>
-<ul><li>Please take note that if present, the <i>pad</i> <b>device</b> should be kept disabled as I do not think GIMP supports such things. Alternatively, to use such features of your tablet you should map them to keyboard commands with a program such as <a rel="nofollow" class="external text" href="http://hem.bredband.net/devel/wacom/">Wacom ExpressKeys</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-06 ⓘ]</sup>.</li></ul>
+<ul><li>Please take note that if present, the <i>pad</i> <b>device</b> should be kept disabled as I do not think GIMP supports such things. Alternatively, to use such features of your tablet you should map them to keyboard commands with a program such as <a rel="nofollow" class="external text" href="https://web.archive.org/web/20070902074142/http://hem.bredband.net/devel/wacom/">Wacom ExpressKeys</a>.</li></ul>
 <ul><li>You should also take note that the tool selected for the <i>stylus</i> is independent to that of the <i>eraser</i>. This can actually be quite handy, as you can have the <i>eraser</i> set to be used as any tool you like.</li></ul>
 <p>For more information checkout the <i>Setting up GIMP</i> section of <a rel="nofollow" class="external text" href="http://www.gimptalk.com/forum/topic.php?t=17992&amp;start=1">GIMP Talk - Community - Install Guide: Getting Wacom Drawing Tablets To Work In Gimp</a><sup title="最后检查状态：domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-06 ⓘ]</sup>.
 </p>
-<p>If the above was not enough, you may want to try setting up the tablet's stylus (and eraser) as a second mouse pointer (separating it from your mouse) by using the <code>xinput create-master</code> and <code>xinput reattach</code> commands. It can help when GIMP does not start painting even if the stylus touches the tablet.
+<p>If the above was not enough, you may want to try setting up the tablets stylus (and eraser) as a second mouse pointer (separating it from your mouse) by using the <code>xinput create-master</code> and <code>xinput reattach</code> commands. It can help when GIMP does not start painting even if the stylus touches the tablet.
 </p>
 <h3><span class="mw-headline" id="Inkscape">Inkscape</span></h3>
 <p>As in GIMP, to do the same simply got to <i>Edit → Input Devices...</i>. Now for each of your <i>eraser</i>, <i>stylus</i>, and <i>cursor</i> <b>devices</b>, set the <b>mode</b> to <i>Screen</i>, and remember to save.
@@ -674,7 +675,7 @@ WALTOP International Corp. Slim Tablet stylus   id: <b>12</b>  type: STYLUS
 <h3><span class="mw-headline" id="Web_Browser_Plugin">Web Browser Plugin</span></h3>
 <p>A plugin that imitates the official Wacom web plugin can be found on the AUR as <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/wacomwebplugin/">wacomwebplugin</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：package not found]</sup>. It has been tested successfully using Chromium and Firefox.
 </p>
-<p>With this plugin it is possible to make use of online tools such as <a rel="nofollow" class="external text" href="http://sta.sh/muro/">deviantART's Muro</a>. This plugin is in early stages so as always, your mileage may vary.
+<p>With this plugin it is possible to make use of online tools such as <a rel="nofollow" class="external text" href="https://sta.sh/muro/">deviantART's Muro</a>. This plugin is in early stages so as always, your mileage may vary.
 </p>
 <h2>
 <span id=".E6.95.85.E9.9A.9C.E6.8E.92.E9.99.A4"></span><span class="mw-headline" id="故障排除">故障排除</span>
@@ -706,7 +707,7 @@ WALTOP International Corp. Slim Tablet stylus   id: <b>12</b>  type: STYLUS
 <a rel="nofollow" class="external text" href="http://www.gimptalk.com/forum/topic.php?t=17992&amp;start=1">GIMP Talk - Community - Install Guide: Getting Wacom Drawing Tablets To Work In Gimp</a><sup title="最后检查状态：domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-06 ⓘ]</sup>
 </li>
 <li><a rel="nofollow" class="external text" href="https://help.ubuntu.com/community/Wacom">Ubuntu Help: Wacom</a></li>
-<li><a rel="nofollow" class="external text" href="http://ubuntuforums.org/showthread.php?t=1038949">Ubuntu Forums - Install a LinuxWacom Kernel Driver for Tablet PC's</a></li>
+<li><a rel="nofollow" class="external text" href="https://ubuntuforums.org/showthread.php?t=1038949">Ubuntu Forums - Install a LinuxWacom Kernel Driver for Tablet PC's</a></li>
 </ul>
 </div>
 </div>
@@ -727,8 +728,8 @@ WALTOP International Corp. Slim Tablet stylus   id: <b>12</b>  type: STYLUS
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Wacom_tablet_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=647086">https://wiki.archlinux.org/index.php?title=Wacom_tablet_(简体中文)&amp;oldid=647086</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 December 2020, at 12:29.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Wacom_tablet_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=662822">https://wiki.archlinux.org/index.php?title=Wacom_tablet_(简体中文)&amp;oldid=662822</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 14:35.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

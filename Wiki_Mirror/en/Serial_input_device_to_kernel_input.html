@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -39,14 +40,14 @@
 </div>
 <p>Although USB is the most popular way to connect input devices such as mice, serial input devices, such as older mice, and more exotic input devices such as 3Dconnexion Spaceballs are still quite usable, either with a serial port built into the computer, or via a USB to serial converter dongle.
 </p>
-<p>The traditional way to support these serially attached input devices was to configure <i>each</i> application with the details such as which serial port the input device was attached to and what protocol the device used. As the most common application people used with a serial input device was X.org / XFree86, this wasn't too much of a problem. However, if you used a variety of applications that needed to talk to the serial input device directly, you may encounter limitations to which serial input device or protocol each application supported. Some applications may not have supported a serial input device you'd have preferred to use.
+<p>The traditional way to support these serially attached input devices was to configure <i>each</i> application with the details such as which serial port the input device was attached to and what protocol the device used. As the most common application people used with a serial input device was X.org / XFree86, this was not too much of a problem. However, if you used a variety of applications that needed to talk to the serial input device directly, you may encounter limitations to which serial input device or protocol each application supported. Some applications may not have supported a serial input device you would have preferred to use.
 </p>
 <p>A better approach is to have the Linux kernel input subsystem manage the serially attached input device, and then present the input signals the device generates in the same way that USB and PS/2 input device signals are presented to applications, via the <i>/dev/input/{mice|mouseX}</i> device files. 
 </p>
 <p>This guide describes the simple steps necessary to "attach" a serial input device to the Linux kernel input subsystem.
 </p>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p>Firstly, you'll need to install the <b>inputattach</b> utility from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linuxconsole">linuxconsole</a></span> package. This utility tells the kernel input subsystem which serial port the input device is attached to, and what type of device is attached to the specified serial port.
+<p>Firstly, you will need to install the <b>inputattach</b> utility from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linuxconsole">linuxconsole</a></span> package. This utility tells the kernel input subsystem which serial port the input device is attached to, and what type of device is attached to the specified serial port.
 </p>
 <h2><span class="mw-headline" id="Configuration_and_usage">Configuration and usage</span></h2>
 <p>Once you have installed package, you can view the <i>inputattach</i> help, to see the large list of serial input devices the Linux kernel input subsystem supports. Here is an example of the help output:
@@ -105,7 +106,7 @@ $
 </p>
 <p>The default <i>/etc/conf.d/inputattach</i> file assumes a Microsoft serial mouse, and assumes the mouse is attached to the first serial port of the computer. The <b>IAPARAMS</b> variable is an array of inputattach arguments. An inputattach instance will be started for each element. See <i>inputattach --help</i> for details on arguments.
 </p>
-<p>Here's an example of a <i>/etc/conf.d/inputattach</i> file, modified to suit a Logitech TrackMan Marble serial mouse:
+<p>Here is an example of a <i>/etc/conf.d/inputattach</i> file, modified to suit a Logitech TrackMan Marble serial mouse:
 </p>
 <pre>$ cat /etc/conf.d/inputattach 
 #
@@ -118,23 +119,17 @@ IAPARAMS=(
   "--mouseman /dev/ttyS0"
 )
 
-$
-</pre>
-<p>Once you have modified the <i>/etc/conf.d/inputattach</i> file, you can then attempt to <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> the <i>inputattach</i> service, by running 
-</p>
-<pre># systemctl start inputattach
-</pre>
-<p>If you happen to be within Xorg when you do this, and have an <i>InputDevice</i> mouse section that specifies <i>/dev/input/mice</i> as the input device file, your new input device is likely to now be another source for Xorg mouse pointer movements, in addition to other input devices e.g., a USB mouse.
+$</pre>
+<p>Once you have modified the <code>/etc/conf.d/inputattach</code> file, you can then attempt to <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>inputattach.service</code>.
+If you happen to be within Xorg when you do this, and have an <i>InputDevice</i> mouse section that specifies <code>/dev/input/mice</code> as the input device file, your new input device is likely to now be another source for Xorg mouse pointer movements, in addition to other input devices e.g., a USB mouse.
 </p>
 <p>Another way to confirm that it worked is to check your system's kernel log using the <a href="../en/Core_utilities.html#Essentials" class="mw-redirect" title="Dmesg">dmesg</a> utility. For a Logitech TrackMan Marble serial mouse, the kernel output is:
 </p>
 <pre>serio: Serial port ttyS0
 input: Logitech M+ Mouse as /class/input/input6
 </pre>
-<p>To have your serial input device work everytime you boot, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> the service: 
+<p>To have your serial input device work everytime you boot, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>inputattach.service</code>.
 </p>
-<pre># systemctl enable inputattach
-</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
@@ -149,8 +144,8 @@ input: Logitech M+ Mouse as /class/input/input6
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Serial_input_device_to_kernel_input&amp;oldid=620865">https://wiki.archlinux.org/index.php?title=Serial_input_device_to_kernel_input&amp;oldid=620865</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 June 2020, at 13:54.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Serial_input_device_to_kernel_input&amp;oldid=658324">https://wiki.archlinux.org/index.php?title=Serial_input_device_to_kernel_input&amp;oldid=658324</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 April 2021, at 02:25.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

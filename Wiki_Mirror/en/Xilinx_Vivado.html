@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -37,7 +38,7 @@
 <div>
 <b>Reason:</b> Write a PKGBUILD (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Xilinx_Vivado">Talk:Xilinx Vivado#</a>)</div>
 </div>
-<p>ArchLinux is not officially supported by Vivado, but as happens with <a href="../en/Xilinx_ISE_WebPACK.html" title="Xilinx ISE WebPACK">Xilinx ISE WebPACK</a>, most of its features can be used with a bit of hacking.
+<p>Arch Linux is not officially supported by Vivado, but as happens with <a href="../en/Xilinx_ISE_WebPACK.html" title="Xilinx ISE WebPACK">Xilinx ISE WebPACK</a>, most of its features can be used with a bit of hacking.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -76,7 +77,7 @@
 <li class="toclevel-2 tocsection-15"><a href="#xsct,_xsdb,_xmd,_and_tclsh_segfault"><span class="tocnumber">3.2</span> <span class="toctext">xsct, xsdb, xmd, and tclsh segfault</span></a></li>
 <li class="toclevel-2 tocsection-16"><a href="#Vivado_HLS_testbench_error_with_GCC"><span class="tocnumber">3.3</span> <span class="toctext">Vivado HLS testbench error with GCC</span></a></li>
 <li class="toclevel-2 tocsection-17"><a href="#Vivado_Crashes_with_Wayland"><span class="tocnumber">3.4</span> <span class="toctext">Vivado Crashes with Wayland</span></a></li>
-<li class="toclevel-2 tocsection-18"><a href="#Vivado_2020.1_installer_doesn't_start"><span class="tocnumber">3.5</span> <span class="toctext">Vivado 2020.1 installer doesn't start</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Vivado_2020.1_installer_does_not_start"><span class="tocnumber">3.5</span> <span class="toctext">Vivado 2020.1 installer does not start</span></a></li>
 <li class="toclevel-2 tocsection-19"><a href="#To_update_Vivado_from_2020.1_to_Vivado_2020.1.1"><span class="tocnumber">3.6</span> <span class="toctext">To update Vivado from 2020.1 to Vivado 2020.1.1</span></a></li>
 <li class="toclevel-2 tocsection-20"><a href="#Synthesis_fails_on_certain_locales"><span class="tocnumber">3.7</span> <span class="toctext">Synthesis fails on certain locales</span></a></li>
 <li class="toclevel-2 tocsection-21"><a href="#Fonts_ignore_system_anti-aliasing_settings"><span class="tocnumber">3.8</span> <span class="toctext">Fonts ignore system anti-aliasing settings</span></a></li>
@@ -117,12 +118,13 @@
 <h4><span class="mw-headline" id="Dependencies_for_petalinux-tools">Dependencies for petalinux-tools</span></h4>
 <p>Before Launch petalinux-tools, please install:
 </p>
-<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=git">git</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=diffstat">diffstat</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=unzip">unzip</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=texinfo">texinfo</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python">python</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=chrpath">chrpath</a></span><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wget">wget</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xterm">xterm</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sdl">sdl</a></span> 
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=rpcsvc-proto">rpcsvc-proto</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=socat">socat</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cpio">cpio</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=inetutils">inetutils</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python2">python2</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=net-tools">net-tools</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tftp-hpa">tftp-hpa</a></span>
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=git">git</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=diffstat">diffstat</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=unzip">unzip</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=texinfo">texinfo</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python">python</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=chrpath">chrpath</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wget">wget</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xterm">xterm</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sdl">sdl</a></span> 
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=rpcsvc-proto">rpcsvc-proto</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=socat">socat</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cpio">cpio</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=inetutils">inetutils</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python2">python2</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=net-tools">net-tools</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tftp-hpa">tftp-hpa</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-virtualenv">python-virtualenv</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-server-xvfb">xorg-server-xvfb</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bison">bison</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=flex">flex</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gnupg">gnupg</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ncurses">ncurses</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=autoconf">autoconf</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libtool">libtool</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tar">tar</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gcc">gcc</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sdl">sdl</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sdl2">sdl2</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glib2">glib2</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=screen">screen</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pax">pax</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pax-utils">pax-utils</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libstdc%2B%2B5">libstdc++5</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-django">python-django</a></span> 
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iproute2">iproute2</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lib32-zlib">lib32-zlib</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openssl">openssl</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gawk">gawk</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-pexpect">python-pexpect</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-pip">python-pip</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-gitpython">python-gitpython</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-jinja">python-jinja</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xz">xz</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iputils">iputils</a></span> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-pylint">python-pylint</a></span>
 </p>
 <p>and Aur Package
 </p>
-<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/pod2man/">pod2man</a></span><sup><small>AUR</small></sup>
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/pod2man/">pod2man</a></span><sup><small>AUR</small></sup> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libselinux/">libselinux</a></span><sup><small>AUR</small></sup> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/debianutils/">debianutils</a></span><sup><small>AUR</small></sup> 
 </p>
 <p>Enable the multilib repository and install the multilib-devel group. 
 </p>
@@ -130,8 +132,8 @@
 </p>
 <p>Enable <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tftp-hpa">tftp-hpa</a></span>
 </p>
-<pre>$ sudo systemctl enable tftp.service
-$ sudo systemctl start tftp.service
+<pre>$ sudo systemctl enable tftpd.service
+$ sudo systemctl start tftpd.service
 </pre>
 <h4><span class="mw-headline" id="Vivado_and_SDK">Vivado and SDK</span></h4>
 <p>Once downloaded and unpacked the tarball, run:
@@ -156,6 +158,7 @@ $ sudo systemctl start tftp.service
 </p>
 <pre># mv /root/.local/share/applications/* /usr/share/applications/
 # mv /root/.local/share/desktop-directories/* /usr/share/desktop-directories/
+# mv /root/.config/menus/applications-merged/* /etc/xdg/menus/applications-merged/
 </pre>
 <p>To copy the desktop shortcuts:
 </p>
@@ -184,15 +187,15 @@ $ sudo systemctl start tftp.service
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
 
 export HTTPS_PROXY=localhost</pre>
-<p>This method will not pollute your environment, only the temporary environment that is configured upon startup of the tools, so it shouldn't break anything else.
+<p>This method will not pollute your environment, only the temporary environment that is configured upon startup of the tools, so it should not break anything else.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Synthesis_segfaults">Synthesis segfaults</span></h3>
 <p>See <a rel="nofollow" class="external free" href="https://forums.xilinx.com/t5/Synthesis/Vivado-crashes-on-Arch-Linux-when-performing-synthesis/td-p/706847">https://forums.xilinx.com/t5/Synthesis/Vivado-crashes-on-Arch-Linux-when-performing-synthesis/td-p/706847</a>
 </p>
-<p>You'll need to recompile <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span> (just take the <a href="../en/PKGBUILD.html" title="PKGBUILD">PKGBUILD</a> from the <a href="../en/Arch_Build_System.html" class="mw-redirect" title="Abs">abs</a>) with <code>--disable-lock-elision</code>. Instead of patching the system libc in <code>/usr/lib</code>, copy the newly
+<p>You will need to recompile <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span> (just take the <a href="../en/PKGBUILD.html" title="PKGBUILD">PKGBUILD</a> from the <a href="../en/Arch_Build_System.html" class="mw-redirect" title="Abs">abs</a>) with <code>--disable-lock-elision</code>. Instead of patching the system libc in <code>/usr/lib</code>, copy the newly
 compiled <code>libpthread-2.25.so</code> and <code>libc-2.25.so</code> to <code>/opt/Xilinx/Vivado/2016.4/ids_lite/ISE/lib/lin64</code>
-Don't forget to repeat this when <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span> gets upgraded.
+Do not forget to repeat this when <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span> gets upgraded.
 </p>
 <h3>
 <span id="xsct.2C_xsdb.2C_xmd.2C_and_tclsh_segfault"></span><span class="mw-headline" id="xsct,_xsdb,_xmd,_and_tclsh_segfault">xsct, xsdb, xmd, and tclsh segfault</span>
@@ -241,9 +244,7 @@ Stack:
 [0x7fcec0cb94cf]</pre>
 <p>Switch to using <a href="../en/Xorg.html" title="Xorg">Xorg</a> instead of <a href="../en/Wayland.html" title="Wayland">Wayland</a>. The version of Java Vivado uses has compatibility problems with Wayland.
 </p>
-<h3>
-<span id="Vivado_2020.1_installer_doesn.27t_start"></span><span class="mw-headline" id="Vivado_2020.1_installer_doesn't_start">Vivado 2020.1 installer doesn't start</span>
-</h3>
+<h3><span class="mw-headline" id="Vivado_2020.1_installer_does_not_start">Vivado 2020.1 installer does not start</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> This has been fixed as of Vivado 2020.2.</div>
 <p>The Vivado 2020.1 installer may not start on Arch Linux. The splash-screen and warning about the unsupported OS show up, but nothing happens after closing the dialog:
@@ -271,14 +272,14 @@ Exception in thread "main" java.lang.IllegalStateException: no splash screen ava
 <pre># ./xsetup -c ~/.Xilinx/install_config.txt --agree XilinxEULA,3rdPartyEULA,WebTalkTerms --batch Add
 </pre>
 <h3><span class="mw-headline" id="To_update_Vivado_from_2020.1_to_Vivado_2020.1.1">To update Vivado from 2020.1 to Vivado 2020.1.1</span></h3>
-<p>If your 2020.1 installation failed to launch and needed to be installed in batch mode, you'll need to update using batch mode:
+<p>If your 2020.1 installation failed to launch and needed to be installed in batch mode, you will need to update using batch mode:
 </p>
 <pre># ./xsetup -b Update
 </pre>
-<p>If Vivado was originally installed by the root user, you'll need to launch the update as the root user.
+<p>If Vivado was originally installed by the root user, you will need to launch the update as the root user.
 </p>
 <h3><span class="mw-headline" id="Synthesis_fails_on_certain_locales">Synthesis fails on certain locales</span></h3>
-<p>If your system locale doesn't use a dot <code>.</code> as the decimal seperator, but for example a comma <code>,</code> (e.g. <code>de_DE</code>), synthesis may fail with errors such as wrong operator types for <code>+</code>. 
+<p>If your system locale does not use a dot <code>.</code> as the decimal seperator, but for example a comma <code>,</code> (e.g. <code>de_DE</code>), synthesis may fail with errors such as wrong operator types for <code>+</code>. 
 </p>
 <p>A possible workaround is to force Vivado to use <code>en_US.UTF-8</code> as the locale for numerics. This can be easily done by appending
 </p>
@@ -322,8 +323,8 @@ export XILINXD_LICENSE_FILE=2100@&lt;server_name&gt;</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xilinx_Vivado&amp;oldid=649304">https://wiki.archlinux.org/index.php?title=Xilinx_Vivado&amp;oldid=649304</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 January 2021, at 02:11.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xilinx_Vivado&amp;oldid=660161">https://wiki.archlinux.org/index.php?title=Xilinx_Vivado&amp;oldid=660161</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 19:45.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

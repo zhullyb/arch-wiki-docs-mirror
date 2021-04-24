@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -240,7 +241,7 @@ $ rm -rf <i>/caminho/para/diretório</i>_antigo
 <h3>
 <span id="Compress.C3.A3o"></span><span class="mw-headline" id="Compressão">Compressão</span>
 </h3>
-<p>Btrfs suporta compactação transparente e automática. Isso não apenas reduz o tamanho dos arquivos, mas também pode <a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=btrfs_compress_2635&amp;num=1">melhorar o desempenho</a>, em alguns casos de uso específicos (por exemplo. thread único com E/S de arquivo pesado), enquanto obviamente prejudica o desempenho em outros casos (por exemplo. tarefas em múltiplas threads e / ou intensivas da CPU com E/S de arquivos grandes). Geralmente, é obtido melhor desempenho com os algoritmos de compactação mais rápidos, <i>zstd</i> e <i>lzo</i>, e alguns <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs-zstd-compress">benchmarks</a> para fornecer comparações detalhadas.
+<p>Btrfs suporta compactação transparente e automática. Isso não apenas reduz o tamanho dos arquivos, mas também pode <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs_compress_2635&amp;num=1">melhorar o desempenho</a>, em alguns casos de uso específicos (por exemplo. thread único com E/S de arquivo pesado), enquanto obviamente prejudica o desempenho em outros casos (por exemplo. tarefas em múltiplas threads e / ou intensivas da CPU com E/S de arquivos grandes). Geralmente, é obtido melhor desempenho com os algoritmos de compactação mais rápidos, <i>zstd</i> e <i>lzo</i>, e alguns <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs-zstd-compress">benchmarks</a> para fornecer comparações detalhadas.
 </p>
 <p><code>compress=<i>alg</i></code> é uma opção de montagem ativada automaticamente considerando todos os arquivos para compactação, onde <code><i>alg</i></code> e também <code>zlib</code>, <code>lzo</code>, <code>zstd</code>, ou <code>no</code> (sem compressão). Usando esta opção, o btrfs verificará se a compactação da primeira parte dos dados a reduz. Se isso acontecer, toda a gravação nesse arquivo será compactada. Caso contrário, nada será compactado. Com esta opção, se a primeira parte da gravação não diminuir, nenhuma compactação será aplicada à gravação, mesmo que o restante dos dados diminua tremendamente. <a rel="nofollow" class="external autonumber" href="https://btrfs.wiki.kernel.org/index.php/Compression#What_happens_to_incompressible_files.3F">[1]</a> Isso é feito para evitar que o disco aguarde para começar a gravar até que todos os dados a serem gravados sejam totalmente fornecidos ao btrfs e compactados.
 </p>
@@ -480,7 +481,7 @@ Para habilitá-los retrospectivamente para subvolumes já existentes, ative o qu
 <p>Os sistemas de arquivos Btrfs existentes podem usar algo como <a href="../en/EncFS.html" title="EncFS">EncFS</a> ou <a href="../en/TrueCrypt.html" title="TrueCrypt">TrueCrypt</a>, embora talvez sem alguns dos recursos do Btrfs.
 </p>
 <h3><span class="mw-headline" id="TLP">TLP</span></h3>
-<p>Usando TLP requer precauções especiais para evitar a corrupção do sistema de arquivos. Consulte a <a href="../en/TLP.html#Btrfs" title="TLP">seção TLP</a> Para maiores informações.
+<p>Usando TLP requer precauções especiais para evitar a corrupção do sistema de arquivos. Consulte a <a href="../en/TLP.html#Btrfs" title="TLP">seção TLP</a><sup>[<a href="../pt/Help:Procedures.html#Corrigir_links_quebrados_de_se%C3%A7%C3%B5es" class="mw-redirect" title="Help:Procedimentos">link quebrado</a>: seção inválida]</sup> Para maiores informações.
 </p>
 <h3>
 <span id="Problemas_de_verifica.C3.A7.C3.A3o_do_btrfs"></span><span class="mw-headline" id="Problemas_de_verificação_do_btrfs">Problemas de verificação do btrfs</span>
@@ -526,14 +527,14 @@ Para habilitá-los retrospectivamente para subvolumes já existentes, ative o qu
 </pre>
 <p>Finalmente <a href="#Balance">balance</a> o sistema de arquivos para recuperar o espaço.
 </p>
-<p>Lembre-se de que alguns aplicativos que foram instalados anteriormente precisam ser adaptados ao Btrfs. Notavelmente <a href="../en/TLP.html#Btrfs" title="TLP">TLP#Btrfs</a> precisa de cuidados especiais para evitar a corrupção do sistema de arquivos, mas outros aplicativos também podem se beneficiar de certos recursos.
+<p>Lembre-se de que alguns aplicativos que foram instalados anteriormente precisam ser adaptados ao Btrfs. Notavelmente <a href="../en/TLP.html#Btrfs" title="TLP">TLP#Btrfs</a><sup>[<a href="../pt/Help:Procedures.html#Corrigir_links_quebrados_de_se%C3%A7%C3%B5es" class="mw-redirect" title="Help:Procedimentos">link quebrado</a>: seção inválida]</sup> precisa de cuidados especiais para evitar a corrupção do sistema de arquivos, mas outros aplicativos também podem se beneficiar de certos recursos.
 </p>
 <h3>
 <span id="Acelera.C3.A7.C3.A3o_de_hardware_de_soma_de_verifica.C3.A7.C3.A3o"></span><span class="mw-headline" id="Aceleração_de_hardware_de_soma_de_verificação">Aceleração de hardware de soma de verificação</span>
 </h3>
 <p>O CRC32 é uma nova instrução no Intel SSE4.2. Para verificar se a soma de verificação Btrfs é acelerada por hardware:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep crc32c</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep crc32c</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Btrfs loaded, crc32c=crc32c-intel</pre>
 <p>Se você ver <code>crc32c=crc32c-generic</code>, provavelmente é porque sua partição raiz é Btrfs, e você terá que compilar <code>crc32c-intel</code> no kernel para fazê-lo funcionar. Colocando <code>crc32c-intel</code> para dentro do <a href="../pt/Mkinitcpio.html" title="Mkinitcpio (Português)">mkinitcpio.conf</a> <i>não</i> vai funcionar.
 </p>
@@ -630,12 +631,12 @@ You are now being dropped into an emergency shell.
 <li>
 <b>Benchmark de opções de montagem do Phoronix</b>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=btrfs-mount-linux49">Linux 4.9</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=linux_314_btrfs">Linux 3.14</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=linux_btrfs_311&amp;num=1">Linux 3.11</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=MTM0OTU">Linux 3.9</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=btrfs_linux37_mounts&amp;num=1">Linux 3.7</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=article&amp;item=linux_btrfs_options&amp;num=1">Linux 3.2</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs-mount-linux49">Linux 4.9</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=linux_314_btrfs">Linux 3.14</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=linux_btrfs_311&amp;num=1">Linux 3.11</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTM0OTU">Linux 3.9</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=btrfs_linux37_mounts&amp;num=1">Linux 3.7</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=linux_btrfs_options&amp;num=1">Linux 3.2</a></li>
 </ul>
 </li>
 <li><a rel="nofollow" class="external text" href="http://blog.erdemagaoglu.com/post/4605524309/lzo-vs-snappy-vs-lzf-vs-zlib-a-comparison-of">Lzo vs. zLib</a></li>
@@ -646,9 +647,9 @@ You are now being dropped into an emergency shell.
 <ul>
 <li><a rel="nofollow" class="external text" href="http://www.funtoo.org/wiki/BTRFS_Fun">Funtoo Wiki Btrfs Fun</a></li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=MTA0ODU">Avi Miller presenting Btrfs</a> at SCALE 10x, January 2012.</li>
+<a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTA0ODU">Avi Miller presenting Btrfs</a> at SCALE 10x, January 2012.</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=MTA4Mzc">Summary of Chris Mason's talk</a> from LFCS 2012</li>
+<a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTA4Mzc">Summary of Chris Mason's talk</a> from LFCS 2012</li>
 <li>
 <a rel="nofollow" class="external text" href="https://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=35054394c4b3cecd52577c2662c84da1f3e73525">Btrfs: stop providing a bmap operation to avoid swapfile corruptions</a> 2009-01-21</li>
 <li><a rel="nofollow" class="external text" href="http://marc.merlins.org/perso/btrfs/post_2014-03-22_Btrfs-Tips_-Doing-Fast-Incremental-Backups-With-Btrfs-Send-and-Receive.html">Doing Fast Incremental Backups With Btrfs Send and Receive</a></li>
@@ -664,6 +665,7 @@ You are now being dropped into an emergency shell.
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 <li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
+<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
@@ -673,8 +675,8 @@ You are now being dropped into an emergency shell.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Btrfs_(Portugu%C3%AAs)&amp;oldid=638068">https://wiki.archlinux.org/index.php?title=Btrfs_(Português)&amp;oldid=638068</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:03.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Btrfs_(Portugu%C3%AAs)&amp;oldid=663820">https://wiki.archlinux.org/index.php?title=Btrfs_(Português)&amp;oldid=663820</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 16:59.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

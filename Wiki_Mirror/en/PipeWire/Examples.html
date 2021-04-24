@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -52,6 +53,8 @@
 </pre>
 <p><code>object.linger=1</code> keeps the sinks alive after the creating client disconnects. You can name <code>sink_name</code> whatever you want.
 </p>
+<p>In order to unload module, you can use <code>pw-cli destroy ID</code>, where <code>ID</code> is output of <code>pactl load-module</code> command. Unloading modules through <code>pactl unload-module</code> is not currently supported.
+</p>
 <p>Using <code>jack_connect</code>, connect the monitors of the new sinks to the sound card's playback ports. Find out the name of the channels by running <code>jack_lsp -c</code>. 
 </p>
 <pre> pw-jack jack_connect speakers:monitor_0  HDA\ ATI\ SB:playback_FL
@@ -60,7 +63,12 @@
  pw-jack jack_connect headphones:monitor_1  HDA\ ATI\ SB:playback_RR
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> Add the above commands to a script and <a href="../../en/Autostarting.html" title="Autostarting">autostart</a> it to automate the process. Be sure to replace <code>HDA\ ATI\ SB</code> with the name of your sound card.</div>
+<strong>Tip:</strong> Add the above commands to a script and <a href="../../en/Autostarting.html" class="mw-redirect" title="Autostart">autostart</a> it to automate the process. Be sure to replace <code>HDA\ ATI\ SB</code> with the name of your sound card.</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> The Jack/Pipewire sinks seem to change name now and then. In the above example, <code>HDA\ ATI\ SB:playback_FL
+</code> sometimes changes into <code>Built-in\ Audio\ Analog\ Surround\ 4.0:playback_FL</code>. As a quick workaround, you could add a second set of <code>pw-jack</code> commands in your autostart script with the second set of names.</div>
+<p>To individually control the volumes, one option is to use alsa utilities (such as amixer) to control Front and Rear/Surround (alsa naming) channels. A script to automatically do that depending on what is your currently default pulseaudio sink can be found <a rel="nofollow" class="external text" href="https://gist.github.com/nicman23/a2a80200e1d5d1f65b75846c5f2387b7">here</a>.
+</p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
@@ -71,8 +79,8 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PipeWire/Examples&amp;oldid=648502">https://wiki.archlinux.org/index.php?title=PipeWire/Examples&amp;oldid=648502</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 8 January 2021, at 20:24.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PipeWire/Examples&amp;oldid=662805">https://wiki.archlinux.org/index.php?title=PipeWire/Examples&amp;oldid=662805</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 11:26.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

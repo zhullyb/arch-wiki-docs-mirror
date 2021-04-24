@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -117,14 +118,14 @@
 </ul>
 </div>
 
-<h1>
+<h2>
 <span id=".E4.B8.8EALSA.E9.A9.B1.E5.8A.A8.E5.AF.B9.E6.AF.94"></span><span class="mw-headline" id="与ALSA驱动对比">与ALSA驱动对比</span>
-</h1>
+</h2>
 <p>OSS与ALSA相比的一些优缺点。
 </p>
-<h2>
+<h3>
 <span id="OSS.E7.9A.84.E4.BC.98.E7.82.B9.EF.BC.88.E5.AF.B9.E7.94.A8.E6.88.B7.E6.9D.A5.E8.AF.B4.EF.BC.89"></span><span class="mw-headline" id="OSS的优点（对用户来说）">OSS的优点（对用户来说）</span>
-</h2>
+</h3>
 <ul>
 <li>在内核空间（kernel space）里面包含了一个透明软件混音器(vmix)。这样多个程序就可以同时使用声音设备而且没有任何问题。</li>
 <li>这个混音器可以让你单独调节各个程序的音量。</li>
@@ -132,29 +133,29 @@
 <li>声音程序的初始反应时间一般更好。</li>
 <li>对使用OSS的应用程序接口（API）的程序有更好的支持，很多程序都支持OSS的API，而不需要ALSA的模拟。</li>
 </ul>
-<h2>
+<h3>
 <span id="OSS.E7.9A.84.E4.BC.98.E7.82.B9.EF.BC.88.E5.AF.B9.E5.BC.80.E5.8F.91.E8.80.85.E6.9D.A5.E8.AF.B4.EF.BC.89"></span><span class="mw-headline" id="OSS的优点（对开发者来说）">OSS的优点（对开发者来说）</span>
-</h2>
+</h3>
 <ul>
 <li>清晰的API<a rel="nofollow" class="external text" href="http://manuals.opensound.com/developer">文档</a>，更易于使用。</li>
 <li>支持用户空间的声音驱动。</li>
 <li>可移植性强，OSS也可以在BSDs和Solaris下运行。</li>
 <li>本身可以跨平台，可以更<a rel="nofollow" class="external text" href="http://revolf.free.fr/Alchimie-7/Alchimie7_OSS_Haiku.en.pdf">方便</a>移植到新的操作系统。</li>
 </ul>
-<h2>
+<h3>
 <span id="ALSA.E7.9A.84.E4.BC.98.E7.82.B9"></span><span class="mw-headline" id="ALSA的优点">ALSA的优点</span>
-</h2>
+</h3>
 <ul>
 <li>ALSA对USB音频设备支持更好，而OSS的输出还在试验中，输入还未实现。</li>
 <li>ALSA支持蓝牙声音设备。</li>
 <li>ALSA支持AC'97和HDAudio dial-up soft-modems (比如Si3055)。</li>
 <li>ALSA对MIDI支持得更好，但用OSS你只能通过软件合成器（如timidity和fluidsynth）来使用MIDI。</li>
-<li>ALSA对待机支持更好，而用OSS，你需要在待机前使用<tt>soundoff</tt>来停止OSS驱动，在恢复后使用<tt>soundon</tt>来启动OSS。</li>
+<li>ALSA对待机支持更好，而用OSS，你需要在待机前使用<code>soundoff</code>来停止OSS驱动，在恢复后使用<code>soundon</code>来启动OSS。</li>
 <li>OSS的jack检测目前在<b>某些</b>HDAudio-powered主板上不能正常工作。也就是说在某些型号的主板上，你可能需要在插入耳机的时候手动关闭外置扬声器。而ALSA没这个问题。</li>
 </ul>
-<h1>
+<h2>
 <span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
-</h1>
+</h2>
 <p>从 <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> 安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/oss/">oss</a></span><sup><small>AUR</small></sup>.
 </p>
 <p>这会安装OSS并运行其启动脚本，它会暂时使ALSA模块失效，并安装OSS内核模块。因为ALSA在引导过程中默认开启，你需要关闭它以免引导时它与OSS发生冲突。可以编辑{Filename|rc.conf}} 文件并添加：
@@ -178,9 +179,9 @@
 </pre>
 <p>然后运行 <code>soundoff &amp;&amp; soundon</code> 来重新激活它。
 </p>
-<h1>
+<h2>
 <span id=".E6.B5.8B.E8.AF.95"></span><span class="mw-headline" id="测试">测试</span>
-</h1>
+</h2>
 <p>要注意默认的音量很高，不要戴耳机，并且调低扬声器的音量（如果可以），然后再进行测试：
 </p>
 <p><b>测试OSS：</b>
@@ -211,12 +212,12 @@
 </pre>
 <p>你应该能够看到你的设备列在Device objects 或 Audio Devices下。如果你要用的设备不在其中，需要编辑 /usr/lib/oss/etc/installed_drivers 。设备的驱动应该在更上边。而后可能需要运行soundoff, soundon。如果还不工作，注释掉所有不必要的驱动。
 </p>
-<h1>
+<h2>
 <span id=".E5.A3.B0.E9.9F.B3.E6.8E.A7.E5.88.B6"></span><span class="mw-headline" id="声音控制">声音控制</span>
-</h1>
+</h2>
 <p>为了控制不同设备，你要设置混音器。命令行工具是 <code>ossmix</code>，它很像BSD声音混音器(mixerctl)。还有一个更友好的基于图形界面的混音器 <code>ossxmix</code> ，运行时依赖<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gtk2">gtk2</a></span>。
 </p>
-<p><tt>ossxmix</tt>的基本界面和控制功能如下：
+<p><code>ossxmix</code>的基本界面和控制功能如下：
 </p>
 <pre> / High Definition Audio ALC262 \    --------------------------------&gt; 1
 /________________________________\________________________________
@@ -250,9 +251,9 @@
 <li>这是你声卡的插孔（输入和输出）的配置。声卡提供的每一个混音器控制都在这里显示。</li>
 <li>应用程序vmix混音器和音量控制。如果程序不在播放声音它会用pcm08, pcm09...标记，当播放时会显示程序名称。</li>
 </ol>
-<h2>
+<h3>
 <span id=".E9.A2.9C.E8.89.B2.E5.AE.9A.E4.B9.89"></span><span class="mw-headline" id="颜色定义">颜色定义</span>
-</h2>
+</h3>
 <p>对于high definition (HD) audio，<code>ossxmix</code>会用预定义的颜色显示jack的设置：
 </p>
 <table class="wikitable">
@@ -315,51 +316,51 @@
 </tr>
 </tbody>
 </table>
-<h2>
+<h3>
 <span id=".E4.BF.9D.E5.AD.98.E5.92.8C.E6.81.A2.E5.A4.8D.E6.B7.B7.E9.9F.B3.E5.99.A8.E8.AE.BE.E7.BD.AE"></span><span class="mw-headline" id="保存和恢复混音器设置">保存和恢复混音器设置</span>
-</h2>
+</h3>
 <p>混音器设置在关机时会保存，如果你现在就要保存，可以运行：
 </p>
 <pre># savemixer
 </pre>
 <p><code>savemixer</code> 可以用来把音量记录在文件中（用 <code>-f</code> 选项）然后用 <code>-L</code> 选项恢复。
 </p>
-<h2>
+<h3>
 <span id=".E5.85.B6.E4.BB.96.E7.9A.84.E6.B7.B7.E9.9F.B3.E5.99.A8.E7.A8.8B.E5.BA.8F"></span><span class="mw-headline" id="其他的混音器程序">其他的混音器程序</span>
-</h2>
+</h3>
 <p>其他支持OSS的混音器程序有：
 </p>
 <ul>
 <li>GNOME - Gnome volume control</li>
 <li>KDE - Kmix - OSS的支持正在开发中。</li>
 </ul>
-<h1>
+<h2>
 <span id=".E9.85.8D.E7.BD.AE.E7.A8.8B.E5.BA.8F.E6.9D.A5.E4.BD.BF.E7.94.A8OSS"></span><span class="mw-headline" id="配置程序来使用OSS">配置程序来使用OSS</span>
-</h1>
-<h2><span class="mw-headline" id="Skype">Skype</span></h2>
-<p><tt>skype</tt>包只支持ALSA ，获得支持OSS的Skype，安装 <tt>skype-oss</tt> 包：
+</h2>
+<h3><span class="mw-headline" id="Skype">Skype</span></h3>
+<p><code>skype</code>包只支持ALSA ，获得支持OSS的Skype，安装 <code>skype-oss</code> 包：
 </p>
 <pre># pacman -S skype-oss
 </pre>
 <p>如果你用的是x86_64，可以用<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/bin32-skype-oss/">bin32-skype-oss</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：package not found]</sup>。
 </p>
-<h2><span class="mw-headline" id="Wine">Wine</span></h2>
-<ul><li>运行 <tt>winecfg</tt>。</li></ul>
+<h3><span class="mw-headline" id="Wine">Wine</span></h3>
+<ul><li>运行 <code>winecfg</code>。</li></ul>
 <pre>$ winecfg
 </pre>
-<ul><li>到<tt>Audio（音频）</tt> 选项卡。</li></ul>
-<ul><li>选择<tt>OSS Driver（OSS驱动）</tt>。</li></ul>
-<h2><span class="mw-headline" id="Gajim">Gajim</span></h2>
+<ul><li>到<code>Audio（音频）</code> 选项卡。</li></ul>
+<ul><li>选择<code>OSS Driver（OSS驱动）</code>。</li></ul>
+<h3><span class="mw-headline" id="Gajim">Gajim</span></h3>
 <p>Gajim缺省用 <code>aplay -q</code>放声音。可以在Advanced Settings（高级设置）里搜索<code>soundplayer</code>变量。oss提供的ossplay程序是一个好的替换：<code>ossplay -qq</code>
 </p>
-<h2><span class="mw-headline" id="MOC">MOC</span></h2>
+<h3><span class="mw-headline" id="MOC">MOC</span></h3>
 <p>让MOC支持OSS4,你必须把配置文件<code>"$HOME"/.moc</code>中的 OSSMixerDevice 改成<code>/dev/ossmix</code>。
 然后MOC就可以正常工作。或者你可以编译AUR中的moc-svn包（它支持新的vmix）。
 在界面下更改OSSMixerChannel可以在mocp中按'w'。
 </p>
-<h2>
+<h3>
 <span id=".E4.BD.BF.E7.94.A8Gstreamer.E7.9A.84.E7.A8.8B.E5.BA.8F"></span><span class="mw-headline" id="使用Gstreamer的程序">使用Gstreamer的程序</span>
-</h2>
+</h3>
 <p>移除pulseaudio和gstreamer*-pulse的程序和库。
 </p>
 <p>要将gstreamer的输出设置成OSS而不是缺省的ALSA，运行：
@@ -384,21 +385,21 @@
 </pre>
 <p>把它加到 <code>~/.bashrc</code> 来登陆自动加载。
 </p>
-<h2>
+<h3>
 <span id="firefox.EF.BC.88.E7.81.AB.E7.8B.90.EF.BC.89.3E.3D3.5"></span><span class="mw-headline" id="firefox（火狐）&gt;=3.5">firefox（火狐）&gt;=3.5</span>
-</h2>
+</h3>
 <p>Firefox 3.5 新引进的&lt;video&gt;和&lt;audio&gt;标签支持直接播放ogg媒体。然而它不能同时支持ALSA和OSS，所以你需要安装[community]中的xulrunner-oss包。
 </p>
 <pre>1. 关闭 firefox。
 2. 安装[community]中的xulrunner-oss包。
 3. 启动firefox。
 </pre>
-<h2><span class="mw-headline" id="Mplayer">Mplayer</span></h2>
+<h3><span class="mw-headline" id="Mplayer">Mplayer</span></h3>
 <p>如果你用GUI外壳（如smplayer）。你会发现在音频设置中有oss输出选项。如果用它本身，可以播放时指定<code>mplayer -ao oss /some/file/to/play.mkv</code>，如果嫌麻烦可以在<code>"$HOME"/.mplayer/config</code>中加入 "ao=oss"。
 </p>
-<h2>
+<h3>
 <span id="Music_Player_Daemon.EF.BC.88MPD.EF.BC.89"></span><span class="mw-headline" id="Music_Player_Daemon（MPD）">Music Player Daemon（MPD）</span>
-</h2>
+</h3>
 <p>MPD的配置文件是 /etc/mpd.conf 和 ~/.mpdconf，检查这两个文件，找到这样的东西：
 </p>
 <pre> audio_output {
@@ -429,56 +430,56 @@
        <b>mixer_device    "/dev/oss/&lt;SOME_CARD_IDENTIFIER&gt;/mix0"</b>
  }
 </pre>
-<h2>
+<h3>
 <span id=".E5.85.B6.E4.BB.96.E7.A8.8B.E5.BA.8F"></span><span class="mw-headline" id="其他程序">其他程序</span>
-</h2>
+</h3>
 <ul>
 <li>如果你不能让其他程序发出声音，试试看<a rel="nofollow" class="external text" href="http://www.4front-tech.com/wiki/index.php/Configuring_Applications_for_OSSv4">为程序设置OSSv4</a>这里</li>
 <li>用{Codeline|pacman -Ss -- -oss}} 和 <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages.php?K=-oss%7C">AUR中</a> 搜索特定的包。</li>
 </ul>
-<h1>
-<span id=".E9.97.AE.E9.A2.98.E4.BB.A5.E5.8F.8A.E8.A7.A3.E5.86.B3"></span><span class="mw-headline" id="问题以及解决">问题以及解决</span>
-</h1>
 <h2>
-<span id="HDAudio.E7.A1.AC.E4.BB.B6.E7.9A.84.E9.97.AE.E9.A2.98.E8.A7.A3.E5.86.B3"></span><span class="mw-headline" id="HDAudio硬件的问题解决">HDAudio硬件的问题解决</span>
+<span id=".E9.97.AE.E9.A2.98.E4.BB.A5.E5.8F.8A.E8.A7.A3.E5.86.B3"></span><span class="mw-headline" id="问题以及解决">问题以及解决</span>
 </h2>
 <h3>
-<span id=".E9.97.AE.E9.A2.98.E5.A6.82.E4.BD.95.E4.BA.A7.E7.94.9F"></span><span class="mw-headline" id="问题如何产生">问题如何产生</span>
+<span id="HDAudio.E7.A1.AC.E4.BB.B6.E7.9A.84.E9.97.AE.E9.A2.98.E8.A7.A3.E5.86.B3"></span><span class="mw-headline" id="HDAudio硬件的问题解决">HDAudio硬件的问题解决</span>
 </h3>
+<h4>
+<span id=".E9.97.AE.E9.A2.98.E5.A6.82.E4.BD.95.E4.BA.A7.E7.94.9F"></span><span class="mw-headline" id="问题如何产生">问题如何产生</span>
+</h4>
 <p>如果你有一个HDAudio声音设备，有可能你必须调整一些设置你的声卡才能正常工作。
 </p>
 <p>HDAudio devices are very powerful in the sense that they can contain a lot of small circuits (called <i>widgets</i>) that can be adjusted by software at any time.（参考翻译：任何时间软件都可以调整强大的HDAudio上包含的很多小器件）。这些控制对混音器是外露的，例如，可以被用来把耳机声音输出功能改到声音输入功能。
 </p>
 <p>但是，这可能导致问题，主要因为HDAudio标准比理想中应该有的标准来说太灵活了，也因为计算机开发商经常支持关注怎么让<i>官方驱动</i>正常工作。
 </p>
-<p>所以你才会在使用HDAudio设备的时候，发现控制是混乱的，必须自己尝试手动调整每一个控制条直到可以工作，因为默认根本不会正常工作。你需要在前台调整ossxmix混音器设定的时候，后台有个程序录制/播放声音(比如 <tt>ossrecord - | ossplay -</tt> 来录制或者 <tt>osstest -lV</tt>来播放)。
+<p>所以你才会在使用HDAudio设备的时候，发现控制是混乱的，必须自己尝试手动调整每一个控制条直到可以工作，因为默认根本不会正常工作。你需要在前台调整ossxmix混音器设定的时候，后台有个程序录制/播放声音(比如 <code>ossrecord - | ossplay -</code> 来录制或者 <code>osstest -lV</code>来播放)。
 </p>
-<h3>
+<h4>
 <span id=".E5.A6.82.E4.BD.95.E8.A7.A3.E5.86.B3"></span><span class="mw-headline" id="如何解决">如何解决</span>
-</h3>
-<p>打开<tt>ossxmix</tt>，尝试改变每个控制条到中间位置，这包含在声卡特殊设定，就如上面"<a href="../en/Open_Sound_System.html#The_mixer" class="mw-redirect" title="OSS">混音器</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>"说到的一样。
+</h4>
+<p>打开<code>ossxmix</code>，尝试改变每个控制条到中间位置，这包含在声卡特殊设定，就如上面"<a href="../en/Open_Sound_System.html#The_mixer" class="mw-redirect" title="OSS">混音器</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>"说到的一样。
 </p>
 <ul>
 <li>把每个音量控制条往上调整Raise every volume control slider.</li>
 <li>在每个选择框里面，尝试改变选项，一定要尝试每个可能的选项</li>
 <li>如果你听到有噪音，一个一个尝试把某些控制往下调整或者静音，直到你找到噪音的来源。</li>
 </ul>
-<p>请注意，你<b>不必</b>调整顶部区域和底部区域的有关虚拟<tt>vmix</tt>混音器控制的部分控制条。
+<p>请注意，你<b>不必</b>调整顶部区域和底部区域的有关虚拟<code>vmix</code>混音器控制的部分控制条。
 </p>
-<h2>
+<h3>
 <span id=".E8.A7.A3.E5.86.B3.E5.85.B6.E4.BB.96.E9.97.AE.E9.A2.98"></span><span class="mw-headline" id="解决其他问题">解决其他问题</span>
-</h2>
+</h3>
 <ul><li>类似ALSA的，你需要降低main音量和PCM音量来一定程序上减少噪音(这根据你芯片情况而定。我使用vol=65,pcm=65，芯片为via8237)</li></ul>
 <ul><li>看<a rel="nofollow" class="external text" href="http://4front-tech.com/forum/viewtopic.php?t=2358">这里</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup>了解如何设定默认声卡，因为默认的选择不是最优的。</li></ul>
 <ul><li>如果一个程序播放声音遇到困难, 4front的wiki里面可能有<a rel="nofollow" class="external text" href="http://www.4front-tech.com/wiki/index.php/Configuring_Applications_for_OSSv4">解决办法</a>.</li></ul>
 <ul><li>如果你有其他问题，尝试在这个地方搜索或者发帖: <a rel="nofollow" class="external free" href="http://www.4front-tech.com/forum/">http://www.4front-tech.com/forum/</a>
 </li></ul>
-<h1>
-<span id=".E6.8F.90.E7.A4.BA.E5.92.8C.E5.B0.8F.E6.8A.80.E5.B7.A7"></span><span class="mw-headline" id="提示和小技巧">提示和小技巧</span>
-</h1>
 <h2>
-<span id="OSS.E4.B8.8E.E5.A4.9A.E5.AA.92.E4.BD.93.E9.94.AE"></span><span class="mw-headline" id="OSS与多媒体键">OSS与多媒体键</span>
+<span id=".E6.8F.90.E7.A4.BA.E5.92.8C.E5.B0.8F.E6.8A.80.E5.B7.A7"></span><span class="mw-headline" id="提示和小技巧">提示和小技巧</span>
 </h2>
+<h3>
+<span id="OSS.E4.B8.8E.E5.A4.9A.E5.AA.92.E4.BD.93.E9.94.AE"></span><span class="mw-headline" id="OSS与多媒体键">OSS与多媒体键</span>
+</h3>
 <p>一个简单的静音/恢复和增减音量的方法是使用<a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>中的 <a rel="nofollow" class="external text" href="http://www.opensound.com/wiki/index.php/Tips_And_Tricks#ossvol"><code>ossvol</code> 脚本</a>。
 如果你的多媒体键默认不工作，查看 <a rel="nofollow" class="external text" href="http://www.opensound.com/wiki/index.php/Tips_And_Tricks#Using_multimedia_keys_with_OSS">使用多媒体键控制OSS</a>。
 </p>
@@ -490,11 +491,9 @@
 </p>
 <p>如果你不如果怎么把命令绑定到多媒体键上，看<a href="../en/Extra_keyboard_keys.html" title="Extra keyboard keys">Extra keyboard keys</a>。
 </p>
-<p><br>
-</p>
-<h2>
+<h3>
 <span id="ossvol.E7.9A.84.E9.97.AE.E9.A2.98.E8.A7.A3.E5.86.B3"></span><span class="mw-headline" id="ossvol的问题解决"><code>ossvol</code>的问题解决</span>
-</h2>
+</h3>
 <p>如果你看到这样的错误：
 </p>
 <pre>Bad mixer control name(987) 'vol'
@@ -513,9 +512,9 @@
 </p>
 <p>加到.xbindkeysrc中的traise/lower volume section是调整音量的好方法。
 </p>
-<h2>
+<h3>
 <span id=".E6.94.B9.E5.8F.98.E9.87.87.E6.A0.B7.E7.8E.87"></span><span class="mw-headline" id="改变采样率">改变采样率</span>
-</h2>
+</h3>
 <p>改变采样率不是那么简单的事，它只能通过root用户改变并且改变时vmix不能被任何程序使用。在接下来的操作之前，检查一下你的receiver/amplifier（接收器/放大器）并且使用高质量的扬声器而不是普通的电脑扬声器。因为如果你用的是普通的电脑扬声器，下边的任何改动都不会让你感觉到任何变化。
 </p>
 <p>缺省的采样率是48000hz。 There are several conditions in which you may want to change this. This all depends on your usage patterns. You want the sample rate you are using to match the media you use the most. If your computer has to change the sampling rate of the media to suit the hardware it is likely, though not guaranteed that you will have a loss in audio quality. This is most noticable in downsampling (ie. 96000hz → 48000hz). There is an article about this issue in <a rel="nofollow" class="external text" href="http://www.stereophile.com/news/121707lucky/">"Stereophile"</a> which was <a rel="nofollow" class="external text" href="http://lists.apple.com/archives/coreaudio-api/2008/Jan/msg00272.html">discussed</a><sup title="最后检查状态：SSL error">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup> on Apple's "CoreAudio API" mailing list if you wish to learn more about this issue.  
@@ -533,7 +532,7 @@
 <ol><li>Run <code>"ossmix | grep rate"</code>.</li></ol>
 <p>You are likely to see <code>"vmix0-rate &lt;decimal value&gt; (currently 48000) (Read-only)"</code>.
 </p>
-<p>If you do not see a "vmix0-rate" (or "vmix1-rate", etc.) being outputted, than it probably means that vmix is disabled. In that case, OSS will use the rate requested by the program which uses the device, so this section doesn't apply. Exception: envy24(ht) cards have a setting envy24.rate which has a similiar function (see "oss_envy24" manpage). You can follow these steps, but at step 2, change with ossmix the value of "envy24.rate" as well.
+<p>If you do not see a "vmix0-rate" (or "vmix1-rate", etc.) being outputted, than it probably means that vmix is disabled. In that case, OSS will use the rate requested by the program which uses the device, so this section does not apply. Exception: envy24(ht) cards have a setting envy24.rate which has a similiar function (see "oss_envy24" manpage). You can follow these steps, but at step 2, change with ossmix the value of "envy24.rate" as well.
 </p>
 <p>Steps to affect the change:
 </p>
@@ -547,7 +546,7 @@
 </ol>
 <pre>write <code>"vmixctl rate /dev/dsp 96000" in the file /usr/lib/oss/soundon.user</code> and make it executable.
 </pre>
-<h2><span class="mw-headline" id="Changing_the_Default_Sound_Output">Changing the Default Sound Output</span></h2>
+<h3><span class="mw-headline" id="Changing_the_Default_Sound_Output">Changing the Default Sound Output</span></h3>
 <p>When running osstest, the first test passes for the first channel, but not for the stereo or right channel, it sounds distorted/hisses.  If this is what your sound is like, then it's set to the wrong output.
 </p>
 <pre>      *** Scanning sound adapter #-1 ***
@@ -573,7 +572,7 @@ you get the command to change the default output; change according to what works
 </pre>
 <p>With 5.1 surround, chose dsp_multichannel; with 2 channel, dsp should work.
 </p>
-<h2><span class="mw-headline" id="Creative_Sound_Blaster_X-Fi_Surround_5.1_SB1090_USB">Creative Sound Blaster X-Fi Surround 5.1 SB1090 USB</span></h2>
+<h3><span class="mw-headline" id="Creative_Sound_Blaster_X-Fi_Surround_5.1_SB1090_USB">Creative Sound Blaster X-Fi Surround 5.1 SB1090 USB</span></h3>
 <p>This information is completely from <a rel="nofollow" class="external text" href="http://www.4front-tech.com/forum/viewtopic.php?f=3&amp;t=3423">4front-tech.com</a> ; courtesy of kristian and Maxa.  Thanks!!
 </p>
 <p>It's surprising to learn that the external card does not work just because of a missing true return value in the function write_control_value(...) in ossusb_audio.c.
@@ -604,11 +603,9 @@ you get the command to change the default output; change according to what works
 </p>
 <p>Now you must install the package with pacman -U ; remove oss first if already installed (pacman -Rd oss)
 </p>
-<p><br>
-</p>
-<h2>
+<h3>
 <span id=".E7.AE.80.E5.8D.95.E7.9A.84.E7.B3.BB.E7.BB.9F.E6.89.98.E7.9B.98.E5.B0.8F.E5.B7.A5.E5.85.B7"></span><span class="mw-headline" id="简单的系统托盘小工具">简单的系统托盘小工具</span>
-</h2>
+</h3>
 <p>想要一个GNOME那样的控制音量小工具？W <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=77440">在这里</a>我得到一个可用的  <a rel="nofollow" class="external text" href="http://pastebin.furver.se/0xflchkfz/">工具</a>。
 </p>
 <p>下载 <a rel="nofollow" class="external text" href="http://pastebin.furver.se/0xflchkfz/0xflchkfz.txt">这个脚本</a> 重命名（例如 ossvolctl），运行：
@@ -620,9 +617,9 @@ you get the command to change the default output; change according to what works
 </p>
 <pre># install -Dm755 ossvolctl /usr/bin/ossvolctl
 </pre>
-<h2>
+<h3>
 <span id=".E5.BC.80.E6.9C.BA.E8.87.AA.E5.90.AF.E5.8A.A8ossxmix.E6.89.98.E7.9B.98"></span><span class="mw-headline" id="开机自启动ossxmix托盘">开机自启动ossxmix托盘</span>
-</h2>
+</h3>
 <p><b>KDE 4</b>
 </p>
 <p>在<code>~/.local/share/applications/</code>创建一个启动器<code>ossxmix.desktop</code>：
@@ -650,15 +647,15 @@ exec /usr/bin/ossxmix -b
 </p>
 <ul><li>点击Add（添加），在Name（名称）中输入 OSSMIX ，field（内容）中输入<code>/usr/local/bin/ossxmix_bg</code>然后点击Add（添加）按钮。</li></ul>
 <ul><li>重新登陆生效。</li></ul>
-<h2>
+<h3>
 <span id=".E5.BD.95.E5.88.B6.E4.B8.80.E4.B8.AA.E7.A8.8B.E5.BA.8F.E7.9A.84.E5.A3.B0.E9.9F.B3"></span><span class="mw-headline" id="录制一个程序的声音">录制一个程序的声音</span>
-</h2>
+</h3>
 <ul><li>
 <a rel="nofollow" class="external text" href="http://www.opensound.com/wiki/index.php/Tips_And_Tricks#Recording_sound_output_of_a_program">Recording sound output of a program</a>.</li></ul>
-<h2><span class="mw-headline" id="Suspend_and_Hibernation">Suspend and Hibernation</span></h2>
+<h3><span class="mw-headline" id="Suspend_and_Hibernation">Suspend and Hibernation</span></h3>
 <p>OSS does not automatically support suspend meaning that OSS must be manually stopped prior to suspending or hibernating.
 </p>
-<p>OSS provides <tt>soundon</tt> and <tt>soundoff</tt> to enable and disable OSS, although any processes that use sound must be terminated first.
+<p>OSS provides <code>soundon</code> and <code>soundoff</code> to enable and disable OSS, although any processes that use sound must be terminated first.
 </p>
 <p>The following script is a rather basic method of automatically unloading OSS prior to suspending and reloading afterwards.
 </p>
@@ -691,7 +688,7 @@ esac
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> This script is rather basic and will terminate any application directly accessing OSS, save your work prior to suspending/hibernating.</div>
-<p>OSS does not support suspending but we don't care or better <a href="../en/Power_management/Suspend_and_hibernate.html" class="mw-redirect" title="Suspend to RAM">s2ram</a> works fine without stopping OSS.
+<p>OSS does not support suspending but we do not care or better <a href="../en/Power_management/Suspend_and_hibernate.html" class="mw-redirect" title="Suspend to RAM">s2ram</a> works fine without stopping OSS.
 Just create a nice suspend script to /sbin/suspend and make it executable.
 </p>
 <pre> #!/bin/sh
@@ -713,21 +710,21 @@ Just create a nice suspend script to /sbin/suspend and make it executable.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong>  If you are using Opera you must kill operapluginwrapper before suspend. To do this add <b>pid=$(pidof operapluginwrapper) &amp;&amp; kill $pid</b> before s2ram -f. </div>
-<h2>
+<h3>
 <span id="ALSA_.E6.A8.A1.E6.8B.9F.E5.99.A8"></span><span class="mw-headline" id="ALSA_模拟器">ALSA 模拟器</span>
-</h2>
-<p>你可以让<tt>alsa-lib</tt>用OSS作为声音输出系统，这是一种ALSA模拟器。
+</h3>
+<p>你可以让<code>alsa-lib</code>用OSS作为声音输出系统，这是一种ALSA模拟器。
 </p>
 <p>但是注意，这个方法可能在你声音输出的时候造成额外的延迟，而且模拟器也不完善，无法保证能让所有程序发声。例如如果软件通过ALSA检测设备，这个软件就不能正常工作。
 </p>
 <p>所以，因为大多数应用直接支持OSSS，这个方法只是最后的解决方案。
 </p>
-<p>将来会有更完善的ALSA模拟器，像<tt>libsalsa</tt>和<tt>cuckoo</tt>.
+<p>将来会有更完善的ALSA模拟器，像<code>libsalsa</code>和<code>cuckoo</code>.
 </p>
-<h3>
+<h4>
 <span id=".E4.BB.8B.E7.BB.8D"></span><span class="mw-headline" id="介绍">介绍</span>
-</h3>
-<ul><li>安装<tt>alsa-plugins</tt>包。</li></ul>
+</h4>
+<ul><li>安装<code>alsa-plugins</code>包。</li></ul>
 <pre># pacman -S alsa-plugins
 </pre>
 <ul><li>编辑 <code>/etc/asound.conf</code>：</li></ul>
@@ -753,10 +750,10 @@ ctl.!default {
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong>  如果你不再使用OSS，别忘了把<code>/etc/asound.conf</code>改回去。</div>
-<h2>
+<h3>
 <span id=".E5.AF.B9.E7.89.B9.E5.AE.9A.E9.A9.B1.E5.8A.A8.E7.9A.84.E8.AE.BE.E7.BD.AE"></span><span class="mw-headline" id="对特定驱动的设置">对特定驱动的设置</span>
-</h2>
-<p>If something isn't working, there is a possibility, that there are specific settings for specific driver (this way I have enabled jack-sense on my laptop)
+</h3>
+<p>If something is not working, there is a possibility, that there are specific settings for specific driver (this way I have enabled jack-sense on my laptop)
 </p>
 <ul><li>Find out which driver is used</li></ul>
 <pre># lspci -vnn|grep -i -A 15 audio
@@ -785,14 +782,14 @@ ctl.!default {
 <pre># sudo /etc/rc.d/oss restart
 </pre>
 <ul><li>oss_hdaudio.conf has hdaudio_jacksens too. Maybe it will work for you. Unfortunately not for everyone.</li></ul>
-<h2>
+<h3>
 <span id="System-wide_.28software.29_equalizer_effects"></span><span class="mw-headline" id="System-wide_(software)_equalizer_effects">System-wide (software) equalizer effects</span>
-</h2>
+</h3>
 <p>NOTES: This requires the use of the old softoss module (the predecessor of vmix) which may not be as good as vmix, wine and gstreamer do not play nice with softoss, and the module will not work with sample rates higher than 48khz.
 </p>
 <p>We must do a few things to gain access to these effects.
 </p>
-<ul><li>If you're running the oss-linux-free daemon right now, stop it by running (as root):</li></ul>
+<ul><li>If you are running the oss-linux-free daemon right now, stop it by running (as root):</li></ul>
 <pre>/etc/rc.d/oss-linux-free stop
 </pre>
 <ul><li><ul><li>On builds 1015 and older, in /usr/lib/oss/etc/installed_drivers remove</li></ul></li></ul>
@@ -895,8 +892,8 @@ esac
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Open_Sound_System_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=629794">https://wiki.archlinux.org/index.php?title=Open_Sound_System_(简体中文)&amp;oldid=629794</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 5 August 2020, at 14:59.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Open_Sound_System_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663524">https://wiki.archlinux.org/index.php?title=Open_Sound_System_(简体中文)&amp;oldid=663524</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 19:38.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -42,9 +42,9 @@
 <li><a href="../en/Window_manager.html" title="Window manager">Window manager</a></li>
 </ul>
 </div>
-<p><a rel="nofollow" class="external text" href="http://xmonad.org/">xmonad</a> is a tiling <a href="../en/Window_manager.html" title="Window manager">window manager</a> for <a href="../en/Xorg.html" class="mw-redirect" title="X">X</a>. Windows are arranged automatically to tile the screen without gaps or overlap, maximizing screen use. Window manager features are accessible from the keyboard: a mouse is optional.
+<p><a rel="nofollow" class="external text" href="https://xmonad.org/">xmonad</a> is a tiling <a href="../en/Window_manager.html" title="Window manager">window manager</a> for <a href="../en/Xorg.html" class="mw-redirect" title="X">X</a>. Windows are arranged automatically to tile the screen without gaps or overlap, maximizing screen use. Window manager features are accessible from the keyboard: a mouse is optional.
 </p>
-<p>xmonad is written, configured and extensible in <a rel="nofollow" class="external text" href="http://haskell.org/">Haskell</a>. Custom layout algorithms, key bindings and other extensions may be written by the user in configuration files.
+<p>xmonad is written, configured and extensible in <a rel="nofollow" class="external text" href="https://haskell.org/">Haskell</a>. Custom layout algorithms, key bindings and other extensions may be written by the user in configuration files.
 </p>
 <p>Layouts are applied dynamically, and different layouts may be used on each workspace. <a href="https://en.wikipedia.org/wiki/Xinerama" class="extiw" title="wikipedia:Xinerama">Xinerama</a> is fully supported, allowing windows to be tiled on several physical screens.
 </p>
@@ -155,9 +155,9 @@
 <p>Because the xmonad configuration file is written in Haskell, non-programmers may have a difficult time adjusting settings.  For detailed HOWTO's and example configurations, we refer you to the following resources:
 </p>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://wiki.haskell.org/Xmonad">xmonad wiki</a></li>
-<li><a rel="nofollow" class="external text" href="http://wiki.haskell.org/Xmonad/Config_archive">xmonad configuration archive</a></li>
-<li><a rel="nofollow" class="external text" href="http://wiki.haskell.org/Xmonad/Frequently_asked_questions">xmonad FAQ</a></li>
+<li><a rel="nofollow" class="external text" href="https://wiki.haskell.org/Xmonad">xmonad wiki</a></li>
+<li><a rel="nofollow" class="external text" href="https://wiki.haskell.org/Xmonad/Config_archive">xmonad configuration archive</a></li>
+<li><a rel="nofollow" class="external text" href="https://wiki.haskell.org/Xmonad/Frequently_asked_questions">xmonad FAQ</a></li>
 <li>Arch Linux <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=40636">forum thread</a>
 </li>
 </ul>
@@ -270,7 +270,7 @@ myKeys =
 <strong>Warning:</strong> 
 <ul>
 <li>Note that "pasteSelection" uses "getSelection" from XMonad.Util.XSelection and so is heir to its flaws.</li>
-<li>getSelection "is fundamentally implemented incorrectly and may, among other possible failure modes, deadlock or crash". For details, see <a rel="nofollow" class="external autonumber" href="http://code.google.com/p/xmonad/issues/detail?id=573">[1]</a>.</li>
+<li>getSelection "is fundamentally implemented incorrectly and may, among other possible failure modes, deadlock or crash". For details, see <a rel="nofollow" class="external autonumber" href="https://code.google.com/p/xmonad/issues/detail?id=573">[1]</a>.</li>
 <li>These errors are generally very rare in practice, but still exist.</li>
 </ul>
 </div>
@@ -280,9 +280,25 @@ myKeys =
 <p>Default keyboard shortcuts are listed in the man page of xmonad.
 </p>
 <h3><span class="mw-headline" id="Targeting_unbound_keys">Targeting unbound keys</span></h3>
-<p>If you use xmonad as a stand alone window manager, you can edit the xmonad.hs to add unbound keyboard keys. You just need to find the Xf86 name of the key (such as XF86PowerDown) and look it up in <code>/usr/include/X11/XF86keysym.h</code>. It will give you a keycode (like 0x1008FF2A) which you can use to add a line like the following in the keybindings section of your <code>xmonad.hs</code>:
+<p>If you use xmonad as a stand alone window manager, you can edit the xmonad.hs to add unbound keyboard keys. You just need to find the Xf86 name of the key (such as XF86PowerDown) and look it up in <code>/usr/include/X11/XF86keysym.h</code>. It will give you a keycode (like <code>0x1008FF2A</code>) which you can use to add a line like the following into list of keybindings in your <code>xmonad.hs</code>:
 </p>
-<pre>((0,               0x1008FF2A), spawn "sudo pm-suspend")
+<pre> ((0,               0x1008FF2A), spawn "sudo pm-suspend")
+</pre>
+<p>You can also search for the Xf86 key name in <a rel="nofollow" class="external text" href="https://hackage.haskell.org/package/X11-1.9.2/docs/Graphics-X11-ExtraTypes-XF86.html">Graphics.X11.ExtraTypes.XF86</a> module, and use it's <code>KeySym</code> constant (such as <code>xF86XK_PowerDown</code>) instead of a keycode as shown in the previous example. You will also need to import the module in your <code>xmonad.hs</code> for the key constant to be available. See more elaborate example with multiple keys in format used by <code>additionalKeys</code> function:
+</p>
+<pre>import Graphics.X11.ExtraTypes.XF86
+
+...
+
+myKeys = [
+   ((0, xF86XK_PowerDown),         spawn "sudo pm-suspend")
+ , ((0, xF86XK_AudioRaiseVolume),  spawn "amixer -D pulse sset Master 10%+")
+ , ((0, xF86XK_AudioLowerVolume),  spawn "amixer -D pulse sset Master 10%-")
+ , ((0, xF86XK_AudioMute),         spawn "amixer -D pulse sset Master toggle")
+ , ((0, xF86XK_MonBrightnessUp),   spawn "brightnessctl set +10%")
+ , ((0, xF86XK_MonBrightnessDown), spawn "brightnessctl set 10%-")
+ ...
+ ]
 </pre>
 <h3>
 <span id="Run_X_.28.29_actions_by_touching_the_edge_of_your_screen_with_your_mouse"></span><span class="mw-headline" id="Run_X_()_actions_by_touching_the_edge_of_your_screen_with_your_mouse">Run X () actions by touching the edge of your screen with your mouse</span>
@@ -338,8 +354,6 @@ mystartupHook = do
 <li>By moving your cursor into one of your screen corners you can trigger an X () action, for example XMonad.Actions.GridSelect.goToSelected or XMonad.Actions.CycleWS.nextWS etc.</li>
 </ul>
 </div>
-<p><br>
-</p>
 <h3><span class="mw-headline" id="Increase_the_number_of_workspaces">Increase the number of workspaces</span></h3>
 <p>By default, xmonad uses a set of 9 workspaces.  You can change this by changing the <b>workspaces</b> parameter:
 </p>
@@ -432,8 +446,6 @@ myKeys =
              , ("M-C-f", tagPrompt defaultXPConfig (`withTaggedGlobal` float)) -- float windows with user-defined tags (input)
 
 </pre>
-<p><br>
-</p>
 <h3><span class="mw-headline" id="Equally_sized_gaps_between_windows">Equally sized gaps between windows</span></h3>
 <p>If your goal is to have equally sized gaps between individual windows and the screen, the following code will not work as expected:
 </p>
@@ -473,7 +485,7 @@ import XMonad.Hooks.DynamicLog
 <pre>main = xmonad =&lt;&lt; xmobar def { modMask = mod4Mask {- or any other configurations here ... -}}
 </pre>
 <h4><span class="mw-headline" id="More_configurable">More configurable</span></h4>
-<p>As of xmonad(-contrib) 0.9, there is a new <a rel="nofollow" class="external text" href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Hooks-DynamicLog.html#v:statusBar">statusBar</a> function in <a rel="nofollow" class="external text" href="http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Hooks-DynamicLog.html">XMonad.Hooks.DynamicLog</a>. It allows you to use your own configuration for:
+<p>As of xmonad(-contrib) 0.9, there is a new <a rel="nofollow" class="external text" href="https://hackage.haskell.org/package/xmonad-contrib-0.13/docs/XMonad-Hooks-DynamicLog.html#v:statusBar">statusBar</a> function in <a rel="nofollow" class="external text" href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Hooks-DynamicLog.html">XMonad.Hooks.DynamicLog</a>. It allows you to use your own configuration for:
 </p>
 <ul>
 <li>The command used to execute the bar</li>
@@ -519,8 +531,8 @@ myConfig = def { modMask = mod4Mask }
 <h3><span class="mw-headline" id="Controlling_xmonad_with_external_scripts">Controlling xmonad with external scripts</span></h3>
 <p>Here are a few ways to do it,
 </p>
-<ul><li>use the following xmonad extension, <a rel="nofollow" class="external text" href="http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Hooks-ServerMode.html">XMonad.Hooks.ServerMode</a>.</li></ul>
-<ul><li>simulate keypress events using <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdotool">xdotool</a></span> or similar programs. See this <a rel="nofollow" class="external text" href="http://ubuntuforums.org/archive/index.php/t-658040.html">Ubuntu forums thread</a>. The following command would simulate the keypress <code>Super+n</code>:</li></ul>
+<ul><li>use the following xmonad extension, <a rel="nofollow" class="external text" href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Hooks-ServerMode.html">XMonad.Hooks.ServerMode</a>.</li></ul>
+<ul><li>simulate keypress events using <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdotool">xdotool</a></span> or similar programs. See this <a rel="nofollow" class="external text" href="https://ubuntuforums.org/archive/index.php/t-658040.html">Ubuntu forums thread</a>. The following command would simulate the keypress <code>Super+n</code>:</li></ul>
 <pre>xdotool key Super+n
 </pre>
 <ul><li>
@@ -555,7 +567,7 @@ main do
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">--Add a keybinding as follows:
 ((modm .|. shiftMask, xK_o     ), restart "/home/abijr/bin/obtoxmd" True)
 </pre>
-<p>Just remember to add a comma before or after and change the path to your actual script path. Now just <code>Mod+q</code> (restart xmonad to refresh the configuration), and then hit <code>Mod+Shift+o</code> and you should have Openbox running with the same windows open as in xmonad. To return to xmonad you should just exit Openbox. Here is a link to adamvo's <code>~/.xmonad/xmonad.hs</code> which uses this setup <a rel="nofollow" class="external text" href="http://wiki.haskell.org/Xmonad/Config_archive/adamvo%27s_xmonad.hs">Adamvo's xmonad.hs</a>
+<p>Just remember to add a comma before or after and change the path to your actual script path. Now just <code>Mod+q</code> (restart xmonad to refresh the configuration), and then hit <code>Mod+Shift+o</code> and you should have Openbox running with the same windows open as in xmonad. To return to xmonad you should just exit Openbox. Here is a link to adamvo's <code>~/.xmonad/xmonad.hs</code> which uses this setup <a rel="nofollow" class="external text" href="https://wiki.haskell.org/Xmonad/Config_archive/adamvo%27s_xmonad.hs">Adamvo's xmonad.hs</a>
 </p>
 <h3><span class="mw-headline" id="KDE_and_xmonad">KDE and xmonad</span></h3>
 <p>The xmonad wiki has instructions on how to <a rel="nofollow" class="external text" href="https://wiki.haskell.org/Xmonad/Using_xmonad_in_KDE">run xmonad inside KDE</a>
@@ -587,15 +599,15 @@ Name=Plasma Desktop Workspace
 <p>Below are some example configurations from fellow xmonad users.  Feel free to add links to your own.
 </p>
 <ul>
-<li>brisbin33 :: simple, useful, readable :: <a rel="nofollow" class="external text" href="https://github.com/pbrisbin/xmonad-config">config</a> <a rel="nofollow" class="external text" href="http://files.pbrisbin.com/screenshots/current_desktop.png">screenshot</a>
+<li>brisbin33 :: simple, useful, readable :: <a rel="nofollow" class="external text" href="https://github.com/pbrisbin/xmonad-config">config</a> <a rel="nofollow" class="external text" href="https://files.pbrisbin.com/screenshots/current_desktop.png">screenshot</a>
 </li>
 <li>jelly :: Configuration with prompt, different layouts, twinview with xmobar :: <a rel="nofollow" class="external text" href="https://github.com/jelly/dotfiles/tree/master/.xmonad/xmonad.hs">xmonad.hs</a>
 </li>
-<li>MrElendig :: Simple configuration, with xmobar :: <a rel="nofollow" class="external text" href="https://github.com/MrElendig/dotfiles-alice/blob/master/.xmonad/xmonad.hs">xmonad.hs</a>, <a rel="nofollow" class="external text" href="https://github.com/MrElendig/dotfiles-alice/blob/master/.xmobarrc">.xmobarrc</a>, <a rel="nofollow" class="external text" href="http://arch.har-ikkje.net/gfx/ss/2010-09-05-163305_2960x1050_scrot.png">screenshot</a>.</li>
-<li>thayer :: A minimal mouse-friendly config ideal for netbooks :: <a rel="nofollow" class="external text" href="http://wiki.haskell.org/Xmonad/Config_archive/Thayer_Williams%27_xmonad.hs">configs</a> <a rel="nofollow" class="external text" href="http://wiki.haskell.org/Image:Thayer-xmonad-20110511.png">screenshot</a>
+<li>MrElendig :: Simple configuration, with xmobar :: <a rel="nofollow" class="external text" href="https://github.com/MrElendig/dotfiles-alice/blob/master/.xmonad/xmonad.hs">xmonad.hs</a>, <a rel="nofollow" class="external text" href="https://github.com/MrElendig/dotfiles-alice/blob/master/.xmobarrc">.xmobarrc</a>, <a rel="nofollow" class="external text" href="https://arch.har-ikkje.net/gfx/ss/2010-09-05-163305_2960x1050_scrot.png">screenshot</a>.</li>
+<li>thayer :: A minimal mouse-friendly config ideal for netbooks :: <a rel="nofollow" class="external text" href="https://wiki.haskell.org/Xmonad/Config_archive/Thayer_Williams%27_xmonad.hs">configs</a> <a rel="nofollow" class="external text" href="https://wiki.haskell.org/Image:Thayer-xmonad-20110511.png">screenshot</a>
 </li>
 <li>vicfryzel :: Beautiful and usable xmonad configuration, along with xmobar configuration, xinitrc, dmenu, and other scripts that make xmonad more usable. :: <a rel="nofollow" class="external text" href="https://github.com/vicfryzel/xmonad-config">git repository</a>, <a rel="nofollow" class="external text" href="https://github.com/vicfryzel/xmonad-config/raw/master/screenshot.png">screenshot</a>.</li>
-<li>vogt :: Check out adamvo's config and many others in the official <a rel="nofollow" class="external text" href="http://wiki.haskell.org/Xmonad/Config_archive">Xmonad/Config archive</a>
+<li>vogt :: Check out adamvo's config and many others in the official <a rel="nofollow" class="external text" href="https://wiki.haskell.org/Xmonad/Config_archive">Xmonad/Config archive</a>
 </li>
 <li>wulax :: Example of using xmonad inside Xfce. Contains two layouts for GIMP. :: <a rel="nofollow" class="external text" href="https://gist.github.com/jsjolund/94f6821b248ff79586ba">xmonad.hs</a>, <a rel="nofollow" class="external text" href="https://i.imgur.com/at9AbOl.png">screenshot</a>.</li>
 <li>alex-courtis :: Clean xmonad, xmobar, media keys, screenshot, j4/dmenu; fonts rendered at the DPI reported by the monitor :: <a rel="nofollow" class="external text" href="https://github.com/alex-courtis/arch/blob/ea77edca1a1cd92e87d9c403dae891d03b9ee94e/home/.xmonad/xmonad.hs">xmonad.hs</a>, <a rel="nofollow" class="external text" href="https://raw.githubusercontent.com/alex-courtis/arch/9e3f16b93f89c328b57a96600da7fd39b81bae8e/ss.png">screenshot</a>.</li>
@@ -674,7 +686,7 @@ main = xmonad xfceConfig
 <p>Also add an entry to <i>Settings &gt; Session and Startup &gt; Application Autostart</i> that runs <code>xmonad --replace</code>.
 </p>
 <h3><span class="mw-headline" id="Missing_xmonad-i386-linux_or_xmonad-x86_64-linux">Missing xmonad-i386-linux or xmonad-x86_64-linux</span></h3>
-<p>xmonad should automatically create the <code>xmonad-i386-linux</code> file (in <code>~/.xmonad/</code>). If this it not the case, grab a configuration file from the <a rel="nofollow" class="external text" href="http://wiki.haskell.org/Xmonad/Config_archive">xmonad wiki</a> or create your <a rel="nofollow" class="external text" href="http://wiki.haskell.org/Xmonad/Config_archive/John_Goerzen's_Configuration">own</a>. Put the <code>.hs</code> and all others files in <code>~/.xmonad/</code> and run this command from the folder:
+<p>xmonad should automatically create the <code>xmonad-i386-linux</code> file (in <code>~/.xmonad/</code>). If this it not the case, grab a configuration file from the <a rel="nofollow" class="external text" href="https://wiki.haskell.org/Xmonad/Config_archive">xmonad wiki</a> or create your <a rel="nofollow" class="external text" href="https://wiki.haskell.org/Xmonad/Config_archive/John_Goerzen's_Configuration">own</a>. Put the <code>.hs</code> and all others files in <code>~/.xmonad/</code> and run this command from the folder:
 </p>
 <pre>xmonad --recompile
 </pre>
@@ -690,12 +702,12 @@ main = xmonad xfceConfig
 </p>
 <p>For <a href="../en/Rxvt-unicode.html" title="Rxvt-unicode">rxvt-unicode</a>, you can use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/rxvt-unicode-patched/">rxvt-unicode-patched</a></span><sup><small>AUR</small></sup>.
 </p>
-<p>You can also configure xmonad to respect size hints, but this will leave a gap instead. See <a rel="nofollow" class="external text" href="http://www.eng.uwaterloo.ca/~aavogt/xmonad/docs/xmonad-contrib/XMonad-Layout-LayoutHints.html">the documentation on Xmonad.Layout.LayoutHints</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup>.
+<p>You can also configure xmonad to respect size hints, but this will leave a gap instead. See <a rel="nofollow" class="external text" href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Layout-LayoutHints.html">the documentation on Xmonad.Layout.LayoutHints</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-04-03 ⓘ]</sup>.
 </p>
 <h3>
 <span id="Chromium.2FChrome_will_not_go_fullscreen"></span><span class="mw-headline" id="Chromium/Chrome_will_not_go_fullscreen">Chromium/Chrome will not go fullscreen</span>
 </h3>
-<p>If Chrome fails to go fullscreen when <code>F11</code> is pressed, you can use the <a rel="nofollow" class="external text" href="http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Hooks-EwmhDesktops.html">XMonad.Hooks.EwmhDesktops</a> extension found in the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xmonad-contrib">xmonad-contrib</a></span> package. Simply add the <code>import</code> statement to your <code>~/.xmonad/xmonad.hs</code>:
+<p>If Chrome fails to go fullscreen when <code>F11</code> is pressed, you can use the <a rel="nofollow" class="external text" href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Hooks-EwmhDesktops.html">XMonad.Hooks.EwmhDesktops</a> extension found in the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xmonad-contrib">xmonad-contrib</a></span> package. Simply add the <code>import</code> statement to your <code>~/.xmonad/xmonad.hs</code>:
 </p>
 <pre>import XMonad.Hooks.EwmhDesktops
 </pre>
@@ -713,10 +725,10 @@ main = xmonad xfceConfig
 <h3>
 <span id="Multitouch_.2F_touchegg"></span><span class="mw-headline" id="Multitouch_/_touchegg">Multitouch / touchegg</span>
 </h3>
-<p>Touchégg polls the window manager for the <code>_NET_CLIENT_LIST</code> (in order to fetch a list of windows it should listen for mouse events on.) By default, xmonad does not supply this property. To enable this, use the <a rel="nofollow" class="external text" href="http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Hooks-EwmhDesktops.html">XMonad.Hooks.EwmhDesktops</a> extension found in the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xmonad-contrib">xmonad-contrib</a></span> package.
+<p>Touchégg polls the window manager for the <code>_NET_CLIENT_LIST</code> (in order to fetch a list of windows it should listen for mouse events on.) By default, xmonad does not supply this property. To enable this, use the <a rel="nofollow" class="external text" href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Hooks-EwmhDesktops.html">XMonad.Hooks.EwmhDesktops</a> extension found in the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xmonad-contrib">xmonad-contrib</a></span> package.
 </p>
 <h3><span class="mw-headline" id="Keybinding_issues_with_an_azerty_keyboard_layout">Keybinding issues with an azerty keyboard layout</span></h3>
-<p>Users with a keyboard with azerty layout can run into issues with certain keybindings. Using the <a rel="nofollow" class="external text" href="http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Config-Azerty.html">XMonad.Config.Azerty</a> module will solve this.
+<p>Users with a keyboard with azerty layout can run into issues with certain keybindings. Using the <a rel="nofollow" class="external text" href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Config-Azerty.html">XMonad.Config.Azerty</a> module will solve this.
 </p>
 <h3>
 <span id="GNOME_3_mod4.2Bp_changes_display_configuration_instead_of_launching_dmenu"></span><span class="mw-headline" id="GNOME_3_mod4+p_changes_display_configuration_instead_of_launching_dmenu">GNOME 3 mod4+p changes display configuration instead of launching dmenu</span>
@@ -729,7 +741,7 @@ main = xmonad xfceConfig
 <h3>
 <span id="Chrome.2FChromium_not_displaying_defined_window_border_color"></span><span class="mw-headline" id="Chrome/Chromium_not_displaying_defined_window_border_color">Chrome/Chromium not displaying defined window border color</span>
 </h3>
-<p>Chromium and Chrome browser windows won't have the defined border color per default but a blurred transparent one. This problem is known for a long <a rel="nofollow" class="external text" href="https://xmonad.haskell.narkive.com/3NiS9dFl/transparent-border-with-chrome-beta-unstable">time</a> but easy to fix. 
+<p>Chromium and Chrome browser windows will not have the defined border color per default but a blurred transparent one. This problem is known for a long <a rel="nofollow" class="external text" href="https://xmonad.haskell.narkive.com/3NiS9dFl/transparent-border-with-chrome-beta-unstable">time</a> but easy to fix. 
 Activating `Use system title bar and borders` in the browser options should fix it immediately.
 </p>
 <h3><span class="mw-headline" id="Problems_with_focused_border_in_VirtualBox">Problems with focused border in VirtualBox</span></h3>
@@ -738,7 +750,7 @@ Activating `Use system title bar and borders` in the browser options should fix 
 <h3>
 <span id="Steam_games_.28Half-Life.2C_Left_4_Dead.2C_.E2.80.A6.29_and_xmonad"></span><span class="mw-headline" id="Steam_games_(Half-Life,_Left_4_Dead,_…)_and_xmonad">Steam games (Half-Life, Left 4 Dead, …) and xmonad</span>
 </h3>
-<p>There seems to be some trouble with xmonad and Source engine based games like Half-Life. If they do not start or get stuck with a black screen, a workaround is to start them in windowed mode. To do so, right click on the game in your Steam library and choose properties, click on launch options and enter <a rel="nofollow" class="external autonumber" href="http://steamcommunity.com/app/221410/discussions/0/864960353968561426/">[3]</a>:
+<p>There seems to be some trouble with xmonad and Source engine based games like Half-Life. If they do not start or get stuck with a black screen, a workaround is to start them in windowed mode. To do so, right click on the game in your Steam library and choose properties, click on launch options and enter <a rel="nofollow" class="external autonumber" href="https://steamcommunity.com/app/221410/discussions/0/864960353968561426/">[3]</a>:
 </p>
 <pre>-windowed
 </pre>
@@ -746,7 +758,7 @@ Activating `Use system title bar and borders` in the browser options should fix 
 </p>
 <pre> className =? "hl_linux" --&gt; doFloat
 </pre>
-<p>This can also be worked around by making xmonad pay attention to EWMH hints and including its fullscreen hook <a rel="nofollow" class="external autonumber" href="http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Hooks-EwmhDesktops.html">[4]</a>:
+<p>This can also be worked around by making xmonad pay attention to EWMH hints and including its fullscreen hook <a rel="nofollow" class="external autonumber" href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Hooks-EwmhDesktops.html">[4]</a>:
 </p>
 <pre>  main = xmonad $ ewmh def{ handleEventHook =
            handleEventHook def &lt;+&gt; fullscreenEventHook }
@@ -777,7 +789,7 @@ Exec = /usr/bin/sudo -u YOUR_USERNAME /usr/bin/xmonad --recompile
 </pre>
 <p>Where <code>YOUR_USERNAME</code> is the username that you run xmonad from.
 </p>
-<p>In the case that <code>xmonad --recompile</code> can't find any modules at all (including <code>XMonad</code> itself), try regenerating the package database cache
+<p>In the case that <code>xmonad --recompile</code> cannot find any modules at all (including <code>XMonad</code> itself), try regenerating the package database cache
 </p>
 <pre>sudo ghc-pkg recache
 </pre>
@@ -790,10 +802,10 @@ If this font is missing those windows simply fail to render at all. Easiest fix 
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li>
-<a rel="nofollow" class="external text" href="http://xmonad.org/">xmonad</a> - The official xmonad website</li>
+<a rel="nofollow" class="external text" href="https://xmonad.org/">xmonad</a> - The official xmonad website</li>
 <li>
 <a rel="nofollow" class="external text" href="https://wiki.haskell.org/Xmonad/Config_archive/Template_xmonad.hs">xmonad.hs</a> - Template xmonad.hs</li>
-<li><a rel="nofollow" class="external text" href="http://xmonad.org/tour.html">xmonad: a guided tour</a></li>
+<li><a rel="nofollow" class="external text" href="https://xmonad.org/tour.html">xmonad: a guided tour</a></li>
 <li>
 <a href="../en/Dzen.html" title="Dzen">dzen</a> - General purpose messaging and notification program</li>
 <li>
@@ -823,8 +835,8 @@ If this font is missing those windows simply fail to render at all. Easiest fix 
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xmonad&amp;oldid=655772">https://wiki.archlinux.org/index.php?title=Xmonad&amp;oldid=655772</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 March 2021, at 11:40.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xmonad&amp;oldid=662714">https://wiki.archlinux.org/index.php?title=Xmonad&amp;oldid=662714</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:54.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

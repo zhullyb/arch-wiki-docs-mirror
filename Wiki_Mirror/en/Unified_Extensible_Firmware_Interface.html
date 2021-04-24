@@ -48,7 +48,7 @@
 <div>
 <b>Reason:</b> Installing in UEFI mode is the norm now. There might not even be an alternative as Intel is phasing out support for CSM. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Unified_Extensible_Firmware_Interface#warning">Talk:Unified Extensible Firmware Interface#warning</a>)</div>
 </div>
-While the choice to install in UEFI mode is forward looking, early vendor UEFI implementations <i>may</i> carry more bugs than their BIOS counterparts. It is advised to do a search relating to your particular motherboard model before proceeding.</div>
+Early vendor UEFI implementations <i>may</i> carry more bugs than their BIOS counterparts. It is advised to do a search relating to your particular motherboard model before proceeding.</div>
 <p>The <a rel="nofollow" class="external text" href="https://www.uefi.org/">Unified Extensible Firmware Interface</a> (UEFI or EFI for short) is a new model for the interface between operating systems and firmware. It provides a standard environment for booting an operating system and running pre-boot applications.
 </p>
 <p>It is distinct from the commonly used "<a href="../en/Partitioning.html#Master_Boot_Record_(bootstrap_code)" title="Partitioning">MBR boot code</a>" method followed for <a href="https://en.wikipedia.org/wiki/BIOS" class="extiw" title="wikipedia:BIOS">BIOS</a> systems. See <a href="../en/Arch_boot_process.html" title="Arch boot process">Arch boot process</a> for their differences and the boot process using UEFI. To set up UEFI boot loaders, see <a href="../en/Arch_boot_process.html#Boot_loader" title="Arch boot process">Arch boot process#Boot loader</a>.
@@ -134,12 +134,19 @@ While the choice to install in UEFI mode is forward looking, early vendor UEFI i
 <li class="toclevel-2 tocsection-31"><a href="#Windows_7_will_not_boot_in_UEFI_mode"><span class="tocnumber">9.1</span> <span class="toctext">Windows 7 will not boot in UEFI mode</span></a></li>
 <li class="toclevel-2 tocsection-32"><a href="#Windows_changes_boot_order"><span class="tocnumber">9.2</span> <span class="toctext">Windows changes boot order</span></a></li>
 <li class="toclevel-2 tocsection-33"><a href="#USB_media_gets_struck_with_black_screen"><span class="tocnumber">9.3</span> <span class="toctext">USB media gets struck with black screen</span></a></li>
-<li class="toclevel-2 tocsection-34"><a href="#UEFI_boot_loader_does_not_show_up_in_firmware_menu"><span class="tocnumber">9.4</span> <span class="toctext">UEFI boot loader does not show up in firmware menu</span></a></li>
-<li class="toclevel-2 tocsection-35"><a href="#System_boots_to_EFI_shell_after_hardware_change_or_starting_other_operating_system"><span class="tocnumber">9.5</span> <span class="toctext">System boots to EFI shell after hardware change or starting other operating system</span></a></li>
-<li class="toclevel-2 tocsection-36"><a href="#Boot_entries_created_with_efibootmgr_fail_to_show_up_in_UEFI"><span class="tocnumber">9.6</span> <span class="toctext">Boot entries created with efibootmgr fail to show up in UEFI</span></a></li>
+<li class="toclevel-2 tocsection-34">
+<a href="#UEFI_boot_loader_does_not_show_up_in_firmware_menu"><span class="tocnumber">9.4</span> <span class="toctext">UEFI boot loader does not show up in firmware menu</span></a>
+<ul>
+<li class="toclevel-3 tocsection-35"><a href="#Default_boot_path_for_removable_drives"><span class="tocnumber">9.4.1</span> <span class="toctext">Default boot path for removable drives</span></a></li>
+<li class="toclevel-3 tocsection-36"><a href="#Microsoft_Windows_boot_loader_location"><span class="tocnumber">9.4.2</span> <span class="toctext">Microsoft Windows boot loader location</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-37"><a href="#See_also"><span class="tocnumber">10</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#System_boots_to_EFI_shell_after_hardware_change_or_starting_other_operating_system"><span class="tocnumber">9.5</span> <span class="toctext">System boots to EFI shell after hardware change or starting other operating system</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#Boot_entries_created_with_efibootmgr_fail_to_show_up_in_UEFI"><span class="tocnumber">9.6</span> <span class="toctext">Boot entries created with efibootmgr fail to show up in UEFI</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#UEFI_boot_entry_disappears_after_removing_its_referenced_drive"><span class="tocnumber">9.7</span> <span class="toctext">UEFI boot entry disappears after removing its referenced drive</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-40"><a href="#See_also"><span class="tocnumber">10</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -209,7 +216,7 @@ CONFIG_FRAMEBUFFER_CONSOLE=y
 </p>
 <pre>CONFIG_EFI_PARTITION=y
 </pre>
-<p>EFI mixed-mode support - to boot a x64_64 kernel on a IA32 UEFI.
+<p>EFI mixed-mode support - to boot a x86_64 kernel on a IA32 UEFI.
 </p>
 <pre>CONFIG_EFI_MIXED=y
 </pre>
@@ -586,6 +593,26 @@ menuentry "Arch Linux install medium (x86_64, UEFI)" {
 <p>This issue can occur due to <a href="../en/Kernel_mode_setting.html" class="mw-redirect" title="KMS">KMS</a> issue. Try <a href="../en/Kernel_mode_setting.html#Disabling_modesetting" title="Kernel mode setting">Disabling KMS</a> while booting the USB.
 </p>
 <h3><span class="mw-headline" id="UEFI_boot_loader_does_not_show_up_in_firmware_menu">UEFI boot loader does not show up in firmware menu</span></h3>
+<p>Some firmware do not support custom boot entries. They will instead only boot from hardcoded boot entries.
+</p>
+<p>A typical workaround is to not rely on boot entries in the NVRAM and install the boot loader to one of the common fallback paths on the EFI system partition.
+</p>
+<p>The following sections describe the fallback paths.
+</p>
+<h4><span class="mw-headline" id="Default_boot_path_for_removable_drives">Default boot path for removable drives</span></h4>
+<p>The UEFI specification defines default file paths for EFI binaries for booting from removable media. The relevant ones are:
+</p>
+<ul>
+<li>
+<code><i>esp</i>/EFI/BOOT/BOOTx64.EFI</code> for x86_64 UEFI</li>
+<li>
+<code><i>esp</i>/EFI/BOOT/BOOTIA.EFI</code> for IA32 UEFI.</li>
+</ul>
+<p>While the specification defines these for removable drives only, most firmware support booting these from any drive.
+</p>
+<p>See the appropriate <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot loader">boot loader</a> article on how to install or migrate the boot loader to the default/fallback boot path.
+</p>
+<h4><span class="mw-headline" id="Microsoft_Windows_boot_loader_location">Microsoft Windows boot loader location</span></h4>
 <p>On certain UEFI motherboards like some boards with an Intel Z77 chipset, adding entries with <code>efibootmgr</code> or <code>bcfg</code> from the UEFI Shell will not work because they do not show up on the boot menu list after being added to NVRAM.
 </p>
 <p>This issue is caused because the motherboards can only load Microsoft Windows. To solve this you have to place the <i>.efi</i> file in the location that Windows uses.
@@ -603,6 +630,11 @@ Shell&gt; cp FS0:\EFI\BOOT\bootx64.efi FS1:\EFI\Microsoft\Boot\bootmgfw.efi
 <p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
 <b>Reason:</b> Too GRUB-specific, most boot loader install commands have an option to install to the default/fallback boot path. Duplicates <a href="#Windows_changes_boot_order">#Windows changes boot order</a> and <a href="../en/GRUB.html#Default/fallback_boot_path" title="GRUB">GRUB#Default/fallback boot path</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Unified_Extensible_Firmware_Interface">Talk:Unified Extensible Firmware Interface#</a>)</div>
+</div>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Why would booting Windows change/remove UEFI boot entries? If such an issue actually exists, it needs a reference. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Unified_Extensible_Firmware_Interface">Talk:Unified Extensible Firmware Interface#</a>)</div>
 </div>
 <p>EFI stores state on the motherboard, called EFIVARS. Your bootloader (e.g. GRUB) may need to set up these variables in a certain way in order to boot. If your hardware configuration changes, your motherboard is replaced, or you boot into another operating system which overwrites these variables (Windows), you may be dumped into the EFI shell or boot menu (where your device is not listed). Upon attempting to boot Arch Linux since the EFIVARS are incorrect and EFI can no longer find your bootloader.
 </p>
@@ -646,6 +678,11 @@ Shell&gt; fs0:EFI\BOOT\BOOTX64.EFI
 
 exec /usr/bin/efibootmgr -e 3 "$@"
 </pre>
+<h3><span class="mw-headline" id="UEFI_boot_entry_disappears_after_removing_its_referenced_drive">UEFI boot entry disappears after removing its referenced drive</span></h3>
+<p>Some firmware will remove boot entries referencing drives that are not present during boot. This could be an issue when frequently detaching/attaching drives or when booting from a removable drive.
+</p>
+<p>The solution is to install the <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot loader">boot loader</a> to <a href="#Default_boot_path_for_removable_drives">the default/fallback boot path</a>.
+</p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/UEFI" class="extiw" title="wikipedia:UEFI">Wikipedia:UEFI</a></li>
@@ -684,6 +721,7 @@ exec /usr/bin/efibootmgr -e 3 "$@"
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
 </div>
@@ -692,8 +730,8 @@ exec /usr/bin/efibootmgr -e 3 "$@"
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Unified_Extensible_Firmware_Interface&amp;oldid=655355">https://wiki.archlinux.org/index.php?title=Unified_Extensible_Firmware_Interface&amp;oldid=655355</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 19 March 2021, at 10:23.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Unified_Extensible_Firmware_Interface&amp;oldid=663600">https://wiki.archlinux.org/index.php?title=Unified_Extensible_Firmware_Interface&amp;oldid=663600</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 April 2021, at 10:32.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

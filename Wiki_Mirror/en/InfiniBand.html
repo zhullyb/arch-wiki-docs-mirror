@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -248,14 +249,14 @@ PSID:            <b>MT_04A0110002</b></pre>
 <ul>
 <li>Check latest firmware version
 <ul>
-<li>Visit <a rel="nofollow" class="external text" href="http://www.mellanox.com/page/firmware_download">Mellanox's firmware download page</a> (this guide incorporates this link's "firmware burning instructions", using its mstflint option)</li>
+<li>Visit <a rel="nofollow" class="external text" href="https://www.mellanox.com/page/firmware_download">Mellanox's firmware download page</a> (this guide incorporates this link's "firmware burning instructions", using its mstflint option)</li>
 <li>Choose the category of device you have</li>
 <li>Locate your device's PSID on their list, that mstflint gave you</li>
 <li>Examine the Firmware Image filename to see if it's more recent than your adapter's FW Version, i.e. <code>fw-25408-2_9_1000-MHGH28-XTC_A1.bin.zip</code>, is version <code>2.9.1000</code>
 </li>
 </ul>
 </li>
-<li>If there's a more recent version, download new firmware and burn it to your adapter</li>
+<li>If there is a more recent version, download new firmware and burn it to your adapter</li>
 </ul>
 <pre>$ unzip &lt;<i>firmware .bin.zip file name</i>&gt;
 # mstflint -d &lt;<i>adapter PCI device ID</i>&gt; -i &lt;<i>firmware .bin file name</i>&gt; burn
@@ -374,7 +375,7 @@ Physical state: LinkUp
 </tbody>
 </table>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> Use the same connection and MTU settings for the entire subnet. Mixing and matching doesn't work optimally.</div>
+<strong>Tip:</strong> Use the same connection and MTU settings for the entire subnet. Mixing and matching does not work optimally.</div>
 <h2>
 <span id="Soft_RoCE_.28RXE.29"></span><span class="mw-headline" id="Soft_RoCE_(RXE)">Soft RoCE (RXE)</span>
 </h2>
@@ -589,7 +590,8 @@ Physical state: LinkUp
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># ibhosts</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Ca      : 0x0002c90300002778 ports 2 "MT25408 ConnectX Mellanox Technologies"
-Ca      : 0x0002c90300002f78 ports 2 "hostname mlx4_0"</pre>
+Ca      : 0x0002c90300002f78 ports 2 "hostname mlx4_0"
+</pre>
 <h3><span class="mw-headline" id="ibswitches_-_View_all_switches_on_IB_network">ibswitches - View all switches on IB network</span></h3>
 <p>ibswitches will show you the Node GUIDs, number of ports, and device names, for each switch on the IB network. If you are running with direct connections only, it will show nothing.
 </p>
@@ -623,7 +625,7 @@ Pong from hostname.(none) (Lid 1): time 0.074 ms
 --- hostname.(none) (Lid 4) ibping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1630 ms
 rtt min/avg/max = 0.053/0.063/0.074 ms</pre>
-<p>If you're running IPoIB, you can use regular <code>ping</code> which pings through the TCP/IP stack. ibping uses IB interfaces, and does not use the TCP/IP stack.
+<p>If you are running IPoIB, you can use regular <code>ping</code> which pings through the TCP/IP stack. ibping uses IB interfaces, and does not use the TCP/IP stack.
 </p>
 <h3><span class="mw-headline" id="ibdiagnet_-_Show_diagnostic_information_for_entire_subnet">ibdiagnet - Show diagnostic information for entire subnet</span></h3>
 <p>ibdiagnet will show you potential problems on your subnet. You can run it without options. <code>-lw &lt;1x|4x|12x&gt;</code> specifies the expected link width (number of virtual lanes) for your computer's adapter, so it can check if it is running as intended. <code>-ls &lt;2.5|5|10&gt;</code> specifies the expected link speed (signaling rate) for your computer's adapter, so it can check if it is running as intended, but it does not yet support options faster than 10 for FDR+ devices. <code>-c &lt;count&gt;</code> overrides the default number of packets to be sent of 10.
@@ -635,7 +637,6 @@ rtt min/avg/max = 0.053/0.063/0.074 ms</pre>
 Loading IBDM from: /usr/lib/ibdm1.5.7
 -I- Using port 1 as the local port.
 -I- Discovering ... 2 nodes (0 Switches &amp; 2 CA-s) discovered.
-
 
 -I---------------------------------------------------
 -I- Bad Guids/LIDs Info
@@ -696,7 +697,8 @@ Loading IBDM from: /usr/lib/ibdm1.5.7
 Please see /tmp/ibdiagnet.log for complete log
 ----------------------------------------------------------------
  
--I- Done. Run time was 0 seconds.</pre>
+-I- Done. Run time was 0 seconds.
+</pre>
 <h3>
 <span id="qperf_-_Measure_performance_over_RDMA_or_TCP.2FIP"></span><span class="mw-headline" id="qperf_-_Measure_performance_over_RDMA_or_TCP/IP">qperf - Measure performance over RDMA or TCP/IP</span>
 </h3>
@@ -750,13 +752,14 @@ iperf Done.</pre>
 <h4>
 <span id="Link.2C_physical_state_and_port_state"></span><span class="mw-headline" id="Link,_physical_state_and_port_state">Link, physical state and port state</span>
 </h4>
-<ul><li>See if the IB hardware modules are recognized by the system.</li></ul>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | egrep -i "Mellanox|InfiniBand|QLogic|Voltaire" # If you have an Intel adapter, you'll have to use Intel here and look through a few lines if you have other Intel hardware</pre>
+<ul><li>See if the IB hardware modules are recognized by the system. If you have an Intel adapter, you will have to use Intel here and look through a few lines if you have other Intel hardware:</li></ul>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | egrep -i "Mellanox|InfiniBand|QLogic|Voltaire"</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[    6.287556] mlx4_core: Mellanox ConnectX core driver v2.2-1 (Feb, 2014)
-[    8.686257] &lt;mlx4_ib&gt; mlx4_ib_add: mlx4_ib: Mellanox ConnectX InfiniBand driver v2.2-1 (Feb 2014)</pre>
+[    8.686257] &lt;mlx4_ib&gt; mlx4_ib_add: mlx4_ib: Mellanox ConnectX InfiniBand driver v2.2-1 (Feb 2014)
+</pre>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ls -l /sys/class/infiniband</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">mlx4_0 -&gt; ../../devices/pci0000:00/0000:00:03.0/0000:05:00.0/infiniband/mlx4_0</pre>
-<p>If nothing is shown, your kernel isn't recognizing your adapter. This example shows approximately what you will see if you have a Mellanox ConnectX adapter, which uses the mlx4_0 kernel module.
+<p>If nothing is shown, your kernel is not recognizing your adapter. This example shows approximately what you will see if you have a Mellanox ConnectX adapter, which uses the mlx4_0 kernel module.
 </p>
 <ul><li>Check the port and physical states. Either run <a href="#ibstat_-_View_a_computer's_IB_GUIDs">ibstat</a> or examine <code>/sys</code>.</li></ul>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ibstat</pre>
@@ -767,7 +770,7 @@ iperf Done.</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"> 5: LinkUp</pre>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ cat /sys/class/infiniband/&lt;kernel module&gt;/ports/&lt;port number&gt;/state</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"> 4: ACTIVE</pre>
-<p>The physical state should be "LinkUp". If it isn't, your cable likely isn't plugged in, isn't connected to anything on the other end, or is defective. The (port) state should be "Active". If it's "Initializing" or "INIT", your <a href="#Subnet_manager">subnet manager</a> doesn't exist, isn't running, or hasn't added the port to the network's routing tables.
+<p>The physical state should be "LinkUp". If it is not, your cable likely is not plugged in, is not connected to anything on the other end, or is defective. The (port) state should be "Active". If it's "Initializing" or "INIT", your <a href="#Subnet_manager">subnet manager</a> does not exist, is not running, or has not added the port to the network's routing tables.
 </p>
 <ul><li>Can you successfully <a href="#ibping_-_Ping_another_IB_device">ibping</a> which uses IB directly, rather than IPoIB? Can you successfully <code>ping</code>, if you are running IPoIB?</li></ul>
 <ul><li>Consider <a href="#Upgrade_firmware">upgrading firmware</a>.</li></ul>
@@ -775,7 +778,7 @@ iperf Done.</pre>
 <ul><li>Run <a href="#ibhosts_-_View_all_hosts_on_IB_network">ibhosts</a> to see the CA names at the end of each line in quotes.</li></ul>
 <h3><span class="mw-headline" id="Speed_problems">Speed problems</span></h3>
 <ul><li>Start by double-checking your expectations.</li></ul>
-<p>How have you determined you have a speed problem? Are you using <a href="#qperf_-_Measure_performance_over_RDMA_or_TCP/IP">qperf</a> or <a href="#iperf_-_Measure_performance_over_TCP/IP">iperf</a>, which both transmit data to and from memory rather than hard drives. Or, are you benchmarking actual file transfers, which relies on your hard drives? Unless you're running RAID to boost speed, even with the fastest SSD's available in mid 2015, a single hard drive (or sometimes even multiple ones) will be bottlenecking your IB transfer speeds. Are you using RDMA or TCP/IP via IPoIB? If so, <a href="#TCP/IP_(IPoIB)">there is a performance hit</a> for using IPoIB instead of RDMA.
+<p>How have you determined you have a speed problem? Are you using <a href="#qperf_-_Measure_performance_over_RDMA_or_TCP/IP">qperf</a> or <a href="#iperf_-_Measure_performance_over_TCP/IP">iperf</a>, which both transmit data to and from memory rather than hard drives. Or, are you benchmarking actual file transfers, which relies on your hard drives? Unless you are running RAID to boost speed, even with the fastest SSD's available in mid 2015, a single hard drive (or sometimes even multiple ones) will be bottlenecking your IB transfer speeds. Are you using RDMA or TCP/IP via IPoIB? If so, <a href="#TCP/IP_(IPoIB)">there is a performance hit</a> for using IPoIB instead of RDMA.
 </p>
 <ul><li>Check your link speeds. Run <a href="#ibstat_-_View_a_computer's_IB_GUIDs">ibstat</a>, <a href="#iblinkinfo_-_View_link_information_on_IB_network">iblinkinfo</a>, or examine <code>/sys</code>.</li></ul>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ibstat</pre>
@@ -808,8 +811,8 @@ iperf Done.</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=InfiniBand&amp;oldid=648331">https://wiki.archlinux.org/index.php?title=InfiniBand&amp;oldid=648331</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 6 January 2021, at 06:20.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=InfiniBand&amp;oldid=663328">https://wiki.archlinux.org/index.php?title=InfiniBand&amp;oldid=663328</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 11:19.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -118,17 +119,17 @@
 </ul>
 </div>
 
-<h1>
-<span id=".E5.89.8D.E8.A8.80"></span><span class="mw-headline" id="前言">前言</span>
-</h1>
 <h2>
-<span id="CUPS_.E6.98.AF.E4.BB.80.E9.BA.BC.3F"></span><span class="mw-headline" id="CUPS_是什麼?">CUPS 是什麼?</span>
+<span id=".E5.89.8D.E8.A8.80"></span><span class="mw-headline" id="前言">前言</span>
 </h2>
+<h3>
+<span id="CUPS_.E6.98.AF.E4.BB.80.E9.BA.BC.3F"></span><span class="mw-headline" id="CUPS_是什麼?">CUPS 是什麼?</span>
+</h3>
 <p>CUPS是蘋果公司發展的一套開源標準的列印系統，其支援MacOSX以及其他Unix-like作業系統，其使用"Internet Printing Protocol"並且對大部分的雷射印表機、噴墨印表機提供完整的列印服務。CUPS遵循GNU GPL條款。雖然也有很多列印軟體(例：LPRNG)，但是CUPS仍然是相對主流，而且簡單操作。許多Linux的發行板(包括Arch)都已經預設CUPS為預設列印系統。
 </p>
-<h2>
+<h3>
 <span id=".E7.96.91.E9.9B.A3.E6.8E.92.E8.A7.A3.E5.92.8CCUPS.E7.9A.84.E7.B5.84.E6.88.90"></span><span class="mw-headline" id="疑難排解和CUPS的組成">疑難排解和CUPS的組成</span>
-</h2>
+</h3>
 <p>最佳列印的方法是在'/etc/cups/cupsd.conf'中設定'LogLevel'。
 </p>
 <pre>LogLevel debug2
@@ -142,8 +143,7 @@
 <pre>D = Debug(臭蟲)
 E = Error(錯誤)
 I = Information(資訊)
-etc...
-</pre>
+etc...</pre>
 <p>這些檔案提供的訊息非常有用。
 </p>
 <pre>在這裡'/var/log/cups/page_log'每次成功列印都會列出資訊
@@ -159,12 +159,12 @@ etc...
 </ol>
 <p>找份檔案列印，同時注意'error_log'可以的到列印過程中的更多細節
 </p>
-<h1>
-<span id=".E5.AE.89.E8.A3.9D_CUPS"></span><span class="mw-headline" id="安裝_CUPS">安裝 CUPS</span>
-</h1>
 <h2>
-<span id=".E8.BB.9F.E9.AB.94.E5.A5.97.E4.BB.B6"></span><span class="mw-headline" id="軟體套件">軟體套件</span>
+<span id=".E5.AE.89.E8.A3.9D_CUPS"></span><span class="mw-headline" id="安裝_CUPS">安裝 CUPS</span>
 </h2>
+<h3>
+<span id=".E8.BB.9F.E9.AB.94.E5.A5.97.E4.BB.B6"></span><span class="mw-headline" id="軟體套件">軟體套件</span>
+</h3>
 <p>你至少需要CUPS和Ghostscript：
 </p>
 <pre># pacman -S cups ghostscript gsfonts
@@ -194,32 +194,31 @@ etc...
 </p>
 <pre># pacman -S samba
 </pre>
-<h2>
+<h3>
 <span id=".E7.82.BA.E6.A0.B8.E5.BF.83.E5.8A.A0.E8.BC.89.E5.8D.B0.E8.A1.A8.E6.A9.9F.E6.A8.A1.E7.B5.84"></span><span class="mw-headline" id="為核心加載印表機模組">為核心加載印表機模組</span>
-</h2>
+</h3>
 <p>連接好印表機機，並打開電源，隨後：
 </p>
-<h3>
+<h4>
 <span id="USB_.E5.9F.A0.E5.8D.B0.E8.A1.A8.E6.A9.9F"></span><span class="mw-headline" id="USB_埠印表機">USB 埠印表機</span>
-</h3>
+</h4>
 <pre># modprobe usblp                      （2.6.x 核心）
 # modprobe printer                    （2.4.x 核心）
 # tail /var/log/messages.log          （看看安裝成功了沒有）
 </pre>
-<h3>
+<h4>
 <span id=".E4.B8.A6.E5.88.97.E5.9F.A0.E5.8D.B0.E8.A1.A8.E6.A9.9F"></span><span class="mw-headline" id="並列埠印表機">並列埠印表機</span>
-</h3>
+</h4>
 <pre># modprobe lp parport parport_pc      （2.6.x 核心）
 # modprobe parport parport_pc         （2.4.x 核心）
 # tail /var/log/messages.log          （看看安裝成功了沒有）
 </pre>
 <p>將這些模組加入/etc/rc.conf中的MODULES中去，以便開機時自動加載。
 </p>
-<h2>
+<h3>
 <span id=".E5.95.9F.E5.8B.95_CUPS"></span><span class="mw-headline" id="啟動_CUPS">啟動 CUPS</span>
-</h2>
-<pre># /etc/rc.d/cupsd start
-</pre>
+</h3>
+<ol><li>/etc/rc.d/cupsd start</li></ol>
 <p>可將cupsd加入/etc/rc.conf中的DAEMONS中去，以便開機時自動加載.
 </p>
 <p>這個時候，就可以用CUPS在控制檯下做一些簡單的列印了，如：
@@ -228,9 +227,9 @@ etc...
 </pre>
 <p>當然僅僅依靠CUPS列印，如果在X下，肯定是不方便的。主要是因為缺少驅動，Linux下的列印驅動是PPD檔案。
 </p>
-<h2>
+<h3>
 <span id=".E5.88.97.E5.8D.B0.E9.A9.85.E5.8B.95.EF.BC.9A_Foomatic"></span><span class="mw-headline" id="列印驅動：_Foomatic">列印驅動： Foomatic</span>
-</h2>
+</h3>
 <p>Foomatic是一個資料庫驅動的列印系統，它將Unix下的通用後臺列印系統與開源的印表機驅動整合在一起。
 只要有任一在開源驅動下能夠正常工作的印表機，它就能支援了。它支援CUPS, LPRng, LPD, GNUlpr, Solaris LP,
 PPR, PDQ, CPS 這些底層的列印系統，也能直接列印（既是驅動也是列印工具）。
@@ -247,29 +246,29 @@ foomatic-db-hpijs (專為HP列印驅動生成Foomatic XML 數據)。
 </p>
 <p>一般來說，安裝前四個包就可以了。如果沒有惠普印表機，就不必安裝foomatic-db-hpijs了。
 </p>
-<h2>
+<h3>
 <span id=".E5.88.97.E5.8D.B0.E9.A9.85.E5.8B.95.EF.BC.9Ahplip"></span><span class="mw-headline" id="列印驅動：hplip">列印驅動：hplip</span>
-</h2>
+</h3>
 <p>惠普DeskJet, OfficeJet, Photosmart, Business Inkjet 和一些 LaserJet 印表機型號，需要安裝hplip。只用於惠普印表機。
 也可同時安裝上面的Foomatic，對比一下兩者的列印速度。
 </p>
 <pre># pacman -S hplip
 </pre>
-<h2>
+<h3>
 <span id=".E5.88.97.E5.8D.B0.E9.A9.85.E5.8B.95.EF.BC.9AGutenprint"></span><span class="mw-headline" id="列印驅動：Gutenprint">列印驅動：Gutenprint</span>
-</h2>
+</h3>
 <p>也許以上的列印驅動仍然不行（不過安裝foomatic一定是必要的，能提高列印速度）。在設定CUPS時（即將講到）
 沒有找到自己的印表機型號。那麼可能還需要接著安裝Gutenprint。
 Gutenprint 是GIMP的列印擴充功能模組，過去叫"gimp-print"，它能夠為GIMP提供流行的列印驅動，能
 讓佳能、愛普生、惠普、利盟、索尼、奧林巴斯，以及其他基於PCL技術的印表機，列印出更出色的品質。用於高品質的圖像列印是在好不過了。
-它支援的印表機型號列表可見於：<a rel="nofollow" class="external free" href="http://gutenprint.sourceforge.net/p_Supported_Printers.php3">http://gutenprint.sourceforge.net/p_Supported_Printers.php3</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-02 ⓘ]</sup>
+它支援的印表機型號列表可見於：<a rel="nofollow" class="external free" href="https://web.archive.org/web/20080513123708/http://gutenprint.sourceforge.net/p_Supported_Printers.php3">https://web.archive.org/web/20080513123708/http://gutenprint.sourceforge.net/p_Supported_Printers.php3</a>
 不過Gutenprint的列印品質是沒得說，但速度就不敢恭維了。但有foomatic的支援就會快很多。
 </p>
 <pre># pacman -S gutenprint
 </pre>
-<h2>
+<h3>
 <span id=".E5.9C.A8_X_.E4.B8.8B.E8.A8.AD.E5.AE.9A_CUPS"></span><span class="mw-headline" id="在_X_下設定_CUPS">在 X 下設定 CUPS</span>
-</h2>
+</h3>
 <p>列印基礎系統CUPS和列印驅動安裝好的，就要開始設定印表機了。
 可以通過設定CUPS來設定印表機。設定CUPS的方法適用於一切印表機及其驅動。因此推薦使用。
 進入X，打開一個網頁瀏覽器，訪問：
@@ -284,12 +283,12 @@ Manage Printers ---&gt; Add Printer ---&gt; root密碼驗證 ---&gt; 輸入印�
 <pre>tupac -S gnome-cups-manager     (Gnome下)
 tupac -S gtklp                  (KDE下)
 </pre>
-<h1>
-<span id=".E5.8D.B0.E8.A1.A8.E6.A9.9F.E7.9A.84.E5.85.B1.E4.BA.AB"></span><span class="mw-headline" id="印表機的共享">印表機的共享</span>
-</h1>
 <h2>
-<span id="Linux_.E5.B0.8D_Linux"></span><span class="mw-headline" id="Linux_對_Linux">Linux 對 Linux</span>
+<span id=".E5.8D.B0.E8.A1.A8.E6.A9.9F.E7.9A.84.E5.85.B1.E4.BA.AB"></span><span class="mw-headline" id="印表機的共享">印表機的共享</span>
 </h2>
+<h3>
+<span id="Linux_.E5.B0.8D_Linux"></span><span class="mw-headline" id="Linux_對_Linux">Linux 對 Linux</span>
+</h3>
 <p>Once you have CUPS setup on your Linux print server, sharing the printer with another Linux box is relatively easy. There are several ways to configure such a scenario, here we will describe the manual setup. On the server computer (the one managing and connecting to the printer) simply open up the <i>/etc/cups/cupsd.conf</i> file and allow access to the server by modifying the location lines.  For instance:
 </p>
 <pre>&lt;Location /&gt;
@@ -326,12 +325,12 @@ no entries
 </p>
 <p>when prompted for username and password use root to access
 then follow the instructions from here
-<a rel="nofollow" class="external free" href="http://www.digitalhermit.com/linux/printing/">http://www.digitalhermit.com/linux/printing/</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-02 ⓘ]</sup>
+<a rel="nofollow" class="external free" href="https://web.archive.org/web/20091217222844/http://www.digitalhermit.com/linux/printing/">https://web.archive.org/web/20091217222844/http://www.digitalhermit.com/linux/printing/</a>
 if its a TCP/IP printer use Jetdirect
 </p>
 <p>That's it for Linux to Linux printer sharing.
 </p>
-<h2><span class="mw-headline" id="Linux_to_Windows">Linux to Windows</span></h2>
+<h3><span class="mw-headline" id="Linux_to_Windows">Linux to Windows</span></h3>
 <p>If you are connected to a Windows print server (or any other Samba capable print server), you can skip the section about kernel modules and such.  All you have to do is start the CUPS daemon and complete the web interface as specified in section 3.3 and 3.4.  Before this, you need to activate the Samba CUPS backend.  You can do this by entering the following command:
 </p>
 <pre># ln -s `which smbspool` /usr/lib/cups/backend/smb
@@ -354,7 +353,7 @@ if its a TCP/IP printer use Jetdirect
 </p>
 <pre>smb://workgroup/username:password@hostname/printer_name
 </pre>
-<h2><span class="mw-headline" id="Windows_to_Linux">Windows to Linux</span></h2>
+<h3><span class="mw-headline" id="Windows_to_Linux">Windows to Linux</span></h3>
 <p>Sometimes, you might want to allow a Windows computer to connect to your computer.  There are a few ways to do this, and the one I am most familiar with is using Samba.  In order to do this, you will have to edit your <i>/etc/samba/smb.conf</i> file to allow access to your printers.  Your smb.conf can look something like this:
 </p>
 <pre>[global]
@@ -371,8 +370,7 @@ security = user
     writable = no
     printable = yes
     create mode = 0700
-    write list = @adm root neocephas
-</pre>
+    write list = @adm root neocephas</pre>
 <p>That should be enough to share your printer, but you just might want to add an individual printer entry:
 </p>
 <pre>[ML1250]
@@ -387,8 +385,7 @@ security = user
     guest ok = no
     writable = no
     write list = @adm root neocephas
-    valid users = @adm root neocephas
-</pre>
+    valid users = @adm root neocephas</pre>
 <p>Please note that in my configuration I made it so that users must have a valid account to access the printer.  To have a public printer, set guest ok to yes, and remove the valid users line.  To add accounts, you must setup a regular Linux account and then setup a Samba password on the server.  For instance:
 </p>
 <pre># useradd neocephas
@@ -419,7 +416,7 @@ application/octet-stream
 </pre>
 <p>Obvious, there are a lot of tweaks and customization that can be done with setting up a Samba print server, so I advise you to look at the Samba and CUPS documentation for more help.  The <i>smb.conf.example</i> file also has some good samples to that you might want to look at.
 </p>
-<h2><span class="mw-headline" id="Windows_2000_and_Windows_XP_to_Linux">Windows 2000 and Windows XP to Linux</span></h2>
+<h3><span class="mw-headline" id="Windows_2000_and_Windows_XP_to_Linux">Windows 2000 and Windows XP to Linux</span></h3>
 <p>For the most modern flavors of Windows an alternative way of connecting to your Linux printer server is to use the CUPS protocol directly.  The Windows client will need to be using Windows 2000 or Windows XP.  Make sure you allows the clients to access the print server by editing the location settings as specified in section 4.1.
 </p>
 <p>On the Windows computer, go to the printer control panel and choose to Add a New Printer.  Next, choose to give an url.  For the url type in the location of your printer:
@@ -428,29 +425,29 @@ application/octet-stream
 </p>
 <p>where host_ip_address is the Linux server's IP address and printer_name is the name of the printer you are connecting to.  After this, install the printer drivers for the Windows computer.  If you setup the CUPS server to use its own printer drivers, then you can just select a generic postscript printer for the Windows client.  You can then test your print setup by printing a test page.
 </p>
-<h2>
+<h3>
 <span id="Others_to_Linux.2C_Linux_to_others"></span><span class="mw-headline" id="Others_to_Linux,_Linux_to_others">Others to Linux, Linux to others</span>
-</h2>
+</h3>
 <p>More information on interfacing CUPS with other printing systems can be found in the CUPS manual, e.g. on <a rel="nofollow" class="external free" href="http://localhost:631/sam.html#PRINTING_OTHER">http://localhost:631/sam.html#PRINTING_OTHER</a>
 </p>
-<h1><span class="mw-headline" id="Appendix">Appendix</span></h1>
-<h2><span class="mw-headline" id="Alternative_CUPS_Interfaces">Alternative CUPS Interfaces</span></h2>
+<h2><span class="mw-headline" id="Appendix">Appendix</span></h2>
+<h3><span class="mw-headline" id="Alternative_CUPS_Interfaces">Alternative CUPS Interfaces</span></h3>
 <p>If you are a GNOME user, you can manage and configure your printer by using the gnome-cups-manager.
 </p>
 <p>Update: this package is now available through pacman if you have the "community" repository uncommented in /etc/pacman.conf
 </p>
 <pre>pacman -S gnome-cups-manager
 </pre>
-<p>The package is also still available from the <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages.php?do_Details=1&amp;ID=66&amp;O=0&amp;L=0&amp;C=0&amp;K=cups&amp;SB=&amp;SO=&amp;PP=25&amp;do_MyPackages=0&amp;do_Orphans=0&amp;SeB=nd">AUR</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-02 ⓘ]</sup>.
+<p>The package is also still available from the <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/?0&amp;C=0&amp;K=cups&amp;SB=&amp;SO=&amp;PP=25&amp;do_MyPackages=0&amp;do_Orphans=0&amp;SeB=nd">AUR</a>.
 </p>
 <p>KDE users can modify their printers from the Control Center.  Both should refer the those desktop environments' documentation for more information on how to use the interfaces.
 </p>
 <p>There is also <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gtklp/">gtklp</a></span><sup><small>AUR</small></sup>. It is in the [extra] repository.
 </p>
-<h2><span class="mw-headline" id="PDF_Virtual_Printer">PDF Virtual Printer</span></h2>
+<h3><span class="mw-headline" id="PDF_Virtual_Printer">PDF Virtual Printer</span></h3>
 <p>A nice little package that I submitted to the incoming folder (<a rel="nofollow" class="external free" href="ftp://ftp.archlinux.org/incoming">ftp://ftp.archlinux.org/incoming</a>) is CUPS-PDF.  This package allows one to setup a virtual printer that will generate a PDF from anything sent to it.  For example, I wrote this document in AbiWord and then printed it to the Virtual Printer which generated a PDF in my <i>/var/spool/cups-pdf/neocephas</i> folder.  Obviously, this package is not necessary, but it can be quite useful.  After downloading the package from the FTP server and installing it, you can set it up as you would for any other printer in the web interface.  Select Virtual PDF Printer as the device and choose Postscript -&gt; Postscript Color Printer for the drivers.
 </p>
-<h2><span class="mw-headline" id="Online_Resources">Online Resources</span></h2>
+<h3><span class="mw-headline" id="Online_Resources">Online Resources</span></h3>
 <p>Here is a listing of websites that may be of use to you:
 </p>
 <ul>
@@ -458,16 +455,16 @@ application/octet-stream
 <b>Official CUPS documentation on your computer</b> <a rel="nofollow" class="external free" href="http://localhost:631/documentation.html">http://localhost:631/documentation.html</a>
 </li>
 <li>
-<b>Official CUPS Website</b> - <a rel="nofollow" class="external free" href="http://www.cups.org/">http://www.cups.org/</a><sup title="Last check status: domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-02 ⓘ]</sup>
+<b>Official CUPS Website</b> - <a rel="nofollow" class="external free" href="https://www.cups.org/">https://www.cups.org/</a>
 </li>
 <li>
 <b>Linux Printing</b> - <a rel="nofollow" class="external free" href="http://www.linuxprinting.org/">http://www.linuxprinting.org/</a>
 </li>
 <li>
-<b>Tips and Suggestions on common CUPS problems</b> - <a rel="nofollow" class="external free" href="http://home.nyc.rr.com/computertaijutsu/cups.html">http://home.nyc.rr.com/computertaijutsu/cups.html</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-02 ⓘ]</sup>
+<b>Tips and Suggestions on common CUPS problems</b> - <a rel="nofollow" class="external free" href="https://web.archive.org/web/20080918042956/http://home.nyc.rr.com/computertaijutsu/cups.html">https://web.archive.org/web/20080918042956/http://home.nyc.rr.com/computertaijutsu/cups.html</a>
 </li>
 <li>
-<b>Gentoo's Printing Guide</b> - <a rel="nofollow" class="external free" href="http://www.gentoo.org/doc/en/printing-howto.xml">http://www.gentoo.org/doc/en/printing-howto.xml</a>
+<b>Gentoo's Printing Guide</b> - <a rel="nofollow" class="external free" href="https://www.gentoo.org/doc/en/printing-howto.xml">https://www.gentoo.org/doc/en/printing-howto.xml</a>
 </li>
 <li>
 <b>Arch Linux User Forums</b> - <a rel="nofollow" class="external free" href="https://bbs.archlinux.org/">https://bbs.archlinux.org/</a>
@@ -476,14 +473,14 @@ application/octet-stream
 <li><a rel="nofollow" class="external text" href="http://uniteddigitalsolutions.com/index.php?page=prcat&amp;cid=91">Tektronix print cartridge</a></li>
 <li><a rel="nofollow" class="external text" href="http://uniteddigitalsolutions.com/?page=prcat&amp;cid=87">Pitney Bowes ink cartridge</a></li>
 </ul>
-<h2><span class="mw-headline" id="Specialized_Cases">Specialized Cases</span></h2>
+<h3><span class="mw-headline" id="Specialized_Cases">Specialized Cases</span></h3>
 <p>This section is dedicated to specific problems and their solutions. If you managed to get some <i>unusual</i> printer working, please put the solution here.
 </p>
-<h3>
+<h4>
 <span id="Printing_does_not_work.2Faborts_with_the_HP_Deskjet_700_Series_Printers."></span><span class="mw-headline" id="Printing_does_not_work/aborts_with_the_HP_Deskjet_700_Series_Printers.">Printing does not work/aborts with the HP Deskjet 700 Series Printers.</span>
-</h3>
+</h4>
 <ul><li>The solution is to install <b>pnm2ppa</b> printer filter for the HP Deskjet 700 series. Without this the print jobs will be aborted by the system.  A <a href="../en/PKGBUILD.html" title="PKGBUILD">PKGBUILD</a> for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/pnm2ppa/">pnm2ppa</a></span><sup><small>AUR</small></sup> can be found in the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>.</li></ul>
-<h3><span class="mw-headline" id="Getting_HP_LaserJet_1010_to_work">Getting HP LaserJet 1010 to work</span></h3>
+<h4><span class="mw-headline" id="Getting_HP_LaserJet_1010_to_work">Getting HP LaserJet 1010 to work</span></h4>
 <p>I had to compile ghostscript myself because ESP gs in rep was 7.07 and had not fixed some bugs like ESP 8.15.1 had. I never downloaded 'foomatic' in rep. I think that is an old package. 
 </p>
 <pre>$ pacman -Qs cups a2ps psutils foo ghost
@@ -514,7 +511,7 @@ local/espgs 8.15.1-1
 </p>
 <p>I'm sure it could have worked with ESP gs 7.07 too(in rep) if i was smart enough to turn on DebugLevel2 sooner :/ UPDATE: yeah it did... maybe this info is useful for someone else though.. sorry for the inconvenience.
 </p>
-<h3><span class="mw-headline" id="Getting_HP_LaserJet_1020_to_work">Getting HP LaserJet 1020 to work</span></h3>
+<h4><span class="mw-headline" id="Getting_HP_LaserJet_1020_to_work">Getting HP LaserJet 1020 to work</span></h4>
 <p>After a lot of tries with hplib and gutenprint I finally found the solution to get my printer HP Laserjet 1020 printing. 
 </p>
 <p>First of all you only need to install cups and ghostscript. Then follow the link on <a rel="nofollow" class="external free" href="http://www.linuxprinting.org/show_printer.cgi?recnum=HP-LaserJet_1020">http://www.linuxprinting.org/show_printer.cgi?recnum=HP-LaserJet_1020</a> to the <a rel="nofollow" class="external free" href="http://foo2zjs.rkkda.com/">http://foo2zjs.rkkda.com/</a> printer driver page and follow the install instructions. Log in as root. After you downloaded the package and extracted the archive, change into the foo2zjs directory. Now you can follow the original installation instructions with a minor modification to change the userid for printing:<br>
@@ -549,17 +546,17 @@ $ make cups
 </p>
 <pre>./getweb 1020
 </pre>
-<p>(or if you're setting another printer change this line to what you need).
+<p>(or if you are setting another printer change this line to what you need).
 </p>
 <p>As a last step add and configure the printer in the CUPS manager. The printer should be recognized automatically. It works fine for root and all users. When booting the operating system, the printer is initialized and indicates its working.
 </p>
-<h3><span class="mw-headline" id="Printer_connected_to_an_Airport_Express_Station">Printer connected to an Airport Express Station</span></h3>
+<h4><span class="mw-headline" id="Printer_connected_to_an_Airport_Express_Station">Printer connected to an Airport Express Station</span></h4>
 <p>The first thing to do is to scan the airport express station. It
 seems that there are different addresses depending on the model.
 </p>
 <pre>[root@somostation somos]# nmap 192.168.0.4
 
-Starting Nmap 4.20 ( http://insecure.org ) at 2007-06-26 00:50 CEST
+Starting Nmap 4.20 ( <a rel="nofollow" class="external free" href="http://insecure.org">http://insecure.org</a> ) at 2007-06-26 00:50 CEST
 Interesting ports on 192.168.0.4:
 Not shown: 1694 closed ports
 PORT      STATE SERVICE
@@ -594,8 +591,8 @@ ErrorPolicy stop-printer
 </pre>
 <p>It should work. I had a few problems. There were resolved by removing foomatic and installing foomatic-db, foomatic-db-engine, foomatic-db-ppd instead.
 </p>
-<h3><span class="mw-headline" id="Performing_Utility_Functions_on_Epson_Printers">Performing Utility Functions on Epson Printers</span></h3>
-<h4><span class="mw-headline" id="Escputil">Escputil</span></h4>
+<h4><span class="mw-headline" id="Performing_Utility_Functions_on_Epson_Printers">Performing Utility Functions on Epson Printers</span></h4>
+<h5><span class="mw-headline" id="Escputil">Escputil</span></h5>
 <p>Here we explain how to perform some of the utility functions such as nozzle cleaning and nozzle checks on Epson printers. We will use the escputil utility, which is part of the gutenprint package.
 </p>
 <p>There is a man page ("man escputil") that provides pretty good information, but it does not include necessary information on how to identify your printer. There are two parameters that can be used. One is --printer; what it expects is the name you used to identify your printer when you configured it. The other is --raw-device. What this option expects is is something beginning with "/dev". If your printer is a serial printer, and the only serial printer, it is "/dev/lp0". If it is an usb printer, it is "/dev/usb/lp0". If you have more than one printer, they will have names ending in "lp1", "lp2", etc. 
@@ -614,17 +611,17 @@ ErrorPolicy stop-printer
 <ul><li>To prints out the ink levels of the printer:</li></ul>
 <pre>  sudo escputil --raw-device=/dev/usb/lp0 --ink-level
 </pre>
-<h4><span class="mw-headline" id="Mtink">Mtink</span></h4>
-<p>This is a printer status monitor which enables to get the remaining ink quantity, to print test patterns, to reset printer and to clean nozzle. It use an intuitive graphical user interface. Package can be downloaded from <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages.php?do_Details=1&amp;ID=476&amp;O=0&amp;L=0&amp;C=0&amp;K=mtink&amp;SB=n&amp;SO=a&amp;PP=25&amp;do_MyPackages=0&amp;do_Orphans=0&amp;SeB=nd">AUR</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-08-02 ⓘ]</sup>.
+<h5><span class="mw-headline" id="Mtink">Mtink</span></h5>
+<p>This is a printer status monitor which enables to get the remaining ink quantity, to print test patterns, to reset printer and to clean nozzle. It use an intuitive graphical user interface. Package can be downloaded from <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/?O=0&amp;L=0&amp;C=0&amp;K=mtink&amp;SB=n&amp;SO=a&amp;PP=25&amp;do_MyPackages=0&amp;do_Orphans=0&amp;SeB=nd">AUR</a>.
 </p>
-<h2><span class="mw-headline" id="Another_Source_for_Printer_Drivers">Another Source for Printer Drivers</span></h2>
+<h3><span class="mw-headline" id="Another_Source_for_Printer_Drivers">Another Source for Printer Drivers</span></h3>
 <p>On <i><a rel="nofollow" class="external free" href="http://www.turboprint.de/english.html">http://www.turboprint.de/english.html</a></i> is a really good printer driver for many printers not yet supported by Linux (especially Canon i*). The only problem is that high-quality-prints are either marked with a turboprint-logo or you have to pay for it... It's not Open-Source.
 </p>
 <p><a href="https://en.wikipedia.org/wiki/Common_Unix_Printing_System" class="extiw" title="wikipedia:Common Unix Printing System">Wikipedia:Common_Unix_Printing_System</a>
 </p>
-<h1><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h1>
-<h2><span class="mw-headline" id="As_a_result_of_upgrade">As a result of upgrade</span></h2>
-<h3><span class="mw-headline" id="Error_with_gnutls">Error with gnutls</span></h3>
+<h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
+<h3><span class="mw-headline" id="As_a_result_of_upgrade">As a result of upgrade</span></h3>
+<h4><span class="mw-headline" id="Error_with_gnutls">Error with gnutls</span></h4>
 <p>After updating, if you get something like :
 </p>
 <pre> /usr/sbin/cupsd: error while loading shared libraries: libgnutls.so.13: cannot open shared object file: No such file or directory
@@ -635,13 +632,13 @@ ErrorPolicy stop-printer
 </pre>
 <p>In addition, in /etc/cups, there will be a file named cupsd.conf.pacnew.  Rename it cupsd.conf.
 </p>
-<h3>
+<h4>
 <span id="All_jobs_are_.22stopped.22"></span><span class="mw-headline" id='All_jobs_are_"stopped"'>All jobs are "stopped"</span>
-</h3>
+</h4>
 <p>After updating CUPS, if all jobs sent to the printer become "stopped", delete the printer and add it again.
 Using the CUPS web interface (<a rel="nofollow" class="external free" href="http://localhost:631">http://localhost:631</a>), go to Printers &gt; Delete Printer.
 </p>
-<p><i>Note:</i> If you don't remember your printer's settings, go to Printers &gt; Modify Printer. Copy down the information displayed, click 'Modify Printer' to proceed to the next page(s), etc.
+<p><i>Note:</i> If you do not remember your printer's settings, go to Printers &gt; Modify Printer. Copy down the information displayed, click 'Modify Printer' to proceed to the next page(s), etc.
 </p>
 </div>
 </div>
@@ -652,10 +649,7 @@ Using the CUPS web interface (<a rel="nofollow" class="external free" href="http
 <li><a href="../zh-TW/Category:Printers.html" title="Category:Printers (正體中文)">Printers (正體中文)</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../zh-TW/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (正體中文)">Pages or sections flagged with Template:Translateme (正體中文)</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../zh-TW/Category:Pages_or_sections_flagged_with_Template:Translateme.html" title="Category:Pages or sections flagged with Template:Translateme (正體中文)">Pages or sections flagged with Template:Translateme (正體中文)</a></li></ul>
 </div>
 </div>
 	</div>
@@ -663,8 +657,8 @@ Using the CUPS web interface (<a rel="nofollow" class="external free" href="http
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=CUPS_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)&amp;oldid=628397">https://wiki.archlinux.org/index.php?title=CUPS_(正體中文)&amp;oldid=628397</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 2 August 2020, at 11:54.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=CUPS_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)&amp;oldid=661409">https://wiki.archlinux.org/index.php?title=CUPS_(正體中文)&amp;oldid=661409</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 22:00.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

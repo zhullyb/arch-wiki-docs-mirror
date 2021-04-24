@@ -41,16 +41,22 @@
 <li><a href="../en/Freenet.html" title="Freenet">Freenet</a></li>
 </ul>
 </div>
-<p><a rel="nofollow" class="external text" href="https://www.torproject.org">Tor</a> is an open source implementation of 2nd generation <a href="https://en.wikipedia.org/wiki/Onion_routing" class="extiw" title="wikipedia:Onion routing">onion routing</a> that provides free access to an anonymous proxy network. Its primary goal is to enable <a href="https://en.wikipedia.org/wiki/Internet_anonymity" class="extiw" title="wikipedia:Internet anonymity">online anonymity</a> by protecting against <a href="https://en.wikipedia.org/wiki/Traffic_analysis" class="extiw" title="wikipedia:Traffic analysis">traffic analysis</a> attacks.
+<p>The <a rel="nofollow" class="external text" href="https://www.torproject.org">Tor Project</a> (<i>T</i>he <i>o</i>nion <i>r</i>outing) is an open source implementation of <a href="https://en.wikipedia.org/wiki/Onion_routing" class="extiw" title="wikipedia:Onion routing">onion routing</a> that provides free access to an anonymous proxy network. Its primary goal is to enable <a href="https://en.wikipedia.org/wiki/Internet_anonymity" class="extiw" title="wikipedia:Internet anonymity">online anonymity</a> by protecting against <a href="https://en.wikipedia.org/wiki/Traffic_analysis" class="extiw" title="wikipedia:Traffic analysis">traffic analysis</a> attacks.
 </p>
+<p>Users of the Tor network run an onion proxy software on their machine which presents a SOCKS interface to its clients. This software connects out to Tor, periodically negotiating a virtual circuit through the Tor network. Tor employs cryptography in a layered manner (hence the 'onion' analogy), ensuring forward secrecy between routers.
+</p>
+<p>Through this process the onion proxy manages networking traffic for end-user anonymity. It keeps a user anonymous by encrypting traffic, sending it through other nodes of the Tor network, and decrypting it at the last node to receive your traffic before forwarding it to the server you specified. One trade off that has to be made for the anonymity Tor provides is that it can be considerably slower than a regular direct connection, due to the large amount of traffic re-routing. Additionally, although Tor provides protection against traffic analysis it cannot prevent traffic confirmation at the boundaries of the Tor network (i.e. the traffic entering and exiting the network). See <a href="https://en.wikipedia.org/wiki/Tor_(anonymity_network)" class="extiw" title="wikipedia:Tor (anonymity network)">Wikipedia:Tor (anonymity network)</a> for more information.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> Tor by itself is <b>not</b> all you need to maintain anonymity. There are several major pitfalls to watch out for (see <a rel="nofollow" class="external text" href="https://en.calameo.com/read/005242387ef11d44d4ae7">Want Tor to really work?</a>).</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#Introduction"><span class="tocnumber">1</span> <span class="toctext">Introduction</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#Installation"><span class="tocnumber">2</span> <span class="toctext">Installation</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#Installation"><span class="tocnumber">1</span> <span class="toctext">Installation</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Usage"><span class="tocnumber">2</span> <span class="toctext">Usage</span></a></li>
 <li class="toclevel-1 tocsection-3">
 <a href="#Configuration"><span class="tocnumber">3</span> <span class="toctext">Configuration</span></a>
 <ul>
@@ -86,76 +92,65 @@
 <li class="toclevel-2 tocsection-17"><a href="#Configure_Tor"><span class="tocnumber">5.3</span> <span class="toctext">Configure Tor</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-18"><a href="#Usage"><span class="tocnumber">6</span> <span class="toctext">Usage</span></a></li>
-<li class="toclevel-1 tocsection-19">
-<a href="#Web_browsing"><span class="tocnumber">7</span> <span class="toctext">Web browsing</span></a>
+<li class="toclevel-1 tocsection-18">
+<a href="#Web_browsing"><span class="tocnumber">6</span> <span class="toctext">Web browsing</span></a>
 <ul>
-<li class="toclevel-2 tocsection-20"><a href="#Firefox"><span class="tocnumber">7.1</span> <span class="toctext">Firefox</span></a></li>
-<li class="toclevel-2 tocsection-21">
-<a href="#Chromium"><span class="tocnumber">7.2</span> <span class="toctext">Chromium</span></a>
+<li class="toclevel-2 tocsection-19"><a href="#Firefox"><span class="tocnumber">6.1</span> <span class="toctext">Firefox</span></a></li>
+<li class="toclevel-2 tocsection-20">
+<a href="#Chromium"><span class="tocnumber">6.2</span> <span class="toctext">Chromium</span></a>
 <ul>
-<li class="toclevel-3 tocsection-22"><a href="#Debug"><span class="tocnumber">7.2.1</span> <span class="toctext">Debug</span></a></li>
-<li class="toclevel-3 tocsection-23"><a href="#Extension"><span class="tocnumber">7.2.2</span> <span class="toctext">Extension</span></a></li>
+<li class="toclevel-3 tocsection-21"><a href="#Debug"><span class="tocnumber">6.2.1</span> <span class="toctext">Debug</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#Extension"><span class="tocnumber">6.2.2</span> <span class="toctext">Extension</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-24"><a href="#Luakit"><span class="tocnumber">7.3</span> <span class="toctext">Luakit</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#Luakit"><span class="tocnumber">6.3</span> <span class="toctext">Luakit</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-25">
-<a href="#HTTP_proxy"><span class="tocnumber">8</span> <span class="toctext">HTTP proxy</span></a>
+<li class="toclevel-1 tocsection-24">
+<a href="#HTTP_proxy"><span class="tocnumber">7</span> <span class="toctext">HTTP proxy</span></a>
 <ul>
-<li class="toclevel-2 tocsection-26"><a href="#Tor"><span class="tocnumber">8.1</span> <span class="toctext">Tor</span></a></li>
-<li class="toclevel-2 tocsection-27"><a href="#Firefox_2"><span class="tocnumber">8.2</span> <span class="toctext">Firefox</span></a></li>
-<li class="toclevel-2 tocsection-28"><a href="#Polipo"><span class="tocnumber">8.3</span> <span class="toctext">Polipo</span></a></li>
-<li class="toclevel-2 tocsection-29"><a href="#Privoxy"><span class="tocnumber">8.4</span> <span class="toctext">Privoxy</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#Tor"><span class="tocnumber">7.1</span> <span class="toctext">Tor</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#Firefox_2"><span class="tocnumber">7.2</span> <span class="toctext">Firefox</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#Polipo"><span class="tocnumber">7.3</span> <span class="toctext">Polipo</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#Privoxy"><span class="tocnumber">7.4</span> <span class="toctext">Privoxy</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-30">
-<a href="#Instant_messaging"><span class="tocnumber">9</span> <span class="toctext">Instant messaging</span></a>
+<li class="toclevel-1 tocsection-29">
+<a href="#Instant_messaging"><span class="tocnumber">8</span> <span class="toctext">Instant messaging</span></a>
 <ul>
-<li class="toclevel-2 tocsection-31"><a href="#Pidgin"><span class="tocnumber">9.1</span> <span class="toctext">Pidgin</span></a></li>
-<li class="toclevel-2 tocsection-32"><a href="#Irssi"><span class="tocnumber">9.2</span> <span class="toctext">Irssi</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#Pidgin"><span class="tocnumber">8.1</span> <span class="toctext">Pidgin</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#Irssi"><span class="tocnumber">8.2</span> <span class="toctext">Irssi</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-33"><a href="#Pacman"><span class="tocnumber">10</span> <span class="toctext">Pacman</span></a></li>
-<li class="toclevel-1 tocsection-34"><a href="#Java"><span class="tocnumber">11</span> <span class="toctext">Java</span></a></li>
-<li class="toclevel-1 tocsection-35">
-<a href="#Running_a_Tor_server"><span class="tocnumber">12</span> <span class="toctext">Running a Tor server</span></a>
+<li class="toclevel-1 tocsection-32"><a href="#Pacman"><span class="tocnumber">9</span> <span class="toctext">Pacman</span></a></li>
+<li class="toclevel-1 tocsection-33"><a href="#Java"><span class="tocnumber">10</span> <span class="toctext">Java</span></a></li>
+<li class="toclevel-1 tocsection-34">
+<a href="#Running_a_Tor_server"><span class="tocnumber">11</span> <span class="toctext">Running a Tor server</span></a>
 <ul>
-<li class="toclevel-2 tocsection-36">
-<a href="#Running_a_Tor_bridge"><span class="tocnumber">12.1</span> <span class="toctext">Running a Tor bridge</span></a>
+<li class="toclevel-2 tocsection-35"><a href="#Running_a_Tor_bridge"><span class="tocnumber">11.1</span> <span class="toctext">Running a Tor bridge</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#Running_a_Tor_relay"><span class="tocnumber">11.2</span> <span class="toctext">Running a Tor relay</span></a></li>
+<li class="toclevel-2 tocsection-37">
+<a href="#Running_a_Tor_exit_node"><span class="tocnumber">11.3</span> <span class="toctext">Running a Tor exit node</span></a>
 <ul>
-<li class="toclevel-3 tocsection-37"><a href="#Configuration_2"><span class="tocnumber">12.1.1</span> <span class="toctext">Configuration</span></a></li>
+<li class="toclevel-3 tocsection-38"><a href="#Configuration_2"><span class="tocnumber">11.3.1</span> <span class="toctext">Configuration</span></a></li>
+<li class="toclevel-3 tocsection-39">
+<a href="#+100Mbps_Exit_Relay_configuration_example"><span class="tocnumber">11.3.2</span> <span class="toctext">+100Mbps Exit Relay configuration example</span></a>
+<ul>
+<li class="toclevel-4 tocsection-40">
+<a href="#Tor_2"><span class="tocnumber">11.3.2.1</span> <span class="toctext">Tor</span></a>
+<ul>
+<li class="toclevel-5 tocsection-41"><a href="#Raise_maximum_number_of_open_file_descriptors"><span class="tocnumber">11.3.2.1.1</span> <span class="toctext">Raise maximum number of open file descriptors</span></a></li>
+<li class="toclevel-5 tocsection-42"><a href="#Start_tor.service_as_root_to_bind_Tor_to_privileged_ports"><span class="tocnumber">11.3.2.1.2</span> <span class="toctext">Start tor.service as root to bind Tor to privileged ports</span></a></li>
+<li class="toclevel-5 tocsection-43"><a href="#Tor_configuration"><span class="tocnumber">11.3.2.1.3</span> <span class="toctext">Tor configuration</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-38">
-<a href="#Running_a_Tor_relay"><span class="tocnumber">12.2</span> <span class="toctext">Running a Tor relay</span></a>
+<li class="toclevel-4 tocsection-44"><a href="#nyx"><span class="tocnumber">11.3.2.2</span> <span class="toctext">nyx</span></a></li>
+<li class="toclevel-4 tocsection-45"><a href="#iptables"><span class="tocnumber">11.3.2.3</span> <span class="toctext">iptables</span></a></li>
+<li class="toclevel-4 tocsection-46"><a href="#Haveged"><span class="tocnumber">11.3.2.4</span> <span class="toctext">Haveged</span></a></li>
+<li class="toclevel-4 tocsection-47">
+<a href="#pdnsd"><span class="tocnumber">11.3.2.5</span> <span class="toctext">pdnsd</span></a>
 <ul>
-<li class="toclevel-3 tocsection-39"><a href="#Configuration_3"><span class="tocnumber">12.2.1</span> <span class="toctext">Configuration</span></a></li>
-</ul>
-</li>
-<li class="toclevel-2 tocsection-40">
-<a href="#Running_a_Tor_exit_node"><span class="tocnumber">12.3</span> <span class="toctext">Running a Tor exit node</span></a>
-<ul>
-<li class="toclevel-3 tocsection-41"><a href="#Configuration_4"><span class="tocnumber">12.3.1</span> <span class="toctext">Configuration</span></a></li>
-<li class="toclevel-3 tocsection-42">
-<a href="#+100Mbps_Exit_Relay_configuration_example"><span class="tocnumber">12.3.2</span> <span class="toctext">+100Mbps Exit Relay configuration example</span></a>
-<ul>
-<li class="toclevel-4 tocsection-43">
-<a href="#Tor_2"><span class="tocnumber">12.3.2.1</span> <span class="toctext">Tor</span></a>
-<ul>
-<li class="toclevel-5 tocsection-44"><a href="#Raise_maximum_number_of_open_file_descriptors"><span class="tocnumber">12.3.2.1.1</span> <span class="toctext">Raise maximum number of open file descriptors</span></a></li>
-<li class="toclevel-5 tocsection-45"><a href="#Start_tor.service_as_root_to_bind_Tor_to_privileged_ports"><span class="tocnumber">12.3.2.1.2</span> <span class="toctext">Start tor.service as root to bind Tor to privileged ports</span></a></li>
-<li class="toclevel-5 tocsection-46"><a href="#Tor_configuration"><span class="tocnumber">12.3.2.1.3</span> <span class="toctext">Tor configuration</span></a></li>
-</ul>
-</li>
-<li class="toclevel-4 tocsection-47"><a href="#nyx"><span class="tocnumber">12.3.2.2</span> <span class="toctext">nyx</span></a></li>
-<li class="toclevel-4 tocsection-48"><a href="#iptables"><span class="tocnumber">12.3.2.3</span> <span class="toctext">iptables</span></a></li>
-<li class="toclevel-4 tocsection-49"><a href="#Haveged"><span class="tocnumber">12.3.2.4</span> <span class="toctext">Haveged</span></a></li>
-<li class="toclevel-4 tocsection-50">
-<a href="#pdnsd"><span class="tocnumber">12.3.2.5</span> <span class="toctext">pdnsd</span></a>
-<ul>
-<li class="toclevel-5 tocsection-51"><a href="#Uncensored_DNS"><span class="tocnumber">12.3.2.5.1</span> <span class="toctext">Uncensored DNS</span></a></li>
+<li class="toclevel-5 tocsection-48"><a href="#Uncensored_DNS"><span class="tocnumber">11.3.2.5.1</span> <span class="toctext">Uncensored DNS</span></a></li>
 </ul>
 </li>
 </ul>
@@ -164,58 +159,53 @@
 </li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-52">
-<a href="#TorDNS"><span class="tocnumber">13</span> <span class="toctext">TorDNS</span></a>
+<li class="toclevel-1 tocsection-49">
+<a href="#TorDNS"><span class="tocnumber">12</span> <span class="toctext">TorDNS</span></a>
 <ul>
-<li class="toclevel-2 tocsection-53"><a href="#Using_TorDNS_for_all_DNS_queries"><span class="tocnumber">13.1</span> <span class="toctext">Using TorDNS for all DNS queries</span></a></li>
+<li class="toclevel-2 tocsection-50"><a href="#Using_TorDNS_for_all_DNS_queries"><span class="tocnumber">12.1</span> <span class="toctext">Using TorDNS for all DNS queries</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-54"><a href="#Torsocks"><span class="tocnumber">14</span> <span class="toctext">Torsocks</span></a></li>
-<li class="toclevel-1 tocsection-55"><a href="#Transparent_Torification"><span class="tocnumber">15</span> <span class="toctext">Transparent Torification</span></a></li>
-<li class="toclevel-1 tocsection-56">
-<a href="#Tips_and_tricks"><span class="tocnumber">16</span> <span class="toctext">Tips and tricks</span></a>
+<li class="toclevel-1 tocsection-51"><a href="#Torsocks"><span class="tocnumber">13</span> <span class="toctext">Torsocks</span></a></li>
+<li class="toclevel-1 tocsection-52"><a href="#Transparent_Torification"><span class="tocnumber">14</span> <span class="toctext">Transparent Torification</span></a></li>
+<li class="toclevel-1 tocsection-53">
+<a href="#Tips_and_tricks"><span class="tocnumber">15</span> <span class="toctext">Tips and tricks</span></a>
 <ul>
-<li class="toclevel-2 tocsection-57"><a href="#Kernel_capabilities"><span class="tocnumber">16.1</span> <span class="toctext">Kernel capabilities</span></a></li>
+<li class="toclevel-2 tocsection-54"><a href="#Kernel_capabilities"><span class="tocnumber">15.1</span> <span class="toctext">Kernel capabilities</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-58">
-<a href="#Troubleshooting"><span class="tocnumber">17</span> <span class="toctext">Troubleshooting</span></a>
+<li class="toclevel-1 tocsection-55">
+<a href="#Troubleshooting"><span class="tocnumber">16</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-59"><a href="#Problem_with_user_value"><span class="tocnumber">17.1</span> <span class="toctext">Problem with user value</span></a></li>
-<li class="toclevel-2 tocsection-60"><a href="#tor-browser_proxy_problems"><span class="tocnumber">17.2</span> <span class="toctext">tor-browser proxy problems</span></a></li>
-<li class="toclevel-2 tocsection-61"><a href="#tor-browser_blank_black_screen"><span class="tocnumber">17.3</span> <span class="toctext">tor-browser blank black screen</span></a></li>
+<li class="toclevel-2 tocsection-56"><a href="#Problem_with_user_value"><span class="tocnumber">16.1</span> <span class="toctext">Problem with user value</span></a></li>
+<li class="toclevel-2 tocsection-57"><a href="#tor-browser_proxy_problems"><span class="tocnumber">16.2</span> <span class="toctext">tor-browser proxy problems</span></a></li>
+<li class="toclevel-2 tocsection-58"><a href="#tor-browser_blank_black_screen"><span class="tocnumber">16.3</span> <span class="toctext">tor-browser blank black screen</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-62"><a href="#See_also"><span class="tocnumber">18</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-59"><a href="#See_also"><span class="tocnumber">17</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
-<h2><span class="mw-headline" id="Introduction">Introduction</span></h2>
-<p>Users of the Tor network run an onion proxy on their machine. This software connects out to Tor, periodically negotiating a virtual circuit through the Tor network. Tor employs cryptography in a layered manner (hence the 'onion' analogy), ensuring perfect forward secrecy between routers. At the same time, the onion proxy software presents a SOCKS interface to its clients. SOCKS-aware applications may be pointed at Tor, which then multiplexes the traffic through a Tor virtual circuit.
-</p>
-<div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Tor by itself is <i>not</i> all you need to maintain your anonymity. There are several major pitfalls to watch out for (see: <a rel="nofollow" class="external text" href="https://en.calameo.com/read/005242387ef11d44d4ae7">Want Tor To Really Work?</a>).</div>
-<p>Through this process the onion proxy manages networking traffic for end-user anonymity. It keeps a user anonymous by encrypting traffic, sending it through other nodes of the Tor network, and decrypting it at the last node to receive your traffic before forwarding it to the server you specified. One trade off that has to be made for the anonymity Tor provides is that it can be considerably slower than a regular direct connection, due to the large amount of traffic re-routing. Additionally, although Tor provides protection against traffic analysis it cannot prevent traffic confirmation at the boundaries of the Tor network (i.e. the traffic entering and exiting the network).
-</p>
-<p>See <a href="https://en.wikipedia.org/wiki/Tor_(anonymity_network)" class="extiw" title="wikipedia:Tor (anonymity network)">Wikipedia:Tor (anonymity network)</a> for more information.
-</p>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
 <p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tor">tor</a></span> package.
 </p>
-<p>Usually, you will access Tor using Tor Browser, available as the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=torbrowser-launcher">torbrowser-launcher</a></span> package.
-Alternatively, you can use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tor-browser/">tor-browser</a></span><sup><small>AUR</small></sup>.
+<p>Usually, it will be used for <a href="#Web_browsing">#Web browsing</a>.
 </p>
-<p>The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nyx">nyx</a></span> (previously named arm - Anonymizing Relay Monitor) package provides a terminal status monitor for bandwidth usage, connection details and more.
+<p><i>Nyx</i> is a command line monitor for Tor, it provides bandwidth usage, connection details and on-the-fly configuration editing. To use it, <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nyx">nyx</a></span> package.
+</p>
+<h2><span class="mw-headline" id="Usage">Usage</span></h2>
+<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">Start/enable</a> <code>tor.service</code>. Alternatively, launch it with <code>sudo -u tor /usr/bin/tor</code>.
+</p>
+<p>To use a program over Tor, configure it to use <code>127.0.0.1</code> or <code>localhost</code> as a SOCKS5 proxy, with port <code>9050</code> for plain Tor with standard settings.
+</p>
+<p>The proxy supports remote DNS resolution: use <code>socks5<b>h</b>://localhost:9050</code> for DNS resolution from the exit node (instead of <code>socks5</code> for a local DNS resolution).
+</p>
+<p>To check if Tor is functioning properly, visit <a rel="nofollow" class="external free" href="https://check.torproject.org/">https://check.torproject.org/</a> or <a rel="nofollow" class="external free" href="https://torcheck.xenobite.eu/">https://torcheck.xenobite.eu/</a> websites.
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
-<p>By default Tor reads configurations from the file <code>/etc/tor/torrc</code>. The configuration options are explained in <span class="plainlinks archwiki-template-man" title="$ man 1 tor"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tor.1">tor(1)</a></span> and the <a rel="nofollow" class="external text" href="https://torproject.org/docs/tor-manual.html.en">Tor website</a>. The default configuration should work fine for most Tor users.
+<p>Tor reads its configurations from the file <code>/etc/tor/torrc</code> by default, or if the latter is not found, from <code>$HOME/.torrc</code>. The configuration options are explained in <span class="plainlinks archwiki-template-man" title="$ man 1 tor"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tor.1">tor(1)</a></span> and the <a rel="nofollow" class="external text" href="https://torproject.org/docs/tor-manual.html.en">Tor website</a>. The default configuration should work fine for most Tor users.
 </p>
-<p>There are potential conflicts between configurations in <code>torrc</code> and those in <code>tor.service</code>.
+<p>To reload the configuration after a change, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Reload">reload</a> <code>tor.service</code>.
 </p>
-<ul>
-<li>In <code>torrc</code>, <code>RunAsDaemon</code> should, as by default, be set to <code>0</code>, since <code>Type=simple</code> is set in the <code>[Service]</code> section in <code>tor.service</code>.</li>
-<li>In <code>torrc</code>, <code>User</code> should not be set unless <code>User=</code> is set to <code>root</code> in the <code>[Service]</code> section in <code>tor.service</code>.</li>
-</ul>
 <h3><span class="mw-headline" id="Relay_Configuration">Relay Configuration</span></h3>
 <p>The maximum file descriptor number that can be opened by Tor can be set with <code>LimitNOFILE</code> in <code>tor.service</code>. Fast relays may want to increase this value.
 </p>
@@ -340,8 +330,8 @@ CacheDirectoryGroupReadable 1 # workaround for tor bug #26913
 <p>See Tor's <a rel="nofollow" class="external text" href="https://gitweb.torproject.org/torspec.git/tree/control-spec.txt">control-spec.txt</a> for more commands.
 </p>
 <h2><span class="mw-headline" id="Running_Tor_in_a_Chroot">Running Tor in a Chroot</span></h2>
-<div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong>  Connecting with telnet to the local ControlPort seems to be broken while running Tor in a chroot</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong>  Connecting with telnet to the local ControlPort seems to be broken while running Tor in a chroot</div>
 <p>For security purposes, it may be desirable to run Tor in a <a href="../en/Chroot.html" title="Chroot">chroot</a>. The following script will create an appropriate chroot in <code>/opt/torchroot</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/torchroot-setup.sh</pre>
@@ -463,20 +453,13 @@ LimitNOFILE=32768</pre>
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> It is easier to edit files in the container from the host with your normal editor.</div>
-<h2><span class="mw-headline" id="Usage">Usage</span></h2>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">Start/enable</a> <code>tor.service</code>. Alternatively, launch it with <code>sudo -u tor /usr/bin/tor</code>.
-</p>
-<p>To use a program over tor, configure it to use <code>127.0.0.1</code> or localhost as a SOCKS5H proxy, with port <code>9050</code> (plain tor with standard settings).
-To check if Tor is functioning properly visit the <a rel="nofollow" class="external text" href="https://check.torproject.org/">Tor</a> or <a rel="nofollow" class="external text" href="https://torcheck.xenobite.eu/">Xenobite.eu</a> websites.
-</p>
 <h2><span class="mw-headline" id="Web_browsing">Web browsing</span></h2>
-<p>The Tor Project currently only supports web browsing with tor through the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tor-browser/">tor-browser</a></span><sup><small>AUR</small></sup>, which can be downloaded from the AUR. It is built with a patched version of the Firefox extended support releases. Tor can also be used with regular <a href="../en/Firefox.html" title="Firefox">Firefox</a>, <a href="../en/Chromium.html" title="Chromium">Chromium</a> and other browsers.
+<p>The only way to browse anonymously is with the supported <i>Tor Browser Bundle</i>, which uses a patched version of <a href="../en/Firefox.html" title="Firefox">Firefox</a>. It can be installed with the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=torbrowser-launcher">torbrowser-launcher</a></span> package or the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tor-browser/">tor-browser</a></span><sup><small>AUR</small></sup> package.
 </p>
-<div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> The Tor Project strongly recommends using only the Tor browser if you want to stay anonymous. <a rel="nofollow" class="external autonumber" href="https://www.torproject.org/docs/faq.html.en#TBBOtherBrowser">[2]</a>
-</div>
+<p>Tor can also be used with regular browsers: see <a href="#Firefox">#Firefox</a> or <a href="#Chromium">#Chromium</a> to run these browsers through the Tor network. Note this is not an anonymous way to browse even in "private browsing" mode: fingerprinting, plugins, DNS leak and other shortcomings may reveal you IP address or identity. <a rel="nofollow" class="external autonumber" href="https://www.torproject.org/docs/faq.html.en#TBBOtherBrowser">[2]</a>
+</p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> For makepkg to verify the signature on the AUR source tarball download for TBB, import the <a rel="nofollow" class="external text" href="https://www.torproject.org/docs/signing-keys.html.en">signing keys from the Tor Project</a> as explained in <a href="../en/GnuPG.html#Use_a_keyserver" title="GnuPG">GnuPG#Use a keyserver</a>.</div>
+<strong>Tip:</strong> For makepkg to verify the signature on the AUR source tarball download for <i>Tor Browser</i>, import the <a rel="nofollow" class="external text" href="https://www.torproject.org/docs/signing-keys.html.en">signing keys from the Tor Project</a> as explained in <a href="../en/GnuPG.html#Use_a_keyserver" title="GnuPG">GnuPG#Use a keyserver</a>.</div>
 <h3><span class="mw-headline" id="Firefox">Firefox</span></h3>
 <p>In <i>Preferences &gt; General &gt; Network Settings &gt; Settings...</i> , select <i>Manual proxy configuration</i> and enter SOCKS host <code>localhost</code> with port <code>9050</code> (SOCKS v5). To channel all DNS requests through TOR's socks proxy, also select <i>Proxy DNS when using SOCKS v5</i>.
 </p>
@@ -487,8 +470,8 @@ To check if Tor is functioning properly visit the <a rel="nofollow" class="exter
 </pre>
 <p>The <code>--proxy-server="socks5://myproxy:8080"</code> flag tells Chrome to send all <code>http://</code> and <code>https://</code> URL requests through the SOCKS proxy server <code>"myproxy:8080"</code>, using version 5 of the SOCKS protocol. The hostname for these URLs will be resolved by the proxy server, and not locally by Chrome.
 </p>
-<div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Proxying of <code>ftp://</code> URLs through a SOCKS proxy is not yet implemented<a rel="nofollow" class="external autonumber" href="https://www.chromium.org/developers/design-documents/network-stack/socks-proxy">[3]</a>.</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> Proxying of <code>ftp://</code> URLs through a SOCKS proxy is not yet implemented<a rel="nofollow" class="external autonumber" href="https://www.chromium.org/developers/design-documents/network-stack/socks-proxy">[3]</a>.</div>
 <p>The <code>--proxy-server</code> flag applies to URL loads only. There are other components of Chrome which may issue DNS resolves directly and hence bypass this proxy server. The most notable such component is the "DNS prefetcher". Hence if DNS prefetching is not disabled in Chrome then you will still see local DNS requests being issued by Chrome despite having specified a SOCKS v5 proxy server. Disabling DNS prefetching would solve this problem, however it is a fragile solution since one needs to be aware of all the areas in Chrome which issue raw DNS requests. To address this, the next flag, <code>--host-resolver-rules="MAP * ~NOTFOUND , EXCLUDE myproxy"</code>, is a catch-all to prevent Chrome from sending any DNS requests over the network. It says that all DNS resolves are to be simply mapped to the (invalid) address <code>~NOTFOUND</code> (think of it as <code>0.0.0.0</code>). The <code>"EXCLUDE"</code> clause make an exception for <code>"myproxy"</code>, because otherwise Chrome would be unable to resolve the address of the SOCKS proxy server itself, and all requests would necessarily fail with <code>PROXY_CONNECTION_FAILED</code>.
 </p>
 <p>To prevent the <a rel="nofollow" class="external text" href="https://ipleak.net/#webrtcleak">WebRTC leak</a> you can install the extension <a rel="nofollow" class="external text" href="https://chrome.google.com/webstore/detail/webrtc-network-limiter/npeicpdbkakmehahjeeohfdhnlpdklia">WebRTC Network Limiter</a>.
@@ -508,14 +491,14 @@ To check if Tor is functioning properly visit the <a rel="nofollow" class="exter
 <p>Optionally you can enable the quick switch under the <i>General</i> tab to be able to switch beetween normal navigation and Tor network just by left-clicking on the Proxy SwitchySharp's icon.
 </p>
 <h3><span class="mw-headline" id="Luakit">Luakit</span></h3>
-<div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> It will not be hard for an observer to identify you by the rare user-agent string, and there may be further issues with Flash, JavaScript or similar.</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> It will not be hard for an observer to identify you by the rare user-agent string, and there may be further issues with Flash, JavaScript or similar.</div>
 <p>You can simply run:
 </p>
 <pre>$ torsocks luakit
 </pre>
 <h2><span class="mw-headline" id="HTTP_proxy">HTTP proxy</span></h2>
-<p>Tor since version <a rel="nofollow" class="external text" href="https://blog.torproject.org/tor-0321-alpha-released-support-next-gen-onion-services-and-kist-scheduler">0.3.2.1</a> offers a builtin tunneled HTTP proxy and also can be used with an HTTP proxy like <a href="../en/Polipo.html" title="Polipo">Polipo</a> or <a href="../en/Privoxy.html" title="Privoxy">Privoxy</a>, however the Tor dev team recommends using the SOCKS5 library since browsers directly support it.
+<p>Tor offers a builtin tunneled HTTP proxy and can also be used with an HTTP proxy like <a href="../en/Privoxy.html" title="Privoxy">Privoxy</a>, however the Tor dev team recommends using the SOCKS5 library since browsers directly support it.
 </p>
 <h3><span class="mw-headline" id="Tor">Tor</span></h3>
 <p>Add following line to your <code>torrc</code> file to set port <code>8118</code> on your <code>localhost</code> as http proxy:
@@ -594,11 +577,10 @@ Port 9150
 <li>If you are in a country where Tor is blocked, or that there are almost or no Tor users at all, you should use bridges.</li>
 </ul>
 <p>Note on gpg:
+On stock arch, pacman only trust keys which are either signed by you (that can be done with <code>pacman-key --lsign-key</code>) or signed by 3 of 5 Arch master keys. If a malicious exit node replaces packages with ones signed by its key, pacman will not let the user install the package.
 </p>
-<p>
-On stock arch, pacman only trust keys which are either signed by you (that can be done with <code>pacman-key --lsign-key</code>) or signed by 3 of 5 Arch master keys. If a malicious exit node replaces packages with ones signed by its key, pacman will not let the user install the package. </p>
-<div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong>  This might not be true for other distributions derived from ARCH, for non-official repositories and for AUR</div>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong>  This might not be true for other distributions derived from ARCH, for non-official repositories and for AUR</div>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pacman.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
 XferCommand = /usr/bin/curl --socks5-hostname localhost:9050 --continue-at - --fail --output %o %u
@@ -614,36 +596,30 @@ XferCommand = /usr/bin/curl --socks5-hostname localhost:9050 --continue-at - --f
 <p>The Tor network is reliant on people contributing bandwidth and setting up services. There are several ways to contribute to the network.
 </p>
 <h3><span class="mw-headline" id="Running_a_Tor_bridge">Running a Tor bridge</span></h3>
-<p>A Tor bridge is a Tor relay that is not listed in the public Tor directory, thus making it possible for people to connect to the Tor network when governments or ISPs block all public Tor relays.
+<p>A Tor bridge is a Tor relay that is not listed in the public Tor directory, thus making it possible for people to connect to the Tor network when governments or ISPs block all public Tor relays. Visit <a rel="nofollow" class="external free" href="https://bridges.torproject.org/">https://bridges.torproject.org/</a> for more information and instructions on how to get bridge addresses.
 </p>
-<h4><span class="mw-headline" id="Configuration_2">Configuration</span></h4>
-<p>According to <a rel="nofollow" class="external free" href="https://www.torproject.org/docs/bridges">https://www.torproject.org/docs/bridges</a> , make your <code>torrc</code> be just these four lines (Default: <code>/etc/tor/torrc</code>, or <code>$HOME/.torrc</code> if that file is not found)
+<p>To run a Tor bridge, make your <code>torrc</code> configuration file be just these four lines (also see <a rel="nofollow" class="external text" href="https://2019.www.torproject.org/docs/bridges#RunningABridge">Tor Project running a bridge</a>):
 </p>
-<dl><dd></dd></dl>
-<pre>   SocksPort 0
-   ORPort 443
-   BridgeRelay 1
-   Exitpolicy reject *:*
+<pre>SocksPort 0
+ORPort 443
+BridgeRelay 1
+Exitpolicy reject *:*
 </pre>
 <h3><span class="mw-headline" id="Running_a_Tor_relay">Running a Tor relay</span></h3>
 <p>This means that your machine will act as an entry node or forwarding relay and, unlike a bridge, it will be listed in the public Tor directory. Your IP address will be publicly visible in the Tor directory but the relay will only forward to other relays or Tor exit nodes, not directly to the internet.
 </p>
-<h4><span class="mw-headline" id="Configuration_3">Configuration</span></h4>
-<p>You should at least share 20KiB/s:
+<p>To run a Tor bridge, add the following options to the <code>torrc</code> configuration file, you should at least share 20KiB/s:
 </p>
 <pre>Nickname <i>tornickname</i>
-ORPort 9001                    # This TCP-Port has to be opened/forwarded in your Firewall
-BandwidthRate 20 KB            # Throttle traffic to 20KB/s
-BandwidthBurst 50 KB           # But allow bursts up to 50KB/s
-</pre>
-<p>Disallow exits from your relay:
-</p>
-<pre>ExitPolicy reject *:*
+ORPort 9001                  # This TCP-Port has to be opened/forwarded in your Firewall
+BandwidthRate 20 KB          # Throttle traffic to 20KB/s
+BandwidthBurst 50 KB         # But allow bursts up to 50KB/s
+ExitPolicy reject *:*        # Disallow exits from your relay
 </pre>
 <h3><span class="mw-headline" id="Running_a_Tor_exit_node">Running a Tor exit node</span></h3>
-<p>Any requests from a Tor user to the regular internet obviously need to exit the network somewhere, and exit nodes provide this vital service. To the accessed host, the request will appear as having originated from your machine. This means that running an exit node is generally considered more legally onerous than running other forms of Tor relays. Before becoming an exit relay, you may want to read <a rel="nofollow" class="external text" href="https://blog.torproject.org/running-exit-node">Tips for Running an Exit Node With Minimal Harassment</a>.
+<p>Any requests from a Tor user to the regular internet obviously need to exit the network somewhere, and exit nodes provide this vital service. To the accessed host, the request will appear as having originated from your machine. This means that running an exit node is generally considered more legally onerous than running other forms of Tor relays. Before becoming an exit relay, you may want to read <a rel="nofollow" class="external text" href="https://blog.torproject.org/running-exit-node">Tor Project - tips for running an exit node</a>.
 </p>
-<h4><span class="mw-headline" id="Configuration_4">Configuration</span></h4>
+<h4><span class="mw-headline" id="Configuration_2">Configuration</span></h4>
 <p>Using the torrc, you can configure which services you wish to allow through your exit node.
 Allow all traffic:
 </p>
@@ -660,7 +636,7 @@ Allow all traffic:
 <h4>
 <span id=".2B100Mbps_Exit_Relay_configuration_example"></span><span class="mw-headline" id="+100Mbps_Exit_Relay_configuration_example">+100Mbps Exit Relay configuration example</span>
 </h4>
-<p>If you run a fast exit relay (+100Mbps) with <code>ORPort 443</code> and <code>DirPort 80</code> (as recommended in <a rel="nofollow" class="external text" href="http://www.torproject.org/docs/tor-relay-debian.html.en#after">Configuring a Tor relay on Debian/Ubuntu</a>) the following configuration changes might serve as inspiration to setup Tor alongside <a href="../en/Iptables.html" title="Iptables">iptables</a> firewall, <a href="../en/Haveged.html" title="Haveged">Haveged</a> to increase system entropy and <a href="../en/Pdnsd.html" title="Pdnsd">pdnsd</a> as DNS cache. It is important to <i>first</i> read <a rel="nofollow" class="external text" href="http://www.torproject.org/docs/tor-relay-debian.html.en#after">Configuring a Tor relay on Debian/Ubuntu</a>. 
+<p>If you run a fast exit relay (+100Mbps) with <code>ORPort 443</code> and <code>DirPort 80</code> (as recommended in <a rel="nofollow" class="external text" href="https://www.torproject.org/docs/tor-relay-debian.html.en#after">Configuring a Tor relay on Debian/Ubuntu</a>) the following configuration changes might serve as inspiration to setup Tor alongside <a href="../en/Iptables.html" title="Iptables">iptables</a> firewall, <a href="../en/Haveged.html" title="Haveged">Haveged</a> to increase system entropy and <a href="../en/Pdnsd.html" title="Pdnsd">pdnsd</a> as DNS cache. It is important to <i>first</i> read <a rel="nofollow" class="external text" href="https://www.torproject.org/docs/tor-relay-debian.html.en#after">Configuring a Tor relay on Debian/Ubuntu</a>. 
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> See <a href="#Running_Tor_in_a_systemd-nspawn_container_with_a_virtual_network_interface">#Running Tor in a systemd-nspawn container with a virtual network interface</a> for instructions to install Tor in a <code>systemd-nspawn</code> container. <a href="../en/Haveged.html" title="Haveged">Haveged</a> should be installed on the container host.</div>
@@ -740,7 +716,7 @@ NumCPUs 2                                         ## Only start two threads</pre
 <p><code>AvoidDiskWrites 1</code> reduces disk writes and wear on SSD.
 <code>DisableAllSwap 1</code> "will attempt to lock all current and future memory pages, so that memory cannot be paged out". 
 </p>
-<p>If <code>grep aes /proc/cpuinfo</code> returns that your CPU supports AES instructions and <code>lsmod | grep aes</code> returns that the module is loaded, you can specify <code>HardwareAccel 1</code> which tries "to use built-in (static) crypto hardware acceleration when available", see <a rel="nofollow" class="external text" href="http://www.torservers.net/wiki/setup/server#aes-ni_crypto_acceleration">http://www.torservers.net/wiki/setup/server#aes-ni_crypto_acceleration</a>.
+<p>If <code>grep aes /proc/cpuinfo</code> returns that your CPU supports AES instructions and <code>lsmod | grep aes</code> returns that the module is loaded, you can specify <code>HardwareAccel 1</code> which tries "to use built-in (static) crypto hardware acceleration when available", see <a rel="nofollow" class="external text" href="https://www.torservers.net/wiki/setup/server#aes-ni_crypto_acceleration">http://www.torservers.net/wiki/setup/server#aes-ni_crypto_acceleration</a>.
 </p>
 <p><code>ORPort 443</code>, <code>DirPort 80</code> and <code>DisableAllSwap 1</code> require that you start the Tor service as <code>root</code> as described in <a href="#Start_tor.service_as_root_to_bind_Tor_to_privileged_ports">#Start tor.service as root to bind Tor to privileged ports</a>.
 Use the <code>User tor</code> option to properly reduce Tor’s privileges.
@@ -792,7 +768,7 @@ COMMIT</pre>
 <p><code>-A INPUT -i lo -j ACCEPT</code> allows all connections on the loopback interface.
 </p>
 <h5><span class="mw-headline" id="Haveged">Haveged</span></h5>
-<p>See <a href="../en/Haveged.html" title="Haveged">Haveged</a> to decide if your system generates enough entropy to handle a lot of OpenSSL connections, see <a rel="nofollow" class="external text" href="http://www.issihosts.com/haveged/">haveged - A simple entropy daemon</a> and <a rel="nofollow" class="external text" href="http://www.digitalocean.com/community/tutorials/how-to-setup-additional-entropy-for-cloud-servers-using-haveged">how-to-setup-additional-entropy-for-cloud-servers-using-haveged</a> for documentation.
+<p>See <a href="../en/Haveged.html" title="Haveged">Haveged</a> to decide if your system generates enough entropy to handle a lot of OpenSSL connections, see <a rel="nofollow" class="external text" href="http://www.issihosts.com/haveged/">haveged - A simple entropy daemon</a> and <a rel="nofollow" class="external text" href="https://www.digitalocean.com/community/tutorials/how-to-setup-additional-entropy-for-cloud-servers-using-haveged">how-to-setup-additional-entropy-for-cloud-servers-using-haveged</a> for documentation.
 </p>
 <h5><span class="mw-headline" id="pdnsd">pdnsd</span></h5>
 <div class="archwiki-template-box archwiki-template-box-warning">
@@ -877,7 +853,7 @@ listen-address=127.0.0.1
 $ torsocks wget -qO- <a rel="nofollow" class="external free" href="https://check.torproject.org/">https://check.torproject.org/</a> | grep -i congratulations
 </pre>
 <h2><span class="mw-headline" id="Transparent_Torification">Transparent Torification</span></h2>
-<p>In some cases it is more secure and often easier to transparently torify an entire system instead of configuring individual applications to use Tor's socks port, not to mention preventing DNS leaks. Transparent torification can be done with <a href="../en/Iptables.html" title="Iptables">iptables</a> in such a way that all outbound packets are redirected through Tor's <i>TransPort</i>, except the Tor traffic itself. Once in place, applications do not need to be configured to use Tor, though Tor's <i>SocksPort</i> will still work. This also works for DNS via Tor's <i>DNSPort</i>, but realize that Tor only supports TCP, thus UDP packets other than DNS cannot be sent through Tor and therefore must be blocked entirely to prevent leaks. Using iptables to transparently torify a system affords comparatively strong leak protection, but it is not a substitute for virtualized torification applications such as Whonix, or TorVM <a rel="nofollow" class="external autonumber" href="https://www.whonix.org/wiki/Comparison_with_Others">[5]</a>. Transparent torification also will not protect against fingerprinting attacks on its own, so it is recommended to use an amnesic solution like <a rel="nofollow" class="external text" href="http://tails.boum.org/">Tails</a> instead. Applications can still learn your computer's hostname, MAC address, serial number, timezone, etc. and those with root privileges can disable the firewall entirely. In other words, transparent torification with iptables protects against accidental connections and DNS leaks by misconfigured software, it is not sufficient to protect against malware or software with serious security vulnerabilities.
+<p>In some cases it is more secure and often easier to transparently torify an entire system instead of configuring individual applications to use Tor's socks port, not to mention preventing DNS leaks. Transparent torification can be done with <a href="../en/Iptables.html" title="Iptables">iptables</a> in such a way that all outbound packets are redirected through Tor's <i>TransPort</i>, except the Tor traffic itself. Once in place, applications do not need to be configured to use Tor, though Tor's <i>SocksPort</i> will still work. This also works for DNS via Tor's <i>DNSPort</i>, but realize that Tor only supports TCP, thus UDP packets other than DNS cannot be sent through Tor and therefore must be blocked entirely to prevent leaks. Using iptables to transparently torify a system affords comparatively strong leak protection, but it is not a substitute for virtualized torification applications such as Whonix, or TorVM <a rel="nofollow" class="external autonumber" href="https://www.whonix.org/wiki/Comparison_with_Others">[5]</a>. Transparent torification also will not protect against fingerprinting attacks on its own, so it is recommended to use an amnesic solution like <a rel="nofollow" class="external text" href="https://tails.boum.org/">Tails</a> instead. Applications can still learn your computer's hostname, MAC address, serial number, timezone, etc. and those with root privileges can disable the firewall entirely. In other words, transparent torification with iptables protects against accidental connections and DNS leaks by misconfigured software, it is not sufficient to protect against malware or software with serious security vulnerabilities.
 </p>
 <p>When a transparent proxy is used, it is possible to start a Tor session from the client as well as from the transparent proxy, creating a "Tor over Tor" scenario.
 Doing so produces undefined and potentially unsafe behavior. In theory, the user could get six hops instead of three in the Tor network. However, it is not guaranteed that the three additional hops received are different; the user could end up with the same hops, possibly in reverse or mixed order. 
@@ -994,7 +970,7 @@ May 23 00:27:24.624 [err] Reading config failed--see warnings above.
 </pre>
 <p>Any files or directories listed in the output from this command needs to have its ownership changed. This can be done individually for each file like so:
 </p>
-<pre>chown tor:tor /var/lib/tor/filename
+<pre>chown tor:tor /var/lib/tor/<i>filename</i>
 </pre>
 <p>Or to change everything listed by the above find example, modify the command to this:
 </p>
@@ -1054,8 +1030,8 @@ Type=simple
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tor&amp;oldid=655151">https://wiki.archlinux.org/index.php?title=Tor&amp;oldid=655151</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 March 2021, at 19:54.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tor&amp;oldid=662462">https://wiki.archlinux.org/index.php?title=Tor&amp;oldid=662462</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:13.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

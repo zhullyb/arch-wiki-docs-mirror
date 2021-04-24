@@ -33,53 +33,61 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p>This page aims to provide as much information as possible to make the Samsung R430 laptop work. There are many variations of the hardware of the unit, so if you had to do something not listed here, please add it.
-</p>
-<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
-<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
-<h2 id="mw-toc-heading">Contents</h2>
-<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Needs more entries (and IDs) in hardware table, lacks firmware and function keys section. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Samsung_R430">Talk:Samsung R430#</a>)</div>
 </div>
-<ul>
-<li class="toclevel-1 tocsection-1"><a href="#Hardware_Specification"><span class="tocnumber">1</span> <span class="toctext">Hardware Specification</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#Touchpad"><span class="tocnumber">2</span> <span class="toctext">Touchpad</span></a></li>
-<li class="toclevel-1 tocsection-3"><a href="#Wireless"><span class="tocnumber">3</span> <span class="toctext">Wireless</span></a></li>
-<li class="toclevel-1 tocsection-4"><a href="#Screen_brightness"><span class="tocnumber">4</span> <span class="toctext">Screen brightness</span></a></li>
-<li class="toclevel-1 tocsection-5"><a href="#Enable_and_disable_features"><span class="tocnumber">5</span> <span class="toctext">Enable and disable features</span></a></li>
-</ul>
-</div>
+<table class="wikitable" style="float: right;">
 
-<h2><span class="mw-headline" id="Hardware_Specification">Hardware Specification</span></h2>
-<ul>
-<li>
-<b>Video:</b> NVIDIA 310M</li>
-<li>
-<b>WLAN:</b> Atheros AR9285</li>
-<li>
-<b>CPU:</b> Intel Core 2 Duo T6600</li>
-<li>
-<b>LAN:</b> Marvell 88E8040 PCI-E Ethernet</li>
-<li>
-<b>Soundcard:</b> Realtek ALC269 (NVIDIA Chipset)</li>
-</ul>
+<tbody>
+<tr>
+<th>Hardware</th>
+<th>PCI/USB ID</th>
+<th>Working?
+</th>
+</tr>
+<tr>
+<td>Touchpad</td>
+<td></td>
+<td data-sort-value="3" style="background: #ffa; color: inherit; vertical-align: middle; text-align: center;">Partial
+</td>
+</tr>
+<tr>
+<td>Keyboard</td>
+<td></td>
+<td data-sort-value="5" style="background: #afa; color: inherit; vertical-align: middle; text-align: center;">Yes
+</td>
+</tr>
+<tr>
+<td>Video</td>
+<td></td>
+<td data-sort-value="5" style="background: #afa; color: inherit; vertical-align: middle; text-align: center;">Yes
+</td>
+</tr>
+<tr>
+<td>Wireless</td>
+<td></td>
+<td data-sort-value="5" style="background: #afa; color: inherit; vertical-align: middle; text-align: center;">Yes
+</td>
+</tr>
+</tbody>
+</table>
 <h2><span class="mw-headline" id="Touchpad">Touchpad</span></h2>
-<p>It's supposed to be multitouch, and works that way in windows, but activating two-finger scroll doesn't do anything.
-</p>
-<h2><span class="mw-headline" id="Wireless">Wireless</span></h2>
-<p>Works out of the box
+<p>Activating two-finger scroll does not seem to work.
 </p>
 <h2><span class="mw-headline" id="Screen_brightness">Screen brightness</span></h2>
-<p>To enable screen brightness, you need to install and activate the kernel module <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvidia-bl/">nvidia-bl</a></span><sup><small>AUR</small></sup> from the AUR. It needs some options tweaked however, so edit <code>/etc/modprobe.d/modprobe.conf</code> to contain:
+<p>To enable screen brightness, you need to install and activate the kernel module <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvidia-bl-dkms/">nvidia-bl-dkms</a></span><sup><small>AUR</small></sup> from the AUR. It needs some options tweaked however, so edit <code>/etc/modprobe.d/modprobe.conf</code> to contain:
 </p>
 <pre>options nvidia-bl max_level=131071 shift=9
 </pre>
-<p>In different models or with different video cards this might not work, so I'll now explain how to get to those values.
+<p>In different models or with different video cards this might not work
 </p>
 <p>max_level is a number one less than a power of 2. to find the ideal one for your laptop just load it with a value (the default is 2047), like
 </p>
 <pre> # modprobe nvidia-bl max_level=level
 </pre>
-<p>and, if it isn't bright enough, try with the next number, not without unloading the module first:
+<p>and, if it is not bright enough, try with the next number, not without unloading the module first:
 </p>
 <pre> # rmmod nvidia-bl
 </pre>
@@ -98,16 +106,20 @@
 </p>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Samsung.html" title="Category:Samsung">Samsung</a></li></ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Samsung_R430&amp;oldid=652801">https://wiki.archlinux.org/index.php?title=Samsung_R430&amp;oldid=652801</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 February 2021, at 02:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Samsung_R430&amp;oldid=657625">https://wiki.archlinux.org/index.php?title=Samsung_R430&amp;oldid=657625</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 4 April 2021, at 20:59.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

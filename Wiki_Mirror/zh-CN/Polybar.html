@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Polybar (简体中文) - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Polybar_简体中文 rootpage-Polybar_简体中文 skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">Polybar (简体中文)</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<p><a rel="nofollow" class="external text" href="https://github.com/jaagr/polybar">polybar</a> 是一种能简单快速地创建状态栏的工具。它可以自定义许多功能模块，比如工作区、日期和音量等等。Polybar对于一些没有状态栏或者状态栏的功能有限的<a href="../zh-CN/Window_manager.html" title="Window manager (简体中文)">窗口管理器</a>格外有用，例如<a href="../en/Awesome.html" title="Awesome">awesome</a>和<a href="../en/I3.html" title="I3">i3</a>。Polybar也可以用于<a href="../en/KDE.html#Plasma" class="mw-redirect" title="Plasma">Plasma</a>这样的<a href="../zh-CN/Desktop_environment.html" title="Desktop environment (简体中文)">桌面环境</a>。
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#%E5%AE%89%E8%A3%85"><span class="tocnumber">1</span> <span class="toctext">安装</span></a></li>
+<li class="toclevel-1 tocsection-2">
+<a href="#%E9%85%8D%E7%BD%AE"><span class="tocnumber">2</span> <span class="toctext">配置</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#%E8%BF%90%E8%A1%8CPolybar"><span class="tocnumber">2.1</span> <span class="toctext">运行Polybar</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#%E9%85%8D%E7%BD%AE%E6%A0%B7%E4%BE%8B"><span class="tocnumber">2.2</span> <span class="toctext">配置样例</span></a></li>
+<li class="toclevel-2 tocsection-5">
+<a href="#%E5%9C%A8%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8C"><span class="tocnumber">2.3</span> <span class="toctext">在窗口管理器中运行</span></a>
+<ul>
+<li class="toclevel-3 tocsection-6"><a href="#bspwm"><span class="tocnumber">2.3.1</span> <span class="toctext">bspwm</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#i3"><span class="tocnumber">2.3.2</span> <span class="toctext">i3</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8">
+<a href="#%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94"><span class="tocnumber">3</span> <span class="toctext">疑难解答</span></a>
+<ul>
+<li class="toclevel-2 tocsection-9"><a href="#Cannot_open_shared_object_file_libjsoncpp.so"><span class="tocnumber">3.1</span> <span class="toctext">Cannot open shared object file libjsoncpp.so</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10"><a href="#%E5%8F%82%E8%A7%81"><span class="tocnumber">4</span> <span class="toctext">参见</span></a></li>
+</ul>
+</div>
+
+<h2>
+<span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
+</h2>
+<p><a href="../zh-CN/Help:Reading.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" class="mw-redirect" title="Install (简体中文)">安装</a><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/polybar/">polybar</a></span><sup><small>AUR</small></sup>包，或者安装它的开发版本<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/polybar-git/">polybar-git</a></span><sup><small>AUR</small></sup>.
+</p>
+<h2>
+<span id=".E9.85.8D.E7.BD.AE"></span><span class="mw-headline" id="配置">配置</span>
+</h2>
+<p>将配置文件样例<code>/usr/share/doc/polybar/config</code>复制到<code>$XDG_CONFIG_HOME/polybar/config</code>.
+</p>
+<h4>
+<span id=".E8.BF.90.E8.A1.8CPolybar"></span><span class="mw-headline" id="运行Polybar">运行Polybar</span>
+</h4>
+<p>Polybar可以携带以下参数运行：
+</p>
+<pre>Usage: polybar [OPTION]... BAR
+
+  -h, --help               显示帮助信息并退出
+  -v, --version            显示构建详情并退出
+  -l, --log=LEVEL          设置日志的详细级别 （默认: WARNING）
+                           LEVEL可以是：error, warning, info, trace
+  -q, --quiet              保持安静，不显示日志 （会覆盖参数-l）
+  -c, --config=FILE        配置文件的路径
+  -r, --reload             当配置文件被修改后自动重新加载
+  -d, --dump=PARAM         输出参数PARAM的值并退出
+  -m, --list-monitors      输出可用的显示器列表并退出
+  -w, --print-wmname       输出生成的WM_NAME并退出
+  -s, --stdout             将数据打印到标准输出，而不是在图形界面中展示
+  -p, --png=FILE           运行3秒后将截图保存到文件
+</pre>
+<p>你可能想要在你的窗口管理器的引导程序中启动Polybar，详见<a href="#%E5%9C%A8%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8C">#在窗口管理器中运行</a>.
+</p>
+<h4>
+<span id=".E9.85.8D.E7.BD.AE.E6.A0.B7.E4.BE.8B"></span><span class="mw-headline" id="配置样例">配置样例</span>
+</h4>
+<p>以下是一份基础的配置：
+</p>
+<pre>[bar/mybar]
+modules-right = date
+
+[module/date]
+type = internal/date
+date = %Y-%m-%d%</pre>
+<p>它定义了一个bar<code>mybar</code>并在其中加入了一个模块<code>date</code>.
+</p>
+<p>Polybar默认生成了一个包含很多配置好的模块的配置文件<code>/usr/share/doc/polybar/config</code>
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>注意：</strong> 这份配置文件样例不是为了给每个人开箱即用而设计的，你可能需要根据你的需求进行一些修改。
+</div>
+<h4>
+<span id=".E5.9C.A8.E7.AA.97.E5.8F.A3.E7.AE.A1.E7.90.86.E5.99.A8.E4.B8.AD.E8.BF.90.E8.A1.8C"></span><span class="mw-headline" id="在窗口管理器中运行">在窗口管理器中运行</span>
+</h4>
+<p>创建一个包含启动逻辑的<a href="../en/Help:Reading.html#Make_executable" class="mw-redirect" title="Executable">executable</a>，例如<code>$HOME/.config/polybar/launch.sh</code>：
+</p>
+<pre>#!/bin/bash
+
+# 终端可能已经有在运行的实例
+killall -q polybar
+
+# 等待进程被终止
+while pgrep -u $UID -x polybar &gt;/dev/null; do sleep 1; done
+
+# 运行Polybar，使用默认的配置文件路径 ~/.config/polybar/config
+polybar mybar &amp;
+
+echo "Polybar launched..."
+</pre>
+<p>这个脚本会在窗口管理器重启后重新运行Polybar
+</p>
+<h6><span class="mw-headline" id="bspwm">bspwm</span></h6>
+<p>如果使用的是<a href="../en/Bspwm.html" title="Bspwm">bspwm</a>，将下面内容添加到<code>bspwmrc</code>：
+</p>
+<pre>$HOME/.config/polybar/launch.sh
+</pre>
+<h6><span class="mw-headline" id="i3">i3</span></h6>
+<p>如果使用的是<a href="../en/I3.html" title="I3">i3</a>，将下面内容添加到你的i3的配置文件：
+</p>
+<pre>exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+</pre>
+<h2>
+<span id=".E7.96.91.E9.9A.BE.E8.A7.A3.E7.AD.94"></span><span class="mw-headline" id="疑难解答">疑难解答</span>
+</h2>
+<h3><span class="mw-headline" id="Cannot_open_shared_object_file_libjsoncpp.so">Cannot open shared object file libjsoncpp.so</span></h3>
+<p>Github中<a rel="nofollow" class="external text" href="https://github.com/jaagr/polybar/issues/885">issue</a>有相关内容，尝试重新安装。
+</p>
+<p>如果依然失败，尝试<a href="../zh-CN/Help:Reading.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" class="mw-redirect" title="Install (简体中文)">安装</a><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=jsoncpp">jsoncpp</a></span>包。
+</p>
+<h2>
+<span id=".E5.8F.82.E8.A7.81"></span><span class="mw-headline" id="参见">参见</span>
+</h2>
+<ul><li><a rel="nofollow" class="external text" href="https://github.com/jaagr/polybar/wiki/">Polybar Github Wiki</a></li></ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Eye_candy.html" title="Category:Eye candy (简体中文)">Eye candy (简体中文)</a></li></ul>
+</div></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Polybar_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663909">https://wiki.archlinux.org/index.php?title=Polybar_(简体中文)&amp;oldid=663909</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 24 April 2021, at 06:08.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

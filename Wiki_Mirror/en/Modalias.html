@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -45,8 +46,8 @@
 <span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
 </div>
 <ul>
-<li class="toclevel-1 tocsection-1"><a href="#What_is_a_'modalias'"><span class="tocnumber">1</span> <span class="toctext">What is a 'modalias'</span></a></li>
-<li class="toclevel-1 tocsection-2"><a href="#What_is_a_'modalias'_file?"><span class="tocnumber">2</span> <span class="toctext">What is a 'modalias' file?</span></a></li>
+<li class="toclevel-1 tocsection-1"><a href="#What_is_a_modalias"><span class="tocnumber">1</span> <span class="toctext">What is a modalias</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#What_is_a_modalias_file?"><span class="tocnumber">2</span> <span class="toctext">What is a modalias file?</span></a></li>
 <li class="toclevel-1 tocsection-3"><a href="#How_is_this_information_used?"><span class="tocnumber">3</span> <span class="toctext">How is this information used?</span></a></li>
 <li class="toclevel-1 tocsection-4"><a href="#Where_does_this_modules.alias_file_come_from?"><span class="tocnumber">4</span> <span class="toctext">Where does this modules.alias file come from?</span></a></li>
 <li class="toclevel-1 tocsection-5"><a href="#How_does_udev_work?"><span class="tocnumber">5</span> <span class="toctext">How does udev work?</span></a></li>
@@ -54,25 +55,23 @@
 </ul>
 </div>
 
-<h2>
-<span id="What_is_a_.27modalias.27"></span><span class="mw-headline" id="What_is_a_'modalias'">What is a 'modalias'</span>
-</h2>
-<p>Modalias is a little sysfs trick that exports hardware information to a file named 'modalias'.  This file simply contains a formatted form of the information normal hardware exposes.  Let's look at a quick example before we continue:
+<h2><span class="mw-headline" id="What_is_a_modalias">What is a modalias</span></h2>
+<p>Modalias is a little sysfs trick that exports hardware information to a file named 'modalias'.  This file simply contains a formatted form of the information normal hardware exposes.  Let us look at a quick example before we continue:
 </p>
 <pre>$ cat /sys/devices/pci0000:00/0000:00:1f.1/modalias
      pci:v00008086d000024DBsv0000103Csd0000006Abc01sc01i8A
 </pre>
-<p>Don't worry, it will all become clear soon.
+<p>Do not worry, it will all become clear soon.
 </p>
 <h2>
-<span id="What_is_a_.27modalias.27_file.3F"></span><span class="mw-headline" id="What_is_a_'modalias'_file?">What is a 'modalias' file?</span>
+<span id="What_is_a_modalias_file.3F"></span><span class="mw-headline" id="What_is_a_modalias_file?">What is a modalias file?</span>
 </h2>
-<p>As described above, a modalias file simply exposes the information that a given piece of hardware already tells the kernel.  This file simply specifies a structure for exposing this information.  Let's return to the example above:
+<p>As described above, a modalias file simply exposes the information that a given piece of hardware already tells the kernel.  This file simply specifies a structure for exposing this information.  Let us return to the example above:
 </p>
 <pre>$ cat /sys/devices/pci0000:00/0000:00:1f.1/modalias
   pci:v00008086d000024DBsv0000103Csd0000006Abc01sc01i8A
 </pre>
-<p>Let's take it apart piece-by-piece.  First, the file name.
+<p>Let us take it apart piece-by-piece.  First, the file name.
 </p>
 <pre>/sys/devices/pci0000:00/0000:00:1f.1/modalias
 </pre>
@@ -87,12 +86,12 @@
 <pre>$ lspci
   00:1f.1 IDE interface: Intel Corp.: Unknown device 24db (rev 02)
 </pre>
-<p>Now, let's take a peek at the contents of this modalias file for device 00:1f.1:
+<p>Now, let us take a peek at the contents of this modalias file for device 00:1f.1:
 </p>
 <pre>pci:v00008086d000024DBsv0000103Csd0000006Abc01sc01i8A
 </pre>
 <p>Well, hey, I can see pci!  I recognize that, but what's all this gibberish at the end?
-This gibberish is actually structured data.  You will notice a repeating letter/number scheme.  Let's split this apart to make it easier to read:
+This gibberish is actually structured data.  You will notice a repeating letter/number scheme.  Let us split this apart to make it easier to read:
 </p>
 <pre>v  00008086
 d  000024DB
@@ -122,7 +121,7 @@ i  8A
 </h2>
 <p>Ok, now we all know what this information is.  A bunch of obscure numbers that each device exposes.  Big deal.  How does this matter when talking about modules?
 </p>
-<p>One thing which people tend to ignore, is all the work <b>depmod</b> does.  When you run depmod, it builds a series of "map" files in /lib/modules/`uname -r` which tell modprobe how to handle certain things it needs to do.  In this case we can ignore most of them.  The important one is <b>modules.alias</b>.  This file contains aliases, or secondary names for modules.  Just for a demonstration, let's look at aliases for, say, snd_intel8x0m:
+<p>One thing which people tend to ignore, is all the work <b>depmod</b> does.  When you run depmod, it builds a series of "map" files in /lib/modules/`uname -r` which tell modprobe how to handle certain things it needs to do.  In this case we can ignore most of them.  The important one is <b>modules.alias</b>.  This file contains aliases, or secondary names for modules.  Just for a demonstration, let us look at aliases for, say, snd_intel8x0m:
 </p>
 <pre>$ grep snd_intel8x0m /lib/modules/`uname -r`/modules.alias
   alias pci:v00008086d00002416sv*sd*bc*sc*i* snd_intel8x0m
@@ -196,7 +195,7 @@ i  8A
 </p>
 <pre>DRIVER!="?*", ENV{MODALIAS}=="?*", RUN{builtin}="kmod load $env{MODALIAS}"
 </pre>
-<p>Yep, that's it.  It's a one-liner.  This simple line, which is part of the default udev rules replace hotplug.  Amazing, isn't it?
+<p>Yep, that's it.  It's a one-liner.  This simple line, which is part of the default udev rules replace hotplug.  Amazing, is it not?
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <p>This article shows others modalias templates, i.e. for usb, dmi and acpi subtypes
@@ -217,8 +216,8 @@ i  8A
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Modalias&amp;oldid=633230">https://wiki.archlinux.org/index.php?title=Modalias&amp;oldid=633230</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 August 2020, at 13:42.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Modalias&amp;oldid=658326">https://wiki.archlinux.org/index.php?title=Modalias&amp;oldid=658326</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 April 2021, at 02:28.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

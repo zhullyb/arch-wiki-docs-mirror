@@ -68,7 +68,7 @@
 <p>Package names for Node.js libraries should start with a <code>nodejs-</code> prefix. For standalone applications, just use the program name.
 </p>
 <h2><span class="mw-headline" id="Using_npm">Using npm</span></h2>
-<p>When installing with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=npm">npm</a></span>, add it as a build dependency:
+<p>When installing with <a href="../en/Node.js.html#Node_Packaged_Modules" class="mw-redirect" title="Npm">npm</a>, add it as a build dependency:
 </p>
 <pre>makedepends=('npm')
 </pre>
@@ -76,7 +76,7 @@
 </p>
 <pre>noextract=("${pkgname}-${pkgver}.tgz")
 </pre>
-<p>This is a minimal <code>package</code> function:
+<p>This is a minimal <a href="../en/PKGBUILD.html#package" title="PKGBUILD">package</a> function:
 </p>
 <pre>package() {
     npm install -g --prefix "${pkgdir}/usr" "${srcdir}/${pkgname}-${pkgver}.tgz"
@@ -91,24 +91,24 @@
 }
 </pre>
 <h3><span class="mw-headline" id="Setting_temporary_cache">Setting temporary cache</span></h3>
-<p>When npm processes <code>package.json</code> in order to build a package it downloads dependencies to its default cache folder at <code>$HOME/.npm</code>. To avoid littering user's home folder we can temporarily set a different cache folder with <code>--cache</code> flag:
+<p>When <i>npm</i> processes <code>package.json</code> in order to build a package it downloads dependencies to its default cache folder at <code>$HOME/.npm</code>. To avoid littering user's home folder we can temporarily set a different cache folder with <code>--cache</code> flag.
 </p>
-<p>Download dependencies to <code>${srcdir}/npm-cache</code> and install them in package directory
+<p>Download dependencies to <code>${srcdir}/npm-cache</code> and install them in package directory:
 </p>
 <pre>npm install --cache "${srcdir}/npm-cache" 
 </pre>
-<p>Continue with packaging as usual
+<p>Continue with packaging as usual:
 </p>
 <pre>npm run packager
 </pre>
 <h3>
 <span id="Package_contains_reference_to_.24srcdir.2F.24pkgdir"></span><span class="mw-headline" id="Package_contains_reference_to_$srcdir/$pkgdir">Package contains reference to $srcdir/$pkgdir</span>
 </h3>
-<p>npm unfortunately creates references to the source dir and the pkg dir, this is <a rel="nofollow" class="external text" href="https://github.com/npm/npm/issues/12110">a known issue</a>. However, you may remove those references manually since they are not used in any way.
+<p><i>npm</i> unfortunately creates references to the source dir and the pkg dir, this is <a rel="nofollow" class="external text" href="https://github.com/npm/npm/issues/12110">a known issue</a>. However, you may remove those references manually since they are not used in any way.
 </p>
 <p>All dependencies will contain a reference to <code>$pkgdir</code>, in the <code>_where</code> attribute. You can usually remove those attributes with some <i>sed</i> magic as follows:
 </p>
-<pre> find "$pkgdir" -name package.json -print0 | xargs -r -0 sed -i '/_where/d'
+<pre>find "$pkgdir" -name package.json -print0 | xargs -r -0 sed -i '/_where/d'
 </pre>
 <p>Your main package will have some other references too. The easiest way to remove those is to remove all underscored properties, but that is not as easy with <i>sed</i>. Instead, you can use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=jq">jq</a></span> for similar results as follows:
 </p>
@@ -121,51 +121,49 @@ chmod 644 "$pkgjson"
 <p>Another place where you may find references to <code>$pkgdir</code> is the <code>man</code> attributes of packages. If you don't care about man pages (they won't be installed for dependencies anyway), you may delete them like this:
 </p>
 <pre>find "$pkgdir" -type f -name package.json | while read pkgjson; do
-	local tmppackage="$(mktemp)"
-	jq 'del(.man)' "$pkgjson" &gt; "$tmppackage"
-	mv "$tmppackage" "$pkgjson"
-	chmod 644 "$pkgjson"
-done</pre>
+    local tmppackage="$(mktemp)"
+    jq 'del(.man)' "$pkgjson" &gt; "$tmppackage"
+    mv "$tmppackage" "$pkgjson"
+    chmod 644 "$pkgjson"
+done
+</pre>
 <p>An example of all three of these techniques can be seen in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/readability-cli/">readability-cli</a></span><sup><small>AUR</small></sup>.
 </p>
 <h2><span class="mw-headline" id="Using_nvm">Using nvm</span></h2>
-<p>When a <a href="../en/Node.js.html" title="Node.js">node.js</a> based application requires different version for <b>building</b> or <b>packaging</b>, 
-then <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvm/">nvm</a></span><sup><small>AUR</small></sup> can be leveraged.
+<p>When a <a href="../en/Node.js.html" title="Node.js">node.js</a>-based application requires different version for <b>building</b> or <b>packaging</b>, then <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvm/">nvm</a></span><sup><small>AUR</small></sup> can be leveraged.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> This applies only for building/packaging needs of the application and does not replace runtime dependency</div>
 <p>Add it as a build dependency:
 </p>
-<pre> makedepends=('npm' 'nvm')
+<pre>makedepends=('npm' 'nvm')
 </pre>
-<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvm/">nvm</a></span><sup><small>AUR</small></sup> uses <code>NVM_DIR</code> environment variable to look for it's prefix, 
-which is set to <code>$HOME/.nvm</code> if not specified before <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvm/">nvm</a></span><sup><small>AUR</small></sup> initialization.
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvm/">nvm</a></span><sup><small>AUR</small></sup> uses <code>NVM_DIR</code> <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a> to look for its prefix, which is set to <code>$HOME/.nvm</code> if not specified before <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvm/">nvm</a></span><sup><small>AUR</small></sup> initialization.
 </p>
-<p>You can use this function to create and isolate your custom prefix from user's location
+<p>You can use the following function to create and isolate your custom prefix from user's location:
 </p>
 <pre>_ensure_local_nvm() {
-  # lets be sure we are starting clean
-  which nvm &gt;/dev/null 2&gt;&amp;1 &amp;&amp; nvm deactivate &amp;&amp; nvm unload
-  export NVM_DIR="${srcdir}/.nvm"
+    # let's be sure we are starting clean
+    which nvm &gt;/dev/null 2&gt;&amp;1 &amp;&amp; nvm deactivate &amp;&amp; nvm unload
+    export NVM_DIR="${srcdir}/.nvm"
 
-  # The init script returns 3 if version
-  # specified in ./.nvrc is not (yet) installed in $NVM_DIR
-  # but nvm itself still gets loaded ok
-  source /usr/share/nvm/init-nvm.sh || [[ $? != 1 ]]
+    # The init script returns 3 if version specified
+    # in ./.nvrc is not (yet) installed in $NVM_DIR
+    # but nvm itself still gets loaded ok
+    source /usr/share/nvm/init-nvm.sh || [[ $? != 1 ]]
 }
 </pre>
-<p>This function should be called before interacting with
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvm/">nvm</a></span><sup><small>AUR</small></sup>, <a href="../en/Node.js.html#Node_Packaged_Modules" class="mw-redirect" title="Npm">npm</a> or any other <a href="../en/Node.js.html" title="Node.js">node.js</a> based programs that should use the specified version.
+<p>This function should be called before interacting with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/nvm/">nvm</a></span><sup><small>AUR</small></sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=npm">npm</a></span> or any other <a href="../en/Node.js.html" title="Node.js">node.js</a>-based programs that should use the specified version.
 </p>
 <h5><span class="mw-headline" id="Example_PKGBUILD_usage">Example <a href="../en/PKGBUILD.html" title="PKGBUILD">PKGBUILD</a> usage</span></h5>
 <pre>prepare() {
-  _ensure_local_nvm
-  nvm install 14.15.0
+    _ensure_local_nvm
+    nvm install 14.15.0
 }
 
 build() {
-  _ensure_local_nvm
-  npm install
+    _ensure_local_nvm
+    npm install
 }
 </pre>
 <p>Alternatively, bare <code>nvm install</code> will look for a version string in <code>.nvrc</code> file in the current directory.
@@ -182,8 +180,8 @@ build() {
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Node.js_package_guidelines&amp;oldid=654198">https://wiki.archlinux.org/index.php?title=Node.js_package_guidelines&amp;oldid=654198</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 8 March 2021, at 07:29.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Node.js_package_guidelines&amp;oldid=659599">https://wiki.archlinux.org/index.php?title=Node.js_package_guidelines&amp;oldid=659599</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 April 2021, at 14:33.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

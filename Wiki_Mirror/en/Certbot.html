@@ -211,7 +211,7 @@ SSLCertificateKeyFile /etc/letsencrypt/live/'domain'/privkey.pem
 </div>
 <p>When using the webroot method the Certbot client places a challenge response inside <code>/path/to/domain.tld/html/.well-known/acme-challenge/</code> which is used for validation.
 </p>
-<p>The use of this method is recommend over a manual install; it offers automatic renewal and easier certificate management. However the usage of <a href="#Plugins">#Plugins</a> may be the preferred since it allows automatic configuration and installation.
+<p>The use of this method is recommended over a manual install; it offers automatic renewal and easier certificate management. However the usage of <a href="#Plugins">#Plugins</a> may be the preferred since it allows automatic configuration and installation.
 </p>
 <h4><span class="mw-headline" id="Mapping_ACME-challenge_requests">Mapping ACME-challenge requests</span></h4>
 <div class="noprint archwiki-template-message">
@@ -314,10 +314,10 @@ Description=Let's Encrypt renewal
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/certbot renew --quiet --agree-tos</pre>
-<p>If you do not use a plugin to manage the web server configuration automatically, the web server has to be reloaded manually to reload the certificates each time they are renewed. This can be done by adding <code>--deploy-hook "systemctl reload nginx.service"</code> to the <code>ExecStart</code> command <a rel="nofollow" class="external autonumber" href="https://certbot.eff.org/docs/using.html#renewing-certificates">[1]</a>. Of course use <code>httpd.service</code> instead of <code>nginx.service</code> if appropriate.
+<p>If you do not use a plugin to manage the web server configuration automatically, the web server has to be reloaded manually to reload the certificates each time they are renewed. This can be done by adding <code>--post-hook "systemctl reload nginx.service"</code> to the <code>ExecStart</code> command <a rel="nofollow" class="external autonumber" href="https://certbot.eff.org/docs/using.html#renewing-certificates">[1]</a>. Of course use <code>httpd.service</code> instead of <code>nginx.service</code> if appropriate.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Before adding a <a href="../en/Systemd/Timers.html" title="Systemd/Timers">timer</a>, check that the service is working correctly and is not trying to prompt anything. Note that the service may take up to 480 seconds to complete since a delay is added to calling certbot non-interactively since <a rel="nofollow" class="external text" href="https://github.com/certbot/certbot/blob/master/CHANGELOG.md#0290---2018-12-05">v0.29.0</a>.</div>
+<strong>Note:</strong> Before adding a <a href="../en/Systemd/Timers.html" title="Systemd/Timers">timer</a>, check that the service is working correctly and is not trying to prompt anything. Note that the service may take up to 480 seconds to complete since a delay is added to calling certbot non-interactively since <a rel="nofollow" class="external text" href="https://github.com/certbot/certbot/blob/master/certbot/CHANGELOG.md#0290---2018-12-05">v0.29.0</a>.</div>
 <p>Add a timer to check for certificate renewal twice a day and include a randomized delay so that everyone's requests for renewal will be spread over the day to lighten the Let's Encrypt server load <a rel="nofollow" class="external autonumber" href="https://certbot.eff.org/#arch-nginx">[2]</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/certbot.timer</pre>
@@ -410,8 +410,8 @@ dns_rfc2136_algorithm = HMAC-SHA512</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Certbot&amp;oldid=653462">https://wiki.archlinux.org/index.php?title=Certbot&amp;oldid=653462</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 February 2021, at 06:25.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Certbot&amp;oldid=662748">https://wiki.archlinux.org/index.php?title=Certbot&amp;oldid=662748</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 07:55.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

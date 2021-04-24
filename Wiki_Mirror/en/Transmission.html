@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,7 +33,7 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p><a rel="nofollow" class="external text" href="http://www.transmissionbt.com/">Transmission</a> is a light-weight and cross-platform BitTorrent client.
+<p><a rel="nofollow" class="external text" href="https://www.transmissionbt.com/">Transmission</a> is a light-weight and cross-platform BitTorrent client.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -252,7 +253,7 @@ Otherwise, you will get a "421 Misdirected Request" error when accessing the ser
 <h4><span class="mw-headline" id="Watch_dir">Watch dir</span></h4>
 <p>If you want to <i>Automatically add .torrent files from a folder</i>, but you find that the <code>watch-dir</code> and <code>watch-dir-enabled</code> options set in the config file do not work, you can start the transmission daemon with the flag <code>-c /path/to/watch/dir</code>.
 </p>
-<p>If you're using systemd, edit the <code>transmission.service</code> unit as described in <a href="../en/Systemd.html#Editing_provided_units" title="Systemd">systemd#Editing provided units</a>.
+<p>If you are using systemd, edit the <code>transmission.service</code> unit as described in <a href="../en/Systemd.html#Editing_provided_units" title="Systemd">systemd#Editing provided units</a>.
 </p>
 <h4><span class="mw-headline" id="Enable_IPv6">Enable IPv6</span></h4>
 <p>By default, the daemon only listens for IPv4 connections. To also listen for IPv6 connections, change the <code>rpc-bind-address</code> option to <code>"::"</code> in <code>settings.json</code>.
@@ -278,37 +279,35 @@ Otherwise, you will get a "421 Misdirected Request" error when accessing the ser
 </p>
 <p>Now you are ready to launch the web interface by either clicking on the <b>Open web client</b>, which makes your default web browser open it, or manually reaching <code>http://<i>TARGET_IP_ADDRESS</i>:<i>PORT</i></code> with any supported web browser.
 </p>
-<p>If you haven't changed the listening port, the default one is 9091. In this case, the link is <code><a rel="nofollow" class="external free" href="http://localhost:9091">http://localhost:9091</a></code>
+<p>If you have not changed the listening port, the default one is 9091. In this case, the link is <code><a rel="nofollow" class="external free" href="http://localhost:9091">http://localhost:9091</a></code>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Keep in mind that <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=transmission-cli">transmission-cli</a></span> must be installed</div>
 <h3><span class="mw-headline" id="The_CLI_way">The CLI way</span></h3>
-<p>You don't need a graphical interface to set up the web interface, the daemon offers the very same options. You can reach the web interface without specifing any flags. See <a href="#Starting_and_stopping_the_daemon">#Starting and stopping the daemon</a>
+<p>You do not need a graphical interface to set up the web interface, the daemon offers the very same options. You can reach the web interface without specifing any flags. See <a href="#Starting_and_stopping_the_daemon">#Starting and stopping the daemon</a>
 </p>
 <p>Nevertheless, you can specify everything that you see in the previous section:
 </p>
 <pre>$ transmission-daemon --auth --username arch --password linux --port 9091 --allowed "127.0.0.1"</pre>
 <p> is equivalent to </p>
 <pre>$ transmission-daemon -t -u arch -v linux -p 9091 -a "127.0.0.1"</pre>
-<p><br>
-</p>
 <h3><span class="mw-headline" id="Optional_web_UI_theme">Optional web UI theme</span></h3>
 <p>If the default user interface of the web app seems outdated, and less fancy then expected try using this simple CSS theme 
 </p>
 <p><a rel="nofollow" class="external free" href="https://git.eigenlab.org/sbiego/transmission-web-soft-theme">https://git.eigenlab.org/sbiego/transmission-web-soft-theme</a>
 </p>
-<p>There's also a proyect of a full replacement that can coexist with the default UI
+<p>There is also a proyect of a full replacement that can coexist with the default UI
 </p>
 <p><a rel="nofollow" class="external free" href="https://github.com/ronggang/transmission-web-control">https://github.com/ronggang/transmission-web-control</a>
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
-<h4><span class="mw-headline" id="Cannot_access_the_daemon_over_the_network">Cannot access the daemon over the network</span></h4>
+<h3><span class="mw-headline" id="Cannot_access_the_daemon_over_the_network">Cannot access the daemon over the network</span></h3>
 <p>The daemon is started after <code>network.service</code> was initialised. However, if you enable the service <code>dhcpcd</code> as opposed to the device-specific service, such as <code>dhcpcd@enp1s0.service</code> for example, it may happen that Transmission is started too early and cannot bind to the network interface. Thus, the web interface is unreachable. A possible solution is to add the <code>Requires</code> line to the unit's <a href="../en/Systemd.html#Editing_provided_units" title="Systemd">configuration file</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/transmission.service.d/fixdep.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
 Requires=network.target</pre>
-<h4><span class="mw-headline" id="Web_interface_cannot_be_reached">Web interface cannot be reached</span></h4>
+<h3><span class="mw-headline" id="Web_interface_cannot_be_reached">Web interface cannot be reached</span></h3>
 <pre>404: Not Found
 
 Couldn't find Transmission's web interface files!
@@ -318,9 +317,9 @@ Users: to tell Transmission where to look, set the TRANSMISSION_WEB_HOME environ
 Package Builders: to set a custom default at compile time, #define PACKAGE_DATA_DIR in libtransmission/platform.c or tweak tr_getClutchDir () by hand.</pre>
 <p>Even if you use the graphical interface, you still need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=transmission-cli">transmission-cli</a></span> in order for web interface to work.
 </p>
-<h4>
+<h3>
 <span id="Failed_to_set_send.2Freceive_buffer"></span><span class="mw-headline" id="Failed_to_set_send/receive_buffer">Failed to set send/receive buffer</span>
-</h4>
+</h3>
 <p>Transmission might display either of these messages in the journal on startup:
 </p>
 <pre>UDP Failed to set receive buffer: requested 4194304, got 425984
@@ -344,8 +343,8 @@ UDP Failed to set send buffer: requested 1048576, got 425984
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Transmission&amp;oldid=643566">https://wiki.archlinux.org/index.php?title=Transmission&amp;oldid=643566</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 5 December 2020, at 21:05.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Transmission&amp;oldid=662472">https://wiki.archlinux.org/index.php?title=Transmission&amp;oldid=662472</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:14.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

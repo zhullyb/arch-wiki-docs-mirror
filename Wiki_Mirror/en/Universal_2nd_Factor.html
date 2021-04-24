@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,8 +33,7 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p><br>
-<a href="https://en.wikipedia.org/wiki/Universal_2nd_Factor" class="extiw" title="wikipedia:Universal 2nd Factor">Universal 2nd Factor (U2F)</a> is an open standard that strengthens and simplifies two-factor authentication (2FA) using specialized USB or NFC devices based on similar security technology found in smart cards.
+<p><a href="https://en.wikipedia.org/wiki/Universal_2nd_Factor" class="extiw" title="wikipedia:Universal 2nd Factor">Universal 2nd Factor (U2F)</a> is an open standard that strengthens and simplifies two-factor authentication (2FA) using specialized USB or NFC devices based on similar security technology found in smart cards.
 </p>
 <p>While initially developed by Google and Yubico, with contribution from NXP Semiconductors, the standard is now hosted by the FIDO Alliance.
 </p>
@@ -70,12 +70,12 @@
 <h2><span class="mw-headline" id="Authentication_for_websites">Authentication for websites</span></h2>
 <p>U2F is supported by major sites like Google, Facebook, Twitter, or GitHub. Check out <a rel="nofollow" class="external text" href="https://twofactorauth.org/">twofactorauth.org</a> or <a rel="nofollow" class="external text" href="https://www.dongleauth.info/">dongleauth.info</a> to find other websites and links to setup documentation. For all browsers which support it, likely the only action required is to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libfido2">libfido2</a></span>. Yubico offers a <a rel="nofollow" class="external text" href="https://demo.yubico.com/">demo page</a> for testing.
 </p>
-<h4><span class="mw-headline" id="Firefox">Firefox</span></h4>
+<h3><span class="mw-headline" id="Firefox">Firefox</span></h3>
 <p><a href="../en/Firefox/Tweaks.html#Fido_U2F_authentication" title="Firefox/Tweaks">Firefox/Tweaks#Fido U2F authentication</a>
 </p>
-<h4>
+<h3>
 <span id="Chromium.2FChrome"></span><span class="mw-headline" id="Chromium/Chrome">Chromium/Chrome</span>
-</h4>
+</h3>
 <p><a href="../en/Chromium.html#U2F_authentication" class="mw-redirect" title="Chromium/Tips and tricks">Chromium/Tips and tricks#U2F authentication</a>
 </p>
 <h2><span class="mw-headline" id="Authentication_for_Arch_Linux">Authentication for Arch Linux</span></h2>
@@ -88,26 +88,30 @@
 <p>Keys need to be added with the tool <code>pamu2fcfg</code>:
 </p>
 <pre>$ mkdir ~/.config/Yubico
-$ pamu2fcfg -o pam://hostname -i pam://hostname &gt; ~/.config/Yubico/u2f_keys</pre>
+$ pamu2fcfg -o pam://hostname -i pam://hostname &gt; ~/.config/Yubico/u2f_keys
+</pre>
 <p>Click the button of your U2F key to confirm the key.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If the hostname of your system changes, e.g. because of DHCP in different networks, you would be unable to login. In order to prevent that, it is recommended to specify the abovementioned options and replace <code>hostname</code> with the actual hostname.</div>
 <p>If you own multiple keys, append them with
 </p>
-<pre>$ pamu2fcfg -o pam://hostname -i pam://hostname -n &gt;&gt; ~/.config/Yubico/u2f_keys</pre>
+<pre>$ pamu2fcfg -o pam://hostname -i pam://hostname -n &gt;&gt; ~/.config/Yubico/u2f_keys
+</pre>
 <h3><span class="mw-headline" id="Passwordless_sudo">Passwordless sudo</span></h3>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Before making any changes to your configuration, create a separate terminal window with superuser permissions (<code>sudo -s</code>). This way you can revert any changes if something goes wrong.</div>
+<strong>Warning:</strong> Before making any changes to your configuration, start a separate shell with root permissions (e.g. <code>sudo -s</code>). This way you can revert any changes if something goes wrong.</div>
 <p>Open <code>/etc/pam.d/sudo</code> and add
 </p>
-<pre>auth            sufficient      pam_u2f.so origin=pam://hostname appid=pam://hostname</pre>
+<pre>auth            sufficient      pam_u2f.so origin=pam://hostname appid=pam://hostname
+</pre>
 <p>as the first line. Be sure to replace the <code>hostname</code> as mentioned above. Then create a new terminal and type <code>sudo ls</code>. Your key's LED should flash and after clicking it the command is executed.
 </p>
 <h3><span class="mw-headline" id="GDM_login">GDM login</span></h3>
 <p>Open <code>/etc/pam.d/gdm-password</code> and add
 </p>
-<pre>auth            required      pam_u2f.so nouserok origin=pam://hostname appid=pam://hostname</pre>
+<pre>auth            required      pam_u2f.so nouserok origin=pam://hostname appid=pam://hostname
+</pre>
 <p>after the existing <code>auth</code> lines. Please note the use of the <code>nouserok</code> option which allows the rule to fail if the user did not configure a key. This way setups with multiple users where only some of them use a U2F key are supported.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -119,7 +123,7 @@ $ pamu2fcfg -o pam://hostname -i pam://hostname &gt; ~/.config/Yubico/u2f_keys</
 <p>If you managed to lock yourself out of the system, boot into recovery mode or from a USB pen drive. Then revert the changes in the PAM config and reboot.
 </p>
 <h2><span class="mw-headline" id="OpenSSH">OpenSSH</span></h2>
-<p>OpenSSH supports FIDO/U2F hardware tokens natively since 8.2 <a rel="nofollow" class="external autonumber" href="https://www.openssh.com/txt/release-8.2">[1]</a>. Both the client and server must support the ed25519-sk key types. Generate a security key backed key pair with:
+<p>OpenSSH supports FIDO/U2F hardware tokens natively since <a rel="nofollow" class="external text" href="https://www.openssh.com/txt/release-8.2">8.2</a>. Both the client and server must support the ed25519-sk key types. Generate a security key backed key pair with:
 </p>
 <pre>$ ssh-keygen -t ecdsa-sk
 </pre>
@@ -135,8 +139,8 @@ $ pamu2fcfg -o pam://hostname -i pam://hostname &gt; ~/.config/Yubico/u2f_keys</
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Universal_2nd_Factor&amp;oldid=640619">https://wiki.archlinux.org/index.php?title=Universal_2nd_Factor&amp;oldid=640619</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 November 2020, at 15:54.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Universal_2nd_Factor&amp;oldid=658685">https://wiki.archlinux.org/index.php?title=Universal_2nd_Factor&amp;oldid=658685</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 10 April 2021, at 08:06.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

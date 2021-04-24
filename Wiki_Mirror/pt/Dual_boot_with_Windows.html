@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -160,7 +161,7 @@
 </h3>
 <p>A maioria dos gerenciadores de boot para linux instalados para um tipo de firmware não podem lançar ou carregar em cadeia gerenciadores de boot para outros tipos de firmware. Isto quer dizer que, se o Arch está instalado em modo UEFI/GPT ou UEFI/MBR em um disco e Windows está instalado em modo BIOS/MBR em outro disco, o gerenciador de boot UEFI usado pelo Arch não poderá carregar, em cadeia, o gerenciador em BIOS do Windows que está no outro disco. Da mesma forma, se o Arch está instalado em modo BIOS/MBR ou BIOS/GPT em um disco e o Windows está instalado em modo UEFI/GPT em outro disco, o gerenciador de boot que está em BIOS usado pelo Arch Arch não será capaz de carregar, em cadeia, o Windows em modo UEFI do outro disco. 
 </p>
-<p>As únicas exceções para isto são <a href="../pt/GRUB.html" title="GRUB (Português)">GRUB</a> em Macs da Apple, em que GRUB no modo UEFI pode inicializar um sistema operacional instalado em modo BIOS via comando <code>appleloader</code> (que não funciona em sistemas que não sejam Apple), e <a href="../en/REFInd.html" title="REFInd">rEFInd</a> que tecnicamente suporta inicializar um sistema operacional em legacy BIOS em sistemas UEFI, mas <a rel="nofollow" class="external text" href="http://rodsbooks.com/refind/using.html#">nem sempre legacy BIOS funciona em sistemas que não sejam Apple UEFI</a>, de acordo com seu autor Rod Smith. 
+<p>As únicas exceções para isto são <a href="../pt/GRUB.html" title="GRUB (Português)">GRUB</a> em Macs da Apple, em que GRUB no modo UEFI pode inicializar um sistema operacional instalado em modo BIOS via comando <code>appleloader</code> (que não funciona em sistemas que não sejam Apple), e <a href="../en/REFInd.html" title="REFInd">rEFInd</a> que tecnicamente suporta inicializar um sistema operacional em legacy BIOS em sistemas UEFI, mas <a rel="nofollow" class="external text" href="https://rodsbooks.com/refind/using.html#">nem sempre legacy BIOS funciona em sistemas que não sejam Apple UEFI</a>, de acordo com seu autor Rod Smith. 
 </p>
 <p>Contudo, se o Arch está instalado em modo BIOS/GPT em um disco e o Windows está instalado em modo BIOS/MBR em outro disco, então o gerenciador de boot em BIOS usado pelo Arch <b>pode</b> inicializar o Windows em outro disco, se o gerenciador de boot usado suportar o carregamento à partir de outro disco. 
 </p>
@@ -226,7 +227,7 @@ Se você quer inicializar o Linux enquanto o Windows está hibernando, o que e u
 <h3>
 <span id="Limita.C3.A7.C3.B5es_de_nomes_de_arquivo_no_Windows"></span><span class="mw-headline" id="Limitações_de_nomes_de_arquivo_no_Windows">Limitações de nomes de arquivo no Windows</span>
 </h3>
-<p>O Windows está limitado em ter caminhos de arquivo menores do que <a rel="nofollow" class="external text" href="http://blogs.msdn.com/b/bclteam/archive/2007/02/13/long-paths-in-net-part-1-of-3-kim-hamilton.aspx">260 caracteres</a><sup title="Status da última verificação: 404">[<a href="https://en.wikipedia.org/wiki/pt:Wikip%C3%A9dia:Liga%C3%A7%C3%A3o_inativa" class="extiw" title="wikipedia:pt:Wikipédia:Ligação inativa">link inativo</a> 2020-12-24 ⓘ]</sup>.
+<p>O Windows está limitado em ter caminhos de arquivo menores do que <a rel="nofollow" class="external text" href="https://docs.microsoft.com/en-us/archive/blogs/bclteam/long-paths-in-net-part-1-of-3-kim-hamilton">260 caracteres</a>.
 </p>
 <p>O Windows também impõe limitações no uso de <a rel="nofollow" class="external text" href="https://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx#naming_conventions">certos caracteres</a> em nomes de arquivo por razões vem desde o DOS:
 </p>
@@ -252,7 +253,7 @@ Se você quer inicializar o Linux enquanto o Windows está hibernando, o que e u
 </ul>
 <p>Estas são limitações do Windows e não do NTFS: qualquer outro sistema operacional usando partições NTFS poderá funcionar normalmente. O Windows irá falhar em detectar estes arquivos e executar <code>chkdsk</code> irá provavelmente acarretar sua remoção, o que significa uma potencial perda de dados.
 </p>
-<p><a href="../en/NTFS-3G.html" title="NTFS-3G">NTFS-3G</a> aplica as restrições do Windows a novos arquivos através da opção <a rel="nofollow" class="external text" href="http://www.tuxera.com/community/ntfs-3g-manual/#4">windows_names</a><sup title="Status da última verificação: 404">[<a href="https://en.wikipedia.org/wiki/pt:Wikip%C3%A9dia:Liga%C3%A7%C3%A3o_inativa" class="extiw" title="wikipedia:pt:Wikipédia:Ligação inativa">link inativo</a> 2020-12-24 ⓘ]</sup> (veja <a href="../pt/Fstab.html" title="Fstab (Português)">fstab</a>).
+<p><a href="../en/NTFS-3G.html" title="NTFS-3G">NTFS-3G</a> aplica as restrições do Windows a novos arquivos através da opção windows_names: <span class="plainlinks archwiki-template-man" title="$ man 8 ntfs-3g"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ntfs-3g.8#Windows_Filename_Compatibility">ntfs-3g(8) § Windows_Filename_Compatibility</a></span> (veja <a href="../pt/Fstab.html" title="Fstab (Português)">fstab</a>).
 </p>
 <h2>
 <span id="Instala.C3.A7.C3.A3o"></span><span class="mw-headline" id="Instalação">Instalação</span>
@@ -265,7 +266,7 @@ Se você quer inicializar o Linux enquanto o Windows está hibernando, o que e u
 <p>Poderão ser utilizados quaisquer <a href="../pt/Arch_boot_process.html#Gerenciador_de_boot" title="Arch boot process (Português)">gerenciadores de boot</a> que suportem inicialização múltipla e BIOS.
 </p>
 <h5><span class="mw-headline" id="Usando_o_gerenciador_de_boot_do_Windows">Usando o gerenciador de boot do Windows</span></h5>
-<p>Com esta configuração, o gerenciador de boot do Windows carrega o GRUB, o qual inicializa o Arch. 
+<p>Com esta configuração, o gerenciador de boot do Windows carrega o GRUB, o qual inicializa o Arch.
 </p>
 <h6>
 <span id="Gerenciador_de_boot_do_Windows_Vista.2F7.2F8.2F8.1"></span><span class="mw-headline" id="Gerenciador_de_boot_do_Windows_Vista/7/8/8.1">Gerenciador de boot do Windows Vista/7/8/8.1</span>
@@ -360,7 +361,7 @@ bcdedit /timeout 30
 </p>
 <p>Se desejar reverter para utilização do Windows, você pode usar o comando <code>FIXBOOT</code> que liga do MBR ao setor de boot da primeira partição para voltar ao normal, neste caso, o carregamento automático do sistema operacional Windows.
 </p>
-<p>É importante notar que existe um utilitário para Linux chamado <code>ms-sys</code> (pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ms-sys/">ms-sys</a></span><sup><small>AUR</small></sup> no AUR) que pode instalar MBRs. No entento, este utilitário só é capaz de escrever novos MBRs (em todos os sistemas operacionais e sistemas de arquivos suportados) e setores de boot (também conhecidos como registro de boot; equivalente a usar <code>FIXBOOT</code>) para sistemas de arquivo FAT. A maioria dos Live CDs não possuem este utilitário por padrão, então ele precisará ser instalado primeiro, ou você poderá checar algum CD de recuperação que o possui, como o <a rel="nofollow" class="external text" href="http://partedmagic.com/">Parted Magic</a>.
+<p>É importante notar que existe um utilitário para Linux chamado <code>ms-sys</code> (pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ms-sys/">ms-sys</a></span><sup><small>AUR</small></sup> no AUR) que pode instalar MBRs. No entento, este utilitário só é capaz de escrever novos MBRs (em todos os sistemas operacionais e sistemas de arquivos suportados) e setores de boot (também conhecidos como registro de boot; equivalente a usar <code>FIXBOOT</code>) para sistemas de arquivo FAT. A maioria dos Live CDs não possuem este utilitário por padrão, então ele precisará ser instalado primeiro, ou você poderá checar algum CD de recuperação que o possui, como o <a rel="nofollow" class="external text" href="https://partedmagic.com/">Parted Magic</a>.
 </p>
 <p>Primeiro, grave a informação da partição (tabela) novamente, usando:
 </p>
@@ -402,7 +403,6 @@ bcdedit /timeout 30
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 <li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
@@ -414,8 +414,8 @@ bcdedit /timeout 30
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(Portugu%C3%AAs)&amp;oldid=646479">https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(Português)&amp;oldid=646479</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 December 2020, at 11:08.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(Portugu%C3%AAs)&amp;oldid=661885">https://wiki.archlinux.org/index.php?title=Dual_boot_with_Windows_(Português)&amp;oldid=661885</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 14:53.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -104,7 +105,7 @@
 <a href="#%CE%A0%CF%81%CE%BF%CE%B2%CE%BB%CE%AE%CE%BC%CE%B1%CF%84%CE%B1_%CF%80%CE%BB%CE%B7%CE%BA%CF%84%CF%81%CE%BF%CE%BB%CE%BF%CE%B3%CE%AF%CE%BF%CF%85"><span class="tocnumber">8.7</span> <span class="toctext">Προβλήματα πληκτρολογίου</span></a>
 <ul>
 <li class="toclevel-3 tocsection-37"><a href="#AltGR_(Compose_Key)_not_working_properly"><span class="tocnumber">8.7.1</span> <span class="toctext">AltGR (Compose Key) not working properly</span></a></li>
-<li class="toclevel-3 tocsection-38"><a href="#Can't_set_qwerty_layouts_using_the_setxkbmap_command"><span class="tocnumber">8.7.2</span> <span class="toctext">Can't set qwerty layouts using the setxkbmap command</span></a></li>
+<li class="toclevel-3 tocsection-38"><a href="#Cannot_set_qwerty_layouts_using_the_setxkbmap_command"><span class="tocnumber">8.7.2</span> <span class="toctext">Cannot set qwerty layouts using the setxkbmap command</span></a></li>
 <li class="toclevel-3 tocsection-39"><a href="#Setup_French_Canadian_(old_ca_enhanced)_layout"><span class="tocnumber">8.7.3</span> <span class="toctext">Setup French Canadian (old ca_enhanced) layout</span></a></li>
 </ul>
 </li>
@@ -127,7 +128,7 @@
 <h2>
 <span id=".CE.95.CE.B9.CF.83.CE.B1.CE.B3.CF.89.CE.B3.CE.AE"></span><span class="mw-headline" id="Εισαγωγή">Εισαγωγή</span>
 </h2>
-<p><b>Xorg</b> is the public, open-source implementation of the X11 X Window System. (See the <a href="https://en.wikipedia.org/wiki/X.Org_Server" class="extiw" title="wikipedia:X.Org Server">X.org Wikipedia Article</a> or <a rel="nofollow" class="external text" href="http://wiki.x.org/wiki/">X.org</a> for details.) Basically, if you want a GUI atop Arch, you will want xorg.
+<p><b>Xorg</b> is the public, open-source implementation of the X11 X Window System. (See the <a href="https://en.wikipedia.org/wiki/X.Org_Server" class="extiw" title="wikipedia:X.Org Server">X.org Wikipedia Article</a> or <a rel="nofollow" class="external text" href="https://wiki.x.org/wiki/">X.org</a> for details.) Basically, if you want a GUI atop Arch, you will want xorg.
 </p>
 <h2>
 <span id=".CE.95.CE.B3.CE.BA.CE.B1.CF.84.CE.AC.CF.83.CF.84.CE.B1.CF.83.CE.B7_.CF.84.CE.BF.CF.85_Xorg"></span><span class="mw-headline" id="Εγκατάσταση_του_Xorg">Εγκατάσταση του Xorg</span>
@@ -158,9 +159,9 @@
 <p>Πριν τρέξετε το xorg, χρειάζεται να τον ρυθμίσετε για να αναγνωρίσει τη κάρτα γραφικών σας, την οθόνη, ποντίκι και πληκτρολόγιο. Υπάρχουν αρκετοί μέθοδοι για να γίνει αυτοματοποιημένη η διαδικασία αυτήν:
 </p>
 <h3><span class="mw-headline" id="hwd">hwd</span></h3>
-<p>Ίσως ο ευκολότερος και γρηγορότερος τρόπος να κάνετε το Xorg να λειτουργήσει είναι να χρησιμοποιήσετε το <tt>hwd</tt>, ένα εργαλείο γραμμένο από την κοινότητα του Arch Linux. Βασικά είναι εργαλείο που ανιχνεύει το hardware του υπολογιστή και έχει πολλαπλές χρήσεις, μία από αυτή είναι το "σετάρισμα" του X server. Ευτυχώς, hwd είναι πολύ πιο εκσυγχρονισμένο απ´ ό,τι το <code>xorgconf</code> και δεν χρειάζεται τη λήψη πληροφοριών
+<p>Ίσως ο ευκολότερος και γρηγορότερος τρόπος να κάνετε το Xorg να λειτουργήσει είναι να χρησιμοποιήσετε το <code>hwd</code>, ένα εργαλείο γραμμένο από την κοινότητα του Arch Linux. Βασικά είναι εργαλείο που ανιχνεύει το hardware του υπολογιστή και έχει πολλαπλές χρήσεις, μία από αυτή είναι το "σετάρισμα" του X server. Ευτυχώς, hwd είναι πολύ πιο εκσυγχρονισμένο απ´ ό,τι το <code>xorgconf</code> και δεν χρειάζεται τη λήψη πληροφοριών
 </p>
-<p>Κατ'αρχήν, κάντε εγκατάσταση το πακέτο <tt>hwd</tt> με:
+<p>Κατ'αρχήν, κάντε εγκατάσταση το πακέτο <code>hwd</code> με:
 </p>
 <pre># pacman -S hwd
 </pre>
@@ -168,9 +169,9 @@
 </p>
 <pre># hwd -xa
 </pre>
-<p>Αυτή η διαδικασία θα αντικαταστήσει οποιοδήποτε /etc/X11/xorg.conf αρχείο με ένα άλλο,βασισμένο στην εντολή <tt>hwd</tt> και το hardware του υπολογιστή σας.
+<p>Αυτή η διαδικασία θα αντικαταστήσει οποιοδήποτε /etc/X11/xorg.conf αρχείο με ένα άλλο,βασισμένο στην εντολή <code>hwd</code> και το hardware του υπολογιστή σας.
 </p>
-<p>Εναλλακτικά, μπορείτε να δημιουργήσετε ένα δείγμα του xorg (/etc/X11/xorg.conf.hwd) χωρίς να αντικατασταθούν οι τρέχουσες ρυθμίσεις.Για να γίνει αυτό, τρέξτε <tt>hwd</tt> με <b>-x</b> flag:
+<p>Εναλλακτικά, μπορείτε να δημιουργήσετε ένα δείγμα του xorg (/etc/X11/xorg.conf.hwd) χωρίς να αντικατασταθούν οι τρέχουσες ρυθμίσεις.Για να γίνει αυτό, τρέξτε <code>hwd</code> με <b>-x</b> flag:
 </p>
 <pre># hwd -x
 </pre>
@@ -189,7 +190,7 @@
 <p>AD: In my experience hwd creates XF86Config-4 file and if there is not xorg.conf present Xorg uses it automatically.
 </p>
 <h3><span class="mw-headline" id="xorgconfig">xorgconfig</span></h3>
-<p>Για την εκκίνηση του <tt>xorgconfig</tt>:
+<p>Για την εκκίνηση του <code>xorgconfig</code>:
 </p>
 <pre># xorgconfig
 </pre>
@@ -197,7 +198,7 @@
 </p>
 <pre># xorgcfg -textmode
 </pre>
-<p>Οι παραπάνω εντολές θα δημιουργήσουν το <tt>xorg.conf</tt>.
+<p>Οι παραπάνω εντολές θα δημιουργήσουν το <code>xorg.conf</code>.
 </p>
 <p>Απαντήστε στις ερωτήσεις,και το πρόγραμμα θα ρυθμίσει το αρχείο για εσάς.Το συγκεκριμένο πρόγραμμα δεν είναι το καλύτερο αλλά είναι μια αρχή.
 </p>
@@ -267,8 +268,6 @@ The following settings are specified in the Monitor section:
 </p>
 <p>Για να δείτε μια λίστα με τα υποστηριζόμενα μοντέλα πληκτρολογίου,layouts, variants and options, ανοίξτε το.
 </p>
-<p><br>
-</p>
 <pre>/usr/share/X11/xkb/rules/xorg.lst
 </pre>
 <h4>
@@ -284,8 +283,7 @@ The following settings are specified in the Monitor section:
 Option "XkbVariant" ",extended"
 Option "XkbOptions" "grp:alt_shift_toggle,grp:control,grp_led:scroll"
 </pre>
-<p><br>
-Το παραπάνω κάνει εναλλαγή μεταξύ Αγγλικών και Ελληνικών με τον συνδιασμό πλήκτρων "Alt+Shift".Επίσης ανάβει και η ένδειξη του Scroll Lock για να καταλάβετε σε ποια γλώσσα είστε.
+<p>Το παραπάνω κάνει εναλλαγή μεταξύ Αγγλικών και Ελληνικών με τον συνδιασμό πλήκτρων "Alt+Shift".Επίσης ανάβει και η ένδειξη του Scroll Lock για να καταλάβετε σε ποια γλώσσα είστε.
 </p>
 <h4>
 <span id=".CE.9C.CE.BF.CE.BD.CF.84.CE.AD.CE.BB.CE.BF_.CF.80.CE.BB.CE.B7.CE.BA.CF.84.CF.81.CE.BF.CE.BB.CE.BF.CE.B3.CE.AF.CE.BF.CF.85"></span><span class="mw-headline" id="Μοντέλο_πληκτρολογίου">Μοντέλο πληκτρολογίου</span>
@@ -311,8 +309,7 @@ InputDevice.Για παράδειγμα,αν έχετε το Microsoft Wireless 
    ...
 EndSection
 </pre>
-<p><br>
-The formula for calculating the DisplaySize values is Width x 25.4 / DPI and Height x 25.4 / DPI. If you're running Xorg with a resolution of 1024x768 and want a DPI of 96, use 1024 x 25.4 / 96 and 768 x 25.4 / 96. Round numbers down.
+<p>The formula for calculating the DisplaySize values is Width x 25.4 / DPI and Height x 25.4 / DPI. If you are running Xorg with a resolution of 1024x768 and want a DPI of 96, use 1024 x 25.4 / 96 and 768 x 25.4 / 96. Round numbers down.
 </p>
 <pre># calc: (x|y)pixels * 25.4 / dpi
 # DisplaySize 168 126 # 96 DPI @ 640x480
@@ -327,14 +324,12 @@ The formula for calculating the DisplaySize values is Width x 25.4 / DPI and Hei
 # DisplaySize 444 277 # 96 DPI @ 1680x1050
 # DisplaySize 506 315 # 96 DPI @ 1920x1200 (non 4:3 aspect)
 </pre>
-<p><br>
-Για τους χρήστες της nVidia πρέπει να απενεργοποιήσετε την αυτόματη ρύθμιση του  DPI και να το καθορίσετε εσείς χειροκίνητα. Υπάρχει επίσης ένα ευκολότερος τρόπος να ρυθμίσετε το DPI σε τέτοιες κάρτες.Είτε τη μία ή ακόμη και τις δύο ακόλουθες γραμμές πρέπει να ρυθμιστούν για τις κάρτες τις nVidia.
+<p>Για τους χρήστες της nVidia πρέπει να απενεργοποιήσετε την αυτόματη ρύθμιση του  DPI και να το καθορίσετε εσείς χειροκίνητα. Υπάρχει επίσης ένα ευκολότερος τρόπος να ρυθμίσετε το DPI σε τέτοιες κάρτες.Είτε τη μία ή ακόμη και τις δύο ακόλουθες γραμμές πρέπει να ρυθμιστούν για τις κάρτες τις nVidia.
 </p>
 <pre>  Option   "UseEdidDpi" "false"
   Option   "DPI" "96 x 96"
 </pre>
-<p><br>
-Results can be checked by issuing the following command, which should return 96x96 dots per inch if you set DPI @ 96.
+<p>Results can be checked by issuing the following command, which should return 96x96 dots per inch if you set DPI @ 96.
 </p>
 <pre>$ xdpyinfo | grep -B1 dot
 </pre>
@@ -347,7 +342,7 @@ Results can be checked by issuing the following command, which should return 96x
 <p>Μερικές συμβουλές για την ρύθμιση των γραμματοσειρών δείτε <a href="../en/Font_configuration.html" class="mw-redirect" title="Xorg Font Configuration">Xorg Font Configuration</a>.
 </p>
 <h3><span class="mw-headline" id="Sample_Xorg.conf_Files">Sample Xorg.conf Files</span></h3>
-<p>Anyone who has an Xorg.conf file written up that works, go ahead and post a link to it here for others to look at!  Please don't inline the entire conf file; upload it somewhere else and link. Thanks!
+<p>Anyone who has an Xorg.conf file written up that works, go ahead and post a link to it here for others to look at!  Please do not inline the entire conf file; upload it somewhere else and link. Thanks!
 </p>
 <ul>
 <li>Shadowhand (nv and nvidia drivers): <a rel="nofollow" class="external free" href="http://people.os-zen.net/shadowhand/configs/xorg.conf">http://people.os-zen.net/shadowhand/configs/xorg.conf</a>
@@ -374,7 +369,7 @@ Results can be checked by issuing the following command, which should return 96x
 </p>
 <pre>$ X -config <i>&lt;your config file&gt;</i>
 </pre>
-<p>If a problem occurs, then view the log at <tt>/var/log/Xorg.0.log</tt>. Be on the lookout for any lines beginning with <i>(EE)</i> which represent errors, and also <i>(WW)</i> which are warnings that could indicate other issues.
+<p>If a problem occurs, then view the log at <code>/var/log/Xorg.0.log</code>. Be on the lookout for any lines beginning with <i>(EE)</i> which represent errors, and also <i>(WW)</i> which are warnings that could indicate other issues.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Using startx requires a <a href="../en/Xinit.html" class="mw-redirect" title="~/.xinitrc">~/.xinitrc</a> file, so that X knows what to run when it starts.</div>
@@ -453,7 +448,7 @@ This works e.g. for Nvidia 76.76
 <h3>
 <span id=".CE.9F_Xorg_.22.CE.B4.CE.B5.CE.BD_.CE.BC.CF.80.CE.BF.CF.81.CE.B5.CE.AF_.CE.BD.CE.B1_.CE.B4.CE.B5.CE.B9.22_.CF.84.CE.B9.CF.82_.CE.B1.CE.BD.CE.B1.CE.BB.CF.8D.CF.83.CE.B5.CE.B9.CF.82_.CF.80.CE.BF.CF.85_.CF.85.CF.80.CE.BF.CF.83.CF.84.CE.B7.CF.81.CE.AF.CE.B6.CE.B5.CE.B9_.CE.B7_.CE.BF.CE.B8.CF.8C.CE.BD.CE.B7"></span><span class="mw-headline" id='Ο_Xorg_"δεν_μπορεί_να_δει"_τις_αναλύσεις_που_υποστηρίζει_η_οθόνη'>Ο Xorg "δεν μπορεί να δει" τις αναλύσεις που υποστηρίζει η οθόνη</span>
 </h3>
-<p>I found myself in a situation where if i used one of my monitors(a gnr ts902) Xorg would only present me with the options 640x480 and 320x480 which ofcourse was less than i desired. After a lot of research i found through read-edid(in aur) that part of my EDID was corrupt and so i could only read my HorizSync with read-edid. This fortunately was enough and after adding the right Horisync line to the xorg.conf's Monitor section(didn't have to add VertRefresh...) I restarted X to see the right resolution :)
+<p>I found myself in a situation where if i used one of my monitors(a gnr ts902) Xorg would only present me with the options 640x480 and 320x480 which ofcourse was less than i desired. After a lot of research i found through read-edid(in aur) that part of my EDID was corrupt and so i could only read my HorizSync with read-edid. This fortunately was enough and after adding the right Horisync line to the xorg.conf's Monitor section(did not have to add VertRefresh...) I restarted X to see the right resolution :)
 </p>
 <p>note: I'm not sure:
 </p>
@@ -521,7 +516,7 @@ Option "XkbVariant" "nodeadkeys" #This line is also known to cause the problems 
 </h3>
 <p>Οι χρήστες του USB Mice πρέπει να διαβάσουν <a href="../en/Mouse_buttons.html" class="mw-redirect" title="Get All Mouse Buttons Working">Get All Mouse Buttons Working</a>.
 </p>
-<p>Οι χρήστες Intellimouse (ExplorerPS/2) users might find their scroll and side buttons aren't behaving as they used to.  Previously xorg.conf needed:
+<p>Οι χρήστες Intellimouse (ExplorerPS/2) users might find their scroll and side buttons are not behaving as they used to.  Previously xorg.conf needed:
 </p>
 <pre>Option      "Buttons" "7"
 Option      "ZAxisMapping" "6 7"
@@ -544,10 +539,10 @@ Option      "ButtonMapping" "1 2 3 6 7"
 <p>Μερικές διατάξεις πλκτρολογίου έχουν αλλάξει.
 </p>
 <ul>
-<li>I wasn't able to Ctrl+Alt+Fx to switch to console</li>
-<li>I wasn't able to use layouts</li>
+<li>I was not able to Ctrl+Alt+Fx to switch to console</li>
+<li>I was not able to use layouts</li>
 </ul>
-<p>The problem was that the <i>sk_qwerty</i> layout doesn't exist anymore. I had to replace
+<p>The problem was that the <i>sk_qwerty</i> layout does not exist anymore. I had to replace
 </p>
 <pre>Option         "XkbLayout" "us,sk_qwerty"
 </pre>
@@ -556,8 +551,8 @@ Option      "ButtonMapping" "1 2 3 6 7"
 <pre>Option         "XkbLayout" "us,sk"
 Option         "XkbVariant" ",qwerty"
 </pre>
-<p>Another thing to look for if your keyboard isn't properly functioning is the XkbRules option:<br>
-You'll need to change
+<p>Another thing to look for if your keyboard is not properly functioning is the XkbRules option:<br>
+You will need to change
 </p>
 <pre>Option         "XkbRules" "xfree86"
 </pre>
@@ -568,7 +563,7 @@ You'll need to change
 <h4>
 <span id="AltGR_.28Compose_Key.29_not_working_properly"></span><span class="mw-headline" id="AltGR_(Compose_Key)_not_working_properly">AltGR (Compose Key) not working properly</span>
 </h4>
-<p>If, after the update, you can't use the AltGr key as expected any more, try adding this to your keyboard section:
+<p>If, after the update, you cannot use the AltGr key as expected any more, try adding this to your keyboard section:
 </p>
 <pre>Option      "XkbOptions" "compose:ralt"
 </pre>
@@ -578,7 +573,7 @@ Just choose a valid keyboard variant for it to work again, for example (the exam
 <pre>Option      "XkbLayout" "de"
 Option      "XkbVariant" "nodeadkeys"
 </pre>
-<p>The solutions above don't work on an Italian keyboard. To activate the AltGr key on an Italian keyboard make sure you have the following lines set up properly:
+<p>The solutions above do not work on an Italian keyboard. To activate the AltGr key on an Italian keyboard make sure you have the following lines set up properly:
 </p>
 <pre> Driver          "kbd"
  Option          "XkbRules"      "xorg"
@@ -591,10 +586,8 @@ That is:
  Option "XkbVariant" "nodeadkeys"
  Option "XkbOptions" "lv3:ralt_switch"
 </pre>
-<h4>
-<span id="Can.27t_set_qwerty_layouts_using_the_setxkbmap_command"></span><span class="mw-headline" id="Can't_set_qwerty_layouts_using_the_setxkbmap_command">Can't set qwerty layouts using the setxkbmap command</span>
-</h4>
-<p>After the update, there aren't qwerty layouts as for example sk_qwerty. If you want to switch your present keyboard layout to any qwerty keyboard layout use this command:
+<h4><span class="mw-headline" id="Cannot_set_qwerty_layouts_using_the_setxkbmap_command">Cannot set qwerty layouts using the setxkbmap command</span></h4>
+<p>After the update, there are not qwerty layouts as for example sk_qwerty. If you want to switch your present keyboard layout to any qwerty keyboard layout use this command:
 </p>
 <pre>$ setxkbmap NAME_OF_THE_LAYOUT qwerty
 </pre>
@@ -603,9 +596,9 @@ That is:
 <pre>$ setxkbmap sk qwerty
 </pre>
 <p>After the update, trying the above command I had this message "Error loading new keyboard description".
-I find out that the xserver doesn't have the rights to write, execute, read in the directory /var/tmp
+I find out that the xserver does not have the rights to write, execute, read in the directory /var/tmp
 So give the permissions to that directory. Restart the xserver and you will have your deadkeys back!
-Don't believe? Try out the code e.g.: it layout
+Do not believe? Try out the code e.g.: it layout
 </p>
 <pre>$ setxkbmap -layout it
 </pre>
@@ -624,17 +617,15 @@ Switch the old:
 </pre>
 <p>It will be similar with other layout, I presume.  You can refer to Gentoo HowTo there: <a rel="nofollow" class="external free" href="http://www.gentoo.org/proj/en/desktop/x/x11/modular-x-howto.xml">http://www.gentoo.org/proj/en/desktop/x/x11/modular-x-howto.xml</a>
 </p>
-<p><br>
-</p>
 <h3><span class="mw-headline" id="Missing_libraries">Missing libraries</span></h3>
 <ul><li>
-<b>Help!  I get an error message running my favourite app saying "libXsomething" doesn't exist!</b><br>
+<b>Help!  I get an error message running my favourite app saying "libXsomething" does not exist!</b><br>
 </li></ul>
 <p>In most cases, all you need to do is take the name of the library (eg libXau.so.1), convert it all to lowercase, remove the extension, and pacman for it:
 </p>
 <pre># pacman -S libxau
 </pre>
-<p>This will install the library you're missing, and all will be well again!
+<p>This will install the library you are missing, and all will be well again!
 </p>
 <h3><span class="mw-headline" id="Some_packages_fail_to_build_and_complain_about_missing_X11_includes">Some packages fail to build and complain about missing X11 includes</span></h3>
 <p>Just reinstall the packages xproto and libx11, even if they are already installed.
@@ -643,10 +634,10 @@ Switch the old:
 <span id="Unable_to_load_font_.27.28null.29.27"></span><span class="mw-headline" id="Unable_to_load_font_'(null)'">Unable to load font '(null)'</span>
 </h3>
 <ul><li>
-<b>Some programs don't work and say unable to load font `(null)'.</b><br>
+<b>Some programs do not work and say unable to load font `(null)'.</b><br>
 </li></ul>
 <p>These packages would like some extra fonts. Some programs only work with bitmap fonts.
-Two major packages with bitmap fonts are available, xorg-fonts-75dpi and xorg-fonts-100dpi. You don't need both; one should be enough. To find out which one would be better in your case, try this:
+Two major packages with bitmap fonts are available, xorg-fonts-75dpi and xorg-fonts-100dpi. You do not need both; one should be enough. To find out which one would be better in your case, try this:
 </p>
 <pre>$ xdpyinfo | grep resolution
 </pre>
@@ -658,7 +649,7 @@ Two major packages with bitmap fonts are available, xorg-fonts-75dpi and xorg-fo
 <span id="KDE_Taskbar.2FDesktop_Icons_Broken"></span><span class="mw-headline" id="KDE_Taskbar/Desktop_Icons_Broken">KDE Taskbar/Desktop Icons Broken</span>
 </h3>
 <ul><li>
-<b>KDE taskbar doesn't work and the desktop icons disappear</b><br>
+<b>KDE taskbar does not work and the desktop icons disappear</b><br>
 </li></ul>
 <p>Install the packages libxcomposite and libxss. It will be fine.
 </p>
@@ -667,7 +658,7 @@ Two major packages with bitmap fonts are available, xorg-fonts-75dpi and xorg-fo
 <h3>
 <span id="Updating_from_testing_version_to_extra_.28missing_files.29"></span><span class="mw-headline" id="Updating_from_testing_version_to_extra_(missing_files)">Updating from testing version to extra (missing files)</span>
 </h3>
-<p>If you've updated from Xorg 7 in testing to Xorg 7 in extra and are finding that many files seem to be missing (including startx, /usr/share/X11/rgb.txt, and others), you may have lost many files due to the xorg-clients package splitting from a single package into many smaller sub packages. <br>
+<p>If you have updated from Xorg 7 in testing to Xorg 7 in extra and are finding that many files seem to be missing (including startx, /usr/share/X11/rgb.txt, and others), you may have lost many files due to the xorg-clients package splitting from a single package into many smaller sub packages. <br>
 </p>
 <p>You need to reinstall all the packages that are dependencies of xorg-clients:
 </p>
@@ -678,7 +669,7 @@ Two major packages with bitmap fonts are available, xorg-fonts-75dpi and xorg-fo
 <p>This should fix the problem.
 </p>
 <h3><span class="mw-headline" id="Problem_with_MIME_types_in_various_desktop_environments">Problem with MIME types in various desktop environments</span></h3>
-<p>If you noticed icons missing and can't click-open files in desktop environments, add the following lines to /etc/profile or your preferred init script and reboot.
+<p>If you noticed icons missing and cannot click-open files in desktop environments, add the following lines to /etc/profile or your preferred init script and reboot.
 </p>
 <pre>XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share
 export XDG_DATA_DIRS
@@ -691,12 +682,12 @@ export XDG_DATA_DIRS
 <p>to the Device section that references the video card in xorg.conf.
 </p>
 <h3><span class="mw-headline" id="Cannot_start_any_clients_under_Xephyr">Cannot start any clients under Xephyr</span></h3>
-<p>The client connections are rejected by the X server's security mechanism, you can find a complete explanation and solution in <a rel="nofollow" class="external autonumber" href="http://wiki.debian.org/XStrikeForce/FAQ#howtoxnest">[1]</a>.
+<p>The client connections are rejected by the X server's security mechanism, you can find a complete explanation and solution in <a rel="nofollow" class="external autonumber" href="https://wiki.debian.org/XStrikeForce/FAQ#howtoxnest">[1]</a>.
 </p>
 <h3>
 <span id="Cannot_start_X_clients_as_root_using_.22su.22"></span><span class="mw-headline" id='Cannot_start_X_clients_as_root_using_"su"'>Cannot start X clients as root using "su"</span>
 </h3>
-<p>If you're getting "Client is not authorized to connect to server", try adding the line 
+<p>If you are getting "Client is not authorized to connect to server", try adding the line 
 </p>
 <pre> session        optional        pam_xauth.so
 </pre>
@@ -735,7 +726,7 @@ pam_xauth will properly set environment variables and handle xauth keys.
 </h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/X.Org_Server" class="extiw" title="wikipedia:X.Org Server">X.org Wikipedia Article</a></li>
-<li><a rel="nofollow" class="external text" href="http://wiki.x.org/wiki/">X.org</a></li>
+<li><a rel="nofollow" class="external text" href="https://wiki.x.org/wiki/">X.org</a></li>
 <li><a rel="nofollow" class="external text" href="http://archux.com/page/installing-and-setting-xorg">Installing and setting up Xorg</a></li>
 </ul>
 </div>
@@ -752,8 +743,8 @@ pam_xauth will properly set environment variables and handle xauth keys.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xorg_(%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CE%AC)&amp;oldid=563246">https://wiki.archlinux.org/index.php?title=Xorg_(Ελληνικά)&amp;oldid=563246</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 January 2019, at 05:40.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xorg_(%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CE%AC)&amp;oldid=662644">https://wiki.archlinux.org/index.php?title=Xorg_(Ελληνικά)&amp;oldid=662644</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:39.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

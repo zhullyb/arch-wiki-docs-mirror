@@ -162,7 +162,7 @@
 </p>
 <p>По умолчанию <code>systemd-networkd-wait-online.service</code> ожидает получения информации о состоянии всех интерфейсов под управлением <i>systemd-networkd</i>, причем минимум на одном интерфейсе должно быть установлено рабочее подключение.
 </p>
-<p>Если в вашей системе несколько интерфейсов, но некоторые не смогли подключиться к сети (например, Ethernet-интерфейс с двумя портами, но кабель воткнут только в один), запуск <code>systemd-networkd-wait-online.service</code> завершится неудачно по истечении тайм-аута в 2 минуты. Это может стать причиной неприятной паузы во время загрузки системы. Чтобы служба ожидала подключения <i>любого</i> интерфейса, а не всех, <a href="../ru/Systemd.html#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%B5%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D0%B0%D0%BC%D0%B8_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Отредактируйте">отредактируйте</a> файл службы, добавив параметр <code>--any</code> к строке <code>ExecStart</code>:
+<p>Если в вашей системе несколько интерфейсов, но некоторые не смогли подключиться к сети (например, Ethernet-интерфейс с двумя портами, но кабель воткнут только в один), запуск <code>systemd-networkd-wait-online.service</code> завершится неудачно по истечении тайм-аута в 2 минуты. Это может стать причиной неприятной паузы во время загрузки системы. Чтобы служба ожидала подключения <i>любого</i> интерфейса, а не всех, <a href="../ru/Systemd.html#%D0%A0%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" class="mw-redirect" title="Отредактируйте">отредактируйте</a> файл службы, добавив параметр <code>--any</code> к строке <code>ExecStart</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/systemd-networkd-wait-online.service.d/wait-for-only-one-interface.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
@@ -736,8 +736,6 @@ DHCP=ipv4</pre>
 <li>появилось два новых интерфейса: <code>vb-<i>мой_контейнер</i></code> на хосте и <code>host0</code> в контейнере. Это результат опции <code>--network-bridge=br0</code> (см. <a href="../en/Systemd-nspawn.html#Use_a_network_bridge" title="Systemd-nspawn">systemd-nspawn#Use a network bridge</a>).</li>
 <li>DHCP-адрес интерфейса <code>host0</code> был выдан на основании файла <code>/usr/lib/systemd/network/80-container-host0.network</code>.</li>
 </ul>
-<p><br>
-</p>
 <ul><li>на хосте</li></ul>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ brctl show</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">bridge name	bridge id		STP enabled	interfaces
@@ -946,8 +944,8 @@ InitialAdvertisedReceiveWindow=10</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-networkd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=656154">https://wiki.archlinux.org/index.php?title=Systemd-networkd_(Русский)&amp;oldid=656154</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 26 March 2021, at 09:04.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-networkd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=659371">https://wiki.archlinux.org/index.php?title=Systemd-networkd_(Русский)&amp;oldid=659371</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 13 April 2021, at 00:31.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

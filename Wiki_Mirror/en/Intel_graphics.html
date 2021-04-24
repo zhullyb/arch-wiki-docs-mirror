@@ -126,7 +126,7 @@
 <p>Also see <a href="../en/Hardware_video_acceleration.html" title="Hardware video acceleration">Hardware video acceleration</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Some (<a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=Ubuntu-Debian-Abandon-Intel-DDX">Debian &amp; Ubuntu</a>, <a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=Fedora-Xorg-Intel-DDX-Switch">Fedora</a>, <a rel="nofollow" class="external text" href="https://community.kde.org/Plasma/5.9_Errata#Intel_GPUs">KDE</a>) recommend not installing the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-intel">xf86-video-intel</a></span> driver, and instead falling back on the modesetting driver for Gen4 and newer GPUs (GMA 3000 from 2006 and newer). See <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20160714232204/https://www.reddit.com/r/archlinux/comments/4cojj9/it_is_probably_time_to_ditch_xf86videointel/">[1]</a>, <a rel="nofollow" class="external autonumber" href="http://www.phoronix.com/scan.php?page=article&amp;item=intel-modesetting-2017&amp;num=1">[2]</a>, <a href="../en/Xorg.html#Installation" title="Xorg">Xorg#Installation</a>, and <span class="plainlinks archwiki-template-man" title="$ man 4 modesetting"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/modesetting.4">modesetting(4)</a></span>. However, the modesetting driver can cause problems such as <a rel="nofollow" class="external text" href="https://bugs.chromium.org/p/chromium/issues/detail?id=370022">Chromium Issue 370022</a> and <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/xorg/xserver/-/issues/928">vsync jitter/video stutter in mpv</a>.</div>
+<strong>Note:</strong> Some (<a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Ubuntu-Debian-Abandon-Intel-DDX">Debian &amp; Ubuntu</a>, <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Fedora-Xorg-Intel-DDX-Switch">Fedora</a>, <a rel="nofollow" class="external text" href="https://community.kde.org/Plasma/5.9_Errata#Intel_GPUs">KDE</a>) recommend not installing the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-intel">xf86-video-intel</a></span> driver, and instead falling back on the modesetting driver for Gen4 and newer GPUs (GMA 3000 from 2006 and newer). See <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20160714232204/https://www.reddit.com/r/archlinux/comments/4cojj9/it_is_probably_time_to_ditch_xf86videointel/">[1]</a>, <a rel="nofollow" class="external autonumber" href="https://www.phoronix.com/scan.php?page=article&amp;item=intel-modesetting-2017&amp;num=1">[2]</a>, <a href="../en/Xorg.html#Installation" title="Xorg">Xorg#Installation</a>, and <span class="plainlinks archwiki-template-man" title="$ man 4 modesetting"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/modesetting.4">modesetting(4)</a></span>. However, the modesetting driver can cause problems such as <a rel="nofollow" class="external text" href="https://bugs.chromium.org/p/chromium/issues/detail?id=370022">Chromium Issue 370022</a> and <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/xorg/xserver/-/issues/928">vsync jitter/video stutter in mpv</a>.</div>
 <h2><span class="mw-headline" id="Loading">Loading</span></h2>
 <p>The Intel kernel module should load fine automatically on system boot.
 </p>
@@ -160,12 +160,12 @@
 <strong>Note:</strong> GuC submission has been <a rel="nofollow" class="external text" href="https://patchwork.kernel.org/patch/10904591">completely disabled</a> for the kernel 5.4 and later, due to it reducing performance and causing bugs. Setting <code>enable_guc=3</code> has no effect.</div>
 <p>On next boot you can verify both GuC and HuC are enabled by using <a href="../en/Core_utilities.html#Essentials" class="mw-redirect" title="Dmesg">dmesg</a>:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[30130.586970] i915 0000:00:02.0: [drm] GuC firmware i915/icl_guc_33.0.0.bin version 33.0 submission:disabled
 [30130.586973] i915 0000:00:02.0: [drm] HuC firmware i915/icl_huc_9.0.0.bin version 9.0 authenticated:yes</pre>
 <p>If they are not supported by your graphics adapter you will see:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[    0.571339] i915 0000:00:02.0: [drm] Incompatible option enable_guc=2 - GuC is not supported!
 [    0.571340] i915 0000:00:02.0: [drm] Incompatible option enable_guc=2 - HuC is not supported!</pre>
 <p>Alternatively, check using:
@@ -181,12 +181,12 @@
 ... kernel: i915: probe of 0000:00:02.0 failed with error -5
 ... kernel: snd_hda_intel 0000:00:1f.3: failed to add i915 component master (-19)
 </pre>
-<p>Note that the related warning
+<p>Note that the related warning  is not fatal, as explained in <a rel="nofollow" class="external autonumber" href="https://github.com/intel/gvt-linux/issues/77#issuecomment-707541069">[5]</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ journalctl -b </pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">... kernel: i915 0000:00:02.0: Direct firmware load for i915/gvt/vid_0x8086_did_0x5916_rid_0x02.golden_hw_state failed with error -2
 </pre>
-is not fatal, as explained <a rel="nofollow" class="external text" href="https://github.com/intel/gvt-linux/issues/77#issuecomment-707541069">here</a>.</div>
+</div>
 <h2><span class="mw-headline" id="Xorg_configuration">Xorg configuration</span></h2>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The following requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-intel">xf86-video-intel</a></span>.</div>
@@ -243,16 +243,16 @@ For the full list of options, see the <span class="plainlinks archwiki-template-
 </pre>
 <p>Enabling frame buffer compression on pre-Sandy Bridge CPUs results in endless error messages:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[ 2360.475430] [drm] not enough stolen space for compressed buffer (need 4325376 bytes), disabling
 [ 2360.475437] [drm] hint: you may be able to increase stolen memory size in the BIOS to avoid this
 </pre>
-The solution is to disable frame buffer compression which will imperceptibly increase power consumption (around 0.06 W). In order to disable it add <code>i915.enable_fbc=0</code> to the kernel line parameters. More information on the results of disabled compression can be found <a rel="nofollow" class="external text" href="http://kernel.ubuntu.com/~cking/power-benchmarking/background-colour-and-framebuffer-compression/">here</a>.</div>
+The solution is to disable frame buffer compression which will imperceptibly increase power consumption (around 0.06 W). In order to disable it add <code>i915.enable_fbc=0</code> to the kernel line parameters. More information on the results of disabled compression can be found <a rel="nofollow" class="external text" href="https://kernel.ubuntu.com/~cking/power-benchmarking/background-colour-and-framebuffer-compression/">here</a>.</div>
 <h3><span class="mw-headline" id="Fastboot">Fastboot</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> This parameter is enabled by default for Skylake and newer<a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3d6535cbed4a4b029602ff83efb2adec7cb8d28b">[5]</a> as well as Bay- and Cherry-Trail (VLV/CHV)<a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7360c9f6b857e22a48e545f4e99c79630994e932">[6]</a> since Linux 5.1.<a rel="nofollow" class="external autonumber" href="https://kernelnewbies.org/Linux_5.1#Graphics">[7]</a>
+<strong>Note:</strong> This parameter is enabled by default for Skylake and newer<a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3d6535cbed4a4b029602ff83efb2adec7cb8d28b">[6]</a> as well as Bay- and Cherry-Trail (VLV/CHV)<a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7360c9f6b857e22a48e545f4e99c79630994e932">[7]</a> since Linux 5.1.<a rel="nofollow" class="external autonumber" href="https://kernelnewbies.org/Linux_5.1#Graphics">[8]</a>
 </div>
-<p>The goal of Intel Fastboot is to preserve the frame-buffer as setup by the BIOS or <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Bootloader">bootloader</a> to avoid any flickering until <a href="../en/Xorg.html" title="Xorg">Xorg</a> has started.<a rel="nofollow" class="external autonumber" href="https://lists.freedesktop.org/archives/intel-gfx/2012-May/017653.html">[8]</a><a rel="nofollow" class="external autonumber" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTEwNzc">[9]</a>
+<p>The goal of Intel Fastboot is to preserve the frame-buffer as setup by the BIOS or <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Bootloader">bootloader</a> to avoid any flickering until <a href="../en/Xorg.html" title="Xorg">Xorg</a> has started.<a rel="nofollow" class="external autonumber" href="https://lists.freedesktop.org/archives/intel-gfx/2012-May/017653.html">[9]</a><a rel="nofollow" class="external autonumber" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTEwNzc">[10]</a>
 </p>
 <p>To force enable fastboot on platforms where it is not the default already, set <code>i915.fastboot=1</code> as <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> or set in <code>/etc/modprobe.d/i915.conf</code>:
 </p>
@@ -284,12 +284,12 @@ The solution is to disable frame buffer compression which will imperceptibly inc
 <p>where <code><i>param</i></code> is one of <code>"Full"</code>, <code>"Center"</code> or <code>"Full aspect"</code>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> This option currently does not work for external displays (e.g. VGA, DVI, HDMI, DP). <a rel="nofollow" class="external autonumber" href="https://bugs.freedesktop.org/show_bug.cgi?id=90989">[10]</a>
+<strong>Note:</strong> This option currently does not work for external displays (e.g. VGA, DVI, HDMI, DP). <a rel="nofollow" class="external autonumber" href="https://bugs.freedesktop.org/show_bug.cgi?id=90989">[11]</a>
 </div>
 <h3><span class="mw-headline" id="Hardware_accelerated_H.264_decoding_on_GMA_4500">Hardware accelerated H.264 decoding on GMA 4500</span></h3>
-<p>The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libva-intel-driver">libva-intel-driver</a></span> package only provides hardware accelerated MPEG-2 decoding for GMA 4500 series GPUs. The H.264 decoding support is maintained in a separated g45-h264 branch, which can be used by installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libva-intel-driver-g45-h264/">libva-intel-driver-g45-h264</a></span><sup><small>AUR</small></sup> package. Note however that this support is experimental and its development has been abandoned. Using the VA-API with this driver on a GMA 4500 series GPU will offload the CPU but may not result in as smooth a playback as non-accelerated playback. Tests using mplayer showed that using vaapi to play back an H.264 encoded 1080p video halved the CPU load (compared to the XV overlay) but resulted in very choppy playback, while 720p worked reasonably well <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=150550">[11]</a>. This is echoed by other experiences <a rel="nofollow" class="external autonumber" href="http://www.emmolution.org/?p=192&amp;cpage=1#comment-12292">[12]</a>.
+<p>The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libva-intel-driver">libva-intel-driver</a></span> package only provides hardware accelerated MPEG-2 decoding for GMA 4500 series GPUs. The H.264 decoding support is maintained in a separated g45-h264 branch, which can be used by installing <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libva-intel-driver-g45-h264/">libva-intel-driver-g45-h264</a></span><sup><small>AUR</small></sup> package. Note however that this support is experimental and its development has been abandoned. Using the VA-API with this driver on a GMA 4500 series GPU will offload the CPU but may not result in as smooth a playback as non-accelerated playback. Tests using mplayer showed that using vaapi to play back an H.264 encoded 1080p video halved the CPU load (compared to the XV overlay) but resulted in very choppy playback, while 720p worked reasonably well <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=150550">[12]</a>. This is echoed by other experiences <a rel="nofollow" class="external autonumber" href="http://www.emmolution.org/?p=192&amp;cpage=1#comment-12292">[13]</a>.
 Setting the preallocated video ram size higher in bios results in much better hardware decoded playback. Even 1080p h264 works well if this is done.
-Smooth playback (1080p/720p) works also with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mpv-git/">mpv-git</a></span><sup><small>AUR</small></sup> in combination with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ffmpeg-git/">ffmpeg-git</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libva-intel-driver-g45-h264/">libva-intel-driver-g45-h264</a></span><sup><small>AUR</small></sup>. With MPV and the Firefox plugin "Watch with MPV"<a rel="nofollow" class="external autonumber" href="https://addons.mozilla.org/de/firefox/addon/watch-with-mpv/">[13]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-29 ⓘ]</sup> it is possible to watch hardware accelerated YouTube videos.
+Smooth playback (1080p/720p) works also with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mpv-git/">mpv-git</a></span><sup><small>AUR</small></sup> in combination with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ffmpeg-git/">ffmpeg-git</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libva-intel-driver-g45-h264/">libva-intel-driver-g45-h264</a></span><sup><small>AUR</small></sup>. With MPV and the Firefox plugin "Watch with MPV"<a rel="nofollow" class="external autonumber" href="https://addons.mozilla.org/de/firefox/addon/watch-with-mpv/">[14]</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-03-29 ⓘ]</sup> it is possible to watch hardware accelerated YouTube videos.
 </p>
 <h3>
 <span id="Old_OpenGL_Driver_.28i965.29"></span><span class="mw-headline" id="Old_OpenGL_Driver_(i965)">Old OpenGL Driver (i965)</span>
@@ -322,7 +322,7 @@ EndSection</pre>
 <strong>Note:</strong> 
 <ul>
 <li>This option may not work when <code>SwapbuffersWait</code> is <code>false</code>.</li>
-<li>This option may increase memory allocation considerably and reduce performance. <a rel="nofollow" class="external autonumber" href="https://bugs.freedesktop.org/show_bug.cgi?id=37686#c123">[14]</a>
+<li>This option may increase memory allocation considerably and reduce performance. <a rel="nofollow" class="external autonumber" href="https://bugs.freedesktop.org/show_bug.cgi?id=37686#c123">[15]</a>
 </li>
 <li>This option is problematic for applications that are very picky about vsync timing, like <a href="https://en.wikipedia.org/wiki/Super_Meat_Boy" class="extiw" title="wikipedia:Super Meat Boy">Super Meat Boy</a>.</li>
 <li>This option does not work with UXA acceleration method, only with SNA.</li>
@@ -338,7 +338,7 @@ EndSection</pre>
 <li>Chomium/Chrome has lags and slow performance due to GPU and runs smoothly with --disable-gpu switch</li>
 <li>glxgears test does not show desired performance</li>
 </ul>
-<p>The intel-driver uses <a rel="nofollow" class="external text" href="http://www.intel.com/support/graphics/sb/CS-004527.htm">Triple Buffering</a> for vertical synchronization; this allows for full performance and avoids tearing. To turn vertical synchronization off (e.g. for benchmarking) use this <code>.drirc</code> in your home directory:
+<p>The intel-driver uses <a rel="nofollow" class="external text" href="https://www.intel.com/support/graphics/sb/CS-004527.htm">Triple Buffering</a> for vertical synchronization; this allows for full performance and avoids tearing. To turn vertical synchronization off (e.g. for benchmarking) use this <code>.drirc</code> in your home directory:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.drirc</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">&lt;device screen="0" driver="dri2"&gt;
@@ -463,7 +463,7 @@ Jun 16 17:54:03 hostname kernel: RIP  [&lt;          (null)&gt;]           (null
 <p>Panel Self Refresh (PSR), a power saving feature used by Intel iGPUs is known to cause flickering in some instances <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/49628">FS#49628</a> <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/49371">FS#49371</a> <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/50605">FS#50605</a>. A temporary solution is to disable this feature using the <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> <code>i915.enable_psr=0</code>.
 </p>
 <h3><span class="mw-headline" id="OpenGL_2.1_with_i915_driver">OpenGL 2.1 with i915 driver</span></h3>
-<p>The update of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mesa">mesa</a></span> from version 13.x to 17 may break support for OpenGL 2.1 on third gen Intel GPUs (GMA3100, see <a href="https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Third_generation" class="extiw" title="wikipedia:List of Intel graphics processing units">here</a>), as described in this <a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=Mesa-i915-OpenGL-2-Drop">article</a>, reverting it back to OpenGL 1.4. However this could be restored manually by setting <code>/etc/drirc</code> or <code>~/.drirc</code> options like:
+<p>The update of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mesa">mesa</a></span> from version 13.x to 17 may break support for OpenGL 2.1 on third gen Intel GPUs (GMA3100, see <a href="https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Third_generation" class="extiw" title="wikipedia:List of Intel graphics processing units">here</a>), as described in this <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Mesa-i915-OpenGL-2-Drop">article</a>, reverting it back to OpenGL 1.4. However this could be restored manually by setting <code>/etc/drirc</code> or <code>~/.drirc</code> options like:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/drirc</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">&lt;driconf&gt;
@@ -519,8 +519,8 @@ Jun 16 17:54:03 hostname kernel: RIP  [&lt;          (null)&gt;]           (null
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Intel_graphics&amp;oldid=656040">https://wiki.archlinux.org/index.php?title=Intel_graphics&amp;oldid=656040</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 25 March 2021, at 16:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Intel_graphics&amp;oldid=663263">https://wiki.archlinux.org/index.php?title=Intel_graphics&amp;oldid=663263</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 07:32.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

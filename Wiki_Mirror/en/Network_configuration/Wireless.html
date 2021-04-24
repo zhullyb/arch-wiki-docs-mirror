@@ -201,7 +201,7 @@
 <h2><span class="mw-headline" id="Device_driver">Device driver</span></h2>
 <p>The default Arch Linux kernel is <i>modular</i>, meaning many of the drivers for machine hardware reside on the hard drive and are available as <a href="../../en/Kernel_module.html" class="mw-redirect" title="Kernel modules">modules</a>. At boot, <a href="../../en/Udev.html" title="Udev">udev</a> takes an inventory of your hardware and loads appropriate modules (drivers) for your corresponding hardware, which will in turn allow creation of a network <i>interface</i>.
 </p>
-<p>Some wireless chipsets also require firmware, in addition to a corresponding driver. Many firmware images are provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-firmware">linux-firmware</a></span> package, however, proprietary firmware images are not included and have to be installed separately. This is described in <a href="#Installing_driver/firmware">#Installing driver/firmware</a>.
+<p>Some wireless chipsets also require firmware, in addition to a corresponding driver. Many firmware images are provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-firmware">linux-firmware</a></span> package; however, proprietary firmware images are not included and have to be installed separately. This is described in <a href="#Installing_driver/firmware">#Installing driver/firmware</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If the proper module is not loaded by udev on boot, simply <a href="../../en/Kernel_module.html#Manual_module_handling" class="mw-redirect" title="Kernel modules">load it manually</a>. If udev loads more than one driver for a device, the resulting conflict may prevent successful configuration. Make sure to <a href="../../en/Kernel_module.html#Blacklisting" class="mw-redirect" title="Blacklist">blacklist</a> the unwanted module.</div>
@@ -231,18 +231,17 @@
 </div>
 <p>Check kernel messages for firmware being loaded:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep firmware</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep firmware</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[   7.148259] iwlwifi 0000:02:00.0: loaded firmware version 39.30.4.1 build 35138 op_mode iwldvm
 </pre>
 <p>If there is no relevant output, check the messages for the full output for the module you identified earlier (<code>iwlwifi</code> in this example) to identify the relevant message or further issues:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep iwlwifi</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep iwlwifi</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[   12.342694] iwlwifi 0000:02:00.0: irq 44 for MSI/MSI-X
 [   12.353466] iwlwifi 0000:02:00.0: loaded firmware version 39.31.5.1 build 35138 op_mode iwldvm
 [   12.430317] iwlwifi 0000:02:00.0: CONFIG_IWLWIFI_DEBUG disabled
 ...
-[   12.430341] iwlwifi 0000:02:00.0: Detected Intel(R) Corporation WiFi Link 5100 AGN, REV=0x6B
-</pre>
+[   12.430341] iwlwifi 0000:02:00.0: Detected Intel(R) Corporation WiFi Link 5100 AGN, REV=0x6B</pre>
 <p>If the kernel module is successfully loaded and the interface is up, you can skip the next section.
 </p>
 <h3>
@@ -591,7 +590,7 @@
 </p>
 <p>To configure the regdomain, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=crda">crda</a></span> and reboot (to reload the <code>cfg80211</code> module and all related drivers). Check the boot log to make sure that CRDA is being called by <code>cfg80211</code>:
 </p>
-<pre>$ dmesg | grep cfg80211
+<pre># dmesg | grep cfg80211
 </pre>
 <p>The current regdomain can be set to the United States with:
 </p>
@@ -608,11 +607,11 @@
 <li>If compiling a custom kernel, <code>CONFIG_CFG80211_INTERNAL_REGDB</code> can be enabled as an alternative to <code>crda</code>. Once enabled, you need to place <a rel="nofollow" class="external text" href="https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/tree/db.txt">db.txt</a> into <code>net/wireless/db.txt</code>. For further details and caveats see <a rel="nofollow" class="external autonumber" href="https://wireless.wiki.kernel.org/en/developers/regulatory/crda">[2]</a>.</li>
 </ul>
 </div>
-<p>However, setting the regdomain may not alter your settings. Some devices have a regdomain set in firmware/EEPROM, which dictates the limits of the device, meaning that setting regdomain in software <a rel="nofollow" class="external text" href="http://wiki.openwrt.org/doc/howto/wireless.utilities#iw">can only increase restrictions</a>, not decrease them. For example, a CN device could be set in software to the US regdomain, but because CN has an EIRP maximum of 20dBm, the device will not be able to transmit at the US maximum of 30dBm.
+<p>However, setting the regdomain may not alter your settings. Some devices have a regdomain set in firmware/EEPROM, which dictates the limits of the device, meaning that setting regdomain in software <a rel="nofollow" class="external text" href="https://wiki.openwrt.org/doc/howto/wireless.utilities#iw">can only increase restrictions</a>, not decrease them. For example, a CN device could be set in software to the US regdomain, but because CN has an EIRP maximum of 20dBm, the device will not be able to transmit at the US maximum of 30dBm.
 </p>
 <p>For example, to see if the regdomain is being set in firmware for an Atheros device:
 </p>
-<pre>$ dmesg | grep ath:
+<pre># dmesg | grep ath:
 </pre>
 <p>For other chipsets, it may help to search for "EEPROM", "regdomain", or simply the name of the device driver.
 </p>
@@ -658,7 +657,7 @@
 <h3><span class="mw-headline" id="Observing_logs">Observing logs</span></h3>
 <p>A good first measure to troubleshoot is to analyze the system's logfiles first. In order not to manually parse through them all, it can help to open a second terminal/console window and watch the kernels messages with 
 </p>
-<pre>$ dmesg -w
+<pre># dmesg -w
 </pre>
 <p>while performing the action, e.g. the wireless association attempt. 
 </p>
@@ -753,8 +752,7 @@ wlp1s0: authenticate with 56:e7:ee:7b:55:bc
 wlp1s0: send auth to 56:e7:ee:7b:55:bc (try 1/3)
 wlp1s0: send auth to 56:e7:ee:7b:55:bc (try 2/3)
 wlp1s0: send auth to 56:e7:ee:7b:55:bc (try 3/3)
-wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
-</pre>
+wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out</pre>
 <p>A possible solution is to disable the <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/html/latest/x86/intel-iommu.html">Intel IOMMU driver (DMA)</a>, adding <code>intel_iommu=off</code> to the <a href="../../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a> <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1907446#p1907446">[4]</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -852,14 +850,8 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 </h4>
 <p>The <code>rtl8723ae</code> and <code>rtl8723be</code> modules are included in the mainline Linux kernel.
 </p>
-<p>Some users may encounter errors with powersave on this card. This is shown with occasional disconnects that are not recognized by high level network managers (<a href="../../en/Netctl.html" title="Netctl">netctl</a>, <a href="../../en/NetworkManager.html" title="NetworkManager">NetworkManager</a>). This error can be confirmed by running <code>dmesg -w</code> or <code>journalctl -f</code> and looking for output related to powersave and the <code>rtl8723ae</code>/<code>rtl8723be</code> module. If you are having this issue, use the <code>fwlps=0</code> kernel option, which should prevent the WiFi card from automatically sleeping and halting connection.
+<p>Some users may encounter errors with powersave on this card. This is shown with occasional disconnects that are not recognized by high level network managers (<a href="../../en/Netctl.html" title="Netctl">netctl</a>, <a href="../../en/NetworkManager.html" title="NetworkManager">NetworkManager</a>). This error can be confirmed by running <code>dmesg -w</code> or <code>journalctl -f</code> and looking for output related to powersave and the <code>rtl8723ae</code>/<code>rtl8723be</code> module. If you are having this issue, use the <code>fwlps=0</code> kernel option, which should prevent the WiFi card from automatically sleeping and halting connection. See <a href="../../en/Kernel_module.html#Setting_module_options" title="Kernel module">Kernel module#Setting module options</a>.
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/rtl8723ae.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options rtl8723ae fwlps=0</pre>
-<p>or
-</p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/rtl8723be.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options rtl8723be fwlps=0</pre>
 <p>If you have poor signal, perhaps your device has only one physical antenna connected, and antenna autoselection is broken. You can force the choice of antenna with <code>ant_sel=1</code> or <code>ant_sel=2</code> kernel option. <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?id=208472">[8]</a>
 </p>
 <h4><span class="mw-headline" id="rtl88xxau">rtl88xxau</span></h4>
@@ -928,6 +920,8 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 </p>
 <p>This requires <a href="../../en/Dynamic_Kernel_Module_Support.html" class="mw-redirect" title="DKMS">DKMS</a>, so make sure you have your proper kernel headers installed.
 </p>
+<p>If no wireless interface shows up even though the <code>8821cu</code> module is loaded, you may need to manually specify the <code>rtw_RFE_type</code> option <a rel="nofollow" class="external autonumber" href="https://forums.linuxmint.com/viewtopic.php?p=1913190&amp;sid=68f2d6eff91cd47e184ae5a56385dc02#p1913190">[9]</a><a rel="nofollow" class="external autonumber" href="https://github.com/brektrou/rtl8821CU/issues/83">[10]</a>. Try e.g. <code>rtw_RFE_type=0x26</code>, other values might also work. See <a href="../../en/Kernel_module.html#Setting_module_options" title="Kernel module">Kernel module#Setting module options</a> for details.
+</p>
 <h4><span class="mw-headline" id="rtl8821ce">rtl8821ce</span></h4>
 <p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/rtl8821ce-dkms-git/">rtl8821ce-dkms-git</a></span><sup><small>AUR</small></sup> provides a kernel module for the Realtek 8821ce chipset found in the Asus X543UA.
 </p>
@@ -953,7 +947,7 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 </p>
 <ul>
 <li>
-<code>madwifi</code> is an old, obsolete driver. Not present in Arch kernel since 2.6.39.1<sup><a rel="nofollow" class="external autonumber" href="https://mailman.archlinux.org/pipermail/arch-dev-public/2011-June/020669.html">[9]</a></sup>.</li>
+<code>madwifi</code> is an old, obsolete driver. Not present in Arch kernel since 2.6.39.1<sup><a rel="nofollow" class="external autonumber" href="https://mailman.archlinux.org/pipermail/arch-dev-public/2011-June/020669.html">[11]</a></sup>.</li>
 <li>
 <code>ath5k</code> is newer driver, which replaces the <code>madwifi</code> driver. Currently a better choice for some chipsets, but not all chipsets are supported (see below)</li>
 <li>
@@ -984,12 +978,10 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 <li><a rel="nofollow" class="external free" href="https://wireless.wiki.kernel.org/en/users/drivers/ath9k">https://wireless.wiki.kernel.org/en/users/drivers/ath9k</a></li>
 <li><a rel="nofollow" class="external free" href="https://wiki.debian.org/ath9k">https://wiki.debian.org/ath9k</a></li>
 </ul>
-<p>As of Linux 3.15.1, some users have been experiencing a decrease in bandwidth. In some cases this can fixed by editing <code>/etc/modprobe.d/ath9k.conf</code> and adding the line:
+<p>As of Linux 3.15.1, some users have been experiencing a decrease in bandwidth. In some cases this can fixed by setting the <code>nohwcrypt=1</code> option for the <code>ath9k</code> module. See <a href="../../en/Kernel_module.html#Setting_module_options" title="Kernel module">Kernel module#Setting module options</a>.
 </p>
-<pre>options ath9k nohwcrypt=1
-</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Check with the command lsmod what module(-name) is in use and change it if named otherwise (e.g. ath9k_htc).</div>
+<strong>Note:</strong> Use the command <code>lsmod</code> to see what modules are in use and change <code>ath9k</code> if it is named differently (e.g. <code>ath9k_htc</code>).</div>
 <p>In the unlikely event that you have stability issues that trouble you, you could try using the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/backports-patched/">backports-patched</a></span><sup><small>AUR</small></sup> package. An <a rel="nofollow" class="external text" href="https://web.archive.org/web/20201118232556/http://lists.ath9k.org/mailman/listinfo/ath9k-devel">ath9k mailing list</a> exists for support and development related discussions.
 </p>
 <h5><span class="mw-headline" id="Power_saving_2">Power saving</span></h5>
@@ -1000,10 +992,8 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># iw dev wlan0 set power_save on</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">command failed: Operation not supported (-95)
 </pre>
-<p>The solution is to set the <code>ps_enable=1</code> option for the <code>ath9k</code> module:
+<p>The solution is to set the <code>ps_enable=1</code> option for the <code>ath9k</code> module, see <a href="../../en/Kernel_module.html#Setting_module_options" title="Kernel module">Kernel module#Setting module options</a>.
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/ath9k.conf</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options ath9k ps_enable=1</pre>
 <h3><span class="mw-headline" id="Intel">Intel</span></h3>
 <h4><span class="mw-headline" id="ipw2100_and_ipw2200">ipw2100 and ipw2200</span></h4>
 <p>These modules are fully supported in the kernel, but they require additional firmware. Depending on which of the chipsets you have, <a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> either <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ipw2100-fw">ipw2100-fw</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ipw2200-fw">ipw2200-fw</a></span>. Then <a href="../../en/Kernel_module.html#Manual_module_handling" class="mw-redirect" title="Kernel modules">reload</a> the appropriate module.
@@ -1024,7 +1014,7 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/iwl4965.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options iwl4965 11n_disable=1</pre>
-<p>If the failures persist during bootup and you are using Nouveau driver, try <a href="../../en/Nouveau.html#Enable_early_KMS" title="Nouveau">enabling early KMS</a> to prevent the conflict <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1748667#p1748667">[10]</a>.
+<p>If the failures persist during bootup and you are using Nouveau driver, try <a href="../../en/Nouveau.html#Enable_early_KMS" title="Nouveau">enabling early KMS</a> to prevent the conflict <a rel="nofollow" class="external autonumber" href="https://bbs.archlinux.org/viewtopic.php?pid=1748667#p1748667">[12]</a>.
 </p>
 <h4><span class="mw-headline" id="iwlwifi">iwlwifi</span></h4>
 <p><a rel="nofollow" class="external text" href="https://wireless.wiki.kernel.org/en/users/drivers/iwlwifi">iwlwifi</a> is the wireless driver for Intel's current wireless chips, such as 5100AGN, 5300AGN, and 5350AGN. See the <a rel="nofollow" class="external text" href="https://wireless.wiki.kernel.org/en/users/drivers/iwlwifi#supported_devices">full list of supported devices</a>. The firmware is included in the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-firmware">linux-firmware</a></span> package. The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-firmware-iwlwifi-git/">linux-firmware-iwlwifi-git</a></span><sup><small>AUR</small></sup> may contain some updates sooner.
@@ -1037,18 +1027,18 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/iwlwifi.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options iwlwifi 11n_disable=8</pre>
-<p>Do not be confused with the option name, when the value is set to <code>8</code> it does not disable anything but re-enables transmission antenna aggregation.<a rel="nofollow" class="external autonumber" href="http://forums.gentoo.org/viewtopic-t-996692.html?sid=81bdfa435c089360bdfd9368fe0339a9">[11]</a> <a rel="nofollow" class="external autonumber" href="https://bugzilla.kernel.org/show_bug.cgi?id=81571">[12]</a>
+<p>Do not be confused with the option name, when the value is set to <code>8</code> it does not disable anything but re-enables transmission antenna aggregation.<a rel="nofollow" class="external autonumber" href="https://forums.gentoo.org/viewtopic-t-996692.html?sid=81bdfa435c089360bdfd9368fe0339a9">[13]</a> <a rel="nofollow" class="external autonumber" href="https://bugzilla.kernel.org/show_bug.cgi?id=81571">[14]</a>
 </p>
 <p>In case this does not work for you, you may try disabling <a href="../../en/Power_management.html#Network_interfaces" class="mw-redirect" title="Power saving">power saving</a> for your wireless adapter.
 </p>
-<p><a rel="nofollow" class="external text" href="http://ubuntuforums.org/showthread.php?t=2183486&amp;p=12845473#post12845473">Some</a> have never gotten this to work. <a rel="nofollow" class="external text" href="http://ubuntuforums.org/showthread.php?t=2205733&amp;p=12935783#post12935783">Others</a> found salvation by disabling N in their router settings after trying everything. This is known to have be the only solution on more than one occasion. The second link there mentions a 5ghz option that might be worth exploring.
+<p><a rel="nofollow" class="external text" href="https://ubuntuforums.org/showthread.php?t=2183486&amp;p=12845473#post12845473">Some</a> have never gotten this to work. <a rel="nofollow" class="external text" href="https://ubuntuforums.org/showthread.php?t=2205733&amp;p=12935783#post12935783">Others</a> found salvation by disabling N in their router settings after trying everything. This is known to have be the only solution on more than one occasion. The second link there mentions a 5ghz option that might be worth exploring.
 </p>
 <p>If you have an 802.11ax (WiFi 6) access point and have problems detecting the beacons or an unreliable connection, review <a rel="nofollow" class="external text" href="https://www.intel.com/content/www/us/en/support/articles/000054799/network-and-i-o/wireless.html">Intel Article 54799</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Using <code>11n_disable=0</code> will also prevent 802.11ac and only allow connection with slower protocols (802.11a in the 5GHz band or 802.11b/g in the 2.4 GHz band).</div>
 <h5><span class="mw-headline" id="Bluetooth_coexistence">Bluetooth coexistence</span></h5>
-<p>If you have difficulty connecting a bluetooth headset and maintaining good downlink speed, try disabling bluetooth coexistence <a rel="nofollow" class="external autonumber" href="https://wireless.wiki.kernel.org/en/users/Drivers/iwlwifi#wi-fibluetooth_coexistence">[13]</a>:
+<p>If you have difficulty connecting a bluetooth headset and maintaining good downlink speed, try disabling bluetooth coexistence <a rel="nofollow" class="external autonumber" href="https://wireless.wiki.kernel.org/en/users/Drivers/iwlwifi#wi-fibluetooth_coexistence">[15]</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modprobe.d/iwlwifi.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options iwlwifi bt_coex_active=0</pre>
@@ -1060,7 +1050,7 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 </div>
 <p>You may have some issue where the driver outputs stack traces &amp; errors, which can cause some stuttering.
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">dmesg</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Microcode SW error detected.  Restarting 0x2000000.</pre>
 <p>To fix those errors, you may downgrade the package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-firmware">linux-firmware</a></span> or rename the last version of the firmware used by your device so that an older version is loaded (which keeps it out of pacman's ignored packages).
 </p>
@@ -1109,7 +1099,7 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 <p>See <a rel="nofollow" class="external text" href="https://sourceforge.net/projects/acx100/">official page</a> for details.
 </p>
 <h4><span class="mw-headline" id="zd1211rw">zd1211rw</span></h4>
-<p><a rel="nofollow" class="external text" href="https://sourceforge.net/projects/zd1211/">zd1211rw</a> is a driver for the ZyDAS ZD1211 802.11b/g USB WLAN chipset, and it is included in recent versions of the Linux kernel. See <a rel="nofollow" class="external autonumber" href="http://www.linuxwireless.org/en/users/Drivers/zd1211rw/devices">[14]</a> for a list of supported devices. You only need to <a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the firmware for the device, provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/zd1211-firmware/">zd1211-firmware</a></span><sup><small>AUR</small></sup> package.
+<p><a rel="nofollow" class="external text" href="https://sourceforge.net/projects/zd1211/">zd1211rw</a> is a driver for the ZyDAS ZD1211 802.11b/g USB WLAN chipset, and it is included in recent versions of the Linux kernel. See <a rel="nofollow" class="external autonumber" href="http://www.linuxwireless.org/en/users/Drivers/zd1211rw/devices">[16]</a> for a list of supported devices. You only need to <a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the firmware for the device, provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/zd1211-firmware/">zd1211-firmware</a></span><sup><small>AUR</small></sup> package.
 </p>
 <h4><span class="mw-headline" id="hostap_cs">hostap_cs</span></h4>
 <p><a rel="nofollow" class="external text" href="http://hostap.epitest.fi/">Host AP</a> is a Linux driver for wireless LAN cards based on Intersil's Prism2/2.5/3 chipset. The driver is included in Linux kernel.
@@ -1158,7 +1148,7 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://wireless.wiki.kernel.org/">The Linux Wireless project</a></li>
-<li><a rel="nofollow" class="external text" href="http://aircrack-ng.org/doku.php?id=install_drivers">Aircrack-ng guide on installing drivers</a></li>
+<li><a rel="nofollow" class="external text" href="https://aircrack-ng.org/doku.php?id=install_drivers">Aircrack-ng guide on installing drivers</a></li>
 <li>
 <a rel="nofollow" class="external text" href="https://wikidevi.wi-cat.ru">Wireless Device Database Wiki</a> (This fork is hosted by wi-cat.ru since the original wiki has shut down. There are two less complete versions available: <a rel="nofollow" class="external text" href="http://en.techinfodepot.shoutwiki.com">TechInfoDepot</a>, <a rel="nofollow" class="external text" href="https://deviwiki.com/">deviwiki</a>)</li>
 </ul>
@@ -1182,8 +1172,8 @@ wlp1s0: authentication with 56:e7:ee:7b:55:bc timed out
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration/Wireless&amp;oldid=655743">https://wiki.archlinux.org/index.php?title=Network_configuration/Wireless&amp;oldid=655743</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 March 2021, at 08:28.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration/Wireless&amp;oldid=662753">https://wiki.archlinux.org/index.php?title=Network_configuration/Wireless&amp;oldid=662753</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 08:11.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

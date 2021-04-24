@@ -359,7 +359,7 @@
 </td>
 <td>
 </td>
-<td>260 MiB
+<td>At least 260 MiB
 </td>
 </tr>
 <tr>
@@ -663,6 +663,11 @@
 <p>The <code>CONFIG_EFI_PARTITION</code> option in the kernel config enables GPT support in the kernel (despite the name, EFI PARTITION). This option must be built in the kernel and not compiled as a loadable module. This option is required even if GPT disks are used only for data storage and not for booting. This option is enabled by default in all Arch's <a href="../en/Kernel.html#Officially_supported_kernels" class="mw-redirect" title="Kernels">officially supported kernels</a>. In case of a custom kernel, enable this option by doing <code>CONFIG_EFI_PARTITION=y</code>.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Add instructions for changing the drive controller operating mode from firmware RAID to native (i.e. AHCI for SATA) (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Installation_guide#Boot_issues_faced_when_installing_on_modern_machines.">Talk:Installation guide#Boot issues faced when installing on modern machines.</a>)</div>
+</div>
 <h3><span class="mw-headline" id="Tricking_old_BIOS_into_booting_from_GPT">Tricking old BIOS into booting from GPT</span></h3>
 <p>Some old BIOSes (from before year 2010) attempt to parse the boot sector and refuse to boot it if it does not contain a bootable MBR partition. This is a problem if one wants to use GPT on this disk, because, from the BIOS viewpoint, it contains only one, non-bootable, MBR partition of type <code>ee</code> (i.e., the protective MBR partition). One can mark the protective MBR entry as bootable using <code>fdisk -t mbr /dev/sda</code>, and it will work on some BIOSes. However, the UEFI specification prohibits the protective MBR partition entry from being bootable, and UEFI-based boards do care about this, even in the legacy boot mode. So, this matters if one wants to create a GPT-based USB flash drive that is supposed to boot both on modern UEFI-based boards and also on old BIOSes that insist on finding a bootable MBR partition. It is not possible to solve this problem using traditional tools such as <a href="../en/Fdisk.html" title="Fdisk">fdisk</a> or <a href="../en/GPT_fdisk.html" class="mw-redirect" title="Gdisk">gdisk</a>, but it is possible to create a fake MBR partition entry suitable for both kinds of BIOSes manually as a sequence of bytes.
 </p>
@@ -717,8 +722,8 @@ Partition table entries are not in disk order.</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Partitioning&amp;oldid=655699">https://wiki.archlinux.org/index.php?title=Partitioning&amp;oldid=655699</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 March 2021, at 21:21.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Partitioning&amp;oldid=663595">https://wiki.archlinux.org/index.php?title=Partitioning&amp;oldid=663595</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 April 2021, at 09:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

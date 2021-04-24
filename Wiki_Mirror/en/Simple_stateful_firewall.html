@@ -172,7 +172,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 <pre># iptables -P FORWARD DROP
 </pre>
 <h3><span class="mw-headline" id="The_OUTPUT_chain">The OUTPUT chain</span></h3>
-<p>The OUTPUT chain can be a powerful tool for filtering outbound traffic, especially for servers and other devices which don't run web browsers or peer-to-peer tools that need to connect to arbitrary destinations on the internet. However, properly setting up an OUTPUT chain requires information about the intended use of the system. A secure set of rules for a desktop system, laptop system, cloud server and home/on-prem server would all be very different.
+<p>The OUTPUT chain can be a powerful tool for filtering outbound traffic, especially for servers and other devices which do not run web browsers or peer-to-peer tools that need to connect to arbitrary destinations on the internet. However, properly setting up an OUTPUT chain requires information about the intended use of the system. A secure set of rules for a desktop system, laptop system, cloud server and home/on-prem server would all be very different.
 </p>
 <p>In this simple example, we will allow all outbound traffic by setting the default policy for the <b>OUTPUT</b> chain to <b>ACCEPT</b>. This is less secure, but is highly compatible with many systems.
 </p>
@@ -196,7 +196,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 <p>The second rule will accept all traffic from the "loopback" (lo) interface, which is necessary for many applications and services.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> You can add more trusted interfaces here such as "eth1" if you do not want/need the traffic filtered by the firewall, but be warned that if you have a NAT setup that redirects any kind of traffic to this interface from anywhere else in the network (let's say a router), it will get through, regardless of any other settings you may have.</div>
+<strong>Note:</strong> You can add more trusted interfaces here such as "eth1" if you do not want/need the traffic filtered by the firewall, but be warned that if you have a NAT setup that redirects any kind of traffic to this interface from anywhere else in the network (let us say a router), it will get through, regardless of any other settings you may have.</div>
 <pre># iptables -A INPUT -i lo -j ACCEPT
 </pre>
 <p>The third rule will drop all traffic with an "INVALID" state match. Traffic can fall into four "state" categories: NEW, ESTABLISHED, RELATED or INVALID and this is what makes this a "stateful" firewall rather than a less secure "stateless" one. States are tracked using the "nf_conntrack_*" kernel modules which are loaded automatically by the kernel as you add rules.
@@ -376,7 +376,7 @@ COMMIT
 <h4>
 <span id="Set_boundary_of_broadcast.2Fmulticast_to_avoid_pollution_from_external_.28outside_of_LAN.29"></span><span class="mw-headline" id="Set_boundary_of_broadcast/multicast_to_avoid_pollution_from_external_(outside_of_LAN)">Set boundary of broadcast/multicast to avoid pollution from external (outside of LAN)</span>
 </h4>
-<p>Since we have enabled <code>net.ipv4.conf.ppp0.forwarding = 1</code>, all type of traffics will be forwarded via ppp0 by default. Take <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol#Discovery" class="extiw" title="wikipedia:Dynamic Host Configuration Protocol">DHCP discovery</a> for example where according to the protocol specification the source address is <code>0.0.0.0</code> and destination address is <code>255.255.255.255</code>, if you are hosting your own DHCP server locally but there is another DHCP server running outside but neighouring with your <code>ppp0</code> and acking your DHCP discovery request, your client IP configuration will probably be polluted because you've enabled <code>MASQUERADE</code> previously. In this case you probably want to set a boundary at <code>ppp0</code> and drop all broadcast/multicast traffics going accross.
+<p>Since we have enabled <code>net.ipv4.conf.ppp0.forwarding = 1</code>, all type of traffics will be forwarded via ppp0 by default. Take <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol#Discovery" class="extiw" title="wikipedia:Dynamic Host Configuration Protocol">DHCP discovery</a> for example where according to the protocol specification the source address is <code>0.0.0.0</code> and destination address is <code>255.255.255.255</code>, if you are hosting your own DHCP server locally but there is another DHCP server running outside but neighouring with your <code>ppp0</code> and acking your DHCP discovery request, your client IP configuration will probably be polluted because you have enabled <code>MASQUERADE</code> previously. In this case you probably want to set a boundary at <code>ppp0</code> and drop all broadcast/multicast traffics going accross.
 </p>
 <pre># iptables -A PREROUTING -i ppp0 -m addrtype --limit-iface-in ! --src-type UNICAST -j DROP
 # iptables -A PREROUTING -i ppp0 -m addrtype --limit-iface-in --dst-type UNSPEC -j DROP
@@ -530,7 +530,7 @@ COMMIT
 <p>All over this section, we assume that the outgoing interface (the one with the public internet IP) is <b>ppp0</b>. Keep in mind that you have to change the name in all following rules if your outgoing interface has another name.
 </p>
 <h4><span class="mw-headline" id="Setting_up_the_POSTROUTING_chain">Setting up the POSTROUTING chain</span></h4>
-<p>Now, we have to define who is allowed to connect to the internet. Let's assume we have the subnet <b>192.168.0.0/24</b> (which means all addresses that are of the form 192.168.0.*) on <b>eth0</b>. We first need to accept the machines on this interface in the FORWARD table, that is why we created the <b>fw-interfaces</b> chain above:
+<p>Now, we have to define who is allowed to connect to the internet. Let us assume we have the subnet <b>192.168.0.0/24</b> (which means all addresses that are of the form 192.168.0.*) on <b>eth0</b>. We first need to accept the machines on this interface in the FORWARD table, that is why we created the <b>fw-interfaces</b> chain above:
 </p>
 <pre># iptables -A fw-interfaces -i eth0 -j ACCEPT
 </pre>
@@ -540,7 +540,7 @@ COMMIT
 </pre>
 <p>Do not forget the <b>-o ppp0</b> parameter above. If you omit it, your network will be screwed up.
 </p>
-<p>Let's assume we have another subnet, <b>10.3.0.0/16</b> (which means all addresses 10.3.*.*), on the interface <b>eth1</b>. We add the same rules as above again:
+<p>Let us assume we have another subnet, <b>10.3.0.0/16</b> (which means all addresses 10.3.*.*), on the interface <b>eth1</b>. We add the same rules as above again:
 </p>
 <pre># iptables -A fw-interfaces -i eth1 -j ACCEPT
 # iptables -t nat -A POSTROUTING -s 10.3.0.0/16 -o ppp0 -j MASQUERADE
@@ -592,8 +592,8 @@ COMMIT
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Simple_stateful_firewall&amp;oldid=655114">https://wiki.archlinux.org/index.php?title=Simple_stateful_firewall&amp;oldid=655114</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 March 2021, at 16:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Simple_stateful_firewall&amp;oldid=659669">https://wiki.archlinux.org/index.php?title=Simple_stateful_firewall&amp;oldid=659669</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 14 April 2021, at 17:36.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

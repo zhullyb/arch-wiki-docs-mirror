@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -126,7 +127,7 @@
 <p>Véase también <a href="../en/Hardware_video_acceleration.html" title="Hardware video acceleration">Hardware video acceleration</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Algunos (<a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=Ubuntu-Debian-Abandon-Intel-DDX">Debian &amp; Ubuntu</a>, <a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=Fedora-Xorg-Intel-DDX-Switch">Fedora</a>, <a rel="nofollow" class="external text" href="https://community.kde.org/Plasma/5.9_Errata#Intel_GPUs">KDE</a>) no recomiendan instalar el controlador <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-intel">xf86-video-intel</a></span> y en su lugar recurrir al controlador modesetting para GPUs Gen4 y más recientes (GMA 3000 del 2006 en adelante). Vea <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20160714232204/https://www.reddit.com/r/archlinux/comments/4cojj9/it_is_probably_time_to_ditch_xf86videointel/">[1]</a>, <a rel="nofollow" class="external autonumber" href="http://www.phoronix.com/scan.php?page=article&amp;item=intel-modesetting-2017&amp;num=1">[2]</a>, <a href="../es/Xorg.html#Instalaci%C3%B3n" title="Xorg (Español)">Xorg (Español)#Instalación</a> y <span class="plainlinks archwiki-template-man" title="$ man 4 modesetting"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/modesetting.4">modesetting(4)</a></span>. Sin embargo, el controlador modesetting puede causar problemas como <a rel="nofollow" class="external text" href="https://bugs.chromium.org/p/chromium/issues/detail?id=370022">Chromium Issue 370022</a> y <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/xorg/xserver/-/issues/928">vsync jitter/video stutter in mpv</a>.</div>
+<strong>Nota:</strong> Algunos (<a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Ubuntu-Debian-Abandon-Intel-DDX">Debian &amp; Ubuntu</a>, <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Fedora-Xorg-Intel-DDX-Switch">Fedora</a>, <a rel="nofollow" class="external text" href="https://community.kde.org/Plasma/5.9_Errata#Intel_GPUs">KDE</a>) no recomiendan instalar el controlador <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-video-intel">xf86-video-intel</a></span> y en su lugar recurrir al controlador modesetting para GPUs Gen4 y más recientes (GMA 3000 del 2006 en adelante). Vea <a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20160714232204/https://www.reddit.com/r/archlinux/comments/4cojj9/it_is_probably_time_to_ditch_xf86videointel/">[1]</a>, <a rel="nofollow" class="external autonumber" href="https://www.phoronix.com/scan.php?page=article&amp;item=intel-modesetting-2017&amp;num=1">[2]</a>, <a href="../es/Xorg.html#Instalaci%C3%B3n" title="Xorg (Español)">Xorg (Español)#Instalación</a> y <span class="plainlinks archwiki-template-man" title="$ man 4 modesetting"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/modesetting.4">modesetting(4)</a></span>. Sin embargo, el controlador modesetting puede causar problemas como <a rel="nofollow" class="external text" href="https://bugs.chromium.org/p/chromium/issues/detail?id=370022">Chromium Issue 370022</a> y <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/xorg/xserver/-/issues/928">vsync jitter/video stutter in mpv</a>.</div>
 <h2><span class="mw-headline" id="Carga">Carga</span></h2>
 <p>El módulo de núcleo proporcionado por Intel debería cargar automáticamente al arranque del sistema.
 </p>
@@ -212,11 +213,11 @@ Para un listado completo de opciones, vea el manual <span class="plainlinks arch
 </pre>
 <p>Habilitar la compresión frame buffer en CPUs anteriores a Sandy Bridge resulta en interminables mensajes de error:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[ 2360.475430] [drm] not enough stolen space for compressed buffer (need 4325376 bytes), disabling
 [ 2360.475437] [drm] hint: you may be able to increase stolen memory size in the BIOS to avoid this
 </pre>
-La solución a esto es desactivar la compresión frame buffer, lo que subirá el consumo energético de forma imperceptible (al rededor de 0.06 W). Para deshabilitarlo añada <code>i915.enable_fbc=0</code> a las líneas de parámetro del núcleo. Mayor información en los resultados de compresión deshabilitada pueden ser encontrados <a rel="nofollow" class="external text" href="http://kernel.ubuntu.com/~cking/power-benchmarking/background-colour-and-framebuffer-compression/">aquí</a>.</div>
+La solución a esto es desactivar la compresión frame buffer, lo que subirá el consumo energético de forma imperceptible (al rededor de 0.06 W). Para deshabilitarlo añada <code>i915.enable_fbc=0</code> a las líneas de parámetro del núcleo. Mayor información en los resultados de compresión deshabilitada pueden ser encontrados <a rel="nofollow" class="external text" href="https://kernel.ubuntu.com/~cking/power-benchmarking/background-colour-and-framebuffer-compression/">aquí</a>.</div>
 <h3><span class="mw-headline" id="Fastboot">Fastboot</span></h3>
 <p>La meta de Intel Fastboot es preservar el frame-buffer del modo en que fue establecido por la BIOS o el <a href="../es/Arch_boot_process.html#Gestor_de_arranque" title="Arch boot process (Español)">gestor de arranque</a> para evitar parpadeos hasta que <a href="../es/Xorg.html" title="Xorg (Español)">Xorg</a> comience <a rel="nofollow" class="external autonumber" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=MTEwNzc">[3]</a>.
 </p>
@@ -313,7 +314,7 @@ EndSection</pre>
 <li>Chomium/Chrome presenta retrasos y un rendimiento lento debido a la GPU y se ejecuta con suavidad con la bandera --disable-gpu</li>
 <li>glxgears no muestra el rendimiento deseado</li>
 </ul>
-<p>El controlador de intel utiliza <a rel="nofollow" class="external text" href="http://www.intel.com/support/graphics/sb/CS-004527.htm">Triple Buffering</a> para sincronización vertical, esto permite un rendimiento total y evita el desgarro. Para desactivar la sincronización vertical (e.g para una evaluación comparativa) utilice este <code>.drirc</code> en su directorio de usuario:
+<p>El controlador de intel utiliza <a rel="nofollow" class="external text" href="https://www.intel.com/support/graphics/sb/CS-004527.htm">Triple Buffering</a> para sincronización vertical, esto permite un rendimiento total y evita el desgarro. Para desactivar la sincronización vertical (e.g para una evaluación comparativa) utilice este <code>.drirc</code> en su directorio de usuario:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.drirc</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">&lt;device screen="0" driver="dri2"&gt;
@@ -441,7 +442,7 @@ Jun 16 17:54:03 hostname kernel: RIP  [&lt;          (null)&gt;]           (null
 <p>Panel Self Refresh (PSR), una característica para el ahorro de energía utilizada por la iGPU de Intel es conocida por causar pestañeos en algunas instancias <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/49628">FS#49628</a> <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/49371">FS#49371</a> <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/50605">FS#50605</a>. Una solución temporal es deshabilitar esta función utilizando el <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetro de núcleo</a> <code>i915.enable_psr=0</code>.
 </p>
 <h3><span class="mw-headline" id="OpenGL_2.1_con_el_controlador_i915">OpenGL 2.1 con el controlador i915</span></h3>
-<p>La actualización de <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mesa">mesa</a></span> desde la versión 13.x a la versión 17 puede quebrar el soporte para OpenGL 2.1 en GPUs Intel de tercera generación (GMA3100, véalo <a href="https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Third_generation" class="extiw" title="wikipedia:List of Intel graphics processing units">aquí</a>), como es descrito en este <a rel="nofollow" class="external text" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=Mesa-i915-OpenGL-2-Drop">artículo</a>, revirtiéndolo a OpenGL 1.4. Sin embargo, esto puede ser restaurado manualmente ajustando las opciones <code>/etc/drirc</code> o <code>~/.drirc</code> del siguiente modo:
+<p>La actualización de <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mesa">mesa</a></span> desde la versión 13.x a la versión 17 puede quebrar el soporte para OpenGL 2.1 en GPUs Intel de tercera generación (GMA3100, véalo <a href="https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Third_generation" class="extiw" title="wikipedia:List of Intel graphics processing units">aquí</a>), como es descrito en este <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Mesa-i915-OpenGL-2-Drop">artículo</a>, revirtiéndolo a OpenGL 1.4. Sin embargo, esto puede ser restaurado manualmente ajustando las opciones <code>/etc/drirc</code> o <code>~/.drirc</code> del siguiente modo:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/drirc</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">&lt;driconf&gt;
@@ -488,8 +489,8 @@ Jun 16 17:54:03 hostname kernel: RIP  [&lt;          (null)&gt;]           (null
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Intel_graphics_(Espa%C3%B1ol)&amp;oldid=632731">https://wiki.archlinux.org/index.php?title=Intel_graphics_(Español)&amp;oldid=632731</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 August 2020, at 20:41.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Intel_graphics_(Espa%C3%B1ol)&amp;oldid=663823">https://wiki.archlinux.org/index.php?title=Intel_graphics_(Español)&amp;oldid=663823</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 17:07.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

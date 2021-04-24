@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -91,7 +92,7 @@
 </p>
 <p>Before starting to configure qdiscs, first we need to remove any existing qdisc from the root. This will remove any qdisc from the eth0 device:
 </p>
-<pre># tc qdisc del root dev eth0 
+<pre># tc qdisc del root dev eth0
 </pre>
 <h3><span class="mw-headline" id="Classless_Qdiscs">Classless Qdiscs</span></h3>
 <p>These are queues that do basic management of traffic by reordering, slowing or dropping packets. This qdiscs do not allow the creation of classes.
@@ -130,12 +131,12 @@ It is also called "Stochastic" because it does not really create a queue for eac
 <pre># tc qdisc add dev eth0 root sfq perturb 10
 </pre>
 <h4><span class="mw-headline" id="CoDel_and_Fair_Queueing_CoDel">CoDel and Fair Queueing CoDel</span></h4>
-<p>Since systemd 217, fq_codel is the default. <a href="https://en.wikipedia.org/wiki/CoDel" class="extiw" title="wikipedia:CoDel">CoDel</a> (Controlled Delay) is an attempt to limit buffer bloating and minimize latency in saturated network links by distinguishing good queues (that empty quickly) from bad queues that stay saturated and slow. The <a href="https://en.wikipedia.org/wiki/Fair_queueing" class="extiw" title="wikipedia:Fair queueing">fair queueing</a> Codel utilizes fair queues to more readily distribute available bandwidth between Codel flows. The configuration options are limited intentionally, since the algorithm is designed to work with dynamic networks, and there are some corner cases to consider that are discussed on the <a rel="nofollow" class="external text" href="http://www.bufferbloat.net/projects/codel/wiki">bufferbloat wiki concerning Codel</a>, including issues on very large switches and sub megabit connections. 
+<p>Since systemd 217, fq_codel is the default. <a href="https://en.wikipedia.org/wiki/CoDel" class="extiw" title="wikipedia:CoDel">CoDel</a> (Controlled Delay) is an attempt to limit buffer bloating and minimize latency in saturated network links by distinguishing good queues (that empty quickly) from bad queues that stay saturated and slow. The <a href="https://en.wikipedia.org/wiki/Fair_queueing" class="extiw" title="wikipedia:Fair queueing">fair queueing</a> Codel utilizes fair queues to more readily distribute available bandwidth between Codel flows. The configuration options are limited intentionally, since the algorithm is designed to work with dynamic networks, and there are some corner cases to consider that are discussed on the <a rel="nofollow" class="external text" href="https://www.bufferbloat.net/projects/codel/wiki">bufferbloat wiki concerning Codel</a>, including issues on very large switches and sub megabit connections. 
 </p>
 <p>Additional information is available via the <span class="plainlinks archwiki-template-man" title="$ man 8 tc-codel"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tc-codel.8">tc-codel(8)</a></span> and <span class="plainlinks archwiki-template-man" title="$ man 8 tc-fq_codel"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tc-fq_codel.8">tc-fq_codel(8)</a></span>. 
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Make sure your ethernet driver supports Byte Queue Limits before using CoDel. <a rel="nofollow" class="external text" href="http://www.bufferbloat.net/projects/bloat/wiki/BQL_enabled_drivers">Here is a list of drivers supported as of kernel 3.6</a>
+<strong>Warning:</strong> Make sure your ethernet driver supports Byte Queue Limits before using CoDel. <a rel="nofollow" class="external text" href="https://www.bufferbloat.net/projects/bloat/wiki/BQL_enabled_drivers">Here is a list of drivers supported as of kernel 3.6</a>
 </div>
 <h3><span class="mw-headline" id="Classful_Qdiscs">Classful Qdiscs</span></h3>
 <p>Classful qdiscs are very useful if you have different kinds of traffic which should have differing treatment.
@@ -277,7 +278,7 @@ exit 0
 </pre>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://lartc.org">Linux Advanced Routing &amp; Traffic Control</a></li>
+<li><a rel="nofollow" class="external text" href="https://lartc.org">Linux Advanced Routing &amp; Traffic Control</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Tc_(Linux)" class="extiw" title="wikipedia:Tc (Linux)">Wikipedia page for the tc command</a></li>
 </ul>
 </div>
@@ -290,8 +291,8 @@ exit 0
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Advanced_traffic_control&amp;oldid=533572">https://wiki.archlinux.org/index.php?title=Advanced_traffic_control&amp;oldid=533572</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 August 2018, at 13:23.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Advanced_traffic_control&amp;oldid=660458">https://wiki.archlinux.org/index.php?title=Advanced_traffic_control&amp;oldid=660458</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 22:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

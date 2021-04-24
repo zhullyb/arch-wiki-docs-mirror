@@ -55,7 +55,7 @@
 <ul>
 <li class="toclevel-2 tocsection-4"><a href="#Key_generation"><span class="tocnumber">2.1</span> <span class="toctext">Key generation</span></a></li>
 <li class="toclevel-2 tocsection-5">
-<a href="#Manual_WireGuard_setup"><span class="tocnumber">2.2</span> <span class="toctext">Manual WireGuard setup</span></a>
+<a href="#Manual_configuration"><span class="tocnumber">2.2</span> <span class="toctext">Manual configuration</span></a>
 <ul>
 <li class="toclevel-3 tocsection-6"><a href="#Peer_setup"><span class="tocnumber">2.2.1</span> <span class="toctext">Peer setup</span></a></li>
 <li class="toclevel-3 tocsection-7">
@@ -101,33 +101,31 @@
 <li class="toclevel-2 tocsection-29"><a href="#Low_MTU"><span class="tocnumber">5.3</span> <span class="toctext">Low MTU</span></a></li>
 <li class="toclevel-2 tocsection-30"><a href="#Key_is_not_the_correct_length_or_format"><span class="tocnumber">5.4</span> <span class="toctext">Key is not the correct length or format</span></a></li>
 <li class="toclevel-2 tocsection-31"><a href="#Unable_to_establish_a_persistent_connection_behind_NAT_/_firewall"><span class="tocnumber">5.5</span> <span class="toctext">Unable to establish a persistent connection behind NAT / firewall</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#Loop_routing"><span class="tocnumber">5.6</span> <span class="toctext">Loop routing</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-32">
-<a href="#Known_issues"><span class="tocnumber">6</span> <span class="toctext">Known issues</span></a>
+<li class="toclevel-1 tocsection-33">
+<a href="#Tips_and_tricks"><span class="tocnumber">6</span> <span class="toctext">Tips and tricks</span></a>
 <ul>
-<li class="toclevel-2 tocsection-33"><a href="#Loop_routing"><span class="tocnumber">6.1</span> <span class="toctext">Loop routing</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#Vanity_keys"><span class="tocnumber">6.1</span> <span class="toctext">Vanity keys</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#Store_private_keys_in_encrypted_form"><span class="tocnumber">6.2</span> <span class="toctext">Store private keys in encrypted form</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#Endpoint_with_changing_IP"><span class="tocnumber">6.3</span> <span class="toctext">Endpoint with changing IP</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#Generate_QR_code"><span class="tocnumber">6.4</span> <span class="toctext">Generate QR code</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#Enable_debug_logs"><span class="tocnumber">6.5</span> <span class="toctext">Enable debug logs</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#Reload_peer_(server)_configuration"><span class="tocnumber">6.6</span> <span class="toctext">Reload peer (server) configuration</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-34">
-<a href="#Tips_and_tricks"><span class="tocnumber">7</span> <span class="toctext">Tips and tricks</span></a>
-<ul>
-<li class="toclevel-2 tocsection-35"><a href="#Vanity_keys"><span class="tocnumber">7.1</span> <span class="toctext">Vanity keys</span></a></li>
-<li class="toclevel-2 tocsection-36"><a href="#Store_private_keys_in_encrypted_form"><span class="tocnumber">7.2</span> <span class="toctext">Store private keys in encrypted form</span></a></li>
-<li class="toclevel-2 tocsection-37"><a href="#Endpoint_with_changing_IP"><span class="tocnumber">7.3</span> <span class="toctext">Endpoint with changing IP</span></a></li>
-<li class="toclevel-2 tocsection-38"><a href="#Generate_QR_code"><span class="tocnumber">7.4</span> <span class="toctext">Generate QR code</span></a></li>
-<li class="toclevel-2 tocsection-39"><a href="#Enable_debug_logs"><span class="tocnumber">7.5</span> <span class="toctext">Enable debug logs</span></a></li>
-<li class="toclevel-2 tocsection-40"><a href="#Reload_peer_(server)_configuration"><span class="tocnumber">7.6</span> <span class="toctext">Reload peer (server) configuration</span></a></li>
-</ul>
-</li>
-<li class="toclevel-1 tocsection-41"><a href="#See_also"><span class="tocnumber">8</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-40"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p>For recent kernels (≥ 5.6) and if using <a href="#systemd-networkd">systemd-networkd</a> or <a href="#NetworkManager">NetworkManager</a> as network manager, no additional tools are required to set up a WireGuard interface. Else, <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-tools">wireguard-tools</a></span>.
-</p>
-<p>If using a Linux <a href="../en/Kernel.html" title="Kernel">kernel</a> older than 5.6, additionally install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-dkms">wireguard-dkms</a></span> for the kernel module.
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-tools">wireguard-tools</a></span> is still required for <a href="#Key_generation">#Key generation</a>. Or do network managers take care of that as well? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:WireGuard">Talk:WireGuard#</a>)</div>
+</div>
+<p>If using <a href="#systemd-networkd">#systemd-networkd</a> or <a href="#NetworkManager">#NetworkManager</a> as network manager, no additional tools are required to set up a WireGuard interface. Else, <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-tools">wireguard-tools</a></span>.
 </p>
 <h3><span class="mw-headline" id="Graphical_clients">Graphical clients</span></h3>
 <ul><li>
@@ -136,6 +134,11 @@
 <a rel="nofollow" class="external free" href="https://github.com/corrad1nho/qomui">https://github.com/corrad1nho/qomui</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/qomui/">qomui</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <h2><span class="mw-headline" id="Usage">Usage</span></h2>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Useless section name – everything on this page is about WireGuard usage. Moving the 4 subsections to the top level would make sense. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:WireGuard">Talk:WireGuard#</a>)</div>
+</div>
 <p>The commands below demonstrate how to set up a basic tunnel between two or more peers with the following settings:
 </p>
 <table class="wikitable">
@@ -245,10 +248,15 @@
 $ wg genpsk &gt; peer_A-peer_C.psk
 $ wg genpsk &gt; peer_B-peer_C.psk
 </pre>
-<h3><span class="mw-headline" id="Manual_WireGuard_setup">Manual WireGuard setup</span></h3>
+<h3><span class="mw-headline" id="Manual_configuration">Manual configuration</span></h3>
 <h4><span class="mw-headline" id="Peer_setup">Peer setup</span></h4>
 <p>Manual setup is accomplished by using <span class="plainlinks archwiki-template-man" title="$ man 8 ip"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ip.8">ip(8)</a></span> and <span class="plainlinks archwiki-template-man" title="$ man 8 wg"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/wg.8">wg(8)</a></span>.
 </p>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> These examples use the pre-shared keys which were introduced as <i>optional</i> in <a href="#Key_generation">#Key generation</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:WireGuard">Talk:WireGuard#</a>)</div>
+</div>
 <p><b>Peer A setup:</b>
 </p>
 <p>In this example peer A will listen on UDP port 51871 and will accept connection from peer B and C.
@@ -334,11 +342,16 @@ nameserver 10.0.0.2
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If a peer will act as a DNS server, make sure to use its WireGuard tunnel address(es) as the DNS server address(es) instead of another of its addresses from allowed IPs. Otherwise DNS lookups may fail.</div>
 <h3><span class="mw-headline" id="Basic_checkups">Basic checkups</span></h3>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Commands in all examples are executed on peer A, so the verbose prompt does not matter at all. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:WireGuard">Talk:WireGuard#</a>)</div>
+</div>
 <p>Invoking the <span class="plainlinks archwiki-template-man" title="$ man 8 wg"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/wg.8">wg(8)</a></span> command without parameters will give a quick overview of the current configuration.
 </p>
 <p>As an example, when peer A has been configured we are able to see its identity and its associated peers:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">[user@peer-a]# wg</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">[root@peer-a]# wg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">interface: wg0
   public key: UguPyBThx/+xMXeTbRYkKlP0Wh/QZT3vTLPOVaaXTD8=
   private key: (hidden)
@@ -378,7 +391,7 @@ peer: 9jalV3EEBnVXahro0pRMQ+cHlmjE33Slo9tddzCVtCw=
 peer: 2RzKFbGMx5g7fG0BrWCI7JIpGvcwGkqUaCoENYueJw4=
   allowed ips: 10.0.0.3/32, fdc9:281f:04d7:9ee9::3</pre>
 <h3><span class="mw-headline" id="Persistent_configuration">Persistent configuration</span></h3>
-<p>Persistent configuration can be achieved using <code>wg-quick@.service</code>, which is shipped with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-tools">wireguard-tools</a></span>, or using a network manager. Network managers that support WireGuard are—<a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>, <a href="../en/Netctl.html" title="Netctl">netctl</a><a rel="nofollow" class="external autonumber" href="https://git.archlinux.org/netctl.git/tree/docs/examples/wireguard">[2]</a>, <a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a> and <a href="../en/ConnMan.html" title="ConnMan">ConnMan</a><a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/network/connman/connman.git/tree/doc/vpn-config-format.txt">[3]</a>.
+<p>Persistent configuration can be achieved using <code>wg-quick@.service</code>, which is shipped with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wireguard-tools">wireguard-tools</a></span>, or using a network manager. Network managers that support WireGuard are <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a>, <a href="../en/Netctl.html" title="Netctl">netctl</a><a rel="nofollow" class="external autonumber" href="https://git.archlinux.org/netctl.git/tree/docs/examples/wireguard">[2]</a>, <a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a> and <a href="../en/ConnMan.html" title="ConnMan">ConnMan</a><a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/network/connman/connman.git/tree/doc/vpn-config-format.txt">[3]</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
@@ -420,6 +433,7 @@ peer: 2RzKFbGMx5g7fG0BrWCI7JIpGvcwGkqUaCoENYueJw4=
 Address = 10.0.0.1/24, fdc9:281f:04d7:9ee9::1/64
 ListenPort = 51871
 PrivateKey = <i>PEER_A_PRIVATE_KEY</i>
+MTU = 1420
 
 [Peer]
 PublicKey = <i>PEER_B_PUBLIC_KEY</i>
@@ -442,6 +456,7 @@ AllowedIPs = 10.0.0.3/32, fdc9:281f:04d7:9ee9::3/128</pre>
 Address = 10.0.0.2/24, fdc9:281f:04d7:9ee9::2/64
 ListenPort = 51902
 PrivateKey = <i>PEER_B_PRIVATE_KEY</i>
+MTU = 1420
 
 [Peer]
 PublicKey = <i>PEER_A_PUBLIC_KEY</i>
@@ -460,6 +475,7 @@ AllowedIPs = 10.0.0.3/32, fdc9:281f:04d7:9ee9::3/128</pre>
 Address = 10.0.0.3/24, fdc9:281f:04d7:9ee9::3/64
 ListenPort = 51993
 PrivateKey = <i>PEER_C_PRIVATE_KEY</i>
+MTU = 1420
 
 [Peer]
 PublicKey = <i>PEER_A_PUBLIC_KEY</i>
@@ -665,8 +681,20 @@ Priority=10
 Gateway=10.50.0.1
 GatewayOnLink=true
 Table=1000</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> You must still enable IP Forwarding and IP masquerading rules in order to provide working internet to Peer B.
+<p>Assumes <a href="../en/Uncomplicated_Firewall.html" title="Uncomplicated Firewall">ufw</a>, but you could do the same with <a href="../en/Iptables.html" title="Iptables">iptables</a> by using the rules outlined in the <a href="#Server_config">Server config</a> section:
+</p>
+<pre>$ ufw route allow in on wg0 out on enp5s0
+</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/ufw/before.rules</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">*nat
+:POSTROUTING ACCEPT [0:0]
+-A POSTROUTING -s 10.0.0.0/24 -o enp5s0 -j MASQUERADE
+COMMIT</pre>
+</div>
 <h4><span class="mw-headline" id="Netctl">Netctl</span></h4>
-<p><a href="../en/Netctl.html" title="Netctl">Netctl</a> has native support for setting up WireGuard interfaces. At least Netctl version ≥ 1.23 is recommended as previous versions had various bugs around WireGuard implementation. A typical set of WireGuard netctl profile configuration files would look like this.
+<p><a href="../en/Netctl.html" title="Netctl">Netctl</a> has native support for setting up WireGuard interfaces. A typical set of WireGuard netctl profile configuration files would look like this.
 </p>
 <p><b>Peer A setup:</b>
 </p>
@@ -965,6 +993,11 @@ AllowedIPs = 0.0.0.0/0, ::/0</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Users of <a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a>, may need to <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> the <code>NetworkManager-wait-online.service</code> and users of <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> may need to <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> the <code>systemd-networkd-wait-online.service</code> to wait until devices are network ready before attempting wireguard connection.</div>
 <h2><span class="mw-headline" id="Testing_the_tunnel">Testing the tunnel</span></h2>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="#Basic_checkups">#Basic checkups</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Notes:</b> Same topic. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:WireGuard">Talk:WireGuard#</a>)</div>
+</div>
 <p>Once a tunnel has been established, one can use <a href="../en/Network_tools.html#Netcat" class="mw-redirect" title="Netcat">netcat</a> to send traffic through it to test out throughput, CPU usage, etc.
 On one side of the tunnel, run <code>nc</code> in listen mode and on the other side, pipe some data from <code>/dev/zero</code> into <code>nc</code> in sending mode.
 </p>
@@ -1016,7 +1049,7 @@ unmanaged-devices=type:wireguard</pre>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/foo.config</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Interface]
 Address = 10.200.200.2/24
-MTU = 1500
+MTU = 1420
 PrivateKey = <i>PEER_FOO_PRIVATE_KEY</i>
 DNS = 10.200.200.1</pre>
 <h3><span class="mw-headline" id="Key_is_not_the_correct_length_or_format">Key is not the correct length or format</span></h3>
@@ -1037,7 +1070,6 @@ Configuration parsing error
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># Set the persistent-keepalive via command line (temporarily)</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[#] wg set wg0 peer $PUBKEY persistent-keepalive 25
 </pre>
-<h2><span class="mw-headline" id="Known_issues">Known issues</span></h2>
 <h3><span class="mw-headline" id="Loop_routing">Loop routing</span></h3>
 <p>Adding the endpoint IP to the allowed IPs list, the kernel will attempt to send handshakes to said device binding, rather than using the original route. This results in failed handshake attempts.
 </p>
@@ -1129,8 +1161,13 @@ ExecStart=/bin/sh -c 'for i in /etc/wireguard/*.conf; do /usr/share/wireguard-to
 </p>
 <pre># wg syncconf ${WGNET} &lt;(wg-quick strip ${WGNET})
 </pre>
-<p>Where <code>$WGNET</code> is WireGuard interface name or configuration base name, for example <code>wg0</code> (for server) or <code>client</code> (without the .conf extension, for client).
+<p>Where <code>$WGNET</code> is WireGuard interface name or configuration base name, for example <code>wg0</code> (for server) or <code>client</code> (without the <i>.conf</i> extension, for client).
 </p>
+<div class="noprint archwiki-template-message">
+<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Show how to do this with other network managers from <a href="#Persistent_configuration">#Persistent configuration</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:WireGuard">Talk:WireGuard#</a>)</div>
+</div>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/WireGuard" class="extiw" title="wikipedia:WireGuard">Wikipedia:WireGuard</a></li>
@@ -1147,6 +1184,8 @@ ExecStart=/bin/sh -c 'for i in /etc/wireguard/*.conf; do /usr/share/wireguard-to
 <a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Virtual_Private_Network.html" title="Category:Virtual Private Network">Virtual Private Network</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
+<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 <li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
 </ul>
@@ -1157,8 +1196,8 @@ ExecStart=/bin/sh -c 'for i in /etc/wireguard/*.conf; do /usr/share/wireguard-to
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=WireGuard&amp;oldid=653783">https://wiki.archlinux.org/index.php?title=WireGuard&amp;oldid=653783</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 March 2021, at 19:07.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=WireGuard&amp;oldid=663653">https://wiki.archlinux.org/index.php?title=WireGuard&amp;oldid=663653</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 22 April 2021, at 18:47.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

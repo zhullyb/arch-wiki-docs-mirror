@@ -209,8 +209,6 @@
 </tr>
 </tbody>
 </table>
-<p><br>
-</p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>警告：</strong> 在启用TRIM功能前，请确保你的SSD支持TRIM。否则可能导致数据丢失！</div>
 <p>检验TRIM支持：
@@ -224,13 +222,9 @@
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># hdparm -I /dev/sda | grep TRIM</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">        *    Data Set Management TRIM supported (limit 1 block)
 </pre>
-<p><br>
-</p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 不同的规范定义了不同的TRIM支持类型。因此，对于不同设备，以上输出可能不同。参见<a href="https://en.wikipedia.org/wiki/TRIM#ATA" class="extiw" title="wikipedia:TRIM">Wikipedia:TRIM#ATA</a>
 </div>
-<p><br>
-</p>
 <h4><span class="mw-headline" id="Periodic_TRIM">Periodic TRIM</span></h4>
 <p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=util-linux">util-linux</a></span>包提供了<code>fstrim.service</code>和<code>fstrim.timer</code>两个Systemd unit文件。<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enabling">启用</a>计时器(<code>fstrim.timer</code>)会每周激活服务来在所有已挂载的支持discard操作的文件系统上执行<span class="plainlinks archwiki-template-man" title="$ man 8 fstrim"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fstrim.8">fstrim(8)</a></span>。
 </p>
@@ -341,7 +335,7 @@ lbaf  0 : ms:0   lbads:9  rp:0 (in use)
 </p>
 <p>上面的输出显示了设备在启动时<b>not locked</b>，而<b>frozen</b>状态保护设备免于间谍软件侵害。它们试图在运行时设置密码来达到目的。
 </p>
-<p>如果你想为"frozen"的设备设置密码，则必须要主板BIOS支持才可。许多笔记本都支持，这是因为这是 <a href="https://en.wikipedia.org/wiki/Hardware-based_full_disk_encryption" class="extiw" title="wikipedia:Hardware-based full disk encryption">硬件加密</a> 所必需的，但并非台式机/服务器主板所必需。例如，对于 Intel DH67CL/BL 主板，必须用跳线设置为"maintenance mode"来查看设置 (见 <a rel="nofollow" class="external autonumber" href="http://sstahlman.blogspot.in/2014/07/hardware-fde-with-intel-ssd-330-on.html?showComment=1411193181867#c4579383928221016762">[11]</a><sup title="最后检查状态：domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup>, <a rel="nofollow" class="external autonumber" href="https://communities.intel.com/message/251978#251978">[12]</a>)。 
+<p>如果你想为"frozen"的设备设置密码，则必须要主板BIOS支持才可。许多笔记本都支持，这是因为这是 <a href="https://en.wikipedia.org/wiki/Hardware-based_full_disk_encryption" class="extiw" title="wikipedia:Hardware-based full disk encryption">硬件加密</a> 所必需的，但并非台式机/服务器主板所必需。例如，对于 Intel DH67CL/BL 主板，必须用跳线设置为"maintenance mode"来查看设置 (见 <a rel="nofollow" class="external autonumber" href="https://sstahlman.blogspot.in/2014/07/hardware-fde-with-intel-ssd-330-on.html?showComment=1411193181867#c4579383928221016762">[11]</a><sup title="最后检查状态：domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup>, <a rel="nofollow" class="external autonumber" href="https://communities.intel.com/message/251978#251978">[12]</a>)。 
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>警告：</strong> 不要试图用<code>hdparm</code>来改变上述的<b>lock</b>安全设置，除非你十分清楚自己在干什么。</div>
@@ -350,7 +344,7 @@ lbaf  0 : ms:0   lbads:9  rp:0 (in use)
 <h4>
 <span id="SSD.E5.AD.98.E5.82.A8.E5.8D.95.E5.85.83.E7.9A.84.E6.B8.85.E9.99.A4"></span><span class="mw-headline" id="SSD存储单元的清除">SSD存储单元的清除</span>
 </h4>
-<p>有时用户希望通过重置SSD单元到刚安装时的纯净状态以使其恢复到 <a rel="nofollow" class="external text" href="http://www.anandtech.com/storage/showdoc.aspx?i=3531&amp;p=8">出厂时的写入性能</a>。即使是原生支持TRIM的SSD，其写入性能也会随时间变差。TRIM只在文件删除时起作用，而不是如增量保存一样的替代保障措施。
+<p>有时用户希望通过重置SSD单元到刚安装时的纯净状态以使其恢复到 <a rel="nofollow" class="external text" href="https://www.anandtech.com/storage/showdoc.aspx?i=3531&amp;p=8">出厂时的写入性能</a>。即使是原生支持TRIM的SSD，其写入性能也会随时间变差。TRIM只在文件删除时起作用，而不是如增量保存一样的替代保障措施。
 </p>
 <p>重置按wiki文章<a href="../en/Solid_state_drive/Memory_cell_clearing.html" class="mw-redirect" title="SSD memory cell clearing">SSD memory cell clearing</a>指示，三步之内即可轻松完成。如果重置的原因是为了擦除数据，你可能不想依靠SSD bios来安全执行。更多信息与例子见<a href="../en/Securely_wipe_disk.html#Flash_memory" title="Securely wipe disk">Securely wipe disk#Flash memory</a>。
 </p>
@@ -470,7 +464,7 @@ Apart from "full", the kernel SCSI storage driver currently knows the following 
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ smartctl --all /dev/sd<b>X</b></pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">==&gt; WARNING: This drive may hang after 5184 hours of power-on time:
-<a rel="nofollow" class="external free" href="http://www.tomshardware.com/news/Crucial-m4-Firmware-BSOD,14544.html">http://www.tomshardware.com/news/Crucial-m4-Firmware-BSOD,14544.html</a>
+<a rel="nofollow" class="external free" href="https://www.tomshardware.com/news/Crucial-m4-Firmware-BSOD,14544.html">https://www.tomshardware.com/news/Crucial-m4-Firmware-BSOD,14544.html</a>
 See the following web pages for firmware updates:
 <a rel="nofollow" class="external free" href="http://www.crucial.com/support/firmware.aspx">http://www.crucial.com/support/firmware.aspx</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup>
 <a rel="nofollow" class="external free" href="http://www.micron.com/products/solid-state-storage/client-ssd#software">http://www.micron.com/products/solid-state-storage/client-ssd#software</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-04 ⓘ]</sup>
@@ -504,7 +498,7 @@ FirmwareUpdateAvailable : The selected Intel SSD contains current firmware as o
 <p>OCZ 在<a rel="nofollow" class="external text" href="http://www.ocztechnology.com/ssd_tools/">论坛</a>上提供了Linux (i686 and x86_64) 版的升级工具。
 </p>
 <h3><span class="mw-headline" id="Samsung">Samsung</span></h3>
-<p>Samsung 注意到使用他们的 Magician Software 是"不支持的"，但是是可能的。显然 Magician Software 可以把USB做成以升级固件启动。最简单的方式是使用他们提供的用于升级固件的可启动的ISO镜像。可从<a rel="nofollow" class="external text" href="http://www.samsung.com/global/business/semiconductor/samsungssd/downloads.html">这里</a>获取。
+<p>Samsung 注意到使用他们的 Magician Software 是"不支持的"，但是是可能的。显然 Magician Software 可以把USB做成以升级固件启动。最简单的方式是使用他们提供的用于升级固件的可启动的ISO镜像。可从<a rel="nofollow" class="external text" href="https://www.samsung.com/global/business/semiconductor/samsungssd/downloads.html">这里</a>获取。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> Samsung 根本不明确提供这些。他们似乎有四个固件升级页面，每个页面要求做不同的事情。</div>
@@ -569,10 +563,10 @@ $ cd Samsung_SSD_840_EVO_EXT0DB6Q/C04D-1342/samsung
 <span id=".E5.8F.A6.E8.A7.81"></span><span class="mw-headline" id="另见">另见</span>
 </h2>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://www.reddit.com/r/archlinux/comments/rkwjm/what_should_i_keep_in_mind_when_installing_on_ssd/">Discussion on Reddit about installing Arch on an SSD</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.reddit.com/r/archlinux/comments/rkwjm/what_should_i_keep_in_mind_when_installing_on_ssd/">Discussion on Reddit about installing Arch on an SSD</a></li>
 <li>See the <a href="../en/Flashcache.html" title="Flashcache">Flashcache</a> article for advanced information on using solid-state with rotational drives for top performance.</li>
 <li>
-<a rel="nofollow" class="external text" href="http://lifehacker.com/5837769/make-sure-your-partitions-are-correctly-aligned-for-optimal-solid-state-drive-performance">Speed Up Your SSD By Correctly Aligning Your Partitions</a> (using GParted)</li>
+<a rel="nofollow" class="external text" href="https://lifehacker.com/5837769/make-sure-your-partitions-are-correctly-aligned-for-optimal-solid-state-drive-performance">Speed Up Your SSD By Correctly Aligning Your Partitions</a> (using GParted)</li>
 <li><a rel="nofollow" class="external text" href="http://permalink.gmane.org/gmane.comp.file-systems.btrfs/19446">Re: Varying Leafsize and Nodesize in Btrfs</a></li>
 <li><a rel="nofollow" class="external text" href="http://thread.gmane.org/gmane.comp.file-systems.btrfs/19650/focus=19667">Re: SSD alignment and Btrfs sector size</a></li>
 <li>
@@ -601,8 +595,8 @@ $ cd Samsung_SSD_840_EVO_EXT0DB6Q/C04D-1342/samsung
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Solid_state_drive_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=655922">https://wiki.archlinux.org/index.php?title=Solid_state_drive_(简体中文)&amp;oldid=655922</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 March 2021, at 08:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Solid_state_drive_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=663345">https://wiki.archlinux.org/index.php?title=Solid_state_drive_(简体中文)&amp;oldid=663345</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 11:45.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

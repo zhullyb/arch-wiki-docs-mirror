@@ -77,32 +77,33 @@
 <p>See <a href="../en/Network_configuration/Ethernet.html#Broadcom_BCM57780" title="Network configuration/Ethernet">Network configuration/Ethernet#Broadcom BCM57780</a>.
 </p>
 <h2><span class="mw-headline" id="Wireless">Wireless</span></h2>
-<p>The Broadcom BCM4313 card requires the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=broadcom-wl">broadcom-wl</a></span> module which is available in the AUR.
+<p>The Broadcom BCM4313 card requires the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=broadcom-wl">broadcom-wl</a></span> module.
 </p>
-<p>Intel Corporation WiMAX/WiFi Link 6050 Series works out of the box (2.6.34).
+<p>Intel Corporation WiMAX/WiFi Link 6050 Series works out of the box (with version 2.6.34 of the kernel).
 </p>
 <h2><span class="mw-headline" id="Graphics">Graphics</span></h2>
 <ul>
-<li>So far I have not been able to get keyboard/touchpad to work with or without xorg.conf</li>
-<li>use <b>vga=866</b> for the kernel line in <code>menu.lst</code>
-</li>
+<li>So far, the keyboard/touchpad has not been able to work with or without an <a href="../en/Xorg.html#Using_xorg.conf" title="Xorg">xorg.conf</a> file.</li>
+<li>Use <code>vga=866</code> as a <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a>.</li>
 </ul>
 <p>See <a href="../en/Xorg.html" title="Xorg">Xorg</a>, <a href="../en/Intel_graphics.html" title="Intel graphics">Intel graphics</a> and <a href="../en/Touchpad_Synaptics.html" title="Touchpad Synaptics">Touchpad Synaptics</a>.
 </p>
 <h2><span class="mw-headline" id="Accelerometer">Accelerometer</span></h2>
-<p>The <a rel="nofollow" class="external text" href="http://gitorious.org/iaps">IAPS</a> driver works.  
+<p>The <a rel="nofollow" class="external text" href="http://gitorious.org/iaps">IAPS</a> driver works.
+It can be built and loaded as follows:
 </p>
-<pre>cd /usr/src
-git clone <a rel="nofollow" class="external free" href="git://gitorious.org/iaps/iaps.git">git://gitorious.org/iaps/iaps.git</a>
-cd iaps
-make
-sudo make install
-depmod -a
-modprobe iaps
-dmesg
-(you see something like input: iaps as /devices/virtual/input/input13)
+<pre>$ cd /usr/src
+$ git clone <a rel="nofollow" class="external free" href="git://gitorious.org/iaps/iaps.git">git://gitorious.org/iaps/iaps.git</a>
+$ cd iaps
+$ make
+# make install
+# depmod -a
+# modprobe iaps
+# dmesg
 </pre>
-<p>lsinput (if you have input-utils installed) will give you something like this
+<p>A line similar to <code>input: iaps as /devices/virtual/input/input13</code> should be observed from the output of <code>dmesg</code> above.
+</p>
+<p><code>lsinput</code> from <a rel="nofollow" class="external text" href="https://github.com/kraxel/input">kraxel/input</a> (a.k.a. <a rel="nofollow" class="external text" href="https://packages.debian.org/unstable/utils/input-utils">input-utils on Debian</a>) will produce output similar to the following:
 </p>
 <pre>/dev/input/event12
   bustype : BUS_ISA
@@ -113,10 +114,10 @@ dmesg
   phys    : "isa702/input0"
   bits ev : EV_SYN EV_ABS
 </pre>
-<p>and you can read events like this
+<p>Events can be read as follows:
 </p>
-<pre>$ input-events 12
-waiting for events
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ input-events 12</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">waiting for events
 15:13:53.622930: EV_ABS ABS_X 555
 15:13:53.622958: EV_SYN code=0 value=0
 15:13:53.973886: EV_ABS ABS_X 541
@@ -125,9 +126,8 @@ waiting for events
 15:13:54.024240: EV_ABS ABS_Y 532
 15:13:54.024243: EV_SYN code=0 value=0
 15:13:54.073551: EV_ABS ABS_X 555
-...
-</pre>
-<p>Here are some <a rel="nofollow" class="external text" href="http://www.thinkwiki.org/wiki/HDAPS#Applications">ideas</a> what to do with it.
+...</pre>
+<p>The <a rel="nofollow" class="external text" href="https://www.thinkwiki.org/wiki/HDAPS#Applications">ThinkWiki page for the Hard Drive Active Protection System (HDAPS)</a> lists some interesting applications for the accelerometer.
 </p>
 </div>
 </div>
@@ -146,8 +146,8 @@ waiting for events
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_s10-3t&amp;oldid=655140">https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_s10-3t&amp;oldid=655140</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 March 2021, at 19:13.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_s10-3t&amp;oldid=663518">https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_s10-3t&amp;oldid=663518</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 19:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -71,6 +72,7 @@
 <li class="toclevel-2 tocsection-15"><a href="#Broadcom_BCM57780"><span class="tocnumber">3.5</span> <span class="toctext">Broadcom BCM57780</span></a></li>
 <li class="toclevel-2 tocsection-16"><a href="#Realtek_RTL8111/8168B"><span class="tocnumber">3.6</span> <span class="toctext">Realtek RTL8111/8168B</span></a></li>
 <li class="toclevel-2 tocsection-17"><a href="#Gigabyte_Motherboard_with_Realtek_8111/8168/8411"><span class="tocnumber">3.7</span> <span class="toctext">Gigabyte Motherboard with Realtek 8111/8168/8411</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#MicroStar_Motherboard_with_Realtek_8111/8168/8411"><span class="tocnumber">3.8</span> <span class="toctext">MicroStar Motherboard with Realtek 8111/8168/8411</span></a></li>
 </ul>
 </li>
 </ul>
@@ -88,7 +90,7 @@
 </pre>
 <p>Next, check that the driver was loaded via <code>dmesg | grep <i>module_name</i></code>. For example:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dmesg | grep atl1</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep atl1</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
 atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 </pre>
@@ -182,7 +184,7 @@ atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 # modprobe tg3
 </pre>
 <ul><li>Plug your network cable back in and check whether the module succeeded with:</li></ul>
-<pre>$ dmesg | grep tg3
+<pre># dmesg | grep tg3
 </pre>
 <ul><li>If this procedure solved the issue you can make it permanent by adding <code>broadcom</code> and <code>tg3</code> (in this order) to the <code>MODULES</code> array:</li></ul>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
@@ -217,6 +219,20 @@ atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 </p>
 <p>When configuring the boot process for your installation, add <code>iommu=soft</code> as a <a href="../../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> to eliminate the error messages on boot and restore USB3.0 functionality.
 </p>
+<h3>
+<span id="MicroStar_Motherboard_with_Realtek_8111.2F8168.2F8411"></span><span class="mw-headline" id="MicroStar_Motherboard_with_Realtek_8111/8168/8411">MicroStar Motherboard with Realtek 8111/8168/8411</span>
+</h3>
+<p>With motherboards such as the "MicroStar B450M MORTAR TITANIUM", unpluging/pluging Ethernet cables or restarting router's DHCP server would cause <code>r8169</code> to enter a downshifted status, and downgrade the 1000 Mbit/s Ethernet speed to 100 Mbit/s. The kernel log will show:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep r8169</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Generic FE-GE Realtek PHY r8169-2200:00: Downshift occurred from negotiated speed 1Gbps to actual speed 100Mbps, check cabling!
+r8169 0000:22:00.0 enp34s0: Link is Up - 100Mbps/Full (downshifted) - flow control rx/tx
+</pre>
+<p>In this case, restart the adapter (set it down and up). For example:
+</p>
+<pre># ip link set dev enp34s0 down
+# ip link set dev enp34s0 up
+</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
@@ -231,8 +247,8 @@ atl1 0000:02:00.0: eth0 link is up 100 Mbps full duplex
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration/Ethernet&amp;oldid=636318">https://wiki.archlinux.org/index.php?title=Network_configuration/Ethernet&amp;oldid=636318</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 September 2020, at 19:39.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_configuration/Ethernet&amp;oldid=663214">https://wiki.archlinux.org/index.php?title=Network_configuration/Ethernet&amp;oldid=663214</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 01:55.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>

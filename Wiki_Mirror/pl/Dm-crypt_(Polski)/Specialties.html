@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -117,7 +118,7 @@
 <p>W tej sekcji opisano kroki, które można podjąć w celu zwiększenia bezpieczeństwa procesu rozruchu.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Należy pamiętać, że zabezpieczenie partycji <code>/boot</code> i MBR może złagodzić liczne ataki podczas rozruchu, ale systemy skonfigurowane w ten sposób mogą nadal być podatne na sabotaż BIOS/UEFI/firmware, sprzętowe keyloggery, zimne ataki rozruchowe i wiele innych zagrożeń, które są poza zakresem tego artykułu. Omówienie problemów związanych z zaufaniem systemu oraz ich związek z szyfrowaniem na pełnym dysku można znaleźć na stronie <a rel="nofollow" class="external autonumber" href="http://www.youtube.com/watch?v=pKeiKYA03eE">[1]</a>.</div>
+<strong>Warning:</strong> Należy pamiętać, że zabezpieczenie partycji <code>/boot</code> i MBR może złagodzić liczne ataki podczas rozruchu, ale systemy skonfigurowane w ten sposób mogą nadal być podatne na sabotaż BIOS/UEFI/firmware, sprzętowe keyloggery, zimne ataki rozruchowe i wiele innych zagrożeń, które są poza zakresem tego artykułu. Omówienie problemów związanych z zaufaniem systemu oraz ich związek z szyfrowaniem na pełnym dysku można znaleźć na stronie <a rel="nofollow" class="external autonumber" href="https://www.youtube.com/watch?v=pKeiKYA03eE">[1]</a>.</div>
 <h3>
 <span id="Uruchamianie_z_urz.C4.85dzenia_wymiennego"></span><span class="mw-headline" id="Uruchamianie_z_urządzenia_wymiennego">Uruchamianie z urządzenia wymiennego</span>
 </h3>
@@ -167,7 +168,7 @@ Skopiuj istniejącą zawartość  <code>/boot</code> na nową.
 <h3><span class="mw-headline" id="chkboot">chkboot</span></h3>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> chkboot makes a <code>/boot</code> partition <b>tamper-evident</b>, not <b>tamper-proof</b>. By the time the chkboot script is run, you have already typed your password into a potentially compromised boot loader, kernel, or initrd. If your system fails the chkboot integrity test, no assumptions can be made about the security of your data.</div>
-<p>Odnosząc się do artykułu z magazynu ct (wydanie 3/12, strona 146, 01.16.2012, <a rel="nofollow" class="external autonumber" href="http://www.heise.de/ct/inhalt/2012/03/6/">[2]</a>) poniższy skrypt sprawdza pliki w katalogu / boot pod kątem zmian sumy kontrolnej SHA-1, i-węzła i zajętych bloków na dysku twardym. Sprawdza także główny rekord rozruchowy. Skrypt nie może zapobiec pewnym typom ataków, ale wiele z nich jest trudniejszych. Konfiguracja samego skryptu nie jest przechowywana w niezaszyfrowanej partycji <code>/boot</code>.
+<p>Odnosząc się do artykułu z magazynu ct (wydanie 3/12, strona 146, 01.16.2012, <a rel="nofollow" class="external autonumber" href="https://www.heise.de/ct/inhalt/2012/03/6/">[2]</a>) poniższy skrypt sprawdza pliki w katalogu / boot pod kątem zmian sumy kontrolnej SHA-1, i-węzła i zajętych bloków na dysku twardym. Sprawdza także główny rekord rozruchowy. Skrypt nie może zapobiec pewnym typom ataków, ale wiele z nich jest trudniejszych. Konfiguracja samego skryptu nie jest przechowywana w niezaszyfrowanej partycji <code>/boot</code>.
 Z zablokowanym / wyłączonym zaszyfrowanym systemem, utrudnia to niektórym napastnikom, ponieważ nie jest oczywiste, że automatyczne porównywanie sumy kontrolnej partycji jest wykonywane po starcie systemu. Jednak osoba atakująca, która przewiduje takie środki ostrożności, może manipulować oprogramowaniem układowym, aby uruchomić własny kod nad jądrem i przechwycić dostęp do systemu plików, np. do rozruchu i przedstawienia niezakodowanych plików. Ogólnie rzecz biorąc, żadne środki bezpieczeństwa poniżej poziomu oprogramowania układowego nie są w stanie zagwarantować zaufania i fałszowania dowodów.
 </p>
 <p>Dostępny jest skrypt z instrukcją  <a rel="nofollow" class="external text" href="ftp://ftp.heise.de/pub/ct/listings/1203-146.zip">instalacji</a>(autor: Juergen Schmidt, ju at heisec.de; Licencja: GPLv2). Istnieje również pakiet <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/chkboot/">chkboot</a></span><sup><small>AUR</small></sup> do zainstalowania.
@@ -233,7 +234,7 @@ Please type uppercase yes to continue:
 <h3><span class="mw-headline" id="Inne_metody">Inne metody</span></h3>
 <p>Alternatywnie do powyższych skryptów można skonfigurować za pomocą <a href="../../en/AIDE.html" title="AIDE">AIDE</a>, którą można dostosować za pomocą bardzo elastycznego pliku konfiguracyjnego.
 </p>
-<p>Chociaż jedna z tych metod powinna służyć większości użytkowników, nie rozwiązuje ona wszystkich problemów związanych z bezpieczeństwem związanym z niezaszyfrowaną partycją <code>/boot</code>. Jedno podejście, które stara się zapewnić w pełni uwierzytelniony łańcuch rozruchowy, zostało opublikowane w POTTS jako praca naukowa w celu wdrożenia struktury uwierzytelniania <a rel="nofollow" class="external text" href="http://www1.informatik.uni-erlangen.de/stark">STARK</a>.
+<p>Chociaż jedna z tych metod powinna służyć większości użytkowników, nie rozwiązuje ona wszystkich problemów związanych z bezpieczeństwem związanym z niezaszyfrowaną partycją <code>/boot</code>. Jedno podejście, które stara się zapewnić w pełni uwierzytelniony łańcuch rozruchowy, zostało opublikowane w POTTS jako praca naukowa w celu wdrożenia struktury uwierzytelniania <a rel="nofollow" class="external text" href="https://www1.informatik.uni-erlangen.de/stark">STARK</a>.
 </p>
 <p>Potwierdzenie koncepcji POTTS wykorzystuje Arch Linux jako podstawową dystrybucję i implementuje łańcuch rozruchowy systemu
 </p>
@@ -369,7 +370,7 @@ Please type uppercase yes to continue:
 </h2>
 <p>Użytkownicy <a href="../../en/Solid_state_drive.html" title="Solid state drive">solid state drive</a>  powinni mieć świadomość, że domyślnie polecenia TRIM nie są włączane przez urządzenie mapujące urządzenia, tj. Urządzenia blokowe są montowane bez opcji <code>discard</code> chyba że zastąpi się domyślną. 
 </p>
-<p>Opiekunowie device-mapper wyraźnie dali do zrozumienia, że obsługa TRIM nigdy nie będzie domyślnie włączona na urządzeniach dm-crypt ze względu na potencjalne konsekwencje dla bezpieczeństwa <a rel="nofollow" class="external autonumber" href="http://www.saout.de/pipermail/dm-crypt/2011-September/002019.html">[3]</a><a rel="nofollow" class="external autonumber" href="http://www.saout.de/pipermail/dm-crypt/2012-April/002420.html">[4]</a> Minimalny wyciek danych w postaci uwolnionych informacji blokowych, być może wystarczających do określenia używanego systemu plików, może wystąpić na urządzeniach z włączoną obsługą TRIM. Ilustracja i omówienie problemów wynikających z aktywacji TRIM jest dostępna na <a rel="nofollow" class="external text" href="http://asalor.blogspot.de/2011/08/trim-dm-crypt-problems.html">blogu</a> programisty cryptsetup. Jeśli obawiasz się o takie czynniki, pamiętaj, że zagrożenia mogą się sumować: na przykład, jeśli Twoje urządzenie jest nadal szyfrowane za pomocą domyślnego szyfrowania (cryptsetup &lt;1.6.0) <code>--cipher aes-cbc-essiv</code>, więcej informacji wyciek może nastąpić więcej wycieków informacji z przyciętej obserwacji sektora niż z bieżącą wartością <a href="../../en/Dm-crypt/Device_encryption.html#Encryption_options_for_LUKS_mode" title="Dm-crypt/Device encryption">domyślną</a>. 
+<p>Opiekunowie device-mapper wyraźnie dali do zrozumienia, że obsługa TRIM nigdy nie będzie domyślnie włączona na urządzeniach dm-crypt ze względu na potencjalne konsekwencje dla bezpieczeństwa <a rel="nofollow" class="external autonumber" href="http://www.saout.de/pipermail/dm-crypt/2011-September/002019.html">[3]</a><a rel="nofollow" class="external autonumber" href="http://www.saout.de/pipermail/dm-crypt/2012-April/002420.html">[4]</a> Minimalny wyciek danych w postaci uwolnionych informacji blokowych, być może wystarczających do określenia używanego systemu plików, może wystąpić na urządzeniach z włączoną obsługą TRIM. Ilustracja i omówienie problemów wynikających z aktywacji TRIM jest dostępna na <a rel="nofollow" class="external text" href="https://asalor.blogspot.de/2011/08/trim-dm-crypt-problems.html">blogu</a> programisty cryptsetup. Jeśli obawiasz się o takie czynniki, pamiętaj, że zagrożenia mogą się sumować: na przykład, jeśli Twoje urządzenie jest nadal szyfrowane za pomocą domyślnego szyfrowania (cryptsetup &lt;1.6.0) <code>--cipher aes-cbc-essiv</code>, więcej informacji wyciek może nastąpić więcej wycieków informacji z przyciętej obserwacji sektora niż z bieżącą wartością <a href="../../en/Dm-crypt/Device_encryption.html#Encryption_options_for_LUKS_mode" title="Dm-crypt/Device encryption">domyślną</a>. 
 </p>
 <p>Można wyróżnić następujące przypadki:
 </p>
@@ -746,8 +747,8 @@ HOOKS=(base udev autodetect modconf block customencrypthook lvm2 filesystems key
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt_(Polski)/Specialties_(Polski)&amp;oldid=615540">https://wiki.archlinux.org/index.php?title=Dm-crypt_(Polski)/Specialties_(Polski)&amp;oldid=615540</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 May 2020, at 15:37.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dm-crypt_(Polski)/Specialties_(Polski)&amp;oldid=661508">https://wiki.archlinux.org/index.php?title=Dm-crypt_(Polski)/Specialties_(Polski)&amp;oldid=661508</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 09:41.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
