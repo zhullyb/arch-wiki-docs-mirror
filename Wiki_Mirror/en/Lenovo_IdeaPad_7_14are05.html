@@ -167,7 +167,7 @@
 <p>This device is marketed both as <a rel="nofollow" class="external text" href="https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_7_14ARE05?MT=82A5">Lenovo IdeaPad Slim 7</a> as well as <a rel="nofollow" class="external text" href="https://psref.lenovo.com/Product/Yoga/Yoga_Slim_7_14ARE05">Lenovo Yoga Slim 7</a> depending on the region. Hence, the below instructions should in principle apply to both these models and minor variants.
 </p>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p>Enter the UEFI Firmware setup by pressing <a rel="nofollow" class="external text" href="https://support.lenovo.com/us/en/solutions/ht500216">(Fn+) F2</a> during boot and disable <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> which should deactivate bootloader and kernel verification for Windows 10 against Lenovo and Microsoft keys. Proceed to ensure that the machine allows for booting from a <a href="../en/USB_flash_installation_medium.html" title="USB flash installation medium">USB key</a>. Boot with the latest <a rel="nofollow" class="external text" href="https://archlinux.org/download/">ArchLinux ISO image</a> and follow the <a href="../en/Installation_guide.html" title="Installation guide">Installation guide</a>.
+<p>Enter the UEFI Firmware setup by pressing <a rel="nofollow" class="external text" href="https://support.lenovo.com/us/en/solutions/ht500216">(Fn+) F2</a> during boot and disable <a href="/title/Secure_Boot" class="mw-redirect" title="Secure Boot">Secure Boot</a> which should deactivate bootloader and kernel verification for Windows 10 against Lenovo and Microsoft keys. Proceed to ensure that the machine allows for booting from a <a href="/title/USB_flash_installation_medium" title="USB flash installation medium">USB key</a>. Boot with the latest <a rel="nofollow" class="external text" href="https://archlinux.org/download/">ArchLinux ISO image</a> and follow the <a href="/title/Installation_guide" title="Installation guide">Installation guide</a>.
 </p>
 <h2><span class="mw-headline" id="Accessibility">Accessibility</span></h2>
 <p>The appearance of the UEFI Firmware interface is reminiscent of regular BIOS'es and solely keyboard-driven.
@@ -195,13 +195,11 @@
 </p>
 <pre># dmidecode -s bios-version
 </pre>
-<p><br>
-In order to enable <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> with your own custom keys, follow the steps as outlined on the <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> page, up to the point of installing your own Platform Key (PK). 
+<p>In order to enable <a href="/title/Secure_Boot" class="mw-redirect" title="Secure Boot">Secure Boot</a> with your own custom keys, follow the steps as outlined on the <a href="/title/Secure_Boot" class="mw-redirect" title="Secure Boot">Secure Boot</a> page, up to the point of installing your own Platform Key (PK). 
 </p>
 <p>An attempt to install a custom Platform Key will fail using the mentioned methods, including using <code>efi-updatevar -f PK.auth</code> as well as <code>sbkeysync --verbose --PK</code> with error messages such as 'operation not permitted'. 
 </p>
-<p><br>
-These errors are due to the fact that the PK file in the firmware has the <a href="../en/File_permissions_and_attributes.html#File_attributes" title="File permissions and attributes">'immutable' bit</a> set. Source for this idea was a comment in this <a rel="nofollow" class="external text" href="https://blog.hansenpartnership.com/uefi-secure-boot/#comment-118929">thread</a> from the author of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=efitools">efitools</a></span>. To verify the state of the 'immutable' bit, do:
+<p>These errors are due to the fact that the PK file in the firmware has the <a href="/title/File_permissions_and_attributes#File_attributes" title="File permissions and attributes">'immutable' bit</a> set. Source for this idea was a comment in this <a rel="nofollow" class="external text" href="https://blog.hansenpartnership.com/uefi-secure-boot/#comment-118929">thread</a> from the author of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=efitools">efitools</a></span>. To verify the state of the 'immutable' bit, do:
 </p>
 <pre>$ lsattr /sys/firmware/efi/efivars/PK-(Lenovo key UID)
 </pre>
@@ -211,12 +209,11 @@ These errors are due to the fact that the PK file in the firmware has the <a hre
 </pre>
 <p>where the single 'i' indicates that the immutable bit is indeed set.
 </p>
-<p><br>
-Proceed to unset the 'immutable' bit by entering:
+<p>Proceed to unset the 'immutable' bit by entering:
 </p>
 <pre># chattr -i /sys/firmware/efi/efivars/PK-(Lenovo key UID)
 </pre>
-<p>Next, install your custom Platform Key (PK) as per one of the methods mentioned in the <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> page instructions (<code>sbkeysync</code>, part of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sbsigntools">sbsigntools</a></span> should work fine). It should install without error.
+<p>Next, install your custom Platform Key (PK) as per one of the methods mentioned in the <a href="/title/Secure_Boot" class="mw-redirect" title="Secure Boot">Secure Boot</a> page instructions (<code>sbkeysync</code>, part of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sbsigntools">sbsigntools</a></span> should work fine). It should install without error.
 </p>
 <p>Check the correct installation of the new PK:
 </p>
@@ -228,10 +225,10 @@ Proceed to unset the 'immutable' bit by entering:
 </p>
 <pre># chattr +i /sys/firmware/efi/efivars/PK-(UID of your new PK)
 </pre>
-<p>The instructions from the <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> page apply again  from this point.
+<p>The instructions from the <a href="/title/Secure_Boot" class="mw-redirect" title="Secure Boot">Secure Boot</a> page apply again  from this point.
 </p>
 <h2><span class="mw-headline" id="Bluetooth">Bluetooth</span></h2>
-<p>Bluetooth works out of the box by simply following the instructions on the <a href="../en/Bluetooth.html" title="Bluetooth">Bluetooth</a> page.
+<p>Bluetooth works out of the box by simply following the instructions on the <a href="/title/Bluetooth" title="Bluetooth">Bluetooth</a> page.
 </p>
 <h2><span class="mw-headline" id="Power_management">Power management</span></h2>
 <p>This device supports the newer <a href="https://en.wikipedia.org/wiki/Advanced_Configuration_and_Power_Interface" class="extiw" title="wikipedia:Advanced Configuration and Power Interface">ACPI S0ix sleep state</a>, promoted by Microsoft and dubbed <a href="https://en.wikipedia.org/wiki/InstantGo" class="extiw" title="wikipedia:InstantGo">Modern Standby</a> with the goal of allowing PC's to operate more like smartphones. This state lets the machine enter a power-saving mode that still allows for certain operations such as retrieving e-mails. The UEFI Firmware can however not advertise both the S3 (Suspend to Ram) state as well as the S0ix state. Thus, the device loses the S3 Suspend to Ram ability. 
@@ -240,34 +237,25 @@ Proceed to unset the 'immutable' bit by entering:
 </p>
 <pre># dmesg | grep 'S0\|S4\|S5'
 </pre>
-<p>The supported power states should not list S3. Note that the S3 Suspend to Ram power state consumes significantly less energy than the new S0ix power state. There are descriptions of ways of re-enabling the S3 power state on similar devices (see <a href="../en/Lenovo_IdeaPad_5_14are05.html#Suspend_issues_(S3_sleep_fix)" title="Lenovo IdeaPad 5 14are05">here</a> and <a rel="nofollow" class="external text" href="https://www.reddit.com/r/linuxhardware/comments/i28nm5/ideapad_14are05_s3_sleep_fix/">here</a> for example). However this has not been tested as of yet on this machine by the author. 
+<p>The supported power states should not list S3. Note that the S3 Suspend to Ram power state consumes significantly less energy than the new S0ix power state. There are descriptions of ways of re-enabling the S3 power state on similar devices (see <a href="/title/Lenovo_IdeaPad_5_14are05#Suspend_issues_(S3_sleep_fix)" title="Lenovo IdeaPad 5 14are05">here</a> and <a rel="nofollow" class="external text" href="https://www.reddit.com/r/linuxhardware/comments/i28nm5/ideapad_14are05_s3_sleep_fix/">here</a> for example). However this has not been tested as of yet on this machine by the author.
 </p>
 <h3><span class="mw-headline" id="Energy_Saving">Energy Saving</span></h3>
-<p>The tips on the <a href="../en/Power_management.html" title="Power management">Power management</a> page can be followed in order to optimize the power savings for the machine, such as creating conf-files in /etc/modprobe.d/ for Wifi and audio power saving. This can be tested, verified and optimized in conjunction with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=powertop">powertop</a></span> for example. When idling, the machine should consume as little as around 3W.
+<p>The tips on the <a href="/title/Power_management" title="Power management">Power management</a> page can be followed in order to optimize the power savings for the machine, such as creating configuration files in /etc/modprobe.d/ for Wifi and audio power saving. This can be tested, verified and optimized in conjunction with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=powertop">powertop</a></span> for example. When idling, the machine should consume as little as around 3W.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong>  with reference to the inability by default to advertise an S3 state, please take heed with 'Suspend' tips on the <a href="../en/Power_management.html" title="Power management">Power management</a> page.</div>
-<p><br>
-</p>
+<strong>Warning:</strong> With reference to the inability by default to advertise an S3 state, please take heed with 'Suspend' tips on the <a href="/title/Power_management" title="Power management">Power management</a> page.</div>
 <h3><span class="mw-headline" id="Battery_Conservation_Mode">Battery Conservation Mode</span></h3>
 <p>A simplified summary of lithium-ion battery chemistry limitations is that lithium-ion cells can get damaged when fully drained, but equally dislike being kept at or near 100% SoC (State of Charge), which stresses the cells causing them to degrade faster than normal/expected. In case lithium-ion batteries are to be stored or otherwise remain unused for a prolonged period of time, a SoC of around 50% to 60% is advisable (it is for example no accident that nearly all new devices such as tablets, cellphones etc. are pre-charged to around 50% SoC when one first unpacks them).
 </p>
-<p><br>
-Equally, lithium-ion batteries should preferably be charged at 0,5C, meaning that the input current (Amps) should not exceed half of the cell's rated capacity (e.g. 2100mAh rated AA cell should preferably be placed in a charger that charges at max 1050 mAmps). Charging at higher rates can be done safely (even much higher rates can be achieved under controlled conditions, such as with cooling to prevent a 'thermal runaway' reaction) but will put a strain on the cells causing for faster degradation.
+<p>Equally, lithium-ion batteries should preferably be charged at 0,5C, meaning that the input current (Amps) should not exceed half of the cell's rated capacity (e.g. 2100mAh rated AA cell should preferably be placed in a charger that charges at max 1050 mAmps). Charging at higher rates can be done safely (even much higher rates can be achieved under controlled conditions, such as with cooling to prevent a 'thermal runaway' reaction) but will put a strain on the cells causing for faster degradation.
 </p>
-<p><br>
-Several Lenovo laptops including this machine have hardware in place that manages both of the above, called battery <a rel="nofollow" class="external text" href="https://support.lenovo.com/nl/en/solutions/ht069687-easy-ways-to-extend-your-battery-life-ideapadlenovothinkpad-laptops">Conservation Mode</a>. Under GNU/Linux, this mode can be set persistently from the command-line. When set, the machine will either discharge to 60% or charge up to 60%, depending on the current SoC being either higher or lower. 
+<p>Several Lenovo laptops including this machine have hardware in place that manages both of the above, called battery <a rel="nofollow" class="external text" href="https://support.lenovo.com/nl/en/solutions/ht069687-easy-ways-to-extend-your-battery-life-ideapadlenovothinkpad-laptops">Conservation Mode</a>. Under GNU/Linux, this mode can be set persistently from the command-line. When set, the machine will either discharge to 60% or charge up to 60%, depending on the current SoC being either higher or lower. 
 </p>
-<p><br>
-Thus, in this mode, one can use the device as a desktop machine and safely leave the charger connected for extended periods of time.
-</p>
-<p><br>
+<p>Thus, in this mode, one can use the device as a desktop machine and safely leave the charger connected for extended periods of time.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong>  This setting is persistent, by which is meant that when plugged into the mains, the charging circuitry will keep the device at precisely 60% regardless of whether it is on or off. 
-Additionally, 'rapid charging' should be disabled in this mode automatically, further preventing premature battery degradation. Note that this last part could not be verified: according to Lenovo's tech specs, rapid charging requires that the model is shipped with a 95W charging adapter. Tested model was shipped with a 65W charging adapter.</div> 
-<p><br>
-In order to set this mode, first verify that the 'ideapad_laptop' <a href="../en/Kernel_module.html" title="Kernel module">Kernel module</a> has been loaded: 
+<strong>Note:</strong>  This setting is persistent, by which is meant that when plugged into the mains, the charging circuitry will keep the device at precisely 60% regardless of whether it is on or off. Additionally, 'rapid charging' should be disabled in this mode automatically, further preventing premature battery degradation. Note that this last part could not be verified: according to Lenovo's tech specs, rapid charging requires that the model is shipped with a 95W charging adapter. Tested model was shipped with a 65W charging adapter.</div> 
+<p>In order to set this mode, first verify that the 'ideapad_laptop' <a href="/title/Kernel_module" title="Kernel module">kernel module</a> has been loaded: 
 </p>
 <pre># lsmod | grep ideapad_laptop
 </pre>
@@ -275,8 +263,7 @@ In order to set this mode, first verify that the 'ideapad_laptop' <a href="../en
 </p>
 <pre># modprobe ideapad_laptop
 </pre>
-<p><br>
-To turn on battery Conservation Mode for the machine, perform the following action: 
+<p>To turn on battery Conservation Mode for the machine, perform the following action: 
 </p>
 <pre># echo 1 &gt; /sys/bus/platform/drivers/ideapad_acpi/VPC2004\:00/conservation_mode
 </pre>
@@ -286,8 +273,7 @@ To turn on battery Conservation Mode for the machine, perform the following acti
 </pre>
 <p>It should now list "1"
 </p>
-<p><br>
-The laptop should now charge/discharge until it reaches 60%. 
+<p>The laptop should now charge/discharge until it reaches 60%. 
 </p>
 <p>At 60% the reported battery state should, instead of "charging" or "discharging", be reported as "unknown" 
 </p>
@@ -302,10 +288,10 @@ The laptop should now charge/discharge until it reaches 60%.
 </div>
 <h3><span class="mw-headline" id="HDMI">HDMI</span></h3>
 <h4><span class="mw-headline" id="Video">Video</span></h4>
-<p>The HDMI output will work out of the box. Read the <a href="../en/Multihead.html" title="Multihead">Multihead</a> and <a href="../en/Xrandr.html" title="Xrandr">xrandr</a> pages in order to set up a second monitor and for example switch between the internal eDP screen and an external HDMI monitor.
+<p>The HDMI output will work out of the box. Read the <a href="/title/Multihead" title="Multihead">Multihead</a> and <a href="/title/Xrandr" title="Xrandr">xrandr</a> pages in order to set up a second monitor and for example switch between the internal eDP screen and an external HDMI monitor.
 </p>
 <h4><span class="mw-headline" id="Audio">Audio</span></h4>
-<p>Additionally, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseaudio">pulseaudio</a></span> can be made to output sound to the speakers of the external display, if present. In order to do this, set the external monitor as default output using e.g. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulsemixer">pulsemixer</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pamixer">pamixer</a></span> or check the <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a> page for further reference. When the external monitor goes into standby or is disconnected, audio will automatically switch back to the machine's speakers.
+<p>Additionally, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulseaudio">pulseaudio</a></span> can be made to output sound to the speakers of the external display, if present. In order to do this, set the external monitor as default output using e.g. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pulsemixer">pulsemixer</a></span> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pamixer">pamixer</a></span> or check the <a href="/title/PulseAudio" title="PulseAudio">PulseAudio</a> page for further reference. When the external monitor goes into standby or is disconnected, audio will automatically switch back to the machine's speakers.
 </p>
 <h2><span class="mw-headline" id="Function_keys">Function keys</span></h2>
 <table class="wikitable">
@@ -467,22 +453,22 @@ The laptop should now charge/discharge until it reaches 60%.
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Lenovo.html" title="Category:Lenovo">Lenovo</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Lenovo" title="Category:Lenovo">Lenovo</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_7_14are05&amp;oldid=656808">https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_7_14are05&amp;oldid=656808</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 30 March 2021, at 20:23.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_7_14are05&amp;oldid=670176">https://wiki.archlinux.org/index.php?title=Lenovo_IdeaPad_7_14are05&amp;oldid=670176</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 May 2021, at 23:47.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

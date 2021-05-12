@@ -36,11 +36,11 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Intel_GVT-g.html" title="Intel GVT-g">Intel GVT-g</a></li>
-<li><a href="../en/PCI_passthrough_via_OVMF/Examples.html" title="PCI passthrough via OVMF/Examples">PCI passthrough via OVMF/Examples</a></li>
+<li><a href="/title/Intel_GVT-g" title="Intel GVT-g">Intel GVT-g</a></li>
+<li><a href="/title/PCI_passthrough_via_OVMF/Examples" title="PCI passthrough via OVMF/Examples">PCI passthrough via OVMF/Examples</a></li>
 </ul>
 </div>
-<p>The Open Virtual Machine Firmware (<a rel="nofollow" class="external text" href="https://github.com/tianocore/tianocore.github.io/wiki/OVMF">OVMF</a>) is a project to enable UEFI support for virtual machines. Starting with Linux 3.9 and recent versions of <a href="../en/QEMU.html" title="QEMU">QEMU</a>, it is now possible to passthrough a graphics card, offering the VM native graphics performance which is useful for graphic-intensive tasks.
+<p>The Open Virtual Machine Firmware (<a rel="nofollow" class="external text" href="https://github.com/tianocore/tianocore.github.io/wiki/OVMF">OVMF</a>) is a project to enable UEFI support for virtual machines. Starting with Linux 3.9 and recent versions of <a href="/title/QEMU" title="QEMU">QEMU</a>, it is now possible to passthrough a graphics card, offering the VM native graphics performance which is useful for graphic-intensive tasks.
 </p>
 <p>Provided you have a desktop computer with a spare GPU you can dedicate to the host (be it an integrated GPU or an old OEM card, the brands do not even need to match) and that your hardware supports it (see <a href="#Prerequisites">#Prerequisites</a>), it is possible to have a VM of any OS with its own dedicated GPU and near-native performance. For more information on techniques see the background <a rel="nofollow" class="external text" href="https://www.linux-kvm.org/images/b/b3/01x09b-VFIOandYou-small.pdf">presentation (pdf)</a>.
 </p>
@@ -277,17 +277,15 @@
 <h3><span class="mw-headline" id="Enabling_IOMMU">Enabling IOMMU</span></h3>
 <p>Ensure that AMD-Vi/Intel VT-d is supported by the CPU and enabled in the BIOS settings. Both normally show up alongside other CPU features (meaning they could be in an overclocking-related menu) either with their actual names ("VT-d" or "AMD-Vi") or in more ambiguous terms such as "Virtualization technology", which may or may not be explained in the manual.
 </p>
-<p>Enable IOMMU support by setting the correct <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> depending on the type of CPU in use:
+<p>Manually enable IOMMU support by setting the correct <a href="/title/Kernel_parameter" class="mw-redirect" title="Kernel parameter">kernel parameter</a> depending on the type of CPU in use:
 </p>
 <ul>
-<li>For Intel CPUs (VT-d) set <code>intel_iommu=on</code>
-</li>
-<li>For AMD CPUs (AMD-Vi) set <code>amd_iommu=on</code>
-</li>
+<li>For Intel CPUs (VT-d) set <code>intel_iommu=on</code>. Since the kernel config option CONFIG_INTEL_IOMMU_DEFAULT_ON is not set in <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span>.</li>
+<li>For AMD CPUs (AMD-Vi), it's on if kernel detects IOMMU HW support from BIOS.</li>
 </ul>
-<p>This should be the default for recent kernel versions. You should also append the <code>iommu=pt</code> parameter. This will prevent Linux from touching devices which cannot be passed through.
+<p>You should also append the <code>iommu=pt</code> parameter. This will prevent Linux from touching devices which cannot be passed through.
 </p>
-<p>After rebooting, check dmesg to confirm that IOMMU has been correctly enabled:
+<p>After rebooting, check <a href="/title/Dmesg" class="mw-redirect" title="Dmesg">dmesg</a> to confirm that IOMMU has been correctly enabled:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep -i -e DMAR -e IOMMU</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[    0.000000] ACPI: DMAR 0x00000000BDCB1CB0 0000B8 (v01 INTEL  BDW      00000001 INTL 00000001)
@@ -374,7 +372,7 @@ IOMMU Group 13:
 <li>Binding the audio device (<code>10de:0fbb</code> in above's example) is optional. Libvirt is able to unbind it from the <code>snd_hda_intel</code> driver on its own.</li>
 </ul>
 </div>
-<p>Two methods exist for providing the device IDs. Specifying them via <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a> has the advantage of being able to easily edit, remove, or undo any breaking changes via your boot loader:
+<p>Two methods exist for providing the device IDs. Specifying them via <a href="/title/Kernel_parameters" title="Kernel parameters">kernel parameters</a> has the advantage of being able to easily edit, remove, or undo any breaking changes via your boot loader:
 </p>
 <pre>vfio-pci.ids=10de:13c2,10de:0fbb
 </pre>
@@ -384,27 +382,27 @@ IOMMU Group 13:
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">options vfio-pci ids=10de:13c2,10de:0fbb</pre>
 <h3><span class="mw-headline" id="Loading_vfio-pci_early">Loading vfio-pci early</span></h3>
 <h4><span class="mw-headline" id="mkinitcpio">mkinitcpio</span></h4>
-<p>Since Arch's <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> has vfio-pci built as a module, we need to force it to load early before the graphics drivers have a chance to bind to the card. To ensure that, add <code>vfio_pci</code>, <code>vfio</code>, <code>vfio_iommu_type1</code>, and <code>vfio_virqfd</code> to <a href="../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a>:
+<p>Since Arch's <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> has vfio-pci built as a module, we need to force it to load early before the graphics drivers have a chance to bind to the card. To ensure that, add <code>vfio_pci</code>, <code>vfio</code>, <code>vfio_iommu_type1</code>, and <code>vfio_virqfd</code> to <a href="/title/Mkinitcpio" title="Mkinitcpio">mkinitcpio</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">MODULES=(... vfio_pci vfio vfio_iommu_type1 vfio_virqfd ...)</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If you also have another driver loaded this way for <a href="../en/Kernel_mode_setting.html#Early_KMS_start" title="Kernel mode setting">early modesetting</a> (such as <code>nouveau</code>, <code>radeon</code>, <code>amdgpu</code>, <code>i915</code>, etc.), all of the aforementioned VFIO modules must precede it.</div>
+<strong>Note:</strong> If you also have another driver loaded this way for <a href="/title/Kernel_mode_setting#Early_KMS_start" title="Kernel mode setting">early modesetting</a> (such as <code>nouveau</code>, <code>radeon</code>, <code>amdgpu</code>, <code>i915</code>, etc.), all of the aforementioned VFIO modules must precede it.</div>
 <p>Also, ensure that the modconf hook is included in the HOOKS list of <code>mkinitcpio.conf</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">HOOKS=(... modconf ...)</pre>
-<p>Since new modules have been added to the initramfs configuration, you must <a href="../en/Mkinitcpio.html#Image_creation_and_activation" class="mw-redirect" title="Regenerate the initramfs">regenerate the initramfs</a>.
+<p>Since new modules have been added to the initramfs configuration, you must <a href="/title/Regenerate_the_initramfs" class="mw-redirect" title="Regenerate the initramfs">regenerate the initramfs</a>.
 </p>
 <h4><span class="mw-headline" id="booster">booster</span></h4>
 <p>Similar to mkinitcpio you need to specify modules to load early:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/booster.yaml</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">modules_force_load: vfio_pci,vfio,vfio_iommu_type1,vfio_virqfd</pre>
-<p>and then <a href="../en/Booster.html#Regenerate_booster_images" title="Booster">regenerate the initramfs</a>.
+<p>and then <a href="/title/Booster#Regenerate_booster_images" title="Booster">regenerate the initramfs</a>.
 </p>
 <h4><span class="mw-headline" id="dracut">dracut</span></h4>
-<p>dracut's early loading mechanism is configured via kernel parameters. To load vfio-pci early, add both the <a href="#Binding_vfio-pci_via_device_ID">device ids</a> and the following line to your <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a>:
+<p>dracut's early loading mechanism is configured via kernel parameters. To load vfio-pci early, add both the <a href="#Binding_vfio-pci_via_device_ID">device ids</a> and the following line to your <a href="/title/Kernel_parameters" title="Kernel parameters">kernel parameters</a>:
 </p>
 <pre>rd.driver.pre=vfio_pci
 </pre>
@@ -412,7 +410,7 @@ IOMMU Group 13:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">10-vfio.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">add_drivers+=" vfio_pci vfio vfio_iommu_type1 vfio_virqfd "</pre>
-<p>As with mkinitcpio, you must regenerate the initramfs. See <a href="../en/Dracut.html" title="Dracut">dracut</a> for more details.
+<p>As with mkinitcpio, you must regenerate the initramfs. See <a href="/title/Dracut" title="Dracut">dracut</a> for more details.
 </p>
 <h3><span class="mw-headline" id="Verifying_that_the_configuration_worked">Verifying that the configuration worked</span></h3>
 <p>Reboot and verify that vfio-pci has loaded properly and that it is now bound to the right devices.
@@ -423,7 +421,7 @@ IOMMU Group 13:
 [    0.354704] vfio_pci: add [10de:0fbb[ffff:ffff]] class 0x000000/00000000
 [    2.061326] vfio-pci 0000:06:00.0: enabling device (0100 -&gt; 0103)
 </pre>
-<p>It is not necessary for all devices (or even expected device) from <code>vfio.conf</code> to be in dmesg output. Sometimes a device does not appear in output at boot but actually is able to be visible and operatable in guest VM.
+<p>It is not necessary for all devices (or even expected device) from <code>vfio.conf</code> to be in <i>dmesg</i> output. Sometimes a device does not appear in output at boot but actually is able to be visible and operatable in guest VM.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ lspci -nnk -d 10de:13c2</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">06:00.0 VGA compatible controller: NVIDIA Corporation GM204 [GeForce GTX 970] [10de:13c2] (rev a1)
@@ -439,16 +437,16 @@ IOMMU Group 13:
 <p>OVMF is an open-source UEFI firmware for QEMU virtual machines. While it is possible to use SeaBIOS to get similar results to an actual PCI passthrough, the setup process is different and it is generally preferable to use the EFI method if your hardware supports it.
 </p>
 <h3><span class="mw-headline" id="Configuring_libvirt">Configuring libvirt</span></h3>
-<p><a href="../en/Libvirt.html" title="Libvirt">Libvirt</a> is a wrapper for a number of virtualization utilities that greatly simplifies the configuration and deployment process of virtual machines. In the case of KVM and QEMU, the frontend it provides allows us to avoid dealing with the permissions for QEMU and make it easier to add and remove various devices on a live VM. Its status as a wrapper, however, means that it might not always support all of the latest qemu features, which could end up requiring the use of a wrapper script to provide some extra arguments to QEMU.
+<p><a href="/title/Libvirt" title="Libvirt">Libvirt</a> is a wrapper for a number of virtualization utilities that greatly simplifies the configuration and deployment process of virtual machines. In the case of KVM and QEMU, the frontend it provides allows us to avoid dealing with the permissions for QEMU and make it easier to add and remove various devices on a live VM. Its status as a wrapper, however, means that it might not always support all of the latest qemu features, which could end up requiring the use of a wrapper script to provide some extra arguments to QEMU.
 </p>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="/title/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libvirt">libvirt</a></span> depends on <i>ebtables</i>, not <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iptables-nft">iptables-nft</a></span> which is just a translation layer. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PCI_passthrough_via_OVMF">Talk:PCI passthrough via OVMF#</a>)</div>
+<b>Reason:</b> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libvirt">libvirt</a></span> depends on <i>ebtables</i>, not <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iptables-nft">iptables-nft</a></span> which is just a translation layer. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:PCI_passthrough_via_OVMF">Talk:PCI passthrough via OVMF#</a>)</div>
 </div>
 <p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=qemu">qemu</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libvirt">libvirt</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=edk2-ovmf">edk2-ovmf</a></span>, and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=virt-manager">virt-manager</a></span>. For the default network connection, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iptables-nft">iptables-nft</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> are required.
 </p>
-<p>You can now <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>libvirtd.service</code> and its logging component <code>virtlogd.socket</code>.
+<p>You can now <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> and <a href="/title/Start" class="mw-redirect" title="Start">start</a> <code>libvirtd.service</code> and its logging component <code>virtlogd.socket</code>.
 </p>
 <p>You may also need to <a rel="nofollow" class="external text" href="https://wiki.libvirt.org/page/Networking#NAT_forwarding_.28aka_.22virtual_networks.22.29">activate the default libvirt network</a>:
 </p>
@@ -570,7 +568,7 @@ cgroup_device_acl = [
 ]
 ...
 </pre>
-<p>Then ensure that the user you provided has access to the <code>kvm</code> and <code>input</code> <a href="../en/Users_and_groups.html#Group_management" class="mw-redirect" title="User group">user groups</a>. <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">Restart</a> <code>libvirtd.service</code>. Now you can startup the guest OS and test swapping control of your mouse and keyboard between the host and guest by pressing both the left and right control keys at the same time.
+<p>Then ensure that the user you provided has access to the <code>kvm</code> and <code>input</code> <a href="/title/User_group" class="mw-redirect" title="User group">user groups</a>. <a href="/title/Restart" class="mw-redirect" title="Restart">Restart</a> <code>libvirtd.service</code>. Now you can startup the guest OS and test swapping control of your mouse and keyboard between the host and guest by pressing both the left and right control keys at the same time.
 </p>
 <p>You may also consider switching from PS/2 to Virtio inputs in your configurations. Add these two devices:
 </p>
@@ -756,11 +754,11 @@ cgroup_device_acl = [
 </pre>
 <h4><span class="mw-headline" id="Dynamic_huge_pages">Dynamic huge pages</span></h4>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="/title/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Need futher testing if this variant as effective as static one (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PCI_passthrough_via_OVMF">Talk:PCI passthrough via OVMF#</a>)</div>
+<b>Reason:</b> Need futher testing if this variant as effective as static one (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:PCI_passthrough_via_OVMF">Talk:PCI passthrough via OVMF#</a>)</div>
 </div>
-<p>Hugepages could be allocated manually via <code>vm.nr_overcommit_hugepages</code> <a href="../en/Sysctl.html" title="Sysctl">sysctl</a> parameter.
+<p>Hugepages could be allocated manually via <code>vm.nr_overcommit_hugepages</code> <a href="/title/Sysctl" title="Sysctl">sysctl</a> parameter.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/sysctl.d/10-kvm.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">vm.nr_hugepages = 0
@@ -784,14 +782,14 @@ And they should be manually freed in the same way.
 <p>Theoretically, 1 GiB pages works as 2 MiB. But practically - no guaranteed way was found to get contiguous 1 GiB memory blocks. Each consequent request of 1 GiB blocks lead to lesser and lesser dynamically allocated count.
 </p>
 <h3><span class="mw-headline" id="CPU_frequency_governor">CPU frequency governor</span></h3>
-<p>Depending on the way your <a href="../en/CPU_frequency_scaling.html" title="CPU frequency scaling">CPU governor</a> is configured, the VM threads may not hit the CPU load thresholds for the frequency to ramp up. Indeed, KVM cannot actually change the CPU frequency on its own, which can be a problem if it does not scale up with vCPU usage as it would result in underwhelming performance. An easy way to see if it behaves correctly is to check if the frequency reported by <code>watch lscpu</code> goes up when running a CPU-intensive task on the guest. If you are indeed experiencing stutter and the frequency does not go up to reach its reported maximum, it may be due to <a rel="nofollow" class="external text" href="https://lime-technology.com/forum/index.php?topic=46664.msg447678#msg447678">cpu scaling being controlled by the host OS</a>. In this case, try setting all cores to maximum frequency to see if this improves performance. Note that if you are using a modern intel chip with the default pstate driver, cpupower commands will be <a href="../en/CPU_frequency_scaling.html#CPU_frequency_driver" title="CPU frequency scaling">ineffective</a>, so monitor <code>/proc/cpuinfo</code> to make sure your cpu is actually at max frequency.
+<p>Depending on the way your <a href="/title/CPU_frequency_scaling" title="CPU frequency scaling">CPU governor</a> is configured, the VM threads may not hit the CPU load thresholds for the frequency to ramp up. Indeed, KVM cannot actually change the CPU frequency on its own, which can be a problem if it does not scale up with vCPU usage as it would result in underwhelming performance. An easy way to see if it behaves correctly is to check if the frequency reported by <code>watch lscpu</code> goes up when running a CPU-intensive task on the guest. If you are indeed experiencing stutter and the frequency does not go up to reach its reported maximum, it may be due to <a rel="nofollow" class="external text" href="https://lime-technology.com/forum/index.php?topic=46664.msg447678#msg447678">cpu scaling being controlled by the host OS</a>. In this case, try setting all cores to maximum frequency to see if this improves performance. Note that if you are using a modern intel chip with the default pstate driver, cpupower commands will be <a href="/title/CPU_frequency_scaling#CPU_frequency_driver" title="CPU frequency scaling">ineffective</a>, so monitor <code>/proc/cpuinfo</code> to make sure your cpu is actually at max frequency.
 </p>
 <h3><span class="mw-headline" id="Isolating_pinned_CPUs">Isolating pinned CPUs</span></h3>
 <p>CPU pinning by itself will not prevent other host processes from running on the pinned CPUs. Properly isolating the pinned CPUs can reduce latency in the guest VM.
 </p>
 <h4><span class="mw-headline" id="With_isolcpus_kernel_parameter">With isolcpus kernel parameter</span></h4>
 <p>In this example, let us assume you are using CPUs 4-7.
-Use the <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a> <code>isolcpus nohz_full rcu_nocbs</code> to completely isolate the CPUs from the kernel. For example:
+Use the <a href="/title/Kernel_parameters" title="Kernel parameters">kernel parameters</a> <code>isolcpus nohz_full rcu_nocbs</code> to completely isolate the CPUs from the kernel. For example:
 </p>
 <pre>isolcpus=4-7 nohz_full=4-7 rcu_nocbs=4-7
 </pre>
@@ -826,9 +824,9 @@ Use the <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel 
 </p>
 <h3><span class="mw-headline" id="Virtio_disk">Virtio disk</span></h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="../en/QEMU.html#Installing_virtio_drivers" title="QEMU">QEMU#Installing virtio drivers</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="/title/QEMU#Installing_virtio_drivers" title="QEMU">QEMU#Installing virtio drivers</a>.</b><a href="/title/File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Notes:</b> Off-topic. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PCI_passthrough_via_OVMF#Moving_virtio_disk_section_to_QEMU">Talk:PCI passthrough via OVMF#Moving virtio disk section to QEMU</a>)</div>
+<b>Notes:</b> Off-topic. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:PCI_passthrough_via_OVMF#Moving_virtio_disk_section_to_QEMU">Talk:PCI passthrough via OVMF#Moving virtio disk section to QEMU</a>)</div>
 </div>
 <p>The default disk types are SATA or IDE emulation out of the box. These controllers offer maximum compatibility but are not suited for efficient virtualization. Two accelerated models exist: <code>virtio-scsi</code> for SCSI emulation and passthrough, or <code>virtio-blk</code> for a more basic block device emulation.
 </p>
@@ -951,9 +949,9 @@ Use the <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel 
 </p>
 <h3><span class="mw-headline" id="Using_identical_guest_and_host_GPUs">Using identical guest and host GPUs</span></h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> A number of users have been having issues with this, it should probably be adressed by the article. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PCI_passthrough_via_OVMF#Additionnal_sections">Talk:PCI passthrough via OVMF#Additionnal sections</a>)</div>
+<b>Reason:</b> A number of users have been having issues with this, it should probably be adressed by the article. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:PCI_passthrough_via_OVMF#Additionnal_sections">Talk:PCI passthrough via OVMF#Additionnal sections</a>)</div>
 </div>
 <p>Due to how vfio-pci uses your vendor and device id pair to identify which device they need to bind to at boot, if you have two GPUs sharing such an ID pair you will not be able to get your passthrough driver to bind with just one of them. This sort of setup makes it necessary to use a script, so that whichever driver you are using is instead assigned by pci bus address using the <code>driver_override</code> mechanism.
 </p>
@@ -998,20 +996,20 @@ modprobe -i vfio-pci
 <h4><span class="mw-headline" id="Script_installation">Script installation</span></h4>
 <p>Edit <code>/etc/mkinitcpio.conf</code>:
 </p>
-<ol><li>Add <code>modconf</code> to the <a href="../en/Mkinitcpio.html#HOOKS" title="Mkinitcpio">HOOKS</a> array and <code>/usr/local/bin/vfio-pci-override.sh</code> to the <a href="../en/Mkinitcpio.html#BINARIES_and_FILES" title="Mkinitcpio">FILES</a> array.</li></ol>
+<ol><li>Add <code>modconf</code> to the <a href="/title/Mkinitcpio#HOOKS" title="Mkinitcpio">HOOKS</a> array and <code>/usr/local/bin/vfio-pci-override.sh</code> to the <a href="/title/Mkinitcpio#BINARIES_and_FILES" title="Mkinitcpio">FILES</a> array.</li></ol>
 <p>Edit <code>/etc/modprobe.d/vfio.conf</code>:
 </p>
 <ol>
 <li>Add the following line: <code>install vfio-pci /usr/local/bin/vfio-pci-override.sh</code>
 </li>
 <li>
-<a href="../en/Mkinitcpio.html#Image_creation_and_activation" class="mw-redirect" title="Regenerate the initramfs">Regenerate the initramfs</a> and reboot.</li>
+<a href="/title/Regenerate_the_initramfs" class="mw-redirect" title="Regenerate the initramfs">Regenerate the initramfs</a> and reboot.</li>
 </ol>
 <h3><span class="mw-headline" id="Passing_the_boot_GPU_to_the_guest">Passing the boot GPU to the guest</span></h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> This is related to VBIOS issues and should be moved into a separate section regarding VBIOS compatibility. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PCI_passthrough_via_OVMF#UEFI_(OVMF)_Compatibility_in_VBIOS">Talk:PCI passthrough via OVMF#UEFI (OVMF) Compatibility in VBIOS</a>)</div>
+<b>Reason:</b> This is related to VBIOS issues and should be moved into a separate section regarding VBIOS compatibility. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:PCI_passthrough_via_OVMF#UEFI_(OVMF)_Compatibility_in_VBIOS">Talk:PCI passthrough via OVMF#UEFI (OVMF) Compatibility in VBIOS</a>)</div>
 </div>
 <p>The GPU marked as <code>boot_vga</code> is a special case when it comes to doing PCI passthroughs, since the BIOS needs to use it in order to display things like boot messages or the BIOS configuration menu. To do that, it makes <a rel="nofollow" class="external text" href="https://www.redhat.com/archives/vfio-users/2016-May/msg00224.html">a copy of the VGA boot ROM which can then be freely modified</a>. This modified copy is the version the system gets to see, which the passthrough driver may reject as invalid. As such, it is generally recommended to change the boot GPU in the BIOS configuration so the host GPU is used instead or, if that is not possible, to swap the host and guest cards in the machine itself.
 </p>
@@ -1126,15 +1124,15 @@ virsh attach-device win10 /home/$USER/.VFIOinput/input_mouse.xml
 virsh attach-device win10 /home/$USER/.VFIOinput/input_keyboard.xml</pre>
 <p>Next duplicate the script file and replace <code>attach-device</code> with <code>detach-device</code>. Ensure both scripts are executable with <code>chmod +x $script.sh</code>
 </p>
-<p>This 2 script files can now be executed to attach or detach your USB devices from the host to the guest VM. It is important to note that they may need to be executed as root. To run the script from the Windows VM, one possibility is using <a href="../en/PuTTY.html" title="PuTTY">PuTTY</a> to <a href="../en/Secure_Shell.html" class="mw-redirect" title="SSH">SSH</a> into the host, and execute the script. On Windows PuTTY comes with plink.exe which can execute singular commands over SSH before then logging out, instead of opening a SSH terminal, all in the background.
+<p>This 2 script files can now be executed to attach or detach your USB devices from the host to the guest VM. It is important to note that they may need to be executed as root. To run the script from the Windows VM, one possibility is using <a href="/title/PuTTY" title="PuTTY">PuTTY</a> to <a href="/title/SSH" class="mw-redirect" title="SSH">SSH</a> into the host, and execute the script. On Windows PuTTY comes with plink.exe which can execute singular commands over SSH before then logging out, instead of opening a SSH terminal, all in the background.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">detach_devices.bat</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">"C:\Program Files\PuTTY\plink.exe" root@$HOST_IP -pw $ROOTPASSWORD /home/$USER/.VFIOinput/input_detach.sh</pre>
-<p>Replace <code>$HOST_IP</code> with the Host <a href="../en/Network_configuration.html#IP_addresses" title="Network configuration">IP Address</a> and $ROOTPASSWORD with the root password.
+<p>Replace <code>$HOST_IP</code> with the Host <a href="/title/Network_configuration#IP_addresses" title="Network configuration">IP Address</a> and $ROOTPASSWORD with the root password.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> This method is insecure if somebody has access to your VM, since they could open the file and read your password. It is advisable to use <a href="../en/SSH_keys.html" title="SSH keys">SSH keys</a> instead!</div>
-<p>You may also want to execute the script files using key binds. On Windows one option is <a rel="nofollow" class="external text" href="https://autohotkey.com/">Autohotkey</a>, and on the Host <a href="../en/Xbindkeys.html" title="Xbindkeys">Xbindkeys</a>. Because of the need to run the scripts as root, you may also need to use <a href="../en/Polkit.html" title="Polkit">Polkit</a> or <a href="../en/Sudo.html" title="Sudo">Sudo</a> which can both be used to authenticate specific executables as able to run as root without needing a password.
+<strong>Warning:</strong> This method is insecure if somebody has access to your VM, since they could open the file and read your password. It is advisable to use <a href="/title/SSH_keys" title="SSH keys">SSH keys</a> instead!</div>
+<p>You may also want to execute the script files using key binds. On Windows one option is <a rel="nofollow" class="external text" href="https://autohotkey.com/">Autohotkey</a>, and on the Host <a href="/title/Xbindkeys" title="Xbindkeys">Xbindkeys</a>. Because of the need to run the scripts as root, you may also need to use <a href="/title/Polkit" title="Polkit">Polkit</a> or <a href="/title/Sudo" title="Sudo">Sudo</a> which can both be used to authenticate specific executables as able to run as root without needing a password.
 </p>
 <h3>
 <span id="Bypassing_the_IOMMU_groups_.28ACS_override_patch.29"></span><span class="mw-headline" id="Bypassing_the_IOMMU_groups_(ACS_override_patch)">Bypassing the IOMMU groups (ACS override patch)</span>
@@ -1157,18 +1155,18 @@ virsh attach-device win10 /home/$USER/.VFIOinput/input_keyboard.xml</pre>
 </pre>
 <p>The option <code>pcie_acs_override=downstream,multifunction</code> should break up as many devices as possible.
 </p>
-<p>After installation and configuration, reconfigure your <a href="../en/Kernel_parameters.html" title="Kernel parameters">bootloader kernel parameters</a> to load the new kernel with the <code>pcie_acs_override=</code> option enabled.
+<p>After installation and configuration, reconfigure your <a href="/title/Kernel_parameters" title="Kernel parameters">bootloader kernel parameters</a> to load the new kernel with the <code>pcie_acs_override=</code> option enabled.
 </p>
 <h2><span class="mw-headline" id="Plain_QEMU_without_libvirt">Plain QEMU without libvirt</span></h2>
 <p>Instead of setting up a virtual machine with the help of libvirt, plain QEMU commands with custom parameters can be used for running the VM intended to be used with PCI passthrough. This is desirable for some use cases like scripted setups, where the flexibility for usage with other scripts is needed.
 </p>
-<p>To achieve this after <a href="#Setting_up_IOMMU">#Setting up IOMMU</a> and <a href="#Isolating_the_GPU">#Isolating the GPU</a>, follow the <a href="../en/QEMU.html" title="QEMU">QEMU</a> article to setup the virtualized environment, <a href="../en/QEMU.html#Enabling_KVM" title="QEMU">enable KVM</a> on it and use the flag <code>-device vfio-pci,host=07:00.0</code> replacing the identifier (07:00.0) with your actual device's ID that you used for the GPU isolation earlier.
+<p>To achieve this after <a href="#Setting_up_IOMMU">#Setting up IOMMU</a> and <a href="#Isolating_the_GPU">#Isolating the GPU</a>, follow the <a href="/title/QEMU" title="QEMU">QEMU</a> article to setup the virtualized environment, <a href="/title/QEMU#Enabling_KVM" title="QEMU">enable KVM</a> on it and use the flag <code>-device vfio-pci,host=07:00.0</code> replacing the identifier (07:00.0) with your actual device's ID that you used for the GPU isolation earlier.
 </p>
 <p>For utilizing the OVMF firmware, make sure the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=edk2-ovmf">edk2-ovmf</a></span> package is installed, copy the UEFI variables from <code>/usr/share/edk2-ovmf/x64/OVMF_VARS.fd</code> to temporary location like <code>/tmp/MY_VARS.fd</code> and finally specify the OVMF paths by appending the following parameters to the QEMU command (order matters):
 </p>
 <ul>
 <li>
-<code>-drive if=pflash,format=raw,readonly,file=/usr/share/edk2-ovmf/x64/OVMF_CODE.fd</code> for the actual OVMF firmware binary, note the readonly option</li>
+<code>-drive if=pflash,format=raw,readonly=on,file=/usr/share/edk2-ovmf/x64/OVMF_CODE.fd</code> for the actual OVMF firmware binary, note the readonly option</li>
 <li>
 <code>-drive if=pflash,format=raw,file=/tmp/MY_VARS.fd</code> for the variables</li>
 </ul>
@@ -1179,7 +1177,7 @@ virsh attach-device win10 /home/$USER/.VFIOinput/input_keyboard.xml</pre>
 <li>QEMU's default SeaBIOS can be used instead of OVMF, but it is not recommended as it can cause issues with passthrough setups.</li>
 </ul>
 </div>
-<p>It is recommended to study the QEMU article for ways to enhance the performance by using the <a href="../en/QEMU.html#Installing_virtio_drivers" title="QEMU">virtio drivers</a> and other further configurations for the setup.
+<p>It is recommended to study the QEMU article for ways to enhance the performance by using the <a href="/title/QEMU#Installing_virtio_drivers" title="QEMU">virtio drivers</a> and other further configurations for the setup.
 </p>
 <p>You also might have to use the <code>-cpu host,kvm=off</code> parameter to forward the host's CPU model info to the VM and fool the virtualization detection used by Nvidia's and possibly other manufacturers' device drivers trying to block the full hardware usage inside a virtualized system.
 </p>
@@ -1217,9 +1215,9 @@ Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 <p>Once you have identified which controller manages which ports by plugging various devices into them and decided which one you want to passthrough, simply add it to the list of PCI host devices controlled by the VM in your guest configuration. No other configuration should be needed.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If your USB controller does not support resetting, is not in an isolated group, or is otherwise unable to be passed through then it may still be possible to accomplish similar results through <a href="../en/Udev.html" title="Udev">udev</a> rules. See <a rel="nofollow" class="external autonumber" href="https://github.com/olavmrk/usb-libvirt-hotplug">[1]</a> which allows any device connected to specified USB ports to be automatically attached to a virtual machine.</div>
+<strong>Note:</strong> If your USB controller does not support resetting, is not in an isolated group, or is otherwise unable to be passed through then it may still be possible to accomplish similar results through <a href="/title/Udev" title="Udev">udev</a> rules. See <a rel="nofollow" class="external autonumber" href="https://github.com/olavmrk/usb-libvirt-hotplug">[1]</a> which allows any device connected to specified USB ports to be automatically attached to a virtual machine.</div>
 <h3><span class="mw-headline" id="Passing_VM_audio_to_host_via_PulseAudio">Passing VM audio to host via PulseAudio</span></h3>
-<p>It is possible to route the virtual machine's audio to the host as an application using libvirt. This has the advantage of multiple audio streams being routable to one host output, and working with audio output devices that do not support passthrough. <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a> is required for this to work.
+<p>It is possible to route the virtual machine's audio to the host as an application using libvirt. This has the advantage of multiple audio streams being routable to one host output, and working with audio output devices that do not support passthrough. <a href="/title/PulseAudio" title="PulseAudio">PulseAudio</a> is required for this to work.
 </p>
 <p>First, remove the comment from the <code>#user = ""</code> line. Then add your username in the quotations. This tells QEMU which user's pulseaudio stream to route through.
 </p>
@@ -1357,7 +1355,7 @@ Note that scream identifies its IVSHMEM device using its size, so make sure ther
 <h6><span class="mw-headline" id="Configuring_the_host">Configuring the host</span></h6>
 <p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/scream/">scream</a></span><sup><small>AUR</small></sup>.
 </p>
-<p>Create a <a href="../en/Systemd/User.html" title="Systemd/User">systemd user service</a> to control the receiver:
+<p>Create a <a href="/title/Systemd/User" title="Systemd/User">systemd user service</a> to control the receiver:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.config/systemd/user/scream-ivshmem-pulse.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
@@ -1376,7 +1374,7 @@ WantedBy=default.target</pre>
 <p>Edit <code>count=2</code> with the size of the IVSHMEM device in MiB.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> If you are using <a href="../en/PipeWire.html" title="PipeWire">PipeWire</a>, replace <code>pulseaudio.service</code> with <code>pipewire-pulse.service</code>.</div>
+<strong>Tip:</strong> If you are using <a href="/title/PipeWire" title="PipeWire">PipeWire</a>, replace <code>pulseaudio.service</code> with <code>pipewire-pulse.service</code>.</div>
 <p>Now start the service with:
 </p>
 <pre>$ systemctl start --user scream-ivshmem-pulse
@@ -1423,14 +1421,14 @@ IOMMU group 13
 <p>This signals that the xHCI USB controller in 00:14.0 cannot be reset and will therefore stop the VM from shutting down properly, while the integrated sound card in 00:1b.0 and the other two controllers in 00:1a.0 and 00:1d.0 do not share this problem and can be passed without issue.
 </p>
 <h2><span class="mw-headline" id="Complete_setups_and_examples">Complete setups and examples</span></h2>
-<p>For many reasons users may seek to see <a href="../en/PCI_passthrough_via_OVMF/Examples.html" title="PCI passthrough via OVMF/Examples">complete passthrough setup examples</a>.
+<p>For many reasons users may seek to see <a href="/title/PCI_passthrough_via_OVMF/Examples" title="PCI passthrough via OVMF/Examples">complete passthrough setup examples</a>.
 </p>
 <p>These examples offer a supplement to existing hardware compatibility lists. Additionally, if you have trouble configuring a certain mechanism in your setup, you might find these examples very valuable. Users there have described their setups in detail, and some have provided examples of their configuration files as well. 
 </p>
 <p>We encourage those who successfully build their system from this resource to help improve it by contributing their builds. Due to the many different hardware manufacturers involved, the seemingly significant lack of sufficient documentation, as well as other issues due to the nature of this process, community contributions are necessary.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
-<p>If your issue is not mentioned below, you may want to browse <a href="../en/QEMU.html#Troubleshooting" title="QEMU">QEMU#Troubleshooting</a>.
+<p>If your issue is not mentioned below, you may want to browse <a href="/title/QEMU#Troubleshooting" title="QEMU">QEMU#Troubleshooting</a>.
 </p>
 <h3>
 <span id="QEMU_4.0:_Unable_to_load_graphics_drivers.2FBSOD.2FGraphics_stutter_after_driver_install_using_Q35"></span><span class="mw-headline" id="QEMU_4.0:_Unable_to_load_graphics_drivers/BSOD/Graphics_stutter_after_driver_install_using_Q35">QEMU 4.0: Unable to load graphics drivers/BSOD/Graphics stutter after driver install using Q35</span>
@@ -1488,13 +1486,13 @@ cBcBC9A5C1gCCywBCjwKPA0ADQANTElPTgANABQSX0JTVACkEgoEAAALcBcL0Dk=
 <span id=".22BAR_3:_cannot_reserve_.5Bmem.5D.22_error_in_dmesg_after_starting_VM"></span><span class="mw-headline" id='"BAR_3:_cannot_reserve_[mem]"_error_in_dmesg_after_starting_VM'>"BAR 3: cannot reserve [mem]" error in dmesg after starting VM</span>
 </h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> This error is actually related to the boot_vgs issue and should be merged together with everything else concerning GPU ROMs. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PCI_passthrough_via_OVMF#UEFI_(OVMF)_Compatibility_in_VBIOS">Talk:PCI passthrough via OVMF#UEFI (OVMF) Compatibility in VBIOS</a>)</div>
+<b>Reason:</b> This error is actually related to the boot_vgs issue and should be merged together with everything else concerning GPU ROMs. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:PCI_passthrough_via_OVMF#UEFI_(OVMF)_Compatibility_in_VBIOS">Talk:PCI passthrough via OVMF#UEFI (OVMF) Compatibility in VBIOS</a>)</div>
 </div>
 <p>With respect to <a rel="nofollow" class="external text" href="https://www.linuxquestions.org/questions/linux-kernel-70/kernel-fails-to-assign-memory-to-pcie-device-4175487043/">this article</a>:
 </p>
-<p>If you still have code 43 check dmesg for memory reservation errors after starting up VM, if you have similar it could be the case:
+<p>If you still have code 43 check <i>dmesg</i> for memory reservation errors after starting up VM, if you have similar it could be the case:
 </p>
 <pre>vfio-pci 0000:09:00.0: BAR 3: cannot reserve [mem 0xf0000000-0xf1ffffff 64bit pref]
 </pre>
@@ -1508,7 +1506,7 @@ cBcBC9A5C1gCCywBCjwKPA0ADQANTElPTgANABQSX0JTVACkEgoEAAALcBcL0Dk=
 # echo 1 &gt; /sys/bus/pci/rescan
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Probably setting <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> <code>video=efifb:off</code> is required as well. <a rel="nofollow" class="external text" href="https://pve.proxmox.com/wiki/Pci_passthrough#BAR_3:_can.27t_reserve_.5Bmem.5D_error">Source</a>
+<strong>Note:</strong> Probably setting <a href="/title/Kernel_parameter" class="mw-redirect" title="Kernel parameter">kernel parameter</a> <code>video=efifb:off</code> is required as well. <a rel="nofollow" class="external text" href="https://pve.proxmox.com/wiki/Pci_passthrough#BAR_3:_can.27t_reserve_.5Bmem.5D_error">Source</a>
 </div>
 <p>In addition try adding kernel parameter <code>pci=realloc</code> which also <a rel="nofollow" class="external text" href="https://github.com/Dunedan/mbp-2016-linux/issues/60#issuecomment-396311301">helps with hotplugging issues</a>.
 </p>
@@ -1516,9 +1514,9 @@ cBcBC9A5C1gCCywBCjwKPA0ADQANTElPTgANABQSX0JTVACkEgoEAAALcBcL0Dk=
 <span id="UEFI_.28OVMF.29_compatibility_in_VBIOS"></span><span class="mw-headline" id="UEFI_(OVMF)_compatibility_in_VBIOS">UEFI (OVMF) compatibility in VBIOS</span>
 </h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a><b>This section is being considered for removal.</b><a href="../File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a><b>This section is being considered for removal.</b><a href="/title/File:Tango-edit-cut.png" class="image"><img alt="Tango-edit-cut.png" src="../File:Tango-edit-cut.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Flashing you guest GPU for the purpose of a GPU passthrough is <b>never</b> good advice. A full section should be dedicated to VBIOS compatibility. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:PCI_passthrough_via_OVMF#UEFI_(OVMF)_Compatibility_in_VBIOS">Talk:PCI passthrough via OVMF#UEFI (OVMF) Compatibility in VBIOS</a>)</div>
+<b>Reason:</b> Flashing you guest GPU for the purpose of a GPU passthrough is <b>never</b> good advice. A full section should be dedicated to VBIOS compatibility. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:PCI_passthrough_via_OVMF#UEFI_(OVMF)_Compatibility_in_VBIOS">Talk:PCI passthrough via OVMF#UEFI (OVMF) Compatibility in VBIOS</a>)</div>
 </div>
 <p>With respect to <a rel="nofollow" class="external text" href="https://pve.proxmox.com/wiki/Pci_passthrough#How_to_known_if_card_is_UEFI_.28ovmf.29_compatible">this article</a>:
 </p>
@@ -1639,7 +1637,7 @@ EndSection
 <h3><span class="mw-headline" id="Chromium_ignores_integrated_graphics_for_acceleration">Chromium ignores integrated graphics for acceleration</span></h3>
 <p>Chromium and friends will try to detect as many GPUs as they can in the system and pick which one is preferred (usually discrete NVIDIA/AMD graphics). It tries to pick a GPU by looking at PCI devices, not OpenGL renderers available in the system - the result is that Chromium may ignore the integrated GPU available for rendering and try to use the dedicated GPU bound to the <code>vfio-pci</code> driver, and unusable on the host system, regardless of whenever a guest VM is running or not. This results in software rendering being used (leading to higher CPU load, which may also result in choppy video playback, scrolling and general un-smoothness).
 </p>
-<p>This can be fixed by <a href="../en/Chromium.html#Forcing_specific_GPU" class="mw-redirect" title="Chromium/Tips and tricks">explicitly telling Chromium which GPU you want to use</a>.
+<p>This can be fixed by <a href="/title/Chromium/Tips_and_tricks#Forcing_specific_GPU" class="mw-redirect" title="Chromium/Tips and tricks">explicitly telling Chromium which GPU you want to use</a>.
 </p>
 <h3><span class="mw-headline" id="VM_only_uses_one_core">VM only uses one core</span></h3>
 <p>For some users, even if IOMMU is enabled and the core count is set to more than 1, the VM still only uses one CPU core and thread. To solve this enable "Manually set CPU topology" in <code>virt-manager</code> and set it to the desirable amount of CPU sockets, cores and threads. Keep in mind that "Threads" refers to the thread count per CPU, not the total count.
@@ -1679,7 +1677,7 @@ Type=simple
 ExecStart=/usr/bin/systemd-inhibit --what=sleep --why="Libvirt domain \"%i\" is running" --who=%U --mode=block sleep infinity
 </pre>
 <h3><span class="mw-headline" id="Cannot_boot_after_upgrading_ovmf">Cannot boot after upgrading ovmf</span></h3>
-<p>If you cannot boot after upgrading from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ovmf">ovmf</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=edk2-ovmf">edk2-ovmf</a></span>]</sup> version 1:r23112.018432f0ce-1 then you need to remove the old <code>*VARS.fd</code> file in <code>/var/lib/libvirt/qemu/nvram/</code>:
+<p>If you cannot boot after upgrading from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ovmf">ovmf</a></span><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=edk2-ovmf">edk2-ovmf</a></span>]</sup> version 1:r23112.018432f0ce-1 then you need to remove the old <code>*VARS.fd</code> file in <code>/var/lib/libvirt/qemu/nvram/</code>:
 </p>
 <pre># mv /var/lib/libvirt/qemu/nvram/vmname_VARS.fd /var/lib/libvirt/qemu/nvram/vmname_VARS.fd.old
 </pre>
@@ -1696,7 +1694,7 @@ ExecStart=/usr/bin/systemd-inhibit --what=sleep --why="Libvirt domain \"%i\" is 
 -soundhw hda \
 -...
 </pre>
-<p>As noted in <a href="#QEMU_3.0_audio_changes">QEMU 3.0 audio changes</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> the specified chipset will include a series of audio patches.
+<p>As noted in <a href="#QEMU_3.0_audio_changes">QEMU 3.0 audio changes</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> the specified chipset will include a series of audio patches.
 </p>
 <p>Setting <code>QEMU_AUDIO_TIMER_PERIOD</code> to values higher than 100 might also help (did not test value lower than 100).
 </p>
@@ -1710,14 +1708,14 @@ You can workaround this by:
 </p>
 <pre>options kvm ignore_msrs=1
 </pre>
-<p>To prevent clogging up dmesg with "ignored rdmsr" messages you can additionally add:
+<p>To prevent clogging up <i>dmesg</i> with "ignored rdmsr" messages you can additionally add:
 </p>
 <pre>options kvm report_ignored_msrs=0
 </pre>
 <h3>
 <span id="AMD_Ryzen_.2F_BIOS_updates_.28AGESA.29_yields_.22Error:_internal_error:_Unknown_PCI_header_type_.E2.80.98127.E2.80.99.22"></span><span class="mw-headline" id='AMD_Ryzen_/_BIOS_updates_(AGESA)_yields_"Error:_internal_error:_Unknown_PCI_header_type_‘127’"'>AMD Ryzen / BIOS updates (AGESA) yields "Error: internal error: Unknown PCI header type ‘127’"</span>
 </h3>
-<p>AMD users have been experiencing breakage of their KVM setups after updating the BIOS on their motherboard. There is a kernel <a rel="nofollow" class="external text" href="https://clbin.com/VCiYJ">patch</a>, (see <a href="../en/Kernel/Arch_Build_System.html" title="Kernel/Arch Build System">Kernel/Arch Build System</a> for instruction on compiling kernels with custom patches) that can resolve the issue as of now (7/28/19), but this is not the first time AMD has made an error of this very nature, so take this into account if you are considering updating your BIOS in the future as a VFIO user.
+<p>AMD users have been experiencing breakage of their KVM setups after updating the BIOS on their motherboard. There is a kernel <a rel="nofollow" class="external text" href="https://clbin.com/VCiYJ">patch</a>, (see <a href="/title/Kernel/Arch_Build_System" title="Kernel/Arch Build System">Kernel/Arch Build System</a> for instruction on compiling kernels with custom patches) that can resolve the issue as of now (7/28/19), but this is not the first time AMD has made an error of this very nature, so take this into account if you are considering updating your BIOS in the future as a VFIO user.
 </p>
 <h3>
 <span id="AMD_GPU_not_resetting_properly_yielding_.22Error:_internal_error:_Unknown_PCI_header_type_.E2.80.98127.E2.80.99.22_.28Separate_issue_from_the_one_above.29"></span><span class="mw-headline" id='AMD_GPU_not_resetting_properly_yielding_"Error:_internal_error:_Unknown_PCI_header_type_‘127’"_(Separate_issue_from_the_one_above)'>AMD GPU not resetting properly yielding "Error: internal error: Unknown PCI header type ‘127’" (Separate issue from the one above)</span>
@@ -1732,7 +1730,7 @@ You can workaround this by:
 <p>If attempting to hotplug an Nvidia card with a USB port, you may have to blacklist the <code>i2c_nvidia_gpu</code> driver. Do this by adding the line <code>blacklist i2c_nvidia_gpu</code> to <code>/etc/modprobe.d/blacklist.conf</code>.
 </p>
 <h3><span class="mw-headline" id="Host_unable_to_boot_and_stuck_in_black_screen_after_enabling_vfio">Host unable to boot and stuck in black screen after enabling vfio</span></h3>
-<p>If debug kernel messages during boot are enabled by adding with the <code>debug ignore_loglevel</code> <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a>, you may see boot stuck with the last message similar to
+<p>If debug kernel messages during boot are enabled by adding with the <code>debug ignore_loglevel</code> <a href="/title/Kernel_parameters" title="Kernel parameters">kernel parameters</a>, you may see boot stuck with the last message similar to
 </p>
 <pre>vfio-pci 0000:01:00.0: vgaarb: changed VGA decodes: olddecodes=io+mem,decodes=io+mem:owns=none
 </pre>
@@ -1777,15 +1775,15 @@ kernel: pcieport 0000:00:01.1: AER: device recovery successful
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Virtualization.html" title="Category:Virtualization">Virtualization</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Virtualization" title="Category:Virtualization">Virtualization</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
-<li><a href="../en/Category:Sections_flagged_with_Template:Remove.html" title="Category:Sections flagged with Template:Remove">Sections flagged with Template:Remove</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Accuracy" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Merge" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Expansion" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="/title/Category:Sections_flagged_with_Template:Remove" title="Category:Sections flagged with Template:Remove">Sections flagged with Template:Remove</a></li>
+<li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li>
+<li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li>
 </ul>
 </div>
 </div>
@@ -1794,15 +1792,15 @@ kernel: pcieport 0000:00:01.1: AER: device recovery successful
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=663505">https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=663505</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 19:12.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=668139">https://wiki.archlinux.org/index.php?title=PCI_passthrough_via_OVMF&amp;oldid=668139</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 May 2021, at 04:25.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

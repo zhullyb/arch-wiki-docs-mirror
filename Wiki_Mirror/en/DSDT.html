@@ -36,8 +36,8 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/ACPI_modules.html" title="ACPI modules">ACPI modules</a></li>
-<li><a href="../en/Acpid.html" title="Acpid">acpid</a></li>
+<li><a href="/title/ACPI_modules" title="ACPI modules">ACPI modules</a></li>
+<li><a href="/title/Acpid" title="Acpid">acpid</a></li>
 </ul>
 </div>
 <p>DSDT (Differentiated System Description Table) is a part of the <a href="https://en.wikipedia.org/wiki/Advanced_Configuration_and_Power_Interface" class="extiw" title="wikipedia:Advanced Configuration and Power Interface">ACPI</a> specification. It supplies information about supported power events in a given system. ACPI tables are provided in firmware from the manufacturer. A common Linux problem is missing ACPI functionality, such as: fans not running, screens not turning off when the lid is closed, etc.  This can stem from DSDTs made with Windows specifically in mind, which can be patched after installation. The goal of this article is to analyze and rebuild a faulty DSDT, so that the kernel can override the default one.
@@ -45,7 +45,7 @@
 <p>Basically a DSDT table is the code run on ACPI (Power Management) events.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The goal of the <a rel="nofollow" class="external text" href="https://01.org/linux-acpi">Linux ACPI</a> project is that Linux should work on unmodified firmware.  If you still find this type of workaround necessary on modern kernels then you should consider <a href="../en/Bug_reporting_guidelines.html" class="mw-redirect" title="Reporting bug guidelines">submitting a bug report</a>. </div>
+<strong>Note:</strong> The goal of the <a rel="nofollow" class="external text" href="https://01.org/linux-acpi">Linux ACPI</a> project is that Linux should work on unmodified firmware.  If you still find this type of workaround necessary on modern kernels then you should consider <a href="/title/Reporting_bug_guidelines" class="mw-redirect" title="Reporting bug guidelines">submitting a bug report</a>. </div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -75,7 +75,7 @@
 <h2><span class="mw-headline" id="Before_you_start...">Before you start...</span></h2>
 <ul>
 <li>It is possible that the hardware manufacturer has released an updated firmware which fixes ACPI related problems.  Installing an updated firmware is often preferred over this method because it would avoid duplication of effort.</li>
-<li>This process does tamper with some fairly fundamental code on your installation. You will want to be absolutely sure of the changes you make. You might also wish to <a href="../en/Disk_cloning.html" title="Disk cloning">clone your disk</a> beforehand.</li>
+<li>This process does tamper with some fairly fundamental code on your installation. You will want to be absolutely sure of the changes you make. You might also wish to <a href="/title/Disk_cloning" title="Disk cloning">clone your disk</a> beforehand.</li>
 <li>Even before attempting to fix your DSDT yourself, you can attempt a couple of different shortcuts:</li>
 </ul>
 <h3><span class="mw-headline" id="Tell_the_kernel_to_report_a_version_of_Windows">Tell the kernel to report a version of Windows</span></h3>
@@ -189,7 +189,7 @@ If it says no errors and no warnings you should be good to go.
 </p>
 <pre># cp acpi_override /boot
 </pre>
-<p>Lastly, configure the <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Bootloader">bootloader</a> to load your CPIO archive. For example, using <a href="../en/Systemd-boot.html" title="Systemd-boot">Systemd-boot</a>, <code>/boot/loader/entries/arch.conf</code> might look like this:
+<p>Lastly, configure the <a href="/title/Bootloader" class="mw-redirect" title="Bootloader">bootloader</a> to load your CPIO archive. For example, using <a href="/title/Systemd-boot" title="Systemd-boot">Systemd-boot</a>, <code>/boot/loader/entries/arch.conf</code> might look like this:
 </p>
 <pre>title	 Arch Linux
 linux	 /vmlinuz-linux
@@ -200,7 +200,7 @@ options  root=PARTUUID=ec9d5998-a9db-4bd8-8ea0-35a45df04701 resume=PARTUUID=58d0
 <p>Now all that is left to do is to reboot and to <a href="#Verify_successful_override">verify the result.</a>
 </p>
 <h3><span class="mw-headline" id="Compiling_into_the_kernel">Compiling into the kernel</span></h3>
-<p>You will want to be familiar with <a href="../en/Kernel.html" class="mw-redirect" title="Kernels">compiling your own kernel</a>.  The most straightforward way is with the "traditional" approach.
+<p>You will want to be familiar with <a href="/title/Kernels" class="mw-redirect" title="Kernels">compiling your own kernel</a>.  The most straightforward way is with the "traditional" approach.
 After compiling DSDT, iasl produce two files: <code>dsdt.hex</code> and <code>dsdt.aml</code>.
 </p>
 <p><b>Using <code>menuconfig</code>:</b>
@@ -211,7 +211,7 @@ After compiling DSDT, iasl produce two files: <code>dsdt.hex</code> and <code>ds
 </ul>
 <h2><span class="mw-headline" id="Verify_successful_override">Verify successful override</span></h2>
 <ol>
-<li>Run <code>dmesg | grep ACPI</code>.</li>
+<li>Run <code>dmesg | grep ACPI</code> as root.</li>
 <li>Look for clues that suggest an override, for example:</li>
 </ol>
 <pre>[    0.000000] ACPI: Override [DSDT-   A M I], this is unsafe: tainting kernel
@@ -226,10 +226,10 @@ After compiling DSDT, iasl produce two files: <code>dsdt.hex</code> and <code>ds
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Boot_process.html" title="Category:Boot process">Boot process</a></li>
-<li><a href="../en/Category:Kernel.html" title="Category:Kernel">Kernel</a></li>
-<li><a href="../en/Category:Power_management.html" title="Category:Power management">Power management</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Boot_process" title="Category:Boot process">Boot process</a></li>
+<li><a href="/title/Category:Kernel" title="Category:Kernel">Kernel</a></li>
+<li><a href="/title/Category:Power_management" title="Category:Power management">Power management</a></li>
 </ul>
 </div></div>
 	</div>
@@ -237,15 +237,15 @@ After compiling DSDT, iasl produce two files: <code>dsdt.hex</code> and <code>ds
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=DSDT&amp;oldid=663244">https://wiki.archlinux.org/index.php?title=DSDT&amp;oldid=663244</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 06:44.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=DSDT&amp;oldid=665818">https://wiki.archlinux.org/index.php?title=DSDT&amp;oldid=665818</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 08:32.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

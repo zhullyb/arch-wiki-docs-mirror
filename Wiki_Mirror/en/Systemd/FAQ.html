@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -23,7 +24,7 @@
 	<h1 id="firstHeading" class="firstHeading" lang="en">systemd/FAQ</h1>
 	<div id="bodyContent" class="mw-body-content">
 		<div id="siteSub" class="noprint">From ArchWiki</div>
-		<div id="contentSub"><span class="subpages">&lt; <a href="../../en/Systemd.html" title="Systemd">Systemd</a></span></div>
+		<div id="contentSub"><span class="subpages">&lt; <a href="/title/Systemd" title="Systemd">Systemd</a></span></div>
 		<div id="contentSub2"></div>
 		
 		<div id="jump-to-nav"></div>
@@ -37,9 +38,9 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../../en/Systemd.html" title="Systemd">systemd</a></li>
-<li><a href="../../en/Systemd/User.html" title="Systemd/User">systemd/User</a></li>
-<li><a href="../../en/Daemons.html" title="Daemons">Daemons</a></li>
+<li><a href="/title/Systemd" title="Systemd">systemd</a></li>
+<li><a href="/title/Systemd/User" title="Systemd/User">systemd/User</a></li>
+<li><a href="/title/Daemons" title="Daemons">Daemons</a></li>
 </ul>
 </div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -72,7 +73,7 @@
 <h3>
 <span id="Why_do_I_get_log_messages_on_my_console.3F"></span><span class="mw-headline" id="Why_do_I_get_log_messages_on_my_console?">Why do I get log messages on my console?</span>
 </h3>
-<p>You must set the kernel loglevel yourself. Historically, <code>/etc/rc.sysinit</code> did this for us and set dmesg loglevel to <code>3</code>, which was a reasonably quiet loglevel. Either add <code>loglevel=3</code> or <code>quiet</code> to your <a href="../../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a>.
+<p>You must set the kernel loglevel yourself. Historically, <code>/etc/rc.sysinit</code> did this for us and set <a href="/title/Dmesg" class="mw-redirect" title="Dmesg">dmesg</a>'s loglevel to <code>3</code>, which was a reasonably quiet loglevel. Either add <code>loglevel=3</code> or <code>quiet</code> to your <a href="/title/Kernel_parameters" title="Kernel parameters">kernel parameters</a>.
 </p>
 <h3>
 <span id="How_do_I_change_the_default_number_of_gettys.3F"></span><span class="mw-headline" id="How_do_I_change_the_default_number_of_gettys?">How do I change the default number of gettys?</span>
@@ -81,7 +82,7 @@
 </p>
 <p>By default, the number of auto-activated gettys is capped at six. Thus [F7] through [F12] won't launch a getty.
 </p>
-<p>If you want to change this behavior, then edit <code>/etc/systemd/logind.conf</code> and change the value of <code>NAutoVTs</code>. If you want all [F<i>x</i>] keys to start a getty, increase the value of NAutoVTs to 12. If you are <a href="../../en/Systemd/Journal.html#Forward_journald_to_.2Fdev.2Ftty12" title="Systemd/Journal">forwarding journald to tty12</a>, increase the value of NAutoVTs to 11 (thus leaving tty12 free).
+<p>If you want to change this behavior, then edit <code>/etc/systemd/logind.conf</code> and change the value of <code>NAutoVTs</code>. If you want all [F<i>x</i>] keys to start a getty, increase the value of NAutoVTs to 12. If you are <a href="/title/Systemd/Journal#Forward_journald_to_.2Fdev.2Ftty12" title="Systemd/Journal">forwarding journald to tty12</a>, increase the value of NAutoVTs to 11 (thus leaving tty12 free).
 </p>
 <p>You can also pre-activate gettys which will be running from boot.
 </p>
@@ -102,12 +103,12 @@
 </h3>
 <p>If you see no output at all in console after the initram message, this means you have the <code>quiet</code> parameter in your kernel line. It's best to remove it, at least the first time you boot with systemd, to see if everything is ok. Then, you will see a list <code>[ OK ]</code> in green or <code>[ FAILED ]</code> in red.
 </p>
-<p>Any messages are logged to the system log and if you want to find out about the status of your system run <code>systemctl</code> (no root privileges required) or look at the boot/system log with <code>journalctl</code>.
+<p>Any messages are logged to the system log and if you want to find out about the status of your system, use <a href="/title/Systemctl" class="mw-redirect" title="Systemctl">systemctl</a> or look at the boot/system log with <a href="/title/Journalctl" class="mw-redirect" title="Journalctl">journalctl</a>.
 </p>
 <h3>
 <span id="How_do_I_avoid_clearing_the_console_after_boot.3F"></span><span class="mw-headline" id="How_do_I_avoid_clearing_the_console_after_boot?">How do I avoid clearing the console after boot?</span>
 </h3>
-<p>Create a directory called <code>/etc/systemd/system/getty@.service.d</code> and place <code>nodisallocate.conf</code> in there to <a href="../../en/Systemd.html#Editing_provided_units" title="Systemd">override</a> the <code>TTYVTDisallocate</code> option to <code>no</code>.
+<p>Create a directory called <code>/etc/systemd/system/getty@.service.d</code> and place <code>nodisallocate.conf</code> in there to <a href="/title/Systemd#Editing_provided_units" title="Systemd">override</a> the <code>TTYVTDisallocate</code> option to <code>no</code>.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/getty@.service.d/nodisallocate.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
@@ -151,9 +152,9 @@ ExecStart=/usr/bin/my-script
  
 [Install]
 WantedBy=multi-user.target</pre>
-<p>This example assumes you want your script to start up when the target multi-user is launched. Make sure the script is <a href="../../en/Help:Reading.html#Make_executable" class="mw-redirect" title="Executable">executable</a>.
+<p>This example assumes you want your script to start up when the target multi-user is launched. Make sure the script is <a href="/title/Executable" class="mw-redirect" title="Executable">executable</a>.
 </p>
-<p><a href="../../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">Enable</a> <i>myscript</i>.service to start the service at boot.
+<p><a href="/title/Enable" class="mw-redirect" title="Enable">Enable</a> <i>myscript</i>.service to start the service at boot.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> In case you want to start a shell script, make sure you have <code>#!/bin/sh</code> in the first line of the script. Do <b>not</b> write something like <code>ExecStart=/bin/sh /path/to/script.sh</code> because that will not work.</div>
@@ -176,22 +177,22 @@ WantedBy=multi-user.target</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../../en/Category:Init.html" title="Category:Init">Init</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Init" title="Category:Init">Init</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd/FAQ&amp;oldid=632259">https://wiki.archlinux.org/index.php?title=Systemd/FAQ&amp;oldid=632259</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 August 2020, at 16:10.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd/FAQ&amp;oldid=666863">https://wiki.archlinux.org/index.php?title=Systemd/FAQ&amp;oldid=666863</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 15:33.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

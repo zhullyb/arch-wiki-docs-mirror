@@ -35,9 +35,9 @@
 <div class="mw-parser-output">
 <p><a rel="nofollow" class="external text" href="https://matrix.org/">Matrix</a> is an ambitious new ecosystem for open federated instant messaging and VoIP. It consists of servers, <a rel="nofollow" class="external text" href="https://matrix.org/clients/">clients</a> and <a rel="nofollow" class="external text" href="https://matrix.org/bridges/">bridge</a> software to connect to existing messaging solutions like <a href="https://en.wikipedia.org/wiki/Internet_Relay_Chat" class="extiw" title="wikipedia:Internet Relay Chat">IRC</a>.
 </p>
-<p>We also have a matrix channel for Arch! Come join us at <a rel="nofollow" class="external text" href="https://matrix.to/#/!SEgsRQLScqPxYtucHl:archlinux.org?via=archlinux.org&amp;via=matrix.org&amp;via=privacytools.io">#archlinux:archlinux.org</a>
+<p>A Matrix channel for Arch Linux exists at <a rel="nofollow" class="external text" href="https://matrix.to/#/!SEgsRQLScqPxYtucHl:archlinux.org?via=archlinux.org&amp;via=matrix.org&amp;via=privacytools.io">#archlinux:archlinux.org</a>. Some international communities have their own matrix rooms; see <a href="/title/International_communities" title="International communities">International communities</a> for details.
 </p>
-<p>For a list of Matrix clients, see the Matrix Clients section of <a href="../en/List_of_applications.html#Matrix_clients" title="List of applications">List of Applications</a>.
+<p>See <a href="/title/List_of_applications#Matrix_clients" title="List of applications">List of applications#Matrix clients</a> for a list of Matrix clients.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -50,6 +50,7 @@
 <li class="toclevel-1 tocsection-3"><a href="#Service"><span class="tocnumber">3</span> <span class="toctext">Service</span></a></li>
 <li class="toclevel-1 tocsection-4"><a href="#User_management"><span class="tocnumber">4</span> <span class="toctext">User management</span></a></li>
 <li class="toclevel-1 tocsection-5"><a href="#Spider_Webcrawler"><span class="tocnumber">5</span> <span class="toctext">Spider Webcrawler</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="#Interesting_channels"><span class="tocnumber">6</span> <span class="toctext">Interesting channels</span></a></li>
 </ul>
 </div>
 
@@ -64,8 +65,7 @@ $ sudo -u synapse python -m synapse.app.homeserver \
   --server-name my.domain.name \
   --config-path /etc/synapse/homeserver.yaml \
   --generate-config \
-  --report-stats=yes
-</pre>
+  --report-stats=yes</pre>
 <p>Note that this will generate corresponding SSL keys and self-signed certificates for the specified server name. You have to regenerate those if you change the server name.
 </p>
 <h2><span class="mw-headline" id="Service">Service</span></h2>
@@ -74,26 +74,25 @@ $ sudo -u synapse python -m synapse.app.homeserver \
 <h2><span class="mw-headline" id="User_management">User management</span></h2>
 <p>You need at least one user on your fresh synapse server. You may create one as your normal non-root user with the command
 </p>
-<pre>$ register_new_matrix_user -c /etc/synapse/homeserver.yaml <a rel="nofollow" class="external free" href="http://127.0.0.1:8008">http://127.0.0.1:8008</a></pre>
+<pre>$ register_new_matrix_user -c /etc/synapse/homeserver.yaml http://127.0.0.1:8008</pre>
 <p>or using one of the <a rel="nofollow" class="external text" href="https://matrix.org/docs/projects/try-matrix-now.html">matrix clients</a>, for example <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=element-desktop">element-desktop</a></span>, or the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/purple-matrix-git/">purple-matrix-git</a></span><sup><small>AUR</small></sup> plug-in for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libpurple">libpurple</a></span>.
 </p>
 <h2><span class="mw-headline" id="Spider_Webcrawler">Spider Webcrawler</span></h2>
-<p>To enable the webcrawler, for server generated link previews, the additional packages <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-lxml">python-lxml</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-netaddr">python-netaddr</a></span> have to be installed.
-After that the config option <code>url_preview_enabled: True</code> can be set in your <code>homeserver.yaml</code>.
-To prevent the synapse server from issuing arbitrary GET requests to internal hosts the <code>url_preview_ip_range_blacklist:</code> has to be set.
+<p>To enable the webcrawler, for server generated link previews, the additional packages <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-lxml">python-lxml</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python-netaddr">python-netaddr</a></span> have to be installed. After that the config option <code>url_preview_enabled: True</code> can be set in your <code>homeserver.yaml</code>. To prevent the synapse server from issuing arbitrary GET requests to internal hosts the <code>url_preview_ip_range_blacklist:</code> has to be set.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> There are no defaults! By default the synapse server can crawl all your internal hosts.</div>
-<p>There are some examples that can be uncommented.
-Add your local IP ranges to that list to prevent the synapse server from trying to crawl them.
-After changing the <code>homeserver.yaml</code> the service has to be restarted.
+<p>There are some examples that can be uncommented. Add your local IP ranges to that list to prevent the synapse server from trying to crawl them. After changing the <code>homeserver.yaml</code> the service has to be restarted.
+</p>
+<h2><span class="mw-headline" id="Interesting_channels">Interesting channels</span></h2>
+<p>KDE community has a wide variety of matrix rooms for specific applications, languages, events and etc. See <a rel="nofollow" class="external autonumber" href="https://community.kde.org/Matrix">[1]</a> for details.
 </p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Instant_messaging.html" title="Category:Instant messaging">Instant messaging</a></li>
-<li><a href="../en/Category:Voice_over_IP.html" title="Category:Voice over IP">Voice over IP</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Instant_messaging" title="Category:Instant messaging">Instant messaging</a></li>
+<li><a href="/title/Category:Voice_over_IP" title="Category:Voice over IP">Voice over IP</a></li>
 </ul>
 </div></div>
 	</div>
@@ -101,15 +100,15 @@ After changing the <code>homeserver.yaml</code> the service has to be restarted.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Matrix&amp;oldid=659843">https://wiki.archlinux.org/index.php?title=Matrix&amp;oldid=659843</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 11:46.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Matrix&amp;oldid=668418">https://wiki.archlinux.org/index.php?title=Matrix&amp;oldid=668418</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 02:16.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

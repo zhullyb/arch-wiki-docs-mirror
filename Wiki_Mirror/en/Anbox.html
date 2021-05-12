@@ -36,10 +36,10 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Linux_Containers.html" title="Linux Containers">Linux Containers</a></li>
+<li><a href="/title/Linux_Containers" title="Linux Containers">Linux Containers</a></li>
 </ul>
 </div>
-<p>Anbox is a <a href="../en/Linux_Containers.html" title="Linux Containers">container-based</a> software for running Android on GNU/Linux distributions.
+<p>Anbox is a <a href="/title/Linux_Containers" title="Linux Containers">container-based</a> software for running Android on GNU/Linux distributions.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -110,11 +110,10 @@
 <ul>
 <li class="toclevel-2 tocsection-28"><a href="#Old_CPUs"><span class="tocnumber">6.1</span> <span class="toctext">Old CPUs</span></a></li>
 <li class="toclevel-2 tocsection-29"><a href="#Old_kernels"><span class="tocnumber">6.2</span> <span class="toctext">Old kernels</span></a></li>
-<li class="toclevel-2 tocsection-30"><a href="#Kernel_5.10_with_lxc_%E2%89%A4_4.0.5"><span class="tocnumber">6.3</span> <span class="toctext">Kernel 5.10 with lxc ≤ 4.0.5</span></a></li>
-<li class="toclevel-2 tocsection-31"><a href="#Secure_Boot_error"><span class="tocnumber">6.4</span> <span class="toctext">Secure Boot error</span></a></li>
+<li class="toclevel-2 tocsection-30"><a href="#Secure_Boot_error"><span class="tocnumber">6.3</span> <span class="toctext">Secure Boot error</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-32"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-31"><a href="#See_also"><span class="tocnumber">7</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -131,9 +130,9 @@
 <p>The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-zen">linux-zen</a></span> kernel includes the necessary modules. This might be the most comfortable way, as you do not have to compile the kernel (which takes a long time) and will receive updated versions regularly.
 </p>
 <h3><span class="mw-headline" id="Building_a_kernel">Building a kernel</span></h3>
-<p>Alternatively, you can recompile the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> kernel — or other kernel packages (&gt;=5.7) — with the necessary options. Please read <a href="../en/Kernel.html#Compilation" title="Kernel">Kernel#Compilation</a> and <a href="#Necessary_config_options">Necessary config options</a> below.
+<p>Alternatively, you can recompile the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> kernel — or other kernel packages (&gt;=5.7) — with the necessary options. Please read <a href="/title/Kernel#Compilation" title="Kernel">Kernel#Compilation</a> and <a href="#Necessary_config_options">Necessary config options</a> below.
 </p>
-<p>You can also build a kernel package that already includes the specific patches from <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>, see <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/?K=linux+anbox">AUR search "linux+anbox"</a>.
+<p>You can also build a kernel package that already includes the specific patches from <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a>, see <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/?K=linux+anbox">AUR search "linux+anbox"</a>.
 </p>
 <h4><span class="mw-headline" id="Necessary_config_options">Necessary config options</span></h4>
 <p>Modules can either be compiled into the kernel (<code>y</code>), into modules (<code>m</code>), or not at all (<code>n</code>). Also, not all combinations in the config are possible, and some options will require other options.
@@ -166,7 +165,7 @@ scripts/config --set-str CONFIG_ANDROID_BINDER_DEVICES ""
 </pre>
 <p>This script is quite handy when building a kernel from the AUR, as it is enough to insert these lines at the right place in the PKGBUILD.
 </p>
-<p>You will notice that here binder is not compiled as module. The reason is, I did not find out how to. Discuss it in <a href="../en/Talk:Anbox.html" title="Talk:Anbox">Talk:Anbox</a>.
+<p>You will notice that here binder is not compiled as module. The reason is, I did not find out how to. Discuss it in <a href="/title/Talk:Anbox" title="Talk:Anbox">Talk:Anbox</a>.
 </p>
 <h3><span class="mw-headline" id="Booting_the_new_kernel">Booting the new kernel</span></h3>
 <p>Please refer to the wiki page of your bootloader, to find out, how to boot with the new kernel. Booting into a newer kernel (version) is one of the few occasions when you have to reboot a Linux system. You should do that before starting Anbox.
@@ -191,7 +190,7 @@ binder_linux
 <p>If your kernel uses binderfs, there is one more step to do: Mounting a binder filesystem.
 </p>
 <p>Firstly, you will need a mountpoint. By default, Anbox will look at <code>/dev/binderfs</code>. You can create that directory now, but it will be removed at boot time.
-You can use <a href="../en/Systemd.html#systemd-tmpfiles_-_temporary_files" class="mw-redirect" title="Systemd-tmpfiles">systemd-tmpfiles</a> to create this directory at boot time. For that, create a file in <code>/etc/tmpfiles.d/</code> with the content:
+You can use <a href="/title/Systemd-tmpfiles" class="mw-redirect" title="Systemd-tmpfiles">systemd-tmpfiles</a> to create this directory at boot time. For that, create a file in <code>/etc/tmpfiles.d/</code> with the content:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/tmpfiles.d/anbox.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">d! /dev/binderfs 0755 root root
@@ -200,15 +199,15 @@ You can use <a href="../en/Systemd.html#systemd-tmpfiles_-_temporary_files" clas
 </p>
 <pre># mount -t binder none /dev/binderfs
 </pre>
-<p>To mount it always at boot, add a line in the <a href="../en/Fstab.html" title="Fstab">fstab</a>. Using the option <code>nofail</code> here will not greet you with a recovery shell when you are booting a kernel without binderfs support (such as the standard kernel).
+<p>To mount it always at boot, add a line in the <a href="/title/Fstab" title="Fstab">fstab</a>. Using the option <code>nofail</code> here will not greet you with a recovery shell when you are booting a kernel without binderfs support (such as the standard kernel).
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/fstab</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">none                         /dev/binderfs binder   nofail  0      0
 </pre>
 <h3><span class="mw-headline" id="Install_Android_Image">Install Android Image</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The images are outdated (based on Android 7.1). For now there are no newer images available from upstream. See also <a href="../en/Talk:Anbox.html#Anbox-Images_outdated" title="Talk:Anbox">Talk:Anbox#Anbox-Images outdated</a>.</div>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> one of these images:
+<strong>Note:</strong> The images are outdated (based on Android 7.1). For now there are no newer images available from upstream. See also <a href="/title/Talk:Anbox#Anbox-Images_outdated" title="Talk:Anbox">Talk:Anbox#Anbox-Images outdated</a>.</div>
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> one of these images:
 </p>
 <ul>
 <li>
@@ -221,7 +220,7 @@ You can use <a href="../en/Systemd.html#systemd-tmpfiles_-_temporary_files" clas
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/anbox-image-gapps/">anbox-image-gapps</a></span><sup><small>AUR</small></sup> (includes Houdini and OpenGApps)</li>
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/anbox-image-gapps-rooted/">anbox-image-gapps-rooted</a></span><sup><small>AUR</small></sup> (includes Houdini, OpenGApps and SuperSU)</li>
-<li>You can find more images in the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>, search for <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/?K=anbox-image">anbox-image</a>.</li>
+<li>You can find more images in the <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a>, search for <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/?K=anbox-image">anbox-image</a>.</li>
 </ul>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> 
@@ -231,9 +230,9 @@ You can use <a href="../en/Systemd.html#systemd-tmpfiles_-_temporary_files" clas
 </ul>
 </div>
 <h3><span class="mw-headline" id="Install_Anbox">Install Anbox</span></h3>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/anbox-git/">anbox-git</a></span><sup><small>AUR</small></sup>.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/anbox-git/">anbox-git</a></span><sup><small>AUR</small></sup>.
 </p>
-<p>Afterwards. <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> <code>anbox-container-manager.service</code>.
+<p>Afterwards. <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> <code>anbox-container-manager.service</code>.
 </p>
 <p>You have now all the required steps done to use Anbox! In the menu of your desktop environment, you should find several entries in the category <code>Others</code>, which can now be launched.
 </p>
@@ -244,7 +243,7 @@ There is also a systemd unit for users, which can be used to start the session-m
 </pre>
 <h2><span class="mw-headline" id="Network">Network</span></h2>
 <h3><span class="mw-headline" id="Via_NetworkManager">Via NetworkManager</span></h3>
-<p>If you are using <a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a> you can use it to configure the networking.
+<p>If you are using <a href="/title/NetworkManager" title="NetworkManager">NetworkManager</a> you can use it to configure the networking.
 </p>
 <p>Execute the following command to create the bridge connection:
 </p>
@@ -254,19 +253,19 @@ There is also a systemd unit for users, which can be used to start the session-m
 <li>
 <code>ifname anbox0</code> specifies the bridge interface name, in this case <code>anbox0</code>. Do not change this as Anbox will only detect the bridge interface if it is named <code>anbox0</code>.</li>
 <li>
-<code>connection.id anbox-net</code> specifies the name of the connection to be <code>anbox-net</code> when it appears in <a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a>. You can change this if you wish.</li>
+<code>connection.id anbox-net</code> specifies the name of the connection to be <code>anbox-net</code> when it appears in <a href="/title/NetworkManager" title="NetworkManager">NetworkManager</a>. You can change this if you wish.</li>
 <li>
-<code>ipv4.method shared</code> instructs <a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a> to create a NAT network and route outgoing packets according to the system routing rules. For that, the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> package is required. <a href="../en/Dnsmasq.html" title="Dnsmasq">dnsmasq</a> does not needs to be configured or be started as systemd service, it will be used behind the scenes by NetworkManager — if it is not available, this step will fail silently. You can leave this and the <code>ipv4.addresses</code> parameter out if you wish to attach the Anbox container directly to a specific network, see <a href="../en/Network_bridge.html#With_NetworkManager" title="Network bridge">Network bridge#With NetworkManager</a>. If you choose this option, you must also change the network configuration of the container in <code>anbox-container-manager.service</code>, see the next bullet point.</li>
+<code>ipv4.method shared</code> instructs <a href="/title/NetworkManager" title="NetworkManager">NetworkManager</a> to create a NAT network and route outgoing packets according to the system routing rules. For that, the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> package is required. <a href="/title/Dnsmasq" title="Dnsmasq">dnsmasq</a> does not needs to be configured or be started as systemd service, it will be used behind the scenes by NetworkManager — if it is not available, this step will fail silently. You can leave this and the <code>ipv4.addresses</code> parameter out if you wish to attach the Anbox container directly to a specific network, see <a href="/title/Network_bridge#With_NetworkManager" title="Network bridge">Network bridge#With NetworkManager</a>. If you choose this option, you must also change the network configuration of the container in <code>anbox-container-manager.service</code>, see the next bullet point.</li>
 <li>
 <code>ipv4.addresses 192.168.250.1/24</code> specifies the default gateway and subnet of the NAT network. If you wish to change this (e.g. to <code>192.168.42.1/24</code>) you must also indicate the new subnet to anbox in the <code>anbox-container-manager.service</code> using: <code>--container-network-address=192.168.42.2/24 --container-network-gateway=192.168.42.1</code>
 </li>
 </ul>
-<p><a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a> will automatically setup the bridge every reboot so you only need to execute the command once.
+<p><a href="/title/NetworkManager" title="NetworkManager">NetworkManager</a> will automatically setup the bridge every reboot so you only need to execute the command once.
 </p>
 <h3><span class="mw-headline" id="Via_systemd-networkd">Via systemd-networkd</span></h3>
 <p>The package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/anbox-git/">anbox-git</a></span><sup><small>AUR</small></sup> provides configuration files for <code>systemd-networkd</code> in <code>/usr/lib/systemd/network/</code> to enable networking in anbox.
 </p>
-<p>Therefore, you can <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> <code>systemd-networkd</code> before starting <code>anbox-container-manager.service</code>.
+<p>Therefore, you can <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> <code>systemd-networkd</code> before starting <code>anbox-container-manager.service</code>.
 </p>
 <h3><span class="mw-headline" id="Via_anbox-bridge_script">Via anbox-bridge script</span></h3>
 <p>Alternatively you can use the anbox-bridge script <a rel="nofollow" class="external text" href="https://raw.githubusercontent.com/anbox/anbox/master/scripts/anbox-bridge.sh">used by the project</a>.
@@ -280,7 +279,7 @@ ExecStopPost=/usr/bin/anbox-bridge stop</pre>
 <h2><span class="mw-headline" id="Usage">Usage</span></h2>
 <p>You can run the Android applications on your desktop's launcher on <b>Other</b> category.
 </p>
-<p>If you want to use <a href="../en/Android_Debug_Bridge.html" class="mw-redirect" title="Adb">adb</a> to debug, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=android-tools">android-tools</a></span>. The <code>anbox session-manager</code> must already be running when launching it.
+<p>If you want to use <a href="/title/Adb" class="mw-redirect" title="Adb">adb</a> to debug, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=android-tools">android-tools</a></span>. The <code>anbox session-manager</code> must already be running when launching it.
 </p>
 <pre>$ adb shell
 </pre>
@@ -330,7 +329,7 @@ ExecStopPost=/usr/bin/anbox-bridge stop</pre>
 <h3><span class="mw-headline" id="Root_shell">Root shell</span></h3>
 <p>With this <a rel="nofollow" class="external text" href="https://github.com/anbox/anbox/blob/master/scripts/anbox-shell.sh">script</a> from the Anbox project one can get a root shell inside the Android container.
 </p>
-<p>It is not part of the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/anbox-git/">anbox-git</a></span><sup><small>AUR</small></sup> package, and it also does not use <a href="../en/Android_Debug_Bridge.html" class="mw-redirect" title="Adb">adb</a>.
+<p>It is not part of the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/anbox-git/">anbox-git</a></span><sup><small>AUR</small></sup> package, and it also does not use <a href="/title/Adb" class="mw-redirect" title="Adb">adb</a>.
 </p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Android_developer_options">Android developer options</span></h3>
@@ -363,19 +362,14 @@ Some older CPUs do not provide that, so you probably cannot use Anbox, see:
 <h3><span class="mw-headline" id="Old_kernels">Old kernels</span></h3>
 <p>Before the kernel modules were mainlined, they were out of tree modules, which needed to be installed seperately from the kernel (Like it is the case for the nvidia kernel modules). They are not compatible with kernel 5.7 or newer.
 </p>
-<p>It is still possible to use that approach with the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span> or other old kernels. The package to install the modules via <a href="../en/Dynamic_Kernel_Module_Support.html" class="mw-redirect" title="DKMS">DKMS</a> is not available in the AUR anymore, but can be retrieved with <code>git clone https://aur.archlinux.org/anbox-modules-dkms</code>, or resurected from <a rel="nofollow" class="external autonumber" href="https://aur.archlinux.org/cgit/aur.git/commit/?h=anbox-git&amp;id=0c9a9385694e680f5b277ca6f9326ad5d5df7dd3">[3]</a>.
-</p>
-<h3>
-<span id="Kernel_5.10_with_lxc_.E2.89.A4_4.0.5"></span><span class="mw-headline" id="Kernel_5.10_with_lxc_≤_4.0.5">Kernel 5.10 with lxc ≤ 4.0.5</span>
-</h3>
-<p>If kernel 5.10.0 - 5.10.3 is used together with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxc">lxc</a></span> ≤ 4.0.5, anbox session-manager will segfault very soon. Updating either the kernel to 5.10.4 or <a href="../en/Linux_Containers.html#Incompatibility_with_linux_kernel_5.10.0" title="Linux Containers">using a newer lxc version</a> fixes this.
+<p>It is still possible to use that approach with the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux-lts">linux-lts</a></span> or other old kernels. The package to install the modules via <a href="/title/DKMS" class="mw-redirect" title="DKMS">DKMS</a> is not available in the AUR anymore, but can be retrieved with <code>git clone https://aur.archlinux.org/anbox-modules-dkms</code>, or resurected from <a rel="nofollow" class="external autonumber" href="https://aur.archlinux.org/cgit/aur.git/commit/?h=anbox-git&amp;id=0c9a9385694e680f5b277ca6f9326ad5d5df7dd3">[3]</a>.
 </p>
 <h3><span class="mw-headline" id="Secure_Boot_error">Secure Boot error</span></h3>
 <p>If you get this error message:
 </p>
 <pre>modprobe: ERROR: could not insert 'ashmem_linux': Operation not permitted
 </pre>
-<p><a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> is likely blocking the module.
+<p><a href="/title/Secure_Boot" class="mw-redirect" title="Secure Boot">Secure Boot</a> is likely blocking the module.
 You can either disable Secure Boot or sign the ashmem module yourself.
 </p>
 <p>More info can be found in the <a rel="nofollow" class="external text" href="https://github.com/anbox/anbox/blob/master/docs/install.md#on-ubuntu-1904-and-later">Anbox Github Docs</a>.
@@ -390,9 +384,9 @@ You can either disable Secure Boot or sign the ashmem module yourself.
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Virtualization.html" title="Category:Virtualization">Virtualization</a></li>
-<li><a href="../en/Category:Android.html" title="Category:Android">Android</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Virtualization" title="Category:Virtualization">Virtualization</a></li>
+<li><a href="/title/Category:Android" title="Category:Android">Android</a></li>
 </ul>
 </div></div>
 	</div>
@@ -400,15 +394,15 @@ You can either disable Secure Boot or sign the ashmem module yourself.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Anbox&amp;oldid=663029">https://wiki.archlinux.org/index.php?title=Anbox&amp;oldid=663029</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 08:16.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Anbox&amp;oldid=667309">https://wiki.archlinux.org/index.php?title=Anbox&amp;oldid=667309</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 2 May 2021, at 16:27.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

@@ -33,18 +33,23 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
+<div class="noprint archwiki-template-message">
+<p><a href="/title/File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a><b>The <a href="/title/ArchWiki:Contributing#Translating" title="ArchWiki:Contributing">translation</a> of this article or section does not reflect the original text.</b><a href="/title/File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Last updated in 2014 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:USB_flash_installation_medium_(Italiano)">Talk:USB flash installation medium (Italiano)#</a>)</div>
+</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Articoli correlati</p>
 <ul>
-<li><a href="../it/Optical_disc_drive.html#Masterizzare" class="mw-redirect" title="CD Burning (Italiano)">CD Burning (Italiano)</a></li>
+<li><a href="/title/CD_Burning_(Italiano)" class="mw-redirect" title="CD Burning (Italiano)">CD Burning (Italiano)</a></li>
 </ul>
 </div>
 <p>Questa pagina illustra come posizionare un media d'installazione di Arch su un supporto USB: <i>chiavette USB</i>, HD esterni ecc. Il risultato sarà simile ad un LiveCD che perderà tutti i cambiamenti e le impostazioni una volta rimosso. 
 </p>
-<p>Nel caso si sia interessati ad installare Arch Linux su un supporto USB si veda <a href="../it/Install_Arch_Linux_on_a_removable_medium.html" class="mw-redirect" title="Installing Arch Linux on a USB key (Italiano)">questa pagina</a>.
+<p>Nel caso si sia interessati ad installare Arch Linux su un supporto USB si veda <a href="/title/Installing_Arch_Linux_on_a_USB_key_(Italiano)" class="mw-redirect" title="Installing Arch Linux on a USB key (Italiano)">questa pagina</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Per i sistemi <a href="../it/Unified_Extensible_Firmware_Interface.html" title="Unified Extensible Firmware Interface (Italiano)">UEFI</a> creare un supporto USB avviabile seguendo <a href="../it/Unified_Extensible_Firmware_Interface.html#Creare_un_dispositivo_USB_avviabile_con_UEFI_dalla_ISO" title="Unified Extensible Firmware Interface (Italiano)">queste</a> istruzioni.</div>
+<strong>Nota:</strong> Per i sistemi <a href="/title/Unified_Extensible_Firmware_Interface_(Italiano)" title="Unified Extensible Firmware Interface (Italiano)">UEFI</a> creare un supporto USB avviabile seguendo <a href="/title/Unified_Extensible_Firmware_Interface_(Italiano)#Creare_un_dispositivo_USB_avviabile_con_UEFI_dalla_ISO" title="Unified Extensible Firmware Interface (Italiano)">queste</a> istruzioni.</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -109,7 +114,7 @@ Per azzerare completamente la memoria USB usare il comando:
 </p>
 <pre># dd count=1 bs=512 if=/dev/zero of=/dev/sdx
 </pre>
-<p>Ora creare una nuova tabella delle partizioni (ad esempio "msdos") e un filesystem (ad esempio EXT$, FAT32) usando uno strumento a piacere come <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gparted">gparted</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cfdisk">cfdisk</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>:
+<p>Ora creare una nuova tabella delle partizioni (ad esempio "msdos") e un filesystem (ad esempio EXT$, FAT32) usando uno strumento a piacere come <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gparted">gparted</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cfdisk">cfdisk</a></span><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>:
 </p>
 <ul><li>Per EXT2/3/4:</li></ul>
 <dl><dd><pre># cfdisk /dev/sdx
@@ -120,9 +125,9 @@ Per azzerare completamente la memoria USB usare il comando:
 # mkfs.vfat -F32 /dev/sdx1
 # dosfslabel /dev/sdx1 USB_STICK</pre></dd></dl>
 <h3><span class="mw-headline" id="Senza_sovrascrivere_tutti_i_dati_presenti_sul_supporto_USB">Senza sovrascrivere tutti i dati presenti sul supporto USB</span></h3>
-<p>La procedura è leggermente più complessa del semplice <code>dd</code> ma permette di usare il supporto USB anche per l'archivizione di dati diversi dall'immagine che si va a masterizzare. Prima di iniziare è di fondamentale importanza che il supporto che verrà occupato dall'immagine di Arch sia formattato in FAT32, FAT(16), ext2/3/4 o brtfs. Per boot <a href="../it/Unified_Extensible_Firmware_Interface.html" title="Unified Extensible Firmware Interface (Italiano)">UEFI</a> o per l'interoperabilità fra sistemi operativi la scelta migliore è FAT32. Assicurarsi inoltre di aver <a href="../it/Pacman.html" title="Pacman (Italiano)">installato</a> il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslinux">syslinux</a></span> &gt;= 4.04 disponibile nei <a href="../it/Official_repositories.html" title="Official repositories (Italiano)">repositotories ufficiali</a>.
+<p>La procedura è leggermente più complessa del semplice <code>dd</code> ma permette di usare il supporto USB anche per l'archivizione di dati diversi dall'immagine che si va a masterizzare. Prima di iniziare è di fondamentale importanza che il supporto che verrà occupato dall'immagine di Arch sia formattato in FAT32, FAT(16), ext2/3/4 o brtfs. Per boot <a href="/title/Unified_Extensible_Firmware_Interface_(Italiano)" title="Unified Extensible Firmware Interface (Italiano)">UEFI</a> o per l'interoperabilità fra sistemi operativi la scelta migliore è FAT32. Assicurarsi inoltre di aver <a href="/title/Pacman_(Italiano)" title="Pacman (Italiano)">installato</a> il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslinux">syslinux</a></span> &gt;= 4.04 disponibile nei <a href="/title/Official_repositories_(Italiano)" title="Official repositories (Italiano)">repositotories ufficiali</a>.
 </p>
-<p><b>1.</b> Estrarre la directory <code>arch</code> dalla iso e copiarla sul dispositivo USB. Per motherboard UEFI seguire <a href="../it/Unified_Extensible_Firmware_Interface.html#Creare_un_dispositivo_USB_avviabile_con_UEFI_dalla_ISO" title="Unified Extensible Firmware Interface (Italiano)">queste</a> istruzioni.
+<p><b>1.</b> Estrarre la directory <code>arch</code> dalla iso e copiarla sul dispositivo USB. Per motherboard UEFI seguire <a href="/title/Unified_Extensible_Firmware_Interface_(Italiano)#Creare_un_dispositivo_USB_avviabile_con_UEFI_dalla_ISO" title="Unified Extensible Firmware Interface (Italiano)">queste</a> istruzioni.
 </p>
 <p><b>2.</b> Installare il bootloader <i>Syslinux</i>:
 </p>
@@ -139,7 +144,7 @@ Per azzerare completamente la memoria USB usare il comando:
 <p><b>3.</b> Sistemare i file di configurazione:
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> È <i>possibile</i> etichettare il disco USB con la <i>label</i> "<code>ARCH_2013XX</code>" (con l'appropriata release mensile) nel file <i>/mnt/usb/loader/entries/archiso-x86_64.conf</i> ma l'approccio migliore potrebbe essere l'uso degli <a href="../it/Persistent_block_device_naming.html#By-uuid" title="Persistent block device naming (Italiano)">UUID</a>. Non usare gli UUID potrebbe portare al famoso errore: <b>30 seconds error</b>. </div>
+<strong>Nota:</strong> È <i>possibile</i> etichettare il disco USB con la <i>label</i> "<code>ARCH_2013XX</code>" (con l'appropriata release mensile) nel file <i>/mnt/usb/loader/entries/archiso-x86_64.conf</i> ma l'approccio migliore potrebbe essere l'uso degli <a href="/title/Persistent_block_device_naming_(Italiano)#By-uuid" title="Persistent block device naming (Italiano)">UUID</a>. Non usare gli UUID potrebbe portare al famoso errore: <b>30 seconds error</b>. </div>
 <p>Per modificare <code>archisolabel=ARCH_2013XX</code> nel equivalente <code>archiso<b>device</b>=/dev/disk/by-uuid/47FA-4071</code> in tutti i file di configurazione allo stesso tempo usando un solo comando.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -203,7 +208,7 @@ Per azzerare completamente la memoria USB usare il comando:
 Per far partire l'installazione selezionare il supporto usb e cliccare sull'immagine del CD vicino alla scritta "Immagine ISO" in basso, e selezionare l'immagine .iso di Arch Linux, poi cliccare su Avvia. Durante l'installazione viene richiesto il download di Syslinux 6. Dare l'ok per procedere con l'installazione.
 </p>
 <h3><span class="mw-headline" id="Metodo_Flashnul">Metodo Flashnul</span></h3>
-<p><a rel="nofollow" class="external text" href="http://shounen.ru/soft/flashnul/">flashnul</a> è una utility che permette di verificare il funzionamento delle memorie Flash (USB-Flash, IDE-Flash, SecureDigital, MMC, MemoryStick, SmartMedia, XD, CompactFlash ecc).
+<p><a rel="nofollow" class="external text" href="https://shounen.ru/soft/flashnul/">flashnul</a> è una utility che permette di verificare il funzionamento delle memorie Flash (USB-Flash, IDE-Flash, SecureDigital, MMC, MemoryStick, SmartMedia, XD, CompactFlash ecc).
 </p>
 <p>Dal prompt dei comandi eseguire <code> flashnul</code> con <code> -p</code>, per determinare l'indice del dispositivo USB. Per esempio, si otterrà una cosa simile a questa:
 </p>
@@ -255,12 +260,10 @@ Oppure, se non si vuole installare Cygwin, si può semplicemente scaricare dd pe
 <h3><span class="mw-headline" id="dd_per_Windows">dd per Windows</span></h3>
 <p>Una versione con licenza GPL di <i>dd</i> per Windows è disponibile <a rel="nofollow" class="external text" href="http://www.chrysocome.net/dd">qui</a>. Il vantaggio rispetto a Cygwin è semplicemente che il download risulta essere più leggero. È possibile usare le istruzioni di Cygwin del paragrafo precedente.
 </p>
-<p><br>
-</p>
 <h3>
 <span id="Avviare_l.27intera_ISO_dalla_memoria_RAM"></span><span class="mw-headline" id="Avviare_l'intera_ISO_dalla_memoria_RAM">Avviare l'intera ISO dalla memoria RAM</span>
 </h3>
-<p>Questo metodo usa <a href="../en/Syslinux.html" title="Syslinux">Syslinux</a> e <a rel="nofollow" class="external text" href="https://wiki.syslinux.org/wiki/index.php/MEMDISK#ISO_images">MEMDISK</a> per caricare tutta l'immagine ISO in RAM, quindi accertarsi di avere ram a sufficienza. A processo ultimato si vedrà il menu grafico e il supporto USB può essere rimosso ed essere usato anche su un pc diverso per riavviare lo stesso processo. Questo permette di installare Arch da (e su) la stessa chiavetta.
+<p>Questo metodo usa <a href="/title/Syslinux" title="Syslinux">Syslinux</a> e <a rel="nofollow" class="external text" href="https://wiki.syslinux.org/wiki/index.php/MEMDISK#ISO_images">MEMDISK</a> per caricare tutta l'immagine ISO in RAM, quindi accertarsi di avere ram a sufficienza. A processo ultimato si vedrà il menu grafico e il supporto USB può essere rimosso ed essere usato anche su un pc diverso per riavviare lo stesso processo. Questo permette di installare Arch da (e su) la stessa chiavetta.
 </p>
 <p><b>1.</b> Formattare il supporto USB in FAT32 e creare le seguenti directories:
 </p>
@@ -285,7 +288,7 @@ X:\Boot\Settings
     INITRD /Boot/ISOs/archlinux-2013.04.01-dual.iso
     APPEND iso</pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> Se si vuole aggiungere un'altra distribuzione <i>(Debian e Parted Magic sono state testate)</i> è possibile farlo editando il presente file. Vedere la pagina <a href="../it/Syslinux.html" title="Syslinux (Italiano)">Syslinux</a> per maggiori dettagli.</div>
+<strong>Tip:</strong> Se si vuole aggiungere un'altra distribuzione <i>(Debian e Parted Magic sono state testate)</i> è possibile farlo editando il presente file. Vedere la pagina <a href="/title/Syslinux_(Italiano)" title="Syslinux (Italiano)">Syslinux</a> per maggiori dettagli.</div>
 <p><b>3.</b> Creare un file <code>*.bat</code> nella stessa directory di <i>syslinux.exe</i> e lanciare:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">C:\Documents and Settings\username\Desktop\install.bat</pre>
@@ -305,9 +308,12 @@ X:\Boot\Settings
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../it/Category:Installation_process.html" title="Category:Installation process (Italiano)">Installation process (Italiano)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Installation_process_(Italiano)" title="Category:Installation process (Italiano)">Installation process (Italiano)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Bad_translation" title="Category:Pages or sections flagged with Template:Bad translation">Pages or sections flagged with Template:Bad translation</a></li>
+<li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -315,15 +321,15 @@ X:\Boot\Settings
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=USB_flash_installation_medium_(Italiano)&amp;oldid=662484">https://wiki.archlinux.org/index.php?title=USB_flash_installation_medium_(Italiano)&amp;oldid=662484</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=USB_flash_installation_medium_(Italiano)&amp;oldid=669462">https://wiki.archlinux.org/index.php?title=USB_flash_installation_medium_(Italiano)&amp;oldid=669462</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:50.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

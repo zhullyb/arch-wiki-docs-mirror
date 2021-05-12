@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,12 +36,12 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Badblocks.html" title="Badblocks">badblocks</a></li>
+<li><a href="/title/Badblocks" title="Badblocks">badblocks</a></li>
 </ul>
 </div>
 <p>This article gives details on how to find out which file owns a given <a href="https://en.wikipedia.org/wiki/Disk_sector" class="extiw" title="wikipedia:Disk sector">disk sector</a>. The main purpose for doing so is finding out which file was damaged in the event a storage device develops any <a href="https://en.wikipedia.org/wiki/Bad_sector" class="extiw" title="wikipedia:Bad sector">bad sectors</a> (that way you will know if you lost anything important).
 </p>
-<p>For most of these commands you will have to be either root or a user that has direct read access to the drive you are checking (being a member of the disk group should be enough). As usual, a current backup is always a good idea, especially if imminent drive failure is suspected. <a href="../en/S.M.A.R.T..html" title="S.M.A.R.T.">S.M.A.R.T.</a> can help determining that.
+<p>For most of these commands you will have to be either root or a user that has direct read access to the drive you are checking (being a member of the disk group should be enough). As usual, a current backup is always a good idea, especially if imminent drive failure is suspected. <a href="/title/S.M.A.R.T." title="S.M.A.R.T.">S.M.A.R.T.</a> can help determining that.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -94,10 +95,10 @@
 
 <h2><span class="mw-headline" id="Filesystems">Filesystems</span></h2>
 <h3><span class="mw-headline" id="btrfs">btrfs</span></h3>
-<p>Unlike other filesystem types, <a href="../en/Btrfs.html" title="Btrfs">btrfs</a> has native support for reporting on damaged files. When scrubbing a partition, <i>btrfs</i> reads all data and metadata blocks and verifies checksums. It automatically repairs corrupted blocks if there’s a correct copy available in a RAID configuration. <i>btrfs</i> also reports any unreadable sector along with the affected file via system log.
+<p>Unlike other filesystem types, <a href="/title/Btrfs" title="Btrfs">btrfs</a> has native support for reporting on damaged files. When scrubbing a partition, <i>btrfs</i> reads all data and metadata blocks and verifies checksums. It automatically repairs corrupted blocks if there is a correct copy available in a RAID configuration. <i>btrfs</i> also reports any unreadable sector along with the affected file via system log.
 </p>
 <h4><span class="mw-headline" id="Find_damaged_files">Find damaged files</span></h4>
-<p>First of all, let's <a href="../en/Btrfs.html#Scrub" title="Btrfs">scrub</a> the damaged partition:
+<p>First of all, let us <a href="/title/Btrfs#Scrub" title="Btrfs">scrub</a> the damaged partition:
 </p>
 <pre># btrfs scrub start -Bd /dev/sdxy</pre>
 <p>The same partition can be scrubbed when mounted by providing its mount point:
@@ -113,24 +114,25 @@
         corrected errors: 0, uncorrectable errors: 1, unverified errors: 0</pre>
 <p>When done, search the kernel log for I/O errors:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ journalctl --output cat | grep 'BTRFS .* i/o error' | sort | uniq | less</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># journalctl --output=cat --grep='BTRFS .* i/o error' | sort | uniq | less</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Jan 16 23:14:19 my_server kernel: BTRFS: i/o error at logical 398602014720 on dev /dev/sdxy, sector <b>4621320</b>, root 5, inode 23839, offset 4378624, length 4096, links 1 (path: <b>my/damaged/file</b>)</pre>
-<p>The output above reveals that sector <code>4621320</code> couldn't be read and it contains data for file <code>my/damaged/file</code>. The sector number can be directly used with <a href="../en/Hdparm.html" title="Hdparm">hdparm</a> when reallocating (see <a href="#Force_the_disk_to_reallocate_bad_block">#Force the disk to reallocate bad block</a>).
+<p>The output above reveals that sector <code>4621320</code> could not be read and it contains data for file <code>my/damaged/file</code>. The sector number can be directly used with <a href="/title/Hdparm" title="Hdparm">hdparm</a> when reallocating (see <a href="#Force_the_disk_to_reallocate_bad_block">#Force the disk to reallocate bad block</a>).
 </p>
 <h3>
 <span id="Ext2.2C_ext3.2C_and_ext4"></span><span class="mw-headline" id="Ext2,_ext3,_and_ext4">Ext2, ext3, and ext4</span>
 </h3>
 <h4><span class="mw-headline" id="Debug_the_filesystem">Debug the filesystem</span></h4>
-<p>The <i>tune2fs</i> command will give you access to all the low level structures within any ext2/<a href="../en/Ext3.html" title="Ext3">ext3</a>/<a href="../en/Ext4.html" title="Ext4">ext4</a> filesystem. 
+<p>The <i>tune2fs</i> command will give you access to all the low level structures within any ext2/<a href="/title/Ext3" title="Ext3">ext3</a>/<a href="/title/Ext4" title="Ext4">ext4</a> filesystem. 
 </p>
 <p>The first thing we want to do is get the block size from the filesystem in question. Just run:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># tune2fs -l /dev/sdxy | grep Block</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Block count:              29119820
-<b>Block size:               4096</b></pre>
+<b>Block size:               4096</b>
+</pre>
 <p>In this case 4096 is the block size being used (it appears to be the default).
 </p>
-<p>If you did not run <a href="../en/Badblocks.html" title="Badblocks">badblocks</a> using the block size that your filesystem is using then you will need to convert your block number(s) to match it (remember to use the block number(s) relative to the partition they're on).
+<p>If you did not run <a href="/title/Badblocks" title="Badblocks">badblocks</a> using the block size that your filesystem is using then you will need to convert your block number(s) to match it (remember to use the block number(s) relative to the partition they are on).
 </p>
 <p>i.e. block number 100 with a block size of 1024 bytes becomes block number 25 at 4096 bytes. The formula is:
 </p>
@@ -149,7 +151,7 @@
 <pre>debugfs:  testb <i>blocknumber</i>
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If <code>debugfs</code> says that block isn't in use then that means the block is not allocated and is being used as free space. In that case this is a good thing as it means nothing important was damaged.</div>
+<strong>Note:</strong> If <code>debugfs</code> says that block is not in use then that means the block is not allocated and is being used as free space. In that case this is a good thing as it means nothing important was damaged.</div>
 <p>If the block is in use then run this command to get the <i>inode</i> number
 </p>
 <pre>icheck <i>blocknumber</i>
@@ -163,7 +165,7 @@
 </pre>
 <p>The <code>debugfs</code> console will give you the full pathname to the file using the bad block. Now you will know what was actually damaged.
 </p>
-<p>If the <i>inode</i> number is very small and <code>ncheck</code> fails to return a path then it's probably the journal itself that is damaged. To delete the journal simply run this command on the partition:
+<p>If the <i>inode</i> number is very small and <code>ncheck</code> fails to return a path then it is probably the journal itself that is damaged. To delete the journal simply run this command on the partition:
 </p>
 <pre># tune2fs -O ^has_journal /dev/sdxy
 </pre>
@@ -173,13 +175,13 @@
 </pre>
 <h3><span class="mw-headline" id="JFS">JFS</span></h3>
 <h4><span class="mw-headline" id="Debug_the_filesystem_2">Debug the filesystem</span></h4>
-<p>The <i>jfs_debugfs</i> command will give you access to all the low level structures within any <a href="../en/JFS.html" title="JFS">JFS</a> filesystem. Other filesystems such as the <a href="../en/Ext3.html" title="Ext3">ext3</a> and <a href="../en/Ext4.html" title="Ext4">ext4</a> filesystems have similar tools. It is probably a good idea to <i>umount</i> any filesystem before you run this on them. To use it just run:
+<p>The <i>jfs_debugfs</i> command will give you access to all the low level structures within any <a href="/title/JFS" title="JFS">JFS</a> filesystem. Other filesystems such as the <a href="/title/Ext3" title="Ext3">ext3</a> and <a href="/title/Ext4" title="Ext4">ext4</a> filesystems have similar tools. It is probably a good idea to <i>umount</i> any filesystem before you run this on them. To use it just run:
 </p>
 <pre># jfs_debugfs /dev/sdxy
 </pre>
-<p>This puts you into a command console. The first thing you should note is your aggregate block size. This is (presumably) the block size the filesystem is using. <a href="../en/JFS.html" title="JFS">JFS</a> seems to default to 4096 bytes.
+<p>This puts you into a command console. The first thing you should note is your aggregate block size. This is (presumably) the block size the filesystem is using. <a href="/title/JFS" title="JFS">JFS</a> seems to default to 4096 bytes.
 </p>
-<p>If you did not run <a href="../en/Badblocks.html" title="Badblocks">badblocks</a> using the block size that your filesystem is using then you will need to convert your block number(s) to match it (remember to use the block number(s) relative to the partition they're on).
+<p>If you did not run <a href="/title/Badblocks" title="Badblocks">badblocks</a> using the block size that your filesystem is using then you will need to convert your block number(s) to match it (remember to use the block number(s) relative to the partition they are on).
 </p>
 <p>i.e. block number 100 with a block size of 1024 bytes becomes block number 25 at 4096 bytes. The formula is:
 </p>
@@ -200,23 +202,24 @@
 <p>When you have all the <i>inode</i> numbers type <code>q</code> to quit.
 </p>
 <h4><span class="mw-headline" id="Find_damaged_files_3">Find damaged files</span></h4>
-<p>Finally to find the damaged file you can simply use the gnu <a href="../en/Core_utilities.html#Essentials" class="mw-redirect" title="Find">find</a> utility. Mount your filesystem and run:
+<p>Finally to find the damaged file you can simply use the gnu <a href="/title/Find" class="mw-redirect" title="Find">find</a> utility. Mount your filesystem and run:
 </p>
 <pre># find / -inum <i>inodenumber</i>
 </pre>
-<p>Substitute <code>/</code> for the mountpoint of the filesystem that the <i>inode</i> belongs to. If you search root and have more than one filesystem mounted (who doesn't?) you can find multiple files with the same <i>inode</i> number on different filesystems, plus <a href="../en/Core_utilities.html#Essentials" class="mw-redirect" title="Find">find</a> will take significantly longer. Remember, an <i>inode</i> is only unique to the filesystem that it's in.
+<p>Substitute <code>/</code> for the mountpoint of the filesystem that the <i>inode</i> belongs to. If you search root and have more than one filesystem mounted (who does not?) you can find multiple files with the same <i>inode</i> number on different filesystems, plus <a href="/title/Find" class="mw-redirect" title="Find">find</a> will take significantly longer. Remember, an <i>inode</i> is only unique to the filesystem that it is in.
 </p>
 <h3><span class="mw-headline" id="ReiserFS_and_Reiser4">ReiserFS and Reiser4</span></h3>
 <h4><span class="mw-headline" id="Debug_the_filesystem_3">Debug the filesystem</span></h4>
-<p>The <i>debugreiserfs</i> command will give you access to all the low level structures within any ReiserFS/<a href="../en/Reiser4.html" title="Reiser4">Reiser4</a> filesystem. 
+<p>The <i>debugreiserfs</i> command will give you access to all the low level structures within any ReiserFS/<a href="/title/Reiser4" title="Reiser4">Reiser4</a> filesystem. 
 </p>
 <p>The first thing we want to do is get the block size from the filesystem in question. Just run:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># debugreiserfs /dev/sdxy | grep '^Blocksize'</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"><b>Blocksize: 4096</b></pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"><b>Blocksize: 4096</b>
+</pre>
 <p>In this case 4096 is the block size being used (it appears to be the default).
 </p>
-<p>If you did not run <a href="../en/Badblocks.html" title="Badblocks">badblocks</a> using the block size that your filesystem is using then you will need to convert your block number(s) to match it (remember to use the block number(s) relative to the partition they're on).
+<p>If you did not run <a href="/title/Badblocks" title="Badblocks">badblocks</a> using the block size that your filesystem is using then you will need to convert your block number(s) to match it (remember to use the block number(s) relative to the partition they are on).
 </p>
 <p>i.e. block number 100 with a block size of 1024 bytes becomes block number 25 at 4096 bytes. The formula is:
 </p>
@@ -225,19 +228,18 @@
 <p>Now the entire point of running this program (for the purpose of this article) is to get the <i>inode</i> number. Before continuing to debug it, unmount the partition. Then, run the command:
 </p>
 <h4><span class="mw-headline" id="Find_damaged_files_4">Find damaged files</span></h4>
-<pre># debugreiserfs -1 <i>blocknumber</i> /dev/sdxy
-</pre>
-<p>This will return the information for what reiser filesystems refer to as a "leaf node". If you see a line stating <code>Looks like unformatted</code> then likely this means that the bad block belongs to free space and nothing important was damaged. If that line is absent and there is more output but no filenames then it likely means damage was done to a filesystem structure (at which point it might be a good idea to run at least a read-only fsck to see what's going on).
+<ol><li>debugreiserfs -1 <i>blocknumber</i> /dev/sdxy</li></ol>
+<p>This will return the information for what reiser filesystems refer to as a "leaf node". If you see a line stating <code>Looks like unformatted</code> then likely this means that the bad block belongs to free space and nothing important was damaged. If that line is absent and there is more output but no filenames then it likely means damage was done to a filesystem structure (at which point it might be a good idea to run at least a read-only fsck to see what is going on).
 </p>
-<p>If you see a <code>Name</code> column with filenames returned under it then it's possible any of these could be damaged (note: there may or may not be a way to more precisely narrow down the exact file damaged). The inode number(s) for listed file(s) seems to be the second number within square brackets listed under the <code>Object key</code> column (this is solely for informational purposes since we already have the filenames).
+<p>If you see a <code>Name</code> column with filenames returned under it then it is possible any of these could be damaged (note: there may or may not be a way to more precisely narrow down the exact file damaged). The inode number(s) for listed file(s) seems to be the second number within square brackets listed under the <code>Object key</code> column (this is solely for informational purposes since we already have the filenames).
 </p>
-<p>Realistically if you do have a damaged block then you'll likely receive an Input/Output error. In this case you can try mounting the bad partition and then running this command on the mount point (per the smartmontools guide):
+<p>Realistically if you do have a damaged block then you will likely receive an Input/Output error. In this case you can try mounting the bad partition and then running this command on the mount point (per the smartmontools guide):
 </p>
 <pre># tar -cO /mydir | cat &gt;/dev/null
 </pre>
 <h3><span class="mw-headline" id="XFS">XFS</span></h3>
 <h4><span class="mw-headline" id="Debug_the_filesystem_4">Debug the filesystem</span></h4>
-<p>The <i>xfs_info</i> command will give you basic information about an <a href="../en/XFS.html" title="XFS">XFS</a> formatted partition and the <i>xfs_db</i> command will give you access to all the low level structures within any <a href="../en/XFS.html" title="XFS">XFS</a> filesystem.
+<p>The <i>xfs_info</i> command will give you basic information about an <a href="/title/XFS" title="XFS">XFS</a> formatted partition and the <i>xfs_db</i> command will give you access to all the low level structures within any <a href="/title/XFS" title="XFS">XFS</a> filesystem.
 </p>
 <p>The first thing we want to do is get the block size from the filesystem in question. Just run:
 </p>
@@ -247,7 +249,7 @@ naming   =version 2              <b>bsize=4096</b>   ascii-ci=0 ftype=1
 log      =internal               <b>bsize=4096</b>   blocks=855, version=2</pre>
 <p>In this case 4096 is the block size being used (it appears to be the default).
 </p>
-<p>If you did not run <a href="../en/Badblocks.html" title="Badblocks">badblocks</a> using the block size that your filesystem is using then you will need to convert your block number(s) to match it (remember to use the block number(s) relative to the partition they're on).
+<p>If you did not run <a href="/title/Badblocks" title="Badblocks">badblocks</a> using the block size that your filesystem is using then you will need to convert your block number(s) to match it (remember to use the block number(s) relative to the partition they are on).
 </p>
 <p>i.e. block number 100 with a block size of 1024 bytes becomes block number 25 at 4096 bytes. The formula is:
 </p>
@@ -268,18 +270,18 @@ log      =internal               <b>bsize=4096</b>   blocks=855, version=2</pre>
 <p>If instead you do not get an inode number in your output but do see the word <i>free</i> then likely this means that the bad block belongs to free space and nothing important was damaged.
 </p>
 <h4><span class="mw-headline" id="Find_damaged_files_5">Find damaged files</span></h4>
-<p>Finally to find the damaged file you can simply use the gnu <a href="../en/Core_utilities.html#Essentials" class="mw-redirect" title="Find">find</a> utility. Mount your filesystem and run:
+<p>Finally to find the damaged file you can simply use the gnu <a href="/title/Find" class="mw-redirect" title="Find">find</a> utility. Mount your filesystem and run:
 </p>
 <pre># find / -inum <i>inodenumber</i>
 </pre>
-<p>Substitute <code>/</code> for the mountpoint of the filesystem that the <i>inode</i> belongs to. If you search root and have more than one filesystem mounted (who doesn't?) you can find multiple files with the same <i>inode</i> number on different filesystems, plus <a href="../en/Core_utilities.html#Essentials" class="mw-redirect" title="Find">find</a> will take significantly longer. Remember, an <i>inode</i> is only unique to the filesystem that it's in.
+<p>Substitute <code>/</code> for the mountpoint of the filesystem that the <i>inode</i> belongs to. If you search root and have more than one filesystem mounted (who does not?) you can find multiple files with the same <i>inode</i> number on different filesystems, plus <a href="/title/Find" class="mw-redirect" title="Find">find</a> will take significantly longer. Remember, an <i>inode</i> is only unique to the filesystem that it is in.
 </p>
 <p>Note: According to the <i>xfs_db</i> man page the <i>blockuse -n</i> command can be used in conjuction with <i>blockget -n -c <b>blocknumber</b></i> in order to print file names. Testing this did not produce the desired results though it may be worth trying anyway since it is faster than the find method.
 </p>
 <pre># xfs_db -c 'blockget -n -b <i>blocknumber</i>' -c 'blockuse -n' /dev/sdxy
 </pre>
 <h2><span class="mw-headline" id="Force_the_disk_to_reallocate_bad_block">Force the disk to reallocate bad block</span></h2>
-<p>First you'll want to see how many badblocks the harddrive is aware of through the <a href="../en/S.M.A.R.T..html#smartctl" title="S.M.A.R.T.">smartctl</a> command:
+<p>First you will want to see how many badblocks the harddrive is aware of through the <a href="/title/Smartctl" class="mw-redirect" title="Smartctl">smartctl</a> command:
 </p>
 <pre># smartctl -t long /dev/sdx
 </pre>
@@ -291,15 +293,15 @@ log      =internal               <b>bsize=4096</b>   blocks=855, version=2</pre>
 <b>196 Reallocated_Event_Count 0x0032   100   100   000    Old_age   Always       -       0</b>
 197 Current_Pending_Sector  0x0022   100   100   000    Old_age   Always       -       0
 <b>198 Offline_Uncorrectable   0x0008   100   100   000    Old_age   Offline      -       0</b></pre>
-<p>To make the harddrive transparently map out the badblock with a spare good sector you will have to simply write zeros to the bad block using the <a href="../en/Dd.html" title="Dd">dd</a> command as root. Remember that with this command you have to work with the same block size as your filesystem and the block as to be relative to the partition the filesystem is on and <b>not</b> the harddrive as a whole:
+<p>To make the harddrive transparently map out the badblock with a spare good sector you will have to simply write zeros to the bad block using the <a href="/title/Dd" title="Dd">dd</a> command as root. Remember that with this command you have to work with the same block size as your filesystem and the block as to be relative to the partition the filesystem is on and <b>not</b> the harddrive as a whole:
 </p>
 <pre># dd if=/dev/zero of=/dev/sdxy bs=4096 count=1 seek=2269012
 $ sync</pre>
-<p>Alternatively, <a href="../en/Hdparm.html" title="Hdparm">hdparm</a> provides a couple of nice and simple options to read and write a given sector (4621327, in the following example):
+<p>Alternatively, <a href="/title/Hdparm" title="Hdparm">hdparm</a> provides a couple of nice and simple options to read and write a given sector (4621327, in the following example):
 </p>
 <pre># hdparm --read-sector 4621327 /dev/sdxy
 # hdparm --repair-sector 4621327 --yes-i-know-what-i-am-doing /dev/sdxy</pre>
-<p>You can see if the harddrive did indeed map out an additional bad sector by checking with the <a href="../en/S.M.A.R.T..html#smartctl" title="S.M.A.R.T.">smartctl</a> command and seeing if the reallocated sector or event count went up:
+<p>You can see if the harddrive did indeed map out an additional bad sector by checking with the <a href="/title/Smartctl" class="mw-redirect" title="Smartctl">smartctl</a> command and seeing if the reallocated sector or event count went up:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># smartctl -A /dev/sdx</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE
@@ -320,22 +322,22 @@ $ sync</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:File_systems.html" title="Category:File systems">File systems</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:File_systems" title="Category:File systems">File systems</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Identify_damaged_files&amp;oldid=621283">https://wiki.archlinux.org/index.php?title=Identify_damaged_files&amp;oldid=621283</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 June 2020, at 05:08.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Identify_damaged_files&amp;oldid=667512">https://wiki.archlinux.org/index.php?title=Identify_damaged_files&amp;oldid=667512</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 3 May 2021, at 01:17.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

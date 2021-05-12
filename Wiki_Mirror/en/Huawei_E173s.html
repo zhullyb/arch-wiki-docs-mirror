@@ -34,9 +34,9 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="/title/Help:Style" title="Help:Style">Help:Style</a> for reference.</b><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Parts are written in first person perspective (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Huawei_E173s">Talk:Huawei E173s#</a>)</div>
+<b>Reason:</b> Parts are written in first person perspective (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Huawei_E173s">Talk:Huawei E173s#</a>)</div>
 </div>
 <p>This page describes how to set up Huawei E173s 3G USB modem on Arch Linux. It involves switching the USB stick from CD-ROM mode to modem mode using usb_modeswitch, making a connection to the network with sakis3g and setting it up to run at system startup.
 </p>
@@ -66,7 +66,7 @@
 <p>Before using a brand new SIM (or a USB stick with SIM included) for the first time in Linux it may need to be activated first by using the Windows-only software on the stick, otherwise it will not connect no matter how many times you try (was true in my case).
 </p>
 <h2><span class="mw-headline" id="Checking_modem">Checking modem</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=usbutils">usbutils</a></span>.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=usbutils">usbutils</a></span>.
 </p>
 <p>Plug in the modem and run lsusb:
 </p>
@@ -79,7 +79,7 @@
 <p>The ID 12d1:1c0b refers to vendor id and product id. If you get different values, it means your modem is not Huawei E173s (of course, you can always open the USB stick to double check).
 </p>
 <h2><span class="mw-headline" id="Set_up_usb_modeswitch">Set up usb_modeswitch</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=usb_modeswitch">usb_modeswitch</a></span>.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=usb_modeswitch">usb_modeswitch</a></span>.
 </p>
 <p>At this point, if you remove your modem and re-insert it udev should switch to modem mode automatically but sometimes it just does not work (on my system for example) so you have to do it manually as root:
 </p>
@@ -97,7 +97,7 @@
 <h2><span class="mw-headline" id="Connecting">Connecting</span></h2>
 <p>One way to connect is with sakis3g. This script has an interactive mode which tries to guide, and lead the user by hand.
 </p>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/sakis3g/">sakis3g</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>. Then run sakis3g:
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/sakis3g/">sakis3g</a></span><sup><small>AUR</small></sup><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>. Then run sakis3g:
 </p>
 <pre>$ sakis3g --interactive
 </pre>
@@ -119,22 +119,22 @@ APN_PASS="tm"
 <p>This configuration file works very well on my system but you may have to adjust CUSTOM_TTY as well if you have more than one USB modem. Note that it's also modem-independent - if you start using a different modem you should not have to change anything.
 </p>
 <h3><span class="mw-headline" id="Running_sakis3g_at_system_startup">Running sakis3g at system startup</span></h3>
-<p>What you need to do is to run sakis3g connect at system startup. With <a href="../en/SysVinit.html" title="SysVinit">SysVinit</a>, one can add these lines to /etc/rc.local (it does not always work, I do not know why):
+<p>What you need to do is to run sakis3g connect at system startup. With <a href="/title/SysVinit" title="SysVinit">SysVinit</a>, one can add these lines to /etc/rc.local (it does not always work, I do not know why):
 </p>
 <pre>sakis3g connect --console
 sleep 3
 </pre>
-<p>The second line gives you time to examine the output of sakis3g at system startup to see if everything is working as it should. If it is, you can just remove it later. If using <a href="../en/Xorg.html" class="mw-redirect" title="X">X</a> with an <a href="../en/Xinit.html#xinitrc" title="Xinit">xinit#xinitrc</a>, and without a <a href="../en/Display_manager.html" title="Display manager">display manager</a> like <a href="../en/GDM.html" title="GDM">GDM</a>, one can add 
+<p>The second line gives you time to examine the output of sakis3g at system startup to see if everything is working as it should. If it is, you can just remove it later. If using <a href="/title/X" class="mw-redirect" title="X">X</a> with an <a href="/title/Xinit#xinitrc" title="Xinit">xinit#xinitrc</a>, and without a <a href="/title/Display_manager" title="Display manager">display manager</a> like <a href="/title/GDM" title="GDM">GDM</a>, one can add 
 </p>
 <pre>sudo sakis3g connect &amp;
 </pre>
 <p>to <code>.xinitrc</code>.
-Although if you are using <a href="../en/GNOME.html" title="GNOME">GNOME</a>, you should add it in gnome-session-properties instead:
+Although if you are using <a href="/title/GNOME" title="GNOME">GNOME</a>, you should add it in gnome-session-properties instead:
 </p>
 <pre>Name: sakis3g
 Command: sudo sakis3g connect
 </pre>
-<p>For both of these to work you need the <a href="../en/Users_and_groups.html#Overview" class="mw-redirect" title="Root user">root user</a> privileges. Or a substitute. With the <a href="../en/Sudo.html" title="Sudo">sudo</a> substitution, add the following line to <a href="../en/Sudo.html#Configuration" title="Sudo">sudo#Configuration</a>:
+<p>For both of these to work you need the <a href="/title/Root_user" class="mw-redirect" title="Root user">root user</a> privileges. Or a substitute. With the <a href="/title/Sudo" title="Sudo">sudo</a> substitution, add the following line to <a href="/title/Sudo#Configuration" title="Sudo">sudo#Configuration</a>:
 </p>
 <pre><i>username</i> ALL=(ALL) NOPASSWD:/usr/bin/sakis3g
 </pre>
@@ -144,11 +144,11 @@ Command: sudo sakis3g connect
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Modems.html" title="Category:Modems">Modems</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Modems" title="Category:Modems">Modems</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Style" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
+<li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 </ul>
 </div>
 </div>
@@ -157,15 +157,15 @@ Command: sudo sakis3g connect
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Huawei_E173s&amp;oldid=656792">https://wiki.archlinux.org/index.php?title=Huawei_E173s&amp;oldid=656792</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 30 March 2021, at 18:46.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Huawei_E173s&amp;oldid=665619">https://wiki.archlinux.org/index.php?title=Huawei_E173s&amp;oldid=665619</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 30 April 2021, at 12:10.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

@@ -73,14 +73,14 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/paperless-ng/">paperless-ng</a></span><sup><small>AUR</small></sup> package.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/paperless-ng/">paperless-ng</a></span><sup><small>AUR</small></sup> package.
 </p>
 <h3><span class="mw-headline" id="Folders">Folders</span></h3>
 <p>Paperless gets installed to <code>/usr/share/paperless</code>. The persistent storage of Paperless is located at <code>/var/lib/paperless</code> and contains the <code>media</code> folder, the <code>data</code> folder (by default containing the SQLite database), the <code>consume</code> folder for document consumption, the temporary <code>uploads</code> folder and <code>tmp</code> convert folder.
-The <code>consume</code> folder has write permissions for everyone in the <code>paperless</code> group. 
+The <code>consume</code> folder has write permissions for everyone in the <code>paperless</code> group.
 </p>
 <h3><span class="mw-headline" id="Consumption_folder_permissions">Consumption folder permissions</span></h3>
-<p>If you wish to allow users (e.g. "http") to put documents in the consumption folder, add them to the <code>paperless</code> <a href="../en/Users_and_groups.html#Group_management" class="mw-redirect" title="User group">user group</a>.
+<p>If you wish to allow users (e.g. "http") to put documents in the consumption folder, add them to the <code>paperless</code> <a href="/title/User_group" class="mw-redirect" title="User group">user group</a>.
 </p>
 <h3><span class="mw-headline" id="OCR_languages">OCR languages</span></h3>
 <p>If you want Paperless to consume documents in a language other than English, you need to install the corresponding tesseract language data package. For German that would be <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tesseract-data-deu">tesseract-data-deu</a></span>.
@@ -89,7 +89,7 @@ The <code>consume</code> folder has write permissions for everyone in the <code>
 <p>You might want to install the optional dependency <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jbig2enc-git/">jbig2enc-git</a></span><sup><small>AUR</small></sup> so Paperless can use it to reduce the size of generated PDF documents.
 </p>
 <h2><span class="mw-headline" id="Start">Start</span></h2>
-<p><a href="../en/Systemd.html#Using_units" title="Systemd">Enable and start</a> the Paperless systemd target:
+<p><a href="/title/Systemd#Using_units" title="Systemd">Enable and start</a> the Paperless systemd target:
 </p>
 <pre># systemctl enable --now paperless.target
 </pre>
@@ -100,7 +100,7 @@ The <code>consume</code> folder has write permissions for everyone in the <code>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/paperless-ng/">paperless-ng</a></span><sup><small>AUR</small></sup> package creates a <code>paperless</code> system user and provides a <code>paperless-manage</code> command which should always be run as the <code>paperless</code> user. See <a href="#Create_admin_user">below</a> for an example. The <code>paperless-manage</code> command should be used wherever the official documentation refers to <code>python3 manage.py</code>.</div>
-<p>Do not forget to <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>paperless.target</code> after changing configurations.
+<p>Do not forget to <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> <code>paperless.target</code> after changing configurations.
 </p>
 <h3><span class="mw-headline" id="Adjust_the_configuration_to_you_needs">Adjust the configuration to you needs</span></h3>
 <p>Open the configuration file located at <code>/etc/paperless.conf</code> at adjust the parameters to your needs, especially those concerning OCR. For explanations of the individual settings, refer to the official <a rel="nofollow" class="external text" href="https://paperless-ng.readthedocs.io/en/latest/configuration.html">documentation</a>.
@@ -125,7 +125,7 @@ The <code>consume</code> folder has write permissions for everyone in the <code>
 <pre>$ sudo -u paperless paperless-manage createsuperuser
 </pre>
 <h3><span class="mw-headline" id="Nginx">Nginx</span></h3>
-<p>Install <a href="../en/Nginx.html" title="Nginx">Nginx</a> and use the following configuration as a starting point for the Paperless virtual host:
+<p>Install <a href="/title/Nginx" title="Nginx">Nginx</a> and use the following configuration as a starting point for the Paperless virtual host:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/nginx/sites-available/paperless.domain.tld</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">server {
@@ -153,7 +153,7 @@ The <code>consume</code> folder has write permissions for everyone in the <code>
 
 }</pre>
 <h3><span class="mw-headline" id="Pacman_hook">Pacman hook</span></h3>
-<p>To automatically run migrations for the Paperless database on package updates, you can make use of the included <a href="../en/Pacman.html#Hooks" class="mw-redirect" title="Pacman hook">pacman hook</a>:
+<p>To automatically run migrations for the Paperless database on package updates, you can make use of the included <a href="/title/Pacman_hook" class="mw-redirect" title="Pacman hook">pacman hook</a>:
 </p>
 <pre># mkdir -vp /etc/pacman.d/hooks
 # ln -sv /usr/share/paperless/docs/paperless-ng.hook /etc/pacman.d/hooks/
@@ -173,27 +173,27 @@ gunicorn[29457]:   warn("""Retry and timeout are misconfigured. Set retry larger
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/ImageMagick-7/policy.xml</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">&lt;!-- &lt;policy domain="delegate" rights="none" pattern="gs" /&gt; --&gt;
 </pre>
-<p>Consider the possible security implications noted at the beginning of the <a href="../en/ImageMagick.html" title="ImageMagick">ImageMagick</a> article. Also note that Paperless will fall back to using ghostscript anyway if the ImageMagick policy rule stays active.
+<p>Consider the possible security implications noted at the beginning of the <a href="/title/ImageMagick" title="ImageMagick">ImageMagick</a> article. Also note that Paperless will fall back to using ghostscript anyway if the ImageMagick policy rule stays active.
 </p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Servers.html" title="Category:Servers">Servers</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Servers" title="Category:Servers">Servers</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Paperless&amp;oldid=659576">https://wiki.archlinux.org/index.php?title=Paperless&amp;oldid=659576</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 April 2021, at 13:24.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Paperless&amp;oldid=666923">https://wiki.archlinux.org/index.php?title=Paperless&amp;oldid=666923</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 19:41.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

@@ -73,7 +73,7 @@
 </div>
 
 <h2><span class="mw-headline" id="Smartmontools">Smartmontools</span></h2>
-<p>The smartmontools package contains two utility programs for analyzing and monitoring storage devices: <code>smartctl</code> and <code>smartd</code>. <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=smartmontools">smartmontools</a></span> package to use these tools.
+<p>The smartmontools package contains two utility programs for analyzing and monitoring storage devices: <code>smartctl</code> and <code>smartd</code>. <a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=smartmontools">smartmontools</a></span> package to use these tools.
 </p>
 <p>SMART support must be available and enabled on each storage device to effectively use these tools. You can use <a href="#smartctl">#smartctl</a> to check for and enable SMART support. That done, you can manually <a href="#Run_a_test">#Run a test</a> and <a href="#View_test_results">#View test results</a>, or you can use <a href="#smartd">#smartd</a> to automatically run tests and email notifications.
 </p>
@@ -130,9 +130,9 @@ recommended polling time:        (   2) minutes.
 </pre>
 <h4><span class="mw-headline" id="Generate_table_with_attributes_of_all_disks">Generate table with attributes of all disks</span></h4>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="/title/Help:Style" title="Help:Style">Help:Style</a> for reference.</b><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> The wiki is not a code development platform. Long scripts should be maintained elsewhere. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:S.M.A.R.T.">Talk:S.M.A.R.T.#</a>)</div>
+<b>Reason:</b> The wiki is not a code development platform. Long scripts should be maintained elsewhere. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:S.M.A.R.T.">Talk:S.M.A.R.T.#</a>)</div>
 </div>
 <pre>#!/bin/bash
 function drives_csv {
@@ -157,12 +157,12 @@ drives_csv | column -s, -t
 <p>The smartd daemon monitors SMART statuses and emits notifications when something goes wrong. It can be managed with systemd and configured using the <code>/etc/smartd.conf</code> configuration file. The configuration file syntax is esoteric, and this wiki page provides only a quick reference. For more complete information, read the examples and comments within the configuration file, or read <span class="plainlinks archwiki-template-man" title="$ man 5 smartd.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/smartd.conf.5">smartd.conf(5)</a></span>.
 </p>
 <h4><span class="mw-headline" id="daemon_management">daemon management</span></h4>
-<p>To start the daemon, check its status, make it auto-start on system boot and read recent log file entries, simply <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> the <code>smartd.service</code> systemd unit.
+<p>To start the daemon, check its status, make it auto-start on system boot and read recent log file entries, simply <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> the <code>smartd.service</code> systemd unit.
 </p>
-<p>smartd respects all the usual systemctl and journalctl commands. For more information on using systemctl and journalctl, see <a href="../en/Systemd.html#Using_units" title="Systemd">systemd#Using units</a> and <a href="../en/Systemd/Journal.html" title="Systemd/Journal">systemd/Journal</a>.
+<p>smartd respects all the usual <a href="/title/Systemctl" class="mw-redirect" title="Systemctl">systemctl</a> and <a href="/title/Journalctl" class="mw-redirect" title="Journalctl">journalctl</a> commands.
 </p>
 <h4><span class="mw-headline" id="Define_the_devices_to_monitor">Define the devices to monitor</span></h4>
-<p>To monitor for all possible SMART errors on all disks, the following setting must be added in the configuration file. 
+<p>To monitor for all possible SMART errors on all disks, the following setting must be added in the configuration file.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/smartd.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">DEVICESCAN -a</pre>
@@ -178,7 +178,7 @@ drives_csv | column -s, -t
 </p>
 <p>First, you will have to get the UUID of the disk to monitor: <code>ls -lah /dev/disk/by-uuid/</code> now look for the disk you want to Monitor
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">ls -lah /dev/disk/by-uuid/</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ls -lah /dev/disk/by-uuid/</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">lrwxrwxrwx 1 root root   9 Nov  5 22:41 820cdd8a-866a-444d-833c-1edb0f4becac -&gt; ../../sde
 lrwxrwxrwx 1 root root  10 Nov  5 22:41 b51b87f3-425e-4fe7-883f-f4ff1689189e -&gt; ../../sdf2
 lrwxrwxrwx 1 root root   9 Nov  5 22:42 ea2199dd-8f9f-4065-a7ba-71bde11a462c -&gt; ../../sda
@@ -199,7 +199,7 @@ lrwxrwxrwx 1 root root  10 Nov  5 22:41 fe9e886a-8031-439f-a909-ad06c494fadb -&g
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/smartd.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">DEVICESCAN -m address@domain.com
 </pre>
-<p>To be able to send the email externally (i.e. not to the root mail account) a MTA (Mail Transport Agent) or a MUA (Mail User Agent) will need to be installed and configured. Common MUAs are <a href="../en/Msmtp.html" title="Msmtp">Msmtp</a> and <a href="../en/SSMTP.html" title="SSMTP">SSMTP</a>, but perhaps the easiest <a href="../en/Dma.html" title="Dma">dma</a> will suffice. Common MTAs are sendmail and <a href="../en/Postfix.html" title="Postfix">Postfix</a>. It is enough to simply configure <a href="../en/S-nail.html" title="S-nail">S-nail</a> if you do not want anything else, but you will need to follow <a rel="nofollow" class="external text" href="//dominicm.com/configure-email-notifications-on-arch-linux/">these instructions</a>.
+<p>To be able to send the email externally (i.e. not to the root mail account) a MTA (Mail Transport Agent) or a MUA (Mail User Agent) will need to be installed and configured. Common MUAs are <a href="/title/Msmtp" title="Msmtp">Msmtp</a> and <a href="/title/SSMTP" title="SSMTP">SSMTP</a>, but perhaps the easiest <a href="/title/Dma" title="Dma">dma</a> will suffice. Common MTAs are sendmail and <a href="/title/Postfix" title="Postfix">Postfix</a>. It is enough to simply configure <a href="/title/S-nail" title="S-nail">S-nail</a> if you do not want anything else, but you will need to follow <a rel="nofollow" class="external text" href="//dominicm.com/configure-email-notifications-on-arch-linux/">these instructions</a>.
 </p>
 <p>The <code>-M test</code> option causes a test email to be sent each time the smartd daemon starts:
 </p>
@@ -225,7 +225,7 @@ wall "$SMARTD_MESSAGE"
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/sh
 
 sudo -u <i>X_user</i> DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/<i>X_userid</i>/bus notify-send "S.M.A.R.T Error ($SMARTD_FAILTYPE)" "$SMARTD_MESSAGE" --icon=dialog-warning</pre>
-<p>This requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libnotify">libnotify</a></span> and a compatible desktop environment. See <a href="../en/Desktop_notifications.html" title="Desktop notifications">Desktop notifications</a> for more details.
+<p>This requires <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libnotify">libnotify</a></span> and a compatible desktop environment. See <a href="/title/Desktop_notifications" title="Desktop notifications">Desktop notifications</a> for more details.
 </p>
 <p>You can also put your custom scripts into <code>/usr/share/smartmontools/smartd_warning.d/</code>:
 </p>
@@ -258,7 +258,7 @@ You can execute your custom scripts with </p>
 </p>
 <p>On some devices the -n does not work. You get the following error message in syslog:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">journalctl -u smartd</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># journalctl -u smartd</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">CHECK POWER MODE: incomplete response, ATA output registers missing
 Device: /dev/sdb [SAT], no ATA CHECK POWER STATUS support, ignoring -n Directive
 </pre>
@@ -351,9 +351,9 @@ Device: /dev/sdb [SAT], no ATA CHECK POWER STATUS support, ignoring -n Directive
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Storage.html" title="Category:Storage">Storage</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Storage" title="Category:Storage">Storage</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Style" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li></ul>
 </div>
 </div>
 	</div>
@@ -361,15 +361,15 @@ Device: /dev/sdb [SAT], no ATA CHECK POWER STATUS support, ignoring -n Directive
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=S.M.A.R.T.&amp;oldid=662313">https://wiki.archlinux.org/index.php?title=S.M.A.R.T.&amp;oldid=662313</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 20:47.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=S.M.A.R.T.&amp;oldid=666851">https://wiki.archlinux.org/index.php?title=S.M.A.R.T.&amp;oldid=666851</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 15:19.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

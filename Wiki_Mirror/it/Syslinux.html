@@ -36,14 +36,14 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Articoli correlati</p>
 <ul>
-<li><a href="../it/Arch_boot_process.html" class="mw-redirect" title="Arch Boot Process (Italiano)">Arch Boot Process (Italiano)</a></li>
-<li><a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot loader">Boot loader</a></li>
+<li><a href="/title/Arch_Boot_Process_(Italiano)" class="mw-redirect" title="Arch Boot Process (Italiano)">Arch Boot Process (Italiano)</a></li>
+<li><a href="/title/Boot_loader" class="mw-redirect" title="Boot loader">Boot loader</a></li>
 </ul>
 </div>
-<p><a href="https://en.wikipedia.org/wiki/SYSLINUX" class="extiw" title="wikipedia:SYSLINUX">Syslinux</a> è una collezione di boot loaders capaci di effettuare il boot da dischi rigidi, CD e via rete utilizzando PXE. Supporta i <a href="../it/File_systems.html" title="File systems (Italiano)">filesystems</a> <a href="https://en.wikipedia.org/wiki/FAT" class="extiw" title="wikipedia:FAT">Wikipedia:FAT</a>, <a href="https://en.wikipedia.org/wiki/ext2" class="extiw" title="wikipedia:ext2">Wikipedia:ext2</a>, <a href="../it/Ext3.html" title="Ext3 (Italiano)">ext3</a>, <a href="../it/Ext4.html" title="Ext4 (Italiano)">ext4</a> e <a href="../en/Btrfs.html" title="Btrfs">Btrfs</a>.
+<p><a href="https://en.wikipedia.org/wiki/SYSLINUX" class="extiw" title="wikipedia:SYSLINUX">Syslinux</a> è una collezione di boot loaders capaci di effettuare il boot da dischi rigidi, CD e via rete utilizzando PXE. Supporta i <a href="/title/File_systems_(Italiano)" title="File systems (Italiano)">filesystems</a> <a href="https://en.wikipedia.org/wiki/FAT" class="extiw" title="wikipedia:FAT">Wikipedia:FAT</a>, <a href="https://en.wikipedia.org/wiki/ext2" class="extiw" title="wikipedia:ext2">Wikipedia:ext2</a>, <a href="/title/Ext3_(Italiano)" title="Ext3 (Italiano)">ext3</a>, <a href="/title/Ext4_(Italiano)" title="Ext4 (Italiano)">ext4</a> e <a href="/title/Btrfs" title="Btrfs">Btrfs</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Syslinux non può accedere a files che non si trovino nella partizione sulla quale è installato. Se si necessita della funzionalità multi-fs, si utilizzi un bootloader alternativo come <a href="../it/GRUB.html" title="GRUB (Italiano)">GRUB</a>.</div>
+<strong>Nota:</strong> Syslinux non può accedere a files che non si trovino nella partizione sulla quale è installato. Se si necessita della funzionalità multi-fs, si utilizzi un bootloader alternativo come <a href="/title/GRUB_(Italiano)" title="GRUB (Italiano)">GRUB</a>.</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -137,7 +137,7 @@
 <b>Fase 2 : Parte 1 - Esecuzione del Volume Boot Record</b> - Il <b>boot code Stage 1</b> esegue il Volume Boot Record (VBR) della partizione <code>/boot</code>. Nel caso di Syslinux, il VBR è il settore iniziale del file <code>/boot/syslinux/ldlinux.sys</code>, creato dal comando <code>extlinux --install</code>. Si noti che <code>ldlinux.sys</code> e <code>ldlinux.c32</code> sono due cose diverse.</li>
 <li>
 <b>Fase 2 : Parte 2 - Esecuzione del file <code>/boot/syslinux/ldlinux.sys</code></b> - Il VBR carica il resto del file <code>/boot/syslinux/ldlinux.sys</code>, la cui posizione su disco non deve cambiare, pena l'impossibilità di effettuare il boot con Syslinux. <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Se si utilizza il file system <a href="../en/Btrfs.html" title="Btrfs">Btrfs</a> i metodi scritti sopra non funzioneranno in quanto i files vengono continuamente spostati, variando di conseguenza la posizione del file <code>ldlinux.sys</code>. Per questo motivo, in presenza di un file system BTRFS, l'intero boot code di <code>ldlinux.sys</code> viene copiato nello spazio che segue il VBR e non viene installato nel percorso canonico come avviene con altri file systems.</div>
+<strong>Nota:</strong> Se si utilizza il file system <a href="/title/Btrfs" title="Btrfs">Btrfs</a> i metodi scritti sopra non funzioneranno in quanto i files vengono continuamente spostati, variando di conseguenza la posizione del file <code>ldlinux.sys</code>. Per questo motivo, in presenza di un file system BTRFS, l'intero boot code di <code>ldlinux.sys</code> viene copiato nello spazio che segue il VBR e non viene installato nel percorso canonico come avviene con altri file systems.</div>
 </li>
 <li>
 <b>Fase 3 - Caricamento del file <code>/boot/syslinux/ldlinux.c32</code></b> - Il file <code>/boot/syslinux/ldlinux.sys</code> caricherà <code>/boot/syslinux/ldlinux.c32</code> (modulo principale) che contiene la parte di Syslinux che non è stato possibile inserire nel <code>ldlinux.sys</code> (a causa di limitazioni sulla grandezza dei files). Il file <code>ldlinux.c32</code> dovrebbe essere presente in ogni installazione di Syslinux/Extlinux e la sua versione dovrebbe corrispondere a quella del file <code>ldlinux.sys</code> installato, pena l'impossibilità di effettuare il boot. Si veda <a rel="nofollow" class="external free" href="http://bugzilla.syslinux.org/show_bug.cgi?id=7">http://bugzilla.syslinux.org/show_bug.cgi?id=7</a> per ulteriori informazioni.</li>
@@ -145,14 +145,14 @@
 <b>Fase 4 - Ricerca e caricamento del file di configurazione</b> - Una volta effettuato il caricamento di Syslinux, verrà cercato il file <code>/boot/syslinux/syslinux.cfg</code> (o, in certi casi, <code>/boot/syslinux/extlinux.conf</code>) e caricato, se presente. In caso di assenza del suddetto file, si verrà lasciati al prompt <code>boot:</code> di Syslinux. Quanto descritto in questa fase e il resto delle componenti secondarie di Syslinux (i moduli <code>/boot/syslinux/*.c32</code>, esclusi <code>lib*.c32</code> e <code>ldlinux.c32</code>) richiedono che i moduli libreria <code>/boot/syslinux/lib*.c32</code> siano presenti (<a rel="nofollow" class="external free" href="https://wiki.syslinux.org/wiki/index.php/Common_Problems#ELF">https://wiki.syslinux.org/wiki/index.php/Common_Problems#ELF</a>). Come sopra, la versione dei moduli libreria <code>lib*.c32</code> e dei moduli secondari <code>*.c32</code> deve combaciare con quella di <code>ldlinux.sys</code>.</li>
 </ol>
 <h3><span class="mw-headline" id="Limitazioni_di_Syslinux_su_sistemi_BIOS">Limitazioni di Syslinux su sistemi BIOS</span></h3>
-<p>Su questi sistemi, syslinux utilizza delle funzionalità fornite dal BIOS della propria scheda madre per accedere al contenuto dei dischi rigidi. Sfortunatamente, tali funzionalità hanno <a rel="nofollow" class="external text" href="http://www.win.tue.nl/~aeb/linux/Large-Disk-4.html">limitazioni</a> che variano in funzione all'età del BIOS. La maggior parte dei BIOS moderni posono accedere solo ai primi 1024 cilindri, il che corrisponde ad una capacità approssimativa di 8,5 GB. Se la propria partizione <code>/boot</code> si trova in un settore sopra tale limite, syslinux potrebbe non essere in grado di caricare i file <code>syslinux.cfg</code>, l'<code>initramfs</code> o il file <code>vmlinuz</code>. Sarà quindi necessario posizionare la partizione <code>/boot</code> all'inizio del disco.
+<p>Su questi sistemi, syslinux utilizza delle funzionalità fornite dal BIOS della propria scheda madre per accedere al contenuto dei dischi rigidi. Sfortunatamente, tali funzionalità hanno <a rel="nofollow" class="external text" href="https://www.win.tue.nl/~aeb/linux/Large-Disk-4.html">limitazioni</a> che variano in funzione all'età del BIOS. La maggior parte dei BIOS moderni posono accedere solo ai primi 1024 cilindri, il che corrisponde ad una capacità approssimativa di 8,5 GB. Se la propria partizione <code>/boot</code> si trova in un settore sopra tale limite, syslinux potrebbe non essere in grado di caricare i file <code>syslinux.cfg</code>, l'<code>initramfs</code> o il file <code>vmlinuz</code>. Sarà quindi necessario posizionare la partizione <code>/boot</code> all'inizio del disco.
 </p>
 <p>Altri bootloaders come <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=grub">grub</a></span> utilizzano un "trucco" chiamato <i>stage 1.5 bootloading</i>, dove GRUB crea un piccolo programma di circa 32 KB che contiene i driver del disco e lo inserisce all'inizio della tabella partizioni, nello spazio inutilizzato (che su sistemi MBR è chiamato <i>MBR gap</i>) oppure, su sistemi GPT, nella partizione di boot BIOS.
 Il procedimento avviene in questo modo: il boot code nel MBR carica lo <i>stage 1.5</i>, inizializza i dischi e vi accede tramite interfaccia SATA, evitando così le limitazioni del BIOS per il caricamento del kernel. Ciò consente di posizionare la partizione <code>/boot</code> dovunque sul disco rigido.
 Sfortunatamente <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslinux">syslinux</a></span> non dispone di tale funzionalità e si avvale delle funzionalità fornite dal BIOS per il caricamento di <code>/boot</code>.
 </p>
 <h3><span class="mw-headline" id="Installazione">Installazione</span></h3>
-<ul><li>Installare i pacchetti <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslinux">syslinux</a></span> e <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=efibootmgr">efibootmgr</a></span> dai <a href="../it/Official_repositories.html" title="Official repositories (Italiano)">repository ufficiali</a>.</li></ul>
+<ul><li>Installare i pacchetti <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslinux">syslinux</a></span> e <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=efibootmgr">efibootmgr</a></span> dai <a href="/title/Official_repositories_(Italiano)" title="Official repositories (Italiano)">repository ufficiali</a>.</li></ul>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> 
 <ul>
@@ -167,7 +167,7 @@ Sfortunatamente <span class="plainlinks archwiki-template-pkg"><a rel="nofollow"
 <ul><li>Dopo aver eseguito lo script <code>syslinux-install_update</code>, ricordarsi di modificare il file <code>/boot/syslinux/syslinux.cfg</code>, seguendo <a href="#Configurazione">#Configurazione</a> e <a href="#Parametri_del_kernel">#Parametri del kernel</a>.</li></ul>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Attenzione:</strong> Lo script <code>syslinux-install_update</code> utilizza come partizione root di default un valore che potrebbe non corrispondere a quello del vostro sistema. Pertanto è importante indicare a Syslinux la partizione root corretta modificando <code>/boot/syslinux/syslinux.cfg</code>. In caso contrario, il sistema operativo non si avvierà. Si veda <a href="#Parametri_del_kernel">#Parametri del kernel</a>.</div>
-<p>Lo script <code>syslinux-install_update</code> si occuperà dell'installazione di Syslinux, della copia dei moduli <code>*.c32</code> in <code>/boot/syslinux</code>, dell'impostazione della flag di boot e dell'installazione de boot code nel MBR. Può gestire schemi di partizionamento <a href="../it/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="Master Boot Record (Italiano)">MBR</a> e <a href="../en/Partitioning.html#GUID_Partition_Table" class="mw-redirect" title="GUID Partition Table">GPT</a> e RAID software.
+<p>Lo script <code>syslinux-install_update</code> si occuperà dell'installazione di Syslinux, della copia dei moduli <code>*.c32</code> in <code>/boot/syslinux</code>, dell'impostazione della flag di boot e dell'installazione de boot code nel MBR. Può gestire schemi di partizionamento <a href="/title/Master_Boot_Record_(Italiano)" class="mw-redirect" title="Master Boot Record (Italiano)">MBR</a> e <a href="/title/GUID_Partition_Table" class="mw-redirect" title="GUID Partition Table">GPT</a> e RAID software.
 </p>
 <p>Se si utilizza una partizione di boot separata, assicurarsi che sia montata. Si controlli con <code>lsblk</code>; se non si vede nessun mount point che punta a <code>/boot</code>, si monti la partizione prima di procedere.
 </p>
@@ -178,7 +178,7 @@ Si esegua lo script <code>syslinux-install_update</code> con gli argomenti <code
 <pre> # extlinux --install /boot/syslinux
  extlinux: cannot find device for path /boot/syslinux
  extlinux: cannot open device (null) </pre>
-<p> Questo problema può verificarsi quando si effettua l'upgrade da <a href="../en/LILO.html" title="LILO">LILO</a> e si utilizza un kernel personalizzato. Può infatti accadere che LILO modifichi il parametro <code>root=</code> del kernel da (ad esempio) <code>root=/dev/sda1</code> al suo equivalente numerico, come <code>root=801</code>, come riportato dall'output di <code>/proc/cmdline</code> e <code>mount</code>. È possibile risolvere il problema effettuando l'installazione manuale descritta sotto, avendo cura di specificare il parametro <code>--device=/dev/sda1</code> a <code>extlinux</code>, oppure utilizzando un kernel stock di Arch, dal momento che l'utilizzo di un initramfs da parte di quest'ultimo evita il verificarsi dell'errore.
+<p> Questo problema può verificarsi quando si effettua l'upgrade da <a href="/title/LILO" title="LILO">LILO</a> e si utilizza un kernel personalizzato. Può infatti accadere che LILO modifichi il parametro <code>root=</code> del kernel da (ad esempio) <code>root=/dev/sda1</code> al suo equivalente numerico, come <code>root=801</code>, come riportato dall'output di <code>/proc/cmdline</code> e <code>mount</code>. È possibile risolvere il problema effettuando l'installazione manuale descritta sotto, avendo cura di specificare il parametro <code>--device=/dev/sda1</code> a <code>extlinux</code>, oppure utilizzando un kernel stock di Arch, dal momento che l'utilizzo di un initramfs da parte di quest'ultimo evita il verificarsi dell'errore.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> 
@@ -195,7 +195,7 @@ Si esegua lo script <code>syslinux-install_update</code> con gli argomenti <code
 <ul><li>Se non si è sicuri dello schema di partizionamento utilizzato (MBR o GPT), è possibile verificare con questo comando:</li></ul>
 <pre># blkid -s PTTYPE -o value /dev/sda
 </pre>
-<ul><li>Se si sta cercando di ripristinare il sistema tramite LiveCD, ci si assicuri di effettuare il <a href="../en/Chroot.html" title="Chroot">chroot</a> prima di eseguire i comandi che seguono.</li></ul>
+<ul><li>Se si sta cercando di ripristinare il sistema tramite LiveCD, ci si assicuri di effettuare il <a href="/title/Chroot" title="Chroot">chroot</a> prima di eseguire i comandi che seguono.</li></ul>
 <p>Se non si effettua il chroot, sarà necessario aggiungere il punto di mount a tutti i percorsi specificati sotto (tranne quelli che iniziano con <code>/dev</code>.
 </p>
 </div>
@@ -208,7 +208,7 @@ Si esegua lo script <code>syslinux-install_update</code> con gli argomenti <code
 <p>Dopo l'esecuzione dei comandi di cui sopra, sarà necessario installare nella regione del disco di 440 byte chiamata Master Boot Record (da non confondersi con lo schema di partizionamento MBR) il boot code di Syslinux <code>mbr.bin</code> o <code>gptmbr.bin</code>, come descritto nella sezione successiva.
 </p>
 <h5><span class="mw-headline" id="Tabella_partizioni_in_formato_MBR">Tabella partizioni in formato MBR</span></h5>
-<p>Si faccia riferimento a: <a href="../it/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="Master Boot Record (Italiano)">Master Boot Record</a>.
+<p>Si faccia riferimento a: <a href="/title/Master_Boot_Record_(Italiano)" class="mw-redirect" title="Master Boot Record (Italiano)">Master Boot Record</a>.
 </p>
 <p>Sarà quindi necessario contrassegnare la propria partizione di boot come attiva: <code>fdisk</code>, <code>cfdisk</code>, <code>sfdisk</code> e <code>gparted</code> sono applicazioni in grado di compiere questa operazione (flag <code>boot</code>).
 </p>
@@ -233,7 +233,7 @@ Si esegua lo script <code>syslinux-install_update</code> con gli argomenti <code
 <p>Syslinux è stato quindi installato nella prima partizione logica (<code>/dev/sda5</code>) del disco.
 </p>
 <h5><span class="mw-headline" id="Tabella_partizioni_GUID">Tabella partizioni GUID</span></h5>
-<p>Si faccia riferimento a: <a href="../en/Partitioning.html#GUID_Partition_Table" class="mw-redirect" title="GUID Partition Table">GUID Partition Table</a>.
+<p>Si faccia riferimento a: <a href="/title/GUID_Partition_Table" class="mw-redirect" title="GUID Partition Table">GUID Partition Table</a>.
 </p>
 <p>È necessario impostare il bit 2 (<code>legacy_boot</code>) degli attributi relativi alla partizione <code>/boot</code>:
 </p>
@@ -283,12 +283,12 @@ Si esegua lo script <code>syslinux-install_update</code> con gli argomenti <code
 </li>
 </ul>
 <h3><span class="mw-headline" id="Installazione_2">Installazione</span></h3>
-<ul><li>Installare <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslinux">syslinux</a></span> ed <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=efibootmgr">efibootmgr</a></span> dai <a href="../it/Official_repositories.html" title="Official repositories (Italiano)">repository ufficiali</a>, quindi si installi Syslinux nella partizione EFI di sistema come mostrato sotto.</li></ul>
+<ul><li>Installare <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslinux">syslinux</a></span> ed <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=efibootmgr">efibootmgr</a></span> dai <a href="/title/Official_repositories_(Italiano)" title="Official repositories (Italiano)">repository ufficiali</a>, quindi si installi Syslinux nella partizione EFI di sistema come mostrato sotto.</li></ul>
 <ul><li>Copiare i file di Syslinux nella partizione EFI di sistema (sostituire a <code>$esp</code> il punto di mount della partizione, solitamente <code>/boot</code>):</li></ul>
 <pre># mkdir -p $esp/EFI/syslinux
 # cp -r /usr/lib/syslinux/efi64/* $esp/EFI/syslinux
 </pre>
-<ul><li>Si crei una voce di avvio per Syslinux utilizzando <a href="../en/Unified_Extensible_Firmware_Interface.html#efibootmgr" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface#efibootmgr</a>:</li></ul>
+<ul><li>Si crei una voce di avvio per Syslinux utilizzando <a href="/title/Unified_Extensible_Firmware_Interface#efibootmgr" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface#efibootmgr</a>:</li></ul>
 <pre># efibootmgr -c -d /dev/sdX -p Y -l /EFI/syslinux/syslinux.efi -L "Syslinux"
 </pre>
 <p>dove <code>/dev/sdXY</code> è la partizione che contiene il bootloader.
@@ -375,8 +375,8 @@ LABEL archfallback
 <pre># cp /usr/lib/syslinux/bios/vesamenu.c32 /boot/syslinux/
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Se si utilizza <a href="../it/Unified_Extensible_Firmware_Interface.html" title="Unified Extensible Firmware Interface (Italiano)">UEFI</a>, assicurarsi di copiare il file <code>efi32</code> dalla directory <code>/usr/lib/syslinux/efi64/</code>, altrimenti si otterrà solamente una schermata nera.
-Nel caso si verificasse il problema, avviare il pc tramite LiveCD ed utilizzare <a href="../en/Chroot.html" title="Chroot">chroot</a> per effettuare le dovute modifiche.</div>
+<strong>Nota:</strong> Se si utilizza <a href="/title/Unified_Extensible_Firmware_Interface_(Italiano)" title="Unified Extensible Firmware Interface (Italiano)">UEFI</a>, assicurarsi di copiare il file <code>efi32</code> dalla directory <code>/usr/lib/syslinux/efi64/</code>, altrimenti si otterrà solamente una schermata nera.
+Nel caso si verificasse il problema, avviare il pc tramite LiveCD ed utilizzare <a href="/title/Chroot" title="Chroot">chroot</a> per effettuare le dovute modifiche.</div>
 <p>Questo file di configurazione utilizza lo stesso design del CD di installazione di Arch Linux, e può essere scaricato da <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/tree/master/configs/releng/syslinux">projects.archlinux.org</a>. L'immagine di sfondo può essere <a rel="nofollow" class="external text" href="https://gitlab.archlinux.org/archlinux/archiso/raw/master/configs/releng/syslinux/splash.png">scaricata dallo stesso sito</a>. La si copi quindi in <code>/boot/syslinux/splash.png</code>
 </p>
 <p>Configurazione:
@@ -443,15 +443,15 @@ MENU HSHIFT 10          # muove il menù vero l'alto
 <p>Gli standard VESA prevedono una dimensione massima di 25 righe e 80 colonne. Impostare valori più alti potrebbe impedire la corretta visualizzazione del menù, richiedendo la modifica del file di configurazione da un LiveCD.
 </p>
 <h3><span class="mw-headline" id="Parametri_del_kernel">Parametri del kernel</span></h3>
-<p>È possibile passare <a href="../en/Kernel_parameters.html" title="Kernel parameters">parametri</a> al kernel utilizzando la variabile <code>APPEND</code> in <code>syslinux.cfg</code>. È raccomandabile applicare le stesse modifiche alla voce per il boot dell'immagine fallback.
+<p>È possibile passare <a href="/title/Kernel_parameters" title="Kernel parameters">parametri</a> al kernel utilizzando la variabile <code>APPEND</code> in <code>syslinux.cfg</code>. È raccomandabile applicare le stesse modifiche alla voce per il boot dell'immagine fallback.
 </p>
 <p><b>Nel caso più semplice</b>, sarà necessario sostituire il valore del parametro <code>root</code>: si modifichi quindi <code>/dev/sda2</code> con il valore corretto.
 </p>
-<p><b>Se si desidera usare gli <a href="../it/Persistent_block_device_naming.html#By-uuid" title="Persistent block device naming (Italiano)">UUID</a></b> per la <a href="../it/Persistent_block_device_naming.html" title="Persistent block device naming (Italiano)">nomenclatura persistende dei dispositivi a blocchi</a> si modifichi la riga APPEND inserendo l'UUID della propria partizione root:
+<p><b>Se si desidera usare gli <a href="/title/Persistent_block_device_naming_(Italiano)#By-uuid" title="Persistent block device naming (Italiano)">UUID</a></b> per la <a href="/title/Persistent_block_device_naming_(Italiano)" title="Persistent block device naming (Italiano)">nomenclatura persistende dei dispositivi a blocchi</a> si modifichi la riga APPEND inserendo l'UUID della propria partizione root:
 </p>
 <pre>APPEND root=UUID=<i>1234</i> rw
 </pre>
-<p><b>Se si usa il sistema di cifratura <a href="../en/Dm-crypt.html" class="mw-redirect" title="LUKS">LUKS</a></b>, si modifichi la riga <code>APPEND</code> affinchè Syslinux utilizzi il volume criptato:
+<p><b>Se si usa il sistema di cifratura <a href="/title/LUKS" class="mw-redirect" title="LUKS">LUKS</a></b>, si modifichi la riga <code>APPEND</code> affinchè Syslinux utilizzi il volume criptato:
 </p>
 <pre>APPEND root=/dev/mapper/<i>gruppo</i>-<i>nome</i> cryptdevice=/dev/sda2:<i>nome</i> rw
 </pre>
@@ -465,7 +465,7 @@ MENU HSHIFT 10          # muove il menù vero l'alto
 </p>
 <pre> APPEND root=LABEL=ETICHETTA_PARTIZIONE_ROOT ro
 </pre>
-<p><b>Se si utilizza un sottovolume <a href="../en/Btrfs.html" title="Btrfs">btrfs</a></b>, si modifichi la riga <code>APPEND</code> come segue: <code>rootflags=subvol=&lt;sottovolume root&gt;</code>.
+<p><b>Se si utilizza un sottovolume <a href="/title/Btrfs" title="Btrfs">btrfs</a></b>, si modifichi la riga <code>APPEND</code> come segue: <code>rootflags=subvol=&lt;sottovolume root&gt;</code>.
 Ad esempio, se <code>/dev/sda2</code> è stato montato come sottovolume btrfs chiamato 'ROOT' (esempio: <code>mount -o noatime,subvol=ROOT /dev/sda2 /mnt</code>):
 </p>
 <pre>APPEND root=/dev/sda2 rw rootflags=subvol=ROOT
@@ -505,7 +505,7 @@ LABEL windows
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> Le operazioni di cui sopra inibiscono il funzionamento del boot manager di Windows <code>bootmgr</code>, necessario per la corretta applicazione di alcuni aggiornamenti (ad esempio <a rel="nofollow" class="external text" href="https://support.microsoft.com/kb/2883200">qui</a>).
-In questi casi potrebbe essere utile impostare temporaneamente il flag Boot sulla partizione di Windows utilizzando <a href="../en/Parted.html" class="mw-redirect" title="GParted">GParted</a>, applicare l'aggiornamento e poi reimpostare il flag boot sulla partizione di Syslinux. (esempio con <a rel="nofollow" class="external text" href="http://www.online-tech-tips.com/computer-tips/set-active-partition-vista-xp">DiskPart</a> per Windows).</div>
+In questi casi potrebbe essere utile impostare temporaneamente il flag Boot sulla partizione di Windows utilizzando <a href="/title/GParted" class="mw-redirect" title="GParted">GParted</a>, applicare l'aggiornamento e poi reimpostare il flag boot sulla partizione di Syslinux. (esempio con <a rel="nofollow" class="external text" href="https://www.online-tech-tips.com/computer-tips/set-active-partition-vista-xp">DiskPart</a> per Windows).</div>
 <p>Se non si è sicuri di quale drive venga identificato dal vostro BIOS come primo, è possibile utilizzare l'identificativo MBR oppure, se si usa GPT, l'etichetta del filesystem.
 Per utilizzare l'identificativo MBR si utilizzi il comando:
 </p>
@@ -529,9 +529,9 @@ Device Boot      Start         End      Blocks   Id  System
         COM32 chain.c32
         APPEND mbr:0xf00f1fd3
 </pre>
-<p>Per ulteriori dettagli sul chainloading si veda: <a rel="nofollow" class="external autonumber" href="http://syslinux.zytor.com/wiki/index.php/Comboot/chain.c32">[1]</a>.
+<p>Per ulteriori dettagli sul chainloading si veda: <a rel="nofollow" class="external autonumber" href="https://wiki.syslinux.org/wiki/index.php/Comboot/chain.c32">[1]</a>.
 </p>
-<p>Se <a href="../it/GRUB.html" class="mw-redirect" title="GRUB2 (Italiano)">GRUB2</a> è installato nella propria partizione di boot, è possibile effettuarne il chainload utilizzando:
+<p>Se <a href="/title/GRUB2_(Italiano)" class="mw-redirect" title="GRUB2 (Italiano)">GRUB2</a> è installato nella propria partizione di boot, è possibile effettuarne il chainload utilizzando:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/boot/syslinux/syslinux.cfg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">
@@ -541,7 +541,7 @@ LABEL grub2
        COM32 chain.c32
        append file=../grub/boot.img
 </pre>
-<p>In alternativa, è possibile caricare <a href="../it/GRUB.html" title="GRUB (Italiano)">GRUB</a> come kernel linux, facendo precedere <code>lnxboot.img</code> a <code>core.img</code>. Il file <code>lnxboot.img</code> fa parte del pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=grub">grub</a></span> e può essere trovato in <code>/usr/lib/grub/i386-pc</code>.
+<p>In alternativa, è possibile caricare <a href="/title/GRUB_(Italiano)" title="GRUB (Italiano)">GRUB</a> come kernel linux, facendo precedere <code>lnxboot.img</code> a <code>core.img</code>. Il file <code>lnxboot.img</code> fa parte del pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=grub">grub</a></span> e può essere trovato in <code>/usr/lib/grub/i386-pc</code>.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/boot/syslinux/syslinux.cfg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
@@ -585,12 +585,12 @@ label MAIN
     com32 chain.c32
     append hd0 0
 </pre>
-<p>Tratta dalla <a href="../User:Djgera.html" title="User:Djgera">pagina utente</a> di Djgera.
+<p>Tratta dalla <a href="/title/User:Djgera" title="User:Djgera">pagina utente</a> di Djgera.
 </p>
 <p>Si noti che la voce relativa all'altro sistema in <code>&lt;altro-OS&gt;/boot/syslinux/syslinux.cfg</code> dovrà essere modificata ogni volta che se ne aggiorna il kernel, dal momento che sti sta avviando direttamente quest'ultimo, al posto di effettuare il chainloading del bootloader di default.
 </p>
 <h3><span class="mw-headline" id="Usare_memtest">Usare memtest</span></h3>
-<p>Si installi <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=memtest86%2B">memtest86+</a></span> dai <a href="../it/Official_repositories.html" title="Official repositories (Italiano)">repository ufficiali</a>.
+<p>Si installi <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=memtest86%2B">memtest86+</a></span> dai <a href="/title/Official_repositories_(Italiano)" title="Official repositories (Italiano)">repository ufficiali</a>.
 </p>
 <p>Si utilizzi questa sezione <code>LABEL</code> per effettuare il boot di memtest.
 </p>
@@ -618,7 +618,7 @@ LABEL hdt
 </pre>
 <h3><span class="mw-headline" id="Riavvio_e_spegnimento">Riavvio e spegnimento</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> A partire da Syslinux 6.03, <code>poweroff.c32</code> funziona solamente con APM e non con ACPI. Per una possibile soluzione si veda <a rel="nofollow" class="external text" href="http://www.syslinux.org/archives/2012-March/017661.html">questa discussione</a>.</div>
+<strong>Nota:</strong> A partire da Syslinux 6.03, <code>poweroff.c32</code> funziona solamente con APM e non con ACPI. Per una possibile soluzione si veda <a rel="nofollow" class="external text" href="https://www.syslinux.org/archives/2012-March/017661.html">questa discussione</a>.</div>
 <p>Si usino le seguenti sezioni per riavviare o spegnere la macchina:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/boot/syslinux/syslinux.cfg</pre>
@@ -706,7 +706,7 @@ append initrd=initramfs-linux.img quiet ip=:::::eth0:dhcp nfsroot=10.0.0.1:/arch
 <h3>
 <span id="Avviare_un.27immagine_ISO_9660_tramite_memdisk"></span><span class="mw-headline" id="Avviare_un'immagine_ISO_9660_tramite_memdisk">Avviare un'immagine ISO 9660 tramite memdisk</span>
 </h3>
-<p>Syslinux supporta l'avvio di immagini ISO tramite il modulo <a rel="nofollow" class="external text" href="https://wiki.syslinux.org/wiki/index.php/MEMDISK">memdisk</a>; si veda <a href="../en/Multiboot_USB_drive.html#Using_Syslinux_and_memdisk" title="Multiboot USB drive">Multiboot USB drive#Using Syslinux and memdisk</a> per ulteriori esempi.
+<p>Syslinux supporta l'avvio di immagini ISO tramite il modulo <a rel="nofollow" class="external text" href="https://wiki.syslinux.org/wiki/index.php/MEMDISK">memdisk</a>; si veda <a href="/title/Multiboot_USB_drive#Using_Syslinux_and_memdisk" title="Multiboot USB drive">Multiboot USB drive#Using Syslinux and memdisk</a> per ulteriori esempi.
 </p>
 <h3><span class="mw-headline" id="Utilizzare_la_console_seriale">Utilizzare la console seriale</span></h3>
 <p>Per abilitare la console seriale, si aggiunga <code>SERIAL port [baudrate]</code> in cima al proprio <code>syslinux.cfg</code>. <i>port</i> è un numero (0 per <code>/dev/ttyS0</code>). Se <i>baudrate</i> viene omesso, il default è 9600 bps. I parametri per la trasmissione seriale sono preimpostati a 8 bit, nessuna parità e 1 bit di stop. <a rel="nofollow" class="external autonumber" href="https://wiki.syslinux.org/wiki/index.php/SYSLINUX#SERIAL_port_.5Bbaudrate_.5Bflowcontrol.5D.5D.">[2]</a>
@@ -714,11 +714,11 @@ append initrd=initramfs-linux.img quiet ip=:::::eth0:dhcp nfsroot=10.0.0.1:/arch
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">syslinux.cfg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">SERIAL 0 115200
 </pre>
-<p>Si abiliti la console seriale all'avvio aggiungendo <code>console=tty0 console=ttyS0,115200n8</code> al parametro <code>APPEND</code>. <a rel="nofollow" class="external autonumber" href="http://www.mjmwired.net/kernel/Documentation/kernel-parameters.txt#681">[3]</a>
+<p>Si abiliti la console seriale all'avvio aggiungendo <code>console=tty0 console=ttyS0,115200n8</code> al parametro <code>APPEND</code>. <a rel="nofollow" class="external autonumber" href="https://www.mjmwired.net/kernel/Documentation/kernel-parameters.txt#681">[3]</a>
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">syslinux.cfg</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">APPEND root=UUID=126ca36d-c853-4f3a-9f46-cdd49d034ce4 rw console=tty0 console=ttyS0,115200n8</pre>
-<p>Abilitare la console seriale su GRUB: <a href="../en/Working_with_the_serial_console.html#GRUB2_and_systemd" title="Working with the serial console">Working with the serial console#GRUB2 and systemd</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.
+<p>Abilitare la console seriale su GRUB: <a href="/title/Working_with_the_serial_console#GRUB2_and_systemd" title="Working with the serial console">Working with the serial console#GRUB2 and systemd</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.
 </p>
 <h2><span class="mw-headline" id="Risoluzione_dei_problemi">Risoluzione dei problemi</span></h2>
 <h3><span class="mw-headline" id="Utilizzare_il_prompt_di_Syslinux">Utilizzare il prompt di Syslinux</span></h3>
@@ -730,7 +730,7 @@ append initrd=initramfs-linux.img quiet ip=:::::eth0:dhcp nfsroot=10.0.0.1:/arch
 </p>
 <pre>boot: ../vmlinuz-linux root=/dev/sda2 ro initrd=../initramfs-linux.img
 </pre>
-<p>Se non si ha accesso a <code>boot:</code> in <a href="../en/Tmpfs.html" class="mw-redirect" title="Ramdisk">ramfs</a> e si è quindi impossibilitati ad effettuare il boot del kernel, si proceda come segue:
+<p>Se non si ha accesso a <code>boot:</code> in <a href="/title/Ramdisk" class="mw-redirect" title="Ramdisk">ramfs</a> e si è quindi impossibilitati ad effettuare il boot del kernel, si proceda come segue:
 </p>
 <dl><dd>1. Si crei una directory temporanea per montare la propria partizione root (se non esiste già):</dd></dl>
 <pre># mkdir -p /new_root
@@ -751,7 +751,7 @@ append initrd=initramfs-linux.img quiet ip=:::::eth0:dhcp nfsroot=10.0.0.1:/arch
 </p>
 <pre># cp /new_root/sbin/tune2fs /sbin/;
 </pre>
-<p>Si seguano quindi le <a href="../en/Fsck.html#ext2fs:_no_external_journal" title="Fsck">seguenti</a> istruzioni per creare un nuovo journal per la partizione root.
+<p>Si seguano quindi le <a href="/title/Fsck#ext2fs:_no_external_journal" title="Fsck">seguenti</a> istruzioni per creare un nuovo journal per la partizione root.
 </p>
 <h3><span class="mw-headline" id="DEFAULT_o_UI_non_trovati">DEFAULT o UI non trovati</span></h3>
 <p>Alcuni produttori di schede madri non hanno un buon supporto al boot da dispositivi USB. Se, ad esempio, un drive USB formattato in Ext4 potrebbe bootare tranquillamente su un PC più recente, macchine più vecchie potrebbero bloccarsi se la partizione di boot contenente "kernel" e "initrd" non si trova  su una partizione FAT16. Per ovviare al problema, si crei una partizione FAT16 (con dimensione minore o uguale a 2GB) e la si formatti con <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dosfstools">dosfstools</a></span>:
@@ -776,7 +776,7 @@ append initrd=initramfs-linux.img quiet ip=:::::eth0:dhcp nfsroot=10.0.0.1:/arch
 </pre>
 <p>Si riavvii quindi il sistema.
 </p>
-<p>È possibile ottenere questo errore anche se si prova ad effettuare il boot da un array <a href="../it/RAID.html" title="RAID (Italiano)">RAID</a> <code>md1</code> creato con una versione dei metadata non supportata da Syslinux. A partire da Agosto 2013, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mdadm">mdadm</a></span> crea un array con la versione metadata <code>1.2</code>, mentre Syslinux supporta solo la <code>1.0</code>. Sarà quindi necessario ricreare il proprio array RAID passando l'opzione <code>--metadata=1.0</code> a <code>mdadm</code>.
+<p>È possibile ottenere questo errore anche se si prova ad effettuare il boot da un array <a href="/title/RAID_(Italiano)" title="RAID (Italiano)">RAID</a> <code>md1</code> creato con una versione dei metadata non supportata da Syslinux. A partire da Agosto 2013, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mdadm">mdadm</a></span> crea un array con la versione metadata <code>1.2</code>, mentre Syslinux supporta solo la <code>1.0</code>. Sarà quindi necessario ricreare il proprio array RAID passando l'opzione <code>--metadata=1.0</code> a <code>mdadm</code>.
 </p>
 <h3>
 <span id="Viene_eseguito_Windows_al_posto_di_Syslinux.21"></span><span class="mw-headline" id="Viene_eseguito_Windows_al_posto_di_Syslinux!">Viene eseguito Windows al posto di Syslinux!</span>
@@ -790,7 +790,7 @@ append initrd=initramfs-linux.img quiet ip=:::::eth0:dhcp nfsroot=10.0.0.1:/arch
 </h3>
 <p>Se si seleziona una voce del menù di boot e non succede niente a parte il ricaricamento dello stesso, è probabile che si abbia un errore nel proprio <code>syslinux.cfg</code>. Si prema <code>tab</code> per modificare i propri parametri di boot. In alternativa si prema <code>esc</code> e si scriva il valore del parametro <code>LABEL</code> corrispondente al sistema da avviare (ad esempio <code>arch</code>).
 </p>
-<p>Il problema potrebbe anche essere causato dall'assenza di un kernel. Si acceda al proprio filesystem tramite LiveCD, si monti la propria partizione <code>/boot</code> ed assicurarsi che <code>/puntodimount/vmlinuz-linux</code> esista e non abbia dimensione 0. In caso procedere con <a href="../en/General_troubleshooting.html#Option_2:_Reinstall_kernel" class="mw-redirect" title="Kernel Panics">Kernel Panics#Option 2: Reinstall kernel</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.
+<p>Il problema potrebbe anche essere causato dall'assenza di un kernel. Si acceda al proprio filesystem tramite LiveCD, si monti la propria partizione <code>/boot</code> ed assicurarsi che <code>/puntodimount/vmlinuz-linux</code> esista e non abbia dimensione 0. In caso procedere con <a href="/title/Kernel_Panics#Option_2:_Reinstall_kernel" class="mw-redirect" title="Kernel Panics">Kernel Panics#Option 2: Reinstall kernel</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>.
 </p>
 <h3><span class="mw-headline" id="Impossibile_rimuovere_ldlinux.sys">Impossibile rimuovere ldlinux.sys</span></h3>
 <p>Il file <code>ldlinux.sys</code> ha l'attributo <i>immutable</i> impostato, che ne impedisce la rimozione o sovrascrittura. Questo comportamento si verifica poichè il settore sul quale risiede il file in questione non deve cambiare, altrimenti Syslinux dovrà essere reinstallato.
@@ -851,11 +851,11 @@ append initrd=initramfs-linux.img quiet ip=:::::eth0:dhcp nfsroot=10.0.0.1:/arch
 <pre>btrfs: found compressed data, cannot continue!
 invalid or corrupt kernel image.
 </pre>
-<p><a href="../it/GRUB.html" title="GRUB (Italiano)">GRUB</a> supporta l'avvio da partizioni BTRFS compresse.
+<p><a href="/title/GRUB_(Italiano)" title="GRUB (Italiano)">GRUB</a> supporta l'avvio da partizioni BTRFS compresse.
 </p>
 <h2><span class="mw-headline" id="Vedere_anche">Vedere anche</span></h2>
 <ul>
-<li>Il <a rel="nofollow" class="external text" href="http://www.syslinux.org/">sito</a> del progetto Syslinux.</li>
+<li>Il <a rel="nofollow" class="external text" href="https://www.syslinux.org/">sito</a> del progetto Syslinux.</li>
 <li>
 <a rel="nofollow" class="external text" href="http://www.josephn.net/scrapbook/pxelinux_stuff">configurazione di PXELinux</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">link interrotto</a> 2020-08-06]</sup>
 </li>
@@ -867,9 +867,9 @@ invalid or corrupt kernel image.
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../it/Category:Boot_loaders.html" title="Category:Boot loaders (Italiano)">Boot loaders (Italiano)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Boot_loaders_(Italiano)" title="Category:Boot loaders (Italiano)">Boot loaders (Italiano)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -877,15 +877,15 @@ invalid or corrupt kernel image.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Syslinux_(Italiano)&amp;oldid=662406">https://wiki.archlinux.org/index.php?title=Syslinux_(Italiano)&amp;oldid=662406</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:04.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Syslinux_(Italiano)&amp;oldid=669414">https://wiki.archlinux.org/index.php?title=Syslinux_(Italiano)&amp;oldid=669414</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:48.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

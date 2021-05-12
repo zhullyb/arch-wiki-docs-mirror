@@ -139,7 +139,7 @@
 </div>
 
 <h2><span class="mw-headline" id="LVM_Building_Blocks">LVM Building Blocks</span></h2>
-<p>Logical Volume Management wykorzystuje jądro <a rel="nofollow" class="external text" href="http://sources.redhat.com/dm/">device-mapper</a> funkcja zapewniająca system partycji niezależny od układu dysku. Za pomocą LVM można zarchiwizować pamięć i utworzyć "wirtualne partycje <a href="#Resizing_volumes">extending/shrinking</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> łatwiejsze (z zastrzeżeniem potencjalnych ograniczeń systemu plików).
+<p>Logical Volume Management wykorzystuje jądro <a rel="nofollow" class="external text" href="http://sources.redhat.com/dm/">device-mapper</a> funkcja zapewniająca system partycji niezależny od układu dysku. Za pomocą LVM można zarchiwizować pamięć i utworzyć "wirtualne partycje <a href="#Resizing_volumes">extending/shrinking</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> łatwiejsze (z zastrzeżeniem potencjalnych ograniczeń systemu plików).
 </p>
 <p>Wirtualne partycje umożliwiają dodawanie i usuwanie bez martwienia się o to, czy masz wystarczająco dużo sąsiadującej przestrzeni na danym dysku, oraz o złapanie fdiskowania używanego dysku (i zastanawiasz się, czy jądro używa starej lub nowej tabeli partycji), czy też przeniesienie innego przegródki na uboczu. Jest to rozwiązanie łatwe w zarządzaniu: LVM nie dodaje żadnych zabezpieczeń.
 </p>
@@ -191,7 +191,7 @@
 <li>Zmień rozmiar/utwórz/usuń logiczne i fizyczne woluminy online. Systemy plików na nich nadal wymagają zmiany rozmiaru, ale niektóre (takie jak ext4) obsługują zmianę rozmiaru online.</li>
 <li>Migracja online/na żywo LV używana przez usługi na różnych dyskach bez konieczności restartowania usług.</li>
 <li>Migawki umożliwiają tworzenie kopii zapasowej zamrożonej kopii systemu plików, przy jednoczesnym ograniczeniu przestojów serwisowych do minimum.</li>
-<li>Obsługa różnych urządzeń device-mapper, w tym przejrzyste szyfrowanie i buforowanie często używanych danych. Umożliwia to utworzenie systemu z (jednym lub więcej) dyskami fizycznymi (zaszyfrowanymi za pomocą LUKS) i <a href="../en/Dm-crypt/Encrypting_an_entire_system.html#LVM_on_LUKS" title="Dm-crypt/Encrypting an entire system">LVM on top</a> aby umożliwić łatwą zmianę rozmiaru i zarządzanie oddzielnymi woluminami (np <code>/</code>, <code>/home</code>, <code>/backup</code>, etc.) bez kłopotów z wielokrotnym wprowadzaniem klucza podczas startu.</li>
+<li>Obsługa różnych urządzeń device-mapper, w tym przejrzyste szyfrowanie i buforowanie często używanych danych. Umożliwia to utworzenie systemu z (jednym lub więcej) dyskami fizycznymi (zaszyfrowanymi za pomocą LUKS) i <a href="/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS" title="Dm-crypt/Encrypting an entire system">LVM on top</a> aby umożliwić łatwą zmianę rozmiaru i zarządzanie oddzielnymi woluminami (np <code>/</code>, <code>/home</code>, <code>/backup</code>, etc.) bez kłopotów z wielokrotnym wprowadzaniem klucza podczas startu.</li>
 </ul>
 <h2><span class="mw-headline" id="Wady">Wady</span></h2>
 <ul>
@@ -199,9 +199,9 @@
 <li>Jeśli masz podwójne uruchamianie, zwróć uwagę, że system Windows nie obsługuje LVM; nie będzie można uzyskać dostępu do żadnych partycji LVM z systemu Windows.</li>
 </ul>
 <h2><span class="mw-headline" id="Instalowanie_Arch_Linux_na_LVM">Instalowanie Arch Linux na LVM</span></h2>
-<p>Woluminy LVM powinieneś utworzyć między krokami <a href="../en/Partitioning.html" title="Partitioning">partycjonowania dysków</a>, a <a href="../en/File_systems.html#Create_a_file_system" title="File systems">formatowania</a> w <a href="../en/Installation_guide.html" title="Installation guide">procedurze instalacji</a>. Zamiast bezpośrednio formatować partycję, która ma być głównym systemem plików, system plików zostanie utworzony wewnątrz woluminu logicznego (LV).
+<p>Woluminy LVM powinieneś utworzyć między krokami <a href="/title/Partitioning" title="Partitioning">partycjonowania dysków</a>, a <a href="/title/File_systems#Create_a_file_system" title="File systems">formatowania</a> w <a href="/title/Installation_guide" title="Installation guide">procedurze instalacji</a>. Zamiast bezpośrednio formatować partycję, która ma być głównym systemem plików, system plików zostanie utworzony wewnątrz woluminu logicznego (LV).
 </p>
-<p>Upewnij się, że <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lvm2">lvm2</a></span> pakiet jest <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">zainstalowany</a>.
+<p>Upewnij się, że <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lvm2">lvm2</a></span> pakiet jest <a href="/title/Install" class="mw-redirect" title="Install">zainstalowany</a>.
 </p>
 <p>Szybki przegląd: 
 </p>
@@ -215,17 +215,17 @@
 <li>Utwórz swoje woluminy fizyczne (PV). Jeśli masz jeden dysk, najlepiej jest po prostu utworzyć jeden PV w jednej dużej partycji. Jeśli masz wiele dysków, możesz utworzyć partycje na każdym z nich i utworzyć PV na każdej partycji.</li>
 <li>Utwórz swoją grupę woluminów (VG) i dodaj do niej wszystkie PV.</li>
 <li>Utwórz woluminy logiczne (LVs) wewnątrz tego VG.</li>
-<li>Kontynuuj instalację (<a href="../en/Installation_guide.html#Format_the_partitions" title="Installation guide">Installation guide#Format the partitions</a>).</li>
+<li>Kontynuuj instalację (<a href="/title/Installation_guide#Format_the_partitions" title="Installation guide">Installation guide#Format the partitions</a>).</li>
 <li>Po przejściu do “Create initial ramdisk environment” w przewodniku instalacji, dodaj hak (hook) <code>lvm</code> do <code>/etc/mkinitcpio.conf</code> (patrz poniżej, aby uzyskać szczegółowe informacje).</li>
 </ul>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> <code>/boot</code> nie może znajdować się w LVM, gdy używa się programu ładującego, który nie obsługuje LVM; musisz utworzyć oddzielną partycję <code>/boot</code> i sformatować ją bezpośrednio. Tylko <a href="../en/GRUB.html" title="GRUB">GRUB</a> jest znany z obsługi LVM.</div>
+<strong>Warning:</strong> <code>/boot</code> nie może znajdować się w LVM, gdy używa się programu ładującego, który nie obsługuje LVM; musisz utworzyć oddzielną partycję <code>/boot</code> i sformatować ją bezpośrednio. Tylko <a href="/title/GRUB" title="GRUB">GRUB</a> jest znany z obsługi LVM.</div>
 <h3>
 <span id="Utw.C3.B3rz_partycje"></span><span class="mw-headline" id="Utwórz_partycje">Utwórz partycje</span>
 </h3>
 <p>Jeśli LVM musi być ustawiony na całym dysku, nie ma potrzeby tworzenia żadnych partycji.
 </p>
-<p>W przeciwnym razie przed przystąpieniem do konfigurowania LVM <a href="../en/Partitioning.html" class="mw-redirect" title="Partition">podziel</a> dysk według potrzeb.
+<p>W przeciwnym razie przed przystąpieniem do konfigurowania LVM <a href="/title/Partition" class="mw-redirect" title="Partition">podziel</a> dysk według potrzeb.
 </p>
 <h3>
 <span id="Utw.C3.B3rz_woluminy_fizyczne"></span><span class="mw-headline" id="Utwórz_woluminy_fizyczne">Utwórz woluminy fizyczne</span>
@@ -330,7 +330,7 @@
 # vgscan
 # vgchange -ay
 </pre>
-<p>Teraz możesz tworzyć systemy plików na woluminach logicznych i montować je jak normalne partycje (jeśli instalujesz Arch Linuksa, zajrzyj do <a href="../en/File_systems.html#Mount_a_file_system" class="mw-redirect" title="Mount">montowania partycji</a> po dodatkowe szczegóły):
+<p>Teraz możesz tworzyć systemy plików na woluminach logicznych i montować je jak normalne partycje (jeśli instalujesz Arch Linuksa, zajrzyj do <a href="/title/Mount" class="mw-redirect" title="Mount">montowania partycji</a> po dodatkowe szczegóły):
 </p>
 <pre># mkfs.&lt;<i>fstype</i>&gt; /dev/mapper/&lt;<i>volume_group</i>&gt;-&lt;<i>logical_volume</i>&gt;
 # mount /dev/mapper/&lt;<i>volume_group</i>&gt;-&lt;<i>logical_volume</i>&gt; /&lt;<i>mountpoint</i>&gt;
@@ -343,7 +343,7 @@
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> Wybierając punkty montowania, wybierz nowo utworzone woluminy logiczne (użyj: <code>/dev/mapper/Volgroup00-lvolhome</code>). <b>Nie</b> wybieraj rzeczywistych partycji, na których zostały utworzone woluminy logiczne (nie używaj: <code>/dev/sda2</code>).</div>
 <h3><span class="mw-headline" id="Skonfiguruj_mkinitcpio">Skonfiguruj mkinitcpio</span></h3>
-<p>W przypadku, gdy twój główny system plików jest na LVM, będziesz musiał włączyć odpowiednie haki (hook) <a href="../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a>, inaczej twój system może się nie uruchomić. Włącz:
+<p>W przypadku, gdy twój główny system plików jest na LVM, będziesz musiał włączyć odpowiednie haki (hook) <a href="/title/Mkinitcpio" title="Mkinitcpio">mkinitcpio</a>, inaczej twój system może się nie uruchomić. Włącz:
 </p>
 <ul>
 <li>
@@ -359,7 +359,7 @@
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">HOOKS=(base <b>systemd</b> ... block <b>sd-lvm2</b> filesystems)</pre>
-<p>Następnie możesz kontynuować normalną instrukcę instalacji: <a href="../en/Mkinitcpio.html#Image_creation_and_activation" title="Mkinitcpio">utwórz początkowy ramdysk</a>
+<p>Następnie możesz kontynuować normalną instrukcę instalacji: <a href="/title/Mkinitcpio#Image_creation_and_activation" title="Mkinitcpio">utwórz początkowy ramdysk</a>
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> 
@@ -371,7 +371,7 @@
 <h3>
 <span id="Opcje_j.C4.85dra"></span><span class="mw-headline" id="Opcje_jądra">Opcje jądra</span>
 </h3>
-<p>Jeśli główny system plików znajduje się w woluminie logicznym, to <code>root=</code> <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">parametr jądra</a> musi być wskazany na zmapowane urządzenie, np <code>/dev/mapper/<i>vg-name</i>-<i>lv-name</i></code>.
+<p>Jeśli główny system plików znajduje się w woluminie logicznym, to <code>root=</code> <a href="/title/Kernel_parameter" class="mw-redirect" title="Kernel parameter">parametr jądra</a> musi być wskazany na zmapowane urządzenie, np <code>/dev/mapper/<i>vg-name</i>-<i>lv-name</i></code>.
 </p>
 <h2><span class="mw-headline" id="Volume_operations">Volume operations</span></h2>
 <h3><span class="mw-headline" id="Zaawansowane_opcje">Zaawansowane opcje</span></h3>
@@ -456,8 +456,8 @@ To jest teraz domyślne.
 <li>to polecenie przenosi 92468 PE (399668-307200) <b>z</b> ostatniego segmentu <b>do</b> pierwszego segmentu. Jest to możliwe, ponieważ pierwszy segment obejmuje 153600 wolnych PE, które mogą zawierać przesunięte PE-92467.</li>
 <li>opcja <code>--alloc anywhere</code> jest używana podczas przenoszenia PE wewnątrz tej samej partycji. W przypadku różnych partycji polecenie wyglądałoby mniej więcej tak: <pre># pvmove /dev/sdb1:1000-1999 /dev/sdc1:0-999</pre>
 </li>
-<li>to polecenie może zająć dużo czasu (od jednej do dwóch godzin) w przypadku dużych woluminów. Dobrym pomysłem może być uruchomienie tego polecenia w sesji <a href="../en/Tmux.html" title="Tmux">Tmux</a> lub <a href="../en/GNU_Screen.html" title="GNU Screen">GNU Screen</a>. Każde niechciane zatrzymanie procesu może być śmiertelne.</li>
-<li>po zakończeniu operacji uruchom program <a href="../en/Fsck.html" title="Fsck">fsck</a>, aby upewnić się, że system plików jest prawidłowy.</li>
+<li>to polecenie może zająć dużo czasu (od jednej do dwóch godzin) w przypadku dużych woluminów. Dobrym pomysłem może być uruchomienie tego polecenia w sesji <a href="/title/Tmux" title="Tmux">Tmux</a> lub <a href="/title/GNU_Screen" title="GNU Screen">GNU Screen</a>. Każde niechciane zatrzymanie procesu może być śmiertelne.</li>
+<li>po zakończeniu operacji uruchom program <a href="/title/Fsck" title="Fsck">fsck</a>, aby upewnić się, że system plików jest prawidłowy.</li>
 </ul>
 </div>
 <h6>
@@ -478,11 +478,11 @@ To jest teraz domyślne.
 <h6>
 <span id="Zmie.C5.84_rozmiar_partycji"></span><span class="mw-headline" id="Zmień_rozmiar_partycji">Zmień rozmiar partycji</span>
 </h6>
-<p>Na koniec, musisz zmniejszyć partycję za pomocą ulubionego <a href="../en/Partitioning.html#Partitioning_tools" title="Partitioning">narzędzia do partycjonowania</a>.
+<p>Na koniec, musisz zmniejszyć partycję za pomocą ulubionego <a href="/title/Partitioning#Partitioning_tools" title="Partitioning">narzędzia do partycjonowania</a>.
 </p>
 <h4><span class="mw-headline" id="Logical_volumes">Logical volumes</span></h4>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong>  <i>lvresize</i> zapewnia mniej więcej takie same opcje, jak wyspecjalizowane polecenia <code>lvextend</code> i <code>lvreduce</code> pozwalając jednocześnie na wykonywanie obu typów operacji. Niezależnie od tego, wszystkie te narzędzia oferują <code>-r</code>/<code>--resizefs</code> opcja, która pozwala na zmianę rozmiaru systemu plików wraz z LV za pomocą <span class="plainlinks archwiki-template-man" title="$ man 8 fsadm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsadm.8">fsadm(8)</a></span> (<i>ext2</i>, <a href="../en/Ext3.html" title="Ext3">ext3</a>, <a href="../en/Ext4.html" title="Ext4">ext4</a>, <i>ReiserFS</i> and <a href="../en/XFS.html" title="XFS">XFS</a> supported). Dlatego może być łatwiej po prostu użyć <code>lvresize</code> dla obu operacji i użyć <code>--resizefs</code> aby trochę uprościć, chyba że masz określone potrzeby lub chcesz mieć pełną kontrolę nad procesem.</div>
+<strong>Note:</strong>  <i>lvresize</i> zapewnia mniej więcej takie same opcje, jak wyspecjalizowane polecenia <code>lvextend</code> i <code>lvreduce</code> pozwalając jednocześnie na wykonywanie obu typów operacji. Niezależnie od tego, wszystkie te narzędzia oferują <code>-r</code>/<code>--resizefs</code> opcja, która pozwala na zmianę rozmiaru systemu plików wraz z LV za pomocą <span class="plainlinks archwiki-template-man" title="$ man 8 fsadm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsadm.8">fsadm(8)</a></span> (<i>ext2</i>, <a href="/title/Ext3" title="Ext3">ext3</a>, <a href="/title/Ext4" title="Ext4">ext4</a>, <i>ReiserFS</i> and <a href="/title/XFS" title="XFS">XFS</a> supported). Dlatego może być łatwiej po prostu użyć <code>lvresize</code> dla obu operacji i użyć <code>--resizefs</code> aby trochę uprościć, chyba że masz określone potrzeby lub chcesz mieć pełną kontrolę nad procesem.</div>
 <h5><span class="mw-headline" id="Growing_or_shrinking_with_lvresize">Growing or shrinking with lvresize</span></h5>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> Podczas gdy powiększanie systemu plików może często odbywać się w trybie on-line (<i>tj.</i> Podczas instalacji), nawet w przypadku partycji głównej, zmniejszanie prawie zawsze będzie wymagało najpierw odmontowania systemu plików, aby zapobiec utracie danych. Upewnij się, że twój FS obsługuje to, co próbujesz zrobić.</div>
@@ -499,7 +499,7 @@ To jest teraz domyślne.
 <pre># lvresize -L 15G -r vg1/lv1
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Only <i>ext2</i>, <a href="../en/Ext3.html" title="Ext3">ext3</a>, <a href="../en/Ext4.html" title="Ext4">ext4</a>, <i>ReiserFS</i> and <a href="../en/XFS.html" title="XFS">XFS</a> <a href="../en/File_systems.html" title="File systems">file systems</a> are supported. For a different type of file system look for the <a href="../en/File_systems.html#Types_of_file_systems" title="File systems">appropriate utility</a>.</div>
+<strong>Note:</strong> Only <i>ext2</i>, <a href="/title/Ext3" title="Ext3">ext3</a>, <a href="/title/Ext4" title="Ext4">ext4</a>, <i>ReiserFS</i> and <a href="/title/XFS" title="XFS">XFS</a> <a href="/title/File_systems" title="File systems">file systems</a> are supported. For a different type of file system look for the <a href="/title/File_systems#Types_of_file_systems" title="File systems">appropriate utility</a>.</div>
 <p>Jeśli chcesz wypełnić całe wolne miejsce w grupie woluminów, użyj następującego polecenia:
 </p>
 <pre># lvresize -l +100%FREE <i>vg</i>/<i>lv</i>
@@ -510,9 +510,9 @@ To jest teraz domyślne.
 <span id="Rozszerzanie_woluminu_logicznego_i_systemu_plik.C3.B3w_za_jednym_razem"></span><span class="mw-headline" id="Rozszerzanie_woluminu_logicznego_i_systemu_plików_za_jednym_razem">Rozszerzanie woluminu logicznego i systemu plików za jednym razem</span>
 </h5>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="#Growing_or_shrinking_with_lvresize">#Growing or shrinking with lvresize</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="#Growing_or_shrinking_with_lvresize">#Growing or shrinking with lvresize</a>.</b><a href="/title/File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Notes:</b> No need to split the sections. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:LVM_(Polski)">Talk:LVM (Polski)#</a>)</div>
+<b>Notes:</b> No need to split the sections. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:LVM_(Polski)">Talk:LVM (Polski)#</a>)</div>
 </div>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> Not all file systems support resizing without loss of data and/or resizing online.</div>
@@ -530,7 +530,7 @@ To jest teraz domyślne.
 <h5>
 <span id="Zmiana_rozmiaru_systemu_plik.C3.B3w_oddzielnie"></span><span class="mw-headline" id="Zmiana_rozmiaru_systemu_plików_oddzielnie">Zmiana rozmiaru systemu plików oddzielnie</span>
 </h5>
-<p>Jeśli nie używasz <code>-r</code>/<code>--resizefs</code> opcja do <code>lvresize</code>, <code>lvextend</code> lub <code>lvreduce</code>, lub przy użyciu systemu plików nieobsługiwanego przez <span class="plainlinks archwiki-template-man" title="$ man 8 fsadm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsadm.8">fsadm(8)</a></span> (np. <a href="../en/Btrfs.html" title="Btrfs">Btrfs</a>, <a href="../en/ZFS.html" title="ZFS">ZFS</a>), musisz ręcznie zmienić rozmiar systemu plików przed zmniejszeniem LV lub po jego rozszerzeniu.
+<p>Jeśli nie używasz <code>-r</code>/<code>--resizefs</code> opcja do <code>lvresize</code>, <code>lvextend</code> lub <code>lvreduce</code>, lub przy użyciu systemu plików nieobsługiwanego przez <span class="plainlinks archwiki-template-man" title="$ man 8 fsadm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsadm.8">fsadm(8)</a></span> (np. <a href="/title/Btrfs" title="Btrfs">Btrfs</a>, <a href="/title/ZFS" title="ZFS">ZFS</a>), musisz ręcznie zmienić rozmiar systemu plików przed zmniejszeniem LV lub po jego rozszerzeniu.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> Nie wszystkie systemy plików obsługują zmianę rozmiaru bez utraty danych i / lub zmiany rozmiaru online.</div>
@@ -625,9 +625,9 @@ To jest teraz domyślne.
 <span id="Typy_wolumin.C3.B3w_logicznych"></span><span class="mw-headline" id="Typy_woluminów_logicznych">Typy woluminów logicznych</span>
 </h2>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Add instructions for thin-provisioned volume creation and RAID volume creation. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:LVM_(Polski)">Talk:LVM (Polski)#</a>)</div>
+<b>Reason:</b> Add instructions for thin-provisioned volume creation and RAID volume creation. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:LVM_(Polski)">Talk:LVM (Polski)#</a>)</div>
 </div>
 <p>Oprócz prostych woluminów logicznych LVM obsługuje migawki, buforowanie woluminów logicznych, woluminy logiczne o cienkich wersjach i macierze RAID.
 </p>
@@ -654,17 +654,17 @@ To jest teraz domyślne.
 <p>Migawkę można zamontować i zarchiwizować za pomocą narzędzia <i>dd</i> lub <i>tar</i>. Rozmiar pliku kopii zapasowej wykonanego przy pomocy dd będzie wielkości plików znajdujących się na woluminie migawki. Aby przywrócić, po prostu utwórz migawkę, zamontuj ją i napisz lub wyodrębnij do niej kopię zapasową, a następnie scal ją z punktem początkowym.
 </p>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> scripts to automate snapshots of root before updates, to rollback... updating <code>menu.lst</code> to boot snapshots (separate article?) (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:LVM_(Polski)">Talk:LVM (Polski)#</a>)</div>
+<b>Reason:</b> scripts to automate snapshots of root before updates, to rollback... updating <code>menu.lst</code> to boot snapshots (separate article?) (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:LVM_(Polski)">Talk:LVM (Polski)#</a>)</div>
 </div>
 <p>Migawki są używane przede wszystkim do zapewnienia zamrożonej kopii systemu plików do tworzenia kopii zapasowych; wykonanie kopii zapasowej trwającej dwie godziny zapewnia bardziej spójny obraz systemu plików niż bezpośrednie tworzenie kopii zapasowej partycji.
 </p>
-<p>Zobacz <a href="../en/Create_root_filesystem_snapshots_with_LVM.html" title="Create root filesystem snapshots with LVM">Create root filesystem snapshots with LVM</a> do automatyzacji tworzenia czystych migawek systemu plików root podczas uruchamiania systemu w celu tworzenia kopii zapasowych i przywracania.
+<p>Zobacz <a href="/title/Create_root_filesystem_snapshots_with_LVM" title="Create root filesystem snapshots with LVM">Create root filesystem snapshots with LVM</a> do automatyzacji tworzenia czystych migawek systemu plików root podczas uruchamiania systemu w celu tworzenia kopii zapasowych i przywracania.
 </p>
-<p><a href="../en/Dm-crypt/Encrypting_an_entire_system.html#LVM_on_LUKS" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LVM on LUKS</a> i <a href="../en/Dm-crypt/Encrypting_an_entire_system.html#LUKS_on_LVM" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LUKS on LVM</a>.
+<p><a href="/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LVM on LUKS</a> i <a href="/title/Dm-crypt/Encrypting_an_entire_system#LUKS_on_LVM" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LUKS on LVM</a>.
 </p>
-<p>Jeśli masz woluminy LVM nie aktywowane przez <a href="../en/Arch_boot_process.html#initramfs" class="mw-redirect" title="Initramfs">initramfs</a>, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>lvm-monitoring.service</code>, który jest dostarczany przez <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lvm2">lvm2</a></span> pakiet.
+<p>Jeśli masz woluminy LVM nie aktywowane przez <a href="/title/Initramfs" class="mw-redirect" title="Initramfs">initramfs</a>, <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> <code>lvm-monitoring.service</code>, który jest dostarczany przez <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lvm2">lvm2</a></span> pakiet.
 </p>
 <h3><span class="mw-headline" id="LVM_cache">LVM cache</span></h3>
 <p>From <span class="plainlinks archwiki-template-man" title="$ man 7 lvmcache"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvmcache.7">lvmcache(7)</a></span>:
@@ -741,7 +741,7 @@ HOOKS=(base <b>udev</b> ... block <b>lvm2</b> filesystems)</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">MODULES=(<b>dm-raid raid0 raid1 raid10 raid456</b>)
 HOOKS=(base <b>systemd</b> ... block <b>sd-lvm2</b> filesystems)</pre>
 <h2><span class="mw-headline" id="Graficzna_konfiguracja">Graficzna konfiguracja</span></h2>
-<p>Nie ma "oficjalnego" narzędzia GUI do zarządzania woluminami LVM, ale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/system-config-lvm/">system-config-lvm</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> obejmuje większość typowych operacji i zapewnia proste wizualizacje stanu woluminu. Może automatycznie zmieniać rozmiar wielu systemów plików podczas zmiany rozmiaru woluminów logicznych.
+<p>Nie ma "oficjalnego" narzędzia GUI do zarządzania woluminami LVM, ale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/system-config-lvm/">system-config-lvm</a></span><sup><small>AUR</small></sup><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> obejmuje większość typowych operacji i zapewnia proste wizualizacje stanu woluminu. Może automatycznie zmieniać rozmiar wielu systemów plików podczas zmiany rozmiaru woluminów logicznych.
 </p>
 <h2>
 <span id="Rozwi.C4.85zywanie_problem.C3.B3w"></span><span class="mw-headline" id="Rozwiązywanie_problemów">Rozwiązywanie problemów</span>
@@ -760,13 +760,13 @@ HOOKS=(base <b>systemd</b> ... block <b>sd-lvm2</b> filesystems)</pre>
 <p>Moduł <code>dm_mod</code> powinien zostać załadowany automatycznie. Jeśli nie, możesz spróbować:
 </p>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="/title/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Should module loading at boot be done using "/etc/modules-load.d" instead? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:LVM_(Polski)">Talk:LVM (Polski)#</a>)</div>
+<b>Reason:</b> Should module loading at boot be done using "/etc/modules-load.d" instead? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:LVM_(Polski)">Talk:LVM (Polski)#</a>)</div>
 </div>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">MODULES=(dm_mod ...)</pre>
-<p>Będziesz musiał <a href="../en/Mkinitcpio.html#Image_creation_and_activation" class="mw-redirect" title="Regenerate the initramfs">zregenerować initramfs,</a> aby zatwierdzić wprowadzone zmiany.
+<p>Będziesz musiał <a href="/title/Regenerate_the_initramfs" class="mw-redirect" title="Regenerate the initramfs">zregenerować initramfs,</a> aby zatwierdzić wprowadzone zmiany.
 </p>
 <ul><li>Wypróbuj wcześniejsze polecenia za pomocą <i>lvm</i>:</li></ul>
 <pre># lvm pvdisplay
@@ -821,7 +821,7 @@ HOOKS=(base <b>systemd</b> ... block <b>sd-lvm2</b> filesystems)</pre>
 <h3>
 <span id="Polecenie_.22grub-mkconfig.22_zg.C5.82asza_b.C5.82.C4.99dy_.22unknown_filesystem.22_errors"></span><span class="mw-headline" id='Polecenie_"grub-mkconfig"_zgłasza_błędy_"unknown_filesystem"_errors'>Polecenie "grub-mkconfig" zgłasza błędy "unknown filesystem" errors</span>
 </h3>
-<p>Pamiętaj, aby wcześniej usunąć woluminy migawek <a href="../en/GRUB.html#Generate_the_main_configuration_file" title="GRUB">generating grub.cfg</a>.
+<p>Pamiętaj, aby wcześniej usunąć woluminy migawek <a href="/title/GRUB#Generate_the_main_configuration_file" title="GRUB">generating grub.cfg</a>.
 </p>
 <h3><span class="mw-headline" id="Thinly-provisioned_root_volume_device_times_out">Thinly-provisioned root volume device times out</span></h3>
 <p>Przy dużej liczbie migawek, <code>thin_check</code> działa przez wystarczająco długi czas, aby wyczekiwać na przekroczenie limitu czasu roota. Aby to zrekompensować, dodaj parametr startowy <code>rootdelay=60</code> jądra do konfiguracji programu ładującego.
@@ -840,7 +840,7 @@ HOOKS=(base <b>systemd</b> ... block <b>sd-lvm2</b> filesystems)</pre>
 <li>
 <a rel="nofollow" class="external text" href="https://wiki.gentoo.org/wiki/LVM">LVM</a> article at Gentoo wiki</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.tutonics.com/2012/11/ubuntu-lvm-guide-part-1.html">Ubuntu LVM Guide Part 1</a><a rel="nofollow" class="external text" href="http://www.tutonics.com/2012/12/lvm-guide-part-2-snapshots.html">Part 2 detals snapshots</a>
+<a rel="nofollow" class="external text" href="https://www.tutonics.com/2012/11/ubuntu-lvm-guide-part-1.html">Ubuntu LVM Guide Part 1</a><a rel="nofollow" class="external text" href="https://www.tutonics.com/2012/12/lvm-guide-part-2-snapshots.html">Part 2 detals snapshots</a>
 </li>
 <li><a rel="nofollow" class="external text" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Logical_Volume_Manager_Administration/index.html">Red Hat: Logical Volume Manager Administration</a></li>
 </ul>
@@ -848,14 +848,14 @@ HOOKS=(base <b>systemd</b> ... block <b>sd-lvm2</b> filesystems)</pre>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../pl/Category:Storage_virtualization.html" title="Category:Storage virtualization (Polski)">Storage virtualization (Polski)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Storage_virtualization_(Polski)" title="Category:Storage virtualization (Polski)">Storage virtualization (Polski)</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
+<li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Merge" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Expansion" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Accuracy" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
 </div>
@@ -864,15 +864,15 @@ HOOKS=(base <b>systemd</b> ... block <b>sd-lvm2</b> filesystems)</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=LVM_(Polski)&amp;oldid=663070">https://wiki.archlinux.org/index.php?title=LVM_(Polski)&amp;oldid=663070</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 15:43.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=LVM_(Polski)&amp;oldid=668942">https://wiki.archlinux.org/index.php?title=LVM_(Polski)&amp;oldid=668942</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 10:56.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

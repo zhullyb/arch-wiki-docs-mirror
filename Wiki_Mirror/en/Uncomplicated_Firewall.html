@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,13 +36,13 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Iptables.html" title="Iptables">iptables</a></li>
-<li><a href="../en/Sshguard.html" title="Sshguard">sshguard</a></li>
+<li><a href="/title/Iptables" title="Iptables">iptables</a></li>
+<li><a href="/title/Sshguard" title="Sshguard">sshguard</a></li>
 </ul>
 </div>
 <p>From the project <a rel="nofollow" class="external text" href="https://launchpad.net/ufw">home page</a>:
 </p>
-<dl><dd>Ufw stands for Uncomplicated Firewall, and is a program for managing a netfilter <a href="../en/Category:Firewalls.html" class="mw-redirect" title="Firewall">firewall</a>. It provides a command line interface and aims to be uncomplicated and easy to use.</dd></dl>
+<dl><dd>Ufw stands for Uncomplicated Firewall, and is a program for managing a netfilter <a href="/title/Firewall" class="mw-redirect" title="Firewall">firewall</a>. It provides a command line interface and aims to be uncomplicated and easy to use.</dd></dl>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -74,12 +75,12 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ufw">ufw</a></span> package.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ufw">ufw</a></span> package.
 </p>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">Start</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>ufw.service</code> to make it available at boot. Note that this will not work if <code>iptables.service</code> is also enabled (and same for its ipv6 counterpart).
+<p><a href="/title/Start" class="mw-redirect" title="Start">Start</a> and <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> <code>ufw.service</code> to make it available at boot. Note that this will not work if <code>iptables.service</code> is also enabled (and same for its ipv6 counterpart).
 </p>
 <h2><span class="mw-headline" id="Basic_configuration">Basic configuration</span></h2>
-<p>A very simplistic configuration which will deny all by default, allow any protocol from inside a 192.168.0.1-192.168.0.255 LAN, and allow incoming <a href="../en/Deluge.html" title="Deluge">Deluge</a> and <a href="#Rate_limiting_with_ufw">rate limited</a> SSH traffic from <i>anywhere</i>:
+<p>A very simplistic configuration which will deny all by default, allow any protocol from inside a 192.168.0.1-192.168.0.255 LAN, and allow incoming <a href="/title/Deluge" title="Deluge">Deluge</a> and <a href="#Rate_limiting_with_ufw">rate limited</a> SSH traffic from <i>anywhere</i>:
 </p>
 <pre># ufw default deny
 # ufw allow from 192.168.0.0/24
@@ -91,7 +92,7 @@
 <pre># ufw enable
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Make sure <code>ufw.service</code> has been <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enabled">enabled</a>.</div>
+<strong>Note:</strong> Make sure <code>ufw.service</code> has been <a href="/title/Enabled" class="mw-redirect" title="Enabled">enabled</a>.</div>
 <p>Finally, query the rules being applied via the status command:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># ufw status</pre>
@@ -121,7 +122,7 @@ SSH                        LIMIT       Anywhere
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If special network variables are set on the system in <code>/etc/sysctl.d/*</code>, it may be necessary to update <code>/etc/ufw/sysctl.conf</code> accordingly since this configuration overrides the default settings.</div>
 <h2><span class="mw-headline" id="Forward_policy">Forward policy</span></h2>
-<p>Users needing to run a <a href="../en/Category:Virtual_Private_Network.html" class="mw-redirect" title="VPN">VPN</a> such as <a href="../en/OpenVPN.html" title="OpenVPN">OpenVPN</a> or <a href="../en/WireGuard.html" title="WireGuard">WireGuard</a> will need to adjust the <b>DEFAULT_FORWARD_POLICY</b> variable in <code>/etc/default/ufw</code> from a value of <b>"DROP"</b> to <b>"ACCEPT"</b> for proper VPN operation.
+<p>Users needing to run a <a href="/title/VPN" class="mw-redirect" title="VPN">VPN</a> such as <a href="/title/OpenVPN" title="OpenVPN">OpenVPN</a> or <a href="/title/WireGuard" title="WireGuard">WireGuard</a> will need to adjust the <b>DEFAULT_FORWARD_POLICY</b> variable in <code>/etc/default/ufw</code> from a value of <b>"DROP"</b> to <b>"ACCEPT"</b> for proper VPN operation.
 </p>
 <h2><span class="mw-headline" id="Adding_other_applications">Adding other applications</span></h2>
 <p>The PKG comes with some defaults based on the default ports of many common daemons and programs.  Inspect the options by looking in the <code>/etc/ufw/applications.d</code> directory or by listing them in the program itself:
@@ -177,7 +178,7 @@ Deluge-my                  ALLOW       Anywhere
 COMMIT
 </pre>
 <h2><span class="mw-headline" id="Rate_limiting_with_ufw">Rate limiting with ufw</span></h2>
-<p>ufw has the ability to deny connections from an IP address that has attempted to initiate 6 or more connections in the last 30 seconds.  Users should consider using this option for services such as <a href="../en/Secure_Shell.html" class="mw-redirect" title="SSH">SSH</a>.
+<p>ufw has the ability to deny connections from an IP address that has attempted to initiate 6 or more connections in the last 30 seconds.  Users should consider using this option for services such as <a href="/title/SSH" class="mw-redirect" title="SSH">SSH</a>.
 </p>
 <p>Using the above basic configuration, to enable rate limiting we would simply replace the allow parameter with the limit parameter.  The new rule will then replace the previous.
 </p>
@@ -210,7 +211,7 @@ Deluge-my                  ALLOW       Anywhere
 <p>If you use IPv6, related rules are in <code>/etc/ufw/before6.rules</code>.
 </p>
 <h3><span class="mw-headline" id="Disable_UFW_logging">Disable UFW logging</span></h3>
-<p>Disabling logging may be useful to stop UFW filling up the kernel (<code>dmesg</code>) and message logs:
+<p>Disabling logging may be useful to stop UFW filling up the kernel (<a href="/title/Dmesg" class="mw-redirect" title="Dmesg">dmesg</a>) and message logs:
 </p>
 <pre># ufw logging off
 </pre>
@@ -226,22 +227,22 @@ Deluge-my                  ALLOW       Anywhere
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Firewalls.html" title="Category:Firewalls">Firewalls</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Firewalls" title="Category:Firewalls">Firewalls</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Uncomplicated_Firewall&amp;oldid=636767">https://wiki.archlinux.org/index.php?title=Uncomplicated_Firewall&amp;oldid=636767</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 29 September 2020, at 13:10.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Uncomplicated_Firewall&amp;oldid=665842">https://wiki.archlinux.org/index.php?title=Uncomplicated_Firewall&amp;oldid=665842</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 09:08.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

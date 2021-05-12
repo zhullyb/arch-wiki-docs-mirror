@@ -38,13 +38,13 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Rsyslog.html" title="Rsyslog">rsyslog</a></li>
+<li><a href="/title/Rsyslog" title="Rsyslog">rsyslog</a></li>
 </ul>
 </div>
 <p><a href="https://en.wikipedia.org/wiki/syslog-ng" class="extiw" title="w:syslog-ng">syslog-ng</a> is a <a href="https://en.wikipedia.org/wiki/syslog" class="extiw" title="w:syslog">syslog</a> implementation which can take log messages from sources and forward them to destinations, based on powerful filter directives.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> With <a href="../en/Systemd/Journal.html" title="Systemd/Journal">systemd's journal</a>, syslog-ng is not needed by most users.</div>
+<strong>Note:</strong> With <a href="/title/Systemd/Journal" title="Systemd/Journal">systemd's journal</a>, syslog-ng is not needed by most users.</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -106,9 +106,9 @@
 <p>Sources are defined using the "source" directive. These incoming messages are then filtered according to defined filters ("filter" keyword), i.e. according to originating program or log level, and sent to the appropriate "destination". Destinations include log files (e.g. <code>/var/log/messages.log</code>), printing messages on a console and remote servers. The pivotal function is <a href="#Log_Paths">log</a>. This function defines which filters should be applied to a certain source, and where the resulting messages should be sent to.
 </p>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslog-ng">syslog-ng</a></span> package.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslog-ng">syslog-ng</a></span> package.
 </p>
-<p>To use syslog-ng, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a>/<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>syslog-ng@default.service</code>.
+<p>To use syslog-ng, <a href="/title/Start" class="mw-redirect" title="Start">start</a>/<a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> <code>syslog-ng@default.service</code>.
 </p>
 <h3>
 <span id="systemd.2Fjournald_integration"></span><span class="mw-headline" id="systemd/journald_integration">systemd/journald integration</span>
@@ -166,7 +166,7 @@ hazard as the <a rel="nofollow" class="external text" href="https://www.syslog-n
 };</pre>
 <p>If, on the other hand, you wish <i>not</i> to retain the journald logs, but only syslog-ng's text logs, set <code>Storage=volatile</code> in <code>/etc/systemd/journald.conf</code>. This will store journald in ram. As of syslog-ng 3.6.3, syslog-ng is using journald as the system(); source so if you set <code>Storage=none</code>, the systemd journal will drop all messages and <b>not</b> forward them to syslog-ng.
 </p>
-<p>After the change <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> the <code>systemd-journald.service</code> and <code>syslog-ng@default.service</code> daemons.
+<p>After the change <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> the <code>systemd-journald.service</code> and <code>syslog-ng@default.service</code> daemons.
 </p>
 <h2><span class="mw-headline" id="Destinations">Destinations</span></h2>
 <p>In syslog-ng, log messages are sent to files. The syntax is very similar to sources:
@@ -247,7 +247,7 @@ flags(flag1[, flag2...]); };
 <p>After understanding the logic behind syslog-ng, many possible and complex configuration are possible. Here there are some examples.
 </p>
 <h3><span class="mw-headline" id="Have_syslog-ng_reload_the_configuration_file">Have syslog-ng reload the configuration file</span></h3>
-<p>You can make syslog-ng re-evaluate the configuration file. You can do so manually by sending a <code>SIGHUP</code> to the process, or <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Reload">reload</a> <code>syslog-ng@default.service</code>.
+<p>You can make syslog-ng re-evaluate the configuration file. You can do so manually by sending a <code>SIGHUP</code> to the process, or <a href="/title/Reload" class="mw-redirect" title="Reload">reload</a> <code>syslog-ng@default.service</code>.
 </p>
 <h3><span class="mw-headline" id="Failover_Logging_to_Remote_Host">Failover Logging to Remote Host</span></h3>
 <p>This setup shows how to send the default unencrypted syslog packets across both TCP and UDP protocols, using the standard port (514) and an alternate port. This is sending the same output to the same machine 4 different ways to try and make sure packets make it. Mostly useful if you are debugging a remote server that fails to reboot. The different ports and protocols are to make it past any firewall filters or other network problems. Also useful for port-forwarding and using tunnels. Something like this setup is ideal to tunnel across an ssh connection that the prone-to-failover host initiates through a reverse connection.
@@ -522,7 +522,7 @@ YEAR_DAY=148
 </ul>
 <h3><span class="mw-headline" id="See_Also">See Also</span></h3>
 <ul><li>
-<a href="../en/General_troubleshooting.html#netconsole" class="mw-redirect" title="Netconsole">Netconsole</a> A kernel module that sends all kernel log messages (i.e. dmesg) over the network to another computer, without involving user space (e.g. syslogd).</li></ul>
+<a href="/title/Netconsole" class="mw-redirect" title="Netconsole">Netconsole</a> A kernel module that sends all kernel log messages (i.e. <a href="/title/Dmesg" class="mw-redirect" title="Dmesg">dmesg</a>) over the network to another computer, without involving user space (e.g. syslogd).</li></ul>
 <h2><span class="mw-headline" id="External_Links">External Links</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://www.syslog-ng.com/products/open-source-log-management/">syslog-ng OSE Main Page</a></li>
@@ -562,22 +562,22 @@ YEAR_DAY=148
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Logging.html" title="Category:Logging">Logging</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Logging" title="Category:Logging">Logging</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Syslog-ng&amp;oldid=659887">https://wiki.archlinux.org/index.php?title=Syslog-ng&amp;oldid=659887</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 12:33.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Syslog-ng&amp;oldid=666576">https://wiki.archlinux.org/index.php?title=Syslog-ng&amp;oldid=666576</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 11:43.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

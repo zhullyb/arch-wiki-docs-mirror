@@ -36,12 +36,12 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/PCI_passthrough_via_OVMF.html" title="PCI passthrough via OVMF">PCI passthrough via OVMF</a></li>
-<li><a href="../en/QEMU.html" title="QEMU">QEMU</a></li>
-<li><a href="../en/Intel_graphics.html" title="Intel graphics">Intel graphics</a></li>
+<li><a href="/title/PCI_passthrough_via_OVMF" title="PCI passthrough via OVMF">PCI passthrough via OVMF</a></li>
+<li><a href="/title/QEMU" title="QEMU">QEMU</a></li>
+<li><a href="/title/Intel_graphics" title="Intel graphics">Intel graphics</a></li>
 </ul>
 </div>
-<p><a rel="nofollow" class="external text" href="https://github.com/intel/gvt-linux/wiki/GVTg_Setup_Guide">Intel GVT-g</a> is a technology that provides mediated device passthrough for Intel GPUs (Broadwell and newer). It can be used to virtualize the GPU for multiple guest virtual machines, effectively providing near-native graphics performance in the virtual machine and still letting your host use the virtualized GPU normally. This is useful if you want accelerated graphics in Windows virtual machines running on ultrabooks without dedicated GPUs for <a href="../en/PCI_passthrough_via_OVMF.html" title="PCI passthrough via OVMF">full device passthrough</a>. (Similar technologies exist for NVIDIA and AMD GPUs, but they are available only in the "professional" GPU lines like Quadro, Radeon Pro and so on.)
+<p><a rel="nofollow" class="external text" href="https://github.com/intel/gvt-linux/wiki/GVTg_Setup_Guide">Intel GVT-g</a> is a technology that provides mediated device passthrough for Intel GPUs (Broadwell and newer). It can be used to virtualize the GPU for multiple guest virtual machines, effectively providing near-native graphics performance in the virtual machine and still letting your host use the virtualized GPU normally. This is useful if you want accelerated graphics in Windows virtual machines running on ultrabooks without dedicated GPUs for <a href="/title/PCI_passthrough_via_OVMF" title="PCI passthrough via OVMF">full device passthrough</a>. (Similar technologies exist for NVIDIA and AMD GPUs, but they are available only in the "professional" GPU lines like Quadro, Radeon Pro and so on.)
 </p>
 <p>There is also a variant of this technology called GVT-d - it is essentially Intel's name for full device passthrough with the vfio-pci driver. With GVT-d, the host cannot use the virtualized GPU.
 </p>
@@ -136,13 +136,13 @@
 <p>You will need to:
 </p>
 <ul>
-<li>Use at least Linux 4.16 and <a href="../en/QEMU.html" title="QEMU">QEMU</a> 2.12.</li>
-<li>Enable IOMMU by adding <code>intel_iommu=on</code> to your <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a>.</li>
+<li>Use at least Linux 4.16 and <a href="/title/QEMU" title="QEMU">QEMU</a> 2.12.</li>
+<li>Enable IOMMU by adding <code>intel_iommu=on</code> to your <a href="/title/Kernel_parameters" title="Kernel parameters">kernel parameters</a>.</li>
 <li>
-<a href="../en/Kernel_module.html#Automatic_module_loading_with_systemd" title="Kernel module">Enable</a> kernel modules: <code>kvmgt</code>, <code>vfio-iommu-type1</code> and <code>vfio-mdev</code>.</li>
+<a href="/title/Kernel_module#Automatic_module_loading_with_systemd" title="Kernel module">Enable</a> kernel modules: <code>kvmgt</code>, <code>vfio-iommu-type1</code> and <code>vfio-mdev</code>.</li>
 <li>
-<a href="../en/Kernel_module.html#Setting_module_options" title="Kernel module">Set</a> i915 module parameter <code>enable_gvt=1</code> to enable GPU virtualization.</li>
-<li>Add <code>i915.enable_guc=0</code> to <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a>, see warning at <a href="../en/Intel_graphics.html#Enable_GuC_/_HuC_firmware_loading" title="Intel graphics">Intel graphics#Enable GuC / HuC firmware loading</a>.</li>
+<a href="/title/Kernel_module#Setting_module_options" title="Kernel module">Set</a> i915 module parameter <code>enable_gvt=1</code> to enable GPU virtualization.</li>
+<li>Add <code>i915.enable_guc=0</code> to <a href="/title/Kernel_parameters" title="Kernel parameters">kernel parameters</a>, see warning at <a href="/title/Intel_graphics#Enable_GuC_/_HuC_firmware_loading" title="Intel graphics">Intel graphics#Enable GuC / HuC firmware loading</a>.</li>
 <li>Find the PCI address and domain number of your GPU (<code>$GVT_PCI</code> and <code>$GVT_DOM</code> in commands below), as it resides in <code>/sys/bus/pci/devices</code>. It looks like this: <code>0000:00:02.0</code> - you can look it up by running <code>lspci -D -nn</code>, looking for <code>VGA compatible controller: Intel Corporation HD Graphics ...</code> and noting down the address on the left.</li>
 <li>Generate a virtual GPU GUID (<code>$GVT_GUID</code> in commands below) which you will use to create and assign the virtual GPU. A single virtual GPU can be assigned only to a single virtual machine - create as many GUIDs as you want virtual GPUs. (You can do so by running <code>uuidgen</code>.)</li>
 </ul>
@@ -178,7 +178,7 @@ if [ $# -ge 3 ]; then
         echo 1 &gt; /sys/bus/pci/devices/$GVT_PCI/$GVT_GUID/remove
     fi
 fi</pre>
-<p>Do not forget to make the file <a href="../en/Help:Reading.html#Make_executable" class="mw-redirect" title="Executable">executable</a>.
+<p>Do not forget to make the file <a href="/title/Executable" class="mw-redirect" title="Executable">executable</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
@@ -357,7 +357,7 @@ fi</pre>
 </pre>
 <h3><span class="mw-headline" id="Disable_all_outputs">Disable all outputs</span></h3>
 <p>If all outputs are disabled, the only way to see the display output would then be using a software server like RDP, VNC or Looking Glass.
-To see more details in <a href="../en/PCI_passthrough_via_OVMF.html#Using_Looking_Glass_to_stream_guest_screen_to_the_host" title="PCI passthrough via OVMF">using Looking Glass to stream guest screen to the host</a>.
+To see more details in <a href="/title/PCI_passthrough_via_OVMF#Using_Looking_Glass_to_stream_guest_screen_to_the_host" title="PCI passthrough via OVMF">using Looking Glass to stream guest screen to the host</a>.
 </p>
 <h4><span class="mw-headline" id="QEMU_CLI_5">QEMU CLI</span></h4>
 <p>In the <code>-device vfio-pci</code> parameter, remove <code>ramfb=on</code> and change to <code>display=off</code>. Add <code>-vga none</code> to disable the QEMU VGA adapter.
@@ -374,7 +374,7 @@ To see more details in <a href="../en/PCI_passthrough_via_OVMF.html#Using_Lookin
 <h3><span class="mw-headline" id="Missing_mdev_supported_types_directory">Missing mdev_supported_types directory</span></h3>
 <p>If you have followed instructions and added <code>i915.enable_gvt=1</code> kernel parameter, but there is still no <code>/sys/bus/pci/devices/0000:02:00.0/mdev_supported_types</code> directory, first double-check that the <code>kvmgt</code> module is loaded.
 </p>
-<p>You should also check whether your hardware is supported. Check dmesg log for this message:
+<p>You should also check whether your hardware is supported. Check the output of <a href="/title/Dmesg" class="mw-redirect" title="Dmesg">dmesg</a> for this message:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep -i gvt </pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[    4.227468] [drm] Unsupported device. GVT-g is disabled</pre>
@@ -382,14 +382,14 @@ To see more details in <a href="../en/PCI_passthrough_via_OVMF.html#Using_Lookin
 For example, for the "Coffee Lake" (CFL) platform support, see <a rel="nofollow" class="external free" href="https://github.com/intel/gvt-linux/issues/53">https://github.com/intel/gvt-linux/issues/53</a>
 </p>
 <h3><span class="mw-headline" id="Windows_hanging_with_bad_memory_error">Windows hanging with bad memory error</span></h3>
-<p>If Windows is hanging due to a Bad Memory error look for more details via dmesg. If the logs show something like rlimit memory exceeded, you may need to increase the max memory linux allows qemu to allocate. Assuming you are in the group <code>kvm</code>, add the following to <code>/etc/security/limits.conf</code> and restarting the system.
+<p>If Windows is hanging due to a Bad Memory error look for more details via <i>dmesg</i>. If the logs show something like rlimit memory exceeded, you may need to increase the max memory linux allows qemu to allocate. Assuming you are in the group <code>kvm</code>, add the following to <code>/etc/security/limits.conf</code> and restarting the system.
 </p>
 <pre># qemu kvm, need high memlock to allocate memory for vga-passthrough
 @kvm	hard	memlock	8388608
 @kvm	soft	memlock	8388608
 </pre>
 <h3><span class="mw-headline" id="Using_Intel_GVT-G_in_combination_with_PRIME_render_offload">Using Intel GVT-G in combination with PRIME render offload</span></h3>
-<p>Using Intel GVT-G while also using NVIDIA's <a href="../en/PRIME.html#PRIME_render_offload" title="PRIME">PRIME render offload</a> on the host causes several <a rel="nofollow" class="external text" href="https://github.com/intel/gvt-linux/issues/162">issues</a> on the guest. It is suggested to use <a href="../en/Bumblebee.html#Power_management" class="mw-redirect" title="Bbswitch">bbswitch</a> to keep the card powered off or use it in conjunction with <a href="../en/Bumblebee.html" title="Bumblebee">Bumblebee</a>, <a href="../en/Nvidia-xrun.html" title="Nvidia-xrun">nvidia-xrun</a> or <a href="../en/NVIDIA_Optimus.html#Using_optimus-manager" title="NVIDIA Optimus">optimus-manager</a>.
+<p>Using Intel GVT-G while also using NVIDIA's <a href="/title/PRIME#PRIME_render_offload" title="PRIME">PRIME render offload</a> on the host causes several <a rel="nofollow" class="external text" href="https://github.com/intel/gvt-linux/issues/162">issues</a> on the guest. It is suggested to use <a href="/title/Bbswitch" class="mw-redirect" title="Bbswitch">bbswitch</a> to keep the card powered off or use it in conjunction with <a href="/title/Bumblebee" title="Bumblebee">Bumblebee</a>, <a href="/title/Nvidia-xrun" title="Nvidia-xrun">nvidia-xrun</a> or <a href="/title/NVIDIA_Optimus#Using_optimus-manager" title="NVIDIA Optimus">optimus-manager</a>.
 </p>
 <h3><span class="mw-headline" id="No_display">No display</span></h3>
 <p>If your virtual machine is not displaying anything when using RAMFB display, try setting the following additional options to the existing &lt;qemu:commandline&gt; tag:
@@ -431,9 +431,9 @@ For example, for the "Coffee Lake" (CFL) platform support, see <a rel="nofollow"
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Virtualization.html" title="Category:Virtualization">Virtualization</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Virtualization" title="Category:Virtualization">Virtualization</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_dead_links" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -441,15 +441,15 @@ For example, for the "Coffee Lake" (CFL) platform support, see <a rel="nofollow"
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Intel_GVT-g&amp;oldid=663255">https://wiki.archlinux.org/index.php?title=Intel_GVT-g&amp;oldid=663255</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 07:11.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Intel_GVT-g&amp;oldid=665822">https://wiki.archlinux.org/index.php?title=Intel_GVT-g&amp;oldid=665822</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 08:39.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

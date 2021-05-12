@@ -36,8 +36,8 @@
 <p><span></span>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/Fish.html" title="Fish">Fish</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2019-05-09。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Fish&amp;diff=0&amp;oldid=567009">更改</a>，则您可以帮助同步翻译。</div>
-<p><a rel="nofollow" class="external text" href="https://fishshell.com">fish</a>是“<i><b>f</b>riendly <b>i</b>nteractive <b>sh</b>ell</i>”的缩写，是一个“交互式的、对用户友好的 <a href="../en/Command-line_shell.html" title="Command-line shell">命令行shell</a>”。
+<strong>翻译状态：</strong>本文是 <a href="/title/Fish" title="Fish">Fish</a> 的<a href="/title/ArchWiki:Translation_Team_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2019-05-09。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Fish&amp;diff=0&amp;oldid=567009">更改</a>，则您可以帮助同步翻译。</div>
+<p><a rel="nofollow" class="external text" href="https://fishshell.com">fish</a>是“<i><b>f</b>riendly <b>i</b>nteractive <b>sh</b>ell</i>”的缩写，是一个“交互式的、对用户友好的 <a href="/title/Command-line_shell" title="Command-line shell">命令行shell</a>”。
 </p>
 <p><i>fish</i>被有意设计成不完全与<a href="https://en.wikipedia.org/wiki/POSIX" class="extiw" title="wikipedia:POSIX">POSIX</a>兼容。fish的作者们认为POSIX中存在一些缺陷和矛盾，并通过fish简化的或不同的语法解决这些问题。因此，即使简单的POSIX兼容的脚本也可能需要较多的修改，甚至完全重写，才能在fish中运行。
 </p>
@@ -102,14 +102,14 @@
 <h2>
 <span id=".E6.8A.8Afish.E9.9B.86.E6.88.90.E5.88.B0.E7.B3.BB.E7.BB.9F.E4.B8.AD"></span><span class="mw-headline" id="把fish集成到系统中">把fish集成到系统中</span>
 </h2>
-<p>需要考虑的是：是把fish设置为默认shell，也就是用户登录时直接进入的shell，还是通过当前的默认shell启动fish，并只在交互模式下使用fish。这里，我们假设当前的默认shell是<a href="../zh-CN/Bash.html" title="Bash (简体中文)">Bash</a>。
+<p>需要考虑的是：是把fish设置为默认shell，也就是用户登录时直接进入的shell，还是通过当前的默认shell启动fish，并只在交互模式下使用fish。这里，我们假设当前的默认shell是<a href="/title/Bash_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Bash (简体中文)">Bash</a>。
 </p>
 <ul><li>把fish设为<b>默认shell</b>：这种方式需要用户对fish的运行机制及其脚本语言有些基本的了解。用户需要把当前的初始化脚本和环境变量移动到fish的环境中。<a href="#%E6%8A%8Afish%E8%AE%BE%E4%B8%BA%E9%BB%98%E8%AE%A4shell">#把fish设为默认shell</a>中有具体的步骤。</li></ul>
 <ul><li>只把fish用作<b>交互式shell</b>：这种方法“破坏性”较小。Bash会照常运行所有的初始化脚本，并在此基础上启动fish。<a href="#%E5%8F%AA%E6%8A%8Afish%E8%AE%BE%E4%B8%BA%E4%BA%A4%E4%BA%92%E5%BC%8Fshell">#只把fish设为交互式shell</a>中有具体的步骤。</li></ul>
 <h3>
 <span id=".E6.8A.8Afish.E8.AE.BE.E4.B8.BA.E9.BB.98.E8.AE.A4shell"></span><span class="mw-headline" id="把fish设为默认shell">把fish设为默认shell</span>
 </h3>
-<p>如果你决定把fish设为默认的shell，首先你需要将你的用户的shell改为<code>/usr/bin/fish</code>。参照<a href="../en/Command-line_shell.html#Changing_your_default_shell" title="Command-line shell">Command-line shell#Changing your default shell</a>中的步骤。
+<p>如果你决定把fish设为默认的shell，首先你需要将你的用户的shell改为<code>/usr/bin/fish</code>。参照<a href="/title/Command-line_shell#Changing_your_default_shell" title="Command-line shell">Command-line shell#Changing your default shell</a>中的步骤。
 </p>
 <p>下一步是把Bash的几个初始化脚本中现有的操作和配置写成fish的格式。这些脚本分别是<code>/etc/profile</code>、<code>~/.bash_profile</code>、<code>/etc/bash.bashrc</code>和<code>~/.bashrc</code>。
 </p>
@@ -127,7 +127,7 @@
 <h4>
 <span id=".E9.80.9A.E8.BF.87.bashrc.E5.90.AF.E5.8A.A8fish"></span><span class="mw-headline" id="通过.bashrc启动fish">通过.bashrc启动fish</span>
 </h4>
-<p>保持默认shell为Bash不变，然后添加一行<code>exec fish</code>到合适的<a href="../en/Bash.html#Configuration_files" title="Bash">Bash配置文件</a>中，比如<code>.bashrc</code>。在这种方法中，Bash会正常执行<code>/etc/profile</code>和<code>/etc/profile.d</code>中的所有配置文件。相对于之后几种方法，这种是最通用的，因为这种方法在本机计算机和SSH远程计算机上都能使用。
+<p>保持默认shell为Bash不变，然后添加一行<code>exec fish</code>到合适的<a href="/title/Bash#Configuration_files" title="Bash">Bash配置文件</a>中，比如<code>.bashrc</code>。在这种方法中，Bash会正常执行<code>/etc/profile</code>和<code>/etc/profile.d</code>中的所有配置文件。相对于之后几种方法，这种是最通用的，因为这种方法在本机计算机和SSH远程计算机上都能使用。
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> 
@@ -152,7 +152,7 @@
 <h4>
 <span id=".E4.BD.BF.E7.94.A8.E7.BB.88.E7.AB.AF.E5.A4.8D.E7.94.A8.E5.99.A8.E7.9A.84.E9.80.89.E9.A1.B9"></span><span class="mw-headline" id="使用终端复用器的选项">使用终端复用器的选项</span>
 </h4>
-<p>要将fish设为<a href="../en/Tmux.html" title="Tmux">tmux</a>启动的默认shell，在<code>~/.tmux.conf</code>中加入这行：
+<p>要将fish设为<a href="/title/Tmux" title="Tmux">tmux</a>启动的默认shell，在<code>~/.tmux.conf</code>中加入这行：
 </p>
 <pre>set-option -g default-shell "/usr/bin/fish"
 </pre>
@@ -296,7 +296,7 @@ end
 <h3>
 <span id=".22command_not_found.22_.E9.92.A9.E5.AD.90"></span><span class="mw-headline" id='"command_not_found"_钩子'>"command not found" 钩子</span>
 </h3>
-<p><a href="../en/Pkgfile.html" title="Pkgfile">pkgfile</a> 包含了一个 "未找到命令"("command not found") 钩子，但你输入一个当前系统不存在的命令，pkgfile会自动从官方仓库中搜索哪个安装包有这个命令。只要你安装了<a href="../en/Pkgfile.html" title="Pkgfile">pkgfile</a>，这个钩子就会自动启用。
+<p><a href="/title/Pkgfile" title="Pkgfile">pkgfile</a> 包含了一个 "未找到命令"("command not found") 钩子，但你输入一个当前系统不存在的命令，pkgfile会自动从官方仓库中搜索哪个安装包有这个命令。只要你安装了<a href="/title/Pkgfile" title="Pkgfile">pkgfile</a>，这个钩子就会自动启用。
 </p>
 <h3>
 <span id=".E4.BB.8Ejobs.E4.B8.AD.E5.88.A0.E9.99.A4.E8.BF.9B.E7.A8.8B"></span><span class="mw-headline" id="从jobs中删除进程">从jobs中删除进程</span>
@@ -328,27 +328,27 @@ $ funcsave FooAliasName
 <li>
 <a rel="nofollow" class="external free" href="https://fishshell.com/docs/current/index.html">https://fishshell.com/docs/current/index.html</a> - 文档</li>
 <li>
-<a rel="nofollow" class="external free" href="http://hyperpolyglot.org/unix-shells">http://hyperpolyglot.org/unix-shells</a> - Shell 语法对照表</li>
+<a rel="nofollow" class="external free" href="https://hyperpolyglot.org/unix-shells">https://hyperpolyglot.org/unix-shells</a> - Shell 语法对照表</li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Command-line_shells.html" title="Category:Command-line shells (简体中文)">Command-line shells (简体中文)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Command-line_shells_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Category:Command-line shells (简体中文)">Command-line shells (简体中文)</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fish_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=661908">https://wiki.archlinux.org/index.php?title=Fish_(简体中文)&amp;oldid=661908</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 15:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fish_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=668755">https://wiki.archlinux.org/index.php?title=Fish_(简体中文)&amp;oldid=668755</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 10:43.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

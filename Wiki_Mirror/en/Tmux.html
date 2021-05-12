@@ -36,7 +36,7 @@
 <p><span></span>
 <a rel="nofollow" class="external text" href="https://tmux.github.io/">tmux</a> is a "terminal multiplexer: it enables a number of terminals (or windows), each running a separate program, to be created, accessed, and controlled from a single screen. tmux may be detached from a screen and continue running in the background, then later reattached." 
 </p>
-<p>tmux is an ISC-licensed alternative to <a href="../en/GNU_Screen.html" title="GNU Screen">GNU Screen</a>. Although similar, there are many differences between the programs, as noted on the <a rel="nofollow" class="external text" href="https://github.com/tmux/tmux/wiki/FAQ">tmux FAQ page</a>.
+<p>tmux is an ISC-licensed alternative to <a href="/title/GNU_Screen" title="GNU Screen">GNU Screen</a>. Although similar, there are many differences between the programs, as noted on the <a rel="nofollow" class="external text" href="https://github.com/tmux/tmux/wiki/FAQ">tmux FAQ page</a>.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -116,18 +116,18 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tmux">tmux</a></span> package.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tmux">tmux</a></span> package.
 Optionally, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tmux-bash-completion-git/">tmux-bash-completion-git</a></span><sup><small>AUR</small></sup> to provide bash completion functions for tmux.
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <p>A user-specific configuration file should be located at <code>~/.tmux.conf</code>, while a global configuration file should be located at <code>/etc/tmux.conf</code>.
 </p>
 <h3><span class="mw-headline" id="Key_bindings">Key bindings</span></h3>
-<p>By default, command key bindings are prefixed by <code>Ctrl-b</code>. For example, to vertically split a window type <code>Ctrl-b+%</code>.
+<p>By default, command key bindings are prefixed by <code>Ctrl+b</code>. For example, to vertically split a window type <code>Ctrl+b %</code>.
 </p>
-<p>After splitting a window into multiple panes, a pane can be resized by the hitting prefix key (e.g. <code>Ctrl-b</code>) and, while continuing to hold Ctrl, press Left/Right/Up/Down. Swapping panes is achieved in the same manner, but by hitting <i>o</i> instead of a directional key.
+<p>After splitting a window into multiple panes, a pane can be resized by the hitting prefix key (e.g. <code>Ctrl+b</code>) and, while continuing to hold <code>Ctrl</code>, press Left/Right/Up/Down. Swapping panes is achieved in the same manner, but by hitting <i>o</i> instead of a directional key.
 </p>
-<p>Key bindings may be changed with the bind and unbind commands in <code>tmux.conf</code>. For example, the default prefix binding of <code>Ctrl-b</code> can be changed to <code>Ctrl-a</code> by adding the following commands in your configuration file:
+<p>Key bindings may be changed with the bind and unbind commands in <code>tmux.conf</code>. For example, the default prefix binding of <code>Ctrl+b</code> can be changed to <code>Ctrl+a</code> by adding the following commands in your configuration file:
 </p>
 <pre>unbind C-b
 set -g prefix C-a
@@ -136,24 +136,26 @@ bind C-a send-prefix
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> Quote special characters to use them as prefix. You may also use <code>Alt</code> (called Meta) instead of <code>Ctrl</code>. For example: <code>set -g prefix m-'\'</code>
 </div>
+<p>To create a new window you can use <code>Ctrl+b c</code> and move forward one window with <code>Ctrl+b n</code> and backwards one window with <code>Ctrl+b p</code>.
+</p>
 <p>Additional ways to move between windows include the following:
 </p>
-<pre>Ctrl-b l (Move to the previously selected window)
-Ctrl-b w (List all windows / window numbers)
-Ctrl-b &lt;window number&gt; (Move to the specified window number, the default bindings are from 0 – 9)
-Ctrl-b q  (Show pane numbers, when the numbers show up type the key to goto that pane)
+<pre>Ctrl+b l (Move to the previously selected window)
+Ctrl+b w (List all windows / window numbers)
+Ctrl+b &lt;window number&gt; (Move to the specified window number, the default bindings are from 0 – 9)
+Ctrl+b q  (Show pane numbers, when the numbers show up type the key to goto that pane)
 </pre>
 <p>tmux has a find-window option &amp; key binding to ease navigation of many windows:
 </p>
-<pre>Ctrl-b f &lt;window name&gt; (Search for window name)
-Ctrl-b w (Select from interactive list of windows)
+<pre>Ctrl+b f &lt;window name&gt; (Search for window name)
+Ctrl+b w (Select from interactive list of windows)
 </pre>
 <h4><span class="mw-headline" id="Copy_Mode">Copy Mode</span></h4>
-<p>A tmux window may be in one of several modes. The default permits direct access to the terminal attached to the window; the other is copy mode. Once in copy mode you can navigate the buffer including scrolling the history. Use <a href="../en/Vi.html" title="Vi">vi</a> or <a href="../en/Emacs.html" title="Emacs">emacs</a>-style key bindings in copy mode. The default is emacs, unless VISUAL or EDITOR contains ‘vi’
+<p>A tmux window may be in one of several modes. The default permits direct access to the terminal attached to the window; the other is copy mode. Once in copy mode you can navigate the buffer including scrolling the history. Use <a href="/title/Vi" title="Vi">vi</a> or <a href="/title/Emacs" title="Emacs">emacs</a>-style key bindings in copy mode. The default is emacs, unless VISUAL or EDITOR contains ‘vi’
 </p>
 <p>To enter copy mode do the following:
 </p>
-<pre>Ctrl-b [
+<pre>Ctrl+b [
 </pre>
 <p>You can navigate the buffer as you would in your default editor.
 </p>
@@ -193,7 +195,7 @@ Ctrl-b w (Select from interactive list of windows)
 <pre>alias tmux="tmux -2"
 </pre>
 <h4><span class="mw-headline" id="24-bit_color">24-bit color</span></h4>
-<p>tmux supports 24-bit color as of version 2.2 <a rel="nofollow" class="external autonumber" href="https://github.com/tmux/tmux/commit/427b8204268af5548d09b830e101c59daa095df9">[1]</a>. If your terminal supports 24-bit color (see this <a rel="nofollow" class="external text" href="https://gist.github.com/XVilka/8346728">gist</a>), add your terminal to the <code>terminal-overrides</code> setting. For example, if you use <a href="../en/Termite.html" title="Termite">Termite</a>, you would add:
+<p>tmux supports 24-bit color as of version 2.2 <a rel="nofollow" class="external autonumber" href="https://github.com/tmux/tmux/commit/427b8204268af5548d09b830e101c59daa095df9">[1]</a>. If your terminal supports 24-bit color (see this <a rel="nofollow" class="external text" href="https://gist.github.com/XVilka/8346728">gist</a>), add your terminal to the <code>terminal-overrides</code> setting. For example, if you use <a href="/title/Termite" title="Termite">Termite</a>, you would add:
 </p>
 <pre>set -ga terminal-overrides ",xterm-termite:Tc"
 </pre>
@@ -255,7 +257,7 @@ WantedBy=multi-user.target
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> You may want to add <code>WorkingDirectory=<i>custom_path</i></code> to customize working directory. If set to <code>~</code>, the home directory of the user specified in <code>User=</code> is used.</div>
-<p>Alternatively, you can place this file within your <a href="../en/Systemd/User.html" title="Systemd/User">systemd/User</a> directory (without <code>User=%I</code> and by replacing <code>multi-user.target</code> with <code>default.target</code> in <code>WantedBy</code>), for example <code>~/.config/systemd/user/tmux.service</code>. This way the tmux service will start when you log in, unless you also enable <a href="../en/Systemd/User.html#Automatic_start-up_of_systemd_user_instances" title="Systemd/User">systemd/User#Automatic start-up of systemd user instances</a>.
+<p>Alternatively, you can place this file within your <a href="/title/Systemd/User" title="Systemd/User">systemd/User</a> directory (without <code>User=%I</code> and by replacing <code>multi-user.target</code> with <code>default.target</code> in <code>WantedBy</code>), for example <code>~/.config/systemd/user/tmux.service</code>. This way the tmux service will start when you log in, unless you also enable <a href="/title/Systemd/User#Automatic_start-up_of_systemd_user_instances" title="Systemd/User">systemd/User#Automatic start-up of systemd user instances</a>.
 </p>
 <h2><span class="mw-headline" id="Session_initialization">Session initialization</span></h2>
 <p>You can have tmux open a session with preloaded windows by including those details in your <code>~/.tmux.conf</code>:
@@ -330,13 +332,13 @@ set -g mouse on
 <p>That's it. Be sure to end all instances of tmux before trying the new MiddleClick functionality.
 </p>
 <p>While in tmux, Shift+MiddleMouseClick will paste the clipboard selection while just MiddleMouseClick will paste your tmux buffer.
-Outside of tmux, just use MiddleMouseClick to paste your tmux buffer and your standard Ctrl-c to copy.
+Outside of tmux, just use MiddleMouseClick to paste your tmux buffer and your standard <code>Ctrl+c</code> to copy.
 </p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Start_tmux_with_default_session_layout">Start tmux with default session layout</span></h3>
-<p>Session managers like tmuxinator and <a href="../en/Tmuxp.html" title="Tmuxp">tmuxp</a> make it easy to manage common session configurations.
+<p>Session managers like tmuxinator and <a href="/title/Tmuxp" title="Tmuxp">tmuxp</a> make it easy to manage common session configurations.
 </p>
-<p>For tmuxinator, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tmuxinator/">tmuxinator</a></span><sup><small>AUR</small></sup> from <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>. Test your installation with
+<p>For tmuxinator, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/tmuxinator/">tmuxinator</a></span><sup><small>AUR</small></sup> from <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a>. Test your installation with
 </p>
 <pre>tmuxinator doctor
 </pre>
@@ -411,7 +413,7 @@ tmux -2 attach-session -d
   &amp;&amp; [ -z "${TMUX}" ] \
   &amp;&amp; (tmux attach || tmux) &gt;/dev/null 2&gt;&amp;1
 </pre>
-<p>Note that the above snippet causes tmux to launch in <i>any</i> login shell, including the virtual console. This interferes with <a href="../en/Xinit.html#Autostart_X_at_login" title="Xinit">Xinit#Autostart X at login</a>. 
+<p>Note that the above snippet causes tmux to launch in <i>any</i> login shell, including the virtual console. This interferes with <a href="/title/Xinit#Autostart_X_at_login" title="Xinit">Xinit#Autostart X at login</a>. 
 </p>
 <p>To launch tmux only when there's a graphical environment running, use this instead:
 </p>
@@ -422,7 +424,7 @@ if [ -x "$(command -v tmux)" ] &amp;&amp; [ -n "${DISPLAY}" ]; then
 fi
 </pre>
 <h3><span class="mw-headline" id="Start_a_non-login_shell">Start a non-login shell</span></h3>
-<p>tmux starts a <a href="../en/Command-line_shell.html#Login_shell" class="mw-redirect" title="Login shell">login shell</a> <a rel="nofollow" class="external text" href="https://web.archive.org/web/20160418141934/http://comments.gmane.org/gmane.comp.terminal-emulators.tmux.user/5997">by default</a>, which may result in multiple negative side effects:
+<p>tmux starts a <a href="/title/Login_shell" class="mw-redirect" title="Login shell">login shell</a> <a rel="nofollow" class="external text" href="https://web.archive.org/web/20160418141934/http://comments.gmane.org/gmane.comp.terminal-emulators.tmux.user/5997">by default</a>, which may result in multiple negative side effects:
 </p>
 <ul>
 <li>Users of <a href="https://en.wikipedia.org/wiki/fortune_(Unix)" class="extiw" title="wikipedia:fortune (Unix)">fortune</a> may notice that quotes are printed when creating a new panel.</li>
@@ -433,7 +435,7 @@ fi
 <pre>set -g default-command "${SHELL}"
 </pre>
 <h3><span class="mw-headline" id="Use_tmux_windows_like_tabs">Use tmux windows like tabs</span></h3>
-<p>The following settings added to <code>~/.tmux.conf</code> allow to use tmux windows like tabs, such as those provided by the reference of these hotkeys — <a href="../en/Rxvt-unicode/Tips_and_tricks.html#urxvtq_with_tabbing" title="Rxvt-unicode/Tips and tricks">urxvt's tabbing extensions</a>. An advantage thereof is that these virtual “tabs” are independent of the terminal emulator.
+<p>The following settings added to <code>~/.tmux.conf</code> allow to use tmux windows like tabs, such as those provided by the reference of these hotkeys — <a href="/title/Rxvt-unicode/Tips_and_tricks#urxvtq_with_tabbing" title="Rxvt-unicode/Tips and tricks">urxvt's tabbing extensions</a>. An advantage thereof is that these virtual “tabs” are independent of the terminal emulator.
 </p>
 <pre>#urxvt tab like window switching (-n: no prior escape seq)
 bind -n S-down new-window
@@ -582,7 +584,7 @@ fi
     tmux select-window -t $1 ;
 exit 0
 </pre>
-<p>A derived version to run <i>irssi</i> with the <i>nicklist</i> plugin can be found on <a href="../en/Irssi.html#Irssi_with_nicklist_in_tmux" title="Irssi">its ArchWiki page</a>.
+<p>A derived version to run <i>irssi</i> with the <i>nicklist</i> plugin can be found on <a href="/title/Irssi#Irssi_with_nicklist_in_tmux" title="Irssi">its ArchWiki page</a>.
 </p>
 <h3><span class="mw-headline" id="Terminal_emulator_window_titles">Terminal emulator window titles</span></h3>
 <p>If you SSH into a host in a tmux window, you'll notice the window title of your terminal emulator remains to be <code>user@localhost</code> rather than <code>user@server</code>. To allow the title bar to adapt to whatever host you connect to, set the following in <code>~/.tmux.conf</code>
@@ -604,12 +606,12 @@ bind-key -n M-n split-window \; select-layout
 <p>See the following if your vim colorscheme isn't loading in tmux: <a rel="nofollow" class="external autonumber" href="https://stackoverflow.com/a/47994805">[3]</a> <a rel="nofollow" class="external autonumber" href="https://github.com/vim/vim/issues/993#issuecomment-255651605">[4]</a>
 </p>
 <h3><span class="mw-headline" id="Vim_friendly_configuration">Vim friendly configuration</span></h3>
-<p>See <a rel="nofollow" class="external autonumber" href="https://gist.github.com/Lartza/6a7a62466a8a3e436234412d9b1c5066">[5]</a> for a configuration friendly to <a href="../en/Vim.html" title="Vim">vim</a> users.
+<p>See <a rel="nofollow" class="external autonumber" href="https://gist.github.com/Lartza/6a7a62466a8a3e436234412d9b1c5066">[5]</a> for a configuration friendly to <a href="/title/Vim" title="Vim">vim</a> users.
 </p>
 <h3><span class="mw-headline" id="Friendly_pane_splitting">Friendly pane splitting</span></h3>
-<p>The default key-binding for splitting a pane vertically is <code>Ctrl</code> + <code>b</code> <code>%</code> and for splitting a pane horizontally is <code>Ctrl</code> + <code>b</code> <code>"</code>. That can be difficult to type depending of your keyboard layout and it is also hard to remember.
+<p>The default key-binding for splitting a pane vertically is <code>Ctrl+b %</code> and for splitting a pane horizontally is <code>Ctrl+b "</code>. That can be difficult to type depending of your keyboard layout and it is also hard to remember.
 </p>
-<p>A more friendly key-binding is to use <code>Ctrl</code> + <code>b</code> <code>h</code> for splitting horizontally and <code>Ctrl</code> + <code>b</code> <code>v</code> for splitting a pane vertically, it is also very convenient to remember.
+<p>A more friendly key-binding is to use <code>Ctrl+b h</code> for splitting horizontally and <code>Ctrl+b v</code> for splitting a pane vertically, it is also very convenient to remember.
 </p>
 <p>To make this change, add these lines in <code>~/.tmux.conf</code>:
 </p>
@@ -663,7 +665,7 @@ bind-key v split-window -v
 <h3>
 <span id="Shift.2BF6_not_working_in_Midnight_Commander"></span><span class="mw-headline" id="Shift+F6_not_working_in_Midnight_Commander">Shift+F6 not working in Midnight Commander</span>
 </h3>
-<p>See <a href="../en/Midnight_Commander.html#Broken_shortcuts" title="Midnight Commander">Midnight Commander#Broken shortcuts</a>.
+<p>See <a href="/title/Midnight_Commander#Broken_shortcuts" title="Midnight Commander">Midnight Commander#Broken shortcuts</a>.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
@@ -681,7 +683,7 @@ bind-key v split-window -v
 <li>manual page <span class="plainlinks archwiki-template-man" title="$ man 1 tmux"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/tmux.1">tmux(1)</a></span>
 </li>
 <li>
-<a rel="nofollow" class="external text" href="http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/">Tmux tutorial Part 1</a> and <a rel="nofollow" class="external text" href="http://blog.hawkhost.com/2010/07/02/tmux-%E2%80%93-the-terminal-multiplexer-part-2">Part 2</a>
+<a rel="nofollow" class="external text" href="https://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/">Tmux tutorial Part 1</a> and <a rel="nofollow" class="external text" href="https://blog.hawkhost.com/2010/07/02/tmux-%E2%80%93-the-terminal-multiplexer-part-2">Part 2</a>
 </li>
 <li>
 <a rel="nofollow" class="external text" href="https://leanpub.com/the-tao-of-tmux/read"><i>The Tao of tmux</i></a>, an ebook by Tony Narlock, author of <a rel="nofollow" class="external text" href="https://tmuxp.git-pull.com">tmuxp</a> and <a rel="nofollow" class="external text" href="https://libtmux.git-pull.com">libtmux</a>
@@ -691,9 +693,9 @@ bind-key v split-window -v
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Terminal_multiplexers.html" title="Category:Terminal multiplexers">Terminal multiplexers</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Terminal_multiplexers" title="Category:Terminal multiplexers">Terminal multiplexers</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_dead_links" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -701,15 +703,15 @@ bind-key v split-window -v
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tmux&amp;oldid=662457">https://wiki.archlinux.org/index.php?title=Tmux&amp;oldid=662457</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:12.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Tmux&amp;oldid=670087">https://wiki.archlinux.org/index.php?title=Tmux&amp;oldid=670087</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 May 2021, at 19:50.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

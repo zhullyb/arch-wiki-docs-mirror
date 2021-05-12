@@ -24,7 +24,7 @@
 	<h1 id="firstHeading" class="firstHeading" lang="en">Chrome OS devices/Crostini</h1>
 	<div id="bodyContent" class="mw-body-content">
 		<div id="siteSub" class="noprint">From ArchWiki</div>
-		<div id="contentSub"><span class="subpages">&lt; <a href="../../en/Chrome_OS_devices.html" title="Chrome OS devices">Chrome OS devices</a></span></div>
+		<div id="contentSub"><span class="subpages">&lt; <a href="/title/Chrome_OS_devices" title="Chrome OS devices">Chrome OS devices</a></span></div>
 		<div id="contentSub2"></div>
 		
 		<div id="jump-to-nav"></div>
@@ -75,10 +75,11 @@
 <li class="toclevel-2 tocsection-13"><a href="#Audio_playback/input"><span class="tocnumber">2.4</span> <span class="toctext">Audio playback/input</span></a></li>
 <li class="toclevel-2 tocsection-14"><a href="#Video_playback"><span class="tocnumber">2.5</span> <span class="toctext">Video playback</span></a></li>
 <li class="toclevel-2 tocsection-15"><a href="#GPU_acceleration"><span class="tocnumber">2.6</span> <span class="toctext">GPU acceleration</span></a></li>
-<li class="toclevel-2 tocsection-16"><a href="#Fullscreen_video,_games_and_mouse_capture"><span class="tocnumber">2.7</span> <span class="toctext">Fullscreen video, games and mouse capture</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Unlock_the_keyring_when_starting_the_container"><span class="tocnumber">2.7</span> <span class="toctext">Unlock the keyring when starting the container</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Fullscreen_video,_games_and_mouse_capture"><span class="tocnumber">2.8</span> <span class="toctext">Fullscreen video, games and mouse capture</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-17"><a href="#Useful_links"><span class="tocnumber">3</span> <span class="toctext">Useful links</span></a></li>
+<li class="toclevel-1 tocsection-18"><a href="#Useful_links"><span class="tocnumber">3</span> <span class="toctext">Useful links</span></a></li>
 </ul>
 </div>
 
@@ -140,7 +141,7 @@ lxc list
 </p>
 <pre># passwd <i>username</i>
 </pre>
-<p>You may additionally want to install <a href="../../en/Sudo.html" title="Sudo">sudo</a> and add the user to the wheel group. Use after installation:
+<p>You may additionally want to install <a href="/title/Sudo" title="Sudo">sudo</a> and add the user to the wheel group. Use after installation:
 </p>
 <pre># visudo
 </pre>
@@ -169,7 +170,7 @@ lxc list
 </p>
 <p>Install the Crostini container tools, Wayland for GUI application support and XWayland for X11 application support:
 </p>
-<p><a href="../../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cros-container-guest-tools-git/">cros-container-guest-tools-git</a></span><sup><small>AUR</small></sup> package. Additionally install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wayland">wayland</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xwayland">xorg-xwayland</a></span> to be able to use GUI tools. 
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cros-container-guest-tools-git/">cros-container-guest-tools-git</a></span><sup><small>AUR</small></sup> package. Additionally install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wayland">wayland</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xwayland">xorg-xwayland</a></span> to be able to use GUI tools. 
 </p>
 <p>Enable and start the services (for Wayland, X11, Wayland (low density) and X11 (low density) accordingly):
 </p>
@@ -245,7 +246,7 @@ lxc file delete penguin/var/lib/lxcfs
 <p>Restart Linux subsystem and container started should start normally.
 </p>
 <h3><span class="mw-headline" id="No_network_in_container">No network in container</span></h3>
-<p>As was reported by multiple sources, systemd-networkd and systemd-resolved services in systemd-244.1 are not working properly for unprivileged LXC containers, which ends up in missing network connectivity inside the Crostini container. Proposed solution is completely disable systemd-networkd/systemd-resolved and perform network configuration by <a href="../../en/Network_configuration.html#DHCP" class="mw-redirect" title="Dhclient">dhclient</a> service instead. First, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dhclient">dhclient</a></span>, then, as the root user, run:
+<p>As was reported by multiple sources, systemd-networkd and systemd-resolved services in systemd-244.1 are not working properly for unprivileged LXC containers, which ends up in missing network connectivity inside the Crostini container. Proposed solution is completely disable systemd-networkd/systemd-resolved and perform network configuration by <a href="/title/Dhclient" class="mw-redirect" title="Dhclient">dhclient</a> service instead. First, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dhclient">dhclient</a></span>, then, as the root user, run:
 </p>
 <pre>dhcpcd eth0
 systemctl disable systemd-networkd
@@ -255,7 +256,7 @@ touch /etc/resolv.conf
 systemctl enable dhclient@eth0
 systemctl start dhclient@eth0
 </pre>
-<p><a href="../../en/NetworkManager.html" title="NetworkManager">NetworkManager</a> and <a href="../../en/Dhcpcd.html" title="Dhcpcd">dhcpcd</a> also can be used to address the issue if you prefer them over the proposed solution.
+<p><a href="/title/NetworkManager" title="NetworkManager">NetworkManager</a> and <a href="/title/Dhcpcd" title="Dhcpcd">dhcpcd</a> also can be used to address the issue if you prefer them over the proposed solution.
 </p>
 <h3>
 <span id="App_not_opening_in_chrome_OS_.28infinite_spinner.29"></span><span class="mw-headline" id="App_not_opening_in_chrome_OS_(infinite_spinner)">App not opening in chrome OS (infinite spinner)</span>
@@ -270,10 +271,71 @@ lxc start penguin
 <h3>
 <span id="Audio_playback.2Finput"></span><span class="mw-headline" id="Audio_playback/input">Audio playback/input</span>
 </h3>
-<p>Crostini support audio playback starting Chrome OS 74. With <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cros-container-guest-tools-git/">cros-container-guest-tools-git</a></span><sup><small>AUR</small></sup> installed both ALSA and PulseAudio playback should work out-of-the-box. Audio input is  supported starting Chrome OS 79.
+<p>Crostini support audio playback starting Chrome OS 74. With <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cros-container-guest-tools-git/">cros-container-guest-tools-git</a></span><sup><small>AUR</small></sup> installed both ALSA and PulseAudio playback should work after PulseAudio configuration. Audio input is  supported starting Chrome OS 79.
 </p>
+<p>Edit and create the following configs in the container:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pulse/daemon.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">default-fragments = 4
+default-fragment-size-msec = 20</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pulse/default.pa</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">.fail
+
+### Automatically restore the volume of streams and devices
+load-module module-device-restore
+load-module module-stream-restore
+load-module module-card-restore
+
+### Automatically augment property information from .desktop files
+### stored in /usr/share/application
+load-module module-augment-properties
+
+### Should be after module-*-restore but before module-*-detect
+load-module module-switch-on-port-available
+
+### Disable udev event detection since we're in container
+### Automatically load driver modules depending on the hardware available
+# .ifexists module-udev-detect.so
+# load-module module-udev-detect
+# .else
+### Use the static hardware detection module (for systems that lack udev support)
+# load-module module-detect
+# .endif
+
+### Load several protocols
+load-module module-native-protocol-unix
+
+### Automatically restore the default sink/source when changed by the user
+### during runtime
+### NOTE: This should be loaded as early as possible so that subsequent modules
+### that look up the default sink/source get the right value
+load-module module-default-device-restore
+
+### Automatically move streams to the default sink if the sink they are
+### connected to dies, similar for sources
+load-module module-rescue-streams
+
+### Make sure we always have a sink around, even if it is a null sink.
+load-module module-always-sink
+
+### Automatically suspend sinks/sources that become idle for too long
+load-module module-suspend-on-idle
+
+### Enable positioned event sounds
+load-module module-position-event-sounds
+
+### Load alsa devices manually since containers won't get udev events.
+### Set tsched=0 to interrupt-based scheduling.
+# For output/playback
+load-module module-alsa-sink device=hw:0,0 tsched=0
+# For input/record
+load-module module-alsa-source device=hw:0,0 tsched=0
+
+.nofail</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pulse/client.conf.d/00-disable-autospawn.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">autospawn=no</pre>
 <h3><span class="mw-headline" id="Video_playback">Video playback</span></h3>
-<p><a href="../../en/Mpv.html" title="Mpv">mpv</a> can play videos using software rendering without any addition configuration, however this is CPU consuming and laggy experience for modern video codecs like H265. For hardware accelerated playback GPU acceleration is required. Take into account, that GPU acceleration for Crostini is based on <a rel="nofollow" class="external text" href="https://virgil3d.github.io/">Virgil 3D GPU project</a>, so no real GPU device pass-though is performed and hardware-specific APIs like VA-API or VPDAU are not available. However OpenGL acceleration can be used, i.e. this is example of mpv.conf config for [mpv] media player which enabled accelerated video and audio playback on Google Pixelbook starting Chrome OS 77:
+<p><a href="/title/Mpv" title="Mpv">mpv</a> can play videos using software rendering without any addition configuration, however this is CPU consuming and laggy experience for modern video codecs like H265. For hardware accelerated playback GPU acceleration is required. Take into account, that GPU acceleration for Crostini is based on <a rel="nofollow" class="external text" href="https://virgil3d.github.io/">Virgil 3D GPU project</a>, so no real GPU device pass-though is performed and hardware-specific APIs like VA-API or VPDAU are not available. However OpenGL acceleration can be used, i.e. this is example of mpv.conf config for [mpv] media player which enabled accelerated video and audio playback on Google Pixelbook starting Chrome OS 77:
 </p>
 <pre>vo=gpu
 ao=alsa</pre>
@@ -309,6 +371,35 @@ OpenGL context flags: (none)
 
 OpenGL ES profile version string: OpenGL ES 3.2 Mesa 19.1.4
 OpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20</pre>
+<h3><span class="mw-headline" id="Unlock_the_keyring_when_starting_the_container">Unlock the keyring when starting the container</span></h3>
+<p>If you have problems with programs that use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=gnome-keyring">gnome-keyring</a></span>-daemon, you need to write a user systemd daemon (see <a href="/title/Systemd/User#Writing_user_units" title="Systemd/User">Systemd/User#Writing user units</a>) that will run the keyring daemon when the container starts.
+</p>
+<p>Create the following two files
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/user/gnome-keyring.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
+Description=Keyring
+
+[Service]
+ExecStart=/usr/local/bin/export-keys
+KillUserProcesses=no
+
+[Install]
+WantedBy=default.target</pre>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> Leaving the password in plain text is potentially dangerous. You can replace <code>echo random-password</code> with <code>cat ~/.password</code> by creating the appropriate file in your home folder.</div>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/local/bin/export-keys</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/bash
+killall gnome-keyring-daemon
+echo random-password | gnome-keyring-daemon --components=secrets,ssh,pkcs11 --unlock --foreground</pre>
+<p>Give the file launch rights 
+</p>
+<pre># chmod a+x /usr/local/bin/export-keys
+</pre>
+<p>Then, execute
+</p>
+<pre>systemctl --user enable --now gnome-keyring &amp;&amp; echo -n 'login' &gt; ~/.local/share/keyrings/default
+</pre>
 <h3>
 <span id="Fullscreen_video.2C_games_and_mouse_capture"></span><span class="mw-headline" id="Fullscreen_video,_games_and_mouse_capture">Fullscreen video, games and mouse capture</span>
 </h3>
@@ -323,22 +414,22 @@ OpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../../en/Category:Chrome_OS_devices.html" title="Category:Chrome OS devices">Chrome OS devices</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Chrome_OS_devices" title="Category:Chrome OS devices">Chrome OS devices</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chrome_OS_devices/Crostini&amp;oldid=658119">https://wiki.archlinux.org/index.php?title=Chrome_OS_devices/Crostini&amp;oldid=658119</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 7 April 2021, at 17:31.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chrome_OS_devices/Crostini&amp;oldid=669480">https://wiki.archlinux.org/index.php?title=Chrome_OS_devices/Crostini&amp;oldid=669480</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:52.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

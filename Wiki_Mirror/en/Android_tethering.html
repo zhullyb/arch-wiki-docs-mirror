@@ -101,18 +101,18 @@
 <li><i>Settings -&gt; More... -&gt; Tethering &amp; mobile hotspot -&gt; USB tethering</i></li>
 </ul>
 </li>
-<li>Follow <a href="../en/Network_configuration.html" title="Network configuration">Network configuration</a>.</li>
+<li>Follow <a href="/title/Network_configuration" title="Network configuration">Network configuration</a>.</li>
 </ul>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The network interface name may change depending on the USB port you use. You may want to <a href="../en/Network_configuration.html#Change_interface_name" title="Network configuration">change the interface name</a> to create a unique name for your device regardless of the USB port.</div>
+<strong>Note:</strong> The network interface name may change depending on the USB port you use. You may want to <a href="/title/Network_configuration#Change_interface_name" title="Network configuration">change the interface name</a> to create a unique name for your device regardless of the USB port.</div>
 <ul><li>If you are using a cellular data plan and you have recently entered a new billing period, you may need to restart your phone.</li></ul>
 <h3><span class="mw-headline" id="Using_systemd-networkd_with_udev">Using systemd-networkd with udev</span></h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> networkd can handle interface changes without a restart, so why this udev rule? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Android_tethering">Talk:Android tethering#</a>)</div>
+<b>Reason:</b> networkd can handle interface changes without a restart, so why this udev rule? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Android_tethering">Talk:Android tethering#</a>)</div>
 </div>
-<p>Using <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> you can automatically adjust the networking to use the phone as the gateway when plugged in.
+<p>Using <a href="/title/Systemd-networkd" title="Systemd-networkd">systemd-networkd</a> you can automatically adjust the networking to use the phone as the gateway when plugged in.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/udev/rules.d/90-android-tethering.rules</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># Execute pairing program when appropriate
@@ -135,7 +135,7 @@ DHCP=ipv4
 <p><a rel="nofollow" class="external text" href="https://github.com/aziwoqpd/azilink">AziLink</a> is an application that allows USB tethering for Android-based phones, without requiring root access. It is very useful for Android older than version 2.2, when there was no stock USB tethering feature implemented. It also does not require changes to your browser, and all network traffic is transparently handled (except ICMP pings). It may be somewhat CPU intensive on the phone at high usage rates (a 500 kBytes/sec data transfer rate may take more than 50% of phone CPU).
 </p>
 <h3><span class="mw-headline" id="Tools_needed">Tools needed</span></h3>
-<p>For Arch, you need to <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openvpn">openvpn</a></span> package. You will also need to install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=android-tools">android-tools</a></span> package for the <i>adb</i> tool and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=android-udev">android-udev</a></span> which sets up the correct <code>/usr/lib/udev/rules.d/51-android.rules</code> file for your device to be recognized. On the phone, you need the <a rel="nofollow" class="external text" href="http://lfx.org/azilink/azilink.apk">azilink.apk</a> (<a rel="nofollow" class="external text" href="https://github.com/aziwoqpd/azilink">azilink homepage</a>). The android application acts as a NAT, adb forwards the ports to your phone, and your openvnp setup will connect to it.
+<p>For Arch, you need to <a href="/title/Install" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openvpn">openvpn</a></span> package. You will also need to install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=android-tools">android-tools</a></span> package for the <i>adb</i> tool and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=android-udev">android-udev</a></span> which sets up the correct <code>/usr/lib/udev/rules.d/51-android.rules</code> file for your device to be recognized. On the phone, you need the <a rel="nofollow" class="external text" href="http://lfx.org/azilink/azilink.apk">azilink.apk</a> (<a rel="nofollow" class="external text" href="https://github.com/aziwoqpd/azilink">azilink homepage</a>). The android application acts as a NAT, adb forwards the ports to your phone, and your openvnp setup will connect to it.
 </p>
 <h4><span class="mw-headline" id="Configuring_the_phone_connection_in_Arch_Linux">Configuring the phone connection in Arch Linux</span></h4>
 <p>So that you do not have to run adb as root, we are going to grant your user permissions to your usb device. Make sure you have turned on USB debugging on the phone (usually in <i>Settings -&gt; Applications -&gt; Development -&gt; USB debugging</i>) so that it will be shown as a device, and that it is plugged in to your computer via the USB cable. You should see it with you run the <code>lsusb</code> command. Original azi link instructions are <a rel="nofollow" class="external text" href="https://raw.githubusercontent.com/aziwoqpd/azilink/master/HOWTO">here</a>
@@ -175,7 +175,7 @@ socket-flags TCP_NODELAY
 keepalive 10 30
 dhcp-option DNS 192.168.56.1
 </pre>
-<p>You may need to manually update the contents of <a href="../en/Domain_name_resolution.html" class="mw-redirect" title="Resolv.conf">resolv.conf</a> to
+<p>You may need to manually update the contents of <a href="/title/Resolv.conf" class="mw-redirect" title="Resolv.conf">resolv.conf</a> to
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/resolv.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">nameserver 192.168.56.1
@@ -196,10 +196,10 @@ dhcp-option DNS 192.168.56.1
 </p>
 <p>NetworkManager can perform this action and handle the network initialisation itself; consult its documentation for more details. 
 </p>
-<p>Alternatively: pair and ensure you can connect your computer and Android device, as described on <a href="../en/Bluetooth.html" title="Bluetooth">Bluetooth</a>, then, substituting the address of the device (here given as <code>AA_BB_CC_DD_EE_FF</code>), do:
+<p>Alternatively: pair and ensure you can connect your computer and Android device, as described on <a href="/title/Bluetooth" title="Bluetooth">Bluetooth</a>, then, substituting the address of the device (here given as <code>AA_BB_CC_DD_EE_FF</code>), do:
 </p>
 <pre>$ dbus-send --system --type=method_call --dest=org.bluez /org/bluez/hci0/dev_AA_BB_CC_DD_EE_FF org.bluez.Network1.Connect string:'nap'</pre>
-<p>This will create a network interface <code>bnep0</code>.  Finally, <a href="../en/Network_configuration.html" title="Network configuration">configure a network connection</a> on this interface; Android offers DHCP by default.
+<p>This will create a network interface <code>bnep0</code>.  Finally, <a href="/title/Network_configuration" title="Network configuration">configure a network connection</a> on this interface; Android offers DHCP by default.
 </p>
 <h2><span class="mw-headline" id="Tethering_with_SOCKS_proxy">Tethering with SOCKS proxy</span></h2>
 <p>With this method tethering is achieved by port forwarding from the phone to the PC. This is suitable only for browsing. For Firefox, you should set <code>network.proxy.socks_remote_dns</code> to <code>true</code> in <code>about:config</code> ( address bar )
@@ -213,7 +213,7 @@ dhcp-option DNS 192.168.56.1
 </ul>
 <h3><span class="mw-headline" id="Instructions">Instructions</span></h3>
 <h4><span class="mw-headline" id="Tetherbot">Tetherbot</span></h4>
-<p>Tetherbot is <i>an experimental SOCKS proxy and Port Bouncer that should allow you to connect your laptop to the internet using the internet connection (EDGE, 3G or Wifi) of your T-Mobile G1 Cellphone.</i> It is discontinued and its website is down, but still can be accessed from Wayback Machine<a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20171121193952/http://graha.ms/androidproxy/">[1]</a> and its APK can be downloaded from <a rel="nofollow" class="external text" href="https://android-apk.org/graha.ms.tunnel/">Android APK website</a>.
+<p>Tetherbot is <i>an experimental SOCKS proxy and Port Bouncer that should allow you to connect your laptop to the internet using the internet connection (EDGE, 3G or Wifi) of your T-Mobile G1 Cellphone.</i> It is discontinued and its website is down, but still can be accessed from Wayback Machine<a rel="nofollow" class="external autonumber" href="https://web.archive.org/web/20171121193952/http://graha.ms/androidproxy/">[1]</a> and its APK can be downloaded from <a rel="nofollow" class="external text" href="https://android-apk.org/graha.ms.tunnel/">Android APK website</a><sup title="Last check status: 404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2021-05-09 ⓘ]</sup>.
 </p>
 <p>In order to do SOCKS proxy via Tetherbot to connect your browser to the Internet, do:
 </p>
@@ -232,12 +232,15 @@ dhcp-option DNS 192.168.56.1
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Android.html" title="Category:Android">Android</a></li>
-<li><a href="../en/Category:Network_sharing.html" title="Category:Network sharing">Network sharing</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Android" title="Category:Android">Android</a></li>
+<li><a href="/title/Category:Network_sharing" title="Category:Network sharing">Network sharing</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Expansion" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="/title/Category:Pages_with_dead_links" title="Category:Pages with dead links">Pages with dead links</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -245,15 +248,15 @@ dhcp-option DNS 192.168.56.1
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Android_tethering&amp;oldid=654607">https://wiki.archlinux.org/index.php?title=Android_tethering&amp;oldid=654607</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 March 2021, at 16:27.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Android_tethering&amp;oldid=669886">https://wiki.archlinux.org/index.php?title=Android_tethering&amp;oldid=669886</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 May 2021, at 08:41.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

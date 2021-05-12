@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -82,14 +83,14 @@
 <h2>
 <span id=".E6.89.8B.E5.8A.A8.E6.9B.B4.E6.94.B9"></span><span class="mw-headline" id="手动更改">手动更改</span>
 </h2>
-<p>有两种方法可以修改 MAC 地址：<a href="../zh-CN/Pacman.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" title="Pacman (简体中文)">安装</a>并配置 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iproute2">iproute2</a></span> 或 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=macchanger">macchanger</a></span>。下面来说明一下这两种方法。
+<p>有两种方法可以修改 MAC 地址：<a href="/title/Pacman_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" title="Pacman (简体中文)">安装</a>并配置 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iproute2">iproute2</a></span> 或 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=macchanger">macchanger</a></span>。下面来说明一下这两种方法。
 </p>
 <h3><span class="mw-headline" id="iproute2">iproute2</span></h3>
 <p>首先，你可以用下面的命令来检查当前的 MAC 地址
 </p>
 <pre># ip link show <i>interface</i>
 </pre>
-<p><code><i>interface</i></code> 是你的 <a href="../zh-CN/Network_configuration.html#%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3" title="Network configuration (简体中文)">网卡</a> 的名字
+<p><code><i>interface</i></code> 是你的 <a href="/title/Network_configuration_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3" title="Network configuration (简体中文)">网卡</a> 的名字
 </p>
 <p>我们现在要关注的是跟在“link/ether”后面的那一串带冒号的十六进制字节。它看起来可能是这样：
 </p>
@@ -116,9 +117,9 @@
 <h3><span class="mw-headline" id="macchanger">macchanger</span></h3>
 <p>另一个方法是通过 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=macchanger">macchanger</a></span> (a.k.a., the GNU MAC Changer)。它有一些方便的功能，比如改变 MAC 地址以匹配某个运营商，或者完全随机化地址。
 </p>
-<p>从<a href="../zh-CN/Official_repositories.html" title="Official repositories (简体中文)">官方仓库</a>里<a href="../zh-CN/Pacman.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" title="Pacman (简体中文)">安装</a> 这个包 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=macchanger">macchanger</a></span> .
+<p>从<a href="/title/Official_repositories_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Official repositories (简体中文)">官方仓库</a>里<a href="/title/Pacman_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" title="Pacman (简体中文)">安装</a> 这个包 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=macchanger">macchanger</a></span> .
 </p>
-<p>由于更改 MAC 地址基于网卡，我们需要用 <a href="../zh-CN/Network_configuration.html#%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3" title="Network configuration (简体中文)">网卡名</a> 来替换每行命令中的 <code><i>interface</i></code> 。
+<p>由于更改 MAC 地址基于网卡，我们需要用 <a href="/title/Network_configuration_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3" title="Network configuration (简体中文)">网卡名</a> 来替换每行命令中的 <code><i>interface</i></code> 。
 </p>
 <p>用这行命令我们可以将 MAC 地址完全随机化：
 </p>
@@ -144,7 +145,7 @@
 <span id=".E8.87.AA.E5.8A.A8.E6.9B.B4.E6.94.B9"></span><span class="mw-headline" id="自动更改">自动更改</span>
 </h2>
 <h3><span class="mw-headline" id="systemd-networkd">systemd-networkd</span></h3>
-<p><a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> 支持通过 <a href="../en/Systemd-networkd.html#link_files" title="Systemd-networkd">link files</a> 设置 MAC 地址（细节请查看 <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.link"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.link.5">systemd.link(5)</a></span>）.
+<p><a href="/title/Systemd-networkd" title="Systemd-networkd">systemd-networkd</a> 支持通过 <a href="/title/Systemd-networkd#link_files" title="Systemd-networkd">link files</a> 设置 MAC 地址（细节请查看 <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.link"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.link.5">systemd.link(5)</a></span>）.
 </p>
 <p>要设置一个静态 MAC 地址，修改这个文件为：
 </p>
@@ -158,7 +159,7 @@ NamePolicy=kernel database onboard slot path</pre>
 <p>如要在每次启动时随机化 MAC 地址，把 <code>MACAddress=<i>更改后的 MAC</i></code> 改成 <code>MACAddressPolicy=random</code>。
 </p>
 <h3><span class="mw-headline" id="systemd-udevd">systemd-udevd</span></h3>
-<p><a href="../zh-CN/Udev.html" title="Udev (简体中文)">udev (简体中文)</a> 允许你创建 <a href="../zh-CN/Udev.html#udev_%E8%A7%84%E5%88%99" title="Udev (简体中文)">udev 规则</a> 来更改 MAC 地址。使用 <code>address</code> 参数来用原始 MAC 地址来匹配设备，然后用 <i>ip</i> 命令来更改 MAC 地址:
+<p><a href="/title/Udev_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Udev (简体中文)">udev (简体中文)</a> 允许你创建 <a href="/title/Udev_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#udev_%E8%A7%84%E5%88%99" title="Udev (简体中文)">udev 规则</a> 来更改 MAC 地址。使用 <code>address</code> 参数来用原始 MAC 地址来匹配设备，然后用 <i>ip</i> 命令来更改 MAC 地址:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/udev/rules.d/75-mac-spoof.rules</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="XX:XX:XX:XX:XX:XX", RUN+="/usr/bin/ip link set dev %k address YY:YY:YY:YY:YY:YY"</pre>
@@ -170,10 +171,10 @@ NamePolicy=kernel database onboard slot path</pre>
 <h4>
 <span id=".E5.88.9B.E5.BB.BA.E5.8D.95.E5.85.83"></span><span class="mw-headline" id="创建单元">创建单元</span>
 </h4>
-<p>下面写了两个用 <a href="../zh-CN/Systemd.html" title="Systemd (简体中文)">Systemd (简体中文)</a> 来在启动时更改 MAC 地址的例子，其中一个用 <i>ip</i> 来设置静态 MAC，另一个用 <i>macchanger</i> 来设置随机 MAC。systemd 的 <code>network-pre.target</code> 可以确保 MAC 地址在网络管理器如 <a href="../zh-CN/Netctl.html" title="Netctl (简体中文)">netctl (简体中文)</a>、<a href="../zh-CN/NetworkManager.html" title="NetworkManager (简体中文)">NetworkManager (简体中文)</a>、<a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> 或 <a href="../zh-CN/Dhcpcd.html" title="Dhcpcd (简体中文)">dhcpcd (简体中文)</a> 启动之前就已经更改好。
+<p>下面写了两个用 <a href="/title/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Systemd (简体中文)">Systemd (简体中文)</a> 来在启动时更改 MAC 地址的例子，其中一个用 <i>ip</i> 来设置静态 MAC，另一个用 <i>macchanger</i> 来设置随机 MAC。systemd 的 <code>network-pre.target</code> 可以确保 MAC 地址在网络管理器如 <a href="/title/Netctl_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Netctl (简体中文)">netctl (简体中文)</a>、<a href="/title/NetworkManager_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="NetworkManager (简体中文)">NetworkManager (简体中文)</a>、<a href="/title/Systemd-networkd" title="Systemd-networkd">systemd-networkd</a> 或 <a href="/title/Dhcpcd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Dhcpcd (简体中文)">dhcpcd (简体中文)</a> 启动之前就已经更改好。
 </p>
 <h5><span class="mw-headline" id="iproute2_2">iproute2</span></h5>
-<p>设置静态 MAC 地址的 <a href="../zh-CN/Systemd.html" title="Systemd (简体中文)">Systemd (简体中文)</a> 单元:
+<p>设置静态 MAC 地址的 <a href="/title/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Systemd (简体中文)">Systemd (简体中文)</a> 单元:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/macspoof@.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
@@ -192,7 +193,7 @@ ExecStart=/usr/bin/ip link set dev %i up
 WantedBy=multi-user.target
 </pre>
 <h5><span class="mw-headline" id="macchanger_2">macchanger</span></h5>
-<p>设置随机 MAC 地址的 <a href="../zh-CN/Systemd.html" title="Systemd (简体中文)">Systemd (简体中文)</a> 单元，同时保留原始的运营商字节。请确保您已<a href="../zh-CN/Pacman.html#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" title="Pacman (简体中文)">安装</a>了 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=macchanger">macchanger</a></span>:
+<p>设置随机 MAC 地址的 <a href="/title/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Systemd (简体中文)">Systemd (简体中文)</a> 单元，同时保留原始的运营商字节。请确保您已<a href="/title/Pacman_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85" title="Pacman (简体中文)">安装</a>了 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=macchanger">macchanger</a></span>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/macspoof@.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
@@ -214,14 +215,14 @@ WantedBy=multi-user.target
 <h4>
 <span id=".E5.90.AF.E7.94.A8.E6.9C.8D.E5.8A.A1"></span><span class="mw-headline" id="启用服务">启用服务</span>
 </h4>
-<p>将所需的网络接口 (如：<code>eth0</code>) 附加到服务名称后面 (如<code>macspoof@eth0.service</code>)，然后<a href="../zh-CN/Systemd.html#%E4%BD%BF%E7%94%A8%E5%8D%95%E5%85%83" title="Systemd (简体中文)">启用</a>服务.
+<p>将所需的网络接口 (如：<code>eth0</code>) 附加到服务名称后面 (如<code>macspoof@eth0.service</code>)，然后<a href="/title/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E4%BD%BF%E7%94%A8%E5%8D%95%E5%85%83" title="Systemd (简体中文)">启用</a>服务.
 </p>
 <p>重启，或者按照适当的顺序重启依赖的服务。如果你是局域网管理员，请通过路由器检查其中的静态或 DHCP 地址表，验证 MAC 是否已成功修改。
 </p>
 <h3>
 <span id="netctl_.E6.8E.A5.E5.8F.A3"></span><span class="mw-headline" id="netctl_接口">netctl 接口</span>
 </h3>
-<p>你可以使用 <a href="../en/Netctl.html#Using_hooks" title="Netctl">netctl hook</a> 来在每次启动或重启网卡的时候运行特定命令。把 <code><i>interface</i></code> 替换为你的<a href="../zh-CN/Network_configuration.html#%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3" title="Network configuration (简体中文)">网络接口</a>: 
+<p>你可以使用 <a href="/title/Netctl#Using_hooks" title="Netctl">netctl hook</a> 来在每次启动或重启网卡的时候运行特定命令。把 <code><i>interface</i></code> 替换为你的<a href="/title/Network_configuration_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3" title="Network configuration (简体中文)">网络接口</a>: 
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/netctl/interfaces/<i>interface</i></pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/usr/bin/env sh
@@ -233,7 +234,7 @@ WantedBy=multi-user.target
 <p>来源: <a rel="nofollow" class="external text" href="https://blog.akendo.eu/archlinuxrandom-mac-address-for-new-wireless-connections/">akendo.eu</a>
 </p>
 <h3><span class="mw-headline" id="NetworkManager">NetworkManager</span></h3>
-<p>参见 <a href="../en/NetworkManager.html#Configuring_MAC_address_randomization" title="NetworkManager">NetworkManager#Configuring MAC address randomization</a>.
+<p>参见 <a href="/title/NetworkManager#Configuring_MAC_address_randomization" title="NetworkManager">NetworkManager#Configuring MAC address randomization</a>.
 </p>
 <h2>
 <span id=".E6.95.85.E9.9A.9C.E6.8E.92.E9.99.A4"></span><span class="mw-headline" id="故障排除">故障排除</span>
@@ -241,7 +242,7 @@ WantedBy=multi-user.target
 <h3>
 <span id=".E8.BF.9E.E6.8E.A5.E5.88.B0_DHCPv4_.E7.BD.91.E7.BB.9C.E5.A4.B1.E8.B4.A5"></span><span class="mw-headline" id="连接到_DHCPv4_网络失败">连接到 DHCPv4 网络失败</span>
 </h3>
-<p>如果您无法连接到 DHCPv4网络，而且您使用的是 NetworkManager 默认的 dhcpcd，你可能需要 <a href="../zh-CN/Dhcpcd.html#%E5%AE%A2%E6%88%B7%E7%AB%AF_ID" title="Dhcpcd (简体中文)">修改 dhcpd 配置</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 来续租。
+<p>如果您无法连接到 DHCPv4网络，而且您使用的是 NetworkManager 默认的 dhcpcd，你可能需要 <a href="/title/Dhcpcd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%AE%A2%E6%88%B7%E7%AB%AF_ID" title="Dhcpcd (简体中文)">修改 dhcpd 配置</a><sup>[<a href="/title/ArchWiki:Requests#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 来续租。
 </p>
 <h2>
 <span id=".E5.8F.A6.E8.A7.81"></span><span class="mw-headline" id="另见">另见</span>
@@ -250,18 +251,18 @@ WantedBy=multi-user.target
 <li><a href="https://en.wikipedia.org/wiki/MAC_spoofing" class="extiw" title="wikipedia:MAC spoofing">Wikipedia:MAC spoofing</a></li>
 <li><a rel="nofollow" class="external text" href="https://github.com/alobbs/macchanger">Macchanger GitHub page</a></li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.debianadmin.com/change-your-network-card-mac-media-access-control-address.html">DebianAdmin 上的文章</a> with more <i>macchanger</i> options</li>
+<a rel="nofollow" class="external text" href="https://www.debianadmin.com/change-your-network-card-mac-media-access-control-address.html">DebianAdmin 上的文章</a> with more <i>macchanger</i> options</li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../zh-CN/Category:Networking.html" title="Category:Networking (简体中文)">Networking (简体中文)</a></li>
-<li><a href="../zh-CN/Category:Security.html" title="Category:Security (简体中文)">Security (简体中文)</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Networking_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Category:Networking (简体中文)">Networking (简体中文)</a></li>
+<li><a href="/title/Category:Security_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Category:Security (简体中文)">Security (简体中文)</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -269,15 +270,15 @@ WantedBy=multi-user.target
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MAC_address_spoofing_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=627916">https://wiki.archlinux.org/index.php?title=MAC_address_spoofing_(简体中文)&amp;oldid=627916</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 1 August 2020, at 18:13.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MAC_address_spoofing_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=669061">https://wiki.archlinux.org/index.php?title=MAC_address_spoofing_(简体中文)&amp;oldid=669061</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:14.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

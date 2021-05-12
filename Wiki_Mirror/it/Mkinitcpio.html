@@ -38,7 +38,7 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Articoli correlati</p>
 <ul>
-<li><a href="../it/Arch_boot_process.html" class="mw-redirect" title="Arch Boot Process (Italiano)">Arch Boot Process (Italiano)</a></li>
+<li><a href="/title/Arch_Boot_Process_(Italiano)" class="mw-redirect" title="Arch Boot Process (Italiano)">Arch Boot Process (Italiano)</a></li>
 </ul>
 </div>
 <p><b>mkinitcpio</b> è un generatore initramfs di ultima generazione <a href="https://en.wikipedia.org/wiki/it:Initrd" class="extiw" title="wikipedia:it:Initrd">initramfs</a>.
@@ -96,7 +96,7 @@
 <p>mkinitcpio è uno script bash usato per generare un iniziale ambiente ramdisk. Da <a rel="nofollow" class="external text" href="https://projects.archlinux.org/mkinitcpio.git/tree/man/mkinitcpio.8.txt">mkinitcpio man page</a>:
 </p>
 <dl><dd><i>Il ramdisk iniziale è in sostanza un ambiente molto ridotto ("pre-userspace"), che carica vari moduli del kernel e imposta le operazioni preliminari necessarie prima di consegnare il controllo ad init. In questo modo è possibile avere, ad esempio, filesystem criptati e filesystem su software RAID. L'mkinitcpio permette inoltre estensioni con hooks personalizzati, rilevamento automatico in fase di runtime, e molte altre caratteristiche.</i></dd></dl>
-<p>Tradizionalmente, il kernel è il responsabile del rilevamento dell'hardware e dei compiti di inizializzazione nelle prime fasi del <a href="../it/Arch_boot_process.html" title="Arch boot process (Italiano)">boot process</a>, prima di montare il filesystem root e passare il controllo a <code>init</code>. Tuttavia, con il progredire della tecnologia, queste attività sono diventate sempre più complesse.
+<p>Tradizionalmente, il kernel è il responsabile del rilevamento dell'hardware e dei compiti di inizializzazione nelle prime fasi del <a href="/title/Arch_boot_process_(Italiano)" title="Arch boot process (Italiano)">boot process</a>, prima di montare il filesystem root e passare il controllo a <code>init</code>. Tuttavia, con il progredire della tecnologia, queste attività sono diventate sempre più complesse.
 </p>
 <p>Al giorno d'ggi, il filesystem root può essere installato su una vasta gamma di hardware, da SCSI a SATA a USB, monitorato da una serie di controller di unità di produttori diversi. Inoltre, il filesystem root può essere compresso o criptato, all'interno di un software RAID o di un gruppo di volumi logici. Il modo più semplice per gestire questa serie di complessità, è passare la gestione all'ambiente userspace: il ramdisk iniziale.
 </p>
@@ -106,15 +106,15 @@
 </p>
 <ul>
 <li>L'utilizzo di <a rel="nofollow" class="external text" href="https://www.busybox.net/">busybox</a>, che fornisce una base minimale e leggera per l'ambiente userspace.</li>
-<li>Il supporto per <b><a href="../it/Udev.html" title="Udev (Italiano)">udev</a></b> per il rilevamento automatico dell'hardware in fase di esecuzione, impedendo così il caricamento di moduli non necessari.</li>
-<li>L'utilizzo di script init espandibili basati su hook; che supportano hooks personalizzati che possono essere facilmente inclusi nei pacchetti <a href="../it/Pacman.html" title="Pacman (Italiano)">pacman</a>.</li>
+<li>Il supporto per <b><a href="/title/Udev_(Italiano)" title="Udev (Italiano)">udev</a></b> per il rilevamento automatico dell'hardware in fase di esecuzione, impedendo così il caricamento di moduli non necessari.</li>
+<li>L'utilizzo di script init espandibili basati su hook; che supportano hooks personalizzati che possono essere facilmente inclusi nei pacchetti <a href="/title/Pacman_(Italiano)" title="Pacman (Italiano)">pacman</a>.</li>
 <li>Supporto per  <b>LVM2</b>, <b>dm-crypt</b> per entrambi i volumi legacy e LUKS, <b>raid</b>, <b>mdadm</b>, e <b>swsusp</b> e <b>suspend2</b> per la ripresa e l'avvio da dispositivi di archiviazione di massa USB.</li>
 <li>La capacità di permettere molte caratteristiche per poter essere configurato dalla riga di comando del kernel, senza la necessità di ricostruire l'immagine.</li>
 </ul>
 <p>mkinitcpio è stato sviluppato dagli sviluppatori di Arch Linux e da contributi della Comunità. vedere il <a rel="nofollow" class="external text" href="https://projects.archlinux.org/mkinitcpio.git/">public Git repository</a>.
 </p>
 <h2><span class="mw-headline" id="Installazione">Installazione</span></h2>
-<p>Il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mkinitcpio">mkinitcpio</a></span> è disponibile nei <a href="../it/Official_repositories.html" title="Official repositories (Italiano)">repositories ufficiali</a>, ed è installato in modo predefinito in quanto incluso nel gruppo <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span>.
+<p>Il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mkinitcpio">mkinitcpio</a></span> è disponibile nei <a href="/title/Official_repositories_(Italiano)" title="Official repositories (Italiano)">repositories ufficiali</a>, ed è installato in modo predefinito in quanto incluso nel gruppo <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=base">base</a></span>.
 </p>
 <p>Gli utenti avanzati che preferiscono installare l'ultima versione in sviluppo di mkinitcpio da Git:
 </p>
@@ -127,7 +127,7 @@
 </h2>
 <p>Per impostazione predefinita, lo script mkinitcpio genera due immagini dopo l'installazione o l'aggiornamento del kernel: <code>/boot/initramfs-linux.img</code> e <code>/boot/initramfs-linux-fallback.img</code>. L'immagine <i>fallback</i> utilizza lo stesso file di configurazione come l'immagine <i>predefinita</i>, ad eccezione dell' hook <b>autodetect</b> che è saltato durante la creazione, includendo quindi anche una vasta gamma di moduli. L'hook di rilevazione (<b>autodetect</b>) automatica rileva i moduli necessari e personalizza l'immagine per hardware specifico, riducendo l'initramfs.
 </p>
-<p>Gli utenti possono creare quante immagini initramfs desiderano, con differenti profili di configurazione. L'immagine desiderata deve essere specificato per il bootloader, spesso nei suoi <a href="../en/Arch_boot_process.html#Configuration_files" class="mw-redirect" title="Boot loader">file di configurazione</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>. Dopo le modifiche apportate al file di configurazione, l'immagine deve essere rigenerata. Per lo stock kernel di Arch Linux, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span>,  questo si ottiene lanciando questo comando con i privilegi di root:
+<p>Gli utenti possono creare quante immagini initramfs desiderano, con differenti profili di configurazione. L'immagine desiderata deve essere specificato per il bootloader, spesso nei suoi <a href="/title/Boot_loader#Configuration_files" class="mw-redirect" title="Boot loader">file di configurazione</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>. Dopo le modifiche apportate al file di configurazione, l'immagine deve essere rigenerata. Per lo stock kernel di Arch Linux, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span>,  questo si ottiene lanciando questo comando con i privilegi di root:
 </p>
 <pre># mkinitcpio -p linux
 </pre>
@@ -151,7 +151,7 @@
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Attenzione:</strong> <b>lvm2</b>, <b>raid</b>, <b>mdadm</b>, e <b>encrypt</b>  <b>NON</b> sono abilitati di default. Si prega di leggere attentamente questa sezione per le istruzioni, se questi hooks sono richiesti.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Gli utenti con più controller hardware del disco che utilizzano i nomi dei nodi stessi, ma moduli del kernel diversi (ad esempio, due SCSI / SATA o due controller IDE) devono assicurarsi che il corretto ordine dei moduli sia specificato in <code>/etc/mkinitcpio.conf</code>. In caso contrario, la posizione della partizione root può variare negli avvii, con conseguente kernel panic. Un'alternativa più elegante è quella di utilizzare nomi di dispositivo non variabili <a href="../it/Persistent_block_device_naming.html" title="Persistent block device naming (Italiano)">persistent block device naming</a>, per garantire che vengano sempre correttamente montati. </div>
+<strong>Nota:</strong> Gli utenti con più controller hardware del disco che utilizzano i nomi dei nodi stessi, ma moduli del kernel diversi (ad esempio, due SCSI / SATA o due controller IDE) devono assicurarsi che il corretto ordine dei moduli sia specificato in <code>/etc/mkinitcpio.conf</code>. In caso contrario, la posizione della partizione root può variare negli avvii, con conseguente kernel panic. Un'alternativa più elegante è quella di utilizzare nomi di dispositivo non variabili <a href="/title/Persistent_block_device_naming_(Italiano)" title="Persistent block device naming (Italiano)">persistent block device naming</a>, per garantire che vengano sempre correttamente montati. </div>
 <p>Gli utenti possono modificare cinque variabili all'interno del file di configurazione:
 </p>
 <dl>
@@ -174,9 +174,7 @@
 <p>I moduli con suffisso <code>?</code> non restituiranno errori se non trovati. Questo può essere molto utile nel caso si stia compilando un kernel personalizzato che compili i moduli scritti esplicitamente negli HOOKS o nel file di configurazione.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Nel caso si utilizzi <b>reiser4</b>, questo <i>deve</i> essere aggiunto alla lista dei moduli. E se ci fosse bisogno di un qualsiasi filesystem durante il processo d'avvio, inesistente durante l'esecuzione di mkinitcpio— come nel caso di una chiave criptata LUKS su un filesystem <b>ext2</b>, ma senza nessun filesystem <b>ext2</b> montato durante l'esecuzione di mkinitcpio— il modulo di quel filesystem deve essere aggiunto alla lista MODULES. Consultare <a href="../en/Dm-crypt.html#Storing_the_Key_File" class="mw-redirect" title="System Encryption with LUKS for dm-crypt">qui</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> per maggiori approfondimenti.</div>
-<p><br>
-</p>
+<strong>Nota:</strong> Nel caso si utilizzi <b>reiser4</b>, questo <i>deve</i> essere aggiunto alla lista dei moduli. E se ci fosse bisogno di un qualsiasi filesystem durante il processo d'avvio, inesistente durante l'esecuzione di mkinitcpio— come nel caso di una chiave criptata LUKS su un filesystem <b>ext2</b>, ma senza nessun filesystem <b>ext2</b> montato durante l'esecuzione di mkinitcpio— il modulo di quel filesystem deve essere aggiunto alla lista MODULES. Consultare <a href="/title/System_Encryption_with_LUKS_for_dm-crypt#Storing_the_Key_File" class="mw-redirect" title="System Encryption with LUKS for dm-crypt">qui</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> per maggiori approfondimenti.</div>
 <h3><span class="mw-headline" id="BINARIES_e_FILES">BINARIES e FILES</span></h3>
 <p>Queste opzioni consentono all'utente di aggiungere dei file all'immagine. Sia i <code>BINARIES</code> che i <code>FILES</code> vengono aggiunti prima che gli hook siano eseguiti, e possono essere usati per sovrascrivere i file usati o forniti dagli hook. I BINARIES vengono auto-localizzati in quanto devono essere salvati in un <code>PATH</code> standard e sono <i>analizzatori di dipendenze</i>, quindi ogni libreria e dipendenza richieste saranno aggiunte di conseguenza. I FILES saranno aggiunti <i>come stanno</i>. Per esempio:
 </p>
@@ -189,7 +187,7 @@
 <h3><span class="mw-headline" id="HOOKS">HOOKS</span></h3>
 <p>La sezione relativa agli <code>HOOKS</code>, è l'impostazione più importante del file. Gli Hook sono piccoli script che descrivono ciò che verrà aggiunto all'immagine. Per alcuni hooks, essi dovranno anche contenere una componente di runtime che fornisce un comportamento aggiuntivo, come ad esempio avviare un demone, o l'assemblaggio di un dispositivo a blocchi accatastati. Gli Hook sono indicati con il loro nome, ed eseguiti nell'ordine in cui sono elencati nel file di configurazione alla sezione <code>HOOKS</code>.
 </p>
-<p>L'impostazione predefinita degli <code>HOOKS</code> dovrebbe essere sufficiente per la maggior parte delle semplici configurazioni di dischi singoli. Per i dispositivi di root che sono accatastati o dispositivi multi-block come <a href="../en/LVM.html" title="LVM">LVM</a>, <a href="../en/LVM_on_software_RAID.html" class="mw-redirect" title="Software RAID and LVM">mdadm</a>, o <a href="../en/Dm-crypt.html" class="mw-redirect" title="LUKS">LUKS</a>, vedere le rispettive pagine wiki per l'ulteriore configurazione necessaria.
+<p>L'impostazione predefinita degli <code>HOOKS</code> dovrebbe essere sufficiente per la maggior parte delle semplici configurazioni di dischi singoli. Per i dispositivi di root che sono accatastati o dispositivi multi-block come <a href="/title/LVM" title="LVM">LVM</a>, <a href="/title/Software_RAID_and_LVM" class="mw-redirect" title="Software RAID and LVM">mdadm</a>, o <a href="/title/LUKS" class="mw-redirect" title="LUKS">LUKS</a>, vedere le rispettive pagine wiki per l'ulteriore configurazione necessaria.
 </p>
 <h4><span class="mw-headline" id="Build_hooks">Build hooks</span></h4>
 <p>I Build hooks  sono contenuti nella cartella <code>/lib/initcpio/install</code>. questi file vengono generati dalla shell bash durante l'esecuzione di <code>mkinitcpio</code> e devono contenere due funzioni : <code>build</code> ed <code>help</code>. La funzione <code>build</code> descrive i moduli, i file e i binari che saranno aggiunti all'immagine. Un'API, documentata da mkinitcpio(8), serve a facilitare l'aggiunta di questi elementi. La funzione <code>help</code> emette una descrizione di ciò che l'hook compie.
@@ -272,7 +270,7 @@ Con l'eccezione dell'hook di pulitura, essi saranno sempre eseguiti nell'ordine 
 </tr>
 <tr>
 <td><b>pcmcia</b></td>
-<td>Aggiunge i moduli necessari per i dispositivi PCMCIA. È necessario disporre anche di <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pcmciautils">pcmciautils</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> per avvalersene.</td>
+<td>Aggiunge i moduli necessari per i dispositivi PCMCIA. È necessario disporre anche di <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pcmciautils">pcmciautils</a></span><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> per avvalersene.</td>
 <td>--
 </td>
 </tr>
@@ -333,7 +331,7 @@ Con l'eccezione dell'hook di pulitura, essi saranno sempre eseguiti nell'ordine 
 <tr>
 <td><b>resume</b></td>
 <td>--</td>
-<td>Tenta di eseguire il ripristino (resume) dallo stato di "sospensione". Funziona in aggiunta a <i>swsusp</i> e <i><a href="../en/ArchWiki:Archive.html" class="mw-redirect" title="Suspend2">suspend2</a></i>. Consultare <a href="#Personalizzazione_del_runtime">#Personalizzazione del runtime</a> per supporto alla configurazione.
+<td>Tenta di eseguire il ripristino (resume) dallo stato di "sospensione". Funziona in aggiunta a <i>swsusp</i> e <i><a href="/title/Suspend2" class="mw-redirect" title="Suspend2">suspend2</a></i>. Consultare <a href="#Personalizzazione_del_runtime">#Personalizzazione del runtime</a> per supporto alla configurazione.
 </td>
 </tr>
 <tr>
@@ -400,7 +398,7 @@ COMPRESSION="lz4c"      # richiede kernel 3.11
 <p>In generale questi non dovrebbero essere necessari, in quanto mkinitcpio farà in modo che qualsiasi metodo di compressione supporti le flag necessarie per produrre una immagine funzionante.
 </p>
 <h2><span class="mw-headline" id="Personalizzazione_del_runtime">Personalizzazione del runtime</span></h2>
-<p>Le opzioni di configurazione del runtime possono essere inviate a <code>init</code> e ad alcuni hooks per mezzo della riga di comando del kernel. I parametri della riga di comando del kernel sono spesso forniti dal bootloader. Le opzioni specificate sotto possono essere apportate alla linea di comando del kernel per alterare il comportamento predefinito. Consultare <a href="../en/Kernel_parameters.html" title="Kernel parameters">Kernel parameters</a> e <a href="../it/Arch_boot_process.html" title="Arch boot process (Italiano)">Arch Boot Process</a> per ulteriori informazioni.
+<p>Le opzioni di configurazione del runtime possono essere inviate a <code>init</code> e ad alcuni hooks per mezzo della riga di comando del kernel. I parametri della riga di comando del kernel sono spesso forniti dal bootloader. Le opzioni specificate sotto possono essere apportate alla linea di comando del kernel per alterare il comportamento predefinito. Consultare <a href="/title/Kernel_parameters" title="Kernel parameters">Kernel parameters</a> e <a href="/title/Arch_boot_process_(Italiano)" title="Arch boot process (Italiano)">Arch Boot Process</a> per ulteriori informazioni.
 </p>
 <h3><span class="mw-headline" id="init">init</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -433,12 +431,12 @@ root=801                                                      # hex-encoded majo
 <dt><code>rootdelay=N</code></dt>
 <dd>Fare una pausa di <code>N</code> secondi prima di montare il sistema root apponendo il <code>rootdelay</code>. (Questo potrebbe essere usato, per esempio, per l'avvio di un disco rigido USB che è lento in fase di avvio).</dd>
 </dl>
-<p>Si veda anche: <a href="../en/General_troubleshooting.html#Boot_problems" class="mw-redirect" title="Boot debugging">Debugging with GRUB and init</a>
+<p>Si veda anche: <a href="/title/Boot_debugging" class="mw-redirect" title="Boot debugging">Debugging with GRUB and init</a>
 </p>
 <h3><span class="mw-headline" id="Usare_RAID">Usare RAID</span></h3>
 <p>Per prima cosa aggiungere l'hook <code>mdadm</code> alla lista <code>HOOKS</code>, e poi ogni altro modulo raid richiesto  (raid456, ext4) alla lista MODULES in <code>/etc/mkinitcpio.conf</code>.
 </p>
-<p><b>Kernel Parameters: </b> Usando l'hook <code>mdadm</code>, non sarà più necessario configurare la stringa RAID nei parametri <a href="../it/GRUB_Legacy.html" title="GRUB Legacy (Italiano)">GRUB Legacy</a>. L'hook <code>mdadm</code> userà il file <code>/etc/mdadm.conf</code>, o automaticamente rileverà gli array durante la fase iniziale di boot.
+<p><b>Kernel Parameters: </b> Usando l'hook <code>mdadm</code>, non sarà più necessario configurare la stringa RAID nei parametri <a href="/title/GRUB_Legacy_(Italiano)" title="GRUB Legacy (Italiano)">GRUB Legacy</a>. L'hook <code>mdadm</code> userà il file <code>/etc/mdadm.conf</code>, o automaticamente rileverà gli array durante la fase iniziale di boot.
 </p>
 <p>Se si configura tale parametro via udev, è consigliabile usare l'hook <code>mdadm_udev</code>. Questo metodo è anche quello consigliato dallo sviluppo in upstream in quanto <code>/etc/mdadm.conf</code> sarà letto per nominare i devices connessi, se esistono.
 </p>
@@ -447,7 +445,7 @@ root=801                                                      # hex-encoded majo
 <strong>Attenzione:</strong> NFSv4 non è ancora supportato</div>
 <p><b>Pacchetti richiesti:</b>
 </p>
-<p>La rete richiede che il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mkinitcpio-nfs-utils">mkinitcpio-nfs-utils</a></span> sia installato dai <a href="../it/Official_repositories.html" title="Official repositories (Italiano)">repositories ufficiali</a>.
+<p>La rete richiede che il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mkinitcpio-nfs-utils">mkinitcpio-nfs-utils</a></span> sia installato dai <a href="/title/Official_repositories_(Italiano)" title="Official repositories (Italiano)">repositories ufficiali</a>.
 </p>
 <p><b>Parametri del Kernel:</b> 
 </p>
@@ -515,8 +513,7 @@ root=801                                                      # hex-encoded majo
 </p>
 <pre> BOOTIF=01-A1-B2-C3-D4-E5-F6  # Note the prepended "01-" and capital letters.
 </pre>
-<p><br>
-<b>nfsroot=</b>
+<p><b>nfsroot=</b>
 </p>
 <p>Se il parametro "nfsroot" non viene dato dalla riga di comando, sarà usato il predefinito "/tftpboot/%s". 
 </p>
@@ -578,7 +575,7 @@ root=801                                                      # hex-encoded majo
 </p>
 <pre>root=/dev/mapper/root cryptdevice=/dev/sda5:root
 </pre>
-<p>In questo esempioi, <code>/dev/sda5</code> è il device crittografato, e diamo un nome arbitrario di <code>root</code>, il che significa che il nostro dispositivo di root, una volta sbloccato, è montato come <code>/dev/mapper/root</code>. Al boot, verrà richiesto per la passphrase per sbloccarlo. Si veda <a href="../en/Dm-crypt.html#Configuration_of_initcpio" class="mw-redirect" title="LUKS">LUKS#Configuration_of_initcpio</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> Per ulteriori dettagli sull'utilizzo di una root criptata.
+<p>In questo esempioi, <code>/dev/sda5</code> è il device crittografato, e diamo un nome arbitrario di <code>root</code>, il che significa che il nostro dispositivo di root, una volta sbloccato, è montato come <code>/dev/mapper/root</code>. Al boot, verrà richiesto per la passphrase per sbloccarlo. Si veda <a href="/title/LUKS#Configuration_of_initcpio" class="mw-redirect" title="LUKS">LUKS#Configuration_of_initcpio</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> Per ulteriori dettagli sull'utilizzo di una root criptata.
 </p>
 <h3>
 <span id=".2Fusr_su_una_partizione_separata"></span><span class="mw-headline" id="/usr_su_una_partizione_separata">/usr su una partizione separata</span>
@@ -614,7 +611,7 @@ root=801                                                      # hex-encoded majo
 </pre>
 <h2><span class="mw-headline" id="Altre_Fonti">Altre Fonti</span></h2>
 <ul><li>
-<a href="../en/General_troubleshooting.html#Boot_problems" class="mw-redirect" title="Boot debugging">Boot debugging</a> - Debugging with GRUB</li></ul>
+<a href="/title/Boot_debugging" class="mw-redirect" title="Boot debugging">Boot debugging</a> - Debugging with GRUB</li></ul>
 <h2><span class="mw-headline" id="Riferimenti_esterni">Riferimenti esterni</span></h2>
 <ul>
 <li>Documentazione del kernel Linux: <a rel="nofollow" class="external text" href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob;f=Documentation/filesystems/ramfs-rootfs-initramfs.txt;hb=HEAD">initramfs</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">link interrotto</a> 2020-08-04]</sup>
@@ -627,14 +624,14 @@ root=801                                                      # hex-encoded majo
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../it/Category:Boot_process.html" title="Category:Boot process (Italiano)">Boot process (Italiano)</a></li>
-<li><a href="../it/Category:Kernel.html" title="Category:Kernel (Italiano)">Kernel (Italiano)</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Boot_process_(Italiano)" title="Category:Boot process (Italiano)">Boot process (Italiano)</a></li>
+<li><a href="/title/Category:Kernel_(Italiano)" title="Category:Kernel (Italiano)">Kernel (Italiano)</a></li>
 </ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
+<li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li>
+<li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 </ul>
 </div>
 </div>
@@ -643,15 +640,15 @@ root=801                                                      # hex-encoded majo
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Mkinitcpio_(Italiano)&amp;oldid=661889">https://wiki.archlinux.org/index.php?title=Mkinitcpio_(Italiano)&amp;oldid=661889</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 15:03.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Mkinitcpio_(Italiano)&amp;oldid=665025">https://wiki.archlinux.org/index.php?title=Mkinitcpio_(Italiano)&amp;oldid=665025</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 28 April 2021, at 18:20.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

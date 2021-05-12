@@ -67,18 +67,19 @@
 <li class="toclevel-2 tocsection-14"><a href="#Running_the_server_behind_a_NAT"><span class="tocnumber">3.1</span> <span class="toctext">Running the server behind a NAT</span></a></li>
 <li class="toclevel-2 tocsection-15"><a href="#Jitsi_gateway_to_SIP_(Jigasi)"><span class="tocnumber">3.2</span> <span class="toctext">Jitsi gateway to SIP (Jigasi)</span></a></li>
 <li class="toclevel-2 tocsection-16"><a href="#Access_restrictions_for_room_creation"><span class="tocnumber">3.3</span> <span class="toctext">Access restrictions for room creation</span></a></li>
-<li class="toclevel-2 tocsection-17"><a href="#Log_evaluation"><span class="tocnumber">3.4</span> <span class="toctext">Log evaluation</span></a></li>
-<li class="toclevel-2 tocsection-18"><a href="#Running_own_STUN_server"><span class="tocnumber">3.5</span> <span class="toctext">Running own STUN server</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Access_restrictions_with_JWT_token"><span class="tocnumber">3.4</span> <span class="toctext">Access restrictions with JWT token</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#Log_evaluation"><span class="tocnumber">3.5</span> <span class="toctext">Log evaluation</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Running_own_STUN_server"><span class="tocnumber">3.6</span> <span class="toctext">Running own STUN server</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-19">
+<li class="toclevel-1 tocsection-20">
 <a href="#Troubleshooting"><span class="tocnumber">4</span> <span class="toctext">Troubleshooting</span></a>
 <ul>
-<li class="toclevel-2 tocsection-20"><a href="#Check_your_logs"><span class="tocnumber">4.1</span> <span class="toctext">Check your logs</span></a></li>
-<li class="toclevel-2 tocsection-21"><a href="#Ask_help_on_Matrix_rooms"><span class="tocnumber">4.2</span> <span class="toctext">Ask help on Matrix rooms</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#Check_your_logs"><span class="tocnumber">4.1</span> <span class="toctext">Check your logs</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Ask_help_on_Matrix_rooms"><span class="tocnumber">4.2</span> <span class="toctext">Ask help on Matrix rooms</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-22"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-23"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
@@ -97,13 +98,13 @@
 <li>
 <code>jicofo</code>: the Jitsi conference focus determining who is speaking</li>
 <li>
-<a href="../en/Prosody.html" title="Prosody">Prosody</a>: a free XMPP server serving as the base of the setup</li>
+<a href="/title/Prosody" title="Prosody">Prosody</a>: a free XMPP server serving as the base of the setup</li>
 </ul>
 <p>A graphical overview of the interfaces to the user and towards each other is given <a rel="nofollow" class="external text" href="https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-manual">here</a>.
 </p>
 <p>You can either use the git versions, the nightly version or the stable versions.
 </p>
-<p>It is possible to install them at the same time, but you will need to use separate port and several instances of prosody (the plugins can't be scope by virtual host).
+<p>It is possible to install them at the same time, but you will need to use separate port and several instances of prosody (the plugins cannot be scope by virtual host).
 </p>
 <p>You need to choose between the normal or the bin version. The bin one conflicts with the normal version. (nightly and nightly-bin can be installed at the same time, but stable and nightly can be.)
 </p>
@@ -135,7 +136,7 @@
 <strong>Note:</strong> This configuration yields an open server for everyone to connect. Refer to the <a rel="nofollow" class="external text" href="https://jitsi.org/blog/security/">Jitsi philosophy</a> for rationale. See tips section for authentication.</div>
 <p>If your server name is <code>example.com</code> then a common choice for your jitsi will be <code>meet.example.com</code>, but you can choose freely. It is however strongly encouraged from security standpoint to host webapps on their own subdomain. You will need to update DNS record for your server with an entry of your chosen subdomain, in the above example <code>meet</code>. The remainder assumes that you have done this.
 </p>
-<p>Also you should have SSL/TLS certificates for your <code>meet.example.com</code> domain, on how to obtain free certificates see <a href="../en/Certbot.html" title="Certbot">certbot</a>.
+<p>Also you should have SSL/TLS certificates for your <code>meet.example.com</code> domain, on how to obtain free certificates see <a href="/title/Certbot" title="Certbot">certbot</a>.
 </p>
 <p>In the following, the following placeholders are used:
 </p>
@@ -148,11 +149,10 @@
 <li>
 <code>SECRET_FOCUS_USER</code>: password for the authenticator</li>
 </ul>
-<p>Passwords should be obtained in a safe way, e.g. via <code>mktemp -u XXXXXXXX</code> or via <code>pwgen</code>.
-<b>Make sure to use different and safe passwords!</b>
+<p>Passwords should be obtained in a safe way, e.g. via <code>mktemp -u XXXXXXXX</code> or via <code>pwgen</code>. <b>Make sure to use different and safe passwords!</b>
 </p>
-<h4><span class="mw-headline" id="Config_paths">Config paths</span></h4>
-<h5><span class="mw-headline" id="Stable">Stable</span></h5>
+<h3><span class="mw-headline" id="Config_paths">Config paths</span></h3>
+<h4><span class="mw-headline" id="Stable">Stable</span></h4>
 <ul>
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-meet/">jitsi-meet</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-meet-bin/">jitsi-meet-bin</a></span><sup><small>AUR</small></sup>: /etc/webapps/jitsi-meet</li>
@@ -165,7 +165,7 @@
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-videobridge/">jitsi-videobridge</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-videobridge-bin/">jitsi-videobridge-bin</a></span><sup><small>AUR</small></sup>: /etc/jitsi-videobridge</li>
 </ul>
-<h5><span class="mw-headline" id="Nightly">Nightly</span></h5>
+<h4><span class="mw-headline" id="Nightly">Nightly</span></h4>
 <ul>
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-meet-nightly/">jitsi-meet-nightly</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-meet-nightly-bin/">jitsi-meet-nightly-bin</a></span><sup><small>AUR</small></sup>: /etc/webapps/jitsi-meet-nightly</li>
@@ -178,7 +178,7 @@
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-videobridge-nightly/">jitsi-videobridge-nightly</a></span><sup><small>AUR</small></sup> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-videobridge-nightly-bin/">jitsi-videobridge-nightly-bin</a></span><sup><small>AUR</small></sup>: /etc/jitsi-videobridge-nightly</li>
 </ul>
-<h5><span class="mw-headline" id="Git">Git</span></h5>
+<h4><span class="mw-headline" id="Git">Git</span></h4>
 <ul>
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-meet-git/">jitsi-meet-git</a></span><sup><small>AUR</small></sup>: /etc/webapps/jitsi-meet-git</li>
@@ -191,14 +191,15 @@
 <li>
 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-videobridge-git/">jitsi-videobridge-git</a></span><sup><small>AUR</small></sup>: /etc/jitsi-videobridge-git</li>
 </ul>
-<h4><span class="mw-headline" id="Loopback">Loopback</span></h4>
-<p>Let's jitsi-meet components reach each other with local ip. It works even if your domain is behind a proxy like Cloudflare which doesn't return the real ip of the server.
+<h3><span class="mw-headline" id="Loopback">Loopback</span></h3>
+<p>Let us jitsi-meet components reach each other with local ip. It works even if your domain is behind a proxy like Cloudflare which does not return the real ip of the server.
 </p>
 <p>In <code>/etc/hosts</code>:
 </p>
 <pre>127.0.0.1 YOUR_DOMAIN auth.YOUR_DOMAIN
-::1 YOUR_DOMAIN auth.YOUR_DOMAIN</pre>
-<h4><span class="mw-headline" id="Configure_prosody">Configure prosody</span></h4>
+::1 YOUR_DOMAIN auth.YOUR_DOMAIN
+</pre>
+<h3><span class="mw-headline" id="Configure_prosody">Configure prosody</span></h3>
 <p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=prosody">prosody</a></span> is a prerequisite and you will need to add a configuration to it for your Jitsi services. If you do not already have a prosody server set up, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=prosody">prosody</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lua52-sec">lua52-sec</a></span> now. The rest of the prosody configuration assumes you have a local install of prosody. 
 </p>
 <p>The package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jitsi-meet-prosody/">jitsi-meet-prosody</a></span><sup><small>AUR</small></sup> provides a configuration you can easily customize:
@@ -231,7 +232,7 @@ VirtualHost "auth.<b>JITSIFQDN</b>"
     }
     authentication = "internal_plain"</pre>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/prosody/conf.d/jitsi.cfg.lua</pre>
-<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">-- Proxy to jicofo's user JID, so that it doesn't have to register as a component.
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">-- Proxy to jicofo's user JID, so that it does not have to register as a component.
 Component "focus.<b>JITSIFQDN</b>" "client_proxy"
     target_address = "focus@auth.<b>JITSIFQDN</b>"</pre>
 <p>You need now to generate the certificate for <b>JITSIFQDN</b> and auth.<b>JITSIFQDN</b>.
@@ -247,14 +248,14 @@ mv /var/lib/prosody/*.{crt,cnf,key} /etc/prosody/certs/
 trust anchor /etc/prosody/certs/<b>JITSIFQDN</b>.crt
 trust anchor /etc/prosody/certs/auth.<b>JITSIFQDN</b>.crt
 update-ca-trust # for java</pre>
-<p>Let's register the users jvb and focus:
+<p>Let us register the users jvb and focus:
 </p>
 <pre>prosodyctl register jvb auth.<b>JITSIFQDN</b> <b>SECRET_JVB_USER</b>
 prosodyctl register focus auth.<b>JITSIFQDN</b> <b>SECRET_FOCUS_USER</b>
 prosodyctl mod_roster_command subscribe focus.<b>JITSIFQDN</b> focus@auth.<b>JITSIFQDN</b></pre>
-<p>Then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> the <code>prosody</code> service (or <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> prosody if it was just installed).
+<p>Then <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> <code>prosody.service</code> (or <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> it if it was just installed).
 </p>
-<h4><span class="mw-headline" id="Configure_jitsi-videobridge">Configure jitsi-videobridge</span></h4>
+<h3><span class="mw-headline" id="Configure_jitsi-videobridge">Configure jitsi-videobridge</span></h3>
 <p>The configuration for jitsi-videobridge. Add <b>-nightly</b> or <b>-git</b> to <b>/etc/jitsi-videobridge</b> for <b>nightly</b> and <b>git</b> version.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/jitsi-videobridge/config</pre>
@@ -270,9 +271,9 @@ JVB_SECRET=<b>SECRET_JVB_USER</b>
 org.jitsi.videobridge.xmpp.user.shard.PASSWORD=<b>SECRET_JVB_USER</b>
 org.jitsi.videobridge.xmpp.user.shard.MUC_JIDS=JvbBrewery@internal.auth.<b>JITSIFQDN</b>
 org.jitsi.videobridge.xmpp.user.shard.MUC_NICKNAME=<b>UUIDGEN_RESULT</b></pre>
-<p>Then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> the <code>jitsi-videobridge</code> service.
+<p>Then <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> <code>jitsi-videobridge.service</code>.
 </p>
-<h4><span class="mw-headline" id="Configure_jicofo">Configure jicofo</span></h4>
+<h3><span class="mw-headline" id="Configure_jicofo">Configure jicofo</span></h3>
 <p>The configuration for jicofo. Add -nightly or -git to /etc/jitsi-videobridge for nightly and git version.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/jicofo/config</pre>
@@ -293,9 +294,9 @@ JICOFO_AUTH_PASSWORD=<b>SECRET_FOCUS_USER</b></pre>
     }
   }
 }</pre>
-<p>Then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> the <code>jicofo</code> service.
+<p>Then <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> <code>jicofo.service</code>.
 </p>
-<h4><span class="mw-headline" id="Configure_jitsi-meet">Configure jitsi-meet</span></h4>
+<h3><span class="mw-headline" id="Configure_jitsi-meet">Configure jitsi-meet</span></h3>
 <p>The configuration for jitsi-meet webapps. Add <b>-nightly</b> or <b>-git</b> to <b>/etc/jitsi-videobridge</b> for <b>nightly</b> and <b>git</b> version.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/webapps/jitsi-meet/config.js</pre>
@@ -308,10 +309,10 @@ JICOFO_AUTH_PASSWORD=<b>SECRET_FOCUS_USER</b></pre>
   bosh: '//<b>JITSIFQDN</b>/http-bind',
   // ...
 }</pre>
-<h4><span class="mw-headline" id="Configure_nginx">Configure nginx</span></h4>
-<p>Configure <a href="../en/Nginx.html" title="Nginx">nginx</a> with TLS as described in <a href="../en/Nginx.html#TLS" title="Nginx">nginx#TLS</a>.
+<h3><span class="mw-headline" id="Configure_nginx">Configure nginx</span></h3>
+<p>Configure <a href="/title/Nginx" title="Nginx">nginx</a> with TLS as described in <a href="/title/Nginx#TLS" title="Nginx">nginx#TLS</a>.
 </p>
-<p>Let’s copy the provided example.
+<p>Let us copy the provided example.
 </p>
 <pre>cd /etc/nginx
 mkdir sites
@@ -352,7 +353,7 @@ cp /usr/share/doc/jitsi-meet/jitsi-meet.example sites/jitsi.conf</pre>
     alias /etc/webapps/jitsi-meet/config.js;
   }
 }</pre>
-<p>Then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> the <code>nginx</code> service.
+<p>Then <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> <code>nginx.service</code>.
 </p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Running_the_server_behind_a_NAT">Running the server behind a NAT</span></h3>
@@ -391,11 +392,10 @@ JIGASI_OPTS=""
 LOGFILE=/var/log/jitsi/jigasi.log</pre>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/opt/jitsi-meet/config.js</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">hosts.call_control = 'callcontrol.meet.jit.si'</pre>
-<p>and then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> <code>jigasi.service</code>.
+<p>and then <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> <code>jigasi.service</code>.
 </p>
 <h3><span class="mw-headline" id="Access_restrictions_for_room_creation">Access restrictions for room creation</span></h3>
-<p>To restrict video conference room <b>creation</b> to authenticated users, you can do the following steps.
-Note that participants to the meeting are still not authenticated!
+<p>To restrict video conference room <b>creation</b> to authenticated users, you can do the following steps. Note that participants to the meeting are still not authenticated!
 </p>
 <p>Add authentication to the jitsi domain in prosody and add a new virtual host for guests:
 </p>
@@ -435,7 +435,7 @@ VirtualHost "guest.<b>JITSIFQDN</b>"
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">org.jitsi.jicofo.auth.URL=XMPP:<b>JITSIFQDN</b></pre>
 <p>Then create the desired users via
 </p>
-<pre>   prosodyctl register &lt;username&gt; <b>JITSIFQDN</b> &lt;password&gt;
+<pre>prosodyctl register &lt;username&gt; <b>JITSIFQDN</b> &lt;password&gt;
 </pre>
 <p>Only if you are using <code>jigasi</code> (if you do not know, you do not) edit the SIP interface to not allow anonymous authentication:
 </p>
@@ -443,15 +443,134 @@ VirtualHost "guest.<b>JITSIFQDN</b>"
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">org.jitsi.jigasi.xmpp.acc.ANONYMOUS_AUTH=false</pre>
 <p>These steps are taken from <a rel="nofollow" class="external text" href="https://github.com/jitsi/jicofo#secure-domain">this guide</a>.
 </p>
-<h3><span class="mw-headline" id="Log_evaluation">Log evaluation</span></h3>
-<p>For a publicly available IP address the above config leads to a public video conference server.
-To monitor server use one can use systemd logging to get an at least vague idea of the usage:
+<h3><span class="mw-headline" id="Access_restrictions_with_JWT_token">Access restrictions with JWT token</span></h3>
+<p>To restrict video conference room <b>creation</b> to users authenticate with a JWT token (external service for authentication), you can do the following steps. Note that participants to the meeting are still not authenticated!
 </p>
-<pre>$ journalctl --unit jicofo.service | grep "Created new focus" | cut -d" " -f7,8,16
+<p>Install those dependencies:
+</p>
+<pre>- <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lua52-base64/">lua52-base64</a></span><sup><small>AUR</small></sup>
+- <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lua52-basexx">lua52-basexx</a></span>
+- <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lua52-cjson/">lua52-cjson</a></span><sup><small>AUR</small></sup>
+- <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/lua52-jwtjitsi/">lua52-jwtjitsi</a></span><sup><small>AUR</small></sup>
+- <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lua52-luaossl">lua52-luaossl</a></span>
+</pre>
+<p>Add authentication to the jitsi domain in prosody and add a new virtual host for guests:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/prosody/conf.d/jitsi.cfg.lua</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">-- change authentification of your domain
+VirtualHost "<b>JITSIFQDN</b>"
+    authentification = "token"
+    app_id = "APP_ID"
+    app_secret = "APP_SECRET"
+    allow_empty_token = false
+    modules_enabled = {
+        -- keep existing modules and add
+        "presence_identity";
+    }
+    c2s_require_encryption = false
+
+-- add guest virtual host to allow anonymous user to join your room
+VirtualHost "guest.<b>JITSIFQDN</b>"
+    authentication = "anonymous"
+    c2s_require_encryption = false
+    modules_enabled = {
+        -- copy the content of the modules_enabled
+        -- of the VirtualHost "<b>JITSIFQDN</b>"
+        -- remove only the module "muc_lobby_rooms" of the list
+        -- example:
+        "bosh";
+        "pubsub";
+        "ping"; -- Enable mod_ping
+        "speakerstats";
+        "external_services";
+        "conference_duration";
+        "presence_identity";
+    }
+
+Component "conference.<b>JITSIFQDN</b>" "muc"
+    modules_enabled = {
+        -- add this to the modules_enabled
+        "token_verification";
+    }</pre>
+<p>Edit the config file for <code>jitsi-meet</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/webapps/jitsi-meet/config.js</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">var config = {
+  host: {
+    // anonymous users need to use a dedicated muc without authentication
+    anonymousdomain: 'guest.<b>JITSIFQDN'</b>,
+  },
+}</pre>
+<p>Add authentication for <code>jicofo</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/jicofo/sip-communicator.properties</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">org.jitsi.jicofo.auth.URL=EXT_JWT:<b>JITSIFQDN</b></pre>
+<p>Then <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> <code>prosody.service</code> (or <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> it if it was just installed).
+And <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> <code>jicofo.service</code> (or <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> it if it was just installed).
+</p>
+<p>Now you can use a JWT token to authenticate an user.
+</p>
+<p>You can read the spec here: <a rel="nofollow" class="external text" href="https://github.com/jitsi/lib-jitsi-meet/blob/master/doc/tokens.md">Jitsi Meet Tokens</a>
+</p>
+<p>Here an quick example in nodejs:
+</p>
+<pre>const jwt = require('jsonwebtoken')
+const crypto = require('crypto');
+const words = require('random-words')
+const yourDomain = "JITSIFQDN"
+const appId = "APP_ID"
+const appSecret = "APP_SECRET"
+const userName = "YOUR_USERNAME"
+const userEmail = "YOUR_EMAIL"
+
+function getBody(domain, appId, name, email, room) {
+    const md5Email = crypto.createHash('md5').update(email).digest("hex");
+    const id = crypto.createHash('sha1').update(`${name}:${email}`).digest("hex")
+
+    return {
+        context: {
+            user: {
+                avatar: `https:/gravatar.com/avatar/${md5Email}`,
+                name,
+                email,
+                id,
+            },
+            group: 'users'
+        },
+        "aud": "jitsi",
+        "iss": appId,
+        "sub": domain,
+        room,
+    }
+}
+
+const room = process.argv[2] || words({exactly: 3, join: '-'})
+
+const data = getBody(
+    yourDomain,
+    appId,
+    userName,
+    userEmail,
+    room,
+)
+
+const options = {
+    algorithm: 'HS256',
+    expiresIn: '2h',
+}
+
+const jwtToken = jwt.sign(data, appSecret, options)
+
+console.log(`https://${yourDomain}/${room}?jwt=${jwtToken}`)
+</pre>
+<h3><span class="mw-headline" id="Log_evaluation">Log evaluation</span></h3>
+<p>For a publicly available IP address the above config leads to a public video conference server. To monitor server use one can use systemd logging to get an at least vague idea of the usage:
+</p>
+<pre># journalctl --unit=jicofo.service --grep="created new focus" | cut -d" " -f7,8,16
 </pre>
 <p>shows all events of new chat room creation and
 </p>
-<pre>$ journalctl --unit jicofo.service | grep "Disposed conference for room" | cut -d" " -f7,8,16
+<pre># journalctl --unit=jicofo.service --grep="disposed conference for room" | cut -d" " -f7,8,16
 </pre>
 <p>shows all events of chat room destruction.
 </p>
@@ -462,23 +581,8 @@ To monitor server use one can use systemd logging to get an at least vague idea 
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Check_your_logs">Check your logs</span></h3>
-<p>You can stop all services, start them one by one and check the logs to see if something seems wrong. Most of the time is a password or config issue.
+<p>You can <a href="/title/Stop" class="mw-redirect" title="Stop">stop</a> all service units (i.e., <code>prosody.service</code>, <code>jitsi-videobridge.service</code>, and <code>jicofo.service</code>), <a href="/title/Start" class="mw-redirect" title="Start">start</a> them one at a time, and follow new messages in the <a href="/title/Journal" class="mw-redirect" title="Journal">journal</a> for each service unit to see if something is wrong. Most problems are due to password or configuration issues.
 </p>
-<pre>systemctl stop prosody jitsi-videobridge jicofo</pre>
-<p>Then
-</p>
-<p>prosody:
-</p>
-<pre>systemctl start prosody
-journalctl -fu prosody</pre>
-<p>jitsi-videobridge:
-</p>
-<pre>systemctl start jitsi-videobridge
-journalctl -fu jitsi-videobridge</pre>
-<p>jicofo:
-</p>
-<pre>systemctl start jicofo
-journalctl -fu jicofo</pre>
 <p>If you have an upgrade from a very different version, or you mess up with your config, start other. It will be faster than trying to findout which part is wrong.
 </p>
 <h3><span class="mw-headline" id="Ask_help_on_Matrix_rooms">Ask help on Matrix rooms</span></h3>
@@ -499,9 +603,9 @@ journalctl -fu jicofo</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Telephony.html" title="Category:Telephony">Telephony</a></li>
-<li><a href="../en/Category:Voice_over_IP.html" title="Category:Voice over IP">Voice over IP</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Telephony" title="Category:Telephony">Telephony</a></li>
+<li><a href="/title/Category:Voice_over_IP" title="Category:Voice over IP">Voice over IP</a></li>
 </ul>
 </div></div>
 	</div>
@@ -509,15 +613,15 @@ journalctl -fu jicofo</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Jitsi-meet&amp;oldid=663805">https://wiki.archlinux.org/index.php?title=Jitsi-meet&amp;oldid=663805</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 23 April 2021, at 15:21.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Jitsi-meet&amp;oldid=670519">https://wiki.archlinux.org/index.php?title=Jitsi-meet&amp;oldid=670519</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 11 May 2021, at 18:28.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

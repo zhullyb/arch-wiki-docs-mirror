@@ -34,11 +34,11 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="/title/Help:Style" title="Help:Style">Help:Style</a> for reference.</b><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> written in first person, other style issues. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Removing_system_encryption">Talk:Removing system encryption#</a>)</div>
+<b>Reason:</b> written in first person, other style issues. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Removing_system_encryption">Talk:Removing system encryption#</a>)</div>
 </div>
-<p>Removing system encryption with <a href="../en/Dm-crypt.html" title="Dm-crypt">dm-crypt and LUKS</a>.
+<p>Removing system encryption with <a href="/title/Dm-crypt" title="Dm-crypt">dm-crypt and LUKS</a>.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -87,7 +87,7 @@
 cryptsetup does allow the user to permanently remove the LUKS encryption from a device in-place. For example, if you have an ext4 filesystem living inside a LUKS-encrypted partition,
 performing in-place decryption will remove the LUKS signature, and place the ext4 filesystem
 directly on the partition, so that you can mount it directly. Unless something goes wrong,
-the files in the filesystem will remain intact. The terms used by cryptsetup's documentation for this is "decryption.
+the files in the filesystem will remain intact. The terms used by cryptsetup's documentation for this is "decryption."
 </p>
 <p>Support for non-destructive offline decryption of LUKS1 devices has been available starting with <code>cryptsetup</code> version 1.5.0, which was released in 2012. LUKS1 decryption only supported offline mode decryption.
 </p>
@@ -122,7 +122,7 @@ devices unless you use detached header. I have tested offline LUKS2 decryption f
 </p>
 <p>If you do not use a detached header, your safest course is to use the safer backup-format-restore procedure described below. Alternatively, you can choose to convert your LUKS2 device to a LUKS1 device, and then proceed with the LUKS1 decryption procedure.
 </p>
-<p>The conversion with take a significant amount of time, the system should be connected to mains.
+<p>The conversion with take a significant amount of time, the system should be connected to mains power and extreme care should be taken to avoid any event that may lead to a system crash or loss of power. DATA LOSS MAY OCCUR if interrupted.
 </p>
 <p>Steps:
 </p>
@@ -133,7 +133,7 @@ devices unless you use detached header. I have tested offline LUKS2 decryption f
 </li>
 <li>Reboot into a live environment using a USB stick.</li>
 <li>Identify your block device using <code>blkid</code> or <code>lsblk</code>.</li>
-<li>Make sure that the block device to be decrypted has not been opened by <code>cryptsetup</code> (there is no entry under <code>/dev/mapper/</code>, let alone mounted. If it has been, unmount and use <code>cryptsetup luksClose</code> to close it.</li>
+<li>Make sure that the block device to be decrypted has not been opened by <code>cryptsetup</code> (there is no entry under <code>/dev/mapper/</code>, let alone mounted). If it has been, unmount and use <code>cryptsetup luksClose</code> to close it.</li>
 <li>Before converting the device, you must convert the Password-Based Key Derivation Function (PBKDF) for all key-slots to be LUKS1 compatible. Use the following command for each key slot: <code>sudo cryptsetup luksConvertKey --key-slot &lt;key slot number&gt; --pbkdf pbkdf2 &lt;device_path&gt;</code>
 </li>
 <li>Verify that all key slots PBKDFs are convert to pbkdf2: <code>cryptsetup luksDump &lt;dev&gt;</code>
@@ -148,25 +148,24 @@ devices unless you use detached header. I have tested offline LUKS2 decryption f
 <p>Hopefully, the <code>cryptsetup</code> project will address these usability and data loss issues in a future release (written August 2020).
 </p>
 <h3><span class="mw-headline" id="Cleaning_up_system_files">Cleaning up system files</span></h3>
-<p>Device names and UUIDs may change due to decryption, and you will likely need to update relevant configuration files. The files most likely to need your attention are  <code>/etc/crypttab</code>, <code>/etc/fstab</code> and, if your recently decrypted device appeared on the kernel command line, also <code>/etc/default/grub</code>. IF you edit the latter, remember to regenerate
-the grub configuration as described in <a href="../en/GRUB.html" title="GRUB">GRUB</a>.
+<p>Device names and UUIDs may change due to decryption, and you will likely need to update relevant configuration files. The files most likely to need updating are  <code>/etc/crypttab</code>, <code>/etc/fstab</code> and, if your recently decrypted device appeared on the kernel command line, your bootloader's configuration (e.g, <code>/etc/default/grub</code>). If you edit the latter, remember to regenerate the grub configuration as described in <a href="/title/GRUB" title="GRUB">GRUB</a>.
 </p>
 <h2><span class="mw-headline" id="Removing_LUKS_via_Backup-Format-Restore">Removing LUKS via Backup-Format-Restore</span></h2>
 <h3><span class="mw-headline" id="Prerequisites">Prerequisites</span></h3>
 <ul>
-<li>An encrypted root filesystem or other filesystem that cannot be umounted while booted into the operating system.</li>
+<li>An encrypted root filesystem you wish to decrypt.</li>
 <li>Enough drive space to store a backup.</li>
-<li>An Arch Linux (or other) live CD.</li>
+<li>An Arch Linux (or other) live CD/USB.</li>
 <li>A few hours.</li>
 </ul>
 <h3><span class="mw-headline" id="Boot_into_a_Live_Environment">Boot into a Live Environment</span></h3>
-<p>Download and burn the latest archlive cd, reboot system and boot to cd.
+<p>Download and burn the latest Arch ISO to a CD or USB, reboot the system, and boot to cd.
 </p>
 <h3><span class="mw-headline" id="Activate_Partitions">Activate Partitions</span></h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="/title/Help:Style" title="Help:Style">Help:Style</a> for reference.</b><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> This uses too many HTML attributes instead of templates (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Removing_system_encryption">Talk:Removing system encryption#</a>)</div>
+<b>Reason:</b> This uses too many HTML attributes instead of templates (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Removing_system_encryption">Talk:Removing system encryption#</a>)</div>
 </div>
 <h4><span class="mw-headline" id="Note_About_Different_Setups">Note About Different Setups</span></h4>
 <p>An example setup is shown here:
@@ -274,9 +273,9 @@ xfs_copy -db <u>/media/Shared/backup_root.img</u> <span style="color: green;">/d
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Data-at-rest_encryption.html" title="Category:Data-at-rest encryption">Data-at-rest encryption</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Data-at-rest_encryption" title="Category:Data-at-rest encryption">Data-at-rest encryption</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Style" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li></ul>
 </div>
 </div>
 	</div>
@@ -284,15 +283,15 @@ xfs_copy -db <u>/media/Shared/backup_root.img</u> <span style="color: green;">/d
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Removing_system_encryption&amp;oldid=661296">https://wiki.archlinux.org/index.php?title=Removing_system_encryption&amp;oldid=661296</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 15:28.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Removing_system_encryption&amp;oldid=669845">https://wiki.archlinux.org/index.php?title=Removing_system_encryption&amp;oldid=669845</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 May 2021, at 04:15.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

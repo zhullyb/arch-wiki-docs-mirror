@@ -36,14 +36,14 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Category:Firewalls.html" class="mw-redirect" title="Firewalls">Firewalls</a></li>
-<li><a href="../en/Internet_sharing.html" title="Internet sharing">Internet sharing</a></li>
-<li><a href="../en/Nftables.html#Simple_stateful_firewall" title="Nftables">Nftables#Simple stateful firewall</a></li>
-<li><a href="../en/Router.html" title="Router">Router</a></li>
-<li><a href="../en/Uncomplicated_Firewall.html" title="Uncomplicated Firewall">Uncomplicated Firewall</a></li>
+<li><a href="/title/Firewalls" class="mw-redirect" title="Firewalls">Firewalls</a></li>
+<li><a href="/title/Internet_sharing" title="Internet sharing">Internet sharing</a></li>
+<li><a href="/title/Nftables#Simple_stateful_firewall" title="Nftables">Nftables#Simple stateful firewall</a></li>
+<li><a href="/title/Router" title="Router">Router</a></li>
+<li><a href="/title/Uncomplicated_Firewall" title="Uncomplicated Firewall">Uncomplicated Firewall</a></li>
 </ul>
 </div>
-<p>This page explains how to set up a <a href="https://en.wikipedia.org/wiki/Stateful_firewall" class="extiw" title="wikipedia:Stateful firewall">stateful</a> firewall using <a href="../en/Iptables.html" title="Iptables">iptables</a>. It also explains what the rules mean and why they are needed. For simplicity, it is split into two major sections. The first section deals with a firewall for a single machine, the second sets up a NAT gateway in addition to the firewall from the first section.
+<p>This page explains how to set up a <a href="https://en.wikipedia.org/wiki/Stateful_firewall" class="extiw" title="wikipedia:Stateful firewall">stateful</a> firewall using <a href="/title/Iptables" title="Iptables">iptables</a>. It also explains what the rules mean and why they are needed. For simplicity, it is split into two major sections. The first section deals with a firewall for a single machine, the second sets up a NAT gateway in addition to the firewall from the first section.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong>  The rules below are given in the order they are executed and should only be followed while logged in locally. If you are logged into a remote machine, you may be locked out of the machine while setting up the rules. To get around this problem in a remote setup, the <a href="#Resulting_iptables.rules_file">example config file</a> can be used.</div>
@@ -87,37 +87,36 @@
 <li class="toclevel-2 tocsection-18">
 <a href="#Protection_against_other_attacks"><span class="tocnumber">2.9</span> <span class="toctext">Protection against other attacks</span></a>
 <ul>
-<li class="toclevel-3 tocsection-19"><a href="#Set_boundary_of_broadcast/multicast_to_avoid_pollution_from_external_(outside_of_LAN)"><span class="tocnumber">2.9.1</span> <span class="toctext">Set boundary of broadcast/multicast to avoid pollution from external (outside of LAN)</span></a></li>
-<li class="toclevel-3 tocsection-20"><a href="#Bruteforce_attacks"><span class="tocnumber">2.9.2</span> <span class="toctext">Bruteforce attacks</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="#Bruteforce_attacks"><span class="tocnumber">2.9.1</span> <span class="toctext">Bruteforce attacks</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-21"><a href="#IPv6"><span class="tocnumber">2.10</span> <span class="toctext">IPv6</span></a></li>
-<li class="toclevel-2 tocsection-22"><a href="#Saving_the_rules"><span class="tocnumber">2.11</span> <span class="toctext">Saving the rules</span></a></li>
-<li class="toclevel-2 tocsection-23"><a href="#Resulting_ip6tables.rules_file"><span class="tocnumber">2.12</span> <span class="toctext">Resulting ip6tables.rules file</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#IPv6"><span class="tocnumber">2.10</span> <span class="toctext">IPv6</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#Saving_the_rules"><span class="tocnumber">2.11</span> <span class="toctext">Saving the rules</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Resulting_ip6tables.rules_file"><span class="tocnumber">2.12</span> <span class="toctext">Resulting ip6tables.rules file</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-24">
+<li class="toclevel-1 tocsection-23">
 <a href="#Setting_up_a_NAT_gateway"><span class="tocnumber">3</span> <span class="toctext">Setting up a NAT gateway</span></a>
 <ul>
-<li class="toclevel-2 tocsection-25">
+<li class="toclevel-2 tocsection-24">
 <a href="#Setting_up_the_filter_table"><span class="tocnumber">3.1</span> <span class="toctext">Setting up the filter table</span></a>
 <ul>
-<li class="toclevel-3 tocsection-26"><a href="#Creating_necessary_chains_2"><span class="tocnumber">3.1.1</span> <span class="toctext">Creating necessary chains</span></a></li>
-<li class="toclevel-3 tocsection-27"><a href="#Setting_up_the_FORWARD_chain"><span class="tocnumber">3.1.2</span> <span class="toctext">Setting up the FORWARD chain</span></a></li>
-<li class="toclevel-3 tocsection-28"><a href="#Setting_up_the_fw-interfaces_and_fw-open_chains"><span class="tocnumber">3.1.3</span> <span class="toctext">Setting up the fw-interfaces and fw-open chains</span></a></li>
+<li class="toclevel-3 tocsection-25"><a href="#Creating_necessary_chains_2"><span class="tocnumber">3.1.1</span> <span class="toctext">Creating necessary chains</span></a></li>
+<li class="toclevel-3 tocsection-26"><a href="#Setting_up_the_FORWARD_chain"><span class="tocnumber">3.1.2</span> <span class="toctext">Setting up the FORWARD chain</span></a></li>
+<li class="toclevel-3 tocsection-27"><a href="#Setting_up_the_fw-interfaces_and_fw-open_chains"><span class="tocnumber">3.1.3</span> <span class="toctext">Setting up the fw-interfaces and fw-open chains</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-29">
+<li class="toclevel-2 tocsection-28">
 <a href="#Setting_up_the_nat_table"><span class="tocnumber">3.2</span> <span class="toctext">Setting up the nat table</span></a>
 <ul>
-<li class="toclevel-3 tocsection-30"><a href="#Setting_up_the_POSTROUTING_chain"><span class="tocnumber">3.2.1</span> <span class="toctext">Setting up the POSTROUTING chain</span></a></li>
-<li class="toclevel-3 tocsection-31"><a href="#Setting_up_the_PREROUTING_chain"><span class="tocnumber">3.2.2</span> <span class="toctext">Setting up the PREROUTING chain</span></a></li>
+<li class="toclevel-3 tocsection-29"><a href="#Setting_up_the_POSTROUTING_chain"><span class="tocnumber">3.2.1</span> <span class="toctext">Setting up the POSTROUTING chain</span></a></li>
+<li class="toclevel-3 tocsection-30"><a href="#Setting_up_the_PREROUTING_chain"><span class="tocnumber">3.2.2</span> <span class="toctext">Setting up the PREROUTING chain</span></a></li>
 </ul>
 </li>
-<li class="toclevel-2 tocsection-32"><a href="#Saving_the_rules_2"><span class="tocnumber">3.3</span> <span class="toctext">Saving the rules</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#Saving_the_rules_2"><span class="tocnumber">3.3</span> <span class="toctext">Saving the rules</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-33"><a href="#See_Also"><span class="tocnumber">4</span> <span class="toctext">See Also</span></a></li>
+<li class="toclevel-1 tocsection-32"><a href="#See_Also"><span class="tocnumber">4</span> <span class="toctext">See Also</span></a></li>
 </ul>
 </div>
 
@@ -153,7 +152,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 </p>
 <pre># iptables-restore &lt; /etc/iptables/empty.rules
 </pre>
-<p>Otherwise, see <a href="../en/Iptables.html#Resetting_rules" title="Iptables">Iptables#Resetting rules</a>.
+<p>Otherwise, see <a href="/title/Iptables#Resetting_rules" title="Iptables">Iptables#Resetting rules</a>.
 </p>
 <h2><span class="mw-headline" id="Firewall_for_a_single_machine">Firewall for a single machine</span></h2>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -187,30 +186,30 @@ num   pkts bytes target     prot opt in     out     source               destina
 </pre>
 <p>Every packet that is received by any network interface will pass the <b>INPUT</b> chain first, if it is destined for this machine. In this chain, we make sure that only the packets that we want are accepted.
 </p>
-<p>The first rule added to the INPUT chain will allow traffic that belongs to established connections, or new valid traffic that is related to these connections such as ICMP errors, or echo replies (the packets a host returns when pinged). <b>ICMP</b> stands for <b>Internet Control Message Protocol</b>. Some ICMP messages are very important and help to manage congestion and MTU, and are accepted by this rule. 
-</p>
-<p>The connection state <code>ESTABLISHED</code> implies that either another rule previously allowed the initial (<code>--ctstate NEW</code>) connection attempt or the connection was already active (for example an active remote SSH connection) when setting the rule: 
+<p>The first rule added to the INPUT chain will allow traffic that belongs to established connections, or new valid traffic that is related to these connections such as ICMP errors, or echo replies (the packets a host returns when pinged). ICMP stands for Internet Control Message Protocol. Some ICMP messages are very important and help to manage congestion and MTU, and are accepted by this rule:
 </p>
 <pre># iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 </pre>
+<p>The connection state <code>ESTABLISHED</code> implies that either another rule previously allowed the initial (<code>--ctstate NEW</code>) connection attempt or the connection was already active (for example an active remote SSH connection).
+</p>
 <p>The second rule will accept all traffic from the "loopback" (lo) interface, which is necessary for many applications and services.
 </p>
-<div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> You can add more trusted interfaces here such as "eth1" if you do not want/need the traffic filtered by the firewall, but be warned that if you have a NAT setup that redirects any kind of traffic to this interface from anywhere else in the network (let us say a router), it will get through, regardless of any other settings you may have.</div>
 <pre># iptables -A INPUT -i lo -j ACCEPT
 </pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> You can add more trusted interfaces here such as "eth1" if you do not want/need the traffic filtered by the firewall, but be warned that if you have a NAT setup that redirects any kind of traffic to this interface from anywhere else in the network (let us say a router), it will get through, regardless of any other settings you may have.</div>
 <p>The third rule will drop all traffic with an "INVALID" state match. Traffic can fall into four "state" categories: NEW, ESTABLISHED, RELATED or INVALID and this is what makes this a "stateful" firewall rather than a less secure "stateless" one. States are tracked using the "nf_conntrack_*" kernel modules which are loaded automatically by the kernel as you add rules.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
 <ul>
 <li>This rule will drop all packets with invalid headers or checksums, invalid TCP flags, invalid ICMP messages (such as a port unreachable when we did not send anything to the host), and out of sequence packets which can be caused by sequence prediction or other similar attacks. The "DROP" target will drop a packet without any response, contrary to REJECT which politely refuses the packet. We use DROP because there is no proper "REJECT" response to packets that are INVALID, and we do not want to acknowledge that we received these packets.</li>
-<li>ICMPv6 Neighbor Discovery packets remain untracked, and will always be classified "INVALID" though they are not corrupted or the like. Keep this in mind, and accept them before this rule! iptables -A INPUT -p 41 -j ACCEPT</li>
+<li>ICMPv6 Neighbor Discovery packets remain untracked, and will always be classified "INVALID" though they are not corrupted or the like. Keep this in mind, and accept them before this rule! Run <code>iptables -A INPUT -p 41 -j ACCEPT</code> as root.</li>
 </ul>
 </div>
 <pre># iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
 </pre>
-<p>The next rule will accept all new incoming <b>ICMP echo requests</b>, also known as pings. Only the first packet will count as NEW, the others will be handled by the RELATED, ESTABLISHED rule. Since the computer is not a router, no other ICMP traffic with state NEW needs to be allowed.
+<p>The next rule will accept all new incoming ICMP echo requests, also known as pings. Only the first packet will count as NEW, the others will be handled by the RELATED, ESTABLISHED rule. Since the computer is not a router, no other ICMP traffic with state NEW needs to be allowed.
 </p>
 <pre># iptables -A INPUT -p icmp --icmp-type 8 -m conntrack --ctstate NEW -j ACCEPT
 </pre>
@@ -259,7 +258,7 @@ COMMIT
 </pre>
 <p>and can be used to continue with the following sections. If you are setting up the firewall remotely via SSH, append the following rule to allow new SSH connections before continuing (adjust port as required):
 </p>
-<pre>-A TCP -p tcp --dport 22 -j ACCEPT
+<pre># iptables -A TCP -p tcp --dport 22 -j ACCEPT
 </pre>
 <h3><span class="mw-headline" id="The_TCP_and_UDP_chains">The TCP and UDP chains</span></h3>
 <p>The TCP and UDP chains contain rules for accepting new incoming TCP connections and UDP streams to specific ports.
@@ -279,7 +278,7 @@ COMMIT
 </p>
 <pre># iptables -A TCP -p tcp --dport 22 -j ACCEPT
 </pre>
-<p>To accept incoming TCP/UDP requests for a <a href="../en/Category:Domain_Name_System.html" class="mw-redirect" title="DNS server">DNS server</a> (port 53):
+<p>To accept incoming TCP/UDP requests for a <a href="/title/DNS_server" class="mw-redirect" title="DNS server">DNS server</a> (port 53):
 </p>
 <pre># iptables -A TCP -p tcp --dport 53 -j ACCEPT
 # iptables -A UDP -p udp --dport 53 -j ACCEPT
@@ -287,12 +286,12 @@ COMMIT
 <p>See <span class="plainlinks archwiki-template-man" title="$ man 8 iptables"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/iptables.8">iptables(8)</a></span> for more advanced rules, like matching multiple ports.
 </p>
 <h4><span class="mw-headline" id="Port_knocking">Port knocking</span></h4>
-<p>Port knocking is a method to externally open ports that, by default, the firewall keeps closed. It works by requiring connection attempts to a series of predefined closed ports. When the correct sequence of port "knocks" (connection attempts) is received, the firewall opens certain port(s) to allow a connection. See <a href="../en/Port_knocking.html" title="Port knocking">Port knocking</a> for more information.
+<p>Port knocking is a method to externally open ports that, by default, the firewall keeps closed. It works by requiring connection attempts to a series of predefined closed ports. When the correct sequence of port "knocks" (connection attempts) is received, the firewall opens certain port(s) to allow a connection. See <a href="/title/Port_knocking" title="Port knocking">Port knocking</a> for more information.
 </p>
 <h3><span class="mw-headline" id="Protection_against_spoofing_attacks">Protection against spoofing attacks</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> <code>rp_filter</code> is currently set to <code>2</code> by default in <code>/usr/lib/sysctl.d/50-default.conf</code>, so the following step is not necessary.</div>
-<p>Blocking reserved local addresses incoming from the internet or local network is normally done through setting <code>rp_filter</code> (Reverse Path Filter) in sysctl to 1. To do so, add the following line to your <code>/etc/sysctl.d/90-firewall.conf</code> file (see <a href="../en/Sysctl.html" title="Sysctl">sysctl</a> for details) to enable source address verification which is built into Linux kernel itself. The verification by the kernel will handle spoofing better than individual iptables rules for each case.
+<p>Blocking reserved local addresses incoming from the internet or local network is normally done through setting <code>rp_filter</code> (Reverse Path Filter) in sysctl to 1. To do so, add the following line to your <code>/etc/sysctl.d/90-firewall.conf</code> file (see <a href="/title/Sysctl" title="Sysctl">sysctl</a> for details) to enable source address verification which is built into Linux kernel itself. The verification by the kernel will handle spoofing better than individual iptables rules for each case.
 </p>
 <pre>net.ipv4.conf.all.rp_filter=1
 </pre>
@@ -314,7 +313,7 @@ COMMIT
 </p>
 <p>This is rudimentary "protection" and makes life difficult when debugging issues in the future. This should only be done for educational purposes.
 </p>
-<p>To block echo requests, add the following line to your <code>/etc/sysctl.d/90-firewall.conf</code> file (see <a href="../en/Sysctl.html" title="Sysctl">sysctl</a> for details):
+<p>To block echo requests, add the following line to your <code>/etc/sysctl.d/90-firewall.conf</code> file (see <a href="/title/Sysctl" title="Sysctl">sysctl</a> for details):
 </p>
 <pre>net.ipv4.icmp_echo_ignore_all = 1
 </pre>
@@ -371,28 +370,14 @@ COMMIT
 # iptables -A INPUT -j REJECT --reject-with icmp-proto-unreachable
 </pre>
 <h3><span class="mw-headline" id="Protection_against_other_attacks">Protection against other attacks</span></h3>
-<p>See the <a href="../en/Sysctl.html#TCP/IP_stack_hardening" title="Sysctl">sysctl#TCP/IP stack hardening</a> for relevant kernel parameters.
+<p>See the <a href="/title/Sysctl#TCP/IP_stack_hardening" title="Sysctl">sysctl#TCP/IP stack hardening</a> for relevant kernel parameters.
 </p>
-<h4>
-<span id="Set_boundary_of_broadcast.2Fmulticast_to_avoid_pollution_from_external_.28outside_of_LAN.29"></span><span class="mw-headline" id="Set_boundary_of_broadcast/multicast_to_avoid_pollution_from_external_(outside_of_LAN)">Set boundary of broadcast/multicast to avoid pollution from external (outside of LAN)</span>
-</h4>
-<p>Since we have enabled <code>net.ipv4.conf.ppp0.forwarding = 1</code>, all type of traffics will be forwarded via ppp0 by default. Take <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol#Discovery" class="extiw" title="wikipedia:Dynamic Host Configuration Protocol">DHCP discovery</a> for example where according to the protocol specification the source address is <code>0.0.0.0</code> and destination address is <code>255.255.255.255</code>, if you are hosting your own DHCP server locally but there is another DHCP server running outside but neighouring with your <code>ppp0</code> and acking your DHCP discovery request, your client IP configuration will probably be polluted because you have enabled <code>MASQUERADE</code> previously. In this case you probably want to set a boundary at <code>ppp0</code> and drop all broadcast/multicast traffics going accross.
-</p>
-<pre># iptables -A PREROUTING -i ppp0 -m addrtype --limit-iface-in ! --src-type UNICAST -j DROP
-# iptables -A PREROUTING -i ppp0 -m addrtype --limit-iface-in --dst-type UNSPEC -j DROP
-# iptables -A PREROUTING -i ppp0 -m addrtype --limit-iface-in --dst-type BROADCAST -j DROP
-# iptables -A PREROUTING -i ppp0 -m addrtype --limit-iface-in --dst-type MULTICAST -j DROP
-# iptables -A POSTROUTING -o ppp0 -m addrtype --limit-iface-out ! --dst-type UNICAST -j DROP
-# iptables -A POSTROUTING -o ppp0 -m addrtype --limit-iface-out --src-type UNSPEC -j DROP
-# iptables -A POSTROUTING -o ppp0 -m addrtype --limit-iface-out --src-type BROADCAST -j DROP
-# iptables -A POSTROUTING -o ppp0 -m addrtype --limit-iface-out --src-type MULTICAST -j DROP
-</pre>
 <h4><span class="mw-headline" id="Bruteforce_attacks">Bruteforce attacks</span></h4>
 <p>Unfortunately, bruteforce attacks on services accessible via an external IP address are common. One reason for this is that the attacks are easy to perform with the many tools available. Fortunately, there are a number of ways to protect the services against them. One is the use of appropriate <code>iptables</code> rules which activate and blacklist an IP after a set number of packets attempt to initiate a connection. Another is the use of specialised daemons that monitor the logfiles for failed attempts and blacklist accordingly.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Using an IP blacklist will stop trivial attacks but it relies on an additional daemon and successful logging (the partition containing <code>/var</code> can become full, especially if an attacker is pounding on the server). Additionally, with the knowledge of your IP address, the attacker can send packets with a spoofed source header and get you locked out of the server. <a href="../en/SSH_keys.html" title="SSH keys">SSH keys</a> provide an elegant solution to the problem of brute forcing without these problems.</div>
-<p>Two packages that ban IPs after too many password failures are <a href="../en/Fail2ban.html" title="Fail2ban">Fail2ban</a> or, for <code>sshd</code> in particular, <a href="../en/Sshguard.html" title="Sshguard">Sshguard</a>. These two applications update iptables rules to reject temporarily or permanently future connections from attackers.
+<strong>Warning:</strong> Using an IP blacklist will stop trivial attacks but it relies on an additional daemon and successful logging (the partition containing <code>/var</code> can become full, especially if an attacker is pounding on the server). Additionally, with the knowledge of your IP address, the attacker can send packets with a spoofed source header and get you locked out of the server. <a href="/title/SSH_keys" title="SSH keys">SSH keys</a> provide an elegant solution to the problem of brute forcing without these problems.</div>
+<p>Two packages that ban IPs after too many password failures are <a href="/title/Fail2ban" title="Fail2ban">Fail2ban</a> or, for <code>sshd</code> in particular, <a href="/title/Sshguard" title="Sshguard">Sshguard</a>. These two applications update iptables rules to reject temporarily or permanently future connections from attackers.
 </p>
 <p>The following rules give an example configuration to mitigate SSH bruteforce attacks using <code>iptables</code>.
 </p>
@@ -423,7 +408,7 @@ COMMIT
 <strong>Tip:</strong> For self-testing the rules after setup, the actual blacklisting can slow the test, making it difficult to fine-tune parameters. One can watch the incoming attempts via <code>cat /proc/net/xt_recent/sshbf</code>. To unblock the own IP during testing, root is needed <code>echo / &gt; /proc/net/xt_recent/sshbf</code>
 </div>
 <h3><span class="mw-headline" id="IPv6">IPv6</span></h3>
-<p>If you do not use IPv6, you can consider <a href="../en/IPv6.html#Disable_IPv6" class="mw-redirect" title="Disabling IPv6">disabling it</a>, otherwise follow these steps to enable the IPv6 firewall rules.
+<p>If you do not use IPv6, you can consider <a href="/title/Disabling_IPv6" class="mw-redirect" title="Disabling IPv6">disabling it</a>, otherwise follow these steps to enable the IPv6 firewall rules.
 </p>
 <p>Copy the IPv4 rules used in this example as a base, and change any IPs from IPv4 format to IPv6 format:
 </p>
@@ -440,9 +425,9 @@ COMMIT
 <p>The above will reject with the default return error of <code>--reject-with icmp6-port-unreachable</code>. You should note though, that identifying a firewall is a basic feature of port scanning applications and most will identify it regardless. 
 </p>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Which ICMPv6 peculiarities should be added to bring the rules at par with the IPv4 rules this article uses? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Simple_stateful_firewall#ICMP_blocking">Talk:Simple_stateful_firewall#ICMP blocking</a>)</div>
+<b>Reason:</b> Which ICMPv6 peculiarities should be added to bring the rules at par with the IPv4 rules this article uses? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Simple_stateful_firewall#ICMP_blocking">Talk:Simple_stateful_firewall#ICMP blocking</a>)</div>
 </div>
 <p>In the next step make sure the protocol and extension are changed to be IPv6 appropriate for the rule regarding all new incoming ICMP echo requests (pings):
 </p>
@@ -494,7 +479,7 @@ COMMIT
 COMMIT
 # Completed on Sat Apr 20 10:53:41 2019
 </pre>
-<p>Then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>iptables.service</code> and the <code>ip6tables.service</code>. Check the status of the services to make sure the rules are loaded correctly.
+<p>Then <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> and <a href="/title/Start" class="mw-redirect" title="Start">start</a> <code>iptables.service</code> and the <code>ip6tables.service</code>. Check the status of the services to make sure the rules are loaded correctly.
 </p>
 <h2><span class="mw-headline" id="Setting_up_a_NAT_gateway">Setting up a NAT gateway</span></h2>
 <p>This section of the guide deals with NAT gateways. It is assumed that you already read the <a href="#Firewall_for_a_single_machine">first part of the guide</a> and set up the <b>INPUT</b>, <b>OUTPUT</b>, <b>TCP</b> and <b>UDP</b> chains like described above. All rules so far have been created in the <b>filter</b> table. In this section, we will also have to use the <b>nat</b> table.
@@ -545,9 +530,9 @@ COMMIT
 <pre># iptables -A fw-interfaces -i eth1 -j ACCEPT
 # iptables -t nat -A POSTROUTING -s 10.3.0.0/16 -o ppp0 -j MASQUERADE
 </pre>
-<p>The last step is to <a href="../en/Internet_sharing.html#Enable_packet_forwarding" title="Internet sharing">enable packet forwarding</a> (if it is not already enabled).
+<p>The last step is to <a href="/title/Internet_sharing#Enable_packet_forwarding" title="Internet sharing">enable packet forwarding</a> (if it is not already enabled).
 </p>
-<p>Machines from these subnets can now use your new NAT machine as their gateway. Note that you may want to set up a DNS and <a href="../en/Network_configuration.html#DHCP" class="mw-redirect" title="DHCP">DHCP</a> server like <a href="../en/Dnsmasq.html" title="Dnsmasq">dnsmasq</a> or a combination of <a href="../en/BIND.html" title="BIND">BIND</a> and <a href="../en/Dhcpd.html" title="Dhcpd">dhcpd</a> to simplify network settings DNS resolution on the client machines. This is not the topic of this guide.
+<p>Machines from these subnets can now use your new NAT machine as their gateway. Note that you may want to set up a DNS and <a href="/title/DHCP" class="mw-redirect" title="DHCP">DHCP</a> server like <a href="/title/Dnsmasq" title="Dnsmasq">dnsmasq</a> or a combination of <a href="/title/BIND" title="BIND">BIND</a> and <a href="/title/Dhcpd" title="Dhcpd">dhcpd</a> to simplify network settings DNS resolution on the client machines. This is not the topic of this guide.
 </p>
 <h4><span class="mw-headline" id="Setting_up_the_PREROUTING_chain">Setting up the PREROUTING chain</span></h4>
 <p>Sometimes, we want to change the address of an incoming packet from the gateway to a LAN machine. To do this, we use the <b>fw-open</b> chain defined above, as well as the <b>PREROUTING</b> chain in the <b>nat</b> table in the following two simple examples. 
@@ -574,7 +559,7 @@ COMMIT
 <h2><span class="mw-headline" id="See_Also">See Also</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://www.webhostingtalk.com/showthread.php?t=456571">Methods to block SSH attacks</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.ducea.com/2006/06/28/using-iptables-to-block-brute-force-attacks/">Using iptables to block brute force attacks</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.ducea.com/2006/06/28/using-iptables-to-block-brute-force-attacks/">Using iptables to block brute force attacks</a></li>
 <li><a rel="nofollow" class="external text" href="https://linuxconfig.org/collection-of-basic-linux-firewall-iptables-rules">20 Iptables Examples For New SysAdmins</a></li>
 <li><a rel="nofollow" class="external text" href="https://www.thegeekstuff.com/2011/06/iptables-rules-examples/">25 Most Frequently Used Linux IPTables Rules Examples</a></li>
 </ul>
@@ -582,9 +567,9 @@ COMMIT
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Firewalls.html" title="Category:Firewalls">Firewalls</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Firewalls" title="Category:Firewalls">Firewalls</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Expansion" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
 </div>
 </div>
 	</div>
@@ -592,15 +577,15 @@ COMMIT
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Simple_stateful_firewall&amp;oldid=659669">https://wiki.archlinux.org/index.php?title=Simple_stateful_firewall&amp;oldid=659669</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 April 2021, at 17:36.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Simple_stateful_firewall&amp;oldid=668196">https://wiki.archlinux.org/index.php?title=Simple_stateful_firewall&amp;oldid=668196</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 May 2021, at 12:38.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

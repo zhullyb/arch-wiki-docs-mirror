@@ -24,7 +24,7 @@
 	<h1 id="firstHeading" class="firstHeading" lang="en">Securely wipe disk/Tips and tricks</h1>
 	<div id="bodyContent" class="mw-body-content">
 		<div id="siteSub" class="noprint">From ArchWiki</div>
-		<div id="contentSub"><span class="subpages">&lt; <a href="../../en/Securely_wipe_disk.html" title="Securely wipe disk">Securely wipe disk</a></span></div>
+		<div id="contentSub"><span class="subpages">&lt; <a href="/title/Securely_wipe_disk" title="Securely wipe disk">Securely wipe disk</a></span></div>
 		<div id="contentSub2"></div>
 		
 		<div id="jump-to-nav"></div>
@@ -33,12 +33,12 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p>See <a href="../../en/Securely_wipe_disk.html" title="Securely wipe disk">Securely wipe disk</a> for the main article.
+<p>See <a href="/title/Securely_wipe_disk" title="Securely wipe disk">Securely wipe disk</a> for the main article.
 </p>
 <p>This article describes alternative wiping methods to the specialized utilities that can speed up wiping.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> <a href="../../en/Ext4.html#Reserved_blocks" title="Ext4">Reserved blocks</a> will not be wiped by creation of the files but they can be disabled with utility <code>tune2fs</code>. </div>
+<strong>Warning:</strong> <a href="/title/Ext4#Reserved_blocks" title="Ext4">Reserved blocks</a> will not be wiped by creation of the files but they can be disabled with utility <code>tune2fs</code>. </div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -67,7 +67,7 @@
 
 <h2><span class="mw-headline" id="Wipe_a_single_file">Wipe a single file</span></h2>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Wiping of single files is less effective, if the partition has been <a href="https://en.wikipedia.org/wiki/File_system_fragmentation" class="extiw" title="wikipedia:File system fragmentation">defragmented</a>, resized or moved, or the files have been <a href="https://en.wikipedia.org/wiki/Temporary_folder" class="extiw" title="wikipedia:Temporary folder">duplicated</a> on the same device before. It is much harder to recover if the whole <a href="../../en/Data-at-rest_encryption.html" title="Data-at-rest encryption">encrypted data</a> container part was wiped but encryption will lower <a href="https://en.wikipedia.org/wiki/Disk_encryption#Implementations" class="extiw" title="wikipedia:Disk encryption">disk performance</a> much, if it is not <a href="https://en.wikipedia.org/wiki/Disk_encryption_hardware" class="extiw" title="wikipedia:Disk encryption hardware">hardware based</a> encryption that has almost no impact on the performance. See also <a href="../../en/Securely_wipe_disk.html#Data_remanence" title="Securely wipe disk">Securely wipe disk#Data remanence</a>.</div>
+<strong>Warning:</strong> Wiping of single files is less effective, if the partition has been <a href="https://en.wikipedia.org/wiki/File_system_fragmentation" class="extiw" title="wikipedia:File system fragmentation">defragmented</a>, resized or moved, or the files have been <a href="https://en.wikipedia.org/wiki/Temporary_folder" class="extiw" title="wikipedia:Temporary folder">duplicated</a> on the same device before. It is much harder to recover if the whole <a href="/title/Data-at-rest_encryption" title="Data-at-rest encryption">encrypted data</a> container part was wiped but encryption will lower <a href="https://en.wikipedia.org/wiki/Disk_encryption#Implementations" class="extiw" title="wikipedia:Disk encryption">disk performance</a> much, if it is not <a href="https://en.wikipedia.org/wiki/Disk_encryption_hardware" class="extiw" title="wikipedia:Disk encryption hardware">hardware based</a> encryption that has almost no impact on the performance. See also <a href="/title/Securely_wipe_disk#Data_remanence" title="Securely wipe disk">Securely wipe disk#Data remanence</a>.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> To preserve file access and modification time you can use <span class="plainlinks archwiki-template-man" title="$ man 1 touch"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/touch.1">touch(1)</a></span> command to change time and <span class="plainlinks archwiki-template-man" title="$ man 1 stat"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/stat.1">stat(1)</a></span> command to read time information before accessing the file. See also <a href="https://en.wikipedia.org/wiki/Comparison_of_file_systems#Metadata" class="extiw" title="wikipedia:Comparison of file systems">comparison of file systems</a> for support of metadata and timestamps by them.</div>
 <p>Wiping of a single file consists of two basic and one advanced anti-forensic time consumed method that can be done only with specialized tools, the last one method will not be covered in this article.
@@ -83,7 +83,7 @@
 <ul>
 <li>Invoking <code>shred -x <i>file</i></code> will replace content of <i>file</i> with pseudo-random data without changing the filesize (<code>-x</code>). Using the <code>-u</code> option will remove <i>file</i> after overwriting it.</li>
 <li>With <code>mkfs</code> you can convert file into the filesystem that will alter everything in it, mount and fill in with any other content for a better overwriting.</li>
-<li>The <code>dd</code> will create a file with preset size and content of your chose, if destination file name exist then it will become overwritten. With <code>dd</code> command you can replace the whole file or only a part in it with another content by combining <code>skip</code> and <code>seek</code> options. You need to know size of the file to avoid expand of the file, to do it can use <code>du -b <i>file_name</i> | cut -f1</code> or <code>stat -c "%s" <i>file_name</i></code>. It is mandatory to use <code>iflag=fullblock</code> option, see <a href="../../en/Dd.html#Partial_read" title="Dd">dd#Partial read</a>.</li>
+<li>The <code>dd</code> will create a file with preset size and content of your chose, if destination file name exist then it will become overwritten. With <code>dd</code> command you can replace the whole file or only a part in it with another content by combining <code>skip</code> and <code>seek</code> options. You need to know size of the file to avoid expand of the file, to do it can use <code>du -b <i>file_name</i> | cut -f1</code> or <code>stat -c "%s" <i>file_name</i></code>. It is mandatory to use <code>iflag=fullblock</code> option, see <a href="/title/Dd#Partial_read" title="Dd">dd#Partial read</a>.</li>
 <li>Replace content in a file with a single symbol to avoid size changing you can do with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=perl">perl</a></span> utility.</li>
 </ul>
 <p>To wipe meta-data you can fill in partition with files that makes file system replace old entries about files with new or use specialized utilities for that, see <a href="#Wipe_free_space">wipe free space</a> section below.
@@ -99,11 +99,11 @@
 </div>
 <p>Examples:
 </p>
-<p><a href="../../en/Perl.html" title="Perl">Perl</a> command that will replace everything in the file with <code>.</code>:
+<p><a href="/title/Perl" title="Perl">Perl</a> command that will replace everything in the file with <code>.</code>:
 </p>
 <pre>$ perl -p -i -e 's\[^*]\.\g' <i>file_name</i>
 </pre>
-<p><a href="../../en/Dd.html" title="Dd">dd</a>:
+<p><a href="/title/Dd" title="Dd">dd</a>:
 </p>
 <pre>$ <i>source_content</i> | dd bs=<i>size_in_bytes</i> count=1 iflag=fullblock of=<i>destination_file</i> seek=0
 </pre>
@@ -137,7 +137,7 @@ NOT_safe="$(lsblk -o "NAME,MOUNTPOINT" ${1//[0-9]/} | grep -e / -e '\]')";
  fi
 fi </pre>
 <h3><span class="mw-headline" id="dd_-_advanced_example">dd - advanced example</span></h3>
-<p>An alternative is to randomize the drive/partition using a randomly-seeded AES cipher from <a href="../../en/OpenSSL.html" title="OpenSSL">OpenSSL</a>. For example:
+<p>An alternative is to randomize the drive/partition using a randomly-seeded AES cipher from <a href="/title/OpenSSL" title="OpenSSL">OpenSSL</a>. For example:
 </p>
 <pre>DEVICE="/dev/sdX"
 PASS=$(tr -cd '[:alnum:]' &lt; /dev/urandom | head -c128)
@@ -147,7 +147,7 @@ openssl enc -aes-256-ctr -pass pass:"$PASS" -nosalt &lt;/dev/zero | dd obs=64K i
 <p>The block size is set to 64K above as it is usually faster than the default 512 bytes. Experiment with larger block sizes to find the optimal transfer rate for your hardware:
 <a rel="nofollow" class="external autonumber" href="https://superuser.com/questions/234199/good-block-size-for-disk-cloning-with-diskdump-dd">[1]</a> and the references therein.
 </p>
-<p>See also <a href="../../en/Dm-crypt/Drive_preparation.html#dm-crypt_wipe_on_an_empty_disk_or_partition" title="Dm-crypt/Drive preparation">Dm-crypt/Drive preparation#dm-crypt wipe on an empty disk or partition</a> for a similar approach.
+<p>See also <a href="/title/Dm-crypt/Drive_preparation#dm-crypt_wipe_on_an_empty_disk_or_partition" title="Dm-crypt/Drive preparation">Dm-crypt/Drive preparation#dm-crypt wipe on an empty disk or partition</a> for a similar approach.
 </p>
 <h3><span class="mw-headline" id="Using_a_template_file">Using a template file</span></h3>
 <p>Instead of zeros you can use a bunch of files you want to be found or partition prints made by <code>mkfs</code> formatted files but you should mount and fill it up with content or with any other repeated output from utilities of your choice.
@@ -168,18 +168,18 @@ done | dd of=/dev/sd"XY" seek=<i>start_sector</i> bs=<i>sector_size</i> count=<i
 <strong>Tip:</strong> For repeatedly rewriting of the same area. You can also use variables from second loop around <code>while ... done | dd ...</code> to change destination of the source template files to use on each new loop.
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If you have a real big amount of predefined data to use for overwriting then you can use the ability of <a rel="nofollow" class="external text" href="https://tldp.org/HOWTO/SquashFS-HOWTO/creatingandusing.html">SquashFS</a> to compress files and folders. Compressing them into a mounted <a rel="nofollow" class="external text" href="http://www.linuxscrew.com/2010/03/24/fastest-way-to-create-ramdisk-in-ubuntulinux/">ramdisk</a> will minimize the amount of physical reads but will higher CPU usage. Or create the compressed archive, copy into the <a rel="nofollow" class="external text" href="http://www.linuxscrew.com/2010/03/24/fastest-way-to-create-ramdisk-in-ubuntulinux/">ramdisk</a> and use a file extraction utility that can extract to stdout. Downsides are that it is harder to navigate between folders and files, if you do not want to use all and same content for each run. Upsides are that you can use even raw parts of the archive, if it was split into volumes upon creation.</div>
+<strong>Note:</strong> If you have a real big amount of predefined data to use for overwriting then you can use the ability of <a rel="nofollow" class="external text" href="https://tldp.org/HOWTO/SquashFS-HOWTO/creatingandusing.html">SquashFS</a> to compress files and folders. Compressing them into a mounted <a rel="nofollow" class="external text" href="https://www.linuxscrew.com/2010/03/24/fastest-way-to-create-ramdisk-in-ubuntulinux/">ramdisk</a> will minimize the amount of physical reads but will higher CPU usage. Or create the compressed archive, copy into the <a rel="nofollow" class="external text" href="https://www.linuxscrew.com/2010/03/24/fastest-way-to-create-ramdisk-in-ubuntulinux/">ramdisk</a> and use a file extraction utility that can extract to stdout. Downsides are that it is harder to navigate between folders and files, if you do not want to use all and same content for each run. Upsides are that you can use even raw parts of the archive, if it was split into volumes upon creation.</div>
 <p>See also: 
 </p>
 <ul><li>
-<a rel="nofollow" class="external text" href="http://flashdba.com/4k-sector-size/">sector size</a> - file creation and sector sizes</li></ul>
+<a rel="nofollow" class="external text" href="https://flashdba.com/4k-sector-size/">sector size</a> - file creation and sector sizes</li></ul>
 <h2><span class="mw-headline" id="Wipe_free_space">Wipe free space</span></h2>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong>  It is not appropriate to use before <a href="../../en/Securely_wipe_disk.html#Preparations_for_block_device_encryption" title="Securely wipe disk">preparations for block device encryption</a>.</div>
+<strong>Warning:</strong>  It is not appropriate to use before <a href="/title/Securely_wipe_disk#Preparations_for_block_device_encryption" title="Securely wipe disk">preparations for block device encryption</a>.</div>
 <p>You can wipe free space by several ways:
 </p>
 <ul><li>
-<a href="../../en/Securely_wipe_disk.html#By_redirecting_output" title="Securely wipe disk">Redirect output</a> into a file instead of partition or device.</li></ul>
+<a href="/title/Securely_wipe_disk#By_redirecting_output" title="Securely wipe disk">Redirect output</a> into a file instead of partition or device.</li></ul>
 <ul><li>Create multiple file copies by using e.g. <code>cp</code> command in loops with random file names or destination directories until no free space will be left.</li></ul>
 <ul><li>Use an utility that creates encrypted files with random password and file names. Some of the file compression utilities have options for compression methods, file types and can even split file into volumes of the preset size upon creation. By using some options randomly into a loop you will be able to fill the whole free space up with encrypted data and overwrite previous data.</li></ul>
 <ul><li>Use a specialized program for the free space wiping such as:</li></ul>
@@ -194,7 +194,7 @@ done | dd of=/dev/sd"XY" seek=<i>start_sector</i> bs=<i>sector_size</i> count=<i
 <a rel="nofollow" class="external free" href="https://frippery.org/uml/">https://frippery.org/uml/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/zerofree/">zerofree</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <h3><span class="mw-headline" id="Using_dd">Using dd</span></h3>
-<p>One can create a file that fills the empty space using <a href="../../en/Dd.html" title="Dd">dd</a>:
+<p>One can create a file that fills the empty space using <a href="/title/Dd" title="Dd">dd</a>:
 </p>
 <pre>dd if=<i>source</i> of=junk
 sync
@@ -215,7 +215,7 @@ DestinationFile="$((${RANDOM/0/1}$(date "+%s")/${RANDOM/0/1}))"
 <strong>Note:</strong> 
 <ul>
 <li>It is not necessary to set level of compression, enough to store data for minimizing CPU usage and a faster fill free space up.</li>
-<li>If you are using a single file as a source then you can put it into the <a rel="nofollow" class="external text" href="https://web.archive.org/web/20191222145936/http://www.vanemery.com/Linux/Ramdisk/ramdisk.html">RAM disk</a> or the <code>/tmp</code> folder, because it uses <a href="../../en/Tmpfs.html" title="Tmpfs">tmpfs</a> that allocates some amount of RAM because it will speed up reading.</li>
+<li>If you are using a single file as a source then you can put it into the <a rel="nofollow" class="external text" href="https://web.archive.org/web/20191222145936/http://www.vanemery.com/Linux/Ramdisk/ramdisk.html">RAM disk</a> or the <code>/tmp</code> folder, because it uses <a href="/title/Tmpfs" title="Tmpfs">tmpfs</a> that allocates some amount of RAM because it will speed up reading.</li>
 </ul>
 </div>
 <h3><span class="mw-headline" id="Create_multiple_files_with_help_of_the_timeout_command">Create multiple files with help of the <i>timeout</i> command</span></h3>
@@ -230,16 +230,16 @@ timeout $((AA/100)) cat /dev/urandom &gt; filename${RANDOM}.tmp;
 <li>
 <a href="https://en.wikipedia.org/wiki/Comparison_of_file_systems#Limits" class="extiw" title="wikipedia:Comparison of file systems">limits</a> for the file creation on the different file systems.</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.r-tt.com/Articles/File_Recovery_Basics/">meta-data</a> in the filesystem may keep information about file after it was deleted.</li>
+<a rel="nofollow" class="external text" href="https://www.r-tt.com/Articles/File_Recovery_Basics/">meta-data</a> in the filesystem may keep information about file after it was deleted.</li>
 <li>
 <a rel="nofollow" class="external text" href="https://security.stackexchange.com/questions/58515/how-does-forensic-software-detect-deleted-files">forensic software</a> uses meta-data to recovery and what need to do for wiping of the meta-data.</li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../../en/Category:Security.html" title="Category:Security">Security</a></li>
-<li><a href="../../en/Category:File_systems.html" title="Category:File systems">File systems</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Security" title="Category:Security">Security</a></li>
+<li><a href="/title/Category:File_systems" title="Category:File systems">File systems</a></li>
 </ul>
 </div></div>
 	</div>
@@ -247,15 +247,15 @@ timeout $((AA/100)) cat /dev/urandom &gt; filename${RANDOM}.tmp;
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Securely_wipe_disk/Tips_and_tricks&amp;oldid=661358">https://wiki.archlinux.org/index.php?title=Securely_wipe_disk/Tips_and_tricks&amp;oldid=661358</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 19:20.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Securely_wipe_disk/Tips_and_tricks&amp;oldid=669365">https://wiki.archlinux.org/index.php?title=Securely_wipe_disk/Tips_and_tricks&amp;oldid=669365</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:45.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

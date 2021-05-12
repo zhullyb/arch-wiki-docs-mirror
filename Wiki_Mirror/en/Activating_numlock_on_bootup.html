@@ -72,19 +72,19 @@
 <h3>
 <span id="Early_bootup_.28mkinitcpio.29"></span><span class="mw-headline" id="Early_bootup_(mkinitcpio)">Early bootup (mkinitcpio)</span>
 </h3>
-<p>You can enable numlock right after the kernel boots in the <a href="../en/Arch_boot_process.html#initramfs" class="mw-redirect" title="Initramfs">initramfs</a>. This is the only way to ensure numlock is on even during <a href="../en/Dm-crypt/Encrypting_an_entire_system.html" title="Dm-crypt/Encrypting an entire system">full-disk encryption</a> password entry. Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mkinitcpio-numlock/">mkinitcpio-numlock</a></span><sup><small>AUR</small></sup> and add the <code>numlock</code> <a href="../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a> hook before <code>encrypt</code> in the <code>/etc/mkinitcpio.conf</code> HOOKS array:
+<p>You can enable numlock right after the kernel boots in the <a href="/title/Initramfs" class="mw-redirect" title="Initramfs">initramfs</a>. This is the only way to ensure numlock is on even during <a href="/title/Dm-crypt/Encrypting_an_entire_system" title="Dm-crypt/Encrypting an entire system">full-disk encryption</a> password entry. Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mkinitcpio-numlock/">mkinitcpio-numlock</a></span><sup><small>AUR</small></sup> and add the <code>numlock</code> <a href="/title/Mkinitcpio" title="Mkinitcpio">mkinitcpio</a> hook before <code>encrypt</code> in the <code>/etc/mkinitcpio.conf</code> HOOKS array:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
 HOOKS=(base udev autodetect keyboard keymap consolefont <b>numlock</b> modconf block encrypt lvm2 filesystems fsck)
 ...</pre>
-<p>Then <a href="../en/Mkinitcpio.html#Image_creation_and_activation" class="mw-redirect" title="Regenerate the initramfs">regenerate the initramfs</a> for the change to take effect.
+<p>Then <a href="/title/Regenerate_the_initramfs" class="mw-redirect" title="Regenerate the initramfs">regenerate the initramfs</a> for the change to take effect.
 </p>
 <p>An advantage of using this method is that the numlock setting will be replicated in the later boot process, and new virtual consoles will default to having numlock on.
 </p>
 <h3><span class="mw-headline" id="With_systemd_service">With systemd service</span></h3>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> These steps can be automated by <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">installing</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-numlockontty/">systemd-numlockontty</a></span><sup><small>AUR</small></sup> package and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enabling">enabling</a> the <code>numLockOnTty</code> service.</div>
+<strong>Tip:</strong> These steps can be automated by <a href="/title/Install" class="mw-redirect" title="Install">installing</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-numlockontty/">systemd-numlockontty</a></span><sup><small>AUR</small></sup> package and <a href="/title/Enabling" class="mw-redirect" title="Enabling">enabling</a> the <code>numLockOnTty</code> service.</div>
 <p>First create a script to set the numlock on relevant TTYs:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/local/bin/numlock</pre>
@@ -95,9 +95,9 @@ do
     /usr/bin/setleds -D +num &lt; "$tty";
 done
 </pre>
-<p>Once the script is created, you will need to make it <a href="../en/Help:Reading.html#Make_executable" class="mw-redirect" title="Executable">executable</a>. Otherwise the script cannot run.
+<p>Once the script is created, you will need to make it <a href="/title/Executable" class="mw-redirect" title="Executable">executable</a>. Otherwise the script cannot run.
 </p>
-<p>Then create and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> a systemd service:
+<p>Then create and <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> a systemd service:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/numlock.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
@@ -113,14 +113,14 @@ WantedBy=multi-user.target</pre>
 <h3>
 <span id="Extending_getty.40.service"></span><span class="mw-headline" id="Extending_getty@.service">Extending getty@.service</span>
 </h3>
-<p>This is simpler than using a separate service and does not hardcode the number of VTs in a script. Create a <a href="../en/Systemd.html#Editing_provided_units" class="mw-redirect" title="Drop-in snippet">drop-in snippet</a> for <code>getty@.service</code> which are applied on top of the original unit:
+<p>This is simpler than using a separate service and does not hardcode the number of VTs in a script. Create a <a href="/title/Drop-in_snippet" class="mw-redirect" title="Drop-in snippet">drop-in snippet</a> for <code>getty@.service</code> which are applied on top of the original unit:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/getty@.service.d/activate-numlock.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
 ExecStartPre=/bin/sh -c 'setleds -D +num &lt; /dev/%I'</pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If you experience any problems, try replacing <code>ExecStartPre</code> with <code>ExecStartPost</code>, and/or disabling the hint as described below.</div>
-<p>To disable the numlock activation hint displaying on the login screen, <a href="../en/Systemd.html#Editing_provided_units" class="mw-redirect" title="Edit">edit</a> <code>getty@tty1.service</code> and add <code>--nohints</code> to <i>agetty</i> options:
+<p>To disable the numlock activation hint displaying on the login screen, <a href="/title/Edit" class="mw-redirect" title="Edit">edit</a> <code>getty@tty1.service</code> and add <code>--nohints</code> to <i>agetty</i> options:
 </p>
 <pre>[Service]
 ExecStart=
@@ -158,7 +158,7 @@ dconf write org.mate.peripherals-keyboard numlock-state 'on'
 <h3><span class="mw-headline" id="GDM">GDM</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> GDM does not execute scripts in <code>/etc/gdm/Init</code> anymore.</div>
-<p>Make sure that you have <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=numlockx">numlockx</a></span> installed then add the following code to <a href="../en/Xprofile.html" title="Xprofile">~/.xprofile</a>:
+<p>Make sure that you have <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=numlockx">numlockx</a></span> installed then add the following code to <a href="/title/Xprofile" title="Xprofile">~/.xprofile</a>:
 </p>
 <pre>if [ -x /usr/bin/numlockx ]; then
       /usr/bin/numlockx on
@@ -167,16 +167,16 @@ fi
 <h3><span class="mw-headline" id="GNOME">GNOME</span></h3>
 <p>Run the following command:
 </p>
-<pre> $ gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
+<pre>$ gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
 </pre>
 <p>In order to remember last state of numlock key (whether you disabled or enabled), use:
 </p>
-<pre> $ gsettings set org.gnome.desktop.peripherals.keyboard remember-numlock-state true
+<pre>$ gsettings set org.gnome.desktop.peripherals.keyboard remember-numlock-state true
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> The key <code>numlock-state</code> was moved from <code>org.gnome.settings-daemon.peripherals.keyboard</code> since GNOME 3.34<a rel="nofollow" class="external autonumber" href="https://gitlab.gnome.org/GNOME/gnome-settings-daemon/merge_requests/107">[1]</a>
 </div>
-<p>Alternatively, you can use add <code>numlockx on</code> (from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=numlockx">numlockx</a></span> to a startup script, like <code>~/.bashrc</code> (if using <a href="../en/Bash.html" title="Bash">Bash</a>) or <code>~/.profile</code>.
+<p>Alternatively, you can use add <code>numlockx on</code> (from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=numlockx">numlockx</a></span> to a startup script, like <code>~/.bashrc</code> (if using <a href="/title/Bash" title="Bash">Bash</a>) or <code>~/.profile</code>.
 </p>
 <h3><span class="mw-headline" id="Xfce">Xfce</span></h3>
 <p>In the file <code>~/.config/xfce4/xfconf/xfce-perchannel-xml/keyboards.xml</code>, make sure the following values are set to true:
@@ -206,7 +206,7 @@ Numlock=on
 <p>And then save the file.
 </p>
 <h3><span class="mw-headline" id="LightDM">LightDM</span></h3>
-<p>See <a href="../en/LightDM.html#NumLock_on_by_default" title="LightDM">LightDM#NumLock on by default</a>.
+<p>See <a href="/title/LightDM#NumLock_on_by_default" title="LightDM">LightDM#NumLock on by default</a>.
 </p>
 <h3><span class="mw-headline" id="LXDM">LXDM</span></h3>
 <p>Set the option in <code>/etc/lxdm/lxdm.conf</code>:
@@ -222,9 +222,9 @@ numlock=true
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Boot_process.html" title="Category:Boot process">Boot process</a></li>
-<li><a href="../en/Category:Keyboards.html" title="Category:Keyboards">Keyboards</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Boot_process" title="Category:Boot process">Boot process</a></li>
+<li><a href="/title/Category:Keyboards" title="Category:Keyboards">Keyboards</a></li>
 </ul>
 </div></div>
 	</div>
@@ -232,15 +232,15 @@ numlock=true
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Activating_numlock_on_bootup&amp;oldid=656877">https://wiki.archlinux.org/index.php?title=Activating_numlock_on_bootup&amp;oldid=656877</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 31 March 2021, at 00:21.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Activating_numlock_on_bootup&amp;oldid=667990">https://wiki.archlinux.org/index.php?title=Activating_numlock_on_bootup&amp;oldid=667990</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 6 May 2021, at 04:24.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

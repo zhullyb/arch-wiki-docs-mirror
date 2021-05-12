@@ -88,7 +88,7 @@ interface displays that data in the form of graphs.
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p>This section covers the installation of <a rel="nofollow" class="external text" href="https://oss.oetiker.ch/smokeping/index.en.html">Smokeping</a> using the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=smokeping">smokeping</a></span> package. FastCGI on Apache will be setup as described in <a href="../en/Apache_HTTP_Server/mod_fcgid.html" class="mw-redirect" title="Apache and FastCGI">Apache and FastCGI</a>.
+<p>This section covers the installation of <a rel="nofollow" class="external text" href="https://oss.oetiker.ch/smokeping/index.en.html">Smokeping</a> using the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=smokeping">smokeping</a></span> package. FastCGI on Apache will be setup as described in <a href="/title/Apache_and_FastCGI" class="mw-redirect" title="Apache and FastCGI">Apache and FastCGI</a>.
 </p>
 <p>The smokeping package consists of two parts:
 </p>
@@ -207,7 +207,7 @@ top of the config file to match your information. The comments describe each fie
 </p>
 <p>You can learn more about the Smokeping config
 file with the examples at
-<a rel="nofollow" class="external free" href="http://oss.oetiker.ch/smokeping/doc/smokeping_examples.en.html">http://oss.oetiker.ch/smokeping/doc/smokeping_examples.en.html</a>
+<a rel="nofollow" class="external free" href="https://oss.oetiker.ch/smokeping/doc/smokeping_examples.en.html">https://oss.oetiker.ch/smokeping/doc/smokeping_examples.en.html</a>
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/smokeping/config</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">*** General ***
@@ -350,7 +350,7 @@ host = /targets/CloudflareDNS /targets/GoogleDNS
 # chmod a+r /etc/smokeping/config
 </pre>
 <h3><span class="mw-headline" id="Start_and_enable_daemon">Start and enable daemon</span></h3>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">Start</a> and enable <code>smokeping.service</code>. Then check that it is running.
+<p><a href="/title/Start" class="mw-redirect" title="Start">Start</a> and enable <code>smokeping.service</code>. Then check that it is running.
 </p>
 <h2><span class="mw-headline" id="Setup_web_frontend">Setup web frontend</span></h2>
 <h3><span class="mw-headline" id="Apache">Apache</span></h3>
@@ -375,7 +375,7 @@ Alias /smokeping /srv/http/smokeping
  Require all granted
 &lt;/Directory&gt;
 </pre>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">Start</a> Apache via the <code>httpd.service</code>.
+<p><a href="/title/Start" class="mw-redirect" title="Start">Start</a> Apache via the <code>httpd.service</code>.
 </p>
 <p>Check that <a rel="nofollow" class="external free" href="http://localhost/smokeping/smokeping.fcgi">http://localhost/smokeping/smokeping.fcgi</a> loads. The first data should appear after a couple of minutes.
 </p>
@@ -452,7 +452,7 @@ Start and enable fcgiwrap.socket!
 <h3><span class="mw-headline" id="Lighttpd">Lighttpd</span></h3>
 <p>First install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lighttpd">lighttpd</a></span> and <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fcgi">fcgi</a></span>.
 </p>
-<p>Edit the <a href="../en/Lighttpd.html" title="Lighttpd">Lighttpd</a> configuration file and ensure you have at least all of the following configuration directives:
+<p>Edit the <a href="/title/Lighttpd" title="Lighttpd">Lighttpd</a> configuration file and ensure you have at least all of the following configuration directives:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/lighttpd/lighttpd.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">server.document-root    = "/srv/http"
@@ -472,7 +472,7 @@ fastcgi.server = (
 <pre>$ systemctl start lighttpd
 $ systemctl enable lighttpd
 </pre>
-<p><a href="../en/Systemd.html" title="Systemd">Systemd</a> should show <code>smokeping_cgi</code> being managed by <code>lighttpd.service</code>.
+<p><a href="/title/Systemd" title="Systemd">Systemd</a> should show <code>smokeping_cgi</code> being managed by <code>lighttpd.service</code>.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ systemctl status lighttpd</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">● lighttpd.service - Lighttpd Web Server
@@ -520,33 +520,33 @@ $ systemctl enable lighttpd
 <p>Verify that your config is fine via <code>nginx -t</code> as the root user and reload the configuration via <code>nginx -s reload</code> as the root user.
 </p>
 <h2><span class="mw-headline" id="Advanced_Configuration">Advanced Configuration</span></h2>
-<p>Smokeping is a powerful tool that can be configured in many ways. You can setup many different types of probes. You can setup slave smokeping servers that can send their statistics and show you probes from other servers. You can also create your custom probes in perl. These options are currently not covered by this guide, please consult the documentation on the <a rel="nofollow" class="external text" href="http://oss.oetiker.ch/smokeping/index.en.html">Smokeping website</a> instead. Also see - <a rel="nofollow" class="external free" href="https://github.com/oetiker/SmokePing/wiki/FAQ">https://github.com/oetiker/SmokePing/wiki/FAQ</a>
+<p>Smokeping is a powerful tool that can be configured in many ways. You can setup many different types of probes. You can setup slave smokeping servers that can send their statistics and show you probes from other servers. You can also create your custom probes in perl. These options are currently not covered by this guide, please consult the documentation on the <a rel="nofollow" class="external text" href="https://oss.oetiker.ch/smokeping/index.en.html">Smokeping website</a> instead. Also see - <a rel="nofollow" class="external free" href="https://github.com/oetiker/SmokePing/wiki/FAQ">https://github.com/oetiker/SmokePing/wiki/FAQ</a>
 </p>
 <h2><span class="mw-headline" id="Notes">Notes</span></h2>
 <h3>
 <span id="Smoketrace_.28Tr.cgi.29"></span><span class="mw-headline" id="Smoketrace_(Tr.cgi)">Smoketrace (Tr.cgi)</span>
 </h3>
-<p>The <a rel="nofollow" class="external text" href="http://oss.oetiker.ch/smokeping/doc/smoketrace.en.html">SmokeTraceroute</a> utility is gone since v2.5.0 according to the <a rel="nofollow" class="external text" href="http://oss.oetiker.ch/smokeping/pub/CHANGES">release notes</a>.
+<p>The <a rel="nofollow" class="external text" href="https://oss.oetiker.ch/smokeping/doc/smoketrace.en.html">SmokeTraceroute</a> utility is gone since v2.5.0 according to the <a rel="nofollow" class="external text" href="https://oss.oetiker.ch/smokeping/pub/CHANGES">release notes</a>.
 </p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Network_monitoring.html" title="Category:Network monitoring">Network monitoring</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Network_monitoring" title="Category:Network monitoring">Network monitoring</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Smokeping&amp;oldid=653114">https://wiki.archlinux.org/index.php?title=Smokeping&amp;oldid=653114</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 February 2021, at 09:22.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Smokeping&amp;oldid=669380">https://wiki.archlinux.org/index.php?title=Smokeping&amp;oldid=669380</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:45.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

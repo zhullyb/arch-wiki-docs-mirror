@@ -36,20 +36,20 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>相关文章</p>
 <ul>
-<li><a href="../en/Arch_boot_process.html" title="Arch boot process">Arch boot process</a></li>
-<li><a href="../en/General_troubleshooting.html#Boot_problems" class="mw-redirect" title="Boot debugging">Boot debugging</a></li>
-<li><a href="../en/ArchWiki:Archive.html" class="mw-redirect" title="Grub-gfx">grub-gfx</a></li>
-<li><a href="../en/Kernel_parameters.html" title="Kernel parameters">Kernel parameters</a></li>
+<li><a href="/title/Arch_boot_process" title="Arch boot process">Arch boot process</a></li>
+<li><a href="/title/Boot_debugging" class="mw-redirect" title="Boot debugging">Boot debugging</a></li>
+<li><a href="/title/Grub-gfx" class="mw-redirect" title="Grub-gfx">grub-gfx</a></li>
+<li><a href="/title/Kernel_parameters" title="Kernel parameters">Kernel parameters</a></li>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/GRUB_Legacy.html" title="GRUB Legacy">GRUB_Legacy</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2015-02-28。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=GRUB_Legacy&amp;diff=0&amp;oldid=348680">更改</a>，则您可以帮助同步翻译。</div>
-<p><a rel="nofollow" class="external text" href="https://www.gnu.org/software/grub/grub-legacy.html">GRUB Legacy</a> 是一个原本由 <a href="../en/GNU.html" class="mw-redirect" title="GNU Project">GNU Project</a> 维护的 <a rel="nofollow" class="external text" href="https://www.gnu.org/software/grub/manual/multiboot/">多启动</a> 引导器，其前身为 GRUB (GRand Unified Bootloader), 最初由 Erich Stefan Boleyn 设计和实现。
+<strong>翻译状态：</strong>本文是 <a href="/title/GRUB_Legacy" title="GRUB Legacy">GRUB_Legacy</a> 的<a href="/title/ArchWiki:Translation_Team_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2015-02-28。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=GRUB_Legacy&amp;diff=0&amp;oldid=348680">更改</a>，则您可以帮助同步翻译。</div>
+<p><a rel="nofollow" class="external text" href="https://www.gnu.org/software/grub/grub-legacy.html">GRUB Legacy</a> 是一个原本由 <a href="/title/GNU_Project" class="mw-redirect" title="GNU Project">GNU Project</a> 维护的 <a rel="nofollow" class="external text" href="https://www.gnu.org/software/grub/manual/multiboot/">多启动</a> 引导器，其前身为 GRUB (GRand Unified Bootloader), 最初由 Erich Stefan Boleyn 设计和实现。
 </p>
 <p>简单的说，<b>启动引导程序</b>是计算机启动时运行的第一个程序。它可用于选择操作系统分区上的不同内核，也可用于向这些内核传递启动参数。然后内核逐个初始化操作系统的其余部分。
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>警告：</strong> 上游已停止维护 GRUB Legacy 并且 Arch 官方也停止支持 (见<a rel="nofollow" class="external text" href="https://archlinux.org/news/grub-legacy-no-longer-supported/">这条</a>新闻). 我们推荐用户使用 <a href="../en/GRUB.html" title="GRUB">GRUB</a>(2) 或 <a href="../en/Syslinux.html" title="Syslinux">Syslinux</a> 来替代。见 <a href="#Upgrading_to_GRUB2">Upgrading to GRUB2</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>.</div>
+<strong>警告：</strong> 上游已停止维护 GRUB Legacy 并且 Arch 官方也停止支持 (见<a rel="nofollow" class="external text" href="https://archlinux.org/news/grub-legacy-no-longer-supported/">这条</a>新闻). 我们推荐用户使用 <a href="/title/GRUB" title="GRUB">GRUB</a>(2) 或 <a href="/title/Syslinux" title="Syslinux">Syslinux</a> 来替代。见 <a href="#Upgrading_to_GRUB2">Upgrading to GRUB2</a><sup>[<a href="/title/ArchWiki:Requests#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 如果你在你的系统里把 grub-legacy 安装为包 grub-0.97, 那么在软件包升级时会升级为包 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=grub">grub</a></span>-2.xx (GRUB2). 如果你想继续使用 grub-legacy, 从 AUR 安装包 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/grub-legacy/">grub-legacy</a></span><sup><small>AUR</small></sup> 以避免冲突。升级过程中只改变了 <code>/usr/lib/grub/</code> 里的文件，grub-legacy 安装到 <code>/boot/grub</code> 的文件和 <code>MBR</code> 并未被移除。 只需重命名 <code>/boot/grub/menu.lst.pacsave</code> 为 <code>/boot/grub/menu.lst</code> 即可启动进入 grub-legacy. 
 </div>
@@ -141,9 +141,9 @@
 <h2>
 <span id=".E5.AE.89.E8.A3.85"></span><span class="mw-headline" id="安装">安装</span>
 </h2>
-<p>GRUB Legacy 已从<a href="../zh-CN/Official_repositories.html" class="mw-redirect" title="官方源">官方源</a>移除以支持 <a href="../en/GRUB.html" title="GRUB">GRUB version 2.x</a>. <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> 的 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/grub-legacy/">grub-legacy</a></span><sup><small>AUR</small></sup> 依然可用。
+<p>GRUB Legacy 已从<a href="/title/%E5%AE%98%E6%96%B9%E6%BA%90" class="mw-redirect" title="官方源">官方源</a>移除以支持 <a href="/title/GRUB" title="GRUB">GRUB version 2.x</a>. <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a> 的 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/grub-legacy/">grub-legacy</a></span><sup><small>AUR</small></sup> 依然可用。
 </p>
-<p>另外，若想 GRUB 以引导器工作它必须被安装到设备或分区的引导扇区。这在 <a href="#Bootloader_installation">Bootloader installation</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 部分有所提及。
+<p>另外，若想 GRUB 以引导器工作它必须被安装到设备或分区的引导扇区。这在 <a href="#Bootloader_installation">Bootloader installation</a><sup>[<a href="/title/ArchWiki:Requests#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup> 部分有所提及。
 </p>
 <h2>
 <span id=".E5.8D.87.E7.BA.A7.E5.88.B0_GRUB2"></span><span class="mw-headline" id="升级到_GRUB2">升级到 GRUB2</span>
@@ -153,21 +153,21 @@
 </h3>
 <p>不是必须的。老 GRUB 不会从系统删除，照旧工作。
 </p>
-<p>然而，和其它不被支持的软件包一样，后续的 bug 将无人修复。所以建议所有的用户抽时间升级到 <a href="../en/GRUB.html" title="GRUB">GRUB version 2.x</a>, 或其它支持的 <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Boot loader">Boot loader</a>.
+<p>然而，和其它不被支持的软件包一样，后续的 bug 将无人修复。所以建议所有的用户抽时间升级到 <a href="/title/GRUB" title="GRUB">GRUB version 2.x</a>, 或其它支持的 <a href="/title/Boot_loader" class="mw-redirect" title="Boot loader">Boot loader</a>.
 </p>
-<p>GRUB legacy 不支持 <a href="../en/Partitioning.html#GUID_Partition_Table" class="mw-redirect" title="GPT">GPT</a> 硬盘，<a href="../en/Btrfs.html" title="Btrfs">Btrfs</a> 文件系统和 <a href="../en/Unified_Extensible_Firmware_Interface.html" class="mw-redirect" title="UEFI">UEFI</a> 固件。
+<p>GRUB legacy 不支持 <a href="/title/GPT" class="mw-redirect" title="GPT">GPT</a> 硬盘，<a href="/title/Btrfs" title="Btrfs">Btrfs</a> 文件系统和 <a href="/title/UEFI" class="mw-redirect" title="UEFI">UEFI</a> 固件。
 </p>
 <h3>
 <span id=".E5.A6.82.E4.BD.95.E5.8D.87.E7.BA.A7"></span><span class="mw-headline" id="如何升级">如何升级</span>
 </h3>
-<p>升级 GRUB Legacy 到 <a href="../en/GRUB.html" title="GRUB">GRUB version 2.x</a> 和在已有 Arch Linux 上安装 GRUB 一样。详细教程见<a href="../en/GRUB.html#Installation" title="GRUB">这里</a>。
+<p>升级 GRUB Legacy 到 <a href="/title/GRUB" title="GRUB">GRUB version 2.x</a> 和在已有 Arch Linux 上安装 GRUB 一样。详细教程见<a href="/title/GRUB#Installation" title="GRUB">这里</a>。
 </p>
 <h3>
 <span id=".E5.8C.BA.E5.88.AB"></span><span class="mw-headline" id="区别">区别</span>
 </h3>
 <ul>
 <li>GRUB Legacy 和 GRUB 的命令之间有许多区别。执行命令之前请学习 <a rel="nofollow" class="external text" href="https://www.gnu.org/software/grub/manual/grub.html#Commands">GRUB commands</a> (例如 "find" 被替换为 "search").</li>
-<li>GRUB 现在是<i>模块化</i>的并再也不需要 "stage 1.5". 因此，引导器本身受到限制 -- 若想扩展功能必须加载模块 (例如为了添加 <a href="../en/LVM.html" title="LVM">LVM</a> 或 RAID 支持).</li>
+<li>GRUB 现在是<i>模块化</i>的并再也不需要 "stage 1.5". 因此，引导器本身受到限制 -- 若想扩展功能必须加载模块 (例如为了添加 <a href="/title/LVM" title="LVM">LVM</a> 或 RAID 支持).</li>
 <li>GRUB Legacy 和 GRUB 显示的设备名不同。分区从 1 而不是 0 开始计数，但驱动器依然从 0 开始，并添加了分区表前缀。例如，<code>/dev/sda1</code> 会显示为 <code>(hd0,msdos1)</code> (对于 MBR) 或 <code>(hd0,gpt1)</code> (对于 GPT).</li>
 <li>GRUB 显著比 GRUB legacy 大 (占用 <code>/boot</code> ~13 MB ). 如果你从单独的 <code>/boot</code> 分区启动并且它小于 32 MB, 你就会碰到硬盘空间问题，pacman 不会安装新的内核。</li>
 </ul>
@@ -365,7 +365,7 @@ initrd /initramfs-linux.img
 <strong>注意：</strong> 
 <ul>
 <li>如果你尝试双启动到 Windows 7，你需要注释掉 <code>makeactive</code> 行。</li>
-<li>Windows 2000 和之后的版本<b>不需要</b>在第一个分区就可以启动(与通常认为的不同)。如果 Windows 分区改变了 (也就是说，如果你在 Windows 分区的前面添加了一个分区)，你需要编辑 Windows 的 <code>boot.ini</code> 文件来应对改变。(参见<a rel="nofollow" class="external text" href="http://vlaurie.com/computers2/Articles/bootini.htm">本文</a>获取更多细节。</li>
+<li>Windows 2000 和之后的版本<b>不需要</b>在第一个分区就可以启动(与通常认为的不同)。如果 Windows 分区改变了 (也就是说，如果你在 Windows 分区的前面添加了一个分区)，你需要编辑 Windows 的 <code>boot.ini</code> 文件来应对改变。(参见<a rel="nofollow" class="external text" href="https://vlaurie.com/computers2/Articles/bootini.htm">本文</a>获取更多细节。</li>
 </ul>
 </div>
 <p>如果 Windows 位于另一块硬盘，需要使用 map 命令。这会欺骗你的 Windows 安装程序，让它以为自己在主硬盘上。假设你的 Windows 分区是在第二块硬盘上的第一个分区:
@@ -399,9 +399,9 @@ initrd /initramfs-linux.img
 <p>为了方便系统维护，应该使用 <code>chainloader</code> 和 <code>configfile</code> 命令以启动提供了”自动化“引导机制的其他 Linux 操作系统(例如： Debian, Ubuntu, openSUSE),这样就允许每个发行版自行维护各自的  <code>menu.lst</code> 启动选项。
 </p>
 <ul><li>
-<code>chainloader</code>命令能装载其他的启动引导器（而不是内核镜像)； 当其他的启动引导器安装在一个分区的启动扇区(例如：GRUB)时就有用了. 这样就可以实现在 <a href="../en/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="MBR">MBR</a> 安装一个“主”GRUB 和在每个分区的引导记录区 (PBR) 安装一些分散的 GRUB.</li></ul>
+<code>chainloader</code>命令能装载其他的启动引导器（而不是内核镜像)； 当其他的启动引导器安装在一个分区的启动扇区(例如：GRUB)时就有用了. 这样就可以实现在 <a href="/title/MBR" class="mw-redirect" title="MBR">MBR</a> 安装一个“主”GRUB 和在每个分区的引导记录区 (PBR) 安装一些分散的 GRUB.</li></ul>
 <ul><li>{ic|configfile}}命令能指导 GRUB 装载确切的配置文件. 这样就可以引导其他的操作系统的 <code>menu.lst</code> 而不需要在引导的操作系统上安装 GRUB. 这种方法一大缺陷就是其他操作系统的 <code>menu.lst</code> 可能和安装的 GRUB 版本不兼容; 许多版本的操作系统高度依赖于 GRUB 的版本。</li></ul>
-<p>例如, GRUB 即将安装在 <a href="../en/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="MBR">MBR</a> (主引导记录区)上，但是其他的启动引导器(可能是 GRUB 或者 LILO)已经安装到了 <code>(hd0,2)</code> 启动扇区。
+<p>例如, GRUB 即将安装在 <a href="/title/MBR" class="mw-redirect" title="MBR">MBR</a> (主引导记录区)上，但是其他的启动引导器(可能是 GRUB 或者 LILO)已经安装到了 <code>(hd0,2)</code> 启动扇区。
 </p>
 <pre>---------------------------------------------
 |   |           |           |   %           |
@@ -479,8 +479,8 @@ chainloader +1
 </p>
 <ul>
 <li>在进行操作之前确保你的GRUB配置文件是正确的 (<code>/boot/grub/menu.lst</code>)。请参考<a href="#%E5%AF%BB%E6%89%BE_GRUB_%E7%9A%84%E6%A0%B9%E5%88%86%E5%8C%BA">#寻找 GRUB 的根分区</a>以确认你的设备被正确的定义。</li>
-<li>GRUB 必须安装在 <a href="../en/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="MBR">MBR</a> (硬盘的第一扇区)，或者在能被大多数 BIOS 识别的第一个存储设备的第一个分区。为了满足个人的多系统引导需求，GRUB 的多重设置就起作用了，请参考<a href="#chainloader_%E5%92%8C_configfile">#chainloader 和 configfile</a>.</li>
-<li>在安装 GRUB 启动引导器时可能需要在 <code>chroot</code> 过的环境下完成 (例如：通过安装光盘 chroot 安装的系统)，比如你编辑RAID的配置文件或者你忘记安装或者破坏了你的 GRUB, 你都需要通过一张 LiveCD 或者其他的 Linux 操作系统 <a href="../en/Chroot.html" class="mw-redirect" title="Change root">Change root</a> (即更改root目录).</li>
+<li>GRUB 必须安装在 <a href="/title/MBR" class="mw-redirect" title="MBR">MBR</a> (硬盘的第一扇区)，或者在能被大多数 BIOS 识别的第一个存储设备的第一个分区。为了满足个人的多系统引导需求，GRUB 的多重设置就起作用了，请参考<a href="#chainloader_%E5%92%8C_configfile">#chainloader 和 configfile</a>.</li>
+<li>在安装 GRUB 启动引导器时可能需要在 <code>chroot</code> 过的环境下完成 (例如：通过安装光盘 chroot 安装的系统)，比如你编辑RAID的配置文件或者你忘记安装或者破坏了你的 GRUB, 你都需要通过一张 LiveCD 或者其他的 Linux 操作系统 <a href="/title/Change_root" class="mw-redirect" title="Change root">Change root</a> (即更改root目录).</li>
 </ul>
 <p>首先，进入 GRUB shell:
 </p>
@@ -491,11 +491,11 @@ chainloader +1
 <pre>grub&gt; root (hd1,0)
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>提示：</strong> GRUB Shell 支持 Tab 补全，如果你键入'root (hd'然后连续敲击 <code>Tab</code> 两次你就可以看见可用的存储分区设备，在分区下也适用，Tab 补全在 GRUB 引导菜单上也适用，如果你的配置文件有错误你可以在引导菜单里编辑并使用 Tab 补全来协助寻找驱动器和分区。请参考<a href="#Edit_GRUB_entries_in_the_boot_menu">#Edit GRUB entries in the boot menu</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>.</div>
+<strong>提示：</strong> GRUB Shell 支持 Tab 补全，如果你键入'root (hd'然后连续敲击 <code>Tab</code> 两次你就可以看见可用的存储分区设备，在分区下也适用，Tab 补全在 GRUB 引导菜单上也适用，如果你的配置文件有错误你可以在引导菜单里编辑并使用 Tab 补全来协助寻找驱动器和分区。请参考<a href="#Edit_GRUB_entries_in_the_boot_menu">#Edit GRUB entries in the boot menu</a><sup>[<a href="/title/ArchWiki:Requests#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>.</div>
 <h3>
 <span id=".E5.AE.89.E8.A3.85.E5.88.B0_MBR"></span><span class="mw-headline" id="安装到_MBR">安装到 MBR</span>
 </h3>
-<p>下面的例子中把 GRUB 安装到第一个驱动器的 <a href="../en/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="MBR">MBR</a>:
+<p>下面的例子中把 GRUB 安装到第一个驱动器的 <a href="/title/MBR" class="mw-redirect" title="MBR">MBR</a>:
 </p>
 <pre>grub&gt; setup (hd0)
 </pre>
@@ -506,7 +506,7 @@ chainloader +1
 </p>
 <pre>grub&gt; setup (hd0,0)
 </pre>
-<p>在运行 <code>setup</code> 完成之后, 键入 <code>quit</code> 退出 shell. 如果你chroot 过，<a href="../en/Chroot.html" class="mw-redirect" title="Change root">退出 chroot 并卸载分区</a>。现在重启测试一下。
+<p>在运行 <code>setup</code> 完成之后, 键入 <code>quit</code> 退出 shell. 如果你chroot 过，<a href="/title/Change_root" class="mw-redirect" title="Change root">退出 chroot 并卸载分区</a>。现在重启测试一下。
 </p>
 <h3>
 <span id=".E5.A4.87.E9.80.89.E6.96.B9.E6.A1.88_.28grub-install.29"></span><span class="mw-headline" id="备选方案_(grub-install)">备选方案 (grub-install)</span>
@@ -527,7 +527,7 @@ chainloader +1
 <h3>
 <span id=".E5.9B.BE.E5.BD.A2.E5.8C.96.E5.90.AF.E5.8A.A8"></span><span class="mw-headline" id="图形化启动">图形化启动</span>
 </h3>
-<p>对于那些渴望看见图形界面的人, 参阅 <a href="../en/ArchWiki:Archive.html" class="mw-redirect" title="Grub-gfx">grub-gfx</a>. <a href="../en/GRUB.html" class="mw-redirect" title="GRUB2">GRUB2</a> 也提供增强的图形化功能，例如背景图片和点阵字体。
+<p>对于那些渴望看见图形界面的人, 参阅 <a href="/title/Grub-gfx" class="mw-redirect" title="Grub-gfx">grub-gfx</a>. <a href="/title/GRUB2" class="mw-redirect" title="GRUB2">GRUB2</a> 也提供增强的图形化功能，例如背景图片和点阵字体。
 </p>
 <h3>
 <span id="Framebuffer_.E5.88.86.E8.BE.A8.E7.8E.87"></span><span class="mw-headline" id="Framebuffer_分辨率">Framebuffer 分辨率</span>
@@ -590,7 +590,7 @@ Mode 0x0365: 1440x900 (+5760), 24 bits
 <h4>
 <span id=".E6.8C.89_UUID"></span><span class="mw-headline" id="按_UUID">按 UUID</span>
 </h4>
-<p>可使用 <code>blkid</code> 或 <code>ls -l /dev/disk/by-uuid</code> 来获取分区的 <a href="../en/Persistent_block_device_naming.html#by-uuid" class="mw-redirect" title="UUID">UUID</a> (Universally Unique IDentifier, 通用唯一标识符). 在 <code>menu.lst</code> 里如下设置:
+<p>可使用 <code>blkid</code> 或 <code>ls -l /dev/disk/by-uuid</code> 来获取分区的 <a href="/title/UUID" class="mw-redirect" title="UUID">UUID</a> (Universally Unique IDentifier, 通用唯一标识符). 在 <code>menu.lst</code> 里如下设置:
 </p>
 <pre>kernel /boot/vmlinuz-linux root=/dev/disk/by-uuid/<i>uuid_number</i>
 </pre>
@@ -679,12 +679,12 @@ chainloader +1
 </p>
 <pre># grub-set-default 1 &amp;&amp; sudo shutdown -r now
 </pre>
-<p>易用起见，你可能希望实现 "<a href="../en/Allow_users_to_shutdown.html" title="Allow users to shutdown">Allow users to shutdown</a> 补丁" (包括<code>/sbin/grub-set-default</code> 中不需要密码来执行的命令).
+<p>易用起见，你可能希望实现 "<a href="/title/Allow_users_to_shutdown" title="Allow users to shutdown">Allow users to shutdown</a> 补丁" (包括<code>/sbin/grub-set-default</code> 中不需要密码来执行的命令).
 </p>
 <h3>
 <span id="LILO_.E5.92.8C_GRUB_.E7.9B.B8.E4.BA.92.E9.85.8D.E5.90.88"></span><span class="mw-headline" id="LILO_和_GRUB_相互配合">LILO 和 GRUB 相互配合</span>
 </h3>
-<p>如果 <a href="../en/LILO.html" title="LILO">LILO</a> 软件包已经安装，删除它:
+<p>如果 <a href="/title/LILO" title="LILO">LILO</a> 软件包已经安装，删除它:
 </p>
 <pre># pacman -R lilo
 </pre>
@@ -718,7 +718,7 @@ chainloader +1
 </pre>
 <p>这样就完成了！现在你可以用这张磁盘重启你的计算机，它应该会用GRUB启动。当然还需先确认在你的BIOS里启动顺序中已经将软盘设为比硬盘更高优先级。
 </p>
-<p>另见: <a rel="nofollow" class="external text" href="http://www.supergrubdisk.org/">Super GRUB Disk</a>.
+<p>另见: <a rel="nofollow" class="external text" href="https://www.supergrubdisk.org/">Super GRUB Disk</a>.
 </p>
 <h3>
 <span id=".E9.9A.90.E8.97.8F_GRUB_.E8.8F.9C.E5.8D.95"></span><span class="mw-headline" id="隐藏_GRUB_菜单">隐藏 GRUB 菜单</span>
@@ -731,7 +731,7 @@ chainloader +1
 <h2>
 <span id=".E8.BF.9B.E4.B8.80.E6.AD.A5.E6.8E.92.E9.99.A4_bug"></span><span class="mw-headline" id="进一步排除_bug">进一步排除 bug</span>
 </h2>
-<p>见 <a href="../en/General_troubleshooting.html#Boot_problems" class="mw-redirect" title="Boot debugging">article</a>.
+<p>见 <a href="/title/Boot_debugging" class="mw-redirect" title="Boot debugging">article</a>.
 </p>
 <h2>
 <span id=".E7.96.91.E9.9A.BE.E9.97.AE.E9.A2.98"></span><span class="mw-headline" id="疑难问题">疑难问题</span>
@@ -741,7 +741,7 @@ chainloader +1
 <strong>注意：</strong> 以下解决方案对 GRUB Error 15 也有效。</div>
 <p><b>第一步是拔下所有外部设备，看起来显而易见但是经常被忽略 ;)</b>
 </p>
-<p>如果你的分区表混乱了，下一次开机时就只会看到"GRUB error 17".  有许多导致分区表混乱的原因。通常是使用 <a href="../en/Parted.html" class="mw-redirect" title="GParted">GParted</a> 操作硬盘 -- 特别是对逻辑分区 -- 造成分区顺序改变。例如，你删除了 <code>/dev/sda6</code> 并调整 <code>/dev/sda7</code> 的大小，最后在原 <code>/dev/sda6</code> 处创建分区，它会显示到列表底部，比如 <code>/dev/sda9</code>. 尽管物理上它们的顺序没有改变，它们被识别的顺序改变了。
+<p>如果你的分区表混乱了，下一次开机时就只会看到"GRUB error 17".  有许多导致分区表混乱的原因。通常是使用 <a href="/title/GParted" class="mw-redirect" title="GParted">GParted</a> 操作硬盘 -- 特别是对逻辑分区 -- 造成分区顺序改变。例如，你删除了 <code>/dev/sda6</code> 并调整 <code>/dev/sda7</code> 的大小，最后在原 <code>/dev/sda6</code> 处创建分区，它会显示到列表底部，比如 <code>/dev/sda9</code>. 尽管物理上它们的顺序没有改变，它们被识别的顺序改变了。
 </p>
 <p>修复分区表很简单。从你的 Arch CD/DVD/USB, 启动，以 root 身份登录，运行:
 </p>
@@ -749,9 +749,9 @@ chainloader +1
 </pre>
 <p>进入硬盘， e[x]tra/expert 模式，[f]ix 分区顺序，然后 [w]rite 分区表并退出。
 </p>
-<p>你可通过 <code>fdisk -l</code> 来检查确实已经修复好了。现在只需修复 GRUB. 见<a href="#Bootloader_installation">引导器的安装</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>部分。
+<p>你可通过 <code>fdisk -l</code> 来检查确实已经修复好了。现在只需修复 GRUB. 见<a href="#Bootloader_installation">引导器的安装</a><sup>[<a href="/title/ArchWiki:Requests#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>部分。
 </p>
-<p>基本上只要告诉 GRUB 正确的 <code>/boot</code> 然后重新写入 GRUB 到硬盘上的 <a href="../en/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="MBR">MBR</a>.
+<p>基本上只要告诉 GRUB 正确的 <code>/boot</code> 然后重新写入 GRUB 到硬盘上的 <a href="/title/MBR" class="mw-redirect" title="MBR">MBR</a>.
 </p>
 <p>例如:
 </p>
@@ -791,9 +791,9 @@ grub&gt; quit
 </h3>
 <p>如果你意外地把 GRUB 安装到了 Windows 分区，GRUB 会覆盖该分区的引导扇区并擦除到 Windows 引导器的引用。 (NTLDR 及更早的确证有此类问题，更新的版本不确定).
 </p>
-<p>你要使用 Windows Recovery Console 来修复此问题。由于许多制造商在他们的产品里不包含这个 (更多的是使用恢复分区), Microsoft 开放了下载。如果你使用 XP, 参见 <a rel="nofollow" class="external text" href="http://tips.vlaurie.com/2006/05/recovery-console-for-those-without-an-xp-disk/">这个页面</a><sup title="最后检查状态：domain name not resolved">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-02 ⓘ]</sup>来把软盘做成 Recovery CD. 启动 Recovery CD (或启用 Windows 恢复模式) 并运行 <code>fixboot</code> 来修复引导扇区。之后你需要重新安装 GRUB --- 这次安装到 MBR, 不是 Windows 分区---来引导 Linux.
+<p>你要使用 Windows Recovery Console 来修复此问题。由于许多制造商在他们的产品里不包含这个 (更多的是使用恢复分区), Microsoft 开放了下载。如果你使用 XP, 参见 <a rel="nofollow" class="external text" href="https://web.archive.org/web/20120723080002/http://tips.vlaurie.com/2006/05/recovery-console-for-those-without-an-xp-disk/">这个页面</a>来把软盘做成 Recovery CD. 启动 Recovery CD (或启用 Windows 恢复模式) 并运行 <code>fixboot</code> 来修复引导扇区。之后你需要重新安装 GRUB --- 这次安装到 MBR, 不是 Windows 分区---来引导 Linux.
 </p>
-<p>更深入的讨论见<a href="../en/Partitioning.html#Restoring_a_Windows_boot_record" class="mw-redirect" title="MBR">这里</a><sup>[<a href="../en/ArchWiki:Requests.html#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>。
+<p>更深入的讨论见<a href="/title/MBR#Restoring_a_Windows_boot_record" class="mw-redirect" title="MBR">这里</a><sup>[<a href="/title/ArchWiki:Requests#Broken_section_links" class="mw-redirect" title="ArchWiki:Requests">断开的链接</a>：无效的部分]</sup>。
 </p>
 <h3>
 <span id=".E5.9C.A8.E5.BC.95.E5.AF.BC.E8.8F.9C.E5.8D.95.E4.B8.AD.E7.BC.96.E8.BE.91_GRUB_.E6.9D.A1.E7.9B.AE"></span><span class="mw-headline" id="在引导菜单中编辑_GRUB_条目">在引导菜单中编辑 GRUB 条目</span>
@@ -844,7 +844,7 @@ root (hd0,0)
 setup (hd0)
 quit
 </pre>
-<p><b>5.</b> 如果 GRUB 没有错误提示，那么就差不多完成了。你还要往 ramdisk 加入合适的模块。更多信息参见 <a href="../en/QEMU.html#Preparing_an_(Arch)_Linux_guest" title="QEMU">QEMU#Preparing an (Arch) Linux guest</a>.
+<p><b>5.</b> 如果 GRUB 没有错误提示，那么就差不多完成了。你还要往 ramdisk 加入合适的模块。更多信息参见 <a href="/title/QEMU#Preparing_an_(Arch)_Linux_guest" title="QEMU">QEMU#Preparing an (Arch) Linux guest</a>.
 </p>
 <h2>
 <span id=".E5.8F.A6.E8.A7.81"></span><span class="mw-headline" id="另见">另见</span>
@@ -853,21 +853,18 @@ quit
 <li><a rel="nofollow" class="external text" href="https://www.gnu.org/software/grub/">GNU GRUB</a></li>
 <li><a rel="nofollow" class="external text" href="http://www.troubleshooters.com/linux/grub/index.htm">GRUB Grotto</a></li>
 <li>
-<a href="../en/General_troubleshooting.html#Boot_problems" class="mw-redirect" title="Boot debugging">Boot debugging</a> - Debugging with GRUB, set module values</li>
+<a href="/title/Boot_debugging" class="mw-redirect" title="Boot debugging">Boot debugging</a> - Debugging with GRUB, set module values</li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../zh-CN/Category:Boot_loaders.html" title="Category:Boot loaders (简体中文)">Boot loaders (简体中文)</a></li>
-<li><a href="../zh-CN/Category:System_recovery.html" title="Category:System recovery (简体中文)">System recovery (简体中文)</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Boot_loaders_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Category:Boot loaders (简体中文)">Boot loaders (简体中文)</a></li>
+<li><a href="/title/Category:System_recovery_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Category:System recovery (简体中文)">System recovery (简体中文)</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -875,15 +872,15 @@ quit
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GRUB_Legacy_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=658443">https://wiki.archlinux.org/index.php?title=GRUB_Legacy_(简体中文)&amp;oldid=658443</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 8 April 2021, at 16:34.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GRUB_Legacy_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=670665">https://wiki.archlinux.org/index.php?title=GRUB_Legacy_(简体中文)&amp;oldid=670665</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 May 2021, at 11:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

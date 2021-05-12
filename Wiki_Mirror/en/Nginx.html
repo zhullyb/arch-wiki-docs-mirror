@@ -36,7 +36,7 @@
 <p><span></span>
 <a href="https://en.wikipedia.org/wiki/nginx" class="extiw" title="wikipedia:nginx">nginx</a> (pronounced "engine X"), is a free, open-source, high-performance HTTP server and reverse proxy, as well as an IMAP/POP3 proxy server, written by Igor Sysoev in 2005. nginx is well known for its stability, rich feature set, simple configuration, and low resource consumption.
 </p>
-<p>This article describes how to set up nginx and how to optionally integrate it with <a href="../en/PHP.html" title="PHP">PHP</a> via <a href="#FastCGI">#FastCGI</a>.
+<p>This article describes how to set up nginx and how to optionally integrate it with <a href="/title/PHP" title="PHP">PHP</a> via <a href="#FastCGI">#FastCGI</a>.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -133,16 +133,16 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nginx-mainline">nginx-mainline</a></span> (mainline branch: new features, updates, bugfixes) or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nginx">nginx</a></span> (stable branch: major bugfixes only).
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nginx-mainline">nginx-mainline</a></span> (mainline branch: new features, updates, bugfixes) or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nginx">nginx</a></span> (stable branch: major bugfixes only).
 </p>
 <p>Using the mainline branch is recommended. The main reason to use the stable branch is that you are concerned about possible impacts of new features, such as incompatibility with third-party modules or the inadvertent introduction of bugs in <a rel="nofollow" class="external text" href="https://nginx.org/en/download.html">new features</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> All nginx modules available in the <a href="../en/Official_repositories.html" title="Official repositories">official repositories</a> require the <i>nginx</i> package (as opposed to <i>nginx-mainline</i>) as a dependency. It may be wise to review the list of modules for any you might need/want before making the <i>nginx</i> vs <i>nginx-mainline</i> decision. Modules for <i>nginx-mainline</i> can be found in the <a href="../en/Arch_User_Repository.html" title="Arch User Repository">Arch User Repository</a>.</div>
+<strong>Note:</strong> All nginx modules available in the <a href="/title/Official_repositories" title="Official repositories">official repositories</a> require the <i>nginx</i> package (as opposed to <i>nginx-mainline</i>) as a dependency. It may be wise to review the list of modules for any you might need/want before making the <i>nginx</i> vs <i>nginx-mainline</i> decision. Modules for <i>nginx-mainline</i> can be found in the <a href="/title/Arch_User_Repository" title="Arch User Repository">Arch User Repository</a>.</div>
 <p>For a chroot-based installation for additional security, see <a href="#Installation_in_a_chroot">#Installation in a chroot</a>.
 </p>
 <h2><span class="mw-headline" id="Running">Running</span></h2>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">Start/enable</a> <code>nginx.service</code>.
+<p><a href="/title/Start/enable" class="mw-redirect" title="Start/enable">Start/enable</a> <code>nginx.service</code>.
 </p>
 <p>The default page served at <a rel="nofollow" class="external free" href="http://127.0.0.1">http://127.0.0.1</a> is <code>/usr/share/nginx/html/index.html</code>.
 </p>
@@ -204,9 +204,9 @@ http {
 <p>If the group is omitted, a group whose name equals that of <i>user</i> is used.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> It is also possible to run nginx without anything running as <code>root</code> using <a href="../en/Systemd.html" title="Systemd">systemd</a>. See <a href="#Running_unprivileged_using_systemd">#Running unprivileged using systemd</a>.</div>
+<strong>Tip:</strong> It is also possible to run nginx without anything running as <code>root</code> using <a href="/title/Systemd" title="Systemd">systemd</a>. See <a href="#Running_unprivileged_using_systemd">#Running unprivileged using systemd</a>.</div>
 <h4><span class="mw-headline" id="Server_blocks">Server blocks</span></h4>
-<p>It is possible to serve multiple domains using <code>server</code> blocks. These are comparable to "VirtualHosts" in <a href="../en/Apache_HTTP_Server.html" title="Apache HTTP Server">Apache HTTP Server</a>. Also see the <a rel="nofollow" class="external text" href="https://www.nginx.com/resources/wiki/start/topics/examples/server_blocks/">upstream examples</a>.
+<p>It is possible to serve multiple domains using <code>server</code> blocks. These are comparable to "VirtualHosts" in <a href="/title/Apache_HTTP_Server" title="Apache HTTP Server">Apache HTTP Server</a>. Also see the <a rel="nofollow" class="external text" href="https://www.nginx.com/resources/wiki/start/topics/examples/server_blocks/">upstream examples</a>.
 </p>
 <p>In the example below the server listens for incoming connections on IPv4 and IPv6 ports 80 for two domains, <code>domainname1.dom</code> and <code>domainname2.dom</code>:
 </p>
@@ -230,10 +230,10 @@ server {
     ...
 }
 </pre>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">Restart</a> <code>nginx.service</code> to apply any changes.
+<p><a href="/title/Restart" class="mw-redirect" title="Restart">Restart</a> <code>nginx.service</code> to apply any changes.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Make sure the hostnames are resolvable by setting up a DNS-server like <a href="../en/BIND.html" title="BIND">BIND</a> or <a href="../en/Dnsmasq.html" title="Dnsmasq">dnsmasq</a>, or have a look at <a href="../en/Network_configuration.html#Local_network_hostname_resolution" title="Network configuration">Network configuration#Local network hostname resolution</a>.</div>
+<strong>Note:</strong> Make sure the hostnames are resolvable by setting up a DNS-server like <a href="/title/BIND" title="BIND">BIND</a> or <a href="/title/Dnsmasq" title="Dnsmasq">dnsmasq</a>, or have a look at <a href="/title/Network_configuration#Local_network_hostname_resolution" title="Network configuration">Network configuration#Local network hostname resolution</a>.</div>
 <h5><span class="mw-headline" id="Managing_server_entries">Managing server entries</span></h5>
 <p>It is possible to put different <code>server</code> blocks in different files. This allows you to easily enable or disable certain sites.
 </p>
@@ -268,29 +268,29 @@ server {
 </p>
 <pre># unlink /etc/nginx/sites-enabled/example.conf
 </pre>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Reload">Reload</a>/<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>nginx.service</code> to enable changes to the sites configuration.
+<p><a href="/title/Reload" class="mw-redirect" title="Reload">Reload</a>/<a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> <code>nginx.service</code> to enable changes to the sites configuration.
 </p>
 <h4><span class="mw-headline" id="TLS">TLS</span></h4>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="/title/Help:Style" title="Help:Style">Help:Style</a> for reference.</b><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Do not duplicate <a href="../en/OpenSSL.html#Certificates" title="OpenSSL">OpenSSL#Certificates</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Nginx">Talk:Nginx#</a>)</div>
+<b>Reason:</b> Do not duplicate <a href="/title/OpenSSL#Certificates" title="OpenSSL">OpenSSL#Certificates</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Nginx">Talk:Nginx#</a>)</div>
 </div>
-<p><a href="../en/OpenSSL.html" title="OpenSSL">OpenSSL</a> provides TLS support and is installed by default on Arch installations.
+<p><a href="/title/OpenSSL" title="OpenSSL">OpenSSL</a> provides TLS support and is installed by default on Arch installations.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> 
 <ul>
 <li>You may want to read the <a rel="nofollow" class="external text" href="https://nginx.org/en/docs/http/ngx_http_ssl_module.html">ngx_http_ssl_module</a> documentation first before configuring SSL.</li>
 <li>
-<a href="../en/Certbot.html" class="mw-redirect" title="Let’s Encrypt">Let’s Encrypt</a> is a free, automated, and open certificate authority. A plugin is available to request valid SSL certificates straight from the command line and automatic configuration.</li>
+<a href="/title/Let%E2%80%99s_Encrypt" class="mw-redirect" title="Let’s Encrypt">Let’s Encrypt</a> is a free, automated, and open certificate authority. A plugin is available to request valid SSL certificates straight from the command line and automatic configuration.</li>
 <li>Mozilla has a useful <a href="https://wiki.mozilla.org/Security/Server_Side_TLS" class="extiw" title="mozillawiki:Security/Server Side TLS">TLS article</a> as well as an <a rel="nofollow" class="external text" href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">automated tool</a> to help create a more secure configuration.</li>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> If you plan on implementing TLS, know that some variations and implementations are <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security#Attacks_against_TLS.2FSSL" class="extiw" title="wikipedia:Transport Layer Security">still vulnerable to attack</a><a rel="nofollow" class="external autonumber" href="https://weakdh.org/#affected">[1]</a>. For details on these current vulnerabilities within TLS and how to apply appropriate changes to nginx, visit <a rel="nofollow" class="external free" href="https://weakdh.org/sysadmin.html">https://weakdh.org/sysadmin.html</a>
 </div>
-<p>Create a private key and self-signed certificate. This is adequate for most installations that do not require a <a href="../en/OpenSSL.html#Generate_a_certificate_signing_request" title="OpenSSL">CSR</a>:
+<p>Create a private key and self-signed certificate. This is adequate for most installations that do not require a <a href="/title/OpenSSL#Generate_a_certificate_signing_request" title="OpenSSL">CSR</a>:
 </p>
 <pre># mkdir /etc/nginx/ssl
 # cd /etc/nginx/ssl
@@ -342,7 +342,7 @@ server {
     }
 }
 </pre>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">Restart</a> <code>nginx.service</code> to apply any changes.
+<p><a href="/title/Restart" class="mw-redirect" title="Restart">Restart</a> <code>nginx.service</code> to apply any changes.
 </p>
 <h4><span class="mw-headline" id="Per-user_directories">Per-user directories</span></h4>
 <p>To replicate Apache-style <code>~user</code> URLs to users' <code>~/public_html</code> directories, try the following. (Note: if both rules are used, below, the more-specific PHP rule must come first.)
@@ -376,14 +376,14 @@ server {
 <h3><span class="mw-headline" id="FastCGI">FastCGI</span></h3>
 <p><a href="https://en.wikipedia.org/wiki/FastCGI" class="extiw" title="wikipedia:FastCGI">FastCGI</a>, also FCGI, is a protocol for interfacing interactive programs with a web server. FastCGI is a variation on the earlier <a href="https://en.wikipedia.org/wiki/Common_Gateway_Interface" class="extiw" title="wikipedia:Common Gateway Interface">Common Gateway Interface</a> (CGI); FastCGI's main aim is to reduce the overhead associated with interfacing the web server and CGI programs, allowing servers to handle more web page requests at once.
 </p>
-<p>FastCGI technology is introduced into nginx to work with many external tools, e.g. <a href="../en/Perl.html" title="Perl">Perl</a>, <a href="../en/PHP.html" title="PHP">PHP</a> and <a href="../en/Python.html" title="Python">Python</a>.
+<p>FastCGI technology is introduced into nginx to work with many external tools, e.g. <a href="/title/Perl" title="Perl">Perl</a>, <a href="/title/PHP" title="PHP">PHP</a> and <a href="/title/Python" title="Python">Python</a>.
 </p>
 <h4><span class="mw-headline" id="PHP_implementation">PHP implementation</span></h4>
-<p><a rel="nofollow" class="external text" href="https://php-fpm.org/">PHP-FPM</a> is the recommended solution to run as FastCGI server for <a href="../en/PHP.html" title="PHP">PHP</a>.
+<p><a rel="nofollow" class="external text" href="https://php-fpm.org/">PHP-FPM</a> is the recommended solution to run as FastCGI server for <a href="/title/PHP" title="PHP">PHP</a>.
 </p>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=php-fpm">php-fpm</a></span> and make sure <a href="../en/PHP.html" title="PHP">PHP</a> has been installed and configured correctly. The main configuration file of PHP-FPM is <code>/etc/php/php-fpm.conf</code>. For basic usage the default configuration should be sufficient.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=php-fpm">php-fpm</a></span> and make sure <a href="/title/PHP" title="PHP">PHP</a> has been installed and configured correctly. The main configuration file of PHP-FPM is <code>/etc/php/php-fpm.conf</code>. For basic usage the default configuration should be sufficient.
 </p>
-<p>Finally, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>php-fpm.service</code>.
+<p>Finally, <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> and <a href="/title/Start" class="mw-redirect" title="Start">start</a> <code>php-fpm.service</code>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
@@ -470,7 +470,7 @@ Unix domain sockets should however be faster.</div>
 </pre>
 </div>
 <h5><span class="mw-headline" id="Test_configuration">Test configuration</span></h5>
-<p>You need to <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> the <code>php-fpm.service</code> and <code>nginx.service</code> units if the configuration has been changed in order to apply changes.
+<p>You need to <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> the <code>php-fpm.service</code> and <code>nginx.service</code> units if the configuration has been changed in order to apply changes.
 </p>
 <p>To test the FastCGI implementation, create a new PHP file inside the <code>root</code> folder containing:
 </p>
@@ -482,7 +482,7 @@ Unix domain sockets should however be faster.</div>
 <p>This implementation is needed for CGI applications.
 </p>
 <h5><span class="mw-headline" id="fcgiwrap">fcgiwrap</span></h5>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fcgiwrap">fcgiwrap</a></span>. The configuration file is <code>/usr/lib/systemd/system/fcgiwrap.socket</code>. <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">Enable</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>fcgiwrap.socket</code>.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fcgiwrap">fcgiwrap</a></span>. The configuration file is <code>/usr/lib/systemd/system/fcgiwrap.socket</code>. <a href="/title/Enable" class="mw-redirect" title="Enable">Enable</a> and <a href="/title/Start" class="mw-redirect" title="Start">start</a> <code>fcgiwrap.socket</code>.
 </p>
 <h6><span class="mw-headline" id="Multiple_worker_threads">Multiple worker threads</span></h6>
 <p>If you want to spawn multiple worker threads, it is recommended that you use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/multiwatch/">multiwatch</a></span><sup><small>AUR</small></sup>, which will take care of restarting crashed children. You will need to use <code>spawn-fcgi</code> to create the unix socket, as multiwatch seems unable to handle the systemd-created socket, even though fcgiwrap itself does not have any trouble if invoked directly in the unit file.
@@ -530,7 +530,7 @@ WantedBy=multi-user.target</pre>
 <p>If you get 403 errors, make sure that the CGI executable is readable and executable by the <code>http</code> user and that every parent folder is readable by the <code>http</code> user.
 </p>
 <h2><span class="mw-headline" id="Installation_in_a_chroot">Installation in a chroot</span></h2>
-<p>Installing nginx in a <a href="../en/Chroot.html" title="Chroot">chroot</a> adds an additional layer of security. For maximum security the chroot should include only the files needed to run the nginx server and all files should have the most restrictive permissions possible, e.g., as much as possible should be owned by root, directories such as <code>/usr/bin</code> should be unreadable and unwriteable, etc.
+<p>Installing nginx in a <a href="/title/Chroot" title="Chroot">chroot</a> adds an additional layer of security. For maximum security the chroot should include only the files needed to run the nginx server and all files should have the most restrictive permissions possible, e.g., as much as possible should be owned by root, directories such as <code>/usr/bin</code> should be unreadable and unwriteable, etc.
 </p>
 <p>Arch comes with an <code>http</code> user and group by default which will run the server. The chroot will be in <code>/srv/http</code>.
 </p>
@@ -691,7 +691,7 @@ nobody:::
 </pre>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Running_unprivileged_using_systemd">Running unprivileged using systemd</span></h3>
-<p><a href="../en/Systemd.html#Editing_provided_units" title="Systemd">Edit nginx.service</a> and set the <code>User</code> and optionally <code>Group</code> options under <code>[Service]</code>:
+<p><a href="/title/Systemd#Editing_provided_units" title="Systemd">Edit nginx.service</a> and set the <code>User</code> and optionally <code>Group</code> options under <code>[Service]</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/nginx.service.d/user.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
@@ -705,7 +705,7 @@ Group=<i>group</i></pre>
 NoNewPrivileges=yes</pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> See <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.exec"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.exec.5">systemd.exec(5)</a></span> for more options of confinement.</div>
-<p>Then we need to ensure that <code><i>user</i></code> has access to everything it needs. Follow the subsections below and then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> nginx.
+<p>Then we need to ensure that <code><i>user</i></code> has access to everything it needs. Follow the subsections below and then <a href="/title/Start" class="mw-redirect" title="Start">start</a> nginx.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> The same setup may be desirable for your <a href="#FastCGI">FastCGI server</a> as well.</div>
@@ -718,7 +718,7 @@ NoNewPrivileges=yes</pre>
 }
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> If you want nginx accessible on port 80 or 443, configure your <a href="../en/Category:Firewalls.html" class="mw-redirect" title="Firewall">firewall</a> to redirect requests from 80 or 443 to the ports nginx listens to.</div>
+<strong>Tip:</strong> If you want nginx accessible on port 80 or 443, configure your <a href="/title/Firewall" class="mw-redirect" title="Firewall">firewall</a> to redirect requests from 80 or 443 to the ports nginx listens to.</div>
 <p>Or you may grant the nginx process the CAP_NET_BIND_SERVICE capability which will allow it to bind to ports below 1024:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/nginx.service.d/user.conf</pre>
@@ -748,7 +748,7 @@ WantedBy=sockets.target</pre>
 <p>The sockets will be passed in the order defined in this unit, so port 80 will be file descriptor 3 and port 443 will be file descriptor 4. If you previously enabled or started the service, you should now stop it, and enable <code>nginx.socket</code> instead. When your system starts, nginx will not be running, but will be started when you access the website in a browser. With this you can harden the service further; for example, in many cases you can now set <code>PrivateNetwork=True</code> in the service file, blocking nginx from the external network, since the socket created by systemd is sufficient to serve the website over. Note that this will print a warning in the logs of the nginx service: <code>2020/08/29 19:33:20 [notice] 254#254: using inherited sockets from "3:4;"</code>
 </p>
 <h4><span class="mw-headline" id="PID_file">PID file</span></h4>
-<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nginx">nginx</a></span> uses <code>/run/nginx.pid</code> by default. We can create a directory that <i>user</i> has write access to and place our PID file in there. An example using <a href="../en/Systemd.html#systemd-tmpfiles_-_temporary_files" class="mw-redirect" title="Systemd-tmpfiles">systemd-tmpfiles</a>:
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nginx">nginx</a></span> uses <code>/run/nginx.pid</code> by default. We can create a directory that <i>user</i> has write access to and place our PID file in there. An example using <a href="/title/Systemd-tmpfiles" class="mw-redirect" title="Systemd-tmpfiles">systemd-tmpfiles</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/tmpfiles.d/nginx.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">d /run/nginx 0775 root <i>group</i> - -</pre>
@@ -756,7 +756,7 @@ WantedBy=sockets.target</pre>
 </p>
 <pre># systemd-tmpfiles --create
 </pre>
-<p><a href="../en/Systemd.html#Editing_provided_units" class="mw-redirect" title="Edit">Edit</a> the PID values based on the original <code>nginx.service</code>:
+<p><a href="/title/Edit" class="mw-redirect" title="Edit">Edit</a> the PID values based on the original <code>nginx.service</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/nginx.service.d/user.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
@@ -774,7 +774,7 @@ ExecReload=/usr/bin/nginx -s reload -g 'pid /run/nginx/nginx.pid;'</pre>
 <h4><span class="mw-headline" id="Log_file_and_directory_permissions">Log file and directory permissions</span></h4>
 <p>The step of running a configuration test will create a dangling <code>root</code>-owned log. Remove logs in <code>/var/log/nginx</code> to start fresh.   
 </p>
-<p>The nginx service user needs write permission to <code>/var/log/nginx</code>. This may require <a href="../en/File_permissions_and_attributes.html#Changing_permissions" title="File permissions and attributes">changing permission</a> and/or ownership of this directory on your system.
+<p>The nginx service user needs write permission to <code>/var/log/nginx</code>. This may require <a href="/title/File_permissions_and_attributes#Changing_permissions" title="File permissions and attributes">changing permission</a> and/or ownership of this directory on your system.
 </p>
 <h3><span class="mw-headline" id="Alternative_script_for_systemd">Alternative script for systemd</span></h3>
 <p>On pure systemd you can get advantages of chroot + systemd. <a rel="nofollow" class="external autonumber" href="http://0pointer.de/blog/projects/changing-roots.html">[4]</a> Based on set <a rel="nofollow" class="external text" href="https://wiki.nginx.org/CoreModule#user">user group</a> and pid with:
@@ -811,7 +811,7 @@ Description=nginx (Chroot) path
 PathExists=/srv/http/site/Public_html
 [Install]
 WantedBy=default.target</pre>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">Enable</a> the created <code>nginx.path</code> and change the <code>WantedBy=default.target</code> to <code>WantedBy=nginx.path</code> in <code>/etc/systemd/system/nginx.service</code>.
+<p><a href="/title/Enable" class="mw-redirect" title="Enable">Enable</a> the created <code>nginx.path</code> and change the <code>WantedBy=default.target</code> to <code>WantedBy=nginx.path</code> in <code>/etc/systemd/system/nginx.service</code>.
 </p>
 <p>The <code>PIDFile</code> in unit file allows systemd to monitor process (absolute path required). If it is undesired, you can change to default one-shot type, and delete the reference from the unit file.
 </p>
@@ -821,7 +821,7 @@ WantedBy=default.target</pre>
 <h3><span class="mw-headline" id="Better_headers_management">Better headers management</span></h3>
 <p>Nginx has a rather unintuitive header management system where headers can only be defined in one context, any other headers are ignored. To remedy this we can install the <a rel="nofollow" class="external text" href="https://github.com/openresty/headers-more-nginx-module#more_set_headers">headers-more-nginx</a> module.
 </p>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nginx-mod-headers-more">nginx-mod-headers-more</a></span> package. This will install the module to <code>/usr/lib/nginx/modules</code> directory.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=nginx-mod-headers-more">nginx-mod-headers-more</a></span> package. This will install the module to <code>/usr/lib/nginx/modules</code> directory.
 </p>
 <p>To load the module add the following to the top of your main nginx configuration file.
 </p>
@@ -853,11 +853,11 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 <p>In Archlinux, the configuration file mentioned in above link is <code>/etc/php/php-fpm.conf</code>.
 </p>
 <h3><span class="mw-headline" id="Error:_No_input_file_specified">Error: No input file specified</span></h3>
-<p>1. Verify that variable <code>open_basedir</code> in <code>/etc/php/php.ini</code> contains the correct path specified as <code>root</code> argument in <code>nginx.conf</code> (usually <code>/usr/share/nginx/</code>). When using <a rel="nofollow" class="external text" href="http://php-fpm.org/">PHP-FPM</a> as FastCGI server for PHP, you may add <code>fastcgi_param PHP_ADMIN_VALUE "open_basedir=$document_root/:/tmp/:/proc/";</code> in the <code>location</code> block which aims for processing php file in <code>nginx.conf</code>.
+<p>1. Verify that variable <code>open_basedir</code> in <code>/etc/php/php.ini</code> contains the correct path specified as <code>root</code> argument in <code>nginx.conf</code> (usually <code>/usr/share/nginx/</code>). When using <a rel="nofollow" class="external text" href="https://php-fpm.org/">PHP-FPM</a> as FastCGI server for PHP, you may add <code>fastcgi_param PHP_ADMIN_VALUE "open_basedir=$document_root/:/tmp/:/proc/";</code> in the <code>location</code> block which aims for processing php file in <code>nginx.conf</code>.
 </p>
 <p>2. Another occasion is that, wrong <code>root</code> argument in the <code>location ~ \.php$</code> section in <code>nginx.conf</code>. Make sure the <code>root</code> points to the same directory as it in <code>location /</code> in the same server. Or you may just set root as global, do not define it in any location section.
 </p>
-<p>3. Check permissions: e.g. <code>http</code> for user/group,  <code>755</code> for directories and <code>644</code> for files. Remember the entire path to the <code>html</code> directory should have the correct permissions. See <a href="../en/File_permissions_and_attributes.html#Bulk_chmod" title="File permissions and attributes">File permissions and attributes#Bulk chmod</a> to bulk modify a directory tree. 
+<p>3. Check permissions: e.g. <code>http</code> for user/group,  <code>755</code> for directories and <code>644</code> for files. Remember the entire path to the <code>html</code> directory should have the correct permissions. See <a href="/title/File_permissions_and_attributes#Bulk_chmod" title="File permissions and attributes">File permissions and attributes#Bulk chmod</a> to bulk modify a directory tree. 
 </p>
 <p>4. You do not have the <code>SCRIPT_FILENAME</code> containing the full path to your scripts. If the configuration of nginx (<code>fastcgi_param SCRIPT_FILENAME</code>) is correct, this kind of error means php failed to load the requested script. Usually it is simply a permissions issue, you can just run php-cgi as root:
 </p>
@@ -892,25 +892,25 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 </p>
 <pre>[emerg] 460#460: bind() to A.B.C.D:443 failed (99: Cannot assign requested address)
 </pre>
-<p>Even, if your nginx unit-file is configured to run after <code>network.target</code> with systemd, nginx may attempt to listen at an address that is configured but not added to any interface yet. Verify that this the case by manually running <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> for nginx (thereby showing the IP address is configured properly). Configuring nginx to listen to any address will resolve this issue. Now if your use case requires listening to a specific address, one possible solution is to reconfigure systemd.
+<p>Even, if your nginx unit-file is configured to run after <code>network.target</code> with systemd, nginx may attempt to listen at an address that is configured but not added to any interface yet. Verify that this the case by manually running <a href="/title/Start" class="mw-redirect" title="Start">start</a> for nginx (thereby showing the IP address is configured properly). Configuring nginx to listen to any address will resolve this issue. Now if your use case requires listening to a specific address, one possible solution is to reconfigure systemd.
 </p>
-<p>To start nginx after all configured network devices are up and assigned an IP address, append <code>network-online.target</code> to <code>After=</code> within <code>nginx.service</code> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> <code>systemd-networkd-wait-online.service</code>.
+<p>To start nginx after all configured network devices are up and assigned an IP address, append <code>network-online.target</code> to <code>After=</code> within <code>nginx.service</code> and <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> <code>systemd-networkd-wait-online.service</code>.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
-<li><a href="../en/WebDAV.html#Nginx" title="WebDAV">WebDAV with nginx</a></li>
+<li><a href="/title/WebDAV#Nginx" title="WebDAV">WebDAV with nginx</a></li>
 <li><a rel="nofollow" class="external text" href="https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/">nginx configuration pitfalls</a></li>
 <li><a rel="nofollow" class="external text" href="https://calomel.org/nginx.html">Very good in-depth 2014 look at nginx security and Reverse Proxying</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.tecmint.com/install-nginx-php-mysql-with-mariadb-engine-and-phpmyadmin-in-arch-linux/">Installing LEMP (nginx, PHP, MySQL with MariaDB engine and PhpMyAdmin) in Arch Linux</a></li>
-<li><a href="../en/Certbot.html" class="mw-redirect" title="Let’s Encrypt">Using SSL certificates generated with Let's Encrypt</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.tecmint.com/install-nginx-php-mysql-with-mariadb-engine-and-phpmyadmin-in-arch-linux/">Installing LEMP (nginx, PHP, MySQL with MariaDB engine and PhpMyAdmin) in Arch Linux</a></li>
+<li><a href="/title/Let%E2%80%99s_Encrypt" class="mw-redirect" title="Let’s Encrypt">Using SSL certificates generated with Let's Encrypt</a></li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Web_server.html" title="Category:Web server">Web server</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Web_server" title="Category:Web server">Web server</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Style" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li></ul>
 </div>
 </div>
 	</div>
@@ -918,15 +918,15 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Nginx&amp;oldid=663719">https://wiki.archlinux.org/index.php?title=Nginx&amp;oldid=663719</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 April 2021, at 23:43.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Nginx&amp;oldid=669175">https://wiki.archlinux.org/index.php?title=Nginx&amp;oldid=669175</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:22.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

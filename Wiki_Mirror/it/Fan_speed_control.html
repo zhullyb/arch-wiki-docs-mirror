@@ -33,12 +33,15 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
+<div class="noprint archwiki-template-message">
+<p><a href="/title/File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a><b>The <a href="/title/ArchWiki:Contributing#Translating" title="ArchWiki:Contributing">translation</a> of this article or section does not reflect the original text.</b><a href="/title/File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Last updated in 2011 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Fan_speed_control_(Italiano)">Talk:Fan speed control (Italiano)#</a>)</div>
+</div>
 <p>Controllare la velocità (e il rumore!) della ventola della CPU è facile!
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> Ciò che segue potrebbe danneggiare il proprio hardware. La ventola della CPU serve per raffreddarla e in questa guida verrà spenta per un paio di secondi. Se non si è preparati a questo, non farlo!</div>
-<p><br>
-</p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -62,8 +65,8 @@
 </ul>
 </div>
 
-<h3><span class="mw-headline" id="lm-sensors">lm-sensors</span></h3>
-<p>Per prima cosa, bisogna configurare <a href="../en/Lm_sensors.html" title="Lm sensors">lm_sensors</a>.
+<h2><span class="mw-headline" id="lm-sensors">lm-sensors</span></h2>
+<p>Per prima cosa, bisogna configurare <a href="/title/Lm_sensors" title="Lm sensors">lm_sensors</a>.
 </p>
 <p>Una volta installato <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lm_sensors">lm_sensors</a></span>, si possono ottenere delle letture con il comando <code>sensors</code>.
 </p>
@@ -96,7 +99,7 @@ temp1:       +37.5°C  (low  = +129.5°C, high = +129.5°C)  sensor = thermistor
 temp2:       +25.0°C  (low  = +127.0°C, high = +127.0°C)  sensor = thermal diode</pre>
 <p>Se nell'output non viene visualizzato il valore RPM per la ventola della CPU, ma si è sicuri che sia in esecuzione, è necessario aumentare il divisore della ventola. Se la velocità della ventola viene mostrata ed è superiore a 0, ignorare il passaggio successivo.
 </p>
-<h4><span class="mw-headline" id="Incrementare_fan_div">Incrementare fan_div</span></h4>
+<h3><span class="mw-headline" id="Incrementare_fan_div">Incrementare fan_div</span></h3>
 <p>La prima riga emessa nell'output dei sensori è il chipset usato dalla scheda madre per leggere le velocità, temperature e voltaggi. 
 </p>
 <p>Creare il file di configurazione <code>libsensors</code> copiando il file di default in <code>/etc/sensors.d/</code>.
@@ -112,16 +115,16 @@ temp2:       +25.0°C  (low  = +127.0°C, high = +127.0°C)  sensor = thermal di
 <p>che ricaricherà le variabili impostate in <code>sensors.conf</code>.
 Eseguire <code>sensors</code> di nuovo e verificare se c'è una lettura RPM. In caso contrario, aumentare il divisore a 8, 16 o 32.
 </p>
-<h3><span class="mw-headline" id="pwmconfig">pwmconfig</span></h3>
+<h2><span class="mw-headline" id="pwmconfig">pwmconfig</span></h2>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> Gli utenti più smaliziati preferiranno magari saltare questa sezione e scrivere <code>/etc/fancontrol</code> da soli, risparmiandosi in questo modo di dover ascoltare le ventole a tutta velocità</div>
 <p>Una volta configurato <code>lm sensor</code> correttamente, eseguire <code>pwmconfig</code> per testare e configurare il controllo della velocità delle ventole.
 </p>
 <p>Seguire le istruzioni di <code>pwmconfig</code> per impostare una velocità di base.
 </p>
-<p>Le opzioni di configurazione di default dovrebbero creare un nuovo file, <code>/etc/fancontrol</code>.  
+<p>Le opzioni di configurazione di default dovrebbero creare un nuovo file, <code>/etc/fancontrol</code>.
 </p>
-<h4><span class="mw-headline" id="Ottimizzazioni">Ottimizzazioni</span></h4>
+<h3><span class="mw-headline" id="Ottimizzazioni">Ottimizzazioni</span></h3>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> Alcune delle fasi descritte di seguito descrivono come modificare la velocità delle ventole.  Prima di fare questo assicurarsi di avere un basso carico della CPU ed essere sicuri di volerlo fare.  Se in qualsiasi momento durante i seguenti passaggi si nota la temperatura della CPU salire drammaticamente, fare un <code>echo "255" &gt; /sys/class/hwmon/hwmon0/device/pwm1</code> per far girare la ventola a tutta velocità ed ottenere un raffreddamento completo in sicurezza.  In sostanza, si dovrebbe sapere cosa si sta facendo prima di giocherellare con il file di configurazione.</div>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -166,7 +169,7 @@ MINSTOP=hwmon0/device/pwm1=105</pre>
 <b>DEVNAME</b>: Imposta il nome del dispositivo. Provare con</li></ul>
 <pre>cat /sys/class/hwmon/&lt;hwmon-device&gt;/device/name | sed -e 's/[[:space:]=]/_/g'
 </pre>
-<h3><span class="mw-headline" id="fancontrol">fancontrol</span></h3>
+<h2><span class="mw-headline" id="fancontrol">fancontrol</span></h2>
 <p>Provare ad eseguire <code>fancontrol</code>:
 </p>
 <pre>/usr/sbin/fancontrol
@@ -178,8 +181,8 @@ MINSTOP=hwmon0/device/pwm1=105</pre>
 <p><i>La maggior parte di questi howto è tratta da <a rel="nofollow" class="external text" href="https://ubuntuforums.org/">Forum di ubuntu</a> e dalla <a rel="nofollow" class="external text" href="http://ubuntuguide.org/">Guida di ubuntu</a>.</i>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Per i portatili Dell Latitude/Inspiron, si consiglia di utilizzare <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/i8kutils/">i8kutils</a></span><sup><small>AUR</small></sup>/<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/i8kmonitor/">i8kmonitor</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>. Tenere conto che questi due pacchetti non funzionano su Ispiron 1764</div>
-<h3><span class="mw-headline" id="Semplice_script_Bash_per_regolazione_fine_delle_ventole">Semplice script Bash per regolazione fine delle ventole</span></h3>
+<strong>Note:</strong> Per i portatili Dell Latitude/Inspiron, si consiglia di utilizzare <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/i8kutils/">i8kutils</a></span><sup><small>AUR</small></sup>/<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/i8kmonitor/">i8kmonitor</a></span><sup><small>AUR</small></sup><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>. Tenere conto che questi due pacchetti non funzionano su Ispiron 1764</div>
+<h2><span class="mw-headline" id="Semplice_script_Bash_per_regolazione_fine_delle_ventole">Semplice script Bash per regolazione fine delle ventole</span></h2>
 <p>Esegui questo come root per fare in modo che diversi valori pwm si convertano in RPM.  Come si può vedere, questo script presuppone che "fancontrol" sia in esecuzione e lo disabilita automaticamente, per poi riattivarlo quando si ha terminato. 
 </p>
 <pre>#!/bin/bash
@@ -224,9 +227,12 @@ echo "0" &gt; ${pwmcontrol}_enable
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../it/Category:CPU.html" title="Category:CPU (Italiano)">CPU (Italiano)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:CPU_(Italiano)" title="Category:CPU (Italiano)">CPU (Italiano)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Bad_translation" title="Category:Pages or sections flagged with Template:Bad translation">Pages or sections flagged with Template:Bad translation</a></li>
+<li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -234,15 +240,15 @@ echo "0" &gt; ${pwmcontrol}_enable
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fan_speed_control_(Italiano)&amp;oldid=661045">https://wiki.archlinux.org/index.php?title=Fan_speed_control_(Italiano)&amp;oldid=661045</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 07:06.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fan_speed_control_(Italiano)&amp;oldid=665207">https://wiki.archlinux.org/index.php?title=Fan_speed_control_(Italiano)&amp;oldid=665207</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 29 April 2021, at 12:33.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

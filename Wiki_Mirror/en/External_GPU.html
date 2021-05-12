@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>External GPU - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-External_GPU rootpage-External_GPU skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">External GPU</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<div class="archwiki-template-meta-related-articles-start">
+<p>Related articles</p>
+<ul>
+<li><a href="/title/Xorg" title="Xorg">Xorg</a></li>
+<li><a href="/title/PRIME" title="PRIME">PRIME</a></li>
+<li><a href="/title/Thunderbolt" title="Thunderbolt">Thunderbolt</a></li>
+<li><a href="/title/NVIDIA_Optimus" title="NVIDIA Optimus">NVIDIA_Optimus</a></li>
+<li><a href="/title/NVIDIA/Tips_and_tricks" title="NVIDIA/Tips and tricks">NVIDIA/Tips_and_tricks</a></li>
+</ul>
+</div>
+<p>On computers equipped with <a href="https://en.wikipedia.org/wiki/Thunderbolt_(interface)#Thunderbolt_3" class="extiw" title="wikipedia:Thunderbolt (interface)">Thunderbolt 3+</a>, it is possible to attach a desktop-grade external graphics card (eGPU) using a GPU enclosure. <a rel="nofollow" class="external text" href="https://egpu.io/">eGPU.io</a> is a good resource with buyer's guide and a community forum. While some manual configuration (shown below) is needed for most modes of operation, Linux support for eGPUs is generally good.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1">
+<a href="#Installation"><span class="tocnumber">1</span> <span class="toctext">Installation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Thunderbolt"><span class="tocnumber">1.1</span> <span class="toctext">Thunderbolt</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Drivers"><span class="tocnumber">1.2</span> <span class="toctext">Drivers</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-4"><a href="#Compute-only_workloads"><span class="tocnumber">2</span> <span class="toctext">Compute-only workloads</span></a></li>
+<li class="toclevel-1 tocsection-5">
+<a href="#Xorg"><span class="tocnumber">3</span> <span class="toctext">Xorg</span></a>
+<ul>
+<li class="toclevel-2 tocsection-6"><a href="#Xorg_rendered_on_eGPU,_PRIME_display_offload_to_iGPU"><span class="tocnumber">3.1</span> <span class="toctext">Xorg rendered on eGPU, PRIME display offload to iGPU</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Xorg_rendered_on_iGPU,_PRIME_render_offload_to_eGPU"><span class="tocnumber">3.2</span> <span class="toctext">Xorg rendered on iGPU, PRIME render offload to eGPU</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Separate_Xorg_instance_for_eGPU"><span class="tocnumber">3.3</span> <span class="toctext">Separate Xorg instance for eGPU</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Known_issues_with_eGPUs_on_Xorg"><span class="tocnumber">3.4</span> <span class="toctext">Known issues with eGPUs on Xorg</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10"><a href="#Wayland"><span class="tocnumber">4</span> <span class="toctext">Wayland</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Installation">Installation</span></h2>
+<h3><span class="mw-headline" id="Thunderbolt">Thunderbolt</span></h3>
+<p>The eGPU enclosure Thunderbolt device may need to be authorized first after plugging in (based on your BIOS/UEFI Firmware configuration). Follow <a href="/title/Thunderbolt#User_device_authorization" title="Thunderbolt">Thunderbolt#User_device_authorization</a>. If successful, the external graphics card should show up in <code>lspci</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ lspci | grep -E 'VGA|3D'</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">00:02.0 VGA compatible controller: Intel Corporation UHD Graphics 620 (rev 07)             # internal GPU
+1a:10.3 VGA compatible controller: NVIDIA Corporation GP107 [GeForce GTX 1050] (rev a1)    # external GPU
+</pre>
+<p>Depending on your computer, its firmware and enclosure firmware, Thunderbolt will limit host &lt;-&gt; eGPU bandwidth to some extent due to <a rel="nofollow" class="external text" href="https://egpu.io/best-laptops-external-gpu/#pcie">the number of PCIe lanes and OPI Mode</a>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | grep PCIe</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[19888.928225] pci 0000:1a:10.3: 8.000 Gb/s available PCIe bandwidth, limited by 2.5 GT/s PCIe x4 link at 0000:05:01.0 (capable of 126.016 Gb/s with 8.0 GT/s PCIe x16 link)
+</pre>
+<h3><span class="mw-headline" id="Drivers">Drivers</span></h3>
+<p>A driver compatible with your GPU model should be installed:
+</p>
+<ul>
+<li><a href="/title/AMDGPU" title="AMDGPU">AMDGPU</a></li>
+<li>
+<a href="/title/NVIDIA" title="NVIDIA">NVIDIA</a> proprietary Nvidia drivers</li>
+<li>
+<a href="/title/Nouveau" title="Nouveau">Nouveau</a> open-source Nvidia drivers</li>
+</ul>
+<p>If installed successfully, <code>lspci -k</code> should show that a driver has been associated with your card:
+</p>
+<pre>1a:10.3 VGA compatible controller: NVIDIA Corporation GP107 [GeForce GTX 1050] (rev a1)
+        Subsystem: NVIDIA Corporation GP107 [GeForce GTX 1050]
+        Kernel driver in use: nvidia
+        Kernel modules: nouveau, nvidia_drm, nvidia
+</pre>
+<h2><span class="mw-headline" id="Compute-only_workloads">Compute-only workloads</span></h2>
+<p>Right after completing <a href="#Installation">installation steps</a>, compute-only workloads like <a href="/title/GPGPU#CUDA" title="GPGPU">GPGPU#CUDA</a> that don't need to display anything should work without any extra configuration. <code>nvidia-smi</code> utility should work with the proprietary NVIDIA driver. Proprietary <a href="https://en.wikipedia.org/wiki/Nvidia_NVENC" class="extiw" title="wikipedia:Nvidia NVENC">Nvidia NVENC/NVDEC</a> should work (without OpenGL interop).
+</p>
+<p>This use-case should also support full hotplug. Hot-unplug should be also possible (probably depending on drivers used). On Nvidia, active <code>nvidia-persistenced</code> is expected to prevent clean hot-unplug.
+</p>
+<h2><span class="mw-headline" id="Xorg">Xorg</span></h2>
+<p>Multiple setups combining internal (iGPU) and external (eGPU) cards are possible, each with own advantages and disadvantages.
+</p>
+<h3>
+<span id="Xorg_rendered_on_eGPU.2C_PRIME_display_offload_to_iGPU"></span><span class="mw-headline" id="Xorg_rendered_on_eGPU,_PRIME_display_offload_to_iGPU">Xorg rendered on eGPU, PRIME display offload to iGPU</span>
+</h3>
+<ul>
+<li>Most programs that make use of GPU run out-of-the-box on eGPU: <code>glxinfo</code>/<code>glxgears</code>, <code>eglinfo</code>/<code>eglgears_x11</code>, <code>NVENC</code>/<code>NVDEC</code> (including OpenGL interop).</li>
+<li>Xorg only starts with the eGPU plugged in.</li>
+<li>Monitors attached to eGPU work out-of-the-box, PRIME <i>display</i> offload can be used for monitors attached to iGPU (i.e. internal laptop screen).</li>
+</ul>
+<p>Main articles are <a href="/title/PRIME#Discrete_card_as_primary_GPU" title="PRIME">PRIME#Discrete_card_as_primary_GPU</a> and <a href="/title/PRIME#Reverse_PRIME" title="PRIME">PRIME#Reverse_PRIME</a>. Also documented in NVIDIA driver docs <a rel="nofollow" class="external text" href="http://us.download.nvidia.com/XFree86/Linux-x86_64/465.27/README/randr14.html">Chapter 33. Offloading Graphics Display with RandR 1.4</a>.
+</p>
+<p>Use Xorg config snippet like this one:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/X11/xorg.conf.d/80-egpu-primary-igpu-offload.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Section "Device"
+    Identifier "Device0"
+    Driver     "nvidia"
+    BusID      "PCI:26:16:3"                 # Edit according to lspci, translate from hex to decimal.
+    Option     "AllowExternalGpus" "True"    # Required for proprietary NVIDIA driver.
+EndSection
+
+Section "Module"
+    # Load modesetting module for the iGPU, which should show up in XrandR 1.4 as a provider.
+    Load "modesetting"
+EndSection
+</pre>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> Xorg uses decimal bus IDs, while most other tools use hexadecimal. We had to convert <code>1a:10.3</code> to <code>26:16:3</code> for <code>xorg.conf</code> snippet.</div>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> With modern Xorg, it is not needed to specify <code>ServerLayout</code> and <code>Screen</code> sections, as these are inferred automatically. First <code>Device</code> defined will be considered primary.</div>
+<p>To <b>validate</b> this setup, use <code>xrandr --listproviders</code>, which should display
+</p>
+<pre>Providers: number : 2
+Provider 0: id: 0x1b8 cap: 0x1, Source Output crtcs: 4 outputs: 4 associated providers: 0 name:NVIDIA-0
+Provider 1: id: 0x1f3 cap: 0xf, Source Output, Sink Output, Source Offload, Sink Offload crtcs: 3 outputs: 5 associated providers: 0 name:modesetting
+</pre>
+<p>To <b>output to internal laptop screen and/or other monitors attached to iGPU</b>, RandR 1.4 PRIME <i>display</i> offload can be used, using names from above <code>xrandr --listproviders</code> output:
+</p>
+<pre>xrandr --setprovideroutputsource modesetting NVIDIA-0 &amp;&amp; xrandr --auto</pre>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> The <code>xrandr --auto</code> is optional and may be substituted by any RandR-based display configuration tool. Its presence prevents all-screens-black situation.</div>
+<p>You may want to run this command before a display manager shows login propmt or before desktop environment starts, see <a href="/title/Xrandr#Configuration" title="Xrandr">Xrandr#Configuration</a> and <a href="/title/Xinit" title="Xinit">Xinit</a>.
+</p>
+<p><a href="/title/Vulkan" title="Vulkan">Vulkan</a> may enumerate GPUs independently of Xorg, so in order to run for example <code>vkcube</code> in this setup, one may need to pass <code>--gpu_number 1</code> option. Alternatively, a layer to reorder GPUs during enumeration can be activated with the same effect: <code>__NV_PRIME_RENDER_OFFLOAD=1 vkcube</code> or equivalently <code>prime-run vkcube</code>.
+</p>
+<h3>
+<span id="Xorg_rendered_on_iGPU.2C_PRIME_render_offload_to_eGPU"></span><span class="mw-headline" id="Xorg_rendered_on_iGPU,_PRIME_render_offload_to_eGPU">Xorg rendered on iGPU, PRIME render offload to eGPU</span>
+</h3>
+<ul>
+<li>Programs are rendered on iGPU by default, but PRIME <i>render</i> offload can be used to render them on eGPU.</li>
+<li>Xorg starts even with eGPU disconnected, but render/display offload won't work until it is restarted.</li>
+<li>Monitors attached to iGPU (i.e. internal laptop screen) work out-of-the-box, PRIME <i>display</i> offload can be used for monitors attached to eGPU.</li>
+</ul>
+<p>Main article is <a href="/title/PRIME#PRIME_GPU_offloading" title="PRIME">PRIME#PRIME_GPU_offloading</a>. Also documented in NVIDIA driver docs <a rel="nofollow" class="external text" href="http://us.download.nvidia.com/XFree86/Linux-x86_64/465.27/README/primerenderoffload.html">Chapter 34. PRIME Render Offload</a>.
+</p>
+<p>With many discrete GPU drivers, this mode should be the default without any manual Xorg configuration. If that doesn't work, or if you use proprietary NVIDIA drivers, use Xorg config snippet like this one:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/X11/xorg.conf.d/80-igpu-primary-egpu-offload.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Section "Device"
+    Identifier "Device0"
+    Driver     "modesetting"
+EndSection
+
+Section "Device"
+    Identifier "Device1"
+    Driver     "nvidia"
+    BusID      "PCI:26:16:3"                 # Edit according to lspci, translate from hex to decimal.
+    Option     "AllowExternalGpus" "True"    # Required for proprietary NVIDIA driver.
+EndSection
+</pre>
+<p>To <b>validate</b> this setup, use <code>xrandr --listproviders</code>, which should display
+</p>
+<pre>Providers: number : 2
+Provider 0: id: 0x47 cap: 0xf, Source Output, Sink Output, Source Offload, Sink Offload crtcs: 3 outputs: 5 associated providers: 0 name:modesetting
+Provider 1: id: 0x24a cap: 0x2, Sink Output crtcs: 4 outputs: 4 associated providers: 0 name:NVIDIA-G0
+</pre>
+<p>To <b>render <code>someprogram</code> on the eGPU</b>, PRIME <i>render</i> offload can be used:
+</p>
+<ul>
+<li>for proprietary NVIDIA drivers: <pre>__NV_PRIME_RENDER_OFFLOAD=1 __VK_LAYER_NV_optimus=NVIDIA_only __GLX_VENDOR_LIBRARY_NAME=nvidia someprogram</pre>
+</li>
+<li>for proprietary NVIDIA drivers (convenience wrapper): <pre>prime-run someprogram</pre>
+</li>
+<li>for open-source drivers: <pre>DRI_PRIME=1 someprogram</pre>
+</li>
+</ul>
+<p>To <b>output to monitors connected to eGPU</b>, RandR 1.4 PRIME <i>display</i> offload can be again used:
+</p>
+<pre>xrandr --setprovideroutputsource NVIDIA-G0 modesetting &amp;&amp; xrandr --auto</pre>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> The order of providers is different, and the Nvidia the has a slightly different name this time.</div>
+<p>NVIDIA drivers 460.27.04+ <a rel="nofollow" class="external text" href="https://forums.developer.nvidia.com/t/linux-solaris-and-freebsd-driver-460-27-04-beta/163730">implement an optimization for a special case of combined render and display offloads</a>: <i>Added support for “Reverse PRIME Bypass”, an optimization that bypasses the bandwidth overhead of PRIME Render Offload and PRIME Display Offload in conditions where a render offload application is fullscreen, unredirected, and visible only on a given NVIDIA-driven PRIME Display Offload output. Use of the optimization is reported in the X log when verbose logging is enabled in the X server.</i>
+</p>
+<h3><span class="mw-headline" id="Separate_Xorg_instance_for_eGPU">Separate Xorg instance for eGPU</span></h3>
+<p>Main article is <a href="/title/Nvidia-xrun#eGPU_setup" title="Nvidia-xrun">Nvidia-xrun#eGPU_setup</a>.
+</p>
+<h3><span class="mw-headline" id="Known_issues_with_eGPUs_on_Xorg">Known issues with eGPUs on Xorg</span></h3>
+<ul>
+<li>hotplug is not supported with most discrete GPU Xorg drivers: the eGPU needs to be plugged in when Xorg starts. Logging out and in again should suffice to restart Xorg.</li>
+<li>hot-unplug is not supported at all: doing so leads to system instability or outright freezes (as acknowledged in <a rel="nofollow" class="external text" href="http://us.download.nvidia.com/XFree86/Linux-x86_64/465.27/README/egpu.html">Nvidia docs</a>).</li>
+</ul>
+<h2><span class="mw-headline" id="Wayland">Wayland</span></h2>
+<p>Wayland support for eGPUs (or multiple GPUs in general) is much less tested now, but should work in theory and with less manual configuration. Note that there needs to be explicit support by particular Wayland compositor.
+</p>
+<p>There seems to be also preliminary support for GPU hotplug in some compositors:
+</p>
+<ul>
+<li>KDE's kwin: <a rel="nofollow" class="external free" href="https://invent.kde.org/plasma/kwin/-/merge_requests/811">https://invent.kde.org/plasma/kwin/-/merge_requests/811</a>
+</li>
+<li>GNOME's Mutter: <a rel="nofollow" class="external free" href="https://gitlab.gnome.org/GNOME/mutter/-/issues/17">https://gitlab.gnome.org/GNOME/mutter/-/issues/17</a>, <a rel="nofollow" class="external free" href="https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/1562">https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/1562</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Graphics" title="Category:Graphics">Graphics</a></li>
+<li><a href="/title/Category:X_server" title="Category:X server">X server</a></li>
+</ul>
+</div></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=External_GPU&amp;oldid=670652">https://wiki.archlinux.org/index.php?title=External_GPU&amp;oldid=670652</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 May 2021, at 09:12.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

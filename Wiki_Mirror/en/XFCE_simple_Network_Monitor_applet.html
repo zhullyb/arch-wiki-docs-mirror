@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,45 +34,71 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="../en/Xfce.html" title="Xfce">Xfce</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-emblem-symbolic-link.png" class="image"><img alt="Tango-emblem-symbolic-link.png" src="../File:Tango-emblem-symbolic-link.png" decoding="async" width="48" height="48"></a><b>This article is being considered for redirection to <a href="/title/Xfce" title="Xfce">Xfce</a>.</b><a href="/title/File:Tango-emblem-symbolic-link.png" class="image"><img alt="Tango-emblem-symbolic-link.png" src="../File:Tango-emblem-symbolic-link.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Notes:</b> A PKGBUILD for the AUR should also be made and only linked from the section. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:XFCE_simple_Network_Monitor_applet">Talk:XFCE simple Network Monitor applet#</a>)</div>
+<b>Notes:</b> All content and more already at <a rel="nofollow" class="external autonumber" href="https://lightful.github.io/xfce-hkmon/">[1]</a> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:XFCE_simple_Network_Monitor_applet">Talk:XFCE simple Network Monitor applet#</a>)</div>
 </div>
-<p>The latest and fairly improved version (now not only reports the network activity) has been moved.
+<p>This is an applet that can be used together with the <a rel="nofollow" class="external text" href="https://docs.xfce.org/panel-plugins/xfce4-genmon-plugin/start">genmon plugin of XFCE4</a>.
 </p>
-<p>Full information and screenshots in <a rel="nofollow" class="external text" href="https://github.com/lightful/xfce-hkmon">github</a>.
+<p>In addition to network speeds, it can also show CPU load, temperatures, IO statistics and RAM usage.
 </p>
-<p>The original version is also available in git history, but the new one it is as simple and easy to install:
+<p>Full information for this applet: <a rel="nofollow" class="external text" href="https://github.com/lightful/xfce-hkmon">github</a>. The original version is also available in git history, but the new one it is as simple and easy to install.
 </p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1">
+<a href="#Installation_instructions"><span class="tocnumber">1</span> <span class="toctext">Installation instructions</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#AUR_package"><span class="tocnumber">1.1</span> <span class="toctext">AUR package</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Manual_installation"><span class="tocnumber">1.2</span> <span class="toctext">Manual installation</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Adding_the_applet_to_a_panel"><span class="tocnumber">1.3</span> <span class="toctext">Adding the applet to a panel</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
 <h2><span class="mw-headline" id="Installation_instructions">Installation instructions</span></h2>
+<h3><span class="mw-headline" id="AUR_package">AUR package</span></h3>
+<p>Install the <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a> package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xfce-hkmon/">xfce-hkmon</a></span><sup><small>AUR</small></sup>
+</p>
+<h3><span class="mw-headline" id="Manual_installation">Manual installation</span></h3>
 <p>Download <a rel="nofollow" class="external text" href="https://raw.githubusercontent.com/lightful/xfce-hkmon/master/xfce-hkmon.cpp">xfce-hkmon.cpp</a> and compile it:
 </p>
 <pre>g++ -std=c++0x -O3 -lrt xfce-hkmon.cpp -o xfce-hkmon
 </pre>
-<p>Place the executable somewhere (e.g. /usr/local/bin) and add a <b>XFCE Generic Monitor Applet</b> with these settings: no label, 1 second period, <i>Bitstream Vera Sans Mono font</i> (recommended) and the following command:
+<p>Place the resulting executable somewhere where the genmon plugin may access it (e.g. /usr/local/bin or inside of the user's directories).
+</p>
+<h3><span class="mw-headline" id="Adding_the_applet_to_a_panel">Adding the applet to a panel</span></h3>
+<p>Add a <b>XFCE Generic Monitor Applet</b> to a panel with these settings: no label, 1 second period, <i>Bitstream Vera Sans Mono font</i> (recommended) and the following command:
 </p>
 <pre>/usr/local/bin/xfce-hkmon NET CPU TEMP IO RAM
 </pre>
-<p>You may also add an interface name (eth0, ppp0,...) to override the automatic selection by traffic.
+<p>You may also add an interface name (eth0, ppp0,...) to override the automatic selection by traffic. Each uppercase argument represents an (optional) category to monitor (network, temperature, etc). At least one of them should be present for the applet to be meaningful.
+</p>
+<p>Experiment with the font size to find the best setting for the panel, so that the panel's height is not increased by the applet (e.g., 7 or 8 points). Using a monospaced font helps in keeping the applet size fixed, and avoids random movement of the windows in the same panel as the applets text changes.
 </p>
 </div>
 </div>
-<div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li></ul>
+<div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_flagged_with_Template:Redirect" title="Category:Pages flagged with Template:Redirect">Pages flagged with Template:Redirect</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=XFCE_simple_Network_Monitor_applet&amp;oldid=483989">https://wiki.archlinux.org/index.php?title=XFCE_simple_Network_Monitor_applet&amp;oldid=483989</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 6 August 2017, at 07:16.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=XFCE_simple_Network_Monitor_applet&amp;oldid=667488">https://wiki.archlinux.org/index.php?title=XFCE_simple_Network_Monitor_applet&amp;oldid=667488</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 2 May 2021, at 20:01.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

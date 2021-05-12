@@ -183,7 +183,7 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Lenovo_ThinkPad_T450.html" title="Lenovo ThinkPad T450">Lenovo ThinkPad T450</a></li>
+<li><a href="/title/Lenovo_ThinkPad_T450" title="Lenovo ThinkPad T450">Lenovo ThinkPad T450</a></li>
 </ul>
 </div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -218,32 +218,48 @@
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Blind users should request the help of a sighted person to change UEFI BIOS settings. Although keyboard beeps in the ThinkPad Setup program are enabled by default, this is not enough to change settings without eyesight as the keyboard will only beep when unmanageable/invalid key combinations are pressed.</div>
-<p>The <a href="#See_also">user guide</a> has a section under "Chapter 6. Advanced configuration" titled "<a rel="nofollow" class="external text" href="https://download.lenovo.com/pccbbs/mobiles_pdf/t450s_ug_en.pdf#page=87">Using the ThinkPad Setup Program</a>" that highlights the steps needed to configure the UEFI BIOS settings as well as the relevant keyboard shortcuts. Keyboard shortcuts needed to trigger certain features on device startup are also mentioned throughout:
+<p>The <a href="#See_also">user guide</a> has a section under Chapter 6, "Advanced configuration", titled "<a rel="nofollow" class="external text" href="https://download.lenovo.com/pccbbs/mobiles_pdf/t450s_ug_en.pdf#page=87">Using the ThinkPad Setup Program</a>" that highlights the steps needed to configure the UEFI BIOS settings as well as relevant keyboard shortcuts. Keyboard shortcuts needed to trigger certain features on device startup are also mentioned throughout:
 </p>
-<ul>
-<li>
-<code>Enter</code> — Interrupt normal startup and bring up the Startup menu</li>
-<li>
-<code>F1</code> — Start the ThinkPad Setup program</li>
-<li>
-<code>F12</code> — Bring up the Boot Menu window</li>
-</ul>
+<table class="wikitable">
+<tbody>
+<tr>
+<th>Key</th>
+<th>Effect
+</th>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>Interrupt normal startup and bring up the Startup menu
+</td>
+</tr>
+<tr>
+<td><code>F1</code></td>
+<td>Start the ThinkPad Setup program
+</td>
+</tr>
+<tr>
+<td><code>F12</code></td>
+<td>Bring up the Boot Menu window
+</td>
+</tr>
+</tbody>
+</table>
 <h2><span class="mw-headline" id="Firmware">Firmware</span></h2>
-<p><a href="../en/Fwupd.html" title="Fwupd">fwupd</a> does not support this device yet.
+<p><a href="/title/Fwupd" title="Fwupd">fwupd</a> does not support this device yet.
 </p>
 <h3><span class="mw-headline" id="UEFI_BIOS_errors">UEFI BIOS errors</span></h3>
-<p>The following error messages appear during the boot process and in the system's <a href="../en/Systemd/Journal.html" title="Systemd/Journal">journal</a> (<a rel="nofollow" class="external text" href="https://bugzilla.redhat.com/show_bug.cgi?id=1458390#c0">since version 4.10.17 of the Linux kernel</a>):
+<p>The following error messages appear during the boot process and in the system's <a href="/title/Journal" class="mw-redirect" title="Journal">journal</a> (<a rel="nofollow" class="external text" href="https://bugzilla.redhat.com/show_bug.cgi?id=1458390#c0">since version 4.10.17 of the Linux kernel</a>):
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># journalctl -p 3 -xb | cut -d ' ' -f 6-</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># journalctl -o cat -kp err</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">DMAR: [Firmware Bug]: No firmware reserved region can cover this RMRR [0x000000009d800000-0x000000009fffffff], contact BIOS vendor for fixes
 ACPI Error: Needed type [Reference], found [Integer] 00000000e2dee060 (20201113/exresop-66)
 ACPI Error: AE_AML_OPERAND_TYPE, While resolving operands for [Store] (20201113/dswexec-431)
 ACPI Error: Aborting method \_PR.CPU0._PDC due to previous error (AE_AML_OPERAND_TYPE) (20201113/psparse-529)</pre>
-<p>(The output above was taken with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> 5.11.12.arch1-1 and version 1.37 of the T450s UEFI BIOS.)
+<p>(The output above was taken with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=linux">linux</a></span> 5.11.12.arch1-1 and version 1.37 (JBET73WW) of the T450s UEFI BIOS.)
 </p>
-<p>These messages are due to the fact that "<a rel="nofollow" class="external text" href="https://bugzilla.kernel.org/show_bug.cgi?id=199983#c8">there is an attempt to store an integer to a reference type in the bytecode.</a>" A <a rel="nofollow" class="external text" href="https://forums.lenovo.com/t5/Other-Linux-Discussions/Thinkpad-T440-T450-T460-Bios-ACPI-Errors/td-p/4239132?page=1">Lenovo forum thread</a> was made to discuss and bring this to Lenovo's attention, but they have yet to fix it.
+<p>These messages appear because "<a rel="nofollow" class="external text" href="https://bugzilla.kernel.org/show_bug.cgi?id=199983#c8">there is an attempt to store an integer to a reference type in the bytecode.</a>" A <a rel="nofollow" class="external text" href="https://forums.lenovo.com/t5/Other-Linux-Discussions/Thinkpad-T440-T450-T460-Bios-ACPI-Errors/td-p/4239132?page=1">Lenovo forum thread</a> was made to discuss and bring this to Lenovo's attention, but they have yet to fix it.
 </p>
-<p>However, these firmware errors do not seem to have any obvious consequences, so it is <i>probably</i> safe to disregard them. <code>loglevel=3</code> can be passed as a <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> to hide these errors (and others) during the boot process.
+<p>However, these firmware errors do not seem to have any obvious consequences, so it is <i>probably</i> safe to disregard them. <code>loglevel=3</code> can be passed as a <a href="/title/Kernel_parameter" class="mw-redirect" title="Kernel parameter">kernel parameter</a> to hide these errors (and others) during the boot process.
 </p>
 <h2><span class="mw-headline" id="Wireless">Wireless</span></h2>
 <p>The kernel's <code>rtl8192ee</code> driver for the Realtek WiFi card may have spotty performance, especially when compared to the <code>iwlwifi</code> driver for the Intel WiFi card. The <a rel="nofollow" class="external text" href="https://github.com/lwfinger/rtl8192ee">lwfinger/rtl8192ee repository on GitHub</a> provides an "alternate (vendor) driver for RTL8192EE":
@@ -252,28 +268,29 @@ ACPI Error: Aborting method \_PR.CPU0._PDC due to previous error (AE_AML_OPERAND
 <dd>May offer much better performance than the kernel rtl8192ee driver, especially when used as Access Point.</dd>
 <dd>Still, it will, with difficulty, barely surpass 50Mbps of uplink, in the best conditions.</dd>
 </dl>
-<p>Installation instructions can be found in the repository's <a rel="nofollow" class="external text" href="https://github.com/lwfinger/rtl8192ee#compiling--building">README.md</a> file. The alternate driver can also be <a rel="nofollow" class="external text" href="https://github.com/lwfinger/rtl8192ee#dkms">installed with DKMS</a> (see <a href="../en/Dynamic_Kernel_Module_Support.html" title="Dynamic Kernel Module Support">Dynamic Kernel Module Support</a> for more details).
+<p>Installation instructions can be found in the repository's <a rel="nofollow" class="external text" href="https://github.com/lwfinger/rtl8192ee#compiling--building">README.md</a> file. The alternate driver can also be <a rel="nofollow" class="external text" href="https://github.com/lwfinger/rtl8192ee#dkms">installed with DKMS</a> (see <a href="/title/Dynamic_Kernel_Module_Support" title="Dynamic Kernel Module Support">Dynamic Kernel Module Support</a> for more details).
 </p>
 <h2><span class="mw-headline" id="SD_card_reader">SD card reader</span></h2>
-<p>The <code>rtsx_pci</code> driver for the Realtek RTS5227 media/SD card reader does not appear to work for all SD cards. In particular, microSDXC cards may be problematic. Installing the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/rts5227-dkms/">rts5227-dkms</a></span><sup><small>AUR</small></sup> package instead resolves this issue. Note that a reboot is required after installing.
+<p>The <code>rtsx_pci</code> driver for the Realtek RTS5227 media/SD card reader does not appear to work for all SD cards. MicroSDXC cards in particular may be problematic. Installing the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/rts5227-dkms/">rts5227-dkms</a></span><sup><small>AUR</small></sup> package instead resolves this issue. Note that a reboot is required after installing.
 </p>
 <h2><span class="mw-headline" id="Power_management">Power management</span></h2>
 <h3>
 <span id="Intel_Rapid_Start_Technology_.28IRST.29"></span><span class="mw-headline" id="Intel_Rapid_Start_Technology_(IRST)">Intel Rapid Start Technology (IRST)</span>
 </h3>
-<p>Some T450s models come equipped with both an HDD and the optional 16GB M.2 SSD. The user guide advises against formatting the M.2 SSD as a bootable device (in "<a rel="nofollow" class="external text" href="https://download.lenovo.com/pccbbs/mobiles_pdf/t450s_ug_en.pdf#page=85">Chapter 6. Advanced configuration</a>") because one of its purposes (in OEM deployments of Windows) is to "support the Intel Rapid Start Technology." The M.2 SSD can still be used for that same purpose in an Arch Linux installation if you so desire. See <a href="../en/Power_management/Suspend_and_hibernate.html#Intel_Rapid_Start_Technology_(IRST)" title="Power management/Suspend and hibernate">Power management/Suspend and hibernate#Intel Rapid Start Technology (IRST)</a> for more details.
+<p>Some T450s models come equipped with both an HDD and the optional 16GB M.2 SSD. The user guide advises against formatting the M.2 SSD as a bootable device (in Chapter 6, "<a rel="nofollow" class="external text" href="https://download.lenovo.com/pccbbs/mobiles_pdf/t450s_ug_en.pdf#page=85">Advanced configuration</a>") because one of its purposes (in OEM deployments of Windows) is to "support the Intel Rapid Start Technology." The M.2 SSD can still be used for that same purpose in an Arch Linux installation if you so desire. See <a href="/title/Power_management/Suspend_and_hibernate#Intel_Rapid_Start_Technology_(IRST)" title="Power management/Suspend and hibernate">Power management/Suspend and hibernate#Intel Rapid Start Technology (IRST)</a> for more details.
 </p>
 <h3>
 <span id="Panel_Self-Refresh_.28PSR.29"></span><span class="mw-headline" id="Panel_Self-Refresh_(PSR)">Panel Self-Refresh (PSR)</span>
 </h3>
-<p>Enabling <a href="https://en.wikipedia.org/wiki/DisplayPort#eDP" class="extiw" title="wikipedia:DisplayPort">Panel Self-Refresh</a> (PSR) may <a rel="nofollow" class="external text" href="https://hansdegoede.livejournal.com/18653.html">decrease the power consumption of the Intel chipset</a>. However, PSR has also been known to cause <a href="../en/Intel_graphics.html#Screen_flickering" title="Intel graphics">screen flickering</a> and it can completely freeze the screen on the T450s (rendering it nearly inoperable).
+<p>Enabling <a href="https://en.wikipedia.org/wiki/DisplayPort#eDP" class="extiw" title="wikipedia:DisplayPort">Panel Self-Refresh</a> (PSR) may <a rel="nofollow" class="external text" href="https://hansdegoede.livejournal.com/18653.html">decrease the power consumption of the Intel chipset</a>. However, PSR has also been known to cause <a href="/title/Intel_graphics#Screen_flickering" title="Intel graphics">screen flickering</a> on other systems.
 </p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> PSR can completely freeze the screen on the T450s (rendering it nearly inoperable). You may need to boot from a <a href="/title/USB_flash_installation_medium" title="USB flash installation medium">USB flash installation medium</a> in order to make the necessary changes to disable PSR.</div>
 <h2><span class="mw-headline" id="Function_keys">Function keys</span></h2>
 <table class="wikitable">
 <tbody>
 <tr>
-<th>Key
-</th>
+<th>Key</th>
 <th>Visible?<sup>1</sup>
 </th>
 <th>Marked?<sup>2</sup>
@@ -396,7 +413,7 @@ ACPI Error: Aborting method \_PR.CPU0._PDC due to previous error (AE_AML_OPERAND
 <td data-sort-value="5" style="background: #afa; color: inherit; vertical-align: middle; text-align: center;">Yes</td>
 <td data-sort-value="1" style="background: #faa; color: inherit; vertical-align: middle; text-align: center;">No</td>
 <td>
-<code>Control_L+Break</code>, break key
+<code>Control_L+Break</code>
 </td>
 </tr>
 <tr>
@@ -420,7 +437,7 @@ ACPI Error: Aborting method \_PR.CPU0._PDC due to previous error (AE_AML_OPERAND
 <td data-sort-value="5" style="background: #afa; color: inherit; vertical-align: middle; text-align: center;">Yes</td>
 <td data-sort-value="1" style="background: #faa; color: inherit; vertical-align: middle; text-align: center;">No</td>
 <td>
-<code>Alt_L</code> <code>Alt_L+Sys_Req</code>, system request
+<code>Alt_L</code> <code>Alt_L+Sys_Req</code>
 </td>
 </tr>
 <tr>
@@ -446,25 +463,22 @@ ACPI Error: Aborting method \_PR.CPU0._PDC due to previous error (AE_AML_OPERAND
 <li>The physical key has a symbol on it, which describes its function.</li>
 </ol>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> 
-<ul>
-<li>By default, the function keys behave as multimedia keys instead of actual function keys, e.g., pressing <code>F1</code> will mute sound from the system instead of the system registering an <code>F1</code> key press. However, this behaviour can be changed in the UEFI BIOS settings so that <code>F1</code> to <code>F12</code> are used as standard function keys and special multimedia features are only triggered with the use of the <code>Fn</code> key.</li>
-<li>The function keys behave as standard function keys during device startup. In other words, Fn lock will be appropriately enabled/disabled by the system to facilitate this behaviour. If Fn lock <i>is</i> enabled during device startup, then it will be disabled once the startup process has completed.</li>
-</ul>
-</div>
+<strong>Note:</strong> By default, the function keys behave as multimedia keys instead of actual function keys, e.g., pressing <code>F1</code> will mute sound from the system instead of the system registering an <code>F1</code> key press. However, the function keys will behave as <i>standard function keys</i> during device startup. In other words, Fn lock will be appropriately enabled/disabled by the system to facilitate this behaviour. If Fn lock <i>is</i> enabled during device startup, then it will be disabled once the startup process has completed.</div>
+<div class="archwiki-template-box archwiki-template-box-tip">
+<strong>Tip:</strong> The behaviour of the function keys can be changed in the UEFI BIOS settings so that <code>F1</code> to <code>F12</code> are used as standard function keys and special multimedia features are only triggered with the use of the <code>Fn</code> key.</div>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://www.thinkwiki.org/wiki/Category:T450s">T450s ThinkWiki page</a></li>
 <li>Resources provided by Lenovo
 <ul>
-<li><a rel="nofollow" class="external text" href="https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T450s/ThinkPad_T450s_Spec.PDF">Product specifications reference (PSREF)</a></li>
+<li><a rel="nofollow" class="external text" href="https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T450s/ThinkPad_T450s_Spec.PDF">Product Specifications Reference (PSREF)</a></li>
 <li><a rel="nofollow" class="external text" href="https://download.lenovo.com/pccbbs/mobiles_pdf/t450s_hmm_en_sp40g54937_01.pdf">Hardware maintenance manual</a></li>
 <li><a rel="nofollow" class="external text" href="https://download.lenovo.com/pccbbs/mobiles_pdf/t450s_ug_en.pdf">User guide</a></li>
 </ul>
 </li>
-<li>Installation guides and blog posts from other distributions
+<li>Installation guides and blog posts for other distributions
 <ul>
-<li><a rel="nofollow" class="external text" href="https://wiki.debian.org/InstallingDebianOn/Thinkpad/T450s/jessie">Installing Debian Jessie on the ThinkPad T450s - Debian Wiki</a></li>
+<li><a href="https://wiki.debian.org/InstallingDebianOn/Thinkpad/T450s/jessie" class="extiw" title="debian:InstallingDebianOn/Thinkpad/T450s/jessie">Debian:InstallingDebianOn/Thinkpad/T450s/jessie</a></li>
 <li>Fedora 21: <a rel="nofollow" class="external text" href="https://www.phoronix.com/scan.php?page=article&amp;item=lenovo-t450s-linux&amp;num=1">The Lenovo T450s Is Working Beautifully With Linux - Phoronix</a>
 </li>
 </ul>
@@ -473,22 +487,22 @@ ACPI Error: Aborting method \_PR.CPU0._PDC due to previous error (AE_AML_OPERAND
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Lenovo.html" title="Category:Lenovo">Lenovo</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Lenovo" title="Category:Lenovo">Lenovo</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_T450s&amp;oldid=663938">https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_T450s&amp;oldid=663938</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 24 April 2021, at 15:12.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_T450s&amp;oldid=670346">https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_T450s&amp;oldid=670346</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 10 May 2021, at 21:11.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

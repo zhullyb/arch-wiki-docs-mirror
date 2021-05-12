@@ -120,7 +120,7 @@ lxc list
 </p>
 <pre>passwd $(grep 1000:1000 /etc/passwd|cut -d':' -f1)
 </pre>
-<p>您可能还需要添加<a href="../en/Sudo.html" title="Sudo">sudo</a>并将用户添加到wheel组。
+<p>您可能还需要添加<a href="/title/Sudo" title="Sudo">sudo</a>并将用户添加到wheel组。
 </p>
 <pre>pacman -S sudo
 visudo
@@ -151,7 +151,7 @@ visudo
 </p>
 <p>7. 安装Crostini容器工具，用于GUI应用程序的Wayland，用于X11应用程序的XWayland。
 </p>
-<p>安装<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cros-container-guest-tools-git/">cros-container-guest-tools-git</a></span><sup><small>AUR</small></sup>包. 另外，安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wayland">wayland</a></span>和 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-server-xwayland">xorg-server-xwayland</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">断开的链接</a>：replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xwayland">xorg-xwayland</a></span>]</sup>才能使用GUI工具。
+<p>安装<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/cros-container-guest-tools-git/">cros-container-guest-tools-git</a></span><sup><small>AUR</small></sup>包. 另外，安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=wayland">wayland</a></span>和 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xwayland">xorg-xwayland</a></span>才能使用GUI工具。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 如果安装时提示如下error可以执行 <code>sudo pacman -S base-devel</code> 安装基本打包工具
@@ -211,9 +211,9 @@ systemctl --user --failed
 <h3>
 <span id=".E5.AE.B9.E5.99.A8.E4.B8.AD.E6.B2.A1.E6.9C.89.E7.BD.91.E7.BB.9C"></span><span class="mw-headline" id="容器中没有网络">容器中没有网络</span>
 </h3>
-<p>As was reported by multiple sources, systemd-networkd and systemd-resolved services in systemd-244.1 are not working properly for unprivileged LXC containers, which ends up in missing network connectivity inside the Crostini container. Proposed solution is completely disable systemd-networkd/systemd-resolved and perform network configuration by <a href="../en/Network_configuration.html#DHCP" class="mw-redirect" title="Dhclient">dhclient</a> service instead:
+<p>As was reported by multiple sources, systemd-networkd and systemd-resolved services in systemd-244.1 are not working properly for unprivileged LXC containers, which ends up in missing network connectivity inside the Crostini container. Proposed solution is completely disable systemd-networkd/systemd-resolved and perform network configuration by <a href="/title/Dhclient" class="mw-redirect" title="Dhclient">dhclient</a> service instead:
 </p>
-<p>正如多个消息来源所报告的那样，systemd-244.1中的systemd networkd和systemd解析服务对于没有特权的LXC容器不能正常工作，最终导致Crostini容器中缺少网络连接。建议的解决方案是完全禁用systemd networkd/systemd resolved，改为通过<a href="../en/Network_configuration.html#DHCP" class="mw-redirect" title="Dhclient">dhclient</a>服务执行网络配置：
+<p>正如多个消息来源所报告的那样，systemd-244.1中的systemd networkd和systemd解析服务对于没有特权的LXC容器不能正常工作，最终导致Crostini容器中缺少网络连接。建议的解决方案是完全禁用systemd networkd/systemd resolved，改为通过<a href="/title/Dhclient" class="mw-redirect" title="Dhclient">dhclient</a>服务执行网络配置：
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong>  这段中文翻译的不太好。。。</div>
@@ -226,7 +226,7 @@ sudo touch /etc/resolv.conf
 sudo systemctl enable dhclient@eth0
 sudo systemctl start dhclient@eth0
 </pre>
-<p>如果您相比建议的解决方案更喜欢<a href="../en/NetworkManager.html" title="NetworkManager">NetworkManager</a>和<a href="../en/Dhcpcd.html" title="Dhcpcd">dhcpcd</a>，也可以用来解决该问题。
+<p>如果您相比建议的解决方案更喜欢<a href="/title/NetworkManager" title="NetworkManager">NetworkManager</a>和<a href="/title/Dhcpcd" title="Dhcpcd">dhcpcd</a>，也可以用来解决该问题。
 </p>
 <h3>
 <span id=".E5.BA.94.E7.94.A8.E6.97.A0.E6.B3.95.E5.9C.A8Chrome_OS.EF.BC.88.E6.97.A0.E9.99.90.E8.BD.AC.E5.9C.88.EF.BC.89.E4.B8.AD.E6.89.93.E5.BC.80"></span><span class="mw-headline" id="应用无法在Chrome_OS（无限转圈）中打开">应用无法在Chrome OS（无限转圈）中打开</span>
@@ -246,7 +246,7 @@ lxc start penguin
 <h3>
 <span id=".E8.A7.86.E9.A2.91.E6.92.AD.E6.94.BE"></span><span class="mw-headline" id="视频播放">视频播放</span>
 </h3>
-<p><a href="../en/Mpv.html" title="Mpv">mpv</a>可以使用软件渲染播放视频，而无需任何附加配置，但这对于像H265这样的现代视频编解码器来说，是一种CPU消耗和滞后的体验。对于硬件加速播放，需要GPU加速。考虑到Crostini的GPU加速是基于<a rel="nofollow" class="external text" href="https://virgil3d.github.io/Virgil">3D GPU project</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-02 ⓘ]</sup>的，因此没有执行真正的GPU设备传递，并且没有VA-API或VPDAU之类的硬件特定API。但是，可以使用OpenGL加速，即这是[mpv]媒体播放器的mpv.conf配置示例，它启用了从Chrome OS 77开始的Google Pixelbook上的加速视频和音频播放：
+<p><a href="/title/Mpv" title="Mpv">mpv</a>可以使用软件渲染播放视频，而无需任何附加配置，但这对于像H265这样的现代视频编解码器来说，是一种CPU消耗和滞后的体验。对于硬件加速播放，需要GPU加速。考虑到Crostini的GPU加速是基于<a rel="nofollow" class="external text" href="https://virgil3d.github.io/">3D GPU project</a>的，因此没有执行真正的GPU设备传递，并且没有VA-API或VPDAU之类的硬件特定API。但是，可以使用OpenGL加速，即这是[mpv]媒体播放器的mpv.conf配置示例，它启用了从Chrome OS 77开始的Google Pixelbook上的加速视频和音频播放：
 </p>
 <pre>vo=gpu
 ao=alsa</pre>
@@ -299,30 +299,23 @@ OpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20</pre>
 </ol>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Chrome_OS_devices.html" title="Category:Chrome OS devices (简体中文)">Chrome OS devices (简体中文)</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-</ul>
-</div>
-</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Chrome_OS_devices_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Category:Chrome OS devices (简体中文)">Chrome OS devices (简体中文)</a></li></ul>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chrome_OS_devices_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Crostini_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=660066">https://wiki.archlinux.org/index.php?title=Chrome_OS_devices_(简体中文)/Crostini_(简体中文)&amp;oldid=660066</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 16:47.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Chrome_OS_devices_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Crostini_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=670491">https://wiki.archlinux.org/index.php?title=Chrome_OS_devices_(简体中文)/Crostini_(简体中文)&amp;oldid=670491</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 11 May 2021, at 15:32.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

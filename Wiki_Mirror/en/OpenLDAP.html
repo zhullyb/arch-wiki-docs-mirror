@@ -36,18 +36,18 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/LDAP_authentication.html" class="mw-redirect" title="LDAP Authentication">LDAP Authentication</a></li>
-<li><a href="../en/LDAP_Hosts.html" title="LDAP Hosts">LDAP Hosts</a></li>
+<li><a href="/title/LDAP_Authentication" class="mw-redirect" title="LDAP Authentication">LDAP Authentication</a></li>
+<li><a href="/title/LDAP_Hosts" title="LDAP Hosts">LDAP Hosts</a></li>
 </ul>
 </div>
-<p><a rel="nofollow" class="external text" href="https://www.openldap.org/">OpenLDAP</a> is an open-source implementation of the LDAP protocol. An LDAP server basically is a non-relational database which is optimised for accessing, but not writing, data. It is mainly used as an address book (for e.g. email clients) or authentication backend to various services (such as Samba, where it is used to emulate a domain controller, or <a href="../en/LDAP_authentication.html" title="LDAP authentication">Linux system authentication</a>, where it replaces <code>/etc/passwd</code>) and basically holds the user data.
+<p><a rel="nofollow" class="external text" href="https://www.openldap.org/">OpenLDAP</a> is an open-source implementation of the LDAP protocol. An LDAP server basically is a non-relational database which is optimised for accessing, but not writing, data. It is mainly used as an address book (for e.g. email clients) or authentication backend to various services (such as Samba, where it is used to emulate a domain controller, or <a href="/title/LDAP_authentication" title="LDAP authentication">Linux system authentication</a>, where it replaces <code>/etc/passwd</code>) and basically holds the user data.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> Commands related to OpenLDAP that begin with <code>ldap</code> (like <code>ldapsearch</code>) are client-side utilities, while commands that begin with <code>slap</code> (like <code>slapcat</code>) are server-side.</div>
 <p>This page is a starting point for a basic OpenLDAP installation and a sanity check.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> Directory services are an enormous topic. Configuration can therefore be complex.  If you are totally new to those concepts, <a rel="nofollow" class="external text" href="http://www.brennan.id.au/20-Shared_Address_Book_LDAP.html">this</a> is a good introduction that is easy to understand and that will get you started, even if you are new to LDAP.</div>
+<strong>Tip:</strong> Directory services are an enormous topic. Configuration can therefore be complex.  If you are totally new to those concepts, <a rel="nofollow" class="external text" href="https://www.brennan.id.au/20-Shared_Address_Book_LDAP.html">this</a> is a good introduction that is easy to understand and that will get you started, even if you are new to LDAP.</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -98,7 +98,7 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p>OpenLDAP contains both a LDAP server and client. <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> it with the package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openldap">openldap</a></span>.
+<p>OpenLDAP contains both a LDAP server and client. <a href="/title/Install" class="mw-redirect" title="Install">Install</a> it with the package <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openldap">openldap</a></span>.
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <h3><span class="mw-headline" id="The_server">The server</span></h3>
@@ -133,7 +133,7 @@ index   cn              pres,sub,eq
 index   sn              pres,sub,eq
 index   dc              eq
 </pre>
-<p>If you plan to use your LDAP server for authentication, you might want to check access control configuration in <a href="../en/LDAP_authentication.html#LDAP_Server_Setup" title="LDAP authentication">LDAP authentication#LDAP Server Setup</a>.
+<p>If you plan to use your LDAP server for authentication, you might want to check access control configuration in <a href="/title/LDAP_authentication#LDAP_Server_Setup" title="LDAP authentication">LDAP authentication#LDAP Server Setup</a>.
 </p>
 <p>Now prepare the database directory. You will need to rename the default config:
 </p>
@@ -149,7 +149,7 @@ index   dc              eq
 </p>
 <pre># chown -R ldap:ldap /etc/openldap/slapd.d
 </pre>
-<p>(if you do not have a database yet, you might need to create one by starting and stopping the <code>slapd.service</code> <a href="../en/Systemd.html#Using_units" title="Systemd">using systemd</a> )
+<p>(if you do not have a database yet, you might need to create one by starting and stopping the <code>slapd.service</code> <a href="/title/Systemd#Using_units" title="Systemd">using systemd</a> )
 </p>
 <p>Then we generate the new configuration with:
 </p>
@@ -227,7 +227,7 @@ description: Directory Manager
 <strong>Note:</strong> <a rel="nofollow" class="external text" href="https://www.openldap.org/doc/admin24/">upstream documentation</a> is much more useful/complete than this section</div>
 <p>If you access the OpenLDAP server over the network and especially if you have sensitive data stored on the server you run the risk of someone sniffing your data which is sent clear-text. The next part will guide you on how to setup an SSL connection between the LDAP server and the client so the data will be sent encrypted.
 </p>
-<p>In order to use TLS, you must have a certificate. For testing purposes, a <i>self-signed</i> certificate will suffice. To learn more about certificates, see <a href="../en/OpenSSL.html" title="OpenSSL">OpenSSL</a>.
+<p>In order to use TLS, you must have a certificate. For testing purposes, a <i>self-signed</i> certificate will suffice. To learn more about certificates, see <a href="/title/OpenSSL" title="OpenSSL">OpenSSL</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> OpenLDAP cannot use a certificate that has a password associated to it.</div>
@@ -259,7 +259,7 @@ TLSCipherSuite DEFAULT
 TLSCertificateFile /etc/openldap/ssl/slapdcert.pem
 TLSCertificateKeyFile /etc/openldap/ssl/slapdkey.pem
 </pre>
-<p>If you are using a signed SSL Certificate from a certification authority such as <a href="../en/Certbot.html" class="mw-redirect" title="Let’s Encrypt">Let’s Encrypt</a>, you will also need to specify the path to the root certificates database and your intermediary certificate. You will also need to change ownership of the <code>.pem</code> files and intermediary directories to make them readable to the user <code>ldap</code>:
+<p>If you are using a signed SSL Certificate from a certification authority such as <a href="/title/Let%E2%80%99s_Encrypt" class="mw-redirect" title="Let’s Encrypt">Let’s Encrypt</a>, you will also need to specify the path to the root certificates database and your intermediary certificate. You will also need to change ownership of the <code>.pem</code> files and intermediary directories to make them readable to the user <code>ldap</code>:
 </p>
 <pre># Certificate/SSL Section
 TLSCipherSuite DEFAULT
@@ -297,16 +297,16 @@ ExecStart=/usr/bin/slapd -u ldap -g ldap -h "ldaps:///"</pre>
 </p>
 <pre>ExecStart=/usr/bin/slapd -u ldap -g ldap -h "ldap://127.0.0.1 ldaps:///"
 </pre>
-<p>Then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>slapd.service</code>. If it was enabled before, reenable it now.
+<p>Then <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> <code>slapd.service</code>. If it was enabled before, reenable it now.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If you created a self-signed certificate above, be sure to add <code>TLS_REQCERT allow</code> to <code>/etc/openldap/ldap.conf</code> on the client, or it will not be able connect to the server.</div>
 <h2><span class="mw-headline" id="Next_steps">Next steps</span></h2>
-<p>You now have a basic LDAP installation. The next step is to design your directory. The design is heavily dependent on what you are using it for. If you are new to LDAP, consider starting with a directory design recommended by the specific client services that will use the directory (<a href="../en/PAM.html" title="PAM">PAM</a>, <a href="../en/Postfix.html" title="Postfix">Postfix</a>, etc).
+<p>You now have a basic LDAP installation. The next step is to design your directory. The design is heavily dependent on what you are using it for. If you are new to LDAP, consider starting with a directory design recommended by the specific client services that will use the directory (<a href="/title/PAM" title="PAM">PAM</a>, <a href="/title/Postfix" title="Postfix">Postfix</a>, etc).
 </p>
-<p>A directory for system authentication is the <a href="../en/LDAP_authentication.html" title="LDAP authentication">LDAP authentication</a> article.
+<p>A directory for system authentication is the <a href="/title/LDAP_authentication" title="LDAP authentication">LDAP authentication</a> article.
 </p>
-<p>A nice web frontend is <a href="../en/PhpLDAPadmin.html" title="PhpLDAPadmin">phpLDAPadmin</a>.
+<p>A nice web frontend is <a href="/title/PhpLDAPadmin" title="PhpLDAPadmin">phpLDAPadmin</a>.
 </p>
 <h3><span class="mw-headline" id="Backup_LDAP">Backup LDAP</span></h3>
 <p>It is imperative that we have a backup of our LDAP database and configuration in case we ever need to restore for any number of reasons.
@@ -348,30 +348,30 @@ ExecStart=/usr/bin/slapd -u ldap -g ldap -h "ldaps:///"</pre>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://www.openldap.org/doc/admin24/">Official OpenLDAP Software 2.4 Administrator's Guide</a></li>
 <li>
-<a href="../en/PhpLDAPadmin.html" title="PhpLDAPadmin">phpLDAPadmin</a> is a web interface tool in the style of phpMyAdmin.</li>
-<li><a href="../en/LDAP_authentication.html" title="LDAP authentication">LDAP authentication</a></li>
+<a href="/title/PhpLDAPadmin" title="PhpLDAPadmin">phpLDAPadmin</a> is a web interface tool in the style of phpMyAdmin.</li>
+<li><a href="/title/LDAP_authentication" title="LDAP authentication">LDAP authentication</a></li>
 <li>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/apachedirectorystudio/">apachedirectorystudio</a></span><sup><small>AUR</small></sup> from the <a href="../en/Arch_User_Repository.html" title="Arch User Repository">Arch User Repository</a> is an Eclipse-based LDAP viewer. Works perfect with OpenLDAP installations.</li>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/apachedirectorystudio/">apachedirectorystudio</a></span><sup><small>AUR</small></sup> from the <a href="/title/Arch_User_Repository" title="Arch User Repository">Arch User Repository</a> is an Eclipse-based LDAP viewer. Works perfect with OpenLDAP installations.</li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Directory_services.html" title="Category:Directory services">Directory services</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Directory_services" title="Category:Directory services">Directory services</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenLDAP&amp;oldid=662080">https://wiki.archlinux.org/index.php?title=OpenLDAP&amp;oldid=662080</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 19:59.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenLDAP&amp;oldid=669190">https://wiki.archlinux.org/index.php?title=OpenLDAP&amp;oldid=669190</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

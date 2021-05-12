@@ -113,22 +113,22 @@ Combined with a nice, quiet computer and a decent TV, it makes an excellent cent
 <p>All systems are going to need a tuner card. The Hauppauge PVR series of cards (150, 250, 350, and 500) are very popular for use with MythTV due to fairly decent Linux support and low CPU usage. Other cards, like those based on the BT878 chipset, are also used. Unlike the PVR series, BT878 based cards require significant amounts of CPU power to save the video, as these cards output raw frames and not compressed streams.
 </p>
 <h2><span class="mw-headline" id="Software_requirements">Software requirements</span></h2>
-<p>For the backend, it is also good to have <a href="../en/Category:Web_applications.html" class="mw-redirect" title="LAMP">LAMP</a> working properly so that anybody can use a web browser to schedule programming through MythWeb. While it is not necessary, it is a very handy feature.
+<p>For the backend, it is also good to have <a href="/title/LAMP" class="mw-redirect" title="LAMP">LAMP</a> working properly so that anybody can use a web browser to schedule programming through MythWeb. While it is not necessary, it is a very handy feature.
 </p>
-<p>A working <a href="../en/Xorg.html" title="Xorg">Xorg</a> (graphical) environment is necessary. For setting MythTV up, a remote access via X11-forwarding mechanism is sufficient.
+<p>A working <a href="/title/Xorg" title="Xorg">Xorg</a> (graphical) environment is necessary. For setting MythTV up, a remote access via X11-forwarding mechanism is sufficient.
 </p>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mythtv/">mythtv</a></span><sup><small>AUR</small></sup> package and <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/?K=mythplugins-">any desired plugins</a>. The package creates the <i>mythtv</i> user.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mythtv/">mythtv</a></span><sup><small>AUR</small></sup> package and <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/?K=mythplugins-">any desired plugins</a>. The package creates the <i>mythtv</i> user.
 </p>
 <p>At this point a generic MythTV installation is present that must be refined into a backend, a frontend, or both.
 </p>
 <h3><span class="mw-headline" id="Backend_setup">Backend setup</span></h3>
-<p>Before setting up your backend, make sure you have a functioning <i>video capture card</i> or a <i>firewire input from a STB</i>. Unfortunately, that part of setup is outside the scope of this article. If you are in the United States, get an account at <a rel="nofollow" class="external text" href="http://www.schedulesdirect.org">Schedules Direct</a> (this service provides TV listings at a minimal cost). Users outside the United States will need to use screen scrapers (<a rel="nofollow" class="external text" href="http://wiki.xmltv.org/index.php/Main_Page/">xmltv</a>) to do the same job.
+<p>Before setting up your backend, make sure you have a functioning <i>video capture card</i> or a <i>firewire input from a STB</i>. Unfortunately, that part of setup is outside the scope of this article. If you are in the United States, get an account at <a rel="nofollow" class="external text" href="https://www.schedulesdirect.org">Schedules Direct</a> (this service provides TV listings at a minimal cost). Users outside the United States will need to use screen scrapers (<a rel="nofollow" class="external text" href="http://wiki.xmltv.org/index.php/Main_Page/">xmltv</a>) to do the same job.
 </p>
 <h4><span class="mw-headline" id="Setting_up_the_database">Setting up the database</span></h4>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> This is a quick and dirty walk through of MariaDB. Be sure you read the <a href="../en/MariaDB.html" title="MariaDB">MariaDB</a> article for more details.</div>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mariadb">mariadb</a></span> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>mysqld.service</code>.
+<strong>Note:</strong> This is a quick and dirty walk through of MariaDB. Be sure you read the <a href="/title/MariaDB" title="MariaDB">MariaDB</a> article for more details.</div>
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=mariadb">mariadb</a></span> and <a href="/title/Start" class="mw-redirect" title="Start">start</a> <code>mysqld.service</code>.
 </p>
 <p>If other machines in the LAN are expected to connect to the masterbackend server, comment out the "skip-networking" line in <code>/etc/mysql/my.cnf</code> at this point.
 </p>
@@ -182,7 +182,7 @@ Query OK, 0 rows affected (0.00 sec)
 </p>
 <pre>$ mythtv-setup
 </pre>
-<p>If your backend runs on a headless server, <i>mythtv-setup</i> can be run via <a href="../en/OpenSSH.html#X11_forwarding" title="OpenSSH">OpenSSH#X11 forwarding</a> by running:
+<p>If your backend runs on a headless server, <i>mythtv-setup</i> can be run via <a href="/title/OpenSSH#X11_forwarding" title="OpenSSH">OpenSSH#X11 forwarding</a> by running:
 </p>
 <pre>$ ssh -X user@backend '. /etc/profile.d/perlbin.sh &amp;&amp; LANG=C mythtv-setup'
 </pre>
@@ -215,7 +215,7 @@ Query OK, 0 rows affected (0.00 sec)
 <p>This should populate your mysql database with TV listings for the next two weeks (or so).
 </p>
 <h4><span class="mw-headline" id="Enable_the_mythbackend_daemon">Enable the mythbackend daemon</span></h4>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">Enable</a> the <code>mythbackend.service</code> systemd unit.
+<p><a href="/title/Enable" class="mw-redirect" title="Enable">Enable</a> the <code>mythbackend.service</code> systemd unit.
 </p>
 <h3><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h3>
 <h4><span class="mw-headline" id="PVR150">PVR150</span></h4>
@@ -233,7 +233,7 @@ Query OK, 0 rows affected (0.00 sec)
 <p>The solution consists in starting the <code>mythbackend.service</code> only after the devices are available:
 </p>
 <ul><li>
-<a href="../en/Help:Reading.html#Append,_add,_create,_edit" class="mw-redirect" title="Textedit">Create</a> file <code>/etc/udev/rules.d/99-mythbackend.rules</code>:</li></ul>
+<a href="/title/Textedit" class="mw-redirect" title="Textedit">Create</a> file <code>/etc/udev/rules.d/99-mythbackend.rules</code>:</li></ul>
 <pre>#
 # Create systemd device units for capture devices
 #
@@ -241,7 +241,7 @@ SUBSYSTEM=="video4linux", TAG+="systemd"
 SUBSYSTEM=="dvb", TAG+="systemd"
 SUBSYSTEM=="firewire", TAG+="systemd"
 </pre>
-<ul><li>Create a <a href="../en/Systemd.html#Drop-in_files" class="mw-redirect" title="Drop-in unit file">drop-in unit file</a> for <code>mythbackend.service</code> as follows:</li></ul>
+<ul><li>Create a <a href="/title/Drop-in_unit_file" class="mw-redirect" title="Drop-in unit file">drop-in unit file</a> for <code>mythbackend.service</code> as follows:</li></ul>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/mythbackend.service.d/override.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># [Unit]
 # After=dev-dvb-adapter0-frontend0.device
@@ -249,7 +249,7 @@ SUBSYSTEM=="firewire", TAG+="systemd"
 <p>See MythTV wiki's page <a rel="nofollow" class="external text" href="https://www.mythtv.org/wiki/Systemd_mythbackend_Configuration#Delay_starting_the_backend_until_tuners_have_initialized">Systemd mythbackend Configuration</a> for further details.
 </p>
 <h2><span class="mw-headline" id="Frontend_setup">Frontend setup</span></h2>
-<p>Compared to the backend, getting a frontend running is trivially simple. The frontend machine needs permission to access the database on the backend machine. On the backend machine, follow the instructions to grant remote access in the <a href="../en/MariaDB.html" title="MariaDB">MariaDB</a> article. On the frontend machine, install the mythtv pacakages using pacman as above. Afterward, make sure you are in an X environment as a normal user and run mythfrontend. It will pop up a menu asking about the IP address of the backend and the local computer's name and IP address. Fill in this information and your frontend should be functional. 
+<p>Compared to the backend, getting a frontend running is trivially simple. The frontend machine needs permission to access the database on the backend machine. On the backend machine, follow the instructions to grant remote access in the <a href="/title/MariaDB" title="MariaDB">MariaDB</a> article. On the frontend machine, install the mythtv pacakages using pacman as above. Afterward, make sure you are in an X environment as a normal user and run mythfrontend. It will pop up a menu asking about the IP address of the backend and the local computer's name and IP address. Fill in this information and your frontend should be functional. 
 </p>
 <p>On the other hand, the frontend has more options than a luxury car. All of those are an article on their own. There are a few notable options that should be set to ensure a good working setup. If you do not have an interlaced monitor (and almost nobody does), you will need to deinterlace your television output. Go into the TV playback menu and select kernel deinterlacing or bob2x deinterlacing. Try both and see which you like better. Also, in the general settings page, it is good to set up your [Alsa setup] settings, but those vary so greatly it is not worth suggesting values here.
 </p>
@@ -257,7 +257,7 @@ SUBSYSTEM=="firewire", TAG+="systemd"
 <p>There are a number of plugins available for MythTV in the AUR. They range from RSS readers to DVD players. Take a look at them. Simply installing the package on the frontend computer should impart the intended functionality. There is rarely any additional setup, and when there is, the install file will mention it.
 </p>
 <h3><span class="mw-headline" id="MythWeb">MythWeb</span></h3>
-<p><a href="../en/MythWeb.html" title="MythWeb">MythWeb</a> is a web interface for MythTV. Instructions for configuring MythWeb in Arch Linux can be found on the <a href="../en/MythWeb.html" title="MythWeb">MythWeb</a> page.
+<p><a href="/title/MythWeb" title="MythWeb">MythWeb</a> is a web interface for MythTV. Instructions for configuring MythWeb in Arch Linux can be found on the <a href="/title/MythWeb" title="MythWeb">MythWeb</a> page.
 </p>
 <h2><span class="mw-headline" id="Hints_to_a_Happy_Myth_System">Hints to a Happy Myth System</span></h2>
 <p>But not full articles (yet)
@@ -265,7 +265,7 @@ SUBSYSTEM=="firewire", TAG+="systemd"
 <ul>
 <li>Run ntpd or openntpd on your backend to make sure it always has the right time.</li>
 <li>
-<a href="../en/LIRC.html" title="LIRC">LIRC</a> on your frontend allows you to use a remote control, which is wonderful in a living room.</li>
+<a href="/title/LIRC" title="LIRC">LIRC</a> on your frontend allows you to use a remote control, which is wonderful in a living room.</li>
 <li>Use gdm, kdm, or xdm to automatically log in your frontend, and ~/.xinitrc to load mythfrontend on boot.</li>
 <li>Set the "automatically run mythfilldatabase" option on one of your frontends to make sure you always have listings.</li>
 <li>Do not forget to use the verbosity statements and log file location arguments to mythfrontend so you can see when things break.</li>
@@ -310,22 +310,22 @@ AutomaticLogin=mythtv (assuming your frontend user is mythtv)</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Home_theater.html" title="Category:Home theater">Home theater</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Home_theater" title="Category:Home theater">Home theater</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MythTV&amp;oldid=660861">https://wiki.archlinux.org/index.php?title=MythTV&amp;oldid=660861</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 18:31.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MythTV&amp;oldid=669124">https://wiki.archlinux.org/index.php?title=MythTV&amp;oldid=669124</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:18.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

@@ -47,7 +47,7 @@
 <li class="toclevel-2 tocsection-2">
 <a href="#php_configuration"><span class="tocnumber">1.1</span> <span class="toctext">php configuration</span></a>
 <ul>
-<li class="toclevel-3 tocsection-3"><a href="#Allow_Matomo_access_to_needed_files_(only_needed_for_matomoAUR)"><span class="tocnumber">1.1.1</span> <span class="toctext">Allow Matomo access to needed files (only needed for <span>matomo</span><sup>AUR</sup>)</span></a></li>
+<li class="toclevel-3 tocsection-3"><a href="#Allow_Matomo_access_to_needed_files"><span class="tocnumber">1.1.1</span> <span class="toctext">Allow Matomo access to needed files</span></a></li>
 </ul>
 </li>
 <li class="toclevel-2 tocsection-4"><a href="#Server_setup_(nginx)"><span class="tocnumber">1.2</span> <span class="toctext">Server setup (nginx)</span></a></li>
@@ -63,15 +63,15 @@
 <h3><span class="mw-headline" id="php_configuration">php configuration</span></h3>
 <p>php needs to be configured properly for Matomo to work.
 </p>
-<p>First, enable MySQL support as described <a href="../en/PHP.html#MySQL/MariaDB" title="PHP">here</a>. Do so by editing "/etc/php/php.ini". Uncomment ";extension=pdo_mysql" and ";extension=mysqli" by removing the preceding semicolon.
+<p>First, enable MySQL support as described <a href="/title/PHP#MySQL/MariaDB" title="PHP">here</a>. Do so by editing "/etc/php/php.ini". Uncomment ";extension=pdo_mysql" and ";extension=mysqli" by removing the preceding semicolon.
 </p>
 <p>In general, comments are indicated by preceding semicolons.
 </p>
 <p>";extension=iconv" needs to be enabled and ";extension=gd" is optional. Uncomment at least iconv.
 </p>
-<h4>
-<span id="Allow_Matomo_access_to_needed_files_.28only_needed_for_matomoAUR.29"></span><span class="mw-headline" id="Allow_Matomo_access_to_needed_files_(only_needed_for_matomoAUR)">Allow Matomo access to needed files (only needed for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/matomo/">matomo</a></span><sup><small>AUR</small></sup>)</span>
-</h4>
+<h4><span class="mw-headline" id="Allow_Matomo_access_to_needed_files">Allow Matomo access to needed files</span></h4>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> The changes here are only needed for the <i>matomo</i> package and not <i>matomo-git</i>.</div>
 <p>Because new restrictions on "php-fpm" since version 7.4, where ProtectSystem is set to prevent Matomo to function correctly (unable to installing plugins, changing configuration, etc), the ability to access certain files needs to be set manually.
 </p>
 <p>The file "/etc/systemd/system/php-fpm.service.d/override_matomo.conf" below fixes the issue while not exposing more then necessary and still allows the user to change ACL as described in the installation manifest, if he does not like that.
@@ -84,7 +84,7 @@ ReadWritePaths = /usr/share/webapps/matomo/plugins/</pre>
 <h3>
 <span id="Server_setup_.28nginx.29"></span><span class="mw-headline" id="Server_setup_(nginx)">Server setup (nginx)</span>
 </h3>
-<p>In order to enable php websites, install the package <code>php-fpm</code> and run its daemon <code>sudo systemctl start php-fpm.service</code> as described <a href="../en/Nginx.html#PHP_implementation" title="Nginx">here</a>.
+<p>In order to enable php websites, install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=php-fpm">php-fpm</a></span> package and <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> <code>php-fpm.service</code> as described <a href="/title/Nginx#PHP_implementation" title="Nginx">here</a>.
 Create the server by modifying "/etc/nginx/nginx.conf". Add the following template to the "http" context.
 </p>
 <pre>server
@@ -112,7 +112,7 @@ ssl_dhparam         /etc/letsencrypt/ssl-dhparams.pem;
 ssl_certificate_key /etc/letsencrypt/live/subdomain.domain.me/privkey.pem;
 ssl_certificate     /etc/letsencrypt/live/subdomain.domain.me/fullchain.pem;
 </pre>
-<p>Run the nginx server <code>sudo systemctl start nginx.service</code>.
+<p>Run the nginx server by <a href="/title/Starting/enabling" class="mw-redirect" title="Starting/enabling">starting/enabling</a> <code>nginx.service</code>.
 </p>
 <h3><span class="mw-headline" id="Final_steps">Final steps</span></h3>
 <p>All major settings are done. Call your matomo website in your browser and complete the small installation guide which is not more than checking that everything needed is available and set up and writing your config file.
@@ -120,22 +120,22 @@ ssl_certificate     /etc/letsencrypt/live/subdomain.domain.me/fullchain.pem;
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Web_applications.html" title="Category:Web applications">Web applications</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Web_applications" title="Category:Web applications">Web applications</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Matomo&amp;oldid=663144">https://wiki.archlinux.org/index.php?title=Matomo&amp;oldid=663144</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 22:59.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Matomo&amp;oldid=667847">https://wiki.archlinux.org/index.php?title=Matomo&amp;oldid=667847</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 4 May 2021, at 23:52.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

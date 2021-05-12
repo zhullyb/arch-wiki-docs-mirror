@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -44,72 +45,91 @@
 <li class="toclevel-1 tocsection-2">
 <a href="#Installation"><span class="tocnumber">2</span> <span class="toctext">Installation</span></a>
 <ul>
-<li class="toclevel-2 tocsection-3"><a href="#64-bit_systems"><span class="tocnumber">2.1</span> <span class="toctext">64-bit systems</span></a></li>
-<li class="toclevel-2 tocsection-4"><a href="#Assessment_environment_check"><span class="tocnumber">2.2</span> <span class="toctext">Assessment environment check</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Download_source_package_tarball"><span class="tocnumber">2.1</span> <span class="toctext">Download source package tarball</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Download_Packet_Tracer_deb_package"><span class="tocnumber">2.2</span> <span class="toctext">Download Packet Tracer deb package</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Build_and_install"><span class="tocnumber">2.3</span> <span class="toctext">Build and install</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#End-user_License_Agreement"><span class="tocnumber">2.4</span> <span class="toctext">End-user License Agreement</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Assessment_environment_check"><span class="tocnumber">2.5</span> <span class="toctext">Assessment environment check</span></a></li>
 </ul>
 </li>
-<li class="toclevel-1 tocsection-5"><a href="#See_also"><span class="tocnumber">3</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#See_also"><span class="tocnumber">3</span> <span class="toctext">See also</span></a></li>
 </ul>
 </div>
 
 <h2><span class="mw-headline" id="Disclaimer">Disclaimer</span></h2>
-<p>Understand if you have permission from Cisco Systems to use this software. If you do not meet eligibility, discontinue your progress and consider alternatives such as <a href="../en/GNS3.html" title="GNS3">GNS3</a>.
+<p>Understand if you have permission from Cisco Systems to use this software. If you do not meet eligibility, discontinue your progress and consider alternatives such as <a href="/title/GNS3" title="GNS3">GNS3</a>.
 </p>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<h3><span class="mw-headline" id="64-bit_systems">64-bit systems</span></h3>
-<p>See the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> article for important usage topics. For now, only download and extract the tarball for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/packettracer/">packettracer</a></span><sup><small>AUR</small></sup> from the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> by clicking <i>Download snapshot</i>
+<h3><span class="mw-headline" id="Download_source_package_tarball">Download source package tarball</span></h3>
+<p><span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/packettracer/">packettracer</a></span><sup><small>AUR</small></sup> can <b>not</b> be installed using automated methods (e.g. <a href="/title/AUR_helper" class="mw-redirect" title="AUR helper">AUR helper</a>) because the software's tarball must be installed first before building the package.
 </p>
-<p>You will need to have access to the file <code>packettracer.tar.gz</code> to continue with the installation. For your convenience, the sha1sum of this file is provided below.
+<p>So, first <a href="/title/Arch_User_Repository#Acquire_build_files" title="Arch User Repository">acquire the build files</a> for <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/packettracer/">packettracer</a></span><sup><small>AUR</small></sup> package.
 </p>
-<pre>$ sha1sum packettracer.tar.gz
-de20a80da365ed7903cdd50ceef875f1ee4c6a82  packettracer.tar.gz
-</pre>
-<p><br>
-Extract this tarball. Download the PacketTracer install file from <a rel="nofollow" class="external text" href="https://www.netacad.com/courses/packet-tracer">Cisco's Official Website </a> . At the time of writing the file is <code>PacketTracer_730_amd64.deb</code>. Copy this deb file inside the extracted tarball folder. The <a href="../en/PKGBUILD.html" title="PKGBUILD">PKGBUILD</a> file found in the tarball requires this archive. It is not provided in the tarball itself for ethical and legal reasons. The required file may change in the future, based on the version of PacketTracer available at that time.
-While inside the extracted tarball folder, run the following
+<h3><span class="mw-headline" id="Download_Packet_Tracer_deb_package">Download Packet Tracer deb package</span></h3>
+<p>It is time to download the Packet Tracer deb package distributed in Cisco's website so it can be used to build <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/packettracer/">packettracer</a></span><sup><small>AUR</small></sup> for Arch Linux.
 </p>
-<pre>$ makepkg
-</pre>
-<p>At the time of writing, <code>packettracer-7.3.1-3-x86_64.pkg.tar.zst</code> is generated. Proceed to install this package by running
+<ol>
+<li>Log into <a rel="nofollow" class="external text" href="https://www.netacad.com">Cisco Networking Academy</a> (netcad) using your Cisco Account. Register an account if you do not have it.</li>
+<li>Once in the Networking Academy portal, download the Packet Tracer from <i>Resources</i> menu &gt; <i>Download Packet Tracer</i> (you should land in <a rel="nofollow" class="external text" href="https://www.netacad.com/portal/resources/packet-tracer">here</a>). The downloaded filename should be something like <code>PacketTracer_800_amd64_build212_final.deb</code>.</li>
+<li>Place the .deb file inside the folder where <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/packettracer/">packettracer</a></span><sup><small>AUR</small></sup>'s build files are located—that is the same folder where the <a href="/title/PKGBUILD" title="PKGBUILD">PKGBUILD</a> file is found.</li>
+</ol>
+<h3><span class="mw-headline" id="Build_and_install">Build and install</span></h3>
+<p>With all the build files and the deb file ready, time to build and install:
 </p>
-<pre>$ sudo pacman -U packettracer-7.3.1-3-x86_64.pkg.tar.zst
-</pre>
-<p>Finally, please read the EULA at <code>/usr/share/licenses/packettracer/eula.txt</code> and uninstall if you do not agree. If you agree, the program can be found under most menu systems in the Internet category.
+<ol>
+<li>Change the directory to where build files (e.g. <code>PKGBUILD</code>) are (if you are not in there already)</li>
+<li>
+<a href="/title/Arch_User_Repository#Build_the_package" title="Arch User Repository">Build the package</a>; alternatively, <a href="/title/DeveloperWiki:Building_in_a_clean_chroot" title="DeveloperWiki:Building in a clean chroot">build in a clean chroot</a>
+</li>
+<li>
+<a href="/title/Arch_User_Repository#Install_the_package" title="Arch User Repository">Install the package</a>.</li>
+</ol>
+<h3><span class="mw-headline" id="End-user_License_Agreement">End-user License Agreement</span></h3>
+<p>Finally, please read the copyright file at <code>/usr/share/licenses/packettracer/COPYRIGHT</code> for the <a rel="nofollow" class="external text" href="https://www.cisco.com/c/en/us/about/legal/cloud-and-software/end_user_license_agreement.html">End-user License Agreement (EULA)</a> and the <a rel="nofollow" class="external text" href="https://www.cisco.com/c/dam/en_us/about/doing_business/legal/seula/cisco-packet-tracer-software.pdf">Supplemental End-user License Agreement (SEULA)</a>, and uninstall if you do not agree with them. If you agree, the program can be found under most menu systems in the Internet category, or you run the <i>packettracer</i> binary.
 </p>
 <h3><span class="mw-headline" id="Assessment_environment_check">Assessment environment check</span></h3>
-<p>The Cisco Packet Tracer-based Assessment Environment Check is used to confirm that students can start packet tracer activities for assessments such as practice and final exams. It is critical that you have a working version of <a href="../en/Java.html" title="Java">Java</a> installed. Perform the check at <a rel="nofollow" class="external text" href="http://skills.netacad.net/check/check.html">this page</a> to confirm whether or not this ability is functional.
+<div class="noprint archwiki-template-message">
+<p><a href="/title/File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="/title/File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> The command below doesn't work, and the package does not have this package. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:PacketTracer">Talk:PacketTracer#</a>)</div>
+</div>
+<p>The Cisco Packet Tracer-based Assessment Environment Check is used to confirm that students can start packet tracer activities for assessments such as practice and final exams. It is critical that you have a working version of <a href="/title/Java" title="Java">Java</a> installed. Perform the check at <a rel="nofollow" class="external free" href="https://assessment.netacad.net/check/check.html">https://assessment.netacad.net/check/check.html</a> to confirm whether or not this ability is functional.
 </p>
 <pre>javaws PT-Assessment-Client.jnlp
 </pre>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
-<li><a href="../en/GNS3.html" title="GNS3">GNS3</a></li>
+<li><a href="/title/GNS3" title="GNS3">GNS3</a></li>
 <li><a rel="nofollow" class="external text" href="https://www.netacad.com/web/about-us/cisco-packet-tracer">Cisco Packet Tracer - Networking Academy</a></li>
-<li><a rel="nofollow" class="external text" href="http://skills.netacad.net/check/check.html">Cisco Packet Tracer-based Assessment Environment Check</a></li>
+<li><a rel="nofollow" class="external text" href="https://assessment.netacad.net/check/check.html">Cisco Packet Tracer-based Assessment Environment Check</a></li>
 <li><a rel="nofollow" class="external text" href="https://youtu.be/NPJpQrZ1C_s">PacketTracer -- video visualizing the installation process</a></li>
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Networking.html" title="Category:Networking">Networking</a></li>
-<li><a href="../en/Category:Simulation.html" title="Category:Simulation">Simulation</a></li>
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Networking" title="Category:Networking">Networking</a></li>
+<li><a href="/title/Category:Simulation" title="Category:Simulation">Simulation</a></li>
 </ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Out_of_date" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PacketTracer&amp;oldid=640838">https://wiki.archlinux.org/index.php?title=PacketTracer&amp;oldid=640838</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 6 November 2020, at 17:02.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=PacketTracer&amp;oldid=664305">https://wiki.archlinux.org/index.php?title=PacketTracer&amp;oldid=664305</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 April 2021, at 00:26.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

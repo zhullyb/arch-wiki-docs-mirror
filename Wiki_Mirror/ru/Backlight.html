@@ -126,7 +126,7 @@ bl_power           device/            power/             type
 <h3>
 <span id=".D0.9F.D0.B0.D1.80.D0.B0.D0.BC.D0.B5.D1.82.D1.80.D1.8B_.D1.8F.D0.B4.D1.80.D0.B0"></span><span class="mw-headline" id="Параметры_ядра">Параметры ядра</span>
 </h3>
-<p>Иногда ACPI не работает должным образом из-за различных реализаций материнских плат и особенностей ACPI, что может приводить, например, к неточным оповещениям о яркости. Этому могут быть подвержены некоторые ноутбуки с двойной графикой (например, выделенный графический процессор Nvidia / Radeon с интегрированным графическим процессором Intel / AMD). Кроме того, иногда может быть необходимо зарегистрировать свою собственную подсветку <code>acpi_video0</code>, даже если другая уже существует (например, <code>intel_backlight</code>), что может быть достигнуто добавлением следующих <a href="../en/Kernel_parameters.html" title="Kernel parameters">параметров ядра</a>:
+<p>Иногда ACPI не работает должным образом из-за различных реализаций материнских плат и особенностей ACPI, что может приводить, например, к неточным оповещениям о яркости. Этому могут быть подвержены некоторые ноутбуки с двойной графикой (например, выделенный графический процессор Nvidia / Radeon с интегрированным графическим процессором Intel / AMD). Кроме того, иногда может быть необходимо зарегистрировать свою собственную подсветку <code>acpi_video0</code>, даже если другая уже существует (например, <code>intel_backlight</code>), что может быть достигнуто добавлением следующих <a href="/title/Kernel_parameters" title="Kernel parameters">параметров ядра</a>:
 </p>
 <pre>acpi_backlight=video
 acpi_backlight=vendor
@@ -138,14 +138,14 @@ acpi_backlight=native
 <strong>Совет:</strong> 
 <ul>
 <li>На ноутбуках Nvidia Optimus параметра ядра nomodeset  может препятствовать регулировке подсветки.</li>
-<li>На ноутбуках Asus вам может также понадобиться загрузить <a href="../en/Kernel_module.html" title="Kernel module">модуль ядра</a> <code>asus-nb-wmi</code>.</li>
+<li>На ноутбуках Asus вам может также понадобиться загрузить <a href="/title/Kernel_module" title="Kernel module">модуль ядра</a> <code>asus-nb-wmi</code>.</li>
 <li>Отключение legacy-загрузки на Dell XPS13 приводит к невозможности изменить подсветку.</li>
 </ul>
 </div>
 <h3>
 <span id=".D0.9F.D1.80.D0.B0.D0.B2.D0.B8.D0.BB.D0.BE_Udev"></span><span class="mw-headline" id="Правило_Udev">Правило Udev</span>
 </h3>
-<p>Если доступен интерфейс ACPI, уровень подсветки может быть установлен во время загрузки с использованием правила <a href="../en/Udev.html" title="Udev">udev</a>:
+<p>Если доступен интерфейс ACPI, уровень подсветки может быть установлен во время загрузки с использованием правила <a href="/title/Udev" title="Udev">udev</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/udev/rules.d/81-backlight.rules</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># Установить уровень подсветки равным 8
@@ -153,7 +153,7 @@ SUBSYSTEM=="backlight", ACTION=="add", KERNEL=="acpi_video0", ATTR{brightness}="
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Примечание:</strong> Служба systemd-backlight восстанавливает предыдущий уровень яркости подсветки во время загрузки. Чтобы предотвратить конфликты для указанных выше правил, см. <a href="#%D0%A1%D0%BB%D1%83%D0%B6%D0%B1%D0%B0_systemd-backlight">#Служба systemd-backlight</a>.</div>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Совет:</strong> Чтобы настроить подсветку в зависимости от состояния питания, см. <a href="../en/Power_management.html#Using_a_script_and_an_udev_rule" title="Power management">Power management#Using a script and an udev rule</a> и используйте выбранную вами <a href="#%D0%A3%D1%82%D0%B8%D0%BB%D0%B8%D1%82%D1%8B_%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8">утилиту</a> в скрипте.</div>
+<strong>Совет:</strong> Чтобы настроить подсветку в зависимости от состояния питания, см. <a href="/title/Power_management#Using_a_script_and_an_udev_rule" title="Power management">Power management#Using a script and an udev rule</a> и используйте выбранную вами <a href="#%D0%A3%D1%82%D0%B8%D0%BB%D0%B8%D1%82%D1%8B_%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8">утилиту</a> в скрипте.</div>
 <h2>
 <span id=".D0.92.D1.8B.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BF.D0.BE.D0.B4.D1.81.D0.B2.D0.B5.D1.82.D0.BA.D0.B8"></span><span class="mw-headline" id="Выключение_подсветки">Выключение подсветки</span>
 </h2>
@@ -169,14 +169,14 @@ SUBSYSTEM=="backlight", ACTION=="add", KERNEL=="acpi_video0", ATTR{brightness}="
 </p>
 <pre>$ vbetool dpms on
 </pre>
-<p>Например, это можно использовать при закрытии крышки ноутбука с помощью <a href="../en/Acpid.html" title="Acpid">Acpid</a>.
+<p>Например, это можно использовать при закрытии крышки ноутбука с помощью <a href="/title/Acpid" title="Acpid">Acpid</a>.
 </p>
 <h2>
 <span id=".D0.A1.D0.BB.D1.83.D0.B6.D0.B1.D0.B0_systemd-backlight"></span><span class="mw-headline" id="Служба_systemd-backlight">Служба systemd-backlight</span>
 </h2>
-<p>Пакет <a href="../ru/Systemd.html" title="Systemd (Русский)">systemd</a> содержит "static" службу <code>systemd-backlight@.service</code>, которая включена по умолчанию. Она сохраняет яркость подсветки во время выключения ПК и восстанавливает при включении. Эта служба использует ACPI метод, описанный в <a href="#ACPI">#ACPI</a>, создавая службы для каждой папки, найденной в <code>/sys/class/backlight/</code>. Например, если есть папка <code>acpi_video0</code>, она создаст службу <code>systemd-backlight@backlight:acpi_video0.service</code>. Если вы используете другие методы установки яркости во время загрузки, рекомендуется <a href="/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;action=edit&amp;redlink=1" class="new" title="Systemd (Руссский) (page does not exist)">маскировать</a> службу <code>systemd-backlight@.service</code>, чтобы сделать невозможным ее запуск.
+<p>Пакет <a href="/title/Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Systemd (Русский)">systemd</a> содержит "static" службу <code>systemd-backlight@.service</code>, которая включена по умолчанию. Она сохраняет яркость подсветки во время выключения ПК и восстанавливает при включении. Эта служба использует ACPI метод, описанный в <a href="#ACPI">#ACPI</a>, создавая службы для каждой папки, найденной в <code>/sys/class/backlight/</code>. Например, если есть папка <code>acpi_video0</code>, она создаст службу <code>systemd-backlight@backlight:acpi_video0.service</code>. Если вы используете другие методы установки яркости во время загрузки, рекомендуется <a href="/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;action=edit&amp;redlink=1" class="new" title="Systemd (Руссский) (page does not exist)">маскировать</a> службу <code>systemd-backlight@.service</code>, чтобы сделать невозможным ее запуск.
 </p>
-<p>Некоторые ноутбуки имеют несколько видеоадаптеров (как Optimus) и восстановление подсветки не выполняется в следствие ошибок. Попробуйте <a href="../ru/Systemd.html#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" title="Systemd (Русский)">маскировать</a> <i>instance</i> этой службы, например <code>systemd-backlight@backlight\:acpi_video1</code> в случае <code>acpi_video1</code>.
+<p>Некоторые ноутбуки имеют несколько видеоадаптеров (как Optimus) и восстановление подсветки не выполняется в следствие ошибок. Попробуйте <a href="/title/Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)#%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%8E%D0%BD%D0%B8%D1%82%D0%BE%D0%B2" title="Systemd (Русский)">маскировать</a> <i>instance</i> этой службы, например <code>systemd-backlight@backlight\:acpi_video1</code> в случае <code>acpi_video1</code>.
 </p>
 <p>Из man-страницы systemd-backlight@.service:
 </p>
@@ -216,7 +216,7 @@ $ xbacklight -dec 10
 $ xgamma -rgamma 1 -ggamma 1 -bgamma 1
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Совет:</strong>  Эти команды могут быть привязаны к клавишам клавиатуры, как описано в <a href="../en/Keyboard_shortcuts.html#Xorg" class="mw-redirect" title="Extra keyboard keys in Xorg">Extra keyboard keys in Xorg</a>.</div>
+<strong>Совет:</strong>  Эти команды могут быть привязаны к клавишам клавиатуры, как описано в <a href="/title/Extra_keyboard_keys_in_Xorg" class="mw-redirect" title="Extra keyboard keys in Xorg">Extra keyboard keys in Xorg</a>.</div>
 <p>Если вы сталкиваетесь с ошибкой "No outputs have backlight property", это потому, что xrandr/xbacklight не выбирает правильную папку в <code>/sys/class/backlight</code>. Вы можете указать папку, настроив опцию <code>Backlight</code> в device-разделе файла xorg.conf. К примеру, если имя папки <code>intel_backlight</code>, раздел device может быть настроен следующим образом:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/X11/xorg.conf</pre>
@@ -251,19 +251,14 @@ EndSection</pre>
 <a rel="nofollow" class="external free" href="https://github.com/jmesmon/illum">https://github.com/jmesmon/illum</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/illum-git/">illum-git</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
-<b>relight</b> — Этот пакет предоставляет <code>relight.service</code>, <a href="../ru/Systemd.html" title="Systemd (Русский)">systemd</a>-службу для автоматического восстановления предыдущих настроек подсветки во время перезагрузки вместе с использованием ACPI метода, описанного выше, и <i>relight-menu</i> — диалоговое меню для выбора и настройки подсветки на разных экранах.</li></ul>
+<b>relight</b> — Этот пакет предоставляет <code>relight.service</code>, <a href="/title/Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Systemd (Русский)">systemd</a>-службу для автоматического восстановления предыдущих настроек подсветки во время перезагрузки вместе с использованием ACPI метода, описанного выше, и <i>relight-menu</i> — диалоговое меню для выбора и настройки подсветки на разных экранах.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://xyne.archlinux.ca/projects/relight">http://xyne.archlinux.ca/projects/relight</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/relight/">relight</a></span><sup><small>AUR</small></sup>
+<a rel="nofollow" class="external free" href="https://xyne.archlinux.ca/projects/relight">https://xyne.archlinux.ca/projects/relight</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/relight/">relight</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
-<b>calise</b> — Основное достоинство этой программы в том, что она очень точная, потребляет мало ресурсов и имеет демон-версию (.service файл для пользователей systemd также доступен). Она практически не влияет на время работы от батареи.</li></ul>
+<b>brightd</b> —  brightd автоматически приглушает (но не переводит в режим ожидания) экран, если в течение какого-то времени пользователь не взаимодействует с ПК. Хорошее дополнение к <a href="/title/Display_Power_Management_Signaling" title="Display Power Management Signaling">Display Power Management Signaling</a> для того, чтобы экран не гас внезапно.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://calise.sourceforge.net/mediawiki/index.php/Main_Page">http://calise.sourceforge.net/mediawiki/index.php/Main_Page</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/calise/">calise</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: package not found]</sup>
-</dd></dl>
-<ul><li>
-<b>brightd</b> —  brightd автоматически приглушает (но не переводит в режим ожидания) экран, если в течение какого-то времени пользователь не взаимодействует с ПК. Хорошее дополнение к <a href="../en/Display_Power_Management_Signaling.html" title="Display Power Management Signaling">Display Power Management Signaling</a> для того, чтобы экран не гас внезапно.</li></ul>
-<dl><dd>
-<a rel="nofollow" class="external free" href="http://www.pberndt.com/Programme/Linux/brightd/">http://www.pberndt.com/Programme/Linux/brightd/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/brightd/">brightd</a></span><sup><small>AUR</small></sup>
+<a rel="nofollow" class="external free" href="https://www.pberndt.com/Programme/Linux/brightd/">https://www.pberndt.com/Programme/Linux/brightd/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/brightd/">brightd</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
 <b>lux</b> — lux это совместимый с POSIX сценарий оболочки для управления яркостью на контролерах подсветки.</li></ul>
@@ -306,7 +301,7 @@ gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gn
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Примечание:</strong> <i>xcalib не меняет</i> силу подсветки, а просто модифицирует LUT-таблицу: это означает, что время работы от батареи не изменится. Однако, это может быть полезно, когда 
 регулировка подсветки недоступна (настольные ПК). Используйте <code>xcalib -clear</code>, чтобы сбросить LUT.</div>
-<p>Пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xcalib">xcalib</a></span> (<a rel="nofollow" class="external text" href="http://xcalib.sourceforge.net/">upstream URL</a>) доступен в <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> и может использоваться, чтобы уменьшить яркость экрана. Видео-демонстрация доступна на <a rel="nofollow" class="external text" href="https://www.youtube.com/watch?v=A9xsvntT6i4">YouTube</a>. Эта программа может корректировать гамму, инвертировать цвета и уменьшать контраст. Например, чтобы уменьшить яркость посредством изменения контраста:
+<p>Пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xcalib">xcalib</a></span> (<a rel="nofollow" class="external text" href="http://xcalib.sourceforge.net/">upstream URL</a>) доступен в <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a> и может использоваться, чтобы уменьшить яркость экрана. Видео-демонстрация доступна на <a rel="nofollow" class="external text" href="https://www.youtube.com/watch?v=A9xsvntT6i4">YouTube</a>. Эта программа может корректировать гамму, инвертировать цвета и уменьшать контраст. Например, чтобы уменьшить яркость посредством изменения контраста:
 </p>
 <pre>$ xcalib -co 40 -a
 </pre>
@@ -318,7 +313,7 @@ gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gn
 <p>В AUR существуют различные пакеты, которые используют <i>f.lux</i>.<a rel="nofollow" class="external autonumber" href="https://aur.archlinux.org/packages/?O=0&amp;K=xflux">[5]</a> "Основной" пакет - <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/xflux/">xflux</a></span><sup><small>AUR</small></sup>, который охватывает функционал командной строки <i>f.lux</i>. Существуют различные демоны для автоматического запуска пакета xflux.
 </p>
 <h3><span class="mw-headline" id="redshift">redshift</span></h3>
-<p><a href="../en/Redshift.html" title="Redshift">Redshift</a> использует <code>randr</code>, чтобы настроить яркость экрана в зависимости от времени суток и вашего географического положения. Она также может выполнять RGB гамма-коррекцию и задавать цветовые температуры. Как и <code>xcalib</code>, это лишь программное решение, и внешний вид курсора мыши не изменяется. Чтобы выполнить быструю настройку яркости, попробуйте что-то вроде этого:
+<p><a href="/title/Redshift" title="Redshift">Redshift</a> использует <code>randr</code>, чтобы настроить яркость экрана в зависимости от времени суток и вашего географического положения. Она также может выполнять RGB гамма-коррекцию и задавать цветовые температуры. Как и <code>xcalib</code>, это лишь программное решение, и внешний вид курсора мыши не изменяется. Чтобы выполнить быструю настройку яркости, попробуйте что-то вроде этого:
 </p>
 <pre>redshift -o -l 0:0 -b 0.8 -t 6500:6500
 </pre>
@@ -328,12 +323,12 @@ gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gn
 </pre>
 </div>
 <h3><span class="mw-headline" id="NVIDIA_settings">NVIDIA settings</span></h3>
-<p>Пользователи <a href="../en/NVIDIA.html" title="NVIDIA">несвободных драйверов NVIDIA</a> могут менять яркость дисплея с помощью утилиты nvidia-settings в разделе "X Server Color Correction". Однако, заметьте, что это не имеет ничего общего с подсветкой (Интенсивность), она всего лишь регулирует цветность. (Уменьшение яркости таким образом не является энергоэффективным. Используйте его в последнюю очередь, если все другие варианты не срабатывают; увеличение яркости портит цвета на экране полностью, по аналогии с засвеченностью фотографий.)
+<p>Пользователи <a href="/title/NVIDIA" title="NVIDIA">несвободных драйверов NVIDIA</a> могут менять яркость дисплея с помощью утилиты nvidia-settings в разделе "X Server Color Correction". Однако, заметьте, что это не имеет ничего общего с подсветкой (Интенсивность), она всего лишь регулирует цветность. (Уменьшение яркости таким образом не является энергоэффективным. Используйте его в последнюю очередь, если все другие варианты не срабатывают; увеличение яркости портит цвета на экране полностью, по аналогии с засвеченностью фотографий.)
 </p>
 <h3>
 <span id=".D0.A3.D0.B2.D0.B5.D0.BB.D0.B8.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D1.8F.D1.80.D0.BA.D0.BE.D1.81.D1.82.D0.B8_.D0.B2.D1.8B.D1.88.D0.B5_.D0.BC.D0.B0.D0.BA.D1.81.D0.B8.D0.BC.D0.B0.D0.BB.D1.8C.D0.BD.D0.BE.D0.B3.D0.BE_.D1.83.D1.80.D0.BE.D0.B2.D0.BD.D1.8F"></span><span class="mw-headline" id="Увеличение_яркости_выше_максимального_уровня">Увеличение яркости выше максимального уровня</span>
 </h3>
-<p>Вы можете испльзовать <a href="../en/Xrandr.html" title="Xrandr">xrandr</a> для увеличения яркости выше максимального уровня:
+<p>Вы можете испльзовать <a href="/title/Xrandr" title="Xrandr">xrandr</a> для увеличения яркости выше максимального уровня:
 </p>
 <pre>$ xrandr --output <i>output_name</i> --brightness 2
 </pre>
@@ -346,7 +341,7 @@ gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gn
 </p>
 <p>DDC может контролировать яркость, контрастность, входы и т.д. на поддерживаемых мониторах. Настройки, доступные с панели OSD (экранное меню), также могут управляться через DDC.
 </p>
-<p>Утилита <a rel="nofollow" class="external text" href="http://www.ddcutil.com/">ddcutil</a> может использоваться, чтобы вывести или поменять настройки яркости:
+<p>Утилита <a rel="nofollow" class="external text" href="https://www.ddcutil.com/">ddcutil</a> может использоваться, чтобы вывести или поменять настройки яркости:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># ddcutil capabilities | grep Brightness</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">  Feature: 10 (Brightness)
@@ -394,14 +389,14 @@ gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gn
 <li>переключение с X на другую виртуальную консоль выключает подсветку</li>
 <li>кнопки регулировки подсветки инвертированы (например, увеличение яркости делает экран темнее)</li>
 </ul>
-<p>Эта проблема может быть решена добавлением <code>i915.invert_brightness=1</code> в список <a href="../en/Kernel_parameters.html" title="Kernel parameters">параметров ядра</a>.
+<p>Эта проблема может быть решена добавлением <code>i915.invert_brightness=1</code> в список <a href="/title/Kernel_parameters" title="Kernel parameters">параметров ядра</a>.
 </p>
 <h3>
 <span id="sysfs_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.2C_.D0.BD.D0.BE_.D0.BD.D0.B5.D1.82_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F_.D1.8F.D1.80.D0.BA.D0.BE.D1.81.D1.82.D0.B8"></span><span class="mw-headline" id="sysfs_изменен,_но_нет_изменения_яркости">sysfs изменен, но нет изменения яркости</span>
 </h3>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Примечание:</strong> Такое поведение и способы его обхода были подтверждены на Dell M6700 с Nvidia K5000m (версия BIOS до A10) и Clevo P750ZM (Eurocom P5 Pro Extreme) с Nvidia 980m.</div>
-<p>На некоторых системах горячие клавиши яркости на клавиатуре корректно изменяют значения интерфейса acpi в <code>/sys/class/backlight/acpi_video0/actual_brightness</code>, но яркость экрана не изменяется. Апплеты яркости в <a href="../en/Desktop_environment.html" class="mw-redirect" title="Desktop environments">окружениях рабочего стола</a> могут также показывать изменения без результатов.
+<p>На некоторых системах горячие клавиши яркости на клавиатуре корректно изменяют значения интерфейса acpi в <code>/sys/class/backlight/acpi_video0/actual_brightness</code>, но яркость экрана не изменяется. Апплеты яркости в <a href="/title/Desktop_environments" class="mw-redirect" title="Desktop environments">окружениях рабочего стола</a> могут также показывать изменения без результатов.
 </p>
 <p>Если вы протестировали рекомендуемые параметры ядра и только <code>xbacklight</code> работает, вы можете столкнуться с несовместимостью между вашим BIOS и драйвером ядра.
 </p>
@@ -409,7 +404,7 @@ gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gn
 </p>
 <p>Обходной путь - использовать inotify api ядра для запуска <code>xbacklight</code> каждый раз, когда изменяется значение <code>/sys/class/backlight/acpi_video0/actual_brightness</code>.
 </p>
-<p>Сперва <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">установите</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=inotify-tools">inotify-tools</a></span>. Затем создайте скрипт, который будет запускаться при каждом включении с помощью <a href="../en/Autostarting.html" class="mw-redirect" title="Autostart">автозагрузки</a>.
+<p>Сперва <a href="/title/Install" class="mw-redirect" title="Install">установите</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=inotify-tools">inotify-tools</a></span>. Затем создайте скрипт, который будет запускаться при каждом включении с помощью <a href="/title/Autostart" class="mw-redirect" title="Autostart">автозагрузки</a>.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/local/bin/xbacklightmon</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/sh
@@ -434,15 +429,12 @@ done
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../ru/Category:Laptops.html" title="Category:Laptops (Русский)">Laptops (Русский)</a></li>
-<li><a href="../ru/Category:Power_management.html" title="Category:Power management (Русский)">Power management (Русский)</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Laptops_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Category:Laptops (Русский)">Laptops (Русский)</a></li>
+<li><a href="/title/Category:Power_management_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Category:Power management (Русский)">Power management (Русский)</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../en/Category:Pages_with_missing_package_links.html" title="Category:Pages with missing package links">Pages with missing package links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_missing_package_links" title="Category:Pages with missing package links">Pages with missing package links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -450,15 +442,15 @@ done
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Backlight_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=660527">https://wiki.archlinux.org/index.php?title=Backlight_(Русский)&amp;oldid=660527</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 06:46.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Backlight_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=668500">https://wiki.archlinux.org/index.php?title=Backlight_(Русский)&amp;oldid=668500</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 09:58.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

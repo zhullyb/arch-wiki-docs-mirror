@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>JupyterHub - ArchWiki</title>
+<link rel="stylesheet" href="../ArchWikiOffline.css">
+<meta name="ResourceLoaderDynamicStyles" content="">
+<meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="noindex,follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd">
+<link rel="license" href="http://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom">
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-JupyterHub rootpage-JupyterHub skin-vector action-view skin-vector-legacy">
+<div id="content" class="mw-body" role="main" style="margin: 0">
+	<a id="top"></a>
+	<div id="siteNotice" class="mw-body-content"></div>
+	<div class="mw-indicators mw-body-content">
+	</div>
+	<h1 id="firstHeading" class="firstHeading" lang="en">JupyterHub</h1>
+	<div id="bodyContent" class="mw-body-content">
+		<div id="siteSub" class="noprint">From ArchWiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
+<div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
+<div class="mw-parser-output">
+<p><br>
+<a rel="nofollow" class="external text" href="https://jupyterhub.readthedocs.io/">JupyterHub</a> is a multi-user web server for <a href="/title/Jupyter" title="Jupyter">Jupyter</a> notebooks. It consists of four subsystems:
+</p>
+<ol>
+<li>The main hub process.</li>
+<li>
+<a href="#Authenticators">Authenticators</a> which authenticate users.</li>
+<li>
+<a href="#Spawners">Spawners</a> which start and monitor a single-user server for each connected user.</li>
+<li>An HTTP proxy which receives incoming requests and routes them to either the hub or the appropriate single-user server.</li>
+</ol>
+<p>See the <a rel="nofollow" class="external text" href="https://jupyterhub.readthedocs.io/en/stable/reference/technical-overview.html">technical overview</a> in the JupyterHub documentation for more details.
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
+<input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
+<h2 id="mw-toc-heading">Contents</h2>
+<span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Installation"><span class="tocnumber">1</span> <span class="toctext">Installation</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Running"><span class="tocnumber">2</span> <span class="toctext">Running</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Configuration"><span class="tocnumber">3</span> <span class="toctext">Configuration</span></a></li>
+<li class="toclevel-1 tocsection-4">
+<a href="#Authenticators"><span class="tocnumber">4</span> <span class="toctext">Authenticators</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5">
+<a href="#PAM_Authenticator"><span class="tocnumber">4.1</span> <span class="toctext">PAM Authenticator</span></a>
+<ul>
+<li class="toclevel-3 tocsection-6"><a href="#PAM_authentication_as_non-root_user"><span class="tocnumber">4.1.1</span> <span class="toctext">PAM authentication as non-root user</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7">
+<a href="#Spawners"><span class="tocnumber">5</span> <span class="toctext">Spawners</span></a>
+<ul>
+<li class="toclevel-2 tocsection-8"><a href="#LocalProcessSpawner"><span class="tocnumber">5.1</span> <span class="toctext">LocalProcessSpawner</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#SudoSpawner"><span class="tocnumber">5.2</span> <span class="toctext">SudoSpawner</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#systemdspawner"><span class="tocnumber">5.3</span> <span class="toctext">systemdspawner</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-11">
+<a href="#Services"><span class="tocnumber">6</span> <span class="toctext">Services</span></a>
+<ul>
+<li class="toclevel-2 tocsection-12"><a href="#Idle_culler"><span class="tocnumber">6.1</span> <span class="toctext">Idle culler</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-13">
+<a href="#Tips_and_Tricks"><span class="tocnumber">7</span> <span class="toctext">Tips and Tricks</span></a>
+<ul>
+<li class="toclevel-2 tocsection-14"><a href="#Running_as_non-root_user"><span class="tocnumber">7.1</span> <span class="toctext">Running as non-root user</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Using_a_reverse_proxy"><span class="tocnumber">7.2</span> <span class="toctext">Using a reverse proxy</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Installation">Installation</span></h2>
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jupyterhub/">jupyterhub</a></span><sup><small>AUR</small></sup> package. In most cases you will also need to install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=jupyter-notebook">jupyter-notebook</a></span> package (some more advanced <a href="#Spawners">spawners</a> may not require it). The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=jupyterlab">jupyterlab</a></span> package can also be installed to make the <a rel="nofollow" class="external text" href="https://jupyterlab.readthedocs.io/">JupyterLab</a> interface available.
+</p>
+<h2><span class="mw-headline" id="Running">Running</span></h2>
+<p><a href="/title/Start/enable" class="mw-redirect" title="Start/enable">Start/enable</a> <code>jupyterhub.service</code>. With the default configuration you can access the hub by going to 127.0.0.1:8000 in your browser.
+</p>
+<h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
+<p>The JupyterHub configuration file is located at <code>/etc/jupyterhub/jupyterhub_config.py</code>. This is a Python script which modifies the configuration object <code>c</code>. The configuration file provided by the package shows the available configuration options and their default values.
+</p>
+<p>Any relative paths in the configuration are resolved from the working directory that the hub is run from. The systemd service provided by the package uses <code>/etc/jupyterhub</code> as the working directory. This means, for example, that the default database URL <code>c.JupyterHub.db_url = 'sqlite:///jupyterhub.sqlite'</code> corresponds to the file <code>/etc/jupyterhub/jupyterhub.sqlite</code>.
+</p>
+<p>All configuration options can be overridden on the command line. For example, the configuration file setting <code>c.Application.show_config = True</code> could instead be set with the command line flag <code>--Application.show_config=True</code>. Note that the provided systemd service uses the command line to explicitly set the <code>c.JupyterHub.pid_file</code> and <code>c.ConfigurableHTTPProxy.pid_file</code> values to a suitable runtime directory so any values for them in the configuration file will be ignored.
+</p>
+<h2><span class="mw-headline" id="Authenticators">Authenticators</span></h2>
+<p>Authenticators control access to the hub and the single-user servers. The <a rel="nofollow" class="external text" href="https://jupyterhub.readthedocs.io/en/stable/reference/authenticators.html">authenticators section</a> of the documentation contains details about how authenticators work and how to write a custom authenticator. The <a rel="nofollow" class="external text" href="https://github.com/jupyterhub/jupyterhub/wiki/Authenticators">authenticators wiki page</a> has a list of authenticators; some of these have <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a> packages and are described below.
+</p>
+<p>Note that user status is stored in cookies, encrypted by the <a rel="nofollow" class="external text" href="https://jupyterhub.readthedocs.io/en/stable/getting-started/security-basics.html#cookie-secret">cookie secret</a>. If you switch to a different authenticator, or modify the settings of your chosen authenticator so that the list of allowed users might change, you should change the cookie secret. This logs out all current users and forces them to re-authenticate with your new settings. This can be performed by deleting the cookie secret file and restarting the hub which will automatically generate a new secret. With the default configuration, the cookie secret is stored at <code>/etc/jupyterhub/jupyterhub_cookie_secret</code>.
+</p>
+<h3><span class="mw-headline" id="PAM_Authenticator">PAM Authenticator</span></h3>
+<p>The PAM authenticator uses <a href="/title/PAM" title="PAM">PAM</a> to allow local users to log in to the hub. It is included with JupyterHub and is the default authenticator. Using it requires the hub to have read permissions to <code>/etc/shadow</code> (which contains hashed versions of user passwords) in order to authenticate users. By default <code>/etc/shadow</code> is owned by root and has <a href="/title/Users_and_groups#Permissions_and_ownership" title="Users and groups">file permissions</a> of <code>-rw------</code>, so running the hub as root will meet this requirement. Some sources (e.g., <a rel="nofollow" class="external text" href="https://fedoraproject.org/wiki/Features/LowerProcessCapabilities">1</a>) advocate removing all permissions from <code>/etc/shadow</code> so it cannot be read by comprised daemons, and granting processes which require access the <code>DAC_OVERRIDE</code> <a href="/title/Capabilities" title="Capabilities">capability</a>. If your <code>/etc/shadow</code> is set up like this, create a <a href="/title/Systemd#Drop-in_files" title="Systemd">drop-in service file</a> to grant this capability to the JupyterHub service:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># systemctl edit jupyterhub.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
+CapabilityBoundingSet=CAP_DAC_OVERRIDE</pre>
+<p>The PAM authenticator relies on the Python package <a rel="nofollow" class="external text" href="https://github.com/minrk/pamela">pamela</a>. For basic troubleshooting this can be tested on the commandline. To attempt authentication as user <code>testuser</code>, run the following command:
+</p>
+<pre># python -m pamela -a testuser
+</pre>
+<p>(If you run JupyterHub as a non-root user, run the command as that user instead of root). If the authentication succeeds, no output will be printed. If it failed an error message will be printed.
+</p>
+<h4><span class="mw-headline" id="PAM_authentication_as_non-root_user">PAM authentication as non-root user</span></h4>
+<p>If you run JupyterHub as a non-root user, you will need to give that user read permissions to the shadow file. The <a rel="nofollow" class="external text" href="https://jupyterhub.readthedocs.io/en/stable/reference/config-sudo.html#enable-pam-for-non-root">method recommended by the JupyterHub documentation</a> is to create a <code>shadow</code> group, make the shadow file readable by this group, and add the JupyterHub user to this group.
+</p>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> This allows read-only access to the hashed passwords in <code>/etc/shadow</code> to anybody running code as the JupyterHub user. Note that each single-user server is run under their own account and so code executed in those servers will not have access. Also note that a security exploit in JupyterHub would allow the same access to the hashed passwords if JupyterHub was being run as root.</div>
+<p>Creating the group, modifying the shadow file permissions and adding the user <code>jupyterhub</code> to the group can be accomplished with the following four commands:
+</p>
+<pre># groupadd shadow
+# chgrp shadow /etc/shadow
+# chmod g+r /etc/shadow
+# usermod -aG shadow jupyterhub</pre>
+<h2><span class="mw-headline" id="Spawners">Spawners</span></h2>
+<p>Spawners are responsible for starting and monitoring each user's notebook server. The <a rel="nofollow" class="external text" href="https://jupyterhub.readthedocs.io/en/stable/reference/spawners.html">spawners section of the documentation</a> contains more details about how they work and how to write a custom spawner. The <a rel="nofollow" class="external text" href="https://github.com/jupyterhub/jupyterhub/wiki/Spawners">spawners wiki page</a> has a list of spawners; some of these have <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a> packages and are described below.
+</p>
+<h3><span class="mw-headline" id="LocalProcessSpawner">LocalProcessSpawner</span></h3>
+<p>This is the default spawner included with JupyterHub. It runs each single-user server in a separate local process under their <a href="/title/User_account" class="mw-redirect" title="User account">user account</a> (this means each JupyterHub user must correspond to a local user account). It also requires JupyterHub to be run as root so it can spawn the processes under the different user accounts. The <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=jupyter-notebook">jupyter-notebook</a></span> package must be installed for this spawner to work.
+</p>
+<h3><span class="mw-headline" id="SudoSpawner">SudoSpawner</span></h3>
+<p>The <a rel="nofollow" class="external text" href="https://github.com/jupyterhub/sudospawner">SudoSpawner</a> uses an intermediate process created with <a href="/title/Sudo" title="Sudo">sudo</a> to spawn the single-user servers. This allows the JupyterHub process to be <a href="#Running_as_non-root_user">run as a non-root user</a>. To use it install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jupyterhub-sudospawner/">jupyterhub-sudospawner</a></span><sup><small>AUR</small></sup> package.
+</p>
+<p>To use it, <a href="/title/Users_and_groups" title="Users and groups">create a system user account</a> (the following assumes the account is named <code>jupyterhub</code>) and a group whose membership will define which users can access the hub (here assumed to be called <code>jupyterhub-users</code>). First, we have to configure sudo to allow the <code>jupyterhub</code> user to spawn a server without a password. Create a <a href="/title/Sudo#Configure_sudo_using_drop-in_files_in_/etc/sudoers.d" title="Sudo">drop-in sudo configuration file</a> with <a href="/title/Sudo#Using_visudo" title="Sudo">visudo</a>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># visudo -f /etc/sudoers.d/jupyterhub-sudospawner</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># The command the hub is allowed to run.
+Cmnd_Alias SUDOSPAWNER_CMD = /usr/bin/sudospawner
+
+# Allow the jupyterhub user to run this command on behalf of anybody
+# in the jupyterhub-users group.
+jupyterhub ALL=(%jupyterhub-users) NOPASSWD:SUDOSPAWNER_CMD</pre>
+<p>The default service file runs the hub as root. It also applies a number of hardening options to the service to restrict its capabilities. This hardening prevents sudo from working; to allow it, the <code>NoNewPrivileges</code> service option (plus any other options which implicitly set it, see <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.exec"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.exec.5">systemd.exec(5)</a></span> for a list of service options) needs to be off. Create a <a href="/title/Drop-in_file" class="mw-redirect" title="Drop-in file">drop-in file</a> to run the hub using the <code>jupyterhub</code> user instead:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># systemctl edit jupyterhub.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
+User=jupyterhub
+Group=jupyterhub
+
+# Required for sudo.
+NoNewPrivileges=false
+
+# Setting the following would implicitly set NoNewPrivileges.
+PrivateDevices=false
+ProtectKernelTunables=false
+ProtectKernelModules=false
+LockPersonality=false
+RestrictRealtime=false
+RestrictSUIDGID=false
+SystemCallFilter=
+SystemCallArchitectures=</pre>
+<p>If you have previously run the hub as the root user, you will need to <a href="/title/File_permissions_and_attributes#Changing_ownership" title="File permissions and attributes">change the ownership</a> of the user database and <a rel="nofollow" class="external text" href="https://jupyterhub.readthedocs.io/en/stable/getting-started/security-basics.html#cookie-secret">cookie secret</a> files:
+</p>
+<pre># chown jupyterhub:jupyterhub /etc/jupyterhub/{jupyterhub_cookie_secret,jupyterhub.sqlite}
+</pre>
+<p>If you are using the PAMAuthenticator, you will need to <a href="#PAM_authentication_as_non-root_user">configure your system to allow it to work as a non-root user</a>.
+</p>
+<p>Finally, edit the JupyterHub configuration and change the spawner class to SudoSpawner:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/jupyterhub/jupyterhub_config.py</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">c.JupyterHub.spawner_class='sudospawner.SudoSpawner'</pre>
+<p>To give a user access to the hub, add them to the <code>jupyterhub-users</code> group:
+</p>
+<pre># usermod -aG jupyterhub-users &lt;username&gt;
+</pre>
+<h3><span class="mw-headline" id="systemdspawner">systemdspawner</span></h3>
+<p>The <a rel="nofollow" class="external text" href="https://github.com/jupyterhub/systemdspawner">systemdspawner</a> uses <a href="/title/Systemd" title="Systemd">systemd</a> to manage each user's notebook which allows configuring resource limitations, better process isolation and sandboxing, and dynamically allocated users. To use it install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jupyterhub-systemdspawner/">jupyterhub-systemdspawner</a></span><sup><small>AUR</small></sup> package and set the spawner class in the configuration file:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/jupyterhub/jupyterhub_config.py</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">c.JupyterHub.spawner_class = 'systemdspawner.SystemdSpawner'</pre>
+<p>Note that as per <a rel="nofollow" class="external text" href="https://github.com/jupyterhub/systemdspawner/blob/master/README.md#root-access">systemdspawner's readme</a> using it currently requires JupyterHub to be run as root.
+</p>
+<h2><span class="mw-headline" id="Services">Services</span></h2>
+<p>A <a rel="nofollow" class="external text" href="https://jupyterhub.readthedocs.io/en/stable/getting-started/services-basics.html">JupyterHub service</a> is defined as a process which interacts with the Hub through its API. Services can either be run by the hub or as standalone processes.
+</p>
+<h3><span class="mw-headline" id="Idle_culler">Idle culler</span></h3>
+<p>The <a rel="nofollow" class="external text" href="https://github.com/jupyterhub/jupyterhub-idle-culler">idle culler</a> service can be used to automatically shut down idle single-user servers. To use it, install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/jupyterhub-idle-culler/">jupyterhub-idle-culler</a></span><sup><small>AUR</small></sup> package. To run the service through the hub, add a service description to the <code>c.JupyterHub.services</code> configuration variable:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/jupyterhub/jupyterhub_config.py</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">import sys
+c.JupyterHub.services = [
+    {
+        'name': 'idle-culler',
+        'admin': True,
+        'command': [
+            sys.executable,
+            '-m', 'jupyterhub_idle_culler',
+            '--timeout=3600'
+        ],
+    }
+]</pre>
+<p>See the service documentation or the output of <code>python -m jupyterhub_idle_culler --help</code> for a description of command-line options and details of how to run the service as a standalone process.
+</p>
+<h2><span class="mw-headline" id="Tips_and_Tricks">Tips and Tricks</span></h2>
+<h3><span class="mw-headline" id="Running_as_non-root_user">Running as non-root user</span></h3>
+<p>By default, the main hub process is run as the root user (the individual user servers are run under the corresponding local user as set by the spawner). To run as a non-root user, you need to use the <a href="#SudoSpawner">SudoSpawner</a> (the other spawners listed above require running as root). If you are using the PAM authenticator, you will also need to <a href="#PAM_authentication_as_non-root_user">configure it for a non-root user</a>.
+</p>
+<h3><span class="mw-headline" id="Using_a_reverse_proxy">Using a reverse proxy</span></h3>
+<p>A reverse proxy can be used to redirect external requests to the JupyterHub instance. This can be useful if you want to serve multiple sites from one machine, or use an existing server to handle <a href="/title/SSL" class="mw-redirect" title="SSL">SSL</a>. The <a rel="nofollow" class="external text" href="https://jupyterhub.readthedocs.io/en/stable/reference/config-proxy.html">using a reverse proxy</a> section of the JupyterHub documentation has example configuration for using either <a href="/title/Nginx" title="Nginx">nginx</a> or <a href="/title/Apache_HTTP_Server" title="Apache HTTP Server">Apache</a> as a reverse proxy.
+</p>
+<div class="archwiki-template-box archwiki-template-box-note">
+<strong>Note:</strong> This does not replace the proxy component of JupyterHub which is responsible for routing requests to either the main hub or the single-user servers. Rather, the reverse proxy passes external requests to the JupyterHub proxy.</div>
+</div>
+</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Science" title="Category:Science">Science</a></li>
+<li><a href="/title/Category:Servers" title="Category:Servers">Servers</a></li>
+</ul>
+</div></div>
+	</div>
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
+	<ul id="footer-info">
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=JupyterHub&amp;oldid=667375">https://wiki.archlinux.org/index.php?title=JupyterHub&amp;oldid=667375</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 2 May 2021, at 17:40.</li>
+		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+	<br>
+</ul>
+	<ul id="footer-places">
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+	<ul id="footer-icons" class="noprint">
+		<li id="footer-copyrightico">
+	</ul>
+	<div style="clear: both;"></div>
+</footer>
+
+
+
+</body>
+</html>

@@ -81,10 +81,10 @@
 <li>Support for implementing redundant monitoring hosts</li>
 <li>Optional web interface for viewing current network status, notification and problem history, log file, etc.</li>
 </ul>
-<p>The following installation and configuration were tested using nagios 3.2.0-1, <a href="../en/Apache_HTTP_Server.html" title="Apache HTTP Server">Apache</a> web server 2.2.14-2, and <a href="../en/PHP.html" title="PHP">PHP</a>5 5.3.1-3 by <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=88461">awayand</a>.
+<p>The following installation and configuration were tested using nagios 3.2.0-1, <a href="/title/Apache_HTTP_Server" title="Apache HTTP Server">Apache</a> web server 2.2.14-2, and <a href="/title/PHP" title="PHP">PHP</a>5 5.3.1-3 by <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=88461">awayand</a>.
 </p>
 <h2><span class="mw-headline" id="Webserver">Webserver</span></h2>
-<p>According to the <a rel="nofollow" class="external text" href="http://nagios.sourceforge.net/docs/3_0/about.html">official documentation</a> a webserver is not required, but if you wish to use any of the CGI features then a webserver (apache preferred), PHP (<a href="../en/Apache_HTTP_Server.html#PHP" title="Apache HTTP Server">php-apache</a>) for it and the gd library are required. This is assumed for this installation.
+<p>According to the <a rel="nofollow" class="external text" href="http://nagios.sourceforge.net/docs/3_0/about.html">official documentation</a> a webserver is not required, but if you wish to use any of the CGI features then a webserver (apache preferred), PHP (<a href="/title/Apache_HTTP_Server#PHP" title="Apache HTTP Server">php-apache</a>) for it and the gd library are required. This is assumed for this installation.
 </p>
 <h3><span class="mw-headline" id="Installation">Installation</span></h3>
 <p>Before installation, it's a good idea to make sure you have prerequisites installed, e.g. if you're using nginx then: nginx, php, php-fpm, fcgiwrap might be a good start.
@@ -129,7 +129,7 @@ cp /etc/nagios/objects/timeperiods.cfg.sample /etc/nagios/objects/timeperiods.cf
 <p>Once Nagios is configured, it is time to configure the webserver.
 </p>
 <h3><span class="mw-headline" id="Apache_configuration">Apache configuration</span></h3>
-<p>If using <a href="../en/Apache_HTTP_Server.html" title="Apache HTTP Server">Apache HTTP Server</a> as webserver, edit <code>/etc/httpd/conf/httpd.conf</code> and add the following to the end of the file:
+<p>If using <a href="/title/Apache_HTTP_Server" title="Apache HTTP Server">Apache HTTP Server</a> as webserver, edit <code>/etc/httpd/conf/httpd.conf</code> and add the following to the end of the file:
 </p>
 <pre>LoadModule php5_module modules/libphp5.so
 Include "conf/extra/nagios.conf"
@@ -150,15 +150,15 @@ Include "conf/extra/php5_module.conf"</pre>
 <pre># chmod 666 /var/nagios/rw/nagios.cmd
 </pre>
 <h3><span class="mw-headline" id="Nginx_configuration">Nginx configuration</span></h3>
-<p>Apart from php and php-fpm, You should have <a href="../en/Nginx.html#CGI_implementation" title="Nginx">fcgiwrap</a> installed or else CGI scripts will not run.
+<p>Apart from php and php-fpm, You should have <a href="/title/Nginx#CGI_implementation" title="Nginx">fcgiwrap</a> installed or else CGI scripts will not run.
 </p>
 <p>You will also need to ensure php-fm and fcgiwrap services/sockets are started when using nginx
 </p>
 <ol>
 <li>
-<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">Start</a>, or restart, <code>php-fpm.service</code> for php-fpm</li>
+<a href="/title/Start" class="mw-redirect" title="Start">Start</a>, or restart, <code>php-fpm.service</code> for php-fpm</li>
 <li>
-<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">Start</a>, or restart, <code>fcgiwrap.socket</code> for fcgiwrap</li>
+<a href="/title/Start" class="mw-redirect" title="Start">Start</a>, or restart, <code>fcgiwrap.socket</code> for fcgiwrap</li>
 </ol>
 <p>Example configuration:
 </p>
@@ -199,7 +199,7 @@ Include "conf/extra/php5_module.conf"</pre>
 
 }</pre>
 <h3><span class="mw-headline" id="Lighttpd_configuration">Lighttpd configuration</span></h3>
-<p>Example for <a href="../en/Lighttpd.html" title="Lighttpd">lighttpd</a>:
+<p>Example for <a href="/title/Lighttpd" title="Lighttpd">lighttpd</a>:
 </p>
 <pre>$HTTP["url"] =~ "^/nagios" {
         alias.url = (
@@ -231,9 +231,9 @@ Include "conf/extra/php5_module.conf"</pre>
 <h3><span class="mw-headline" id="Final_steps">Final steps</span></h3>
 <ol>
 <li>
-<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">Start</a>, or restart, <code>nagios.service</code> for Nagios</li>
+<a href="/title/Start" class="mw-redirect" title="Start">Start</a>, or restart, <code>nagios.service</code> for Nagios</li>
 <li>
-<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">Start</a>, or restart, your webserver: <code>httpd.service</code> for Apache, <code>nginx.service</code> for Nginx, and <code>lighttpd.service</code> for lightttpd.</li>
+<a href="/title/Start" class="mw-redirect" title="Start">Start</a>, or restart, your webserver: <code>httpd.service</code> for Apache, <code>nginx.service</code> for Nginx, and <code>lighttpd.service</code> for lightttpd.</li>
 </ol>
 <p>Now you should be able to access nagios through your webbrowser using the username and password you have created above using htpasswd:
 </p>
@@ -271,10 +271,10 @@ Include "conf/extra/php5_module.conf"</pre>
 <h2><span class="mw-headline" id="Forks">Forks</span></h2>
 <ul>
 <li>
-<a href="../en/Icinga.html" title="Icinga">Icinga</a> is a Nagios fork. More details about the fork can be found at <a rel="nofollow" class="external text" href="https://www.icinga.org/icinga/faq/icinga-vs-nagios/">Icinga FAQ: Why a fork?</a>
+<a href="/title/Icinga" title="Icinga">Icinga</a> is a Nagios fork. More details about the fork can be found at <a rel="nofollow" class="external text" href="https://www.icinga.org/icinga/faq/icinga-vs-nagios/">Icinga FAQ: Why a fork?</a>
 </li>
 <li>
-<a href="../en/Naemon.html" title="Naemon">Naemon</a> is the new monitoring suite that aims to be faster and more stable, while giving you a clearer view of the state of your network. <a rel="nofollow" class="external text" href="http://www.naemon.org/project.html">Naemon FAQ: Why a fork?</a>
+<a href="/title/Naemon" title="Naemon">Naemon</a> is the new monitoring suite that aims to be faster and more stable, while giving you a clearer view of the state of your network. <a rel="nofollow" class="external text" href="https://www.naemon.org/project.html">Naemon FAQ: Why a fork?</a>
 </li>
 </ul>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
@@ -293,22 +293,22 @@ Include "conf/extra/php5_module.conf"</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Network_monitoring.html" title="Category:Network monitoring">Network monitoring</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Network_monitoring" title="Category:Network monitoring">Network monitoring</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Nagios&amp;oldid=662004">https://wiki.archlinux.org/index.php?title=Nagios&amp;oldid=662004</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 18:57.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Nagios&amp;oldid=669141">https://wiki.archlinux.org/index.php?title=Nagios&amp;oldid=669141</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:19.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

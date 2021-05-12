@@ -34,9 +34,9 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="/title/Help:Laptop_page_guidelines" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Needs IDs in hardware table and a function keys section (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:HP_EliteBook_2570p">Talk:HP EliteBook 2570p#</a>)</div>
+<b>Reason:</b> Needs IDs in hardware table and a function keys section (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:HP_EliteBook_2570p">Talk:HP EliteBook 2570p#</a>)</div>
 </div>
 <table class="wikitable" style="float: right;">
 
@@ -128,15 +128,15 @@
 </tbody>
 </table>
 <h2><span class="mw-headline" id="Bluetooth">Bluetooth</span></h2>
-<p>The integrated <a href="../en/Bluetooth.html" title="Bluetooth">Bluetooth</a> device seems a bit buggy as a few random disconnects were observed in combination with some BT4.0 devices. One possible way to circumvent this is to replace the integrated Wi-Fi card with Wi-Fi+BT combo one such as Intel® Centrino® Advanced-N 6235 or similar (later 2570p BIOS-es should have WLAN whitelisting <a rel="nofollow" class="external text" href="https://www.techinferno.com/index.php?/forums/topic/1982-125-hp-elitebook-2570p-owners-lounge/&amp;page=41#comment-109982">removed</a>) and then <a rel="nofollow" class="external text" href="https://www.techinferno.com/index.php?/forums/topic/1982-125-hp-elitebook-2570p-owners-lounge/&amp;page=47#comment-132577">connecting</a> the Bluetooth interface of the card to the pins used by the docking connector. This is necessary as this laptop has no USB pins connected on the WLAN miniPCIe interface and the user also benefits from the Intel® Centrino® Advanced-N 6235's improved power efficiency over 6205.
+<p>The integrated <a href="/title/Bluetooth" title="Bluetooth">Bluetooth</a> device seems a bit buggy as a few random disconnects were observed in combination with some BT4.0 devices. One possible way to circumvent this is to replace the integrated Wi-Fi card with Wi-Fi+BT combo one such as Intel® Centrino® Advanced-N 6235 or similar (later 2570p BIOS-es should have WLAN whitelisting <a rel="nofollow" class="external text" href="https://www.techinferno.com/index.php?/forums/topic/1982-125-hp-elitebook-2570p-owners-lounge/&amp;page=41#comment-109982">removed</a>) and then <a rel="nofollow" class="external text" href="https://www.techinferno.com/index.php?/forums/topic/1982-125-hp-elitebook-2570p-owners-lounge/&amp;page=47#comment-132577">connecting</a> the Bluetooth interface of the card to the pins used by the docking connector. This is necessary as this laptop has no USB pins connected on the WLAN miniPCIe interface and the user also benefits from the Intel® Centrino® Advanced-N 6235's improved power efficiency over 6205.
 </p>
 <h2><span class="mw-headline" id="Power_management">Power management</span></h2>
-<p>The following <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a> can be enabled to provide additional power management for <a href="../en/Intel_graphics.html" title="Intel graphics">Intel graphics</a>. However, some of them are experimental on Ivy Bridge hardware and can lead to problems.
+<p>The following <a href="/title/Kernel_parameters" title="Kernel parameters">kernel parameters</a> can be enabled to provide additional power management for <a href="/title/Intel_graphics" title="Intel graphics">Intel graphics</a>. However, some of them are experimental on Ivy Bridge hardware and can lead to problems.
 </p>
 <pre>i915.i915_enable_fbc=1
 drm.vblankoffdelay=1
 </pre>
-<p>This laptop has <a href="../en/Power_management.html#Active_State_Power_Management" title="Power management">ASPM</a> disabled by default and even later versions of BIOS do not provide any options for enabling it. As this feature improves battery life for around 25%, it is a very useful one to have. It is possible to forcibly enable ASPM by using GRUB to write the proper bits to the configuration registers before the kernel is executed. The easiest way is to add the following to the <code>/etc/grub.d/01_enable-aspm</code>:
+<p>This laptop has <a href="/title/Power_management#Active_State_Power_Management" title="Power management">ASPM</a> disabled by default and even later versions of BIOS do not provide any options for enabling it. As this feature improves battery life for around 25%, it is a very useful one to have. It is possible to forcibly enable ASPM by using GRUB to write the proper bits to the configuration registers before the kernel is executed. The easiest way is to add the following to the <code>/etc/grub.d/01_enable-aspm</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/grub.d/01_enable-aspm</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#! /bin/sh
@@ -156,7 +156,7 @@ echo "write_byte 0xB9CF506D 0x03" # Enable in ACPI FADT/FACP (BIOS F.40-)
 echo "write_byte 0xB9FFC06D 0x03" # Enable in ACPI FADT/FACP (BIOS F.40+)
 echo "write_byte 0xB9FFC019 0x10" # Correct checksum
 </pre>
-<p>If ASPM has been successfully enabled, there will be no complaints in <code>dmesg | grep ASPM</code>. Forcing ASPM in software with <code>pcie_aspm=force</code> <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> is not needed, however ASPM still needs to be enabled for every PCI device after the kernel is booted. This can be done by a <a href="../en/Autostarting.html" title="Autostarting">startup script</a> and its contents should be:
+<p>If ASPM has been successfully enabled, there will be no complaints from running <code>dmesg | grep ASPM</code> as root. Forcing ASPM in software with <code>pcie_aspm=force</code> <a href="/title/Kernel_parameter" class="mw-redirect" title="Kernel parameter">kernel parameter</a> is not needed, however ASPM still needs to be enabled for every PCI device after the kernel is booted. This can be done by a <a href="/title/Autostarting" title="Autostarting">startup script</a> and its contents should be:
 </p>
 <pre># HP EliteBook 2570p ASPM hardware enable
 setpci -s "00:1c.0" "50.b=0x43" # PCI Express Root Port 1
@@ -171,7 +171,7 @@ setpci -s "03:00.0" "f0.b=0x43" # Network controller</pre>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li>
-<b>HP Battery Check</b> tool in <a rel="nofollow" class="external text" href="http://h20565.www2.hp.com/hpsc/swd/public/detail?sp4ts.oid=5284308&amp;swItemId=ob_156672_1&amp;swEnvOid=4059">HP Support Assistant</a> package is a Windows-only tool to display additional battery info such as per-cell readings and recharge cycle count</li>
+<b>HP Battery Check</b> tool in <a rel="nofollow" class="external text" href="https://h20565.www2.hp.com/hpsc/swd/public/detail?sp4ts.oid=5284308&amp;swItemId=ob_156672_1&amp;swEnvOid=4059">HP Support Assistant</a> package is a Windows-only tool to display additional battery info such as per-cell readings and recharge cycle count</li>
 <li><a rel="nofollow" class="external text" href="https://www.techinferno.com/index.php?/forums/topic/1982-125-hp-elitebook-2570p-owners-lounge/">HP EliteBook 2570p users' forum</a></li>
 <li><a rel="nofollow" class="external text" href="http://www.notebookreview.com/notebookreview/hp-elitebook-2570p-review/">NotebookReview's review</a></li>
 <li><a rel="nofollow" class="external text" href="https://www.notebookcheck.net/Review-HP-Elitebook-2570p-B6Q10EA-Notebook.82051.0.html">NotebookCheck's review</a></li>
@@ -179,7 +179,7 @@ setpci -s "03:00.0" "f0.b=0x43" # Network controller</pre>
 </li>
 <li>Enabling ASPM with GRUB: <a rel="nofollow" class="external text" href="https://www.techinferno.com/index.php?/forums/topic/1982-125-hp-elitebook-2570p-owners-lounge/&amp;page=42#comment-117096">1</a> and <a rel="nofollow" class="external text" href="http://forum.notebookreview.com/threads/hp-elitebook-2560p-owners-lounge.586353/page-15#post-8375856">2</a>
 </li>
-<li><a rel="nofollow" class="external text" href="http://h20565.www2.hp.com/portal/site/hpsc/template.PAGE/action.process/public/psi/manualsDisplay/?sp4ts.oid=5259393&amp;javax.portlet.action=true&amp;spf_p.tpst=psiContentDisplay&amp;javax.portlet.begCacheTok=com.vignette.cachetoken&amp;spf_p.prp_psiContentDisplay=wsrp-interactionState%3DdocId%253Demr_na-c03500525%257CdocLocale%253Den_US&amp;javax.portlet.endCacheTok=com.vignette.cachetoken">Linux User Guide</a></li>
+<li><a rel="nofollow" class="external text" href="https://h20565.www2.hp.com/portal/site/hpsc/template.PAGE/action.process/public/psi/manualsDisplay/?sp4ts.oid=5259393&amp;javax.portlet.action=true&amp;spf_p.tpst=psiContentDisplay&amp;javax.portlet.begCacheTok=com.vignette.cachetoken&amp;spf_p.prp_psiContentDisplay=wsrp-interactionState%3DdocId%253Demr_na-c03500525%257CdocLocale%253Den_US&amp;javax.portlet.endCacheTok=com.vignette.cachetoken">Linux User Guide</a></li>
 <li><a rel="nofollow" class="external text" href="https://support.hp.com/bg-en/document/c03412731">Specifications</a></li>
 <li><a rel="nofollow" class="external text" href="http://www.hp.com/ctg/Manual/c03559419.pdf">Maintenance and Service Guide</a></li>
 <li><a rel="nofollow" class="external text" href="http://www.hp.com/hpinfo/globalcitizenship/environment/productdata/Countries/_MultiCountry/disassembly_notebo_2012627193535.pdf">EoL Disassembly Guide</a></li>
@@ -189,9 +189,9 @@ setpci -s "03:00.0" "f0.b=0x43" # Network controller</pre>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:HP.html" title="Category:HP">HP</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:HP" title="Category:HP">HP</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Laptop_style" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li></ul>
 </div>
 </div>
 	</div>
@@ -199,15 +199,15 @@ setpci -s "03:00.0" "f0.b=0x43" # Network controller</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=HP_EliteBook_2570p&amp;oldid=663257">https://wiki.archlinux.org/index.php?title=HP_EliteBook_2570p&amp;oldid=663257</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 07:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=HP_EliteBook_2570p&amp;oldid=668860">https://wiki.archlinux.org/index.php?title=HP_EliteBook_2570p&amp;oldid=668860</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 10:50.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

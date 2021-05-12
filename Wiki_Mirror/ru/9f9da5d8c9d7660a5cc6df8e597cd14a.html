@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -23,7 +24,7 @@
 	<h1 id="firstHeading" class="firstHeading" lang="en">Samba (Русский)/Active Directory domain controller (Русский)</h1>
 	<div id="bodyContent" class="mw-body-content">
 		<div id="siteSub" class="noprint">From ArchWiki</div>
-		<div id="contentSub"><span class="subpages">&lt; <a href="../ru/Samba.html" title="Samba (Русский)">Samba (Русский)</a></span></div>
+		<div id="contentSub"><span class="subpages">&lt; <a href="/title/Samba_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Samba (Русский)">Samba (Русский)</a></span></div>
 		<div id="contentSub2"></div>
 		
 		<div id="jump-to-nav"></div>
@@ -33,16 +34,21 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Состояние перевода:</strong> На этой странице представлен перевод статьи <a href="../en/Samba/Active_Directory_domain_controller.html" title="Samba/Active Directory domain controller">Samba/Active Directory domain controller</a>. Дата последней синхронизации: 3 сентября 2015. Вы можете <a href="../ru/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Русский)">помочь</a> синхронизировать перевод, если в английской версии произошли <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Samba/Active_Directory_domain_controller&amp;diff=0&amp;oldid=398112">изменения</a>.</div>
+<strong>Состояние перевода:</strong> На этой странице представлен перевод статьи <a href="/title/Samba/Active_Directory_domain_controller" title="Samba/Active Directory domain controller">Samba/Active Directory domain controller</a>. Дата последней синхронизации: 3 сентября 2015. Вы можете <a href="/title/ArchWiki:Translation_Team_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="ArchWiki:Translation Team (Русский)">помочь</a> синхронизировать перевод, если в английской версии произошли <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Samba/Active_Directory_domain_controller&amp;diff=0&amp;oldid=398112">изменения</a>.</div>
+<div class="noprint archwiki-template-message">
+<p><a href="/title/File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a><b>The <a href="/title/ArchWiki:Contributing#Translating" title="ArchWiki:Contributing">translation</a> of this article or section does not reflect the original text.</b><a href="/title/File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Last updated in 2015 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Samba_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)/Active_Directory_domain_controller_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)">Talk:Samba (Русский)/Active Directory domain controller (Русский)#</a>)</div>
+</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Ссылки по теме</p>
 <ul>
-<li><a href="../ru/Active_Directory_integration.html" class="mw-redirect" title="Интеграция Active Directory">Интеграция Active Directory</a></li>
-<li><a href="../ru/Samba.html" title="Samba (Русский)">Samba (Русский)</a></li>
-<li><a href="../en/SOGo.html" title="SOGo">SOGo</a></li>
+<li><a href="/title/%D0%98%D0%BD%D1%82%D0%B5%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D1%8F_Active_Directory" class="mw-redirect" title="Интеграция Active Directory">Интеграция Active Directory</a></li>
+<li><a href="/title/Samba_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Samba (Русский)">Samba (Русский)</a></li>
+<li><a href="/title/SOGo" title="SOGo">SOGo</a></li>
 </ul>
 </div>
-<p>Эта статья объясняет, как настроить новый контроллер домена Active Directory. Предполагается, что после установки все файлы настроек находятся в неизменённом состоянии. Эта статья была написана и протестирована на свежей установке, без каких-либо других установок (сетевое соединение статического IPv4, назначение имени хоста, добавление <a href="../ru/OpenSSH.html" class="mw-redirect" title="Secure Shell (Русский)">OpenSSH</a> и <a href="../ru/Vim.html" title="Vim (Русский)">Vim</a>), которые не должны иметь никакого влияния на настройки <a href="../ru/Samba.html" title="Samba (Русский)">Samba</a>. Большинство приведенных ниже команд потребует повышенных привелегий (прав суперпользователя). Несмотря на здравый смысл, проще запустить несколько этих коротких команд из сессии root, чем получать права по мере необходимости.
+<p>Эта статья объясняет, как настроить новый контроллер домена Active Directory. Предполагается, что после установки все файлы настроек находятся в неизменённом состоянии. Эта статья была написана и протестирована на свежей установке, без каких-либо других установок (сетевое соединение статического IPv4, назначение имени хоста, добавление <a href="/title/Secure_Shell_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" class="mw-redirect" title="Secure Shell (Русский)">OpenSSH</a> и <a href="/title/Vim_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Vim (Русский)">Vim</a>), которые не должны иметь никакого влияния на настройки <a href="/title/Samba_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Samba (Русский)">Samba</a>. Большинство приведенных ниже команд потребует повышенных привелегий (прав суперпользователя). Несмотря на здравый смысл, проще запустить несколько этих коротких команд из сессии root, чем получать права по мере необходимости.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -91,7 +97,7 @@
 <h2>
 <span id=".D0.A3.D1.81.D1.82.D0.B0.D0.BD.D0.BE.D0.B2.D0.BA.D0.B0"></span><span class="mw-headline" id="Установка">Установка</span>
 </h2>
-<p>Полностью функциональный Samba 4 DC требует несколько программ, помимо тех, которые включенны в дистрибутив Samba. <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Установите</a> пакеты <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bind-tools">bind-tools</a></span><sup>[<a href="../en/ArchWiki:Requests.html#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bind">bind</a></span>]</sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=krb5">krb5</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ntp">ntp</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openldap">openldap</a></span>, и <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=samba">samba</a></span>.
+<p>Полностью функциональный Samba 4 DC требует несколько программ, помимо тех, которые включенны в дистрибутив Samba. <a href="/title/Install" class="mw-redirect" title="Install">Установите</a> пакеты <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bind-tools">bind-tools</a></span><sup>[<a href="/title/ArchWiki:Requests#Broken_package_links" class="mw-redirect" title="ArchWiki:Requests">ссылка недействительна</a>: replaced by <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bind">bind</a></span>]</sup>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=krb5">krb5</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ntp">ntp</a></span>, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openldap">openldap</a></span>, и <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=samba">samba</a></span>.
 </p>
 <p>Кроме того, Самба содержит свой собственный полнофункциональный DNS-сервер, но многие администраторы предпочитают использовать пакет ISC BIND. 
 Если вам нужна поддержка DNS зон для внешних доменов, вам настоятельно рекомендуется использовать <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bind">bind</a></span>. Для совместного использования принтеров, воспользуйтесь <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cups">cups</a></span>. При необходимости, поставьте пакет(ы) <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bind">bind</a></span> и/или <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=cups">cups</a></span>.
@@ -148,7 +154,7 @@
 <span id=".D0.9D.D0.B0.D1.81.D1.82.D1.80.D0.BE.D0.B9.D0.BA.D0.B0_.D0.B4.D0.B5.D0.BC.D0.BE.D0.BD.D0.BE.D0.B2"></span><span class="mw-headline" id="Настройка_демонов">Настройка демонов</span>
 </h2>
 <h3><span class="mw-headline" id="NTPD">NTPD</span></h3>
-<p>Создайте подходящую настройку сервера времени NTP. Для пояснения и настройки дополнительных опций смотрите <a href="../ru/Network_Time_Protocol_daemon.html" title="Network Time Protocol daemon (Русский)">Ntpd</a>.
+<p>Создайте подходящую настройку сервера времени NTP. Для пояснения и настройки дополнительных опций смотрите <a href="/title/Network_Time_Protocol_daemon_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Network Time Protocol daemon (Русский)">Ntpd</a>.
 Создать резервную копию файла по умолчанию:
 </p>
 <pre># mv /etc/ntp.conf{,.default}
@@ -181,8 +187,7 @@ restrict 2.pool.ntp.org mask 255.255.255.255 nomodify notrap nopeer noquery
 
 # Конец /etc/ntp.conf
 </pre>
-<p><br>
-Создайте каталог и установите права:
+<p>Создайте каталог и установите права:
 </p>
 <pre># install -d /var/lib/samba/ntp_signd
 # chown root:ntp /var/lib/samba/ntp_signd
@@ -191,7 +196,7 @@ restrict 2.pool.ntp.org mask 255.255.255.255 nomodify notrap nopeer noquery
 <p>Включите и запустите службу <code>ntpd</code>.
 </p>
 <h3><span class="mw-headline" id="BIND">BIND</span></h3>
-<p>Если вы решили использовать <b>BIND9_DLZ</b> DNS бэкенд, <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">установите</a> пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bind">bind</a></span> и создайте следующую конфигурацию BIND. Смотрите <a href="../en/BIND.html" title="BIND">BIND</a> для объяснения, и дополнительных опций настройки. Замените символы <b>x</b> на верные, подходящие значения:
+<p>Если вы решили использовать <b>BIND9_DLZ</b> DNS бэкенд, <a href="/title/Install" class="mw-redirect" title="Install">установите</a> пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=bind">bind</a></span> и создайте следующую конфигурацию BIND. Смотрите <a href="/title/BIND" title="BIND">BIND</a> для объяснения, и дополнительных опций настройки. Замените символы <b>x</b> на верные, подходящие значения:
 Для начала, создайте резервную копию файла настроек по умолчанию:
 </p>
 <pre># mv /etc/named.conf{,.default}
@@ -421,7 +426,7 @@ Valid starting       Expires              Service principal
         DNS Client
           Dynamic Update = Disabled
           Register PTR Records = Disabled</pre>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Установите</a> пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dhcp">dhcp</a></span>.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Установите</a> пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dhcp">dhcp</a></span>.
 </p>
 <p>Создайте непривилегированного пользователя в AD для выполнения обновления. При запросе пароля, используйте безопасный пароль. Достаточно 63 случайных, смешанных, буквенно-циферных символов. 
 По желанию samba-tool также берет случайный аргумент:
@@ -819,17 +824,20 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
 </h2>
 <p>Если вы зашли настолько далеко, что не покинули указанных выше испытаний, - вы на верном пути. Поздравляем! Вот некоторые темы, по расширению вашего сервера AD:
 </p>
-<p><a href="../en/Active_Directory_integration.html" title="Active Directory integration">Active Directory integration</a> - This article explains how to attach Linux clients to an Active Directory domain.
+<p><a href="/title/Active_Directory_integration" title="Active Directory integration">Active Directory integration</a> - This article explains how to attach Linux clients to an Active Directory domain.
 </p>
-<p><a href="../en/SOGo.html" title="SOGo">SOGo</a> - The OpenChange project provides a Microsoft Exchange compatible mail server using only open source software.
+<p><a href="/title/SOGo" title="SOGo">SOGo</a> - The OpenChange project provides a Microsoft Exchange compatible mail server using only open source software.
 </p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../ru/Category:Network_sharing.html" title="Category:Network sharing (Русский)">Network sharing (Русский)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Network_sharing_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Category:Network sharing (Русский)">Network sharing (Русский)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Bad_translation" title="Category:Pages or sections flagged with Template:Bad translation">Pages or sections flagged with Template:Bad translation</a></li>
+<li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -837,15 +845,15 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Samba_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)/Active_Directory_domain_controller_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=626729">https://wiki.archlinux.org/index.php?title=Samba_(Русский)/Active_Directory_domain_controller_(Русский)&amp;oldid=626729</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 25 July 2020, at 06:53.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Samba_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)/Active_Directory_domain_controller_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=665400">https://wiki.archlinux.org/index.php?title=Samba_(Русский)/Active_Directory_domain_controller_(Русский)&amp;oldid=665400</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 29 April 2021, at 20:12.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

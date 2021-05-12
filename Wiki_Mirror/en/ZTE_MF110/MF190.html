@@ -62,7 +62,7 @@
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <h3><span class="mw-headline" id="Switch_from_CD_mode_to_modem_mode_on_the_device">Switch from CD mode to modem mode on the device</span></h3>
-<p>When you first plug the device, it is identified as a USB SCSI CD-ROM. You can find out the name of the device by using this:
+<p>When you first plug the device, it is identified as a USB SCSI CD-ROM. You can find out the name of the device by using <a href="/title/Dmesg" class="mw-redirect" title="Dmesg">dmesg</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># dmesg | tail</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[ 6102.172283] usb 1-5: new high-speed USB device number 4 using ehci_hcd
@@ -119,7 +119,7 @@ Init2 = AT+ZCDRUN=8
 <p>Run <code>wvdial</code>, it should use those commands and fail to connect. Once it exits, unplug the stick and plug it back in and it should be seen as a modem.
 </p>
 <h3><span class="mw-headline" id="Setup_udev_rules">Setup udev rules</span></h3>
-<p>Create the following <a href="../../en/Udev.html" title="Udev">udev</a> rule:
+<p>Create the following <a href="/title/Udev" title="Udev">udev</a> rule:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/udev/rules.d/90-zte.conf.rules</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;"># This is the Modem part of the card, let us load usbserial with the correct vendor and product IDs so we get our usb serial devices
@@ -129,7 +129,7 @@ ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="19d2", ATTRS{idProduct}=="012
 # This is the ZeroCD part of the card
 ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="19d2", ATTRS{idProduct}=="0150", RUN+="/usr/bin/eject /dev/sr1"</pre>
 <h3><span class="mw-headline" id="Create_a_wvdial_configuration">Create a wvdial configuration</span></h3>
-<p><a href="../../en/Wvdial.html" title="Wvdial">Wvdial</a> is an easy-to-use frontend to PPPd.  The configuration is fairly easy to comprehend.  Make sure you replace the <code>/dev/ttyUSB2</code> line with the node that your USB modem is connected to, you can see that with <code>dmesg</code>.  Save as <code>/etc/wvdial.conf</code>:
+<p><a href="/title/Wvdial" title="Wvdial">Wvdial</a> is an easy-to-use frontend to PPPd.  The configuration is fairly easy to comprehend.  Make sure you replace the <code>/dev/ttyUSB2</code> line with the node that your USB modem is connected to, you can see that with <i>dmesg</i>.  Save as <code>/etc/wvdial.conf</code>:
 </p>
 <pre>[Dialer Defaults]
 
@@ -164,30 +164,30 @@ Init7 = AT+CGEQREQ=1,4,64,640,64,640
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
-<li><a href="../../en/Mobile_broadband_modem.html" class="mw-redirect" title="USB 3G Modem">USB 3G Modem</a></li>
-<li><a href="../../en/ZTE_MF626_/_MF636.html" title="ZTE MF626 / MF636">ZTE MF626 / MF636</a></li>
-<li>Thanks to the following web pages that gave me all this information: <a rel="nofollow" class="external autonumber" href="http://blog.ufsoft.org/zte-mf622-usb-modem-under-linux">[1]</a><a rel="nofollow" class="external autonumber" href="http://wiki.bandaancha.st/APN_de_las_operadoras_para_configurar_el_m%C3%B3dem_de_Internet_m%C3%B3vil_3G">[2]</a>
+<li><a href="/title/USB_3G_Modem" class="mw-redirect" title="USB 3G Modem">USB 3G Modem</a></li>
+<li><a href="/title/ZTE_MF626_/_MF636" title="ZTE MF626 / MF636">ZTE MF626 / MF636</a></li>
+<li>Thanks to the following web pages that gave me all this information: <a rel="nofollow" class="external autonumber" href="http://blog.ufsoft.org/zte-mf622-usb-modem-under-linux">[1]</a><a rel="nofollow" class="external autonumber" href="https://wiki.bandaancha.st/APN_de_las_operadoras_para_configurar_el_m%C3%B3dem_de_Internet_m%C3%B3vil_3G">[2]</a>
 </li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../../en/Category:Modems.html" title="Category:Modems">Modems</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Modems" title="Category:Modems">Modems</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ZTE_MF110/MF190&amp;oldid=662983">https://wiki.archlinux.org/index.php?title=ZTE_MF110/MF190&amp;oldid=662983</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 05:09.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=ZTE_MF110/MF190&amp;oldid=669603">https://wiki.archlinux.org/index.php?title=ZTE_MF110/MF190&amp;oldid=669603</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 12:01.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

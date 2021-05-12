@@ -36,14 +36,14 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Articoli correlati</p>
 <ul>
-<li><a href="../en/Sound_system.html" title="Sound system">Sound system</a></li>
-<li><a href="../en/PC_speaker.html" class="mw-redirect" title="Disable PC Speaker Beep">Disable PC Speaker Beep</a></li>
+<li><a href="/title/Sound_system" title="Sound system">Sound system</a></li>
+<li><a href="/title/Disable_PC_Speaker_Beep" class="mw-redirect" title="Disable PC Speaker Beep">Disable PC Speaker Beep</a></li>
 </ul>
 </div>
 <p>L' <a href="https://en.wikipedia.org/wiki/Advanced_Linux_Sound_Architecture" class="extiw" title="wikipedia:Advanced Linux Sound Architecture">Architettura Avanzata per il Suono su Linux</a> (conosciuta con l'acronimo di <b>ALSA</b>) è un componente del kernel che rimpiazza l'originale Open Sound System (OSSv3) utilizzato per fornire driver di periferica per le schede audio. Oltre ai driver audio, <b>ALSA</b> mette a disposizione anche una libreria in spazio-utente per sviluppatori di applicazioni che vogliano utilizzare le funzioni dei driver tramite un'API piuttosto che con un'interazione diretta con i driver del kernel.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong>  Per una eventuale alternativa consultare la pagina <a href="../en/Open_Sound_System.html" class="mw-redirect" title="OSS">OSS</a>.</div>
+<strong>Nota:</strong>  Per una eventuale alternativa consultare la pagina <a href="/title/OSS" class="mw-redirect" title="OSS">OSS</a>.</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -154,13 +154,13 @@
 <h2><span class="mw-headline" id="Installazione">Installazione</span></h2>
 <p>ALSA è incluso nel kernel di default di Arch come insieme di moduli, perciò non è necessario installarlo esplicitamente.
 </p>
-<p><a href="../it/Udev.html" title="Udev (Italiano)">Udev</a> interrogherà automaticamente l'hardware al boot, caricando il modulo del kernel corretto per l'hardware rilevato. Perciò, la scheda audio dovrebbe essere subito funzionante, ma di default la configurazione prevederà che tutti i canali siano impostati su muto.
+<p><a href="/title/Udev_(Italiano)" title="Udev (Italiano)">Udev</a> interrogherà automaticamente l'hardware al boot, caricando il modulo del kernel corretto per l'hardware rilevato. Perciò, la scheda audio dovrebbe essere subito funzionante, ma di default la configurazione prevederà che tutti i canali siano impostati su muto.
 </p>
-<p>Gli utenti con un login locale (su terminale virtuale o tramite display manager) hanno la facoltà di riprodurre l'audio e modificare i canali del mixer. Per consentire queste operazioni a chi ha un login remoto, l'utente deve essere <a href="../it/Users_and_groups.html#Gestione_dei_gruppi" class="mw-redirect" title="Utenti e Gruppi">inserito</a> nel gruppo <code>audio</code>. L'aggiunta dell'utente al gruppo <code>audio</code> consente anche l'accesso diretto ai dispositivi, e ciò potrebbe portare alcune applicazioni ad impadronirsi in maniera esclusive di alcune uscite (rendendo impossibile il mixaggio software), impedire il passaggio rapido ad un altro utente, ed il sistema multiseat. Per questi motivi l'aggiunto di un utente al gruppo <code>audio</code> <b>non</b> è raccomandata, a meno di necessità specifiche. <a rel="nofollow" class="external autonumber" href="https://wiki.ubuntu.com/Audio/TheAudioGroup">[1]</a>.
+<p>Gli utenti con un login locale (su terminale virtuale o tramite display manager) hanno la facoltà di riprodurre l'audio e modificare i canali del mixer. Per consentire queste operazioni a chi ha un login remoto, l'utente deve essere <a href="/title/Utenti_e_Gruppi#Gestione_dei_gruppi" class="mw-redirect" title="Utenti e Gruppi">inserito</a> nel gruppo <code>audio</code>. L'aggiunta dell'utente al gruppo <code>audio</code> consente anche l'accesso diretto ai dispositivi, e ciò potrebbe portare alcune applicazioni ad impadronirsi in maniera esclusive di alcune uscite (rendendo impossibile il mixaggio software), impedire il passaggio rapido ad un altro utente, ed il sistema multiseat. Per questi motivi l'aggiunto di un utente al gruppo <code>audio</code> <b>non</b> è raccomandata, a meno di necessità specifiche. <a rel="nofollow" class="external autonumber" href="https://wiki.ubuntu.com/Audio/TheAudioGroup">[1]</a>.
 </p>
 <h3><span class="mw-headline" id="Utility">Utility</span></h3>
-<p>Installare dai <a href="../it/Official_repositories.html" title="Official repositories (Italiano)">repository ufficiali</a> il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-utils">alsa-utils</a></span>, contenente lo strumento <code>alsamixer</code>, che consente la configurazione delle periferiche audio tramite console o terminale. Installare anche il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-plugins">alsa-plugins</a></span> se si necessità del <a href="#Ricampionamento_in_alta_qualit%C3%A0">ricampionamento in alta qualità</a>, dell'<a href="#Upmixing/Downmixing">upmixing/downmixing</a> e di altre funzionalità avanzate. 
-Se si vuole che le applicazioni basate su <a href="../it/Open_Sound_System.html" title="Open Sound System (Italiano)">OSS</a> funzionino tramite dmix (mixaggio software) installare anche il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-oss">alsa-oss</a></span>. Caricare i <a href="../it/Kernel_module.html" class="mw-redirect" title="Kernel modules (Italiano)">moduli del kernel</a> <code>snd_seq_oss</code>, <code>snd_pcm_oss</code> e <code>snd_mixer_oss</code> per abilitare i componenti di emulazione di OSS.
+<p>Installare dai <a href="/title/Official_repositories_(Italiano)" title="Official repositories (Italiano)">repository ufficiali</a> il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-utils">alsa-utils</a></span>, contenente lo strumento <code>alsamixer</code>, che consente la configurazione delle periferiche audio tramite console o terminale. Installare anche il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-plugins">alsa-plugins</a></span> se si necessità del <a href="#Ricampionamento_in_alta_qualit%C3%A0">ricampionamento in alta qualità</a>, dell'<a href="#Upmixing/Downmixing">upmixing/downmixing</a> e di altre funzionalità avanzate. 
+Se si vuole che le applicazioni basate su <a href="/title/Open_Sound_System_(Italiano)" title="Open Sound System (Italiano)">OSS</a> funzionino tramite dmix (mixaggio software) installare anche il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=alsa-oss">alsa-oss</a></span>. Caricare i <a href="/title/Kernel_modules_(Italiano)" class="mw-redirect" title="Kernel modules (Italiano)">moduli del kernel</a> <code>snd_seq_oss</code>, <code>snd_pcm_oss</code> e <code>snd_mixer_oss</code> per abilitare i componenti di emulazione di OSS.
 </p>
 <h2><span class="mw-headline" id="Togliere_il_muto_ai_canali">Togliere il muto ai canali</span></h2>
 <p>La versione attuale di ALSA, viene installata con tutti i canali impostati su <b>muto di default</b>. Sarà necessario togliere il "muto" manualmente. Il metodo più semplice per fare ciò è utilizzare l'interfaccia utente in ncurses <code>alsamixer</code>.
@@ -262,9 +262,9 @@ Ad esempio, consideriamo il caso in cui si sia creato un downmix PCM dal nome <b
 </p>
 <h4><span class="mw-headline" id="Metodo_alternativo">Metodo alternativo</span></h4>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="/title/File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b>  Queste istruzioni potrebbero non essere più valide (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Advanced_Linux_Sound_Architecture_(Italiano)">Talk:Advanced Linux Sound Architecture (Italiano)#</a>)</div>
+<b>Reason:</b>  Queste istruzioni potrebbero non essere più valide (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Advanced_Linux_Sound_Architecture_(Italiano)">Talk:Advanced Linux Sound Architecture (Italiano)#</a>)</div>
 </div>
 <p>Bisogna innanzitutto rilevare gli id della scheda e del dispositivo che si vogliono impostare come predefiniti eseguendo <code>aplay -l</code>.
 </p>
@@ -309,7 +309,7 @@ snd_page_alloc         7017    2  snd_hda_intel,snd_pcm
 <p>Se l'output è simile, i driver audio sono stati autorilevati con successo. Si può anche controllare la directory <code>/dev/snd</code> per visualizzare i giusti file del dispositivo:
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> A partire da udev&gt;=171, i moduli per l'emulazione OSS (<code>snd_seq_oss, snd_pcm_oss, snd_mixer_oss</code>) non sono più caricati automaticamente di default: <a href="../it/Kernel_module.html#Caricamento" class="mw-redirect" title="Kernel modules (Italiano)">Impostarne il caricamento</a> se si desidera che vengano caricati automaticamente ad ogni avvio.</div>
+<strong>Nota:</strong> A partire da udev&gt;=171, i moduli per l'emulazione OSS (<code>snd_seq_oss, snd_pcm_oss, snd_mixer_oss</code>) non sono più caricati automaticamente di default: <a href="/title/Kernel_modules_(Italiano)#Caricamento" class="mw-redirect" title="Kernel modules (Italiano)">Impostarne il caricamento</a> se si desidera che vengano caricati automaticamente ad ogni avvio.</div>
 <p>Si potrebbe anche controllare la directory <code>/dev/snd/</code> per conoscere i nomi di dispositivo corretti:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ls -l /dev/snd/</pre>
@@ -331,11 +331,11 @@ crw-rw----  1 root audio 116, 33 Apr  8 14:17 timer
 <p>Altrimenti, i moduli audio non sono stati rilevati correttamente. Per risolvere, provare a caricare i moduli manualmente:
 </p>
 <ul>
-<li>Individuare il modulo della scheda audio: <a rel="nofollow" class="external text" href="http://www.alsa-project.org/main/index.php/Matrix:Main">ALSA Soundcard Matrix</a>. Il modulo sarà preceduto dal suffisso 'snd-' (ad esempio: 'snd-via82xx').</li>
+<li>Individuare il modulo della scheda audio: <a rel="nofollow" class="external text" href="https://www.alsa-project.org/main/index.php/Matrix:Main">ALSA Soundcard Matrix</a>. Il modulo sarà preceduto dal suffisso 'snd-' (ad esempio: 'snd-via82xx').</li>
 <li>
-<a href="../it/Kernel_module.html#Caricamento" class="mw-redirect" title="Kernel modules (Italiano)">Caricare i moduli</a>:</li>
+<a href="/title/Kernel_modules_(Italiano)#Caricamento" class="mw-redirect" title="Kernel modules (Italiano)">Caricare i moduli</a>:</li>
 <li>Controllare i file del dispositivo in <code>/dev/snd</code> (vedi sopra) e/o provare se <code>alsamixer</code> o <code>amixer</code> hanno un corretto output.</li>
-<li>Configurare <code>snd-NOME-DEL-MODULO</code> e <code>snd-pcm-oss</code> in modo che <a href="../it/Kernel_module.html#Caricamento" class="mw-redirect" title="Kernel modules (Italiano)">vengano caricati all'avvio</a>.</li>
+<li>Configurare <code>snd-NOME-DEL-MODULO</code> e <code>snd-pcm-oss</code> in modo che <a href="/title/Kernel_modules_(Italiano)#Caricamento" class="mw-redirect" title="Kernel modules (Italiano)">vengano caricati all'avvio</a>.</li>
 </ul>
 <h3><span class="mw-headline" id="Ottenere_un_output_SPDIF">Ottenere un output SPDIF</span></h3>
 <p>(da gralves dai forum di Gentoo)
@@ -366,7 +366,7 @@ amixer set 'Audigy Analog/Digital Output Jack' on
 <h4>
 <span id="Utilizzando_AlsaEqual_.28fornisce_l.E2.80.99interfaccia_grafica.29"></span><span class="mw-headline" id="Utilizzando_AlsaEqual_(fornisce_l’interfaccia_grafica)">Utilizzando AlsaEqual (fornisce l’interfaccia grafica)</span>
 </h4>
-<p>Installare <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/alsaequal/">alsaequal</a></span><sup><small>AUR</small></sup> da <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>.
+<p>Installare <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/alsaequal/">alsaequal</a></span><sup><small>AUR</small></sup> da <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong>  Se si utilizza un sistema x86_64 e 32bit-flashplugin, il suono in flash non funzionerà. Si dovrà quindi o disabilitare alsaequal o compilarlo per 32bit.</div>
@@ -399,13 +399,13 @@ pcm.!default {
 </p>
 <pre>$ alsamixer -D equal</pre>
 <p>Si noti che il file di configurazione, diverso per ogni utente (se non diversamente specificato), viene salvato in <code>$HOME/.alsaequal.bin</code>.
-Perciò se si vuole utilizzare AlsaEqual con <a href="../en/Music_Player_Daemon.html" class="mw-redirect" title="Mpd">mpd</a> o con un altro software, con un utente diverso, è possibile configurarlo con il comando:
+Perciò se si vuole utilizzare AlsaEqual con <a href="/title/Mpd" class="mw-redirect" title="Mpd">mpd</a> o con un altro software, con un utente diverso, è possibile configurarlo con il comando:
 </p>
 <pre># su mpd -c 'alsamixer -D equal</pre>
 <p>Oppure, è possibile creare un link simbolico a <code>.alsaequal.bin</code> nella home di quell’utente.
 </p>
 <h5><span class="mw-headline" id="Gestire_gli_stati_di_AlsaEqual">Gestire gli stati di AlsaEqual</span></h5>
-<p>Installare <a rel="nofollow" class="external text" href="http://xyne.archlinux.ca/projects/alsaequal-mgr/">alsaequal-mgr</a> da <a rel="nofollow" class="external text" href="http://xyne.archlinux.ca/repos/">Xyne's repos</a> o da <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages.php?ID=62420">AUR</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">link interrotto</a> 2020-08-02]</sup>.
+<p>Installare <a rel="nofollow" class="external text" href="https://xyne.archlinux.ca/projects/alsaequal-mgr/">alsaequal-mgr</a> da <a rel="nofollow" class="external text" href="https://xyne.archlinux.ca/repos/">Xyne's repos</a> o da <a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages.php?ID=62420">AUR</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">link interrotto</a> 2020-08-02]</sup>.
 </p>
 <p>Configurare l'equalizzatore come al solito tramite
 </p>
@@ -421,7 +421,7 @@ Perciò se si vuole utilizzare AlsaEqual con <a href="../en/Music_Player_Daemon.
 </p>
 <p>È quindi possibile creare stati differenziati per giochi, film, generi musicali, applicazioni VoIP, etc. e caricarli quando necessario.
 </p>
-<p>Consultare <a rel="nofollow" class="external text" href="http://xyne.archlinux.ca/projects/alsaequal-mgr/">project page</a> ed i messaggi di aiuto per ulteriori informazioni.
+<p>Consultare <a rel="nofollow" class="external text" href="https://xyne.archlinux.ca/projects/alsaequal-mgr/">project page</a> ed i messaggi di aiuto per ulteriori informazioni.
 </p>
 <h4><span class="mw-headline" id="Utilizzando_mbeq">Utilizzando mbeq</span></h4>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -594,12 +594,12 @@ $ echo "et.x86 0 0 disable" &gt; /proc/asound/card0/pcm0c/oss</pre>
 <h2><span class="mw-headline" id="Risoluzione_dei_problemi">Risoluzione dei problemi</span></h2>
 <h3><span class="mw-headline" id="Suono_che_salta_utilizzando_Dynamic_Frequency_Scaling">Suono che salta utilizzando Dynamic Frequency Scaling</span></h3>
 <p>Alcune combinazioni di determinati driver ALSA e chipset, possono causare dei "salti" nel suono da tutte le sorgenti se utilizzati in combinazione con  un governor dinamico della frequenza della cpu come <code>ondemand</code> o <code>conservative</code>. Attualmente, l'unica soluzione è di passare al governor <code>performance</code>.	
-Fare riferimento alla pagina <a href="../it/CPU_frequency_scaling.html" title="CPU frequency scaling (Italiano)">CPU frequency scaling (Italiano)</a> per ulteriori informazioni.
+Fare riferimento alla pagina <a href="/title/CPU_frequency_scaling_(Italiano)" title="CPU frequency scaling (Italiano)">CPU frequency scaling (Italiano)</a> per ulteriori informazioni.
 </p>
 <h3>
 <span id="Problemi_con_la_disponibilit.C3.A0_del_mixaggio_software_per_pi.C3.B9_di_un_utente_per_volta"></span><span class="mw-headline" id="Problemi_con_la_disponibilità_del_mixaggio_software_per_più_di_un_utente_per_volta">Problemi con la disponibilità del mixaggio software per più di un utente per volta</span>
 </h3>
-<p>Può capitare di rilevare che solo un utente per volta può utilizzare dmix. Questa situazione può andar bene per la maggior parte degli utenti, ma coloro i quali utilizzano <a href="../en/Music_Player_Daemon.html" class="mw-redirect" title="Mpd">mpd</a> come utente differente, ciò diviene un problema. Quando mpd è in esecuzione un utente non può eseguire suoni tramite dmix. Nonostante sia sufficiente eseguire mpd tramite l'account utente di login, è stata trovata anche un'altra soluzione. L'aggiunta della riga <code>ipc_key_add_uid 0</code> al blocco <code>pcm.dmixer</code> disabilita questa limitazione. Quello seguente è un estratto del codice di <code>/etc/asound.conf</code>, il resto è identico a quello mostrato in precedenza.
+<p>Può capitare di rilevare che solo un utente per volta può utilizzare dmix. Questa situazione può andar bene per la maggior parte degli utenti, ma coloro i quali utilizzano <a href="/title/Mpd" class="mw-redirect" title="Mpd">mpd</a> come utente differente, ciò diviene un problema. Quando mpd è in esecuzione un utente non può eseguire suoni tramite dmix. Nonostante sia sufficiente eseguire mpd tramite l'account utente di login, è stata trovata anche un'altra soluzione. L'aggiunta della riga <code>ipc_key_add_uid 0</code> al blocco <code>pcm.dmixer</code> disabilita questa limitazione. Quello seguente è un estratto del codice di <code>/etc/asound.conf</code>, il resto è identico a quello mostrato in precedenza.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/asound.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">...
@@ -612,7 +612,7 @@ slave {
 ...
 </pre>
 <h3><span class="mw-headline" id="Problemi_di_riproduzione_simultanea">Problemi di riproduzione simultanea</span></h3>
-<p>Se si  hanno problemmi a riprodurre più tracce contemporaneamente, e se è installto <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a> (ad esempio utilizzando <a href="../en/GNOME.html" title="GNOME">GNOME</a>), la sua configurazione di default verrà utilizzata automaticamente. Alcuni utenti potrebbero non voler utilizzare <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a> trovandosi bene con le proprie configurazioni di ALSA. Un metodo per risolvere il problema, è modificare il file <code>/etc/asound.conf</code> e commentare le righe seguenti:
+<p>Se si  hanno problemmi a riprodurre più tracce contemporaneamente, e se è installto <a href="/title/PulseAudio" title="PulseAudio">PulseAudio</a> (ad esempio utilizzando <a href="/title/GNOME" title="GNOME">GNOME</a>), la sua configurazione di default verrà utilizzata automaticamente. Alcuni utenti potrebbero non voler utilizzare <a href="/title/PulseAudio" title="PulseAudio">PulseAudio</a> trovandosi bene con le proprie configurazioni di ALSA. Un metodo per risolvere il problema, è modificare il file <code>/etc/asound.conf</code> e commentare le righe seguenti:
 </p>
 <pre># Use PulseAudio by default
 #pcm.!default {
@@ -631,7 +631,7 @@ slave {
 #  fallback "sysdefault"
 #}
 </pre>
-<p>Questa può rivelarsi una soluzione più semplice rispetto alla totale disinstallazione di <a href="../en/PulseAudio.html" title="PulseAudio">PulseAudio</a>.
+<p>Questa può rivelarsi una soluzione più semplice rispetto alla totale disinstallazione di <a href="/title/PulseAudio" title="PulseAudio">PulseAudio</a>.
 Qui di seguito viene mostrato un esempio di un <code>/etc/asound.conf</code> correttamente funzionante.
 </p>
 <pre>cm.dmixer {
@@ -646,7 +646,7 @@ pcm.dsp {
 }
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong>  Questo <code>/etc/asound.conf</code> è stato creato ed utilizzato con successo per una configurazione globale di <a href="../it/Music_Player_Daemon.html" title="Music Player Daemon (Italiano)">MPD</a>. Consultare <a href="#Problemi_con_la_disponibilit%C3%A0_del_mixaggio_software_per_pi%C3%B9_di_un_utente_per_volta">questa sezione</a>
+<strong>Nota:</strong>  Questo <code>/etc/asound.conf</code> è stato creato ed utilizzato con successo per una configurazione globale di <a href="/title/Music_Player_Daemon_(Italiano)" title="Music Player Daemon (Italiano)">MPD</a>. Consultare <a href="#Problemi_con_la_disponibilit%C3%A0_del_mixaggio_software_per_pi%C3%B9_di_un_utente_per_volta">questa sezione</a>
 </div>
 <h3><span class="mw-headline" id="Mancanza_di_suono_casuale">Mancanza di suono casuale</span></h3>
 <p>Si può testare velocemente il comparto audio eseguendo <code>speaker-test</code>. Se non viene emesso alcun suono, il messaggio d'errore dovrebbe essere qualcosa di simile a:
@@ -656,10 +656,10 @@ Playback open error: -16
 Device or resource busy</pre>
 <p>Se non si ottiene alcun suono all'avvio del sistema, può darsi che sul proprio sistema siano presenti più schede audio, e che il loro ordine cambi ad ogni avvio. Se fosse questo il caso, seguire <a href="#Impostare_la_scheda_audio_predefinita">#Impostare la scheda audio predefinita</a>
 </p>
-<p>Se si utilizza mpd ed il consiglio precedente non dovesse funzionare provare [<a rel="nofollow" class="external text" href="http://mpd.wikia.com/wiki/Configuration#ALSA_MPD_software_volume_control">questa soluzione</a>
+<p>Se si utilizza mpd ed il consiglio precedente non dovesse funzionare provare [<a rel="nofollow" class="external text" href="https://mpd.wikia.com/wiki/Configuration#ALSA_MPD_software_volume_control">questa soluzione</a>
 </p>
 <h4><span class="mw-headline" id="Timidity">Timidity</span></h4>
-<p><a href="../en/Timidity++.html" class="mw-redirect" title="Timidity">Timidity</a> potrebbe essere la causa della mancanza di suono. Provare ad eseguire:
+<p><a href="/title/Timidity" class="mw-redirect" title="Timidity">Timidity</a> potrebbe essere la causa della mancanza di suono. Provare ad eseguire:
 </p>
 <p><code>systemctl status timidity</code>
 </p>
@@ -690,7 +690,7 @@ sembra non funzionare più, al suo posto si può utilizzare
 </p>
 <pre>options snd-hda-intel model=MODEL
 </pre>
-<p>Ci sono anche altri modelli da impostare. Nella maggior parte dei casi Alsa lo farà in automatico. Se si vogliono vedere nel dettaglio le impostazioni della propria scheda audio si veda <a rel="nofollow" class="external text" href="http://bugtrack.alsa-project.org/main/index.php/Matrix:Main">Alsa Soundcard List</a>, si individui il proprio modello, si clicchi su “<i>Details</i>” e si osservi la sezione "<i>Setting up modprobe...</i>". Inserire i valori trovati in <code>/etc/modprobe.d/modprobe.conf</code>.  Ad esempio, per una scheda AC97 Intel:
+<p>Ci sono anche altri modelli da impostare. Nella maggior parte dei casi Alsa lo farà in automatico. Se si vogliono vedere nel dettaglio le impostazioni della propria scheda audio si veda <a rel="nofollow" class="external text" href="https://bugtrack.alsa-project.org/main/index.php/Matrix:Main">Alsa Soundcard List</a>, si individui il proprio modello, si clicchi su “<i>Details</i>” e si osservi la sezione "<i>Setting up modprobe...</i>". Inserire i valori trovati in <code>/etc/modprobe.d/modprobe.conf</code>.  Ad esempio, per una scheda AC97 Intel:
 </p>
 <pre># ALSA portion
 alias char-major-116 snd
@@ -731,7 +731,7 @@ alias sound-service-0-12 snd-pcm-oss</pre>
 <p>Alcuni portatili Dell richiedono che il suffisso "-dmic" sia aggiunto al nome del modello all'interno di <code>/etc/modprobe.d/modprobe.conf</code>:
 <code>options snd-hda-intel model=dell-m6-dmic</code>
 </p>
-<p>Alcuni programmi tentano di utilizzare OSS come software di input principale. Se sono stati abilitati in precedenza i <a href="../it/Kernel_module.html" class="mw-redirect" title="Kernel modules (Italiano)">moduli del kernel</a> <code>snd_pcm_oss</code>, <code>snd_mixer_oss</code> o <code>snd_seq_oss</code> (di default non sono caricati automaticamente), provare a scaricarli.
+<p>Alcuni programmi tentano di utilizzare OSS come software di input principale. Se sono stati abilitati in precedenza i <a href="/title/Kernel_modules_(Italiano)" class="mw-redirect" title="Kernel modules (Italiano)">moduli del kernel</a> <code>snd_pcm_oss</code>, <code>snd_mixer_oss</code> o <code>snd_seq_oss</code> (di default non sono caricati automaticamente), provare a scaricarli.
 </p>
 <h3>
 <span id="Impostazione_predefinita_Microfono.2FDispositivo_di_acquisizione"></span><span class="mw-headline" id="Impostazione_predefinita_Microfono/Dispositivo_di_acquisizione">Impostazione predefinita Microfono/Dispositivo di acquisizione</span>
@@ -796,7 +796,7 @@ pcm.!default
 <strong>Nota:</strong>  Potrebbe essere necessario inserire queste "opzioni" dopo eventuali "alias"</div>
 <p>Si possono visualizzare tutti i modelli disponibili nella documentazione del kernel. Ad esempio <a rel="nofollow" class="external text" href="https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/tree/Documentation/sound/alsa/HD-Audio-Models.txt">qui</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">link interrotto</a> 2020-08-02]</sup>, ma accertarsi che si tratti della documentazione della versione del kernel in uso.
 </p>
-<p>Un elenco di tutti i modelli è anche disponibile a <a rel="nofollow" class="external text" href="http://www.mjmwired.net/kernel/Documentation/sound/alsa/HD-Audio-Models.txt">questo indirizzo</a>. Per conoscere il nome del proprio chip eseguire il seguente comando
+<p>Un elenco di tutti i modelli è anche disponibile a <a rel="nofollow" class="external text" href="https://www.mjmwired.net/kernel/Documentation/sound/alsa/HD-Audio-Models.txt">questo indirizzo</a>. Per conoscere il nome del proprio chip eseguire il seguente comando
 <code>$ grep Codec /proc/asound/card*/codec*</code>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -922,7 +922,7 @@ Ad esempio: per disabilitare il risparmio energetico utilizzando snd_hda_intel a
 <p>La procedura esposta di seguito consente di testare il funzionamento dell'uscita audio HDMI. Prima di procede, accertarsi di aver abilitato e levato il muto all'output corrispondente tramite <code>alsamixer</code>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Se si utilizza una scheda video ATI ed un kernel linux &gt;=3.0, un modulo del kernel necessario risulterà disabilitato. Consultare <a href="../en/ATI.html#HDMI_audio" title="ATI">ATI#HDMI audio</a>.</div>
+<strong>Note:</strong> Se si utilizza una scheda video ATI ed un kernel linux &gt;=3.0, un modulo del kernel necessario risulterà disabilitato. Consultare <a href="/title/ATI#HDMI_audio" title="ATI">ATI#HDMI audio</a>.</div>
 <p>Collegare il pc al monitor tramite cavo HDMI ed abilitare il display con un tool come <code>xrandr</code> o <code>arandr</code>. Ad esempio 
 </p>
 <pre>$ xrandr # list outputs
@@ -974,7 +974,7 @@ options snd-hda-intel index=0 model=toshiba position_fix=1
 <p>Se si hanno salti di suono durante la riproduzione di file MP3 e se al computer sono collegati di più di 2 altoparlanti (o più di due), eseguire <code> alsamixer</code> e disabilitare i canali degli altoparlanti che <b>NON</b> si posseggono (ad esempio, disabilitare il canale dell’altoparlante centrale se non si dispone di un altoparlante centrale).
 </p>
 <h3><span class="mw-headline" id="Cuffia_USB_e_schede_audio_esterne_USB">Cuffia USB e schede audio esterne USB</span></h3>
-<p>Se si utilizza una cuffia USB con ALSA, si può provare ad usare <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=asoundconf">asoundconf</a></span> (attualmente disponibile solo da <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>) per impostare l'auricolare come uscita audio principale. Prima di proseguire,  assicurarsi di avere abilitato il modulo usb audio (<code>modprobe snd-usb-audio</code>).
+<p>Se si utilizza una cuffia USB con ALSA, si può provare ad usare <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=asoundconf">asoundconf</a></span> (attualmente disponibile solo da <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a>) per impostare l'auricolare come uscita audio principale. Prima di proseguire,  assicurarsi di avere abilitato il modulo usb audio (<code>modprobe snd-usb-audio</code>).
 </p>
 <pre>#modprobe snd-usb-audio
 </pre>
@@ -990,7 +990,7 @@ Aggiungere questo codice a <code>/etc/modprobe.d/modprobe.conf</code> :
 </p>
 <pre>options snd-usb-audio nrpacks=1
 </pre>
-<p>Fonte: <a rel="nofollow" class="external free" href="http://alsa.opensrc.org/Usb-audio#Tuning_USB_devices_for_minimal_latencies">http://alsa.opensrc.org/Usb-audio#Tuning_USB_devices_for_minimal_latencies</a>
+<p>Fonte: <a rel="nofollow" class="external free" href="https://alsa.opensrc.org/Usb-audio#Tuning_USB_devices_for_minimal_latencies">https://alsa.opensrc.org/Usb-audio#Tuning_USB_devices_for_minimal_latencies</a>
 </p>
 <h4><span class="mw-headline" id="Inserimento_a_caldo_di_una_scheda_audio_USB">Inserimento a caldo di una scheda audio USB</span></h4>
 <p>Per fare in modo che una scheda audio USB diventi al suo inserimento automaticamente la scheda principale, si può utilizzare la seguente regola di udev (ad esempio aggiungendo queste righe al file <code>/etc/udev/rules.d/00-local.rules</code>):
@@ -1022,7 +1022,7 @@ Hardware is initialized using a generic method
 <p>Potrebbe essere necessario configurare nuovamente ALSA tramite <code>alsamixer</code>
 </p>
 <h3><span class="mw-headline" id="HDA_Analyzer">HDA Analyzer</span></h3>
-<p>Se la mappatura dei pin (spinotti) audio non corrisponde ma ALSA funzione regolarmente, si può provare HDA Analyzer – un’interfaccia grafica (GUI) in pyGTK2 per il controllo dell’audio HD, disponibile nel <a rel="nofollow" class="external text" href="http://www.alsa-project.org/main/index.php/HDA_Analyzer">wiki di ALSA</a>.
+<p>Se la mappatura dei pin (spinotti) audio non corrisponde ma ALSA funzione regolarmente, si può provare HDA Analyzer – un’interfaccia grafica (GUI) in pyGTK2 per il controllo dell’audio HD, disponibile nel <a rel="nofollow" class="external text" href="https://www.alsa-project.org/main/index.php/HDA_Analyzer">wiki di ALSA</a>.
 Provare anche ad utilizzare la sezione Widget Control per gestire i PIN, impostando IN per il microfono e OUT per le cuffie. Potrebbe essere una buona idea fare riferimento ai valori di default (Config Defaults).
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -1070,23 +1070,23 @@ pcm.softvol {
 <h2>
 <span id="Configurazioni_d.27esempio"></span><span class="mw-headline" id="Configurazioni_d'esempio">Configurazioni d'esempio</span>
 </h2>
-<p>Consultare <a href="../it/Advanced_Linux_Sound_Architecture_(Italiano)/Configuration_examples.html" class="mw-redirect" title="Advanced Linux Sound Architecture/Example Configurations (Italiano)">Advanced Linux Sound Architecture/Example Configurations (Italiano)</a>
+<p>Consultare <a href="/title/Advanced_Linux_Sound_Architecture/Example_Configurations_(Italiano)" class="mw-redirect" title="Advanced Linux Sound Architecture/Example Configurations (Italiano)">Advanced Linux Sound Architecture/Example Configurations (Italiano)</a>
 </p>
 <h2><span class="mw-headline" id="Link_esterni">Link esterni</span></h2>
 <p>Altre informazioni possono essere trovate ai seguenti link:
 </p>
 <ul>
-<li><a rel="nofollow" class="external text" href="http://www.mjmwired.net/kernel/Documentation/sound/alsa/ALSA-Configuration.txt">Advanced ALSA module configuration</a></li>
-<li><a rel="nofollow" class="external text" href="http://alsa.opensrc.org/Main_Page">Unofficial ALSA Wiki</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.mjmwired.net/kernel/Documentation/sound/alsa/ALSA-Configuration.txt">Advanced ALSA module configuration</a></li>
+<li><a rel="nofollow" class="external text" href="https://alsa.opensrc.org/Main_Page">Unofficial ALSA Wiki</a></li>
 <li><a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=36815">HOWTO: Compile driver from svn</a></li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../it/Category:Multimedia.html" title="Category:Multimedia (Italiano)">Multimedia (Italiano)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Multimedia_(Italiano)" title="Category:Multimedia (Italiano)">Multimedia (Italiano)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Out_of_date" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li></ul>
 </div>
 </div>
 	</div>
@@ -1094,15 +1094,15 @@ pcm.softvol {
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture_(Italiano)&amp;oldid=663145">https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture_(Italiano)&amp;oldid=663145</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 23:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture_(Italiano)&amp;oldid=668280">https://wiki.archlinux.org/index.php?title=Advanced_Linux_Sound_Architecture_(Italiano)&amp;oldid=668280</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 7 May 2021, at 19:59.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

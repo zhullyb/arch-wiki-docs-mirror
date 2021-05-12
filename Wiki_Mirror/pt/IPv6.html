@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -33,11 +34,11 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="../en/IPv6.html" title="IPv6">IPv6</a>. Data da última tradução: 2019-11-06. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=IPv6&amp;diff=0&amp;oldid=587192">alterações</a> na versão em inglês.</div>
+<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="/title/IPv6" title="IPv6">IPv6</a>. Data da última tradução: 2019-11-06. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=IPv6&amp;diff=0&amp;oldid=587192">alterações</a> na versão em inglês.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artigos relacionados</p>
 <ul>
-<li><a href="../pt/IPv6_tunnel_broker_setup.html" class="mw-redirect" title="Configuração de tunnel broker IPv6">Configuração de tunnel broker IPv6</a></li>
+<li><a href="/title/Configura%C3%A7%C3%A3o_de_tunnel_broker_IPv6" class="mw-redirect" title="Configuração de tunnel broker IPv6">Configuração de tunnel broker IPv6</a></li>
 </ul>
 </div>
 <p>No Arch Linux, IPv6 está habilitado por padrão.
@@ -126,13 +127,13 @@
 <p>A maneira mais fácil de adquirir um endereço IPv6, desde que sua rede esteja configurada, é através de <i>Stateless address autoconfiguration</i> (abreviado para SLAAC, que poderia ser traduzido para português como "Autoconfiguração de endereço sem estado"). O endereço é inferido automaticamente do prefixo que o seu roteador anuncia e não requer nenhuma configuração adicional nem software especializado, como um cliente DHCP.
 </p>
 <h3><span class="mw-headline" id="Para_clientes">Para clientes</span></h3>
-<p>Se você está usando o <a href="../en/Netctl.html" title="Netctl">netctl</a>, você só precisa adicionar a seguinte linha para sua configuração Ethernet ou sem fio.
+<p>Se você está usando o <a href="/title/Netctl" title="Netctl">netctl</a>, você só precisa adicionar a seguinte linha para sua configuração Ethernet ou sem fio.
 </p>
 <pre>IP6=stateless
 </pre>
-<p>Se você está usando o <a href="../pt/NetworkManager.html" title="NetworkManager (Português)">NetworkManager</a>, então endereços IP são habilitados automaticamente se houver anúncios para eles na rede.
+<p>Se você está usando o <a href="/title/NetworkManager_(Portugu%C3%AAs)" title="NetworkManager (Português)">NetworkManager</a>, então endereços IP são habilitados automaticamente se houver anúncios para eles na rede.
 </p>
-<p>Observe que a autoconfiguração sem estado funciona com a condição de que pacotes icmp IPv6 sejam permitidos em toda a rede. Portanto, para o lado do cliente, os pacotes <code>ipv6-icmp</code> devem ser aceitos. Se você estiver usando um <a href="../en/Simple_stateful_firewall.html" title="Simple stateful firewall">Firewall stateful simples</a> ou o <a href="../en/Iptables.html" title="Iptables">iptables</a>, você só precisa adicionar:
+<p>Observe que a autoconfiguração sem estado funciona com a condição de que pacotes icmp IPv6 sejam permitidos em toda a rede. Portanto, para o lado do cliente, os pacotes <code>ipv6-icmp</code> devem ser aceitos. Se você estiver usando um <a href="/title/Simple_stateful_firewall" title="Simple stateful firewall">Firewall stateful simples</a> ou o <a href="/title/Iptables" title="Iptables">iptables</a>, você só precisa adicionar:
 </p>
 <pre>-A INPUT -p ipv6-icmp -j ACCEPT
 </pre>
@@ -141,7 +142,7 @@
 <p>Se a sua solução de gerenciamento de rede escolhida não ter suporte a configuração do resolvedor DNS com IPv6 sem estado (por exemplo, netctl), será possível usar <span class="plainlinks archwiki-template-man" title="$ man 8 rdnssd"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/rdnssd.8">rdnssd(8)</a></span> do pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ndisc6">ndisc6</a></span> para isso.
 </p>
 <h3><span class="mw-headline" id="Para_gateways">Para gateways</span></h3>
-<p>Para distribuir corretamente os IPv6s aos clientes da rede, precisaremos usar um daemon de anúncio. A ferramenta padrão para este trabalho é <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=radvd">radvd</a></span> e está disponível em <a href="../pt/Official_repositories.html" class="mw-redirect" title="Repositórios oficiais">repositórios oficiais</a>. Configuração do radvd é bastante simples. Edite <code>/etc/radvd.conf</code> para incluir:
+<p>Para distribuir corretamente os IPv6s aos clientes da rede, precisaremos usar um daemon de anúncio. A ferramenta padrão para este trabalho é <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=radvd">radvd</a></span> e está disponível em <a href="/title/Reposit%C3%B3rios_oficiais" class="mw-redirect" title="Repositórios oficiais">repositórios oficiais</a>. Configuração do radvd é bastante simples. Edite <code>/etc/radvd.conf</code> para incluir:
 </p>
 <pre># substitua LAN com sua interface de LAN
 interface LAN {
@@ -162,7 +163,7 @@ interface LAN {
 <pre>RDNSS 2001:4860:4860::8888 2001:4860:4860::8844 {
 };
 </pre>
-<p>O gateway também deve permitir o tráfego de pacotes <code> ipv6-icmp</code> em todas as cadeias básicas. Para um <a href="../en/Simple_stateful_firewall.html" title="Simple stateful firewall">Firewall stateful simples</a> ou o <a href="../en/Iptables.html" title="Iptables">iptables</a>, adicione:
+<p>O gateway também deve permitir o tráfego de pacotes <code> ipv6-icmp</code> em todas as cadeias básicas. Para um <a href="/title/Simple_stateful_firewall" title="Simple stateful firewall">Firewall stateful simples</a> ou o <a href="/title/Iptables" title="Iptables">iptables</a>, adicione:
 </p>
 <pre>-A INPUT -p ipv6-icmp -j ACCEPT
 -A OUTPUT -p ipv6-icmp -j ACCEPT
@@ -184,12 +185,12 @@ net.ipv6.conf.<i>nic0</i>.use_tempaddr = 2
 ...
 net.ipv6.conf.<i>nicN</i>.use_tempaddr = 2
 </pre>
-<p>Sendo que <code>nic0</code> a <code>nicN</code> são suas placas de rede (<i><b>N</b>etwork <b>I</b>nterface <b>C</b>ards</i>). Você pode encontrar seus nomes usando as instruções em <a href="../pt/Network_configuration.html#Listando_interfaces_de_rede" class="mw-redirect" title="Configuração de rede">Configuração de rede#Listando interfaces de rede</a>. Os parâmetros <code>all.use_tempaddr</code> ou <code>default.use_tempaddr</code> não são aplicados nas <i>NIC</i>s que já existem quando as configurações de <a href="../en/Sysctl.html" title="Sysctl">sysctl</a> são executadas.
+<p>Sendo que <code>nic0</code> a <code>nicN</code> são suas placas de rede (<i><b>N</b>etwork <b>I</b>nterface <b>C</b>ards</i>). Você pode encontrar seus nomes usando as instruções em <a href="/title/Configura%C3%A7%C3%A3o_de_rede#Listando_interfaces_de_rede" class="mw-redirect" title="Configuração de rede">Configuração de rede#Listando interfaces de rede</a>. Os parâmetros <code>all.use_tempaddr</code> ou <code>default.use_tempaddr</code> não são aplicados nas <i>NIC</i>s que já existem quando as configurações de <a href="/title/Sysctl" title="Sysctl">sysctl</a> são executadas.
 </p>
 <p>Após uma reinicialização, no final, Privacy Extensions devem estar habilitadas.
 </p>
 <h3><span class="mw-headline" id="dhcpcd">dhcpcd</span></h3>
-<p><a href="../en/Dhcpcd.html" title="Dhcpcd">dhcpcd</a> inclui em seu arquivo de configuração padrão desde a versão 6.4.0 a opção <code>slaac private</code>, que ativa "Endereços IPv6 privados estáveis ao invés de baseados em hardware", implementando <a rel="nofollow" class="external text" href="https://tools.ietf.org/html/rfc7217">RFC 7217</a> (<a rel="nofollow" class="external text" href="http://roy.marples.name/projects/dhcpcd/info/8aa9dab00dc72c453aeccbde885ecce27a3d81ff">commit</a><sup title="Status da última verificação: 404">[<a href="https://en.wikipedia.org/wiki/pt:Wikip%C3%A9dia:Liga%C3%A7%C3%A3o_inativa" class="extiw" title="wikipedia:pt:Wikipédia:Ligação inativa">link inativo</a> 2020-08-02 ⓘ]</sup>). Portanto, não é necessário alterar nada, exceto se for desejado alterar o endereço IPv6 com mais frequência do que a cada vez que o sistema for conectado a uma nova rede. Defina para <code>slaac hwaddr</code> para um endereço estável.
+<p><a href="/title/Dhcpcd" title="Dhcpcd">dhcpcd</a> inclui em seu arquivo de configuração padrão desde a versão 6.4.0 a opção <code>slaac private</code>, que ativa "Endereços IPv6 privados estáveis ao invés de baseados em hardware", implementando <a rel="nofollow" class="external text" href="https://tools.ietf.org/html/rfc7217">RFC 7217</a> (<a rel="nofollow" class="external text" href="http://archive.today/2014.10.06-110059/http://roy.marples.name/projects/dhcpcd/info/8aa9dab00dc72c453aeccbde885ecce27a3d81ff">commit</a>). Portanto, não é necessário alterar nada, exceto se for desejado alterar o endereço IPv6 com mais frequência do que a cada vez que o sistema for conectado a uma nova rede. Defina para <code>slaac hwaddr</code> para um endereço estável.
 </p>
 <h3><span class="mw-headline" id="NetworkManager">NetworkManager</span></h3>
 <p>NetworkManager não honra as configurações colocadas em <code>/etc/sysctl.d/40-ipv6.conf</code>. Isso pode ser verificado executando <code>$ ip -6 addr show <i>interface</i></code> após reiniciar: nenhum endereço <code>scope global <b>temporary</b></code> aparece além do regular.
@@ -221,7 +222,7 @@ net.ipv6.conf.xxx.temp_valid_lft
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> <code>temp_prefered_lft</code> é o nome da variável, <i>preferred</i> tem que ser escrito errado mesmo.</div>
-<p>Veja <a href="../en/Systemd-networkd.html" title="Systemd-networkd">systemd-networkd</a> e <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.network"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.network.5">systemd.network(5)</a></span> para detalhes.
+<p>Veja <a href="/title/Systemd-networkd" title="Systemd-networkd">systemd-networkd</a> e <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.network"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/systemd.network.5">systemd.network(5)</a></span> para detalhes.
 </p>
 <h3><span class="mw-headline" id="connman">connman</span></h3>
 <p>Adicione a <code>/var/lib/connman/settings</code> sob a seção global:
@@ -250,9 +251,9 @@ net.ipv6.conf.wlan0.addr_gen_mode = 2
 <h2>
 <span id="Endere.C3.A7o_est.C3.A1tico"></span><span class="mw-headline" id="Endereço_estático">Endereço estático</span>
 </h2>
-<p>Às vezes, usar um endereço estático pode melhorar a segurança. Por exemplo, se o seu roteador local usa Neighbor Discovery ou radvd (<a rel="nofollow" class="external text" href="http://www.apps.ietf.org/rfc/rfc2461.html">RFC 2461</a><sup title="Status da última verificação: domain name not resolved">[<a href="https://en.wikipedia.org/wiki/pt:Wikip%C3%A9dia:Liga%C3%A7%C3%A3o_inativa" class="extiw" title="wikipedia:pt:Wikipédia:Ligação inativa">link inativo</a> 2020-08-02 ⓘ]</sup>), sua interface receberá automaticamente um endereço baseado em seu endereço MAC (usando a configuração automática sem estado do IPv6). Isso pode ser menos do que ideal para segurança, pois permite que um sistema seja rastreado mesmo que a parte da rede do endereço IP seja alterada.
+<p>Às vezes, usar um endereço estático pode melhorar a segurança. Por exemplo, se o seu roteador local usa Neighbor Discovery ou radvd (<a rel="nofollow" class="external text" href="https://datatracker.ietf.org/doc/html/rfc2461">RFC 2461</a>), sua interface receberá automaticamente um endereço baseado em seu endereço MAC (usando a configuração automática sem estado do IPv6). Isso pode ser menos do que ideal para segurança, pois permite que um sistema seja rastreado mesmo que a parte da rede do endereço IP seja alterada.
 </p>
-<p>Para atribuir um endereço IP estático usando <a href="../en/Netctl.html" title="Netctl">netctl</a>, veja no exemplo de perfil em <code>/etc/netctl/examples/ethernet-static</code>. As seguintes linhas são importantes:
+<p>Para atribuir um endereço IP estático usando <a href="/title/Netctl" title="Netctl">netctl</a>, veja no exemplo de perfil em <code>/etc/netctl/examples/ethernet-static</code>. As seguintes linhas são importantes:
 </p>
 <pre>...
 # Para configuração de endereço IPv6 estático
@@ -265,13 +266,13 @@ Gateway6='1234:0:123::abcd'
 <strong>Nota:</strong> Se você estiver conectado somente a IPv6, precisará determinar seu servidor DNS IPv6. Por exemplo:
 <pre>DNS=('6666:6666::1' '6666:6666::2')
 </pre>
-Se o seu provedor não forneceu DNS IPv6 e você não está executando o seu próprio, você pode escolher o artigo <a href="../pt/Domain_name_resolution.html" class="mw-redirect" title="Resolv.conf (Português)">resolv.conf</a>.</div>
+Se o seu provedor não forneceu DNS IPv6 e você não está executando o seu próprio, você pode escolher o artigo <a href="/title/Resolv.conf_(Portugu%C3%AAs)" class="mw-redirect" title="Resolv.conf (Português)">resolv.conf</a>.</div>
 <h2><span class="mw-headline" id="IPv6_e_PPPoE">IPv6 e PPPoE</span></h2>
 <p>A ferramenta padrão para o PPPoE, <code>pppd</code>, fornece suporte a IPv6 sob PPPoE desde que seu provedor de internet e seu modem tenham suporte a isso. Basta adicionar ao seguinte a <code>/etc/ppp/options</code>
 </p>
 <pre>+ipv6
 </pre>
-<p>Se você estiver usando <a href="../en/Netctl.html" title="Netctl">netctl</a> para PPPoE, basta adicionar o seguinte a sua configuração de netctl
+<p>Se você estiver usando <a href="/title/Netctl" title="Netctl">netctl</a> para PPPoE, basta adicionar o seguinte a sua configuração de netctl
 </p>
 <pre>PPPoEIP6=yes
 </pre>
@@ -283,7 +284,7 @@ Se o seu provedor não forneceu DNS IPv6 e você não está executando o seu pr�
 <p>A delegação de prefixo é uma técnica comum de implementação de IPv6 usada por muitos ISPs. É um método de atribuição de um prefixo de rede a um site do usuário (por exemplo, rede local). Um roteador pode ser configurado para atribuir diferentes prefixos de rede a várias sub-redes. O ISP distribui um prefixo de rede usando DHCPv6 (geralmente um <code>/56</code> ou <code>/64</code>) e um cliente dhcp atribui os prefixos à rede local. Para um simples gateway de duas interfaces, ele praticamente atribui um prefixo IPv6 à interface conectada à rede local a partir de um endereço adquirido através da interface conectada à WAN (ou uma pseudo-interface como ppp).
 </p>
 <h3><span class="mw-headline" id="Com_dibbler">Com dibbler</span></h3>
-<p><a rel="nofollow" class="external text" href="http://klub.com.pl/dhcpv6/">Dibbler</a> é um cliente e servidor DHCPv6 portátil que pode ser usado para delegação de prefixo. Pode ser <a href="../pt/Help:Reading.html#Instala%C3%A7%C3%A3o_de_pacotes" class="mw-redirect" title="Instala">instalado</a> com o pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dibbler/">dibbler</a></span><sup><small>AUR</small></sup>.
+<p><a rel="nofollow" class="external text" href="http://klub.com.pl/dhcpv6/">Dibbler</a> é um cliente e servidor DHCPv6 portátil que pode ser usado para delegação de prefixo. Pode ser <a href="/title/Instala" class="mw-redirect" title="Instala">instalado</a> com o pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dibbler/">dibbler</a></span><sup><small>AUR</small></sup>.
 </p>
 <p>Se você está usando <code>dibbler</code>, edite <code>/etc/dibbler/client.conf</code>
 </p>
@@ -298,7 +299,7 @@ iface "WAN" {
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Dica:</strong> Leia <span class="plainlinks archwiki-template-man" title="$ man 8 dibbler-client">dibbler-client(8)</span> para mais informações.</div>
 <h3><span class="mw-headline" id="Com_dhcpcd">Com dhcpcd</span></h3>
-<p>O <a href="../en/Dhcpcd.html" title="Dhcpcd">dhcpcd</a> além do suporte a dhcp IPv4 também fornece uma implementação bastante completa do padrão de cliente DHCPv6 que inclui o DHCPv6-PD. Se você estiver usando <code>dhcpcd</code> edite <code>/etc/dhcpcd.conf</code>. Você pode já estar usando o dhcpcd para IPv4, portanto, basta atualizar sua configuração existente.
+<p>O <a href="/title/Dhcpcd" title="Dhcpcd">dhcpcd</a> além do suporte a dhcp IPv4 também fornece uma implementação bastante completa do padrão de cliente DHCPv6 que inclui o DHCPv6-PD. Se você estiver usando <code>dhcpcd</code> edite <code>/etc/dhcpcd.conf</code>. Você pode já estar usando o dhcpcd para IPv4, portanto, basta atualizar sua configuração existente.
 </p>
 <pre>duid
 noipv6rs
@@ -321,7 +322,7 @@ Ele também desativará as solicitações do roteador em todas as interfaces, ex
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Dica:</strong> Leia também <span class="plainlinks archwiki-template-man" title="$ man 8 dhcpcd"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/dhcpcd.8">dhcpcd(8)</a></span> e <span class="plainlinks archwiki-template-man" title="$ man 5 dhcpcd.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/dhcpcd.conf.5">dhcpcd.conf(5)</a></span>.</div>
 <h3><span class="mw-headline" id="Com_WIDE-DHCPv6">Com WIDE-DHCPv6</span></h3>
-<p><a rel="nofollow" class="external text" href="http://wide-dhcpv6.sourceforge.net/">WIDE-DHCPv6</a> é uma implementação de código aberto do Protocolo de Configuração de Host Dinâmico para IPv6 (DHCPv6) originalmente desenvolvido pelo projeto KAME. Pode ser <a href="../pt/Help:Reading.html#Instala%C3%A7%C3%A3o_de_pacotes" class="mw-redirect" title="Instala">instalado</a> com o pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/wide-dhcpv6/">wide-dhcpv6</a></span><sup><small>AUR</small></sup>.
+<p><a rel="nofollow" class="external text" href="http://wide-dhcpv6.sourceforge.net/">WIDE-DHCPv6</a> é uma implementação de código aberto do Protocolo de Configuração de Host Dinâmico para IPv6 (DHCPv6) originalmente desenvolvido pelo projeto KAME. Pode ser <a href="/title/Instala" class="mw-redirect" title="Instala">instalado</a> com o pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/wide-dhcpv6/">wide-dhcpv6</a></span><sup><small>AUR</small></sup>.
 </p>
 <p>Se você está usando <code>wide-dhcpv6</code>, edite <code>/etc/wide-dhcpv6/dhcp6c.conf</code>
 </p>
@@ -340,7 +341,7 @@ id-assoc pd 0 {
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> <code>sla-len</code> deve ser definido de forma que <code>(WAN-prefix) + (sla-len) = 64</code>. Neste caso, é configurado para um <code>/56</code> prefix 56+8=64. Para um prefixo <code>/64</code>, <code>sla-len</code> deve ser <code>0</code>.</div>
-<p>O cliente wide-dhcpv6 pode ser <a href="../pt/Systemd.html#Usando_units" class="mw-redirect" title="Iniciado/habilitado">iniciado/habilitado</a> usando o arquivo unit systemd <code>dhcp6c@<i>interface</i>.service</code>, sendo que <code><i>interface</i></code> é o nome da interface no arquivo de configuração. Por exemplo, para um nome de interface "WAN", use <code>dhcp6c@WAN.service</code>.
+<p>O cliente wide-dhcpv6 pode ser <a href="/title/Iniciado/habilitado" class="mw-redirect" title="Iniciado/habilitado">iniciado/habilitado</a> usando o arquivo unit systemd <code>dhcp6c@<i>interface</i>.service</code>, sendo que <code><i>interface</i></code> é o nome da interface no arquivo de configuração. Por exemplo, para um nome de interface "WAN", use <code>dhcp6c@WAN.service</code>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Dica:</strong> Leia <span class="plainlinks archwiki-template-man" title="$ man 8 dhcp6c">dhcp6c(8)</span> e <span class="plainlinks archwiki-template-man" title="$ man 5 dhcp6c.conf">dhcp6c.conf(5)</span> para mais informações.</div>
@@ -359,7 +360,7 @@ IPv6AcceptRA=yes
 IPv6DuplicateAddressDetection=1
 IPv6PrivacyExtensions=kernel</pre>
 <h3><span class="mw-headline" id="Outros_clientes">Outros clientes</span></h3>
-<p><a href="../pt/Network_configuration.html#DHCP" class="mw-redirect" title="Dhclient (Português)">dhclient</a> também pode solicitar um prefixo, mas atribuir esse prefixo ou partes desse prefixo a interfaces deve ser feito usando um script de saída do dhclient. Por exemplo: <a rel="nofollow" class="external free" href="https://github.com/jaymzh/v6-gw-scripts/blob/master/dhclient-ipv6">https://github.com/jaymzh/v6-gw-scripts/blob/master/dhclient-ipv6</a>.
+<p><a href="/title/Dhclient_(Portugu%C3%AAs)" class="mw-redirect" title="Dhclient (Português)">dhclient</a> também pode solicitar um prefixo, mas atribuir esse prefixo ou partes desse prefixo a interfaces deve ser feito usando um script de saída do dhclient. Por exemplo: <a rel="nofollow" class="external free" href="https://github.com/jaymzh/v6-gw-scripts/blob/master/dhclient-ipv6">https://github.com/jaymzh/v6-gw-scripts/blob/master/dhclient-ipv6</a>.
 </p>
 <h2><span class="mw-headline" id="Desabilitar_IPv6">Desabilitar IPv6</span></h2>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -368,7 +369,7 @@ IPv6PrivacyExtensions=kernel</pre>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Atenção:</strong> Desabilitar a pilha IPv6 pode quebrar certos programas que esperam que ela seja ativada. <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/46297">FS#46297</a>
 </div>
-<p>Adicionar <code>ipv6.disable=1</code> à linha do kernel desabilita toda a pilha IPv6, o que é provável o que você deseja se estiver tendo problemas. Veja <a href="../pt/Kernel_parameters.html" class="mw-redirect" title="Parâmetros do kernel">Parâmetros do kernel</a> para mais informações.
+<p>Adicionar <code>ipv6.disable=1</code> à linha do kernel desabilita toda a pilha IPv6, o que é provável o que você deseja se estiver tendo problemas. Veja <a href="/title/Par%C3%A2metros_do_kernel" class="mw-redirect" title="Parâmetros do kernel">Parâmetros do kernel</a> para mais informações.
 </p>
 <p>Como alternativa, adicionar <code>ipv6.disable_ipv6=1</code> manterá a pilha do IPv6 funcional, mas não atribuirá endereços IPv6 a nenhum de seus dispositivos de rede.
 </p>
@@ -394,7 +395,7 @@ net.ipv6.conf.<i>nicN</i>.disable_ipv6 = 1
 <p>Desabilitar a funcionalidade do IPv6 no kernel não impede que outros programas tentem usar o IPv6. Na maioria dos casos, isso é completamente inofensivo, mas se você tiver problemas com esse programa, consulte as páginas de manual do programa para obter uma maneira de desabilitar essa funcionalidade.
 </p>
 <h4><span class="mw-headline" id="dhcpcd_2">dhcpcd</span></h4>
-<p><i>dhcpcd</i> vai continuar sem prejuízo tentar realizar uma solicitação IPv6 ao roteador. Para desabilitar isso, conforme documentado na <a href="../pt/Man_page.html" class="mw-redirect" title="Página man">página man</a> <span class="plainlinks archwiki-template-man" title="$ man 5 dhcpcd.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/dhcpcd.conf.5">dhcpcd.conf(5)</a></span>, adicione o seguinte ao <code>/etc/dhcpcd.conf</code>:
+<p><i>dhcpcd</i> vai continuar sem prejuízo tentar realizar uma solicitação IPv6 ao roteador. Para desabilitar isso, conforme documentado na <a href="/title/P%C3%A1gina_man" class="mw-redirect" title="Página man">página man</a> <span class="plainlinks archwiki-template-man" title="$ man 5 dhcpcd.conf"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/dhcpcd.conf.5">dhcpcd.conf(5)</a></span>, adicione o seguinte ao <code>/etc/dhcpcd.conf</code>:
 </p>
 <pre>noipv6rs
 noipv6
@@ -405,7 +406,7 @@ noipv6
 <p>Então, clique em "Salvar".
 </p>
 <h4><span class="mw-headline" id="ntpd">ntpd</span></h4>
-<p>Seguindo o conselho em <a href="../pt/Systemd.html#Arquivos_drop-in" title="Systemd (Português)">systemd (Português)#Arquivos drop-in</a>, <a href="../pt/Systemd.html#Editando_units_fornecidas" class="mw-redirect" title="Edite">edite</a> <code>ntpd.service</code> para definir como o systemd o inicia.
+<p>Seguindo o conselho em <a href="/title/Systemd_(Portugu%C3%AAs)#Arquivos_drop-in" title="Systemd (Português)">systemd (Português)#Arquivos drop-in</a>, <a href="/title/Edite" class="mw-redirect" title="Edite">edite</a> <code>ntpd.service</code> para definir como o systemd o inicia.
 </p>
 <p>Isso criará um trecho drop-in que será executado em vez do padrão <code>ntpd.service</code>. O sinalizador <code>-4</code> impede que o IPv6 seja usado pelo daemon ntp. Coloque o seguinte no trecho drop-in:
 </p>
@@ -443,27 +444,23 @@ precedence ::ffff:0:0/96  100
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../pt/Category:Networking.html" title="Category:Networking (Português)">Networking (Português)</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
-</div>
-</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Networking_(Portugu%C3%AAs)" title="Category:Networking (Português)">Networking (Português)</a></li></ul>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=IPv6_(Portugu%C3%AAs)&amp;oldid=631187">https://wiki.archlinux.org/index.php?title=IPv6_(Português)&amp;oldid=631187</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 11 August 2020, at 20:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=IPv6_(Portugu%C3%AAs)&amp;oldid=670700">https://wiki.archlinux.org/index.php?title=IPv6_(Português)&amp;oldid=670700</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 May 2021, at 12:56.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

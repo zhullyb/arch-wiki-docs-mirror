@@ -36,8 +36,8 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/ZFS.html" title="ZFS">ZFS</a></li>
-<li><a href="../en/ZFS/Virtual_disks.html" class="mw-redirect" title="Experimenting with ZFS">Experimenting with ZFS</a></li>
+<li><a href="/title/ZFS" title="ZFS">ZFS</a></li>
+<li><a href="/title/Experimenting_with_ZFS" class="mw-redirect" title="Experimenting with ZFS">Experimenting with ZFS</a></li>
 </ul>
 </div>
 <p>This article details the steps required to install Arch Linux onto a ZFS root filesystem.
@@ -134,18 +134,18 @@
 <p>See <a rel="nofollow" class="external text" href="https://github.com/eoli3n/archiso-zfs">eoli3n/archiso-zfs</a>
 </p>
 <h3><span class="mw-headline" id="Embedding_ZFS_module_into_custom_archiso">Embedding ZFS module into custom archiso</span></h3>
-<p>To build custom archiso, see <a href="../en/ZFS.html#Embed_the_archzfs_packages_into_an_archiso" title="ZFS">ZFS</a> article.
+<p>To build custom archiso, see <a href="/title/ZFS#Embed_the_archzfs_packages_into_an_archiso" title="ZFS">ZFS</a> article.
 </p>
 <p>An unofficial weekly build is available <a rel="nofollow" class="external text" href="https://gitlab.com/m_zhou/archiso/">here</a>.
 </p>
 <h2><span class="mw-headline" id="Partition_the_destination_drive">Partition the destination drive</span></h2>
-<p>Review <a href="../en/Partitioning.html" title="Partitioning">Partitioning</a> for information on determining the partition table type to use for ZFS. ZFS supports GPT and MBR partition tables.
+<p>Review <a href="/title/Partitioning" title="Partitioning">Partitioning</a> for information on determining the partition table type to use for ZFS. ZFS supports GPT and MBR partition tables.
 </p>
 <p>ZFS manages its own partitions, so only a basic partition table scheme is required. The partition that will contain the ZFS filesystem should be of the type <code>bf00</code>, or "Solaris Root".
 </p>
 <p>Drives larger than 2TB require a GPT partition table. GRUB on BIOS/GPT configurations require a small (1~2MiB) BIOS boot partition to embed its image of boot code.
 </p>
-<p>Depending upon your machine's firmware or your choice of boot mode, booting may or may not require an EFI partition. On a BIOS machine (or a UEFI machine booting in legacy mode) EFI partition is not required. Consult <a href="../en/Arch_boot_process.html#Boot_loader" title="Arch boot process">Arch boot process#Boot loader</a> for more information.
+<p>Depending upon your machine's firmware or your choice of boot mode, booting may or may not require an EFI partition. On a BIOS machine (or a UEFI machine booting in legacy mode) EFI partition is not required. Consult <a href="/title/Arch_boot_process#Boot_loader" title="Arch boot process">Arch boot process#Boot loader</a> for more information.
 </p>
 <h3><span class="mw-headline" id="Partition_scheme">Partition scheme</span></h3>
 <p>Here is an example of a basic partition scheme that could be employed for your ZFS root install on a BIOS/MBR installation using GRUB:
@@ -161,14 +161,14 @@
    1       2M   BIOS boot partition (ef02)
    2     XXXG   Solaris Root (bf00)
 </pre>
-<p>Another example, this time using a UEFI-specific bootloader (such as <a href="../en/REFInd.html" title="REFInd">rEFInd</a>) with an GPT partition table:
+<p>Another example, this time using a UEFI-specific bootloader (such as <a href="/title/REFInd" title="REFInd">rEFInd</a>) with an GPT partition table:
 </p>
 <pre>Part     Size   Type
 ----     ----   -------------------------
    1     100M   EFI boot partition (ef00)
    2     XXXG   Solaris Root (bf00)
 </pre>
-<p>ZFS does not support swap files. If you require a swap partition, see <a href="../en/ZFS.html#Swap_volume" title="ZFS">ZFS#Swap volume</a> for creating a swap ZVOL.
+<p>ZFS does not support swap files. If you require a swap partition, see <a href="/title/ZFS#Swap_volume" title="ZFS">ZFS#Swap volume</a> for creating a swap ZVOL.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> Bootloaders with support for ZFS are described in <a href="#Install_and_configure_the_bootloader">#Install and configure the bootloader</a>.</div>
@@ -195,6 +195,8 @@
 <p>If you have opted for a boot partition as well as any other non-ZFS system partitions then format them. Do not do anything to the Solaris partition nor to the BIOS boot partition. ZFS will manage the first, and your bootloader the second.
 </p>
 <h2><span class="mw-headline" id="Setup_the_ZFS_filesystem">Setup the ZFS filesystem</span></h2>
+<div class="archwiki-template-box archwiki-template-box-warning">
+<strong>Warning:</strong> Do not use '-' in the names of your datasets. (<a rel="nofollow" class="external text" href="https://github.com/zfsonlinux/zfs/commit/c39b2786ac98ab87d6dda00aa83b399ed175055a">see this "feature"</a>)</div>
 <p>First, make sure the ZFS modules are loaded,
 </p>
 <pre># modprobe zfs
@@ -240,7 +242,7 @@ Default options are detailed in <a rel="nofollow" class="external text" href="ht
 <strong>Warning:</strong> 
 <ul>
 <li>Always use id names when working with ZFS, otherwise import errors will occur.</li>
-<li>The zpool command will normally activate all features. See <a href="../en/ZFS.html#GRUB-compatible_pool_creation" title="ZFS">ZFS#GRUB-compatible pool creation</a> when using <a href="../en/GRUB.html" title="GRUB">GRUB</a>.</li>
+<li>The zpool command will normally activate all features. See <a href="/title/ZFS#GRUB-compatible_pool_creation" title="ZFS">ZFS#GRUB-compatible pool creation</a> when using <a href="/title/GRUB" title="GRUB">GRUB</a>.</li>
 </ul>
 </div>
 <h3><span class="mw-headline" id="Create_your_datasets">Create your datasets</span></h3>
@@ -296,7 +298,7 @@ In such, you can create ROOT with the following command:
 <td>acltype=posixacl
 </td>
 <td>
-<a href="../en/Systemd.html#systemd-tmpfiles-setup.service_fails_to_start_at_boot" title="Systemd">Systemd#systemd-tmpfiles-setup.service fails to start at boot</a>
+<a href="/title/Systemd#systemd-tmpfiles-setup.service_fails_to_start_at_boot" title="Systemd">Systemd#systemd-tmpfiles-setup.service fails to start at boot</a>
 </td>
 </tr>
 </tbody>
@@ -358,14 +360,14 @@ find out the ID of your pool then use a command such as:
 <pre># zpool set cachefile=/etc/zfs/zpool.cache zroot
 </pre>
 <h2><span class="mw-headline" id="Install_and_configure_Arch_Linux">Install and configure Arch Linux</span></h2>
-<p>Follow the following steps using the <a href="../en/Installation_guide.html" title="Installation guide">Installation guide</a>. It will be noted where special consideration must be taken for ZFSonLinux.
+<p>Follow the following steps using the <a href="/title/Installation_guide" title="Installation guide">Installation guide</a>. It will be noted where special consideration must be taken for ZFSonLinux.
 </p>
 <ul><li>First mount any legacy or non-ZFS boot or system partitions using the mount command.</li></ul>
 <ul><li>Install the base system.</li></ul>
-<ul><li>The procedure described in <a href="../en/Installation_guide.html#Fstab" title="Installation guide">Installation guide#Fstab</a> is usually overkill for ZFS. ZFS usually auto mounts its own partitions, so we do not need ZFS partitions in <code>fstab</code> file, unless the user made legacy datasets of system directories. To generate the <code>fstab</code> for filesystems, use:</li></ul>
+<ul><li>The procedure described in <a href="/title/Installation_guide#Fstab" title="Installation guide">Installation guide#Fstab</a> is usually overkill for ZFS. ZFS usually auto mounts its own partitions, so we do not need ZFS partitions in <code>fstab</code> file, unless the user made legacy datasets of system directories. To generate the <code>fstab</code> for filesystems, use:</li></ul>
 <pre># genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab
 </pre>
-<ul><li>Change root into the new system, per <a href="../en/Installation_guide.html#Chroot" title="Installation guide">Installation guide#Chroot</a>
+<ul><li>Change root into the new system, per <a href="/title/Installation_guide#Chroot" title="Installation guide">Installation guide#Chroot</a>
 </li></ul>
 <pre># arch-chroot /mnt
 </pre>
@@ -377,11 +379,11 @@ find out the ID of your pool then use a command such as:
 <li>Comment out all non-legacy datasets apart from the swap file and the boot/EFI partition. It is a convention to replace the swap's uuid with <code>/dev/zvol/zroot/swap</code>.</li>
 </ul>
 </div>
-<ul><li>You need to add the <a href="../en/Unofficial_user_repositories.html#archzfs" title="Unofficial user repositories">Arch ZFS</a> repository to <code>/etc/pacman.conf</code>, sign its key and <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> <b>zfs-linux</b> (or <b>zfs-linux-lts</b> if you are running the LTS kernel) within the arch-chroot before you can update the ramdisk with ZFS support.</li></ul>
+<ul><li>You need to add the <a href="/title/Unofficial_user_repositories#archzfs" title="Unofficial user repositories">Arch ZFS</a> repository to <code>/etc/pacman.conf</code>, sign its key and <a href="/title/Install" class="mw-redirect" title="Install">install</a> <b>zfs-linux</b> (or <b>zfs-linux-lts</b> if you are running the LTS kernel) within the arch-chroot before you can update the ramdisk with ZFS support.</li></ul>
 <ul><li>When creating the initial ramdisk, first edit <code>/etc/mkinitcpio.conf</code> and add <code>zfs</code> before filesystems. Also, move <code>keyboard</code> hook before <code>zfs</code> so you can type in console if something goes wrong. You may also remove fsck (if you are not using Ext3 or Ext4). Your <code>HOOKS</code> line should look something like this:</li></ul>
 <pre>HOOKS="base udev autodetect modconf block keyboard zfs filesystems"
 </pre>
-<p>When using systemd in the initrd, you need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mkinitcpio-sd-zfs/">mkinitcpio-sd-zfs</a></span><sup><small>AUR</small></sup> and add the <code>sd-zfs</code> hook after the <code>systemd</code> hook instead of the <code>zfs</code> hook. Keep in mind that this hook uses different kernel parameters than the default <code>zfs</code> hook, more information can be found at the <a rel="nofollow" class="external text" href="https://github.com/dasJ/sd-zfs">project page</a>.
+<p>When using systemd in the initrd, you need to install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mkinitcpio-sd-zfs/">mkinitcpio-sd-zfs</a></span><sup><small>AUR</small></sup><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> and add the <code>sd-zfs</code> hook after the <code>systemd</code> hook instead of the <code>zfs</code> hook. Keep in mind that this hook uses different kernel parameters than the default <code>zfs</code> hook, more information can be found at the <a rel="nofollow" class="external text" href="https://github.com/dasJ/sd-zfs">project page</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
@@ -397,15 +399,15 @@ find out the ID of your pool then use a command such as:
 </ul>
 </div>
 <ul><li>
-<a href="../en/Mkinitcpio.html#Image_creation_and_activation" class="mw-redirect" title="Regenerate the initramfs">Regenerate the initramfs</a>.</li></ul>
+<a href="/title/Regenerate_the_initramfs" class="mw-redirect" title="Regenerate the initramfs">Regenerate the initramfs</a>.</li></ul>
 <h2><span class="mw-headline" id="Install_and_configure_the_bootloader">Install and configure the bootloader</span></h2>
 <h3>
 <span id="Using_GRUB_for_EFI.2FBIOS"></span><span class="mw-headline" id="Using_GRUB_for_EFI/BIOS">Using GRUB for EFI/BIOS</span>
 </h3>
 <p>If you use GRUB, you can store your <code>/boot</code> on a zpool.
-Please read <a rel="nofollow" class="external text" href="https://github.com/openzfs/zfs/wiki/Debian-Buster-Root-on-ZFS#step-3-system-installation">Debian-Buster-Root-on-ZFS#step-3-system-installation</a>.
+Please read <a rel="nofollow" class="external text" href="https://openzfs.github.io/openzfs-docs/Getting%20Started/Debian/Debian%20Buster%20Root%20on%20ZFS.html#step-3-system-installation">Debian-Buster-Root-on-ZFS#step-3-system-installation</a>.
 </p>
-<p>Install GRUB onto your disk as instructed here: <a href="../en/GRUB.html#BIOS_systems" title="GRUB">GRUB#BIOS systems</a> or <a href="../en/GRUB.html#UEFI_systems" title="GRUB">GRUB#UEFI systems</a>. The GRUB <a rel="nofollow" class="external text" href="https://www.gnu.org/software/grub/manual/grub.html#Configuration">manual</a> provides detailed information on manually configuring the software which you can supplement with <a href="../en/GRUB.html" title="GRUB">GRUB</a> and <a href="../en/GRUB/Tips_and_tricks.html" title="GRUB/Tips and tricks">GRUB/Tips and tricks</a>.
+<p>Install GRUB onto your disk as instructed here: <a href="/title/GRUB#BIOS_systems" title="GRUB">GRUB#BIOS systems</a> or <a href="/title/GRUB#UEFI_systems" title="GRUB">GRUB#UEFI systems</a>. The GRUB <a rel="nofollow" class="external text" href="https://www.gnu.org/software/grub/manual/grub.html#Configuration">manual</a> provides detailed information on manually configuring the software which you can supplement with <a href="/title/GRUB" title="GRUB">GRUB</a> and <a href="/title/GRUB/Tips_and_tricks" title="GRUB/Tips and tricks">GRUB/Tips and tricks</a>.
 </p>
 <h4><span class="mw-headline" id="error:_failed_to_get_canonical_path_of">error: failed to get canonical path of</span></h4>
 <p><code>grub-mkconfig</code> fails to properly generate entries for systems hosted on ZFS.
@@ -468,7 +470,7 @@ menuentry "Arch Linux" {
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> To be able to manage your Boot Environments with <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/zectl/">zectl</a></span><sup><small>AUR</small></sup>, follow <a rel="nofollow" class="external text" href="https://github.com/johnramsden/zectl/blob/master/docs/plugins/systemdboot.md">zectl/docs/plugins/systemdboot.md</a> </div>
-<p>Install bootloader on your <code>esp</code>, following <a href="../en/Systemd-boot.html#Installing_the_EFI_boot_manager" title="Systemd-boot">Systemd-boot#Installing the EFI boot manager</a>.
+<p>Install bootloader on your <code>esp</code>, following <a href="/title/Systemd-boot#Installing_the_EFI_boot_manager" title="Systemd-boot">Systemd-boot#Installing the EFI boot manager</a>.
 </p>
 <p>Create a boot entry:
 </p>
@@ -489,7 +491,7 @@ options         zfs=zroot/ROOT/default rw
 </p>
 <pre># zpool set cachefile=/etc/zfs/zpool.cache &lt;pool&gt;
 </pre>
-<p>Enable the target with <a href="../en/Systemd.html" title="Systemd">systemd</a>:
+<p>Enable the target with <a href="/title/Systemd" title="Systemd">systemd</a>:
 </p>
 <pre># systemctl enable zfs.target --root=/mnt
 </pre>
@@ -499,7 +501,7 @@ options         zfs=zroot/ROOT/default rw
 # systemctl enable zfs-mount --root=/mnt
 # systemctl enable zfs-import.target --root=/mnt
 </pre>
-<p>When running ZFS on root, the machine's hostid will not be available at the time of mounting the root filesystem. There are two solutions to this. You can either place your spl hostid in the <a href="../en/Kernel_parameters.html" title="Kernel parameters">kernel parameters</a> in your boot loader. For example, adding <code>spl.spl_hostid=0x00bab10c</code>, to get your number use the <code>hostid</code> command.
+<p>When running ZFS on root, the machine's hostid will not be available at the time of mounting the root filesystem. There are two solutions to this. You can either place your spl hostid in the <a href="/title/Kernel_parameters" title="Kernel parameters">kernel parameters</a> in your boot loader. For example, adding <code>spl.spl_hostid=0x00bab10c</code>, to get your number use the <code>hostid</code> command.
 </p>
 <p>The other, and suggested, solution is to make sure that there is a hostid in <code>/etc/hostid</code>, and then regenerate the initramfs image which will copy the hostid into the initramfs image. To write the hostid file safely you need to use the <code>zgenhostid</code> command.
 </p>
@@ -518,7 +520,7 @@ options         zfs=zroot/ROOT/default rw
 </p>
 <pre># arch-chroot /mnt zgenhostid
 </pre>
-<p>Don't forget to regenerate your image using <a href="../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a>.
+<p>Don't forget to regenerate your image using <a href="/title/Mkinitcpio" title="Mkinitcpio">mkinitcpio</a>.
 </p>
 <h2><span class="mw-headline" id="Unmount_and_restart">Unmount and restart</span></h2>
 <p>We are almost done!
@@ -537,7 +539,7 @@ Save password on first bytes of usb-stick:
 </p>
 <pre># dd if=your_password_file bs=32 count=1 of=/dev/disk/by-id/usb_stick
 </pre>
-<p>To create partition zfs partition you can either use previous described method with password prompt or pipe with <a href="../en/Dd.html" title="Dd">dd</a>:
+<p>To create partition zfs partition you can either use previous described method with password prompt or pipe with <a href="/title/Dd" title="Dd">dd</a>:
 </p>
 <pre># dd if=/dev/disk/by-id/usb_stick bs=32 count=1 | zfs create -o encryption=on -o keyformat=passphrase zroot/ROOT
 </pre>
@@ -549,7 +551,7 @@ Save password on first bytes of usb-stick:
 </p>
 <pre># ! eval dd if=/dev/disk/by-id/usb_stick bs=32 count=1 | zfs load-key "${encryptionroot}"; do
 </pre>
-<p>You are modifying your zfs hook so don't forget to regenerate your image using <a href="../en/Mkinitcpio.html" title="Mkinitcpio">mkinitcpio</a>.
+<p>You are modifying your zfs hook so don't forget to regenerate your image using <a href="/title/Mkinitcpio" title="Mkinitcpio">mkinitcpio</a>.
 Now zfs should load password from your usb-stick on boot.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
@@ -557,7 +559,7 @@ Now zfs should load password from your usb-stick on boot.
 <p>You can try the following steps and see if they can help.
 </p>
 <ul>
-<li>Use the kernel modules from the <a href="../en/Unofficial_user_repositories.html#archzfs" title="Unofficial user repositories">archzfs repo</a> instead of the dkms version. You can go back to the dkms version after a sucessfull boot.</li>
+<li>Use the kernel modules from the <a href="/title/Unofficial_user_repositories#archzfs" title="Unofficial user repositories">archzfs repo</a> instead of the dkms version. You can go back to the dkms version after a sucessfull boot.</li>
 <li>Remove the <code>/etc/zfs/zpool.cache</code> and run:</li>
 </ul>
 <pre># zpool set cachefile=none zroot
@@ -569,31 +571,35 @@ Now zfs should load password from your usb-stick on boot.
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
 <li><a rel="nofollow" class="external text" href="https://github.com/dajhorn/pkg-zfs/wiki/HOWTO-install-Ubuntu-to-a-Native-ZFS-Root-Filesystem">HOWTO install Ubuntu to a Native ZFS Root</a></li>
-<li><a rel="nofollow" class="external text" href="http://lildude.co.uk/zfs-cheatsheet">ZFS cheatsheet</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.funtoo.org/wiki/ZFS_Install_Guide">Funtoo ZFS install guide</a></li>
+<li><a rel="nofollow" class="external text" href="https://lildude.co.uk/zfs-cheatsheet">ZFS cheatsheet</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.funtoo.org/wiki/ZFS_Install_Guide">Funtoo ZFS install guide</a></li>
 <li><a rel="nofollow" class="external text" href="https://kiljan.org/2018/09/23/a-reference-guide-to-zfs-on-arch-linux/">A reference guide to ZFS on Arch Linux</a></li>
 <li><a rel="nofollow" class="external text" href="https://ramsdenj.com/2016/06/23/arch-linux-on-zfs-part-2-installation.html">Arch Linux On Zfs </a></li>
 <li><a rel="nofollow" class="external text" href="https://www.youtube.com/watch?v=mLbtJQmfumI">Youtube: Open-ZFS Bootcamp</a></li>
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Installation_process.html" title="Category:Installation process">Installation process</a></li></ul>
-</div></div>
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Installation_process" title="Category:Installation process">Installation process</a></li></ul>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_on_ZFS&amp;oldid=656561">https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_on_ZFS&amp;oldid=656561</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 28 March 2021, at 13:42.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_on_ZFS&amp;oldid=670084">https://wiki.archlinux.org/index.php?title=Install_Arch_Linux_on_ZFS&amp;oldid=670084</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 May 2021, at 19:38.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

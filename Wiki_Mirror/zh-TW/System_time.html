@@ -36,10 +36,10 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Network_Time_Protocol_daemon.html" title="Network Time Protocol daemon">Network Time Protocol daemon</a></li>
-<li><a href="../en/OpenNTPD.html" title="OpenNTPD">OpenNTPD</a></li>
-<li><a href="../en/Chrony.html" title="Chrony">Chrony</a></li>
-<li><a href="../en/Systemd-timesyncd.html" title="Systemd-timesyncd">systemd-timesyncd</a></li>
+<li><a href="/title/Network_Time_Protocol_daemon" title="Network Time Protocol daemon">Network Time Protocol daemon</a></li>
+<li><a href="/title/OpenNTPD" title="OpenNTPD">OpenNTPD</a></li>
+<li><a href="/title/Chrony" title="Chrony">Chrony</a></li>
+<li><a href="/title/Systemd-timesyncd" title="Systemd-timesyncd">systemd-timesyncd</a></li>
 </ul>
 </div>
 <p>作業系統中，時間（時鐘）由以下部分決定：時間值（本地時間、協調世界時或其他）、時區和夏令日光節約時間（daylight saving time, DST）。本文將介紹了這些東西是什麼以及如何進行設置，在系統上的時鐘分為兩個：硬體時鐘（hardware clock）和系統時鐘（system clock），本文也會詳細介紹。
@@ -48,7 +48,7 @@
 </p>
 <ul>
 <li>啟動時，使用硬體時鐘（hardware clock）來設定系統時鐘（system clock）。</li>
-<li>保持系統時鐘的準確性，詳細內容參閱 <a href="#%E6%99%82%E9%96%93%E5%90%8C%E6%AD%A5">#時間同步</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>。</li>
+<li>保持系統時鐘的準確性，詳細內容參閱 <a href="#%E6%99%82%E9%96%93%E5%90%8C%E6%AD%A5">#時間同步</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>。</li>
 <li>關機時，使用系統時鐘（system clock）來設定硬體時鐘（hardware clock）。</li>
 </ul>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -116,7 +116,7 @@
 <h2>
 <span id=".E7.A1.AC.E9.AB.94.E6.99.82.E9.90.98.EF.BC.88Hardware_Clock.EF.BC.89"></span><span class="mw-headline" id="硬體時鐘（Hardware_Clock）">硬體時鐘（Hardware Clock）</span>
 </h2>
-<p><b>硬體時鐘（hardware clock）</b> 又稱為實時時鐘（Real-time clock, RTC）或 CMOS 時鐘（CMOS clock），存儲的時間值包含了：年、月、日、時、分、秒。從 2016 年之後，才開始將時區資訊儲存於 <a href="../en/Unified_Extensible_Firmware_Interface.html" class="mw-redirect" title="UEFI">UEFI</a> 韌體，並且採用夏令日光節約時間（daylight saving time, DST）。
+<p><b>硬體時鐘（hardware clock）</b> 又稱為實時時鐘（Real-time clock, RTC）或 CMOS 時鐘（CMOS clock），存儲的時間值包含了：年、月、日、時、分、秒。從 2016 年之後，才開始將時區資訊儲存於 <a href="/title/UEFI" class="mw-redirect" title="UEFI">UEFI</a> 韌體，並且採用夏令日光節約時間（daylight saving time, DST）。
 </p>
 <h3><span class="mw-headline" id="Read_hardware_clock">Read hardware clock</span></h3>
 <pre># hwclock --show
@@ -179,11 +179,11 @@ You can see the current hardware clock time standard of the Arch system using:
 <strong>Note:</strong> 
 <ul>
 <li>The use of <code>timedatectl</code> requires an active dbus.  Therefore, it may not be possible to use this command under a chroot (such as during installation).  In these cases, you can revert back to the hwclock command.</li>
-<li>If <code>/etc/adjtime</code> is not present, <a href="../en/Systemd.html" title="Systemd">systemd</a> assumes the hardware clock is set to UTC.</li>
+<li>If <code>/etc/adjtime</code> is not present, <a href="/title/Systemd" title="Systemd">systemd</a> assumes the hardware clock is set to UTC.</li>
 </ul>
 </div>
 <h3><span class="mw-headline" id="UTC_in_Windows">UTC in Windows</span></h3>
-<p>To <a href="../en/Dual_boot_with_Windows.html" title="Dual boot with Windows">dual boot with Windows</a> it is recommended to configure Windows to use UTC, rather than Linux to use localtime. (Windows by default uses localtime <a rel="nofollow" class="external autonumber" href="https://devblogs.microsoft.com/oldnewthing/20040902-00/?p=37983">[1]</a>.)
+<p>To <a href="/title/Dual_boot_with_Windows" title="Dual boot with Windows">dual boot with Windows</a> it is recommended to configure Windows to use UTC, rather than Linux to use localtime. (Windows by default uses localtime <a rel="nofollow" class="external autonumber" href="https://devblogs.microsoft.com/oldnewthing/20040902-00/?p=37983">[1]</a>.)
 </p>
 <p>It can be done by a simple registry fix: Open <code>regedit</code> and add a <code>DWORD</code> value for <i>32-bit</i> Windows, or <code>QWORD</code> for <i>64-bit</i> one, with hexadecimal value <code>1</code> to the registry:
 </p>
@@ -206,7 +206,7 @@ You can see the current hardware clock time standard of the Arch system using:
 </p>
 <p>Should Windows ask to update the clock due to DST changes, let it. It will leave the clock in UTC as expected, only correcting the displayed time.
 </p>
-<p>The <a href="#Hardware_clock">#Hardware clock</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> and <a href="#Set_system_clock">#Set system clock</a> time may need to be updated after setting this value.
+<p>The <a href="#Hardware_clock">#Hardware clock</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> and <a href="#Set_system_clock">#Set system clock</a> time may need to be updated after setting this value.
 </p>
 <p>If you are having issues with the offset of the time, try reinstalling <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=tzdata">tzdata</a></span> and then setting your time zone again:
 </p>
@@ -244,7 +244,7 @@ You can see the current hardware clock time standard of the Arch system using:
 </p>
 <pre># timedatectl set-timezone Canada/Eastern
 </pre>
-<p>This will create an <code>/etc/localtime</code> symlink that points to a zoneinfo file under <code>/usr/share/zoneinfo/</code>. In case you choose to create the link manually (for example during <a href="../en/Chroot.html" title="Chroot">chroot</a> where <code>timedatectl</code> will not work), keep in mind that it must be a symbolic link, as specified in <span class="plainlinks archwiki-template-man" title="$ man 7 archlinux"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/archlinux.7">archlinux(7)</a></span><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2021-02-08]</sup>:
+<p>This will create an <code>/etc/localtime</code> symlink that points to a zoneinfo file under <code>/usr/share/zoneinfo/</code>. In case you choose to create the link manually (for example during <a href="/title/Chroot" title="Chroot">chroot</a> where <code>timedatectl</code> will not work), keep in mind that it must be a symbolic link, as specified in <span class="plainlinks archwiki-template-man" title="$ man 7 archlinux"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/archlinux.7">archlinux(7)</a></span><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2021-02-08]</sup>:
 </p>
 <pre># ln -sf /usr/share/zoneinfo/<i>Zone</i>/<i>SubZone</i> /etc/localtime
 </pre>
@@ -254,19 +254,19 @@ You can see the current hardware clock time standard of the Arch system using:
 </p>
 <h3><span class="mw-headline" id="Setting_based_on_geolocation">Setting based on geolocation</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Some desktop environments have support for automatic time zone selection (e.g. see <a href="../en/GNOME.html#Date_&amp;_time" title="GNOME">GNOME#Date &amp; time</a>).</div>
+<strong>Note:</strong> Some desktop environments have support for automatic time zone selection (e.g. see <a href="/title/GNOME#Date_&amp;_time" title="GNOME">GNOME#Date &amp; time</a>).</div>
 <p>To set the timezone automatically based on the IP address location, one can use a geolocation API to retrieve the timezone, for example <code>curl https://ipapi.co/timezone</code>, and pass the output to <code>timedatectl set-timezone</code> for automatic setting. Some geo-IP APIs that provide free or partly free services are listed below:
 </p>
 <ul>
 <li><a rel="nofollow" class="external free" href="https://freegeoip.app">https://freegeoip.app</a></li>
 <li><a rel="nofollow" class="external free" href="https://ipapi.co/">https://ipapi.co/</a></li>
-<li><a rel="nofollow" class="external free" href="http://ip-api.com/">http://ip-api.com/</a></li>
+<li><a rel="nofollow" class="external free" href="https://ip-api.com/">https://ip-api.com/</a></li>
 <li><a rel="nofollow" class="external free" href="https://ipstack.com/">https://ipstack.com/</a></li>
 <li><a rel="nofollow" class="external free" href="https://timezoneapi.io/">https://timezoneapi.io/</a></li>
 <li><a rel="nofollow" class="external free" href="https://ipdata.co">https://ipdata.co</a></li>
 </ul>
 <h4><span class="mw-headline" id="Update_timezone_every_time_NetworkManager_connects_to_a_network">Update timezone every time NetworkManager connects to a network</span></h4>
-<p>Create a <a href="../en/NetworkManager.html#Network_services_with_NetworkManager_dispatcher" title="NetworkManager">NetworkManager dispatcher script</a>:
+<p>Create a <a href="/title/NetworkManager#Network_services_with_NetworkManager_dispatcher" title="NetworkManager">NetworkManager dispatcher script</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/NetworkManager/dispatcher.d/09-timezone</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">#!/bin/sh
@@ -285,10 +285,10 @@ esac
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> If the hwclock has been set again less than 24 hours after a previous set, the drift is not recalculated as <code>hwclock</code> considers the elapsed time period too short to accurately calculate the drift.</div>
-<p>If the hardware clock keeps losing or gaining time in large increments, it is possible that an invalid drift has been recorded (but only applicable, if the hwclock daemon is running). This can happen if you have set the hardware clock time incorrectly or your <a href="#Time_standard">time standard</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> is not synchronized with a Windows or macOS install.  The drift value can be removed by first removing the file <code>/etc/adjtime</code>, then setting the correct hardware clock and system clock time. You should then check if your time standard is correct.
+<p>If the hardware clock keeps losing or gaining time in large increments, it is possible that an invalid drift has been recorded (but only applicable, if the hwclock daemon is running). This can happen if you have set the hardware clock time incorrectly or your <a href="#Time_standard">time standard</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> is not synchronized with a Windows or macOS install.  The drift value can be removed by first removing the file <code>/etc/adjtime</code>, then setting the correct hardware clock and system clock time. You should then check if your time standard is correct.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If you wish to make use of the drift value stored in <code>/etc/adjtime</code> even when using systemd, (e.g. you cannot or do not want to use NTP), you must call <code>hwclock --adjust</code> on a regular basis, perhaps by creating a <a href="../en/Cron.html" title="Cron">cron</a> job.</div>
+<strong>Note:</strong> If you wish to make use of the drift value stored in <code>/etc/adjtime</code> even when using systemd, (e.g. you cannot or do not want to use NTP), you must call <code>hwclock --adjust</code> on a regular basis, perhaps by creating a <a href="/title/Cron" title="Cron">cron</a> job.</div>
 <p>The software clock is very accurate but like most clocks is not perfectly accurate and will drift as well. Though rarely, the system clock can lose accuracy if the kernel skips interrupts. There are some tools to improve software clock accuracy:
 </p>
 <ul><li>See <a href="#Time_synchronization">#Time synchronization</a>.</li></ul>
@@ -296,19 +296,19 @@ esac
 <p>The <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol" class="extiw" title="wikipedia:Network Time Protocol">Network Time Protocol</a> (NTP) is a protocol for synchronizing the clocks of computer systems over packet-switched, variable-latency data networks. The following are implementations of NTP available for Arch Linux:
 </p>
 <ul><li>
-<b><a href="../en/Chrony.html" title="Chrony">Chrony</a></b> — A client and server that is roaming friendly and designed specifically for systems that are not online all the time.</li></ul>
+<b><a href="/title/Chrony" title="Chrony">Chrony</a></b> — A client and server that is roaming friendly and designed specifically for systems that are not online all the time.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://chrony.tuxfamily.org/">https://chrony.tuxfamily.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=chrony">chrony</a></span>
 </dd></dl>
 <ul><li>
-<b><a href="../en/ConnMan.html" title="ConnMan">ConnMan</a></b> — A lightweight network manager with NTP support.</li></ul>
+<b><a href="/title/ConnMan" title="ConnMan">ConnMan</a></b> — A lightweight network manager with NTP support.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://01.org/connman">https://01.org/connman</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=connman">connman</a></span>
 </dd></dl>
 <ul><li>
-<b><a href="../en/Network_Time_Protocol_daemon.html" title="Network Time Protocol daemon">Network Time Protocol daemon</a></b> — The <a href="https://en.wikipedia.org/wiki/reference_implementation" class="extiw" title="wikipedia:reference implementation">reference implementation</a> of the protocol, especially recommended to be used on time servers. It can also adjust the interrupt frequency and the number of ticks per second to decrease system clock drift, and will cause the hardware clock to be re-synchronised every 11 minutes.</li></ul>
+<b><a href="/title/Network_Time_Protocol_daemon" title="Network Time Protocol daemon">Network Time Protocol daemon</a></b> — The <a href="https://en.wikipedia.org/wiki/reference_implementation" class="extiw" title="wikipedia:reference implementation">reference implementation</a> of the protocol, especially recommended to be used on time servers. It can also adjust the interrupt frequency and the number of ticks per second to decrease system clock drift, and will cause the hardware clock to be re-synchronised every 11 minutes.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://www.ntp.org/">http://www.ntp.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ntp">ntp</a></span>
+<a rel="nofollow" class="external free" href="https://www.ntp.org/">https://www.ntp.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ntp">ntp</a></span>
 </dd></dl>
 <ul><li>
 <b>ntpclient</b> — A simple command-line NTP client.</li></ul>
@@ -316,22 +316,22 @@ esac
 <a rel="nofollow" class="external free" href="http://doolittle.icarus.com/ntpclient/">http://doolittle.icarus.com/ntpclient/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ntpclient/">ntpclient</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
-<b><a href="../en/NTPsec.html" title="NTPsec">NTPsec</a></b> — A fork of NTPd, focused on security.</li></ul>
+<b><a href="/title/NTPsec" title="NTPsec">NTPsec</a></b> — A fork of NTPd, focused on security.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://ntpsec.org/">https://ntpsec.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/ntpsec/">ntpsec</a></span><sup><small>AUR</small></sup>
 </dd></dl>
 <ul><li>
-<b><a href="../en/OpenNTPD.html" title="OpenNTPD">OpenNTPD</a></b> — Part of the OpenBSD project and implements both a client and a server.</li></ul>
+<b><a href="/title/OpenNTPD" title="OpenNTPD">OpenNTPD</a></b> — Part of the OpenBSD project and implements both a client and a server.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="http://www.openntpd.org/">http://www.openntpd.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=openntpd">openntpd</a></span>
 </dd></dl>
 <ul><li>
 <b>sntp</b> — An <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP" class="extiw" title="wikipedia:Network Time Protocol">SNTP</a> client that comes with NTPd. It supersedes <i>ntpdate</i> and is recommended in non-server environments.</li></ul>
 <dl><dd>
-<a rel="nofollow" class="external free" href="http://www.ntp.org/">http://www.ntp.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ntp">ntp</a></span>
+<a rel="nofollow" class="external free" href="https://www.ntp.org/">https://www.ntp.org/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ntp">ntp</a></span>
 </dd></dl>
 <ul><li>
-<b><a href="../en/Systemd-timesyncd.html" title="Systemd-timesyncd">systemd-timesyncd</a></b> — A simple <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP" class="extiw" title="wikipedia:Network Time Protocol">SNTP</a> daemon that only implements a client side, focusing only on querying time from one remote server. It should be more than appropriate for most installations.</li></ul>
+<b><a href="/title/Systemd-timesyncd" title="Systemd-timesyncd">systemd-timesyncd</a></b> — A simple <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP" class="extiw" title="wikipedia:Network Time Protocol">SNTP</a> daemon that only implements a client side, focusing only on querying time from one remote server. It should be more than appropriate for most installations.</li></ul>
 <dl><dd>
 <a rel="nofollow" class="external free" href="https://www.freedesktop.org/wiki/Software/systemd/">https://www.freedesktop.org/wiki/Software/systemd/</a> || <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd">systemd</a></span>
 </dd></dl>
@@ -340,16 +340,16 @@ esac
 </h2>
 <p>For some use cases it may be useful to change the time settings without touching the global system values. For example to test applications relying on the time during development or adjusting the system time zone when logging into a server remotely from another zone. 
 </p>
-<p>To make an application "see" a different date/time than the system one, you can use the <i>faketime</i> (from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libfaketime">libfaketime</a></span>) or the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=datefudge">datefudge</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> utilities.
+<p>To make an application "see" a different date/time than the system one, you can use the <i>faketime</i> (from <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=libfaketime">libfaketime</a></span>) or the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=datefudge">datefudge</a></span><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> utilities.
 </p>
-<p>If instead you want an application to "see" a different time zone than the system one, set the <code>TZ</code> <a href="../en/Environment_variables.html" class="mw-redirect" title="Environment variable">environment variable</a>, for example: 
+<p>If instead you want an application to "see" a different time zone than the system one, set the <code>TZ</code> <a href="/title/Environment_variable" class="mw-redirect" title="Environment variable">environment variable</a>, for example: 
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ date &amp;&amp; export TZ=":/usr/share/zoneinfo/Pacific/Fiji" &amp;&amp; date</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Tue Nov  1 14:34:51 CET 2016
 Wed Nov  2 01:34:51 FJT 2016</pre>
 <p>This is different than just setting the time, as for example it allows to test the behavior of a program with positive or negative UTC offset values, or the effects of DST changes when developing on systems in a non-DST time zone.
 </p>
-<p>Another use case is having different time zones set for different users of the same system: this can be accomplished by setting the <code>TZ</code> variable in the shell's configuration file, see <a href="../en/Environment_variables.html#Defining_variables" title="Environment variables">Environment variables#Defining variables</a>.
+<p>Another use case is having different time zones set for different users of the same system: this can be accomplished by setting the <code>TZ</code> variable in the shell's configuration file, see <a href="/title/Environment_variables#Defining_variables" title="Environment variables">Environment variables#Defining variables</a>.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Clock_shows_a_value_that_is_neither_UTC_nor_local_time">Clock shows a value that is neither UTC nor local time</span></h3>
@@ -358,7 +358,7 @@ Wed Nov  2 01:34:51 FJT 2016</pre>
 <p>To force your clock to the correct time, and to also write the correct UTC to your hardware clock, follow these steps:
 </p>
 <ul>
-<li>Setup <a href="../en/Network_Time_Protocol_daemon.html" class="mw-redirect" title="Ntpd">ntpd</a> (enabling it as a service is not necessary).</li>
+<li>Setup <a href="/title/Ntpd" class="mw-redirect" title="Ntpd">ntpd</a> (enabling it as a service is not necessary).</li>
 <li>Set your <a href="#Time_zone">time zone</a> correctly.</li>
 <li>Run <code>ntpd -qg</code> to manually synchronize your clock with the network, ignoring large deviations between local UTC and network UTC.</li>
 <li>Run <code>hwclock --systohc</code> to write the current software UTC time to the hardware clock.</li>
@@ -367,7 +367,7 @@ Wed Nov  2 01:34:51 FJT 2016</pre>
 <h3><span class="mw-headline" id="fake-hwclock">fake-hwclock</span></h3>
 <p><a rel="nofollow" class="external text" href="https://github.com/xanmanning/alarm-fake-hwclock">alarm-fake-hwclock</a> designed especially for system without battery backed up RTC, it includes a systemd service which on shutdown saves the current time and on startup restores the saved time, thus avoiding strange time travel errors. 
 </p>
-<p><a href="../en/Arch_User_Repository.html#Installing_packages" title="Arch User Repository">Install</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/fake-hwclock-git/">fake-hwclock-git</a></span><sup><small>AUR</small></sup>, <a href="../en/Systemd.html#Using_units" title="Systemd">start and enable</a> the service <code>fake-hwclock.service</code>.
+<p><a href="/title/Arch_User_Repository#Installing_packages" title="Arch User Repository">Install</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/fake-hwclock-git/">fake-hwclock-git</a></span><sup><small>AUR</small></sup>, <a href="/title/Systemd#Using_units" title="Systemd">start and enable</a> the service <code>fake-hwclock.service</code>.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
@@ -384,16 +384,16 @@ Wed Nov  2 01:34:51 FJT 2016</pre>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:7d876dcc0aeb99723c8082d6986c7db5.html" title="Category:正體中文">正體中文</a></li>
-<li><a href="../zh-TW/Category:Mainboards_and_BIOS.html" title="Category:Mainboards and BIOS (正體中文)">Mainboards and BIOS (正體中文)</a></li>
-<li><a href="../zh-TW/Category:System_administration.html" title="Category:System administration (正體中文)">System administration (正體中文)</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87" title="Category:正體中文">正體中文</a></li>
+<li><a href="/title/Category:Mainboards_and_BIOS_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)" title="Category:Mainboards and BIOS (正體中文)">Mainboards and BIOS (正體中文)</a></li>
+<li><a href="/title/Category:System_administration_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)" title="Category:System administration (正體中文)">System administration (正體中文)</a></li>
 </ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
+<li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li>
+<li><a href="/title/Category:Pages_with_dead_links" title="Category:Pages with dead links">Pages with dead links</a></li>
+<li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li>
 </ul>
 </div>
 </div>
@@ -402,15 +402,15 @@ Wed Nov  2 01:34:51 FJT 2016</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=System_time_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)&amp;oldid=663110">https://wiki.archlinux.org/index.php?title=System_time_(正體中文)&amp;oldid=663110</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 21:23.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=System_time_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)&amp;oldid=669420">https://wiki.archlinux.org/index.php?title=System_time_(正體中文)&amp;oldid=669420</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:48.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

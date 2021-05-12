@@ -38,26 +38,26 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Xorg.html" title="Xorg">Xorg</a></li>
-<li><a href="../en/Keyboard_input.html" title="Keyboard input">Keyboard input</a></li>
-<li><a href="../en/Linux_console/Keyboard_configuration.html#Creating_a_custom_keymap" class="mw-redirect" title="Extra keyboard keys in console">Extra keyboard keys in console</a></li>
-<li><a href="../en/Xbindkeys.html" title="Xbindkeys">Xbindkeys</a></li>
+<li><a href="/title/Xorg" title="Xorg">Xorg</a></li>
+<li><a href="/title/Keyboard_input" title="Keyboard input">Keyboard input</a></li>
+<li><a href="/title/Extra_keyboard_keys_in_console" class="mw-redirect" title="Extra keyboard keys in console">Extra keyboard keys in console</a></li>
+<li><a href="/title/Xbindkeys" title="Xbindkeys">Xbindkeys</a></li>
 </ul>
 </div>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Why is xmodmap only recommended for the simplest tasks? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Xmodmap">Talk:Xmodmap#</a>)</div>
+<b>Reason:</b> Why is xmodmap only recommended for the simplest tasks? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Xmodmap">Talk:Xmodmap#</a>)</div>
 </div>
-<p><i>xmodmap</i> is a utility for modifying keymaps and pointer button mappings in <a href="../en/Xorg.html" title="Xorg">Xorg</a>.
+<p><i>xmodmap</i> is a utility for modifying keymaps and pointer button mappings in <a href="/title/Xorg" title="Xorg">Xorg</a>.
 </p>
-<p><i>xmodmap</i> is not directly related to <a href="../en/X_keyboard_extension.html" title="X keyboard extension">X keyboard extension</a> (XKB), as it uses different (pre-XKB) ideas on how <i>keycodes</i> are processed within X. Generally, it is only recommended for the simplest tasks. See <a href="../en/X_keyboard_extension.html" title="X keyboard extension">X keyboard extension</a> for advanced layout configuration.
+<p><i>xmodmap</i> is not directly related to <a href="/title/X_keyboard_extension" title="X keyboard extension">X keyboard extension</a> (XKB), as it uses different (pre-XKB) ideas on how <i>keycodes</i> are processed within X. Generally, it is only recommended for the simplest tasks. See <a href="/title/X_keyboard_extension" title="X keyboard extension">X keyboard extension</a> for advanced layout configuration.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
 <ul>
 <li>
-<i>xmodmap</i> settings are reset by <i>setxkbmap</i>, which not only alters the alphanumeric keys to the values given in the map, but also resets all other keys to the startup default. <a rel="nofollow" class="external autonumber" href="http://wiki.linuxquestions.org/wiki/Configuring_keyboards">[1]</a>
+<i>xmodmap</i> settings are reset by <i>setxkbmap</i>, which not only alters the alphanumeric keys to the values given in the map, but also resets all other keys to the startup default. <a rel="nofollow" class="external autonumber" href="https://wiki.linuxquestions.org/wiki/Configuring_keyboards">[1]</a>
 </li>
 <li>Due to a limitation of Xorg, <i>xmodmap</i> settings are not applied to hotplugged devices automatically. If a keyboard is added to a system after a custom table has been applied, the custom table will have to be applied again. <a rel="nofollow" class="external autonumber" href="https://bugs.freedesktop.org/show_bug.cgi?id=25262">[2]</a>
 </li>
@@ -103,17 +103,17 @@
 </div>
 
 <h2><span class="mw-headline" id="Introduction">Introduction</span></h2>
-<p>There are two types of keyboard values in <a href="../en/Xorg.html" title="Xorg">Xorg</a>: <i>keycodes</i> and <i>keysyms</i>.
+<p>There are two types of keyboard values in <a href="/title/Xorg" title="Xorg">Xorg</a>: <i>keycodes</i> and <i>keysyms</i>.
 </p>
 <dl>
 <dt>keycode</dt>
 <dd>The <i>keycode</i> is the numeric representation received by the kernel when a key or a mouse button is pressed.</dd>
 <dt>keysym</dt>
 <dd>The <i>keysym</i> is the value assigned to the <i>keycode</i>. For example, pressing <code>a</code> generates the <code>keycode 38</code>, which is mapped to the <code>keysym 0×61</code>, which matches <code>a</code> in the <a href="https://en.wikipedia.org/wiki/ASCII" class="extiw" title="wikipedia:ASCII">ASCII table</a>.</dd>
-<dd>The <i>keysyms</i> are managed by <a href="../en/Xorg.html" title="Xorg">Xorg</a> in a table of <i>keycodes</i> defining the <i>keycode</i>-<i>keysym</i> relations, which is called the <a href="#Keymap_table">keymap table</a>. This can be shown by running <code>xmodmap</code>.</dd>
+<dd>The <i>keysyms</i> are managed by <a href="/title/Xorg" title="Xorg">Xorg</a> in a table of <i>keycodes</i> defining the <i>keycode</i>-<i>keysym</i> relations, which is called the <a href="#Keymap_table">keymap table</a>. This can be shown by running <code>xmodmap</code>.</dd>
 </dl>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><i>xmodmap</i> can be <a href="../en/Pacman.html" title="Pacman">installed</a> through the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xmodmap">xorg-xmodmap</a></span> package.
+<p><i>xmodmap</i> can be <a href="/title/Pacman" title="Pacman">installed</a> through the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xorg-xmodmap">xorg-xmodmap</a></span> package.
 </p>
 <p>Optionally, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xkeycaps">xkeycaps</a></span>, which is a graphical front-end to <i>xmodmap</i>.
 </p>
@@ -138,12 +138,12 @@ keycode  57 = n N
 </ol>
 <p>Not all <i>keysyms</i> have to be set, but to assign only a latter <i>keysym</i>, use the <code>NoSymbol</code> value.
 </p>
-<p>To see which <i>keycode</i> corresponds to a key, see <a href="../en/Keyboard_input.html#Identifying_keycodes_in_Xorg" title="Keyboard input">Keyboard input#Identifying keycodes in Xorg</a> for details on the <i>xev</i> utility which will output relevant keycode/keysym information about a key when you press it.
+<p>To see which <i>keycode</i> corresponds to a key, see <a href="/title/Keyboard_input#Identifying_keycodes_in_Xorg" title="Keyboard input">Keyboard input#Identifying keycodes in Xorg</a> for details on the <i>xev</i> utility which will output relevant keycode/keysym information about a key when you press it.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> There are predefined descriptive <i>keysyms</i> for multimedia keys, e.g. <code>XF86AudioMute</code> or <code>XF86Mail</code>. These <i>keysyms</i> can be found in <code>/usr/include/X11/XF86keysym.h</code>. Many multimedia programs are designed to work with these <i>keysyms</i> out-of-the-box, without the need to configure any third-party application.
 </div>
-<p>Note that xmodmap is influenced by xkbd settings, so all eight keysym are available for the US(intl) xkbd layout but not for the default US (it is missing the ralt_switch symbol defined in level3). To have all 8 keysyms available you should configure the <i>(intl)</i> variant of the keyboard.  Using US layout as an example, <code>$ setxkbmap -layout 'us(intl)'</code> before calling xmodmap to test your changes in the current X session. To permanently make this change, edit the xorg configuration or your .xprofile or .xinitrc file.  See <a href="../en/Xorg/Keyboard_configuration.html#Setting_keyboard_layout" title="Xorg/Keyboard configuration">Xorg/Keyboard configuration#Setting keyboard layout</a> for a full explanation.
+<p>Note that xmodmap is influenced by xkbd settings, so all eight keysym are available for the US(intl) xkbd layout but not for the default US (it is missing the ralt_switch symbol defined in level3). To have all 8 keysyms available you should configure the <i>(intl)</i> variant of the keyboard.  Using US layout as an example, <code>$ setxkbmap -layout 'us(intl)'</code> before calling xmodmap to test your changes in the current X session. To permanently make this change, edit the xorg configuration or your .xprofile or .xinitrc file.  See <a href="/title/Xorg/Keyboard_configuration#Setting_keyboard_layout" title="Xorg/Keyboard configuration">Xorg/Keyboard configuration#Setting keyboard layout</a> for a full explanation.
 </p>
 <h2><span class="mw-headline" id="Custom_table">Custom table</span></h2>
 <p>To create a key map (i.e. <code>~/.Xmodmap</code>):
@@ -155,7 +155,7 @@ keycode  57 = n N
 <pre>$ xmodmap ~/.Xmodmap
 </pre>
 <h3><span class="mw-headline" id="Activating_the_custom_table">Activating the custom table</span></h3>
-<p>With <a href="../en/GDM.html" title="GDM">GDM</a>, <a href="../en/XDM.html" title="XDM">XDM</a> or <a href="../en/LightDM.html" title="LightDM">LightDM</a> there is no need to source <code>~/.Xmodmap</code>. For <a href="../en/Xinit.html" class="mw-redirect" title="Startx">startx</a>, use:
+<p>With <a href="/title/GDM" title="GDM">GDM</a>, <a href="/title/XDM" title="XDM">XDM</a> or <a href="/title/LightDM" title="LightDM">LightDM</a> there is no need to source <code>~/.Xmodmap</code>. For <a href="/title/Startx" class="mw-redirect" title="Startx">startx</a>, use:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.xinitrc</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[[ -f ~/.Xmodmap ]] &amp;&amp; xmodmap ~/.Xmodmap
@@ -186,9 +186,9 @@ mod4        Super_R (0x86),  Super_L (0xce),  Hyper_L (0xcf)
 mod5        ISO_Level3_Shift (0x5c),  ISO_Level3_Shift (0x6c),  Mode_switch (0x85),  Mode_switch (0xcb)</pre> 
 <h3><span class="mw-headline" id="Finding_the_keysym_column_modifier_keys">Finding the keysym column modifier keys</span></h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="#Keymap_table">#Keymap table</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="#Keymap_table">#Keymap table</a>.</b><a href="/title/File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Notes:</b> The point of this section does not seem to be <i>finding</i> anything. The meaning of the modifier keys should be explained in <a href="#Keymap_table">#Keymap table</a> where they are mentioned first. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Xmodmap">Talk:Xmodmap#</a>)</div>
+<b>Notes:</b> The point of this section does not seem to be <i>finding</i> anything. The meaning of the modifier keys should be explained in <a href="#Keymap_table">#Keymap table</a> where they are mentioned first. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Xmodmap">Talk:Xmodmap#</a>)</div>
 </div>
 <dl>
 <dt>ISO_Level3_Shift</dt>
@@ -197,7 +197,7 @@ mod5        ISO_Level3_Shift (0x5c),  ISO_Level3_Shift (0x6c),  Mode_switch (0x8
 <dd>The Mode_switch modifier may be mapped by default to a key that is not on your keyboard.</dd>
 </dl>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The usage of the modifier names <code>ISO_Level3_Shift</code> and <code>Mode_switch</code> is different between xmodmap and <a href="../en/X_keyboard_extension.html#xmodmap" title="X keyboard extension">X Keyboard Extension</a>. See also <a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/questions/55076/what-is-the-mode-switch-modifier-for">[3]</a>.</div>
+<strong>Note:</strong> The usage of the modifier names <code>ISO_Level3_Shift</code> and <code>Mode_switch</code> is different between xmodmap and <a href="/title/X_keyboard_extension#xmodmap" title="X keyboard extension">X Keyboard Extension</a>. See also <a rel="nofollow" class="external autonumber" href="https://unix.stackexchange.com/questions/55076/what-is-the-mode-switch-modifier-for">[3]</a>.</div>
 <h3><span class="mw-headline" id="Reassigning_modifiers_to_keys_on_your_keyboard">Reassigning modifiers to keys on your keyboard</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> xmodmap is <i>case-sensitive</i>. Using incorrect case, such as <code>Mode_Switch</code> instead of the correct <code>Mode_switch</code> will cause errors.</div>
@@ -242,9 +242,9 @@ add control = Caps_Lock Control_L Control_R
 keycode 66 = Control_L Caps_Lock NoSymbol NoSymbol</pre>
 <h2><span class="mw-headline" id="Reverse_scrolling">Reverse scrolling</span></h2>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="../en/Mouse_buttons.html" title="Mouse buttons">Mouse buttons</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="/title/Mouse_buttons" title="Mouse buttons">Mouse buttons</a>.</b><a href="/title/File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Notes:</b> xmodmap is not the only way to do this. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Xmodmap">Talk:Xmodmap#</a>)</div>
+<b>Notes:</b> xmodmap is not the only way to do this. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Xmodmap">Talk:Xmodmap#</a>)</div>
 </div>
 <p>The <a rel="nofollow" class="external text" href="https://who-t.blogspot.com/2011/09/natural-scrolling-in-synaptics-driver.html">natural scrolling</a> feature available in OS X Lion (mimicking smartphone or tablet scrolling) can be <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=126258">replicated</a> with <i>xmodmap</i>. Since the synaptics driver uses the buttons 4/5/6/7 for up/down/left/right scrolling, you simply need to swap the order of how the buttons are declared in <code>~/.Xmodmap</code>:
 </p>
@@ -256,9 +256,9 @@ keycode 66 = Control_L Caps_Lock NoSymbol NoSymbol</pre>
 </pre>
 <h2><span class="mw-headline" id="Swapping_mouse_buttons">Swapping mouse buttons</span></h2>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="../en/Mouse_buttons.html" title="Mouse buttons">Mouse buttons</a>.</b><a href="../File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a><b>This article or section is a candidate for merging with <a href="/title/Mouse_buttons" title="Mouse buttons">Mouse buttons</a>.</b><a href="/title/File:Merge-arrows-2.png" class="image"><img alt="Merge-arrows-2.png" src="../File:Merge-arrows-2.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Notes:</b> xmodmap is not the only way to do this. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Xmodmap">Talk:Xmodmap#</a>)</div>
+<b>Notes:</b> xmodmap is not the only way to do this. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Xmodmap">Talk:Xmodmap#</a>)</div>
 </div>
 <p>The left, middle and right mouse buttons correspond to buttons 1,2 and 3 respectively in the synaptics driver. To swap left and right mouse buttons, again simply reverse the order in which they are listed in your <code>~/.Xmodmap</code>:
 </p>
@@ -342,25 +342,25 @@ keycode 19 = equal 0 0 equal dead_doubleacute doubleacute dead_doubleacute
 <ul>
 <li><span class="plainlinks archwiki-template-man" title="$ man 1 xmodmap"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xmodmap.1">xmodmap(1)</a></span></li>
 <li>
-<a rel="nofollow" class="external text" href="http://cweiske.de/howto/xmodmap/allinone.html">Multimediakeys with .Xmodmap HOWTO</a> by Christian Weiske</li>
+<a rel="nofollow" class="external text" href="https://cweiske.de/howto/xmodmap/allinone.html">Multimediakeys with .Xmodmap HOWTO</a> by Christian Weiske</li>
 <li>
 <a rel="nofollow" class="external text" href="https://dev-loki.blogspot.com/2006/04/mapping-unsupported-keys-with-xmodmap.html">Mapping unsupported keys with xmodmap</a> by Pascal Bleser</li>
 <li>
-<a rel="nofollow" class="external text" href="http://wiki.linuxquestions.org/wiki/List_of_Keysyms_Recognised_by_Xmodmap">List of Keysyms Recognised by Xmodmap</a> on <a rel="nofollow" class="external text" href="https://linuxquestions.org">LinuxQuestions</a>
+<a rel="nofollow" class="external text" href="https://wiki.linuxquestions.org/wiki/List_of_Keysyms_Recognised_by_Xmodmap">List of Keysyms Recognised by Xmodmap</a> on <a rel="nofollow" class="external text" href="https://linuxquestions.org">LinuxQuestions</a>
 </li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Keyboard_configuration.html" title="Category:Keyboard configuration">Keyboard configuration</a></li>
-<li><a href="../en/Category:Xorg_commands.html" title="Category:Xorg commands">Xorg commands</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Keyboard_configuration" title="Category:Keyboard configuration">Keyboard configuration</a></li>
+<li><a href="/title/Category:Xorg_commands" title="Category:Xorg commands">Xorg commands</a></li>
 </ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Merge.html" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Expansion" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Merge" title="Category:Pages or sections flagged with Template:Merge">Pages or sections flagged with Template:Merge</a></li>
 </ul>
 </div>
 </div>
@@ -369,15 +369,15 @@ keycode 19 = equal 0 0 equal dead_doubleacute doubleacute dead_doubleacute
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xmodmap&amp;oldid=662633">https://wiki.archlinux.org/index.php?title=Xmodmap&amp;oldid=662633</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 21:37.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Xmodmap&amp;oldid=669584">https://wiki.archlinux.org/index.php?title=Xmodmap&amp;oldid=669584</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 12:00.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

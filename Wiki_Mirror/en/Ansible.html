@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -77,12 +78,12 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p>On the control machine (master), <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ansible">ansible</a></span> package.
+<p>On the control machine (master), <a href="/title/Install" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ansible">ansible</a></span> package.
 </p>
-<p>On the managed machines (nodes),  where you want to automate deployment or configuration tasks, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python">python</a></span> is required and it may be necessary to indicate the specific <a href="#Python_binary_location">#Python binary location</a> in some circumstances.  A way to communicate with the node is also necessary, this is usually <a href="../en/Secure_Shell.html" class="mw-redirect" title="SSH">SSH</a>. Note that a functioning <a href="../en/SSH_keys.html#Copying_the_public_key_to_the_remote_server" title="SSH keys">SSH key</a> setup eases the use of Ansible but is not required.
+<p>On the managed machines (nodes),  where you want to automate deployment or configuration tasks, <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=python">python</a></span> is required and it may be necessary to indicate the specific <a href="#Python_binary_location">#Python binary location</a> in some circumstances.  A way to communicate with the node is also necessary, this is usually <a href="/title/SSH" class="mw-redirect" title="SSH">SSH</a>. Note that a functioning <a href="/title/SSH_keys#Copying_the_public_key_to_the_remote_server" title="SSH keys">SSH key</a> setup eases the use of Ansible but is not required.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> You may want to install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=vim-ansible">vim-ansible</a></span> plugin for better syntax highlighting of Ansible files in <a href="../en/Vim.html" title="Vim">vim</a>.</div>
+<strong>Tip:</strong> You may want to install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=vim-ansible">vim-ansible</a></span> plugin for better syntax highlighting of Ansible files in <a href="/title/Vim" title="Vim">vim</a>.</div>
 <h2><span class="mw-headline" id="Basic_usage">Basic usage</span></h2>
 <h3><span class="mw-headline" id="Configuration">Configuration</span></h3>
 <p>Ansible parameters are set in the configuration file which can either be <code>ansible.cfg</code> in the current directory, <code>.ansible.cfg</code> in the home directory or <code>/etc/ansible/ansible.cfg</code>, whichever it finds first.
@@ -164,12 +165,12 @@ mysecret: !vault |
 other_not_secret: othervalue</pre>
 <h3><span class="mw-headline" id="Package_management">Package management</span></h3>
 <h4><span class="mw-headline" id="Official_repositories">Official repositories</span></h4>
-<p>Ansible has a <a rel="nofollow" class="external text" href="https://docs.ansible.com/ansible/latest/collections/community/general/pacman_module.html">pacman module</a> to handle installation, removal and system upgrades with <a href="../en/Pacman.html" title="Pacman">pacman</a>.
+<p>Ansible has a <a rel="nofollow" class="external text" href="https://docs.ansible.com/ansible/latest/collections/community/general/pacman_module.html">pacman module</a> to handle installation, removal and system upgrades with <a href="/title/Pacman" title="Pacman">pacman</a>.
 </p>
 <h4><span class="mw-headline" id="AUR">AUR</span></h4>
-<p>For the <a href="../en/Arch_User_Repository.html" title="Arch User Repository">Arch User Repository</a> <i>(AUR)</i>, it is required to use the external module <a rel="nofollow" class="external text" href="https://github.com/kewlfft/ansible-aur">ansible-aur</a>. See the README for use and installation instructions.
+<p>For the <a href="/title/Arch_User_Repository" title="Arch User Repository">Arch User Repository</a> <i>(AUR)</i>, it is required to use the external module <a rel="nofollow" class="external text" href="https://github.com/kewlfft/ansible-aur">ansible-aur</a>. See the README for use and installation instructions.
 </p>
-<p>While Ansible expects to ssh as root, AUR helpers do not allow executing operations as root, they all fail with "you cannot perform this operation as root". For Ansible automation, it is therefore recommended to create a user, for example named <i>aur_builder</i>, that has no need for password with pacman in <a href="../en/Sudo.html#Configuration" class="mw-redirect" title="Sudoers">sudoers</a>. This can be done in Ansible with the following actions:
+<p>While Ansible expects to ssh as root, AUR helpers do not allow executing operations as root, they all fail with "you cannot perform this operation as root". For Ansible automation, it is therefore recommended to create a user, for example named <i>aur_builder</i>, that has no need for password with pacman in <a href="/title/Sudoers" class="mw-redirect" title="Sudoers">sudoers</a>. This can be done in Ansible with the following actions:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">task.yml</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">- user: name=<i>aur_builder</i>
@@ -180,7 +181,7 @@ other_not_secret: othervalue</pre>
      line: "<i>aur_builder</i> ALL=(ALL) NOPASSWD: /usr/bin/pacman"
      validate: /usr/sbin/visudo -cf %s
      create: yes</pre>
-<p>Then, AUR helpers or <a href="../en/Makepkg.html" title="Makepkg">makepkg</a> can be used associated with the Ansible parameters <code>become: yes</code> and <code>become_user: aur_builder</code>
+<p>Then, AUR helpers or <a href="/title/Makepkg" title="Makepkg">makepkg</a> can be used associated with the Ansible parameters <code>become: yes</code> and <code>become_user: aur_builder</code>
 </p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="User_account_creation">User account creation</span></h3>
@@ -204,7 +205,7 @@ other_not_secret: othervalue</pre>
 <pre>$ python -c 'import crypt; print(crypt.crypt("<i>user_password</i>", crypt.mksalt(crypt.METHOD_SHA512)))'
 </pre>
 <h3><span class="mw-headline" id="Python_binary_location">Python binary location</span></h3>
-<p>Ansible requires <a href="../en/Python.html" title="Python">Python</a> on the target machine. By default Ansible assumes it can find a <code>/usr/bin/python</code> on the remote system that is a 2.X or 3.X version, specifically 2.6 or higher.
+<p>Ansible requires <a href="/title/Python" title="Python">Python</a> on the target machine. By default Ansible assumes it can find a <code>/usr/bin/python</code> on the remote system that is a 2.X or 3.X version, specifically 2.6 or higher.
 </p>
 <p>If some of your modules specifically require Python2, you need to inform Ansible about its location by setting the <code>ansible_python_interpreter</code> variable in the inventory file. This can be done by using host groups in the inventory:
 </p>
@@ -218,7 +219,7 @@ server3
 
 [archlinux:vars]
 ansible_python_interpreter=/usr/bin/python2</pre>
-<p>More information about Python version support in Ansible is available in <a rel="nofollow" class="external autonumber" href="https://docs.ansible.com/ansible/latest/reference_appendices/python_3_support.html">[1]</a>, <a rel="nofollow" class="external autonumber" href="https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">[2]</a> and <a rel="nofollow" class="external autonumber" href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#list-of-behavioral-inventory-parameters">[3]</a>.
+<p>More information about Python version support in Ansible is available in <a rel="nofollow" class="external autonumber" href="https://docs.ansible.com/ansible/latest/reference_appendices/python_3_support.html">[1]</a>, <a rel="nofollow" class="external autonumber" href="https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-handle-not-having-a-python-interpreter-at-usr-bin-python-on-a-remote-machine">[2]</a> e <a rel="nofollow" class="external autonumber" href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters">[3]</a>.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Unarchive">Unarchive</span></h3>
@@ -234,22 +235,22 @@ ansible_python_interpreter=/usr/bin/python2</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:System_administration.html" title="Category:System administration">System administration</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:System_administration" title="Category:System administration">System administration</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Ansible&amp;oldid=649232">https://wiki.archlinux.org/index.php?title=Ansible&amp;oldid=649232</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 19 January 2021, at 00:58.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Ansible&amp;oldid=670381">https://wiki.archlinux.org/index.php?title=Ansible&amp;oldid=670381</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 10 May 2021, at 22:27.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

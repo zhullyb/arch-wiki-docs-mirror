@@ -38,10 +38,10 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Domain_name_resolution.html" title="Domain name resolution">Domain name resolution</a></li>
+<li><a href="/title/Domain_name_resolution" title="Domain name resolution">Domain name resolution</a></li>
 </ul>
 </div>
-<p><a rel="nofollow" class="external text" href="http://members.home.nl/p.a.rombouts/pdnsd/index.html">pdnsd</a> is a DNS server designed for local caching of DNS information. Correctly configured, it can significantly increase browsing speed on a broadband connection. Compared to <a href="../en/BIND.html" title="BIND">BIND</a> or <a href="../en/Dnsmasq.html" title="Dnsmasq">dnsmasq</a> it can remember its cache after a reboot; "p" stands for persistent. 
+<p><a rel="nofollow" class="external text" href="http://members.home.nl/p.a.rombouts/pdnsd/index.html">pdnsd</a> is a DNS server designed for local caching of DNS information. Correctly configured, it can significantly increase browsing speed on a broadband connection. Compared to <a href="/title/BIND" title="BIND">BIND</a> or <a href="/title/Dnsmasq" title="Dnsmasq">dnsmasq</a> it can remember its cache after a reboot; "p" stands for persistent.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -95,7 +95,7 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pdnsd">pdnsd</a></span> package.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=pdnsd">pdnsd</a></span> package.
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <p>The package comes with a sample configuration file at <code>/usr/share/doc/pdnsd/pdnsd.conf</code>. The customized configuration file should be created at <code>/etc/pdnsd.conf</code>.
@@ -127,14 +127,14 @@
 <p>The rest of the server section will work without any more changes. For details on all the available options, see the <a rel="nofollow" class="external text" href="http://members.home.nl/p.a.rombouts/pdnsd/doc.html">pdnsd manual</a>.
 </p>
 <h4><span class="mw-headline" id="DNS_servers_with_DHCP_connections">DNS servers with DHCP connections</span></h4>
-<p>When <a href="../en/Netctl.html" title="Netctl">netctl</a> is installed, pdnsd can be notified of the ip addresses of the name servers by <a href="../en/Openresolv.html" title="Openresolv">openresolv</a> and the notifications become dynamic when you use <a href="../en/Netctl.html#Special_systemd_units" title="Netctl">Automatic switching of profiles</a>.
+<p>When <a href="/title/Netctl" title="Netctl">netctl</a> is installed, pdnsd can be notified of the ip addresses of the name servers by <a href="/title/Openresolv" title="Openresolv">openresolv</a> and the notifications become dynamic when you use <a href="/title/Netctl#Special_systemd_units" title="Netctl">Automatic switching of profiles</a>.
 </p>
 <p>To configure this feature, remove the broadband server section and update the dial-up server section with the following changes:
 </p>
 <pre>   label = resolvconf;
    file = /etc/pdnsd-resolv.conf;
 </pre>
-<p>Edit <code>/etc/resolvconf.conf</code> to configure <a href="../en/Openresolv.html" title="Openresolv">openresolv</a> with pdnsd as one of its subscribers:
+<p>Edit <code>/etc/resolvconf.conf</code> to configure <a href="/title/Openresolv" title="Openresolv">openresolv</a> with pdnsd as one of its subscribers:
 </p>
 <pre>name_servers=127.0.0.1
 pdnsd_resolv=/etc/pdnsd-resolv.conf
@@ -153,12 +153,12 @@ pdnsd_resolv=/etc/pdnsd-resolv.conf
 <h3><span class="mw-headline" id="Testing">Testing</span></h3>
 <p>You should now have a working <code>pdnsd</code> daemon. Start it.
 </p>
-<p><a href="../en/Domain_name_resolution.html#Lookup_utilities" title="Domain name resolution">Test</a> that it is now working.
+<p><a href="/title/Domain_name_resolution#Lookup_utilities" title="Domain name resolution">Test</a> that it is now working.
 </p>
 <p>For the second time you look up any address using <code>127.0.0.1</code>, query time should be under 1 ms.
 </p>
 <h3><span class="mw-headline" id="System_setup">System setup</span></h3>
-<p>Make sure to <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>pdnsd.service</code>.
+<p>Make sure to <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> <code>pdnsd.service</code>.
 </p>
 <p>It starts right after <code>network.target</code>, as services that use the network rely on a working DNS, i.e. <code>network-online.target</code> (see: <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget/">Upstream Wiki</a>).
 </p>
@@ -194,7 +194,7 @@ purge_cache=off;
 </p>
 <p>Times are specified in seconds by default, or you may append an "m", "h", "d", or "w" to the time to specify minutes, hours, days, or weeks.
 </p>
-<p><code>min_ttl</code> in the global settings sets a minimum TTL for cached records, causing pdnsd to ignore the default TTL in the record received from the server.  On a slow connection or with a slow DNS server, you may want to set this to several hours to reduce the number of lookups ( eg <code>min_ttl=6h;</code> ).
+<p><code>min_ttl</code> in the global settings sets a minimum TTL for cached records, causing pdnsd to ignore the default TTL in the record received from the server.  On a slow connection or with a slow DNS server, you may want to set this to several hours to reduce the number of lookups (eg <code>min_ttl=6h;</code>).
 </p>
 <p><code>neg_ttl</code> in the global settings sets a minimum TTL for non-existent domains.  If a server tells pdnsd that a domain does not exist, it will not try to lookup that domain again until this amount of time has elapsed.
 </p>
@@ -212,9 +212,9 @@ purge_cache=off;
 </p>
 <pre>debug=on;
 </pre>
-<p>Restart pdnsd and monitor the pdnsd.service for changes with the <a href="../en/Systemd/Journal.html" class="mw-redirect" title="Systemd journal">systemd journal</a>:
+<p>Restart pdnsd and monitor the pdnsd.service for changes with the <a href="/title/Systemd_journal" class="mw-redirect" title="Systemd journal">systemd journal</a>:
 </p>
-<pre>journalctl -f _SYSTEMD_UNIT=pdnsd.service
+<pre># journalctl -f -u pdnsd.service
 </pre>
 <p>Be sure to turn debug off for general use as leaving it on may degrade performance.
 </p>
@@ -240,7 +240,7 @@ purge_cache=off;
 <p>Since there can only be one domain set per block, this does not scale well for blocking adds, trackers or malicious content. It is however possible to add a <code>source</code> section (additional to the existing one that loads <code>/etc/hosts</code>), that loads a file in <code>/etc/hosts</code> format that binds domains to the  special IP-Address 0.0.0.0 – but this will not block subdomains since <code>/etc/hosts</code> does not allow wildcards. Doing this is is equivalent to adding the rules to <code>/etc/hosts</code> but it avoids having a huge <code>/etc/hosts</code> which can break some applications.
 </p>
 <h3><span class="mw-headline" id="pdnsd-ctl">pdnsd-ctl</span></h3>
-<p>From the pdnsd-ctl(8) manpage:
+<p>From <span class="plainlinks archwiki-template-man" title="$ man 8 pdnsd-ctl"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/pdnsd-ctl.8#DESCRIPTION">pdnsd-ctl(8) § DESCRIPTION</a></span>:
 </p>
 <dl><dd><i><b>pdnsd-ctl</b>  controls <b>pdnsd</b>, a proxy dns server with permanent caching. Note that the status control socket must be enabled (by specifying an option on the  pdnsd command line or in the configuration file) before you can use <b>pdnsd-ctl</b>.</i></dd></dl>
 <p>A couple of useful commands to get you started...
@@ -254,13 +254,13 @@ purge_cache=off;
 <pre># pdnsd-ctl empty-cache
 </pre>
 <h3><span class="mw-headline" id="DNSCrypt">DNSCrypt</span></h3>
-<p>pdnsd can be used with <a href="../en/Dnscrypt-proxy.html" class="mw-redirect" title="DNSCrypt">DNSCrypt</a>. DNSCrypt encrypts the domain name lookup. pdnsd then queries DNSCrypt when necessary. An example configuration is found in <a href="../en/Dnscrypt-proxy.html#pdnsd" class="mw-redirect" title="DNSCrypt">DNSCrypt#pdnsd</a>.
+<p>pdnsd can be used with <a href="/title/DNSCrypt" class="mw-redirect" title="DNSCrypt">DNSCrypt</a>. DNSCrypt encrypts the domain name lookup. pdnsd then queries DNSCrypt when necessary. An example configuration is found in <a href="/title/DNSCrypt#pdnsd" class="mw-redirect" title="DNSCrypt">DNSCrypt#pdnsd</a>.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="result_of_uptest_for_192.168.x.x:_failed">result of uptest for 192.168.x.x: failed</span></h3>
 <p>You can successfully ping your ISP's <a href="https://en.wikipedia.org/wiki/Dynamic_DNS" class="extiw" title="wikipedia:Dynamic DNS">dynamic DNS</a> server, even though the log shows the following:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ journalctl -f _SYSTEMD_UNIT=pdnsd.service</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># journalctl -f -u pdnsd.service</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">result of uptest for 192.168.x.x: failed
 </pre>
 <p>Check the interface configured in <code>/etc/pdnsd.conf</code> global section exists:
@@ -285,22 +285,22 @@ purge_cache=off;
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Domain_Name_System.html" title="Category:Domain Name System">Domain Name System</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Domain_Name_System" title="Category:Domain Name System">Domain Name System</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pdnsd&amp;oldid=654989">https://wiki.archlinux.org/index.php?title=Pdnsd&amp;oldid=654989</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 March 2021, at 01:05.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pdnsd&amp;oldid=665799">https://wiki.archlinux.org/index.php?title=Pdnsd&amp;oldid=665799</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 07:54.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

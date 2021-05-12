@@ -36,18 +36,18 @@
 <p><span></span>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="../en/Systemd-boot.html" title="Systemd-boot">Systemd-boot</a>. Data da última tradução: 2021-02-17. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;diff=0&amp;oldid=649691">alterações</a> na versão em inglês.</div>
+<strong>Status de tradução:</strong> Esse artigo é uma tradução de <a href="/title/Systemd-boot" title="Systemd-boot">Systemd-boot</a>. Data da última tradução: 2021-02-17. Você pode ajudar a sincronizar a tradução, se houver <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd-boot&amp;diff=0&amp;oldid=649691">alterações</a> na versão em inglês.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artigos relacionados</p>
 <ul>
-<li><a href="../pt/Arch_boot_process.html" class="mw-redirect" title="Processo de inicialização do Arch">Processo de inicialização do Arch</a></li>
-<li><a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a></li>
-<li><a href="../en/Unified_Extensible_Firmware_Interface.html" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface</a></li>
+<li><a href="/title/Processo_de_inicializa%C3%A7%C3%A3o_do_Arch" class="mw-redirect" title="Processo de inicialização do Arch">Processo de inicialização do Arch</a></li>
+<li><a href="/title/Secure_Boot" class="mw-redirect" title="Secure Boot">Secure Boot</a></li>
+<li><a href="/title/Unified_Extensible_Firmware_Interface" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface</a></li>
 </ul>
 </div>
-<p><b>systemd-boot</b>, antigamente chamado de <b>gummiboot</b> (Alemão para: 'bote de borracha'), é um simples <a href="../pt/Arch_boot_process.html#Gerenciador_de_boot" class="mw-redirect" title="Gerenciador de boot">gerenciador de boot</a> UEFI que executa imagens EFI configuradas. A entrada padrão é selecionada por um padrão (glob) definido ou um menu navegável na tela por meio das setas. Vêm com o <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd">systemd</a></span>, que é instalado em um sistema Arch por padrão.
+<p><b>systemd-boot</b>, antigamente chamado de <b>gummiboot</b> (Alemão para: 'bote de borracha'), é um simples <a href="/title/Gerenciador_de_boot" class="mw-redirect" title="Gerenciador de boot">gerenciador de boot</a> UEFI que executa imagens EFI configuradas. A entrada padrão é selecionada por um padrão (glob) definido ou um menu navegável na tela por meio das setas. Vêm com o <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd">systemd</a></span>, que é instalado em um sistema Arch por padrão.
 </p>
-<p>É simples de configurar mas pode somente iniciar executáveis EFI como o <a href="../pt/EFISTUB.html" title="EFISTUB (Português)">EFISTUB</a> do kernel Linux, shell UEFI, GRUB ou o gerenciador de boot do Windows.
+<p>É simples de configurar mas pode somente iniciar executáveis EFI como o <a href="/title/EFISTUB_(Portugu%C3%AAs)" title="EFISTUB (Português)">EFISTUB</a> do kernel Linux, shell UEFI, GRUB ou o gerenciador de boot do Windows.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -111,9 +111,9 @@
 <span id="Instala.C3.A7.C3.A3o"></span><span class="mw-headline" id="Instalação">Instalação</span>
 </h2>
 <h3><span class="mw-headline" id="Instalando_o_gerenciador_de_boot_EFI">Instalando o gerenciador de boot EFI</span></h3>
-<p>Para instalar o gerenciador de boot EFI <i>systemd-boot</i>, primeiro tenha certeza que o sistema inicializou no modo UEFI e que as <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_variables" title="Unified Extensible Firmware Interface">variáveis UEFI</a> são acessíveis. Isto pode ser verificado ao executar o comando <code>efivar --list</code> ou, se <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=efivar">efivar</a></span> não está instalado, ao executar <code>ls /sys/firmware/efi/efivars</code> (se o diretório existe, o sistema foi inicializado no modo UEFI).
+<p>Para instalar o gerenciador de boot EFI <i>systemd-boot</i>, primeiro tenha certeza que o sistema inicializou no modo UEFI e que as <a href="/title/Unified_Extensible_Firmware_Interface#UEFI_variables" title="Unified Extensible Firmware Interface">variáveis UEFI</a> são acessíveis. Isto pode ser verificado ao executar o comando <code>efivar --list</code> ou, se <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=efivar">efivar</a></span> não está instalado, ao executar <code>ls /sys/firmware/efi/efivars</code> (se o diretório existe, o sistema foi inicializado no modo UEFI).
 </p>
-<p><code><i>esp</i></code> será usada nesta página para indicar o <a href="../pt/EFI_system_partition.html#Pontos_de_montagem_comuns" title="EFI system partition (Português)">ponto de montagem ESP</a>, ex. <code>/boot</code>, <code>/boot/efi</code>, ou <code>/efi</code>. Isto assume que você executou <code>chroot</code> no ponto de montagem do seu sistema.
+<p><code><i>esp</i></code> será usada nesta página para indicar o <a href="/title/EFI_system_partition_(Portugu%C3%AAs)#Pontos_de_montagem_comuns" title="EFI system partition (Português)">ponto de montagem ESP</a>, ex. <code>/boot</code>, <code>/boot/efi</code>, ou <code>/efi</code>. Isto assume que você executou <code>chroot</code> no ponto de montagem do seu sistema.
 </p>
 <p>Com a ESP montada em <code><i>esp</i></code>, use bootctl para instalar <i>systemd-boot</i> na partição de sistema EFI ao executar: 
 </p>
@@ -130,7 +130,7 @@
 </h3>
 <p>Uma partição <code><i>boot</i></code> separada do tipo <code>"Linux extended boot"</code> pode ser criada para manter o kernel e initramfs separados da partição <code><i>esp</i></code>. XBOOTLDR <a rel="nofollow" class="external autonumber" href="https://systemd.io/BOOT_LOADER_SPECIFICATION">[1]</a> deve ter o tipo de partição GUID <code>"bc13c2ff-59e6-4262-a352-b275fd6f7172"</code>.
 </p>
-<p>Isto é particularmente útil para <a href="../pt/Dual_boot_with_Windows.html" class="mw-redirect" title="Dual boot com Windows">dual boot com Windows</a> com uma <a href="../pt/EFI_system_partition.html" class="mw-redirect" title="Partição de sistema EFI">partição de sistema EFI</a> que é muito pequena. Caso contrário, crie uma partição <code><i>esp</i></code> normal e depois crie outra partição para <code><i>boot</i></code> no mesmo dispositivo de armazenamento físico. O tamanho do <code><i>boot</i></code> deve ser o bastante para acomodar todos os kernels que você vai instalar.
+<p>Isto é particularmente útil para <a href="/title/Dual_boot_com_Windows" class="mw-redirect" title="Dual boot com Windows">dual boot com Windows</a> com uma <a href="/title/Parti%C3%A7%C3%A3o_de_sistema_EFI" class="mw-redirect" title="Partição de sistema EFI">partição de sistema EFI</a> que é muito pequena. Caso contrário, crie uma partição <code><i>esp</i></code> normal e depois crie outra partição para <code><i>boot</i></code> no mesmo dispositivo de armazenamento físico. O tamanho do <code><i>boot</i></code> deve ser o bastante para acomodar todos os kernels que você vai instalar.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> 
@@ -166,7 +166,7 @@
 <h4>
 <span id="Atualiza.C3.A7.C3.A3o_autom.C3.A1tica"></span><span class="mw-headline" id="Atualização_automática">Atualização automática</span>
 </h4>
-<p>O pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-boot-pacman-hook/">systemd-boot-pacman-hook</a></span><sup><small>AUR</small></sup> oferece um <a href="../pt/Pacman.html#Hooks" class="mw-redirect" title="Hook do pacman">hook do pacman</a> para automatizar o processo de atualização. <a href="../pt/Help:Reading.html#Instala%C3%A7%C3%A3o_de_pacotes" class="mw-redirect" title="Instala">Instalar</a> o pacote adicionará um pacote hook que será executado toda vez que o pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd">systemd</a></span> é atualizado.
+<p>O pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-boot-pacman-hook/">systemd-boot-pacman-hook</a></span><sup><small>AUR</small></sup> oferece um <a href="/title/Hook_do_pacman" class="mw-redirect" title="Hook do pacman">hook do pacman</a> para automatizar o processo de atualização. <a href="/title/Instala" class="mw-redirect" title="Instala">Instalar</a> o pacote adicionará um pacote hook que será executado toda vez que o pacote <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=systemd">systemd</a></span> é atualizado.
 Alternativamente, para replicar o que o pacote <i>systemd-boot-pacman-hook</i> faz sem instalá-lo, adicione o seguinte hook do pacman no diretório <code>/etc/pacman.d/hooks/</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pacman.d/hooks/100-systemd-boot.hook</pre>
@@ -179,7 +179,7 @@ Target = systemd
 Description = Updating systemd-boot
 When = PostTransaction
 Exec = /usr/bin/bootctl update</pre>
-<p>Se você tem <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> habilitado, você pode querer instalar um <a href="../pt/Pacman.html#Hooks" class="mw-redirect" title="Hook do pacman">hook do pacman</a> para automaticamente reassinar o kernel e o systemd-boot quando este for atualizado.
+<p>Se você tem <a href="/title/Secure_Boot" class="mw-redirect" title="Secure Boot">Secure Boot</a> habilitado, você pode querer instalar um <a href="/title/Hook_do_pacman" class="mw-redirect" title="Hook do pacman">hook do pacman</a> para automaticamente reassinar o kernel e o systemd-boot quando este for atualizado.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/pacman.d/hooks/99-secureboot.hook</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Trigger]
@@ -193,9 +193,7 @@ Target = systemd
 Description = Assinar o Kernel para SecureBoot
 When = PostTransaction
 Exec = /usr/bin/sh -c "/usr/bin/find /boot/ -type f \( -name 'vmlinuz-*' -o -name 'systemd*' \) -exec /usr/bin/sh -c 'if ! /usr/bin/sbverify --list {} 2&gt;/dev/null</pre>
-<p>O <code>Target</code> precisa ser duplicado cada vez que você deseja acrescentar um novo pacote. Com relação à instrução do <code>find</code>, como havia uma condição com os nomes de arquivos do hooks do ALPM serem separados por espaços, foi necessário inserir a instrução toda com aspas para que fosse interpretada corretamente. Como o systemd-boot é localizado em subdiretórios, a profundidade precisou ser ajustada também para que fosse removido o argumento <code>-maxdepth</code>. Para evitar incômodo, se você não tiver certeza, tente reinstalar o pacote que deseja testar para testar se o hook e o processo de assinatura são executados corretamente. Veja. Veja <a href="../pt/Pacman.html#Hooks" title="Pacman (Português)">Pacman (Português)#Hooks</a> ou <span class="plainlinks archwiki-template-man" title="$ man 5 alpm-hooks"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/alpm-hooks.5">alpm-hooks(5)</a></span> para mais informações.
-</p>
-<p><br>
+<p>O <code>Target</code> precisa ser duplicado cada vez que você deseja acrescentar um novo pacote. Com relação à instrução do <code>find</code>, como havia uma condição com os nomes de arquivos do hooks do ALPM serem separados por espaços, foi necessário inserir a instrução toda com aspas para que fosse interpretada corretamente. Como o systemd-boot é localizado em subdiretórios, a profundidade precisou ser ajustada também para que fosse removido o argumento <code>-maxdepth</code>. Para evitar incômodo, se você não tiver certeza, tente reinstalar o pacote que deseja testar para testar se o hook e o processo de assinatura são executados corretamente. Veja. Veja <a href="/title/Pacman_(Portugu%C3%AAs)#Hooks" title="Pacman (Português)">Pacman (Português)#Hooks</a> ou <span class="plainlinks archwiki-template-man" title="$ man 5 alpm-hooks"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/alpm-hooks.5">alpm-hooks(5)</a></span> para mais informações.
 </p>
 <h2>
 <span id="Configura.C3.A7.C3.A3o"></span><span class="mw-headline" id="Configuração">Configuração</span>
@@ -270,20 +268,20 @@ As opções possíveis são:
 <li>
 <code>efi</code> – aplicação EFI a iniciar, relativo ao seu ESP (<code><i>esp</i></code>); ex. <code>/vmlinuz-linux</code>. Este parâmetro <b>ou</b> <code>linux</code> (veja abaixo) é <b>necessário</b>.</li>
 <li>
-<code>options</code> – opções da linha de comando à passar para o programa EFI ou <a href="../pt/Kernel_parameters.html" class="mw-redirect" title="Parâmetros do kernel">parâmetros do kernel</a>. Opcional, mas você precisará no mínimo <code>root=<i>dev</i></code> se inicializar o Linux. Este parâmetro pode ser omitido se a partição raiz é atribuída ao tipo Root Partition GUID correto como definido na <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Discoverable Partitions Specification</a> e se o hook do <a href="../pt/Mkinitcpio.html" title="Mkinitcpio (Português)">mkinitcpio</a> do <code>systemd</code> está presente.</li>
+<code>options</code> – opções da linha de comando à passar para o programa EFI ou <a href="/title/Par%C3%A2metros_do_kernel" class="mw-redirect" title="Parâmetros do kernel">parâmetros do kernel</a>. Opcional, mas você precisará no mínimo <code>root=<i>dev</i></code> se inicializar o Linux. Este parâmetro pode ser omitido se a partição raiz é atribuída ao tipo Root Partition GUID correto como definido na <a rel="nofollow" class="external text" href="https://systemd.io/DISCOVERABLE_PARTITIONS/">Discoverable Partitions Specification</a> e se o hook do <a href="/title/Mkinitcpio_(Portugu%C3%AAs)" title="Mkinitcpio (Português)">mkinitcpio</a> do <code>systemd</code> está presente.</li>
 </ul>
 <p>Para inicializar o Linux, você pode também usar <code>linux</code> ao invês de <code>efi</code>. Ou <code>initrd</code> em adição a <code>options</code>. A sintaxe é:
 </p>
 <ul><li>
 <code>linux</code> e <code>initrd</code> seguido por um caminho relativo dos arquivos correspondentes na ESP;  e.x. <code>/vmlinuz-linux</code>; isto vai ser automaticamente traduzido em <code>efi <i>caminho</i></code> e <code>options initrd=<i>caminho</i></code> – esta sintaxe é somente suportada por conveniência e não há diferenças em função.</li></ul>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> Se <code>options</code> está presente na entrada de boot e <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a> está desabilitado, o valor de <code>options</code> vai sobrescrever qualquer linha <code>.cmdline</code> inserida na imagem EFI que está especificada pelo <code>efi</code> ou <code>linux</code> (veja <a href="#Preparando_uma_imagem_de_kernel_unificada">#Preparando uma imagem de kernel unificada</a>). Com Secure Boot, no entanto, <code>options</code> (e quaisquer modificações feitas a linha de comando do kernel na interface do gerenciador de boot) serão ignoradas, e somente as <code>.cmdline</code> serão usadas. </div>
+<strong>Nota:</strong> Se <code>options</code> está presente na entrada de boot e <a href="/title/Secure_Boot" class="mw-redirect" title="Secure Boot">Secure Boot</a> está desabilitado, o valor de <code>options</code> vai sobrescrever qualquer linha <code>.cmdline</code> inserida na imagem EFI que está especificada pelo <code>efi</code> ou <code>linux</code> (veja <a href="#Preparando_uma_imagem_de_kernel_unificada">#Preparando uma imagem de kernel unificada</a>). Com Secure Boot, no entanto, <code>options</code> (e quaisquer modificações feitas a linha de comando do kernel na interface do gerenciador de boot) serão ignoradas, e somente as <code>.cmdline</code> serão usadas. </div>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Provide an example entry with fallback initramfs. It may not be immediately obvious that you need to create a separate entry file for it, an example would make it clear. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-boot_(Portugu%C3%AAs)">Talk:Systemd-boot (Português)#</a>)</div>
+<b>Reason:</b> Provide an example entry with fallback initramfs. It may not be immediately obvious that you need to create a separate entry file for it, an example would make it clear. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Systemd-boot_(Portugu%C3%AAs)">Talk:Systemd-boot (Português)#</a>)</div>
 </div>
-<p>Um exemplo de um arquivo de configuração para inicializar o Arch de uma partição com <a href="../pt/Persistent_block_device_naming.html#by-label" class="mw-redirect" title="Nomeação persistente de dispositivo de bloco">rótulo</a> <i>arch_os</i> e carregando o <a href="../en/Microcode.html" title="Microcode">microcode</a> da CPU da Intel é:
+<p>Um exemplo de um arquivo de configuração para inicializar o Arch de uma partição com <a href="/title/Nomea%C3%A7%C3%A3o_persistente_de_dispositivo_de_bloco#by-label" class="mw-redirect" title="Nomeação persistente de dispositivo de bloco">rótulo</a> <i>arch_os</i> e carregando o <a href="/title/Microcode" title="Microcode">microcode</a> da CPU da Intel é:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"><i>esp</i>/loader/entries/arch.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">title   Arch Linux
@@ -291,14 +289,14 @@ linux   /vmlinuz-linux
 initrd  /intel-ucode.img
 initrd  /initramfs-linux.img
 options root="LABEL=<i>arch_os</i>" rw</pre>
-<p><i>systemd-boot</i> vai automaticamente verificar no tempo de inicialização pelo <b>Gerenciador de Boot do Windows</b> na localização <code>/EFI/Microsoft/Boot/Bootmgfw.efi</code>, <b>Shell EFI</b> <code>/shellx64.efi</code> e <b>EFI Default Loader</b> (carregador padrão EFI) <code>/EFI/BOOT/bootx64.efi</code>, como também arquivos do kernel especialmente preparados em <code>/EFI/Linux</code>. Quando detectado, as entradas correspondentes com títulos <code>auto-windows</code>, <code>auto-efi-shell</code> e <code>auto-efi-default</code>, respectivamente, serão geradas. Estas entradas não precisam de configuração manual. No entanto, outras aplicações EFI não são detectadas automaticamente (diferente do <a href="../en/REFInd.html" title="REFInd">rEFInd</a>), então para inicializar o kernel Linux, entradas de boot devem ser criadas manualmente.
+<p><i>systemd-boot</i> vai automaticamente verificar no tempo de inicialização pelo <b>Gerenciador de Boot do Windows</b> na localização <code>/EFI/Microsoft/Boot/Bootmgfw.efi</code>, <b>Shell EFI</b> <code>/shellx64.efi</code> e <b>EFI Default Loader</b> (carregador padrão EFI) <code>/EFI/BOOT/bootx64.efi</code>, como também arquivos do kernel especialmente preparados em <code>/EFI/Linux</code>. Quando detectado, as entradas correspondentes com títulos <code>auto-windows</code>, <code>auto-efi-shell</code> e <code>auto-efi-default</code>, respectivamente, serão geradas. Estas entradas não precisam de configuração manual. No entanto, outras aplicações EFI não são detectadas automaticamente (diferente do <a href="/title/REFInd" title="REFInd">rEFInd</a>), então para inicializar o kernel Linux, entradas de boot devem ser criadas manualmente.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> 
 <ul>
-<li>Se você tem dual-boot com Windows, é fortemente recomendado desabilitar sua opção padrão <a href="../pt/Dual_boot_with_Windows.html#Inicializa%C3%A7%C3%A3o_r%C3%A1pida_e_hiberna%C3%A7%C3%A3o" class="mw-redirect" title="Dual boot com Windows">inicialização rápida</a>.</li>
-<li>Se você tem uma CPU Intel ou AMD, carregue o <i>microcode</i> com <code>initrd</code> antes de outras imagens, um exemplo é fornecido em <a href="../en/Microcode.html#systemd-boot" title="Microcode">Microcode#systemd-boot</a>.</li>
-<li>A partição raiz pode ser indentificada com sua <code>LABEL</code> (rótulo), <code>PARTUUID</code> ou <code>UUID</code> (veja <a href="../pt/Persistent_block_device_naming.html" class="mw-redirect" title="Nomeação persistente de dispositivo de bloco">Nomeação persistente de dispositivo de bloco</a>). Isto é necessário somente para identificar a partição raiz, não a <code><i>esp</i></code>.</li>
+<li>Se você tem dual-boot com Windows, é fortemente recomendado desabilitar sua opção padrão <a href="/title/Dual_boot_com_Windows#Inicializa%C3%A7%C3%A3o_r%C3%A1pida_e_hiberna%C3%A7%C3%A3o" class="mw-redirect" title="Dual boot com Windows">inicialização rápida</a>.</li>
+<li>Se você tem uma CPU Intel ou AMD, carregue o <i>microcode</i> com <code>initrd</code> antes de outras imagens, um exemplo é fornecido em <a href="/title/Microcode#systemd-boot" title="Microcode">Microcode#systemd-boot</a>.</li>
+<li>A partição raiz pode ser indentificada com sua <code>LABEL</code> (rótulo), <code>PARTUUID</code> ou <code>UUID</code> (veja <a href="/title/Nomea%C3%A7%C3%A3o_persistente_de_dispositivo_de_bloco" class="mw-redirect" title="Nomeação persistente de dispositivo de bloco">Nomeação persistente de dispositivo de bloco</a>). Isto é necessário somente para identificar a partição raiz, não a <code><i>esp</i></code>.</li>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-tip">
@@ -306,18 +304,18 @@ options root="LABEL=<i>arch_os</i>" rw</pre>
 <ul>
 <li>As entradas de boot disponíveis que foram configuradas podem ser listadas com o comando <code>bootctl list</code>.</li>
 <li>Um exemplo de arquivo de entrada está localizado em <code>/usr/share/systemd/bootctl/arch.conf</code>.</li>
-<li>Os <a href="../pt/Kernel_parameters.html" class="mw-redirect" title="Parâmetros do kernel">parâmetros do kernel</a> para cenários como <a href="../pt/LVM.html" title="LVM (Português)">LVM</a>, <a href="../pt/Dm-crypt.html" class="mw-redirect" title="LUKS (Português)">LUKS</a> ou <a href="../pt/Dm-crypt.html" title="Dm-crypt (Português)">dm-crypt</a> pode ser encontrado nas páginas relevantes.</li>
+<li>Os <a href="/title/Par%C3%A2metros_do_kernel" class="mw-redirect" title="Parâmetros do kernel">parâmetros do kernel</a> para cenários como <a href="/title/LVM_(Portugu%C3%AAs)" title="LVM (Português)">LVM</a>, <a href="/title/LUKS_(Portugu%C3%AAs)" class="mw-redirect" title="LUKS (Português)">LUKS</a> ou <a href="/title/Dm-crypt_(Portugu%C3%AAs)" title="Dm-crypt (Português)">dm-crypt</a> pode ser encontrado nas páginas relevantes.</li>
 </ul>
 </div>
 <h4>
 <span id="Shells_EFI_ou_outras_aplica.C3.A7.C3.B5es_EFI"></span><span class="mw-headline" id="Shells_EFI_ou_outras_aplicações_EFI">Shells EFI ou outras aplicações EFI</span>
 </h4>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> If the UEFI shell is placed as <code>/shellx64.efi</code> in the ESP, it will be autodetected. Using multiple UEFI shell versions is uncommon, so provide a better example with some other EFI application. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd-boot_(Portugu%C3%AAs)">Talk:Systemd-boot (Português)#</a>)</div>
+<b>Reason:</b> If the UEFI shell is placed as <code>/shellx64.efi</code> in the ESP, it will be autodetected. Using multiple UEFI shell versions is uncommon, so provide a better example with some other EFI application. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Systemd-boot_(Portugu%C3%AAs)">Talk:Systemd-boot (Português)#</a>)</div>
 </div>
-<p>Caso você tenha instalado <a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_Shell" title="Unified Extensible Firmware Interface">shells EFI</a> e <a href="../en/REFInd.html#Tools" title="REFInd">outras aplicações EFI</a> na ESP, você pode usar os seguintes exemplos.
+<p>Caso você tenha instalado <a href="/title/Unified_Extensible_Firmware_Interface#UEFI_Shell" title="Unified Extensible Firmware Interface">shells EFI</a> e <a href="/title/REFInd#Tools" title="REFInd">outras aplicações EFI</a> na ESP, você pode usar os seguintes exemplos.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> O parâmetro do caminho do arquivo para a linha <code>efi</code> é relativo ao ponto de montagem da sua <i>esp</i>. Se você montou em <code>/boot</code> e seus binários EFI estão em <code>/boot/EFI/xx.efi</code> e <code>/boot/yy.efi</code>, então você deve especificar os parâmetros como <code>efi /EFI/xx.efi</code> e <code>efi /yy.efi</code> respectivamente.</div>
@@ -334,12 +332,12 @@ efi     /EFI/shellx64_v2.efi
 <h3>
 <span id="Inicializando_para_a_configura.C3.A7.C3.A3o_de_Firmware_EFI"></span><span class="mw-headline" id="Inicializando_para_a_configuração_de_Firmware_EFI">Inicializando para a configuração de Firmware EFI</span>
 </h3>
-<p>A maioria dos firmware configurados para EFI vão adicionar suas próprias entradas <a href="../en/Unified_Extensible_Firmware_Interface.html#efibootmgr" class="mw-redirect" title="Efibootmgr">efibootmgr</a> para inicializar o firmware de configuração UEFI.
+<p>A maioria dos firmware configurados para EFI vão adicionar suas próprias entradas <a href="/title/Efibootmgr" class="mw-redirect" title="Efibootmgr">efibootmgr</a> para inicializar o firmware de configuração UEFI.
 </p>
 <h3>
 <span id="Supporte_a_hiberna.C3.A7.C3.A3o"></span><span class="mw-headline" id="Supporte_a_hibernação">Supporte a hibernação</span>
 </h3>
-<p>Veja <a href="../en/Power_management/Suspend_and_hibernate.html" class="mw-redirect" title="Suspend and hibernate">Suspend and hibernate</a>.
+<p>Veja <a href="/title/Suspend_and_hibernate" class="mw-redirect" title="Suspend and hibernate">Suspend and hibernate</a>.
 </p>
 <h3>
 <span id="Editor_de_par.C3.A2metros_do_kernel_protegido_por_senha"></span><span class="mw-headline" id="Editor_de_parâmetros_do_kernel_protegido_por_senha">Editor de parâmetros do kernel protegido por senha</span>
@@ -406,7 +404,7 @@ efi     /EFI/shellx64_v2.efi
 <pre>$ systemctl reboot --firmware-setup
 </pre>
 <h3><span class="mw-headline" id="Preparando_uma_imagem_de_kernel_unificada">Preparando uma imagem de kernel unificada</span></h3>
-<p>systemd-boot busca em <code><i>esp</i>/EFI/Linux/</code> por <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_SPECIFICATION#type-2-efi-unified-kernel-images">imagens unificadas de kernel</a>, que junta o kernel, o disco RAM inicial (initrd), a linha de comando do kernel, <code>/etc/os-release</code>, e uma imagem splash em um único arquivo. Este arquivo pode ser facilmente assinado para <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html" class="mw-redirect" title="Secure Boot">Secure Boot</a>.
+<p>systemd-boot busca em <code><i>esp</i>/EFI/Linux/</code> por <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_SPECIFICATION#type-2-efi-unified-kernel-images">imagens unificadas de kernel</a>, que junta o kernel, o disco RAM inicial (initrd), a linha de comando do kernel, <code>/etc/os-release</code>, e uma imagem splash em um único arquivo. Este arquivo pode ser facilmente assinado para <a href="/title/Secure_Boot" class="mw-redirect" title="Secure Boot">Secure Boot</a>.
 </p>
 <p>Coloque a linha de comando do kernel que você quer em um arquivo, e crie o arquivo unificado dessa forma:
 </p>
@@ -417,13 +415,13 @@ efi     /EFI/shellx64_v2.efi
     --add-section .linux="arquivo-vmlinuz" --change-section-vma .linux=0x2000000 \
     --add-section .initrd="arquivo-initrd" --change-section-vma .initrd=0x3000000 \
     "/usr/lib/systemd/boot/efi/linuxx64.efi.stub" "<i>linux</i>.efi"</pre>
-<p>Opcionalmente <a href="../en/Unified_Extensible_Firmware_Interface/Secure_Boot.html#Signing_EFI_binaries" class="mw-redirect" title="Secure Boot">assine</a> o arquivo <code><i>linux</i>.efi</code> produzido acima.
+<p>Opcionalmente <a href="/title/Secure_Boot#Signing_EFI_binaries" class="mw-redirect" title="Secure Boot">assine</a> o arquivo <code><i>linux</i>.efi</code> produzido acima.
 </p>
 <p>Copie <code><i>linux</i>.efi</code> para <code><i>esp</i>/EFI/Linux/</code>.
 </p>
 <h3><span class="mw-headline" id="Grml_na_ESP">Grml na ESP</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Nota:</strong> As seguintes instruções não são exclusivas para Grml. Com leves ajustes, instalar outro software (e.x. <a rel="nofollow" class="external text" href="http://www.system-rescue-cd.org/">SystemRescueCD</a>) é possível.</div>
+<strong>Nota:</strong> As seguintes instruções não são exclusivas para Grml. Com leves ajustes, instalar outro software (e.x. <a rel="nofollow" class="external text" href="https://www.system-rescue-cd.org/">SystemRescueCD</a>) é possível.</div>
 <p><a rel="nofollow" class="external text" href="https://grml.org/">Grml</a> é um pequeno sistema live com uma coleção de software para administração e recuperação do sistema.
 </p>
 <p>Para instalar Grml na ESP, precisamos somente copiar o kernel <code>vmlinuz</code>, o initramfs <code>initrd.img</code>, e a squashed image (Imagem compactada com sistema de arquivos somente leitura) <code>grml64-small.squashfs</code> do arquivo iso para a ESP. Para fazer isso, primeiro baixe a <a rel="nofollow" class="external text" href="https://grml.org/">grml64-small.iso</a> e monte o arquivo (o ponto de montagem desse exemplo é <i>mnt</i>); o kernel e initramfs estão localizados em <code><i>mnt</i>/boot/grml64small/</code>, e a squashed image reside em <code><i>mnt</i>/live/grml64-small/</code>.
@@ -445,10 +443,10 @@ efi     /EFI/shellx64_v2.efi
 linux   /grml/vmlinuz
 initrd  /grml/initrd.img
 options apm=power-off boot=live live-media-path=/grml/ nomce net.ifnames=0</pre>
-<p>Para uma visão geral das opções de boot disponíveis, consulte <a rel="nofollow" class="external text" href="http://git.grml.org/?p=grml-live.git;a=blob_plain;f=templates/GRML/grml-cheatcodes.txt;hb=HEAD">cheatcode for Grml</a>.
+<p>Para uma visão geral das opções de boot disponíveis, consulte <a rel="nofollow" class="external text" href="https://git.grml.org/?p=grml-live.git;a=blob_plain;f=templates/GRML/grml-cheatcodes.txt;hb=HEAD">cheatcode for Grml</a>.
 </p>
 <h3><span class="mw-headline" id="systemd-boot_em_sistemas_BIOS">systemd-boot em sistemas BIOS</span></h3>
-<p>Se você precisa de um gerenciador de boot para sistemas BIOS que segue a <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_SPECIFICATION/">Boot Loader Specification</a>, o systemd-boot pode funcionar. O gerenciador de boot <a href="../en/Clover.html" title="Clover">Clover</a> suporta inicializar de sistemas BIOS e oferece um ambiente EFI simulado.
+<p>Se você precisa de um gerenciador de boot para sistemas BIOS que segue a <a rel="nofollow" class="external text" href="https://systemd.io/BOOT_LOADER_SPECIFICATION/">Boot Loader Specification</a>, o systemd-boot pode funcionar. O gerenciador de boot <a href="/title/Clover" title="Clover">Clover</a> suporta inicializar de sistemas BIOS e oferece um ambiente EFI simulado.
 </p>
 <h2>
 <span id="Resolu.C3.A7.C3.A3o_de_problemas"></span><span class="mw-headline" id="Resolução_de_problemas">Resolução de problemas</span>
@@ -471,7 +469,7 @@ options apm=power-off boot=live live-media-path=/grml/ nomce net.ifnames=0</pre>
 </p>
 <pre># efibootmgr --create --disk /dev/sd<i>X</i> --part <i>Y</i> --loader "\EFI\systemd\systemd-bootx64.efi" --label "Gerenciador de Boot do Linux" --verbose
 </pre>
-<p>Onde <code>/dev/sd<i>XY</i></code> é a <a href="../pt/EFI_system_partition.html" class="mw-redirect" title="Partição de sistema EFI">partição de sistema EFI</a>.
+<p>Onde <code>/dev/sd<i>XY</i></code> é a <a href="/title/Parti%C3%A7%C3%A3o_de_sistema_EFI" class="mw-redirect" title="Partição de sistema EFI">partição de sistema EFI</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> O caminho para a imagem EFI deve usar a barra invertida (<code>\</code>) como o separador</div>
@@ -488,7 +486,7 @@ options apm=power-off boot=live live-media-path=/grml/ nomce net.ifnames=0</pre>
 <h3>
 <span id="Menu_n.C3.A3o_aparece_depois_de_atualiza.C3.A7.C3.A3o_do_Windows"></span><span class="mw-headline" id="Menu_não_aparece_depois_de_atualização_do_Windows">Menu não aparece depois de atualização do Windows</span>
 </h3>
-<p>Veja <a href="../en/Unified_Extensible_Firmware_Interface.html#Windows_changes_boot_order" class="mw-redirect" title="UEFI">UEFI#Windows changes boot order</a>.
+<p>Veja <a href="/title/UEFI#Windows_changes_boot_order" class="mw-redirect" title="UEFI">UEFI#Windows changes boot order</a>.
 </p>
 <h2>
 <span id="Veja_tamb.C3.A9m"></span><span class="mw-headline" id="Veja_também">Veja também</span>
@@ -503,9 +501,9 @@ options apm=power-off boot=live live-media-path=/grml/ nomce net.ifnames=0</pre>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../pt/Category:Boot_loaders.html" title="Category:Boot loaders (Português)">Boot loaders (Português)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Boot_loaders_(Portugu%C3%AAs)" title="Category:Boot loaders (Português)">Boot loaders (Português)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Expansion" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
 </div>
 </div>
 	</div>
@@ -513,15 +511,15 @@ options apm=power-off boot=live live-media-path=/grml/ nomce net.ifnames=0</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-boot_(Portugu%C3%AAs)&amp;oldid=652665">https://wiki.archlinux.org/index.php?title=Systemd-boot_(Português)&amp;oldid=652665</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 February 2021, at 11:57.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd-boot_(Portugu%C3%AAs)&amp;oldid=669422">https://wiki.archlinux.org/index.php?title=Systemd-boot_(Português)&amp;oldid=669422</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:48.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

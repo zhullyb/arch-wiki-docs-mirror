@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,7 +36,7 @@
 <p>OpenNTPD (parte del progetto OpenBSD) è un demone che può essere usato per sincronizzare l'orologio di sistema con time servers in internet utilizzando il Network Time Protocol, e può anche funzionare esso stesso come un time server, se necessario.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Attenzione:</strong> <i>OpenNTPD</i> non è attualmente mantenuto per Linux (leggere <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=68627">questo thread</a>): gli utenti interessati alle sue funzionalità farebbero meglio ad usare <a href="../it/Network_Time_Protocol_daemon.html" class="mw-redirect" title="NTPd (Italiano)">NTPd</a>.</div>
+<strong>Attenzione:</strong> <i>OpenNTPD</i> non è attualmente mantenuto per Linux (leggere <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=68627">questo thread</a>): gli utenti interessati alle sue funzionalità farebbero meglio ad usare <a href="/title/NTPd_(Italiano)" class="mw-redirect" title="NTPd (Italiano)">NTPd</a>.</div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -72,7 +73,7 @@
 </pre>
 <p>La configurazione di base è già sufficiente se si vuole solamente sincronizzare l'ora del computer locale. Per impostazioni maggiormente dettagliate, il file <code>/etc/ntpd.conf</code> deve essere editato: 
 </p>
-<p>Per sincronizzarsi ad un particolare server, decommentare e inserire le direttive del "server". Si possono trovare gli URL dei server della propria area in <a rel="nofollow" class="external text" href="http://www.pool.ntp.org/zone/@">www.pool.ntp.org/zone/@</a>.
+<p>Per sincronizzarsi ad un particolare server, decommentare e inserire le direttive del "server". Si possono trovare gli URL dei server della propria area in <a rel="nofollow" class="external text" href="https://www.pool.ntp.org/zone/@">www.pool.ntp.org/zone/@</a>.
 </p>
 <pre>server ntp.example.org
 </pre>
@@ -108,7 +109,7 @@
 </p>
 <p>OpenNTPD aggiusta l'orologio con piccole variazioni alla volta. Ciò è stato fatto per evitare improvvisi, grandi fluttuazioni di tempo nel proprio sistema, che potrebbero comportare problemi a servizi di sistema (ad esempio, quelli relativi a cron). Perciò, ci può volere un pò prima di correggere l'orario.
 </p>
-<p>Se l'orologio non è funzionante per più di 180 secondi si può provare con "<code>ntpd -s -d</code>" lanciato in una console. Se ntpd è già avviato, si può semplicemente riavviarlo con <code>sudo /etc/rc.d/openntpd restart</code>, dal momento che il pacchetto Arch di openntpd usa la variabile "-s" di base. Si veda <span class="plainlinks archwiki-template-man" title="$ man 1 ntpd"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ntpd.1">ntpd(1)</a></span> per maggiori informazioni. Si può anche impostare l'<a href="../en/System_time.html#Time_Set" title="System time">orologio di sistema</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> il più vicino possibile all'ora attuale e quindi permettere a OpenNTPD di completare la sintonizzazione del tempo. 
+<p>Se l'orologio non è funzionante per più di 180 secondi si può provare con "<code>ntpd -s -d</code>" lanciato in una console. Se ntpd è già avviato, si può semplicemente riavviarlo con <code>sudo /etc/rc.d/openntpd restart</code>, dal momento che il pacchetto Arch di openntpd usa la variabile "-s" di base. Si veda <span class="plainlinks archwiki-template-man" title="$ man 1 ntpd"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/ntpd.1">ntpd(1)</a></span> per maggiori informazioni. Si può anche impostare l'<a href="/title/System_time#Time_Set" title="System time">orologio di sistema</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> il più vicino possibile all'ora attuale e quindi permettere a OpenNTPD di completare la sintonizzazione del tempo. 
 </p>
 <h2>
 <span id="Rendere_openntpd_dipendente_dall.27accesso_al_network"></span><span class="mw-headline" id="Rendere_openntpd_dipendente_dall'accesso_al_network">Rendere openntpd dipendente dall'accesso al network</span>
@@ -126,7 +127,7 @@ PRE_DOWN="/etc/rc.d/openntpd stop || true"
 <h3>
 <span id="Usando_l.27invio_di_NetworkManager"></span><span class="mw-headline" id="Usando_l'invio_di_NetworkManager">Usando l'invio di NetworkManager</span>
 </h3>
-<p>OpenNTPD può essere acceso/spento a seconda della connessione internet attraverso l'uso degli <a href="../it/NetworkManager.html#Servizi_di_rete_con_NetworkManager_Dispatcher" title="NetworkManager (Italiano)">NetworkManager's dispatcher scripts</a>. E' possibile installare gli script necessari dal repo [community]:
+<p>OpenNTPD può essere acceso/spento a seconda della connessione internet attraverso l'uso degli <a href="/title/NetworkManager_(Italiano)#Servizi_di_rete_con_NetworkManager_Dispatcher" title="NetworkManager (Italiano)">NetworkManager's dispatcher scripts</a>. E' possibile installare gli script necessari dal repo [community]:
 </p>
 <pre># pacman -S networkmanager-dispatcher-openntpd
 </pre>
@@ -192,16 +193,16 @@ fi
 <p>Ciò farà sì che il sistema aspetti 5 minuti prima di avviare openntpd, in modo tale da dare un tempo sufficiente al sistema per configurare la connessione. Se le proprie impostazioni network cambiano spesso, si potrebbe anche considerare di riavviare il demone regolarmente tramite cron.
 </p>
 <h2><span class="mw-headline" id="Articoli_correlati">Articoli correlati</span></h2>
-<ul><li><a href="../it/Network_Time_Protocol_daemon.html" title="Network Time Protocol daemon (Italiano)">Network Time Protocol daemon</a></li></ul>
+<ul><li><a href="/title/Network_Time_Protocol_daemon_(Italiano)" title="Network Time Protocol daemon (Italiano)">Network Time Protocol daemon</a></li></ul>
 <h2><span class="mw-headline" id="Link_esterni">Link esterni</span></h2>
 <ul><li><a rel="nofollow" class="external free" href="http://www.openntpd.org">http://www.openntpd.org</a></li></ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../it/Category:Networking.html" title="Category:Networking (Italiano)">Networking (Italiano)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Networking_(Italiano)" title="Category:Networking (Italiano)">Networking (Italiano)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -209,15 +210,15 @@ fi
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenNTPD_(Italiano)&amp;oldid=638532">https://wiki.archlinux.org/index.php?title=OpenNTPD_(Italiano)&amp;oldid=638532</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 October 2020, at 07:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=OpenNTPD_(Italiano)&amp;oldid=669193">https://wiki.archlinux.org/index.php?title=OpenNTPD_(Italiano)&amp;oldid=669193</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

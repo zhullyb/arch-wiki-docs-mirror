@@ -36,14 +36,14 @@
 <p><span></span>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Getty.html" title="Getty">Getty</a> fue revisada el <b>2020-12-10</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Getty&amp;diff=0&amp;oldid=632203">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<strong>Estado de la traducción:</strong> esta traducción de <a href="/title/Getty" title="Getty">Getty</a> fue revisada el <b>2020-12-10</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Getty&amp;diff=0&amp;oldid=632203">cambios</a> puede <a href="/title/ArchWiki:Translation_Team/Contributing_(Espa%C3%B1ol)" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="/title/ArchWiki:Translation_Team_(Espa%C3%B1ol)" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artículos relacionados</p>
 <ul>
-<li><a href="../es/Display_manager.html" title="Display manager (Español)">Gestor de pantalla</a></li>
+<li><a href="/title/Display_manager_(Espa%C3%B1ol)" title="Display manager (Español)">Gestor de pantalla</a></li>
 </ul>
 </div>
-<p>Un <a href="https://en.wikipedia.org/wiki/getty_(Unix)" class="extiw" title="w:getty (Unix)">getty</a> es el nombre genérico de un programa que gestiona una línea de terminal y su terminal conectada. Su propósito es proteger el sistema del acceso no autorizado. En general, cada proceso getty se inicia mediante <a href="../es/Systemd.html" title="Systemd (Español)">systemd</a> y gestiona una sola línea de terminal.
+<p>Un <a href="https://en.wikipedia.org/wiki/getty_(Unix)" class="extiw" title="w:getty (Unix)">getty</a> es el nombre genérico de un programa que gestiona una línea de terminal y su terminal conectada. Su propósito es proteger el sistema del acceso no autorizado. En general, cada proceso getty se inicia mediante <a href="/title/Systemd_(Espa%C3%B1ol)" title="Systemd (Español)">systemd</a> y gestiona una sola línea de terminal.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -101,22 +101,22 @@
 <h2>
 <span id="Inicio_de_sesi.C3.B3n_autom.C3.A1tico_a_la_consola_virtual"></span><span class="mw-headline" id="Inicio_de_sesión_automático_a_la_consola_virtual">Inicio de sesión automático a la consola virtual</span>
 </h2>
-<p>La configuración se basa en <a href="../es/Systemd.html#Modificar_los_archivos_de_unidad_suministrados" title="Systemd (Español)">archivos de entrada</a> de systemd para anular los parámetros predeterminados pasados ​​a <i>agetty</i>.
+<p>La configuración se basa en <a href="/title/Systemd_(Espa%C3%B1ol)#Modificar_los_archivos_de_unidad_suministrados" title="Systemd (Español)">archivos de entrada</a> de systemd para anular los parámetros predeterminados pasados ​​a <i>agetty</i>.
 </p>
 <p>La configuración es diferente para las consolas virtuales y las serie. En la mayoría de los casos, quiere configurar el inicio de sesión automático en una consola virtual, cuyo nombre de dispositivo es <code>tty<i>N</i></code>, donde <code><i>N</i></code> es un número. La configuración de inicio de sesión automático para consolas serie será ligeramente diferente. Los nombres de los dispositivos de las consolas serie aparecen como <code>ttyS<i>N</i></code>, donde <code><i>N</i></code> es un número.
 </p>
 <h3><span class="mw-headline" id="Consola_virtual">Consola virtual</span></h3>
-<p><a href="../es/Systemd.html#Modificar_los_archivos_de_unidad_suministrados" title="Systemd (Español)">Edite la unidad provista</a> ya sea manualmente creando el siguiente fragmento de código, o ejecutando <code>systemctl edit getty@tty1</code> y pegando su contenido:
+<p><a href="/title/Systemd_(Espa%C3%B1ol)#Modificar_los_archivos_de_unidad_suministrados" title="Systemd (Español)">Edite la unidad provista</a> ya sea manualmente creando el siguiente fragmento de código, o ejecutando <code>systemctl edit getty@tty1</code> y pegando su contenido:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/getty@tty1.service.d/override.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
 ExecStart=
 ExecStart=-/usr/bin/agetty --autologin <i>usuario</i> --noclear %I $TERM</pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Sugerencia:</strong> La opción <code>Type=idle</code> que se encuentra en el <code>getty@.service</code> predeterminado retrasará el inicio del servicio hasta que todos los trabajos (solicitudes de cambio de estado a las unidades) se completen en orden para evitar contaminar el mensaje de inicio de sesión con mensajes de arranque. Cuando <a href="../es/Xinit.html#Inicio_autom%C3%A1tico_de_X_al_inicio_de_sesi%C3%B3n" class="mw-redirect" title="Start X at login (Español)">inicie X automáticamente</a>, puede ser útil iniciar <code>getty@tty1.service</code> inmediatamente añadiendo <code>Type=simple</code> en la <a href="../es/Systemd.html#Modificar_los_archivos_de_unidad_suministrados" class="mw-redirect" title="Drop-in snippet (Español)">fragmento de entrada</a>. Tanto el sistema init como <i>startx</i> pueden ser <a href="../en/Silent_boot.html" title="Silent boot">silenciados</a> para evitar el intercalado de sus mensajes durante el arranque.</div>
+<strong>Sugerencia:</strong> La opción <code>Type=idle</code> que se encuentra en el <code>getty@.service</code> predeterminado retrasará el inicio del servicio hasta que todos los trabajos (solicitudes de cambio de estado a las unidades) se completen en orden para evitar contaminar el mensaje de inicio de sesión con mensajes de arranque. Cuando <a href="/title/Start_X_at_login_(Espa%C3%B1ol)" class="mw-redirect" title="Start X at login (Español)">inicie X automáticamente</a>, puede ser útil iniciar <code>getty@tty1.service</code> inmediatamente añadiendo <code>Type=simple</code> en la <a href="/title/Drop-in_snippet_(Espa%C3%B1ol)" class="mw-redirect" title="Drop-in snippet (Español)">fragmento de entrada</a>. Tanto el sistema init como <i>startx</i> pueden ser <a href="/title/Silent_boot" title="Silent boot">silenciados</a> para evitar el intercalado de sus mensajes durante el arranque.</div>
 <p>Si no desea un inicio de sesión automático completo, pero tampoco desea escribir su nombre de usuario, puede reemplazar <code>--autologin <i> usuario </i></code> por <code>--skip-login --login-options <i>usuario</i></code>.
 </p>
-<p>Si desea utilizar un <i>tty</i> distinto a <i>tty1</i>, véase el <a href="../es/d248d36bf684cffdef092c16fe52a0e8.html#%C2%BFC%C3%B3mo_puedo_cambiar_el_n%C3%BAmero_de_gettys_ejecutadas_por_defecto?" class="mw-redirect" title="Systemd FAQ (Español)">FAQ de systemd</a>.
+<p>Si desea utilizar un <i>tty</i> distinto a <i>tty1</i>, véase el <a href="/title/Systemd_FAQ_(Espa%C3%B1ol)#%C2%BFC%C3%B3mo_puedo_cambiar_el_n%C3%BAmero_de_gettys_ejecutadas_por_defecto?" class="mw-redirect" title="Systemd FAQ (Español)">FAQ de systemd</a>.
 </p>
 <h3><span class="mw-headline" id="Consola_serie">Consola serie</span></h3>
 <p>Cree el siguiente archivo (y directorios principales):
@@ -126,7 +126,7 @@ ExecStart=-/usr/bin/agetty --autologin <i>usuario</i> --noclear %I $TERM</pre>
 ExecStart=
 ExecStart=-/usr/bin/agetty --autologin <i>usuario</i> -s %I 115200,38400,9600 vt102</pre>
 <h3><span class="mw-headline" id="Consola_Nspawn">Consola Nspawn</span></h3>
-<p>Para configurar el inicio de sesión automático para un contenedor <a href="../es/Systemd-nspawn.html" title="Systemd-nspawn (Español)">systemd-nspawn</a>, anule <code>console-getty.service</code>:
+<p>Para configurar el inicio de sesión automático para un contenedor <a href="/title/Systemd-nspawn_(Espa%C3%B1ol)" title="Systemd-nspawn (Español)">systemd-nspawn</a>, anule <code>console-getty.service</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/console-getty.service.d/override.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
@@ -152,38 +152,38 @@ ExecStart=-/sbin/agetty -n -o <i>usuario</i> %I</pre>
 <pre># systemctl enable getty@tty1
 </pre>
 <h2><span class="mw-headline" id="Mantener_los_mensajes_de_arranque_en_tty1">Mantener los mensajes de arranque en tty1</span></h2>
-<p>De manera predeterminada, Arch tiene habilitado el servicio <code>getty@tty1</code>. El archivo de servicio ya pasa <code>--noclear</code>, lo que evita que Agetty borre la pantalla. Sin embargo <a href="../es/Systemd.html" title="Systemd (Español)">systemd</a> borra la pantalla antes de iniciarla. Para deshabilitar este comportamiento, cree <code>/etc/systemd/system/getty@tty1.service.d/noclear.conf</code>:
+<p>De manera predeterminada, Arch tiene habilitado el servicio <code>getty@tty1</code>. El archivo de servicio ya pasa <code>--noclear</code>, lo que evita que Agetty borre la pantalla. Sin embargo <a href="/title/Systemd_(Espa%C3%B1ol)" title="Systemd (Español)">systemd</a> borra la pantalla antes de iniciarla. Para deshabilitar este comportamiento, cree <code>/etc/systemd/system/getty@tty1.service.d/noclear.conf</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/getty@tty1.service.d/noclear.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
 TTYVTDisallocate=no</pre>
-<p>Esto reemplaza solo <code>TTYVTDisallocate</code> para <i>agetty</i> en TTY1, y deja el archivo de servicio global <code>/usr/lib/systemd/system/getty@.service</code> sin tocar. Véase <a href="../es/Systemd.html#Modificar_los_archivos_de_unidad_suministrados" title="Systemd (Español)">Systemd (Español)#Modificar los archivos de unidad suministrados</a>.
+<p>Esto reemplaza solo <code>TTYVTDisallocate</code> para <i>agetty</i> en TTY1, y deja el archivo de servicio global <code>/usr/lib/systemd/system/getty@.service</code> sin tocar. Véase <a href="/title/Systemd_(Espa%C3%B1ol)#Modificar_los_archivos_de_unidad_suministrados" title="Systemd (Español)">Systemd (Español)#Modificar los archivos de unidad suministrados</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> 
 <ul>
-<li>Asegúrese de eliminar <code>quiet</code> de los <a href="../es/Kernel_parameters.html" title="Kernel parameters (Español)">parámetros del kernel</a>.</li>
-<li>El inicio tardío de KMS puede hacer que se borren los primeros mensajes de arranque. Véase <a href="../es/Kernel_mode_setting.html#Iniciar_KMS_tempranamente" class="mw-redirect" title="KMS (Español)">KMS (Español)#Iniciar KMS tempranamente</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> o <a href="../es/Kernel_mode_setting.html#Desactivar_modesetting" class="mw-redirect" title="KMS (Español)">KMS (Español)#Desactivar modesetting</a>.</li>
+<li>Asegúrese de eliminar <code>quiet</code> de los <a href="/title/Kernel_parameters_(Espa%C3%B1ol)" title="Kernel parameters (Español)">parámetros del kernel</a>.</li>
+<li>El inicio tardío de KMS puede hacer que se borren los primeros mensajes de arranque. Véase <a href="/title/KMS_(Espa%C3%B1ol)#Iniciar_KMS_tempranamente" class="mw-redirect" title="KMS (Español)">KMS (Español)#Iniciar KMS tempranamente</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> o <a href="/title/KMS_(Espa%C3%B1ol)#Desactivar_modesetting" class="mw-redirect" title="KMS (Español)">KMS (Español)#Desactivar modesetting</a>.</li>
 </ul>
 </div>
 <h2>
 <span id="V.C3.A9ase_tambi.C3.A9n"></span><span class="mw-headline" id="Véase_también">Véase también</span>
 </h2>
 <ul>
-<li><a href="../es/Systemd.html#Cambiar_el_target_predeterminado_para_arrancar" title="Systemd (Español)">Systemd (Español)#Cambiar el target predeterminado para arrancar</a></li>
-<li><a rel="nofollow" class="external text" href="http://www.linusakesson.net/programming/tty/">El TTY desmitificado</a></li>
+<li><a href="/title/Systemd_(Espa%C3%B1ol)#Cambiar_el_target_predeterminado_para_arrancar" title="Systemd (Español)">Systemd (Español)#Cambiar el target predeterminado para arrancar</a></li>
+<li><a rel="nofollow" class="external text" href="https://www.linusakesson.net/programming/tty/">El TTY desmitificado</a></li>
 <li><a href="https://en.wikipedia.org/wiki/es:Tty_(unix)" class="extiw" title="wikipedia:es:Tty (unix)">Wikipedia:es:Tty (unix)</a></li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../es/Category:Boot_process.html" title="Category:Boot process (Español)">Boot process (Español)</a></li>
-<li><a href="../es/Category:Linux_console.html" title="Category:Linux console (Español)">Linux console (Español)</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Boot_process_(Espa%C3%B1ol)" title="Category:Boot process (Español)">Boot process (Español)</a></li>
+<li><a href="/title/Category:Linux_console_(Espa%C3%B1ol)" title="Category:Linux console (Español)">Linux console (Español)</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -191,15 +191,15 @@ TTYVTDisallocate=no</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Getty_(Espa%C3%B1ol)&amp;oldid=657334">https://wiki.archlinux.org/index.php?title=Getty_(Español)&amp;oldid=657334</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 3 April 2021, at 07:56.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Getty_(Espa%C3%B1ol)&amp;oldid=668842">https://wiki.archlinux.org/index.php?title=Getty_(Español)&amp;oldid=668842</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 10:49.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

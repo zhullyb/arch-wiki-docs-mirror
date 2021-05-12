@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,6 +33,11 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
+<div class="noprint archwiki-template-message">
+<p><a href="/title/File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a><b>The <a href="/title/ArchWiki:Contributing#Translating" title="ArchWiki:Contributing">translation</a> of this article or section does not reflect the original text.</b><a href="/title/File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Last updated in 2013 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Arch_Build_System_(Italiano)">Talk:Arch Build System (Italiano)#</a>)</div>
+</div>
 <p>Quest'articolo fornisce una panoramica dell' Arch Build System insieme ad una guida passo passo per principianti. Non è una guida di riferimento completa! Se si necessita di ulteriori informazioni, si è pregati di consultare il manuale.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -85,7 +91,7 @@
 <h2>
 <span id="Cosa_.C3.A8_ABS.3F"></span><span class="mw-headline" id="Cosa_è_ABS?">Cosa è ABS?</span>
 </h2>
-<p>ABS è l'acronimo di "<b>A</b>rch <b>B</b>uild <b>S</b>ystem", cioè <i>Sistema di costruzione (dei pacchetti) di Arch</i>. E' un sistema per fare pacchetti del codice sorgente. Mentre <a href="../en/Pacman.html" title="Pacman">pacman</a> è il tool di Arch specializzato nella gestione dei pacchetti binari (inclusi i pacchetti fatti con ABS), ABS è il tool specializzato nella compilazione dei sorgenti in un pacchetto <code>.pkg.tar.xz</code> installabile.
+<p>ABS è l'acronimo di "<b>A</b>rch <b>B</b>uild <b>S</b>ystem", cioè <i>Sistema di costruzione (dei pacchetti) di Arch</i>. E' un sistema per fare pacchetti del codice sorgente. Mentre <a href="/title/Pacman" title="Pacman">pacman</a> è il tool di Arch specializzato nella gestione dei pacchetti binari (inclusi i pacchetti fatti con ABS), ABS è il tool specializzato nella compilazione dei sorgenti in un pacchetto <code>.pkg.tar.xz</code> installabile.
 </p>
 <h3>
 <span id="Cos.27.C3.A8_un_sistema_ports-like.3F"></span><span class="mw-headline" id="Cos'è_un_sistema_ports-like?">Cos'è un sistema ports-like?</span>
@@ -95,31 +101,31 @@
 <h3>
 <span id="ABS_.C3.A8_un_concetto_simile"></span><span class="mw-headline" id="ABS_è_un_concetto_simile"><b>ABS</b> è un concetto simile</span>
 </h3>
-<p>"ABS" è costituito da un albero di directory ("ABS Tree"), situato in <code>/var/abs</code>, che contiene molte sottodirectory, ognuna dentro una categoria, e ognuna chiamata con il rispettivo pacchetto installabile contenuto al suo interno. Quest'albero rappresenta (ma non contiene) tutto il <i>software ufficialmente disponibile in Arch</i>, reperibile tramite sistema SVN. Si può considerare ogni sottodirectory chiamata come un pacchetto un <i>ABS</i>, più o meno allo stesso modo con cui ci si potrebbe riferire ad un <i>Port</i>. Questi <i>ABS</i>, o sottodirectory, non contengono il pacchetto nè il codice sorgente del software, bensì un file <a href="../it/PKGBUILD.html" title="PKGBUILD (Italiano)">PKGBUILD</a> (e a volte altri file). Un PKGBUILD è un semplice script, un file di testo contenente le istruzioni per la compilazione e la pacchettizzazione, ma anche l'url dell'apposito <b>tarball di sorgenti</b> da scaricare. (I componenti più importanti di ABS sono proprio i PKGBUILD). Utilizzando il comando di ABS <a href="../it/Makepkg.html" title="Makepkg (Italiano)">makepkg</a>, il software viene prima compilato e poi <i>pacchettizzato</i> all'interno della directory di compilazione, prima di poter essere installato. Da questo momento si potrà usare <a href="../it/Pacman.html" title="Pacman (Italiano)">pacman</a>, il gestore pacchetti di Arch Linux per installare, aggiornare, e rimuovere il nuovo pacchetto.
+<p>"ABS" è costituito da un albero di directory ("ABS Tree"), situato in <code>/var/abs</code>, che contiene molte sottodirectory, ognuna dentro una categoria, e ognuna chiamata con il rispettivo pacchetto installabile contenuto al suo interno. Quest'albero rappresenta (ma non contiene) tutto il <i>software ufficialmente disponibile in Arch</i>, reperibile tramite sistema SVN. Si può considerare ogni sottodirectory chiamata come un pacchetto un <i>ABS</i>, più o meno allo stesso modo con cui ci si potrebbe riferire ad un <i>Port</i>. Questi <i>ABS</i>, o sottodirectory, non contengono il pacchetto nè il codice sorgente del software, bensì un file <a href="/title/PKGBUILD_(Italiano)" title="PKGBUILD (Italiano)">PKGBUILD</a> (e a volte altri file). Un PKGBUILD è un semplice script, un file di testo contenente le istruzioni per la compilazione e la pacchettizzazione, ma anche l'url dell'apposito <b>tarball di sorgenti</b> da scaricare. (I componenti più importanti di ABS sono proprio i PKGBUILD). Utilizzando il comando di ABS <a href="/title/Makepkg_(Italiano)" title="Makepkg (Italiano)">makepkg</a>, il software viene prima compilato e poi <i>pacchettizzato</i> all'interno della directory di compilazione, prima di poter essere installato. Da questo momento si potrà usare <a href="/title/Pacman_(Italiano)" title="Pacman (Italiano)">pacman</a>, il gestore pacchetti di Arch Linux per installare, aggiornare, e rimuovere il nuovo pacchetto.
 </p>
 <h3><span class="mw-headline" id="Descrizione_generale_di_ABS">Descrizione generale di ABS</span></h3>
 <p>"ABS" potrebbe essere usato come un termine "ad ombrello", in quanto include, ed è formato, da molti altri componenti. Pertanto, parlando in termini non proprio tecnici, "ABS" fa riferimento alla seguente struttura come un toolkit completo:
 </p>
 <dl>
 <dt>L'albero ABS</dt>
-<dd>La struttura di directory di ABS; una gerarchia SVN sotto <code>/var/abs/</code> sul proprio sistema locale. Contiene molte sottodirectory, chiamate con il nome di ogni software disponibile per arch nei repository specificati in <code>/etc/abs.conf</code>, ma non i pacchetti stessi. L'albero è creato dopo aver installato il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=abs">abs</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> tramite pacman e dopo aver eseguito lo script <code>abs</code>
+<dd>La struttura di directory di ABS; una gerarchia SVN sotto <code>/var/abs/</code> sul proprio sistema locale. Contiene molte sottodirectory, chiamate con il nome di ogni software disponibile per arch nei repository specificati in <code>/etc/abs.conf</code>, ma non i pacchetti stessi. L'albero è creato dopo aver installato il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=abs">abs</a></span><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> tramite pacman e dopo aver eseguito lo script <code>abs</code>
 </dd>
-<dt><a href="../it/PKGBUILD.html" title="PKGBUILD (Italiano)">PKGBUILD</a></dt>
+<dt><a href="/title/PKGBUILD_(Italiano)" title="PKGBUILD (Italiano)">PKGBUILD</a></dt>
 <dd>Script in BASH contenente le istruzioni per costruire i pacchetti e l'URL dei sorgenti.</dd>
 </dl>
 <dl>
-<dt><a href="../it/Makepkg.html" title="Makepkg (Italiano)">Makepkg</a></dt>
-<dd>Il comando da shell di ABS che legge il PKGBUILD, scarica e compila il sorgente e crea il <code>.pkg.tar.gz or .pkg.tar.xz</code>, in accordo con l'array <code>PKGEXT</code> all'interno di <code>makepkg.conf</code>. È anche possibile utilizzare makepkg per compilare i propri pacchetti da <a href="../it/Arch_User_Repository.html" class="mw-redirect" title="AUR (Italiano)">AUR</a> o da fonti esterne. (Consultare l'articolo <a href="../it/Creating_packages.html" title="Creating packages (Italiano)">Creating packages (Italiano)</a>)</dd>
+<dt><a href="/title/Makepkg_(Italiano)" title="Makepkg (Italiano)">Makepkg</a></dt>
+<dd>Il comando da shell di ABS che legge il PKGBUILD, scarica e compila il sorgente e crea il <code>.pkg.tar.gz or .pkg.tar.xz</code>, in accordo con l'array <code>PKGEXT</code> all'interno di <code>makepkg.conf</code>. È anche possibile utilizzare makepkg per compilare i propri pacchetti da <a href="/title/AUR_(Italiano)" class="mw-redirect" title="AUR (Italiano)">AUR</a> o da fonti esterne. (Consultare l'articolo <a href="/title/Creating_packages_(Italiano)" title="Creating packages (Italiano)">Creating packages (Italiano)</a>)</dd>
 </dl>
 <p><b>Strumenti correlati</b>
 </p>
 <dl>
-<dt><a href="../it/Pacman.html" title="Pacman (Italiano)">Pacman</a></dt>
+<dt><a href="/title/Pacman_(Italiano)" title="Pacman (Italiano)">Pacman</a></dt>
 <dd>Pacman è completamente separato, ma è necessario invocarlo o dal makepkg o manualmente, per installare e rimuovere i pacchetti costruiti, e per risolvere le dipendenze.</dd>
 </dl>
 <dl>
-<dt><a href="../it/Arch_User_Repository.html" class="mw-redirect" title="AUR (Italiano)">AUR</a></dt>
-<dd>Il repository degli utenti della comunità di Arch è separato da ABS, ma i PKGBUILD non supportati di <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> (unsupported) possono essere usati con il tool <b>makepkg</b> di ABS, per compilare e impacchettare il software. A differenza dell'albero ABS presente in locale, AUR esiste come interfaccia web. Contiene migliaia di PKGBUILD degli utenti per pacchettizzare software non presente come pacchetto ufficiale di Arch. Avendo bisogno di compilare un pacchetto al di fuori delle strutture ufficiali di Arch, è molto probabile poterlo trovare su AUR.</dd>
+<dt><a href="/title/AUR_(Italiano)" class="mw-redirect" title="AUR (Italiano)">AUR</a></dt>
+<dd>Il repository degli utenti della comunità di Arch è separato da ABS, ma i PKGBUILD non supportati di <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a> (unsupported) possono essere usati con il tool <b>makepkg</b> di ABS, per compilare e impacchettare il software. A differenza dell'albero ABS presente in locale, AUR esiste come interfaccia web. Contiene migliaia di PKGBUILD degli utenti per pacchettizzare software non presente come pacchetto ufficiale di Arch. Avendo bisogno di compilare un pacchetto al di fuori delle strutture ufficiali di Arch, è molto probabile poterlo trovare su AUR.</dd>
 </dl>
 <h2>
 <span id="Perch.C3.A8_dovrei_usare_ABS.3F"></span><span class="mw-headline" id="Perchè_dovrei_usare_ABS?">Perchè dovrei usare ABS?</span>
@@ -128,10 +134,10 @@
 </p>
 <ul>
 <li>Compilare o ri-compilare un pacchetto per qualsiasi motivo</li>
-<li>Creare nuovi pacchetti da codice sorgente, di software per i quali non sono ancora disponibili pacchetti (Vedi anche <a href="../it/Creating_packages.html" title="Creating packages (Italiano)">Creating Packages</a>)</li>
+<li>Creare nuovi pacchetti da codice sorgente, di software per i quali non sono ancora disponibili pacchetti (Vedi anche <a href="/title/Creating_packages_(Italiano)" title="Creating packages (Italiano)">Creating Packages</a>)</li>
 <li>Modificare pacchetti esistenti per adattarli ai propri bisogni (abilitando o disabilitando opzioni, applicando patch)</li>
-<li>Ricompilare il tuo intero sistema utilizzando flag di compilazione "a la FreeBSD" (ad esempio con <a href="../en/Makepkg.html" class="mw-redirect" title="Pacbuilder">pacbuilder</a>)</li>
-<li>Pacchettizzare e installare in modo pulito il proprio kernel personalizzato. (Consultare <a href="../en/Kernel.html#Compilation" class="mw-redirect" title="Kernel Compilation">Kernel Compilation</a> così come <a href="../en/Kernel/Arch_Build_System.html" class="mw-redirect" title="Custom Kernel Compilation with ABS">Custom Kernel Compilation with ABS</a>)</li>
+<li>Ricompilare il tuo intero sistema utilizzando flag di compilazione "a la FreeBSD" (ad esempio con <a href="/title/Pacbuilder" class="mw-redirect" title="Pacbuilder">pacbuilder</a>)</li>
+<li>Pacchettizzare e installare in modo pulito il proprio kernel personalizzato. (Consultare <a href="/title/Kernel_Compilation" class="mw-redirect" title="Kernel Compilation">Kernel Compilation</a> così come <a href="/title/Custom_Kernel_Compilation_with_ABS" class="mw-redirect" title="Custom Kernel Compilation with ABS">Custom Kernel Compilation with ABS</a>)</li>
 <li>Utilizzare moduli del kernel che funzionino col proprio kernel personalizzato</li>
 <li>Compilare ed installare facilmente un pacchetto per Arch più recente, più vecchio, in beta testing, o in sviluppo modificando il numero di versione nel PKGBUILD.</li>
 </ul>
@@ -143,7 +149,7 @@
 <p>La compilazione di pacchetti tramite ABS consta dei seguenti passaggi:
 </p>
 <ol>
-<li>Installare il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=abs">abs</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> tramite <a href="../it/Pacman.html" title="Pacman (Italiano)">pacman</a>
+<li>Installare il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=abs">abs</a></span><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> tramite <a href="/title/Pacman_(Italiano)" title="Pacman (Italiano)">pacman</a>
 </li>
 <li>Eseguire <code>abs</code> da utente root in modo da creare l'albero ABS sincronizzato con i server di Arch Linux</li>
 <li>Copiare i file di compilazione (che solitamente si trovano sotto <code>/var/abs/&lt;repo&gt;/&lt;pkgname&gt;</code>) in una directory di compilazione a scelta</li>
@@ -156,11 +162,11 @@
 <h3>
 <span id="Strumenti_d.27installazione"></span><span class="mw-headline" id="Strumenti_d'installazione">Strumenti d'installazione</span>
 </h3>
-<p>Per utilizzare ABS, bisogna innanzitutto <a href="../it/Pacman.html" title="Pacman (Italiano)">installare</a> il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=abs">abs</a></span><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> dai <a href="../it/Official_repositories.html" title="Official repositories (Italiano)">repository ufficiali</a>
+<p>Per utilizzare ABS, bisogna innanzitutto <a href="/title/Pacman_(Italiano)" title="Pacman (Italiano)">installare</a> il pacchetto <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=abs">abs</a></span><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> dai <a href="/title/Official_repositories_(Italiano)" title="Official repositories (Italiano)">repository ufficiali</a>
 </p>
-<p>Ciò installerà gli script di sincronizzazione di ABS, vari script di compilazione, ed <a href="../en/Rsync.html" title="Rsync">rsync</a> (come dipendenza, nel caso non fosse già installato).
+<p>Ciò installerà gli script di sincronizzazione di ABS, vari script di compilazione, ed <a href="/title/Rsync" title="Rsync">rsync</a> (come dipendenza, nel caso non fosse già installato).
 </p>
-<p>Prima di poter effettivamente compilare qualcosa, comunque, è necessario <a href="../it/Pacman.html#Installare_gruppi_di_pacchetti" title="Pacman (Italiano)">installare</a> anche i programmi di compilazione di base. Questi ultimi sono raccolti all'interno del gruppo <b>base-devel</b>.
+<p>Prima di poter effettivamente compilare qualcosa, comunque, è necessario <a href="/title/Pacman_(Italiano)#Installare_gruppi_di_pacchetti" title="Pacman (Italiano)">installare</a> anche i programmi di compilazione di base. Questi ultimi sono raccolti all'interno del gruppo <b>base-devel</b>.
 </p>
 <h3>
 <span id=".2Fetc.2Fabs.conf"></span><span class="mw-headline" id="/etc/abs.conf">/etc/abs.conf</span>
@@ -219,7 +225,7 @@
 <h3>
 <span id=".2Fetc.2Fmakepkg.conf"></span><span class="mw-headline" id="/etc/makepkg.conf"><code>/etc/makepkg.conf</code></span>
 </h3>
-<p><code>/etc/makepkg.conf</code> e' un file che specifica le variabili d'ambiente e i flag del compilatore che magari si vuole modificare se si utilizza un sistema SMP, o per specificare altre ottimizzazioni. Le impostazioni di default sono ottimizzate per le architetture i686 e x86_64, e andranno generalmente bene per i sistemi con una sola cpu. (vanno bene anche per le macchina SMP, ma useranno soltanto una cpu- consultare <a href="../it/Makepkg.html" title="Makepkg (Italiano)">makepkg</a>.)
+<p><code>/etc/makepkg.conf</code> e' un file che specifica le variabili d'ambiente e i flag del compilatore che magari si vuole modificare se si utilizza un sistema SMP, o per specificare altre ottimizzazioni. Le impostazioni di default sono ottimizzate per le architetture i686 e x86_64, e andranno generalmente bene per i sistemi con una sola cpu. (vanno bene anche per le macchina SMP, ma useranno soltanto una cpu- consultare <a href="/title/Makepkg_(Italiano)" title="Makepkg (Italiano)">makepkg</a>.)
 </p>
 <h4>
 <span id="Impostare_la_variabile_PACKAGER_all.27interno_di_.2Fetc.2Fmakepkg.conf"></span><span class="mw-headline" id="Impostare_la_variabile_PACKAGER_all'interno_di_/etc/makepkg.conf">Impostare la variabile PACKAGER all'interno di /etc/makepkg.conf</span>
@@ -292,13 +298,16 @@ tar
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../it/Category:About_Arch.html" title="Category:About Arch (Italiano)">About Arch (Italiano)</a></li>
-<li><a href="../it/Category:Package_development.html" title="Category:Package development (Italiano)">Package development (Italiano)</a></li>
-<li><a href="../it/Category:Package_management.html" title="Category:Package management (Italiano)">Package management (Italiano)</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:About_Arch_(Italiano)" title="Category:About Arch (Italiano)">About Arch (Italiano)</a></li>
+<li><a href="/title/Category:Package_development_(Italiano)" title="Category:Package development (Italiano)">Package development (Italiano)</a></li>
+<li><a href="/title/Category:Package_management_(Italiano)" title="Category:Package management (Italiano)">Package management (Italiano)</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Bad_translation" title="Category:Pages or sections flagged with Template:Bad translation">Pages or sections flagged with Template:Bad translation</a></li>
+<li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -306,15 +315,15 @@ tar
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Arch_Build_System_(Italiano)&amp;oldid=585371">https://wiki.archlinux.org/index.php?title=Arch_Build_System_(Italiano)&amp;oldid=585371</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 12 October 2019, at 13:48.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Arch_Build_System_(Italiano)&amp;oldid=669829">https://wiki.archlinux.org/index.php?title=Arch_Build_System_(Italiano)&amp;oldid=669829</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 23:50.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

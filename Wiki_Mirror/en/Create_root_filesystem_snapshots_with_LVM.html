@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,11 +36,11 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/LVM.html" title="LVM">LVM</a></li>
-<li><a href="../en/Full_system_backup_with_tar.html" title="Full system backup with tar">Full system backup with tar</a></li>
+<li><a href="/title/LVM" title="LVM">LVM</a></li>
+<li><a href="/title/Full_system_backup_with_tar" title="Full system backup with tar">Full system backup with tar</a></li>
 </ul>
 </div>
-<p>This article describes how to set up root filesystem LVM snapshot creation during system start. Such snapshots can be used for <a href="../en/Full_system_backup_with_tar.html" title="Full system backup with tar">full system backups</a> with minimal downtime or testing system updates with the option to revert them.
+<p>This article describes how to set up root filesystem LVM snapshot creation during system start. Such snapshots can be used for <a href="/title/Full_system_backup_with_tar" title="Full system backup with tar">full system backups</a> with minimal downtime or testing system updates with the option to revert them.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -61,8 +62,8 @@
 </div>
 
 <h2><span class="mw-headline" id="Prerequisites">Prerequisites</span></h2>
-<p>You need a system with <a href="../en/LVM.html" title="LVM">LVM</a> root filesystem and <a href="../en/Systemd.html" title="Systemd">systemd</a>.
-Ensure that <a href="../en/LVM.html#Snapshots" title="LVM">LVM snapshots</a> prerequisites are correctly setup.
+<p>You need a system with <a href="/title/LVM" title="LVM">LVM</a> root filesystem and <a href="/title/Systemd" title="Systemd">systemd</a>.
+Ensure that <a href="/title/LVM#Snapshots" title="LVM">LVM snapshots</a> prerequisites are correctly setup.
 </p>
 <h2><span class="mw-headline" id="Setup">Setup</span></h2>
 <p>During system start a clean snapshot of the root volume is
@@ -98,10 +99,10 @@ Description=Make Snapshots
 Requires=<i>multi-user.target</i></pre>
 <p>Adapt the base target, if <code>multi-user.target</code> is not your default target. If you want to get into your desktop, you need to change it to <code>graphical.target</code>.
 </p>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">Enable</a> <code>mk-lvm-snapshots.service</code>.
+<p><a href="/title/Enable" class="mw-redirect" title="Enable">Enable</a> <code>mk-lvm-snapshots.service</code>.
 </p>
 <p>If the system is started with the new target, LVM snapshot(s) are created just after mounting the local filesystems.
-To get a <a href="../en/GRUB.html" title="GRUB">GRUB</a> menu entry starting this target create <code>/boot/grub/custom.cfg</code> based on the
+To get a <a href="/title/GRUB" title="GRUB">GRUB</a> menu entry starting this target create <code>/boot/grub/custom.cfg</code> based on the
 <code>grub.cfg</code> entry for your normal startup. The kernel command line is extended to start the new
 <code>make-snapshots.target</code>:
 </p>
@@ -118,12 +119,12 @@ menuentry 'Arch GNU/Linux, make snapshots' --class arch --class gnu-linux --clas
 <p>After restarting the system with this grub entry <code>lvs</code> should show up the newly created snapshot.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> To get the messages of the new service use <code>journalctl -u mk-lvm-snapshots.service</code>.</div>
+<strong>Tip:</strong> To get the messages of the new service, run <code>journalctl -u mk-lvm-snapshots.service</code> as root.</div>
 <h2><span class="mw-headline" id="Usage">Usage</span></h2>
 <h3><span class="mw-headline" id="Backup">Backup</span></h3>
 <p>To use this functionality for a full system backup, restart your system with the snapshot creation target.
 Mount the snapshot volume (and further volumes, if required), preferably using the read only (<code>-o</code>) option.
-Then backup your system, for example with tar as described in <a href="../en/Full_system_backup_with_tar.html" title="Full system backup with tar">Full system backup with tar</a>.
+Then backup your system, for example with tar as described in <a href="/title/Full_system_backup_with_tar" title="Full system backup with tar">Full system backup with tar</a>.
 </p>
 <p>During backup you can continue to use your system normally, since all changes to your regular volumes are invisible in
 the snapshots. Do not forget to delete the snapshot volume after the backup – changes to your regular volume will
@@ -144,9 +145,9 @@ is merged back into your regular volume. All changes to the volume happened afte
 option is desired.</div>
 <h2><span class="mw-headline" id="Known_issues">Known issues</span></h2>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="/title/File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Linked report is from 2011, "currently" is August 2016. Is this still an issue? Either way, the systemd configuration should be moved to <a href="../en/Systemd.html" title="Systemd">systemd</a> as other programs may block shutdown, e.g. <a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/issues/2691">[1]</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Create_root_filesystem_snapshots_with_LVM">Talk:Create root filesystem snapshots with LVM#</a>)</div>
+<b>Reason:</b> Linked report is from 2011, "currently" is August 2016. Is this still an issue? Either way, the systemd configuration should be moved to <a href="/title/Systemd" title="Systemd">systemd</a> as other programs may block shutdown, e.g. <a rel="nofollow" class="external autonumber" href="https://github.com/systemd/systemd/issues/2691">[1]</a>. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Create_root_filesystem_snapshots_with_LVM">Talk:Create root filesystem snapshots with LVM#</a>)</div>
 </div>
 <p>Due to <a rel="nofollow" class="external text" href="https://bugzilla.redhat.com/show_bug.cgi?id=681582">bug 681582</a> shutting down the system with active
 snapshots may hang for some time (currently 1...3 minutes). As a workaround a shorter job timeout can be set.
@@ -172,9 +173,9 @@ OOMScoreAdjust=-1000</pre>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:System_recovery.html" title="Category:System recovery">System recovery</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:System_recovery" title="Category:System recovery">System recovery</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Out_of_date" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li></ul>
 </div>
 </div>
 	</div>
@@ -182,15 +183,15 @@ OOMScoreAdjust=-1000</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Create_root_filesystem_snapshots_with_LVM&amp;oldid=629048">https://wiki.archlinux.org/index.php?title=Create_root_filesystem_snapshots_with_LVM&amp;oldid=629048</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 August 2020, at 07:56.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Create_root_filesystem_snapshots_with_LVM&amp;oldid=666858">https://wiki.archlinux.org/index.php?title=Create_root_filesystem_snapshots_with_LVM&amp;oldid=666858</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 15:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

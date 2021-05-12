@@ -34,15 +34,15 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Estado de la traducción:</strong> esta traducción de <a href="../en/Dotfiles.html" title="Dotfiles">Dotfiles</a> fue revisada el <b>2021-04-14</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Dotfiles&amp;diff=0&amp;oldid=654810">cambios</a> puede <a href="../es/ArchWiki:f6ecee2fb17812f6654b3a6ff807d392.html" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="../es/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
+<strong>Estado de la traducción:</strong> esta traducción de <a href="/title/Dotfiles" title="Dotfiles">Dotfiles</a> fue revisada el <b>2021-04-14</b>. Si existen <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Dotfiles&amp;diff=0&amp;oldid=654810">cambios</a> puede <a href="/title/ArchWiki:Translation_Team/Contributing_(Espa%C3%B1ol)" class="mw-redirect" title="ArchWiki:Translation Team/Contributing (Español)">actualizarla</a> o avisar al <a href="/title/ArchWiki:Translation_Team_(Espa%C3%B1ol)" title="ArchWiki:Translation Team (Español)">equipo de traducción</a>.</div>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Artículos relacionados</p>
 <ul>
-<li><a href="../en/XDG_Base_Directory.html" class="mw-redirect" title="XDG Base Directory support">XDG Base Directory support</a></li>
-<li><a href="../en/X_resources.html" title="X resources">X resources</a></li>
+<li><a href="/title/XDG_Base_Directory_support" class="mw-redirect" title="XDG Base Directory support">XDG Base Directory support</a></li>
+<li><a href="/title/X_resources" title="X resources">X resources</a></li>
 </ul>
 </div>
-<p>La configuración de aplicaciones específica del usuario es tradicionalmente almacenada en los llamados <a href="https://en.wikipedia.org/wiki/dotfile" class="extiw" title="wikipedia:dotfile">dotfiles</a> (archivos en los que su nombre comienza con un punto). Es una práctica común seguir el rastro de los dotfiles con un <a href="../es/Category:Version_Control_System.html" class="mw-redirect" title="Version control system (Español)">version control system (Español)</a> como podría ser <a href="../es/Git.html" title="Git (Español)">Git (Español)</a> para seguir el rastro de los cambios y sincronizar dotfiles a través de varios huéspedes (hosts). Hay varias maneras de gestionar sus dotfiles (por ejemplo rastrearlos del directorio home contra almacenarlos en un subdirectorio y hacer un enlace simbólico, copiar o generar archivos con un script de <a href="../es/Command-line_shell.html" class="mw-redirect" title="Shell (Español)">shell</a> o <a href="#Herramientas">una herramienta dedicada</a>). Ademas de explicar como se gestionan los dotfiles, este artículo también contiene <a href="#User_repositories">una lista de repositorios dotfile</a> de los usuarios de Arch Linux.
+<p>La configuración de aplicaciones específica del usuario es tradicionalmente almacenada en los llamados <a href="https://en.wikipedia.org/wiki/dotfile" class="extiw" title="wikipedia:dotfile">dotfiles</a> (archivos en los que su nombre comienza con un punto). Es una práctica común seguir el rastro de los dotfiles con un <a href="/title/Version_control_system_(Espa%C3%B1ol)" class="mw-redirect" title="Version control system (Español)">version control system (Español)</a> como podría ser <a href="/title/Git_(Espa%C3%B1ol)" title="Git (Español)">Git (Español)</a> para seguir el rastro de los cambios y sincronizar dotfiles a través de varios huéspedes (hosts). Hay varias maneras de gestionar sus dotfiles (por ejemplo rastrearlos del directorio home contra almacenarlos en un subdirectorio y hacer un enlace simbólico, copiar o generar archivos con un script de <a href="/title/Shell_(Espa%C3%B1ol)" class="mw-redirect" title="Shell (Español)">shell</a> o <a href="#Herramientas">una herramienta dedicada</a>). Ademas de explicar como se gestionan los dotfiles, este artículo también contiene <a href="#User_repositories">una lista de repositorios dotfile</a> de los usuarios de Arch Linux.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -60,9 +60,9 @@
 </div>
 
 <h2><span class="mw-headline" id="Rastrear_dotfiles_directamente_con_Git">Rastrear dotfiles directamente con Git</span></h2>
-<p>El beneficio de seguir la pista de los dotfiles directamente con Git es que solamente requiere <a href="../es/Git.html" title="Git (Español)">Git</a> y no requiere enlaces simbólicos. La desventaja es que las <a href="#Configuraciones_espec%C3%ADficas_del_hu%C3%A9sped">configuraciones específicas del huésped</a> generalmente requieren fusionar los cambios en múltiples <a href="../es/Git.html#Ramas_en_un_repositorio" title="Git (Español)">ramas</a>.
+<p>El beneficio de seguir la pista de los dotfiles directamente con Git es que solamente requiere <a href="/title/Git_(Espa%C3%B1ol)" title="Git (Español)">Git</a> y no requiere enlaces simbólicos. La desventaja es que las <a href="#Configuraciones_espec%C3%ADficas_del_hu%C3%A9sped">configuraciones específicas del huésped</a> generalmente requieren fusionar los cambios en múltiples <a href="/title/Git_(Espa%C3%B1ol)#Ramas_en_un_repositorio" title="Git (Español)">ramas</a>.
 </p>
-<p>La manera más sencilla de conseguir este método es inicializar un repositorio <a href="../es/Git.html" title="Git (Español)">Git</a> directamente en tu directorio home e ignorar todos los archivos por defecto con un patrón <span class="plainlinks archwiki-template-man" title="$ man 5 gitignore"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/gitignore.5">gitignore(5)</a></span> de <code>*</code>.
+<p>La manera más sencilla de conseguir este método es inicializar un repositorio <a href="/title/Git_(Espa%C3%B1ol)" title="Git (Español)">Git</a> directamente en tu directorio home e ignorar todos los archivos por defecto con un patrón <span class="plainlinks archwiki-template-man" title="$ man 5 gitignore"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/gitignore.5">gitignore(5)</a></span> de <code>*</code>.
 Sin embargo este método tiene dos inconvenientes: se puede volver confuso cuando se tienen otros repositorios Git en el directorio home (por ejemplo si olvida inicializar un repositorio de repente opera en los dotfiles de su repositorio) y no se pueden ver fácilmente que archivos no están rastreados en el directorio actual (porque están siendo ignorados).
 </p>
 <p>Un método alternativo que no tiene estos inconvenientes es el "bare repository and alias method" (Repositorio vacío y método de alias) popularizado por <a rel="nofollow" class="external text" href="https://news.ycombinator.com/item?id=11070797">este comentario de Hacker News</a>, que solo toma tres órdenes para configurar.
@@ -71,20 +71,20 @@ Sin embargo este método tiene dos inconvenientes: se puede volver confuso cuand
 $ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 $ config config status.showUntrackedFiles no
 </pre>
-<p>Después puede gestionar sus dotfiles con el <a href="../es/Bash.html#Alias" class="mw-redirect" title="Alias (Español)">alias</a> creado. Si está usando <a href="../es/Bash.html" title="Bash (Español)">Bash</a> y quisiera bash completion (Terminación de Bash) para este alias, simplemente instale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/bash-complete-alias/">bash-complete-alias</a></span><sup><small>AUR</small></sup>, después añada el alias y la siguiente línea a su <code>~/.bashrc</code>.
+<p>Después puede gestionar sus dotfiles con el <a href="/title/Alias_(Espa%C3%B1ol)" class="mw-redirect" title="Alias (Español)">alias</a> creado. Si está usando <a href="/title/Bash_(Espa%C3%B1ol)" title="Bash (Español)">Bash</a> y quisiera bash completion (Terminación de Bash) para este alias, simplemente instale <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/bash-complete-alias/">bash-complete-alias</a></span><sup><small>AUR</small></sup>, después añada el alias y la siguiente línea a su <code>~/.bashrc</code>.
 </p>
 <pre>$ complete -F _complete_alias config
 </pre>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Sugerencia:</strong> Para evitar accidentalmente hacer commit (consolidar) de información confidencial, véase <a href="../en/Git.html#Filtering_confidential_information" title="Git">Git#Filtering confidential information</a>.</div>
+<strong>Sugerencia:</strong> Para evitar accidentalmente hacer commit (consolidar) de información confidencial, véase <a href="/title/Git#Filtering_confidential_information" title="Git">Git#Filtering confidential information</a>.</div>
 <h2>
 <span id="Configuraciones_espec.C3.ADficas_del_hu.C3.A9sped"></span><span class="mw-headline" id="Configuraciones_específicas_del_huésped">Configuraciones específicas del huésped</span>
 </h2>
 <p>Un problema común con la sincronización de dotfiles a través de varias máquinas es la configuración específica del huésped.
 </p>
-<p>Con <a href="../es/Git.html" title="Git (Español)">Git</a> se puede resolver manteniendo una rama maestra para todas las configuraciones compartidas, mientras cada máquina individual tenga una rama específica por máquina controlada. La configuración específica del huésped se puede hacer un commit a la rama específica de la máquina; cuando la configuración compartida es modificada en la rama maestra, las ramas de cada máquina necesitará establecer una nueva base (rebase) sobre la rama maestra actualizada.
+<p>Con <a href="/title/Git_(Espa%C3%B1ol)" title="Git (Español)">Git</a> se puede resolver manteniendo una rama maestra para todas las configuraciones compartidas, mientras cada máquina individual tenga una rama específica por máquina controlada. La configuración específica del huésped se puede hacer un commit a la rama específica de la máquina; cuando la configuración compartida es modificada en la rama maestra, las ramas de cada máquina necesitará establecer una nueva base (rebase) sobre la rama maestra actualizada.
 </p>
-<p>En scripts de configuración como <a href="../es/Command-line_shell.html#Archivos_de_configuraci%C3%B3n" title="Command-line shell (Español)">archivos de configuración de shell</a> se pueden utilizar condicionales. Por ejemplo, un script de <a href="../es/Bash.html" title="Bash (Español)">Bash (Español)</a> (es decir <code>.bashrc</code>) puede aplicar distintas configuraciones dependiendo del nombre de la máquina (o tipo, variable personalizada, etc.):
+<p>En scripts de configuración como <a href="/title/Command-line_shell_(Espa%C3%B1ol)#Archivos_de_configuraci%C3%B3n" title="Command-line shell (Español)">archivos de configuración de shell</a> se pueden utilizar condicionales. Por ejemplo, un script de <a href="/title/Bash_(Espa%C3%B1ol)" title="Bash (Español)">Bash (Español)</a> (es decir <code>.bashrc</code>) puede aplicar distintas configuraciones dependiendo del nombre de la máquina (o tipo, variable personalizada, etc.):
 </p>
 <pre>if [[ "$(hostname)" == "archlaptop" ]]; then
     # mandatos específicos de laptop
@@ -233,7 +233,7 @@ fi
 </tbody>
 </table>
 <h2><span class="mw-headline" id="Programas_que_envuelven_a_Git">Programas que envuelven a Git</span></h2>
-<p>Si está incómodo con <a href="../es/Git.html" title="Git (Español)">Git (Español)</a>, ustede querrá usar una de estas herramientas, las cuales abstraen el sistema de control de versión (más o menos).
+<p>Si está incómodo con <a href="/title/Git_(Espa%C3%B1ol)" title="Git (Español)">Git (Español)</a>, ustede querrá usar una de estas herramientas, las cuales abstraen el sistema de control de versión (más o menos).
 </p>
 <table class="wikitable sortable" style="text-align:center;">
 <tbody>
@@ -286,7 +286,7 @@ fi
 <a rel="nofollow" class="external text" href="https://github.com/technicalpickles/homesick">homesick</a>
 </th>
 <td>
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/homesick/">homesick</a></span><sup><small>AUR</small></sup>
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/homesick/">homesick</a></span><sup><small>AUR</small></sup><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">enlace roto</a>: package not found]</sup>
 </td>
 <td>Ruby</td>
 <td>conforme repositorio</td>
@@ -1103,26 +1103,30 @@ fi
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../es/Category:Configuration_files.html" title="Category:Configuration files (Español)">Configuration files (Español)</a></li>
-<li><a href="../es/Category:Configuration_management.html" title="Category:Configuration management (Español)">Configuration management (Español)</a></li>
+<div id="catlinks" class="catlinks" data-mw="interface">
+<div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Configuration_files_(Espa%C3%B1ol)" title="Category:Configuration files (Español)">Configuration files (Español)</a></li>
+<li><a href="/title/Category:Configuration_management_(Espa%C3%B1ol)" title="Category:Configuration management (Español)">Configuration management (Español)</a></li>
 </ul>
-</div></div>
+</div>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
+</div>
+</div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dotfiles_(Espa%C3%B1ol)&amp;oldid=660931">https://wiki.archlinux.org/index.php?title=Dotfiles_(Español)&amp;oldid=660931</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 20:49.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dotfiles_(Espa%C3%B1ol)&amp;oldid=665755">https://wiki.archlinux.org/index.php?title=Dotfiles_(Español)&amp;oldid=665755</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 07:22.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

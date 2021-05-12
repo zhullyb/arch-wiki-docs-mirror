@@ -38,15 +38,15 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Syslog-ng.html" title="Syslog-ng">syslog-ng</a></li>
+<li><a href="/title/Syslog-ng" title="Syslog-ng">syslog-ng</a></li>
 </ul>
 </div>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="/title/File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> References out of date documentation (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Rsyslog">Talk:Rsyslog#</a>)</div>
+<b>Reason:</b> References out of date documentation (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Rsyslog">Talk:Rsyslog#</a>)</div>
 </div>
-<p><a rel="nofollow" class="external text" href="https://www.rsyslog.com">rsyslog</a> is a <a href="https://en.wikipedia.org/wiki/syslog" class="extiw" title="w:syslog">syslog</a> implementation that offers many benefits over <a href="../en/Syslog-ng.html" title="Syslog-ng">syslog-ng</a>. It can be configured to receive log entries from <a href="../en/Systemd/Journal.html" title="Systemd/Journal">systemd's journal</a> in order to process or filter them before quickly writing them to disk or sending them over network.
+<p><a rel="nofollow" class="external text" href="https://www.rsyslog.com">rsyslog</a> is a <a href="https://en.wikipedia.org/wiki/syslog" class="extiw" title="w:syslog">syslog</a> implementation that offers many benefits over <a href="/title/Syslog-ng" title="Syslog-ng">syslog-ng</a>. It can be configured to receive log entries from <a href="/title/Systemd/Journal" title="Systemd/Journal">systemd's journal</a> in order to process or filter them before quickly writing them to disk or sending them over network.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -83,13 +83,13 @@
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> It is recommended to disable and uninstall the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslog-ng">syslog-ng</a></span> package to prevent possible conflicts.</div>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/rsyslog/">rsyslog</a></span><sup><small>AUR</small></sup> package.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/rsyslog/">rsyslog</a></span><sup><small>AUR</small></sup> package.
 </p>
 <h3><span class="mw-headline" id="Starting_service">Starting service</span></h3>
-<p>You can <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> <code>rsyslog.service</code> after installation.
+<p>You can <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> <code>rsyslog.service</code> after installation.
 </p>
 <h3><span class="mw-headline" id="Configure_hostname">Configure hostname</span></h3>
-<p>Rsyslog uses the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span> routine <code>gethostname()</code> or <code>gethostbyname()</code> to determine the hostname of the local machine. The <code>gethostname()</code> or <code>gethostbyname()</code> routine check the contents of <code>/etc/hosts</code> for the fully qualified domain name (FQDN) if you are not using <a href="../en/BIND.html" title="BIND">BIND</a> or <a href="../en/NIS.html" title="NIS">NIS</a>.
+<p>Rsyslog uses the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=glibc">glibc</a></span> routine <code>gethostname()</code> or <code>gethostbyname()</code> to determine the hostname of the local machine. The <code>gethostname()</code> or <code>gethostbyname()</code> routine check the contents of <code>/etc/hosts</code> for the fully qualified domain name (FQDN) if you are not using <a href="/title/BIND" title="BIND">BIND</a> or <a href="/title/NIS" title="NIS">NIS</a>.
 </p>
 <p>You can check what the local machine's currently configured FQDN is by running <code>hostname --fqdn</code>. The output of <code>hostname --short</code> will be used by rsyslog when writing log messages. If you want to have full hostnames in logs, you need to add <code>$PreserveFQDN on</code> to the beginning of the file (before using any directive that write to files). This is because, rsyslog reads config file and applies it on-the-go and then reads the later lines. 
 </p>
@@ -114,7 +114,7 @@
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <p>rsyslog is configured in <code>/etc/rsyslog.conf</code>. See <a rel="nofollow" class="external text" href="https://www.rsyslog.com/doc/v8-stable/configuration/index.html">the official documentation</a> for more information on the available configuration options.
 </p>
-<p>By default, all syslog messages are handled by <a href="../en/Systemd/Journal.html" title="Systemd/Journal">systemd's journal</a>. In order to gather system logs in rsyslog, you either have to turn on <a href="#journald's_syslog-forward_feature">#journald's syslog-forward feature</a> or use the <a href="#imjournal">#imjournal</a> module of rsyslog to gather the logs by importing it from the systemd journald.
+<p>By default, all syslog messages are handled by <a href="/title/Systemd/Journal" title="Systemd/Journal">systemd's journal</a>. In order to gather system logs in rsyslog, you either have to turn on <a href="#journald's_syslog-forward_feature">#journald's syslog-forward feature</a> or use the <a href="#imjournal">#imjournal</a> module of rsyslog to gather the logs by importing it from the systemd journald.
 </p>
 <h3><span class="mw-headline" id="imjournal">imjournal</span></h3>
 <p>If you want rsyslog to pull messages from systemd, load the <i>imjournal</i> module:
@@ -145,7 +145,7 @@ authpriv.*                                              /var/log/secure
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/rsyslog.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">auth.*                                                  -/var/log/auth
 </pre>
-<p>See <a href="../en/Systemd/Journal.html#Journald_in_conjunction_with_syslog" title="Systemd/Journal">Systemd/Journal#Journald in conjunction with syslog</a> for more information.
+<p>See <a href="/title/Systemd/Journal#Journald_in_conjunction_with_syslog" title="Systemd/Journal">Systemd/Journal#Journald in conjunction with syslog</a> for more information.
 </p>
 <h2><span class="mw-headline" id="Facility_levels">Facility levels</span></h2>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -390,9 +390,9 @@ authpriv.*                                              /var/log/secure
 <h2><span class="mw-headline" id="Examples">Examples</span></h2>
 <h3><span class="mw-headline" id="journald_with_rsyslog_for_kernel_messages">journald with rsyslog for kernel messages</span></h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="../en/Help:Style.html" title="Help:Style">Help:Style</a> for reference.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section needs language, wiki syntax or style improvements. See <a href="/title/Help:Style" title="Help:Style">Help:Style</a> for reference.</b><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Redundant instructions, systemd commands... (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Rsyslog">Talk:Rsyslog#</a>)</div>
+<b>Reason:</b> Redundant instructions, systemd commands... (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Rsyslog">Talk:Rsyslog#</a>)</div>
 </div>
 <p>Since the syslog component of systemd, journald, does not flush its logs to disk during normal operation, these logs will be gone when the machine is shut down abnormally (power loss, kernel lock-ups, ...). In the case of kernel lock-ups, it can be important to have some kernel logs for debugging. Until journald gains a configuration option for flushing kernel logs, rsyslog can be used in conjunction with journald.
 </p>
@@ -419,7 +419,7 @@ authpriv.*                                              /var/log/secure
 <li>Since rsyslog should operate completely separated from systemd, remove the option that shares a socket with systemd:
 <dl><dd><pre>sed 's/^Sockets=/#&amp;/' /usr/lib/systemd/system/rsyslog.service | sudo tee /etc/systemd/system/rsyslog.service</pre></dd></dl>
 </li>
-<li>Next, make rsyslog start on boot and start it for this session by <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">starting</a> and enabling <code>rsyslog.service</code>.</li>
+<li>Next, make rsyslog start on boot and start it for this session by <a href="/title/Start" class="mw-redirect" title="Start">starting</a> and enabling <code>rsyslog.service</code>.</li>
 </ol>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> rsyslog reads from <code>/proc/kmsg</code>. This means that subsequent reads from that file (either the user or a syslog daemon) will not read "old" logs from that file anymore. journald is not affected as it reads from <code>/dev/kmsg</code> which allows multiple readers.</div>
@@ -429,11 +429,11 @@ authpriv.*                                              /var/log/secure
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Logging.html" title="Category:Logging">Logging</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Logging" title="Category:Logging">Logging</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Style.html" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Out_of_date" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Style" title="Category:Pages or sections flagged with Template:Style">Pages or sections flagged with Template:Style</a></li>
 </ul>
 </div>
 </div>
@@ -442,15 +442,15 @@ authpriv.*                                              /var/log/secure
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Rsyslog&amp;oldid=658115">https://wiki.archlinux.org/index.php?title=Rsyslog&amp;oldid=658115</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 7 April 2021, at 17:28.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Rsyslog&amp;oldid=664452">https://wiki.archlinux.org/index.php?title=Rsyslog&amp;oldid=664452</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 26 April 2021, at 22:29.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

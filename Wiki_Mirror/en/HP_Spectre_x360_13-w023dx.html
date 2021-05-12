@@ -34,18 +34,17 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="/title/Help:Laptop_page_guidelines" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> <code>lspci</code>/<code>lsusb</code> dumps do not belong into laptop pages (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:HP_Spectre_x360_13-w023dx">Talk:HP Spectre x360 13-w023dx#</a>)</div>
+<b>Reason:</b> <code>lspci</code>/<code>lsusb</code> dumps do not belong into laptop pages (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:HP_Spectre_x360_13-w023dx">Talk:HP Spectre x360 13-w023dx#</a>)</div>
 </div>
 <table class="wikitable" style="float: right;">
 <tbody>
 <tr>
-<td><b>Device</b></td>
-<td><b>Status</b></td>
-<td>
-<b>Modules</b>
-</td>
+<th>Device</th>
+<th>Status</th>
+<th>Modules
+</th>
 </tr>
 <tr>
 <td>Video</td>
@@ -87,7 +86,7 @@
 </table>
 <p>This article covers hardware specific configuration of this laptop, some minor issues remain after customization. These can be performed after an installation of Arch Linux has been finished and the machine rebooted into it. 
 </p>
-<p>For a general overview of laptop-related articles and recommendations, see <a href="../en/Laptop.html" title="Laptop">Laptop</a>.
+<p>For a general overview of laptop-related articles and recommendations, see <a href="/title/Laptop" title="Laptop">Laptop</a>.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -152,13 +151,13 @@
 <h3><span class="mw-headline" id="Audio">Audio</span></h3>
 <p>Codec has changed from the previous version, now it's Realtek ALC295:
 </p>
-<pre># aplay -l
-**** List of PLAYBACK Hardware Devices ****
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># aplay -l</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">**** List of PLAYBACK Hardware Devices ****
 card 0: PCH [HDA Intel PCH], device 0: ALC295 Analog [ALC295 Analog]
   Subdevices: 1/1
   Subdevice #0: subdevice #0
 </pre>
-<p>In best case scenario just one speaker is going to work. There's a bug for that: <a rel="nofollow" class="external free" href="https://bugzilla.kernel.org/show_bug.cgi?id=189331">https://bugzilla.kernel.org/show_bug.cgi?id=189331</a>
+<p>In best case scenario just one speaker is going to work. There is a bug for that: <a rel="nofollow" class="external free" href="https://bugzilla.kernel.org/show_bug.cgi?id=189331">https://bugzilla.kernel.org/show_bug.cgi?id=189331</a>
 </p>
 <h3><span class="mw-headline" id="Touchpad">Touchpad</span></h3>
 <p>When using synaptics X11 drivers touchpad works but fails to detect palm, which causes problems when typing. Dell XPS13 had similar issue and they fixed it, but HP is not going to do that. Refer to <a rel="nofollow" class="external free" href="https://github.com/advancingu/XPS13Linux/issues/3">https://github.com/advancingu/XPS13Linux/issues/3</a>
@@ -166,11 +165,11 @@ card 0: PCH [HDA Intel PCH], device 0: ALC295 Analog [ALC295 Analog]
 <p>When using libinput drivers palm detection works out of the box.
 </p>
 <h3><span class="mw-headline" id="Multimedia_keys">Multimedia keys</span></h3>
-<p>While the keyboard backlight (f5) and airplane mode (f12) keys work without any intervention, the rest of the fn keys will be nonfunctional out of the box (unless your DE/WM provides this functionality). In the case that it doesn't, this can be remedied with <a href="../en/Acpid.html" title="Acpid">acpid</a>, allowing the screen brightness, volume, and multimedia back/play/forward keys to work.
+<p>While the keyboard backlight (f5) and airplane mode (f12) keys work without any intervention, the rest of the fn keys will be nonfunctional out of the box (unless your DE/WM provides this functionality). In the case that it does not, this can be remedied with <a href="/title/Acpid" title="Acpid">acpid</a>, allowing the screen brightness, volume, and multimedia back/play/forward keys to work.
 </p>
 <p>Hardware names that the acpi event handler recognizes for these buttons are as follows:
 </p>
-<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ journalctl -f</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># journalctl -f</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">... ACPI group/action undefined: <b>video/brightnessdown</b> / BRTDN
 ... ACPI group/action undefined: <b>video/brightnessup</b> / BRTUP
 ... ACPI group/action undefined: <b>button/mute</b> / MUTE
@@ -180,20 +179,20 @@ card 0: PCH [HDA Intel PCH], device 0: ALC295 Analog [ALC295 Analog]
 ... ACPI group/action undefined: <b>cd/play</b> / CDPLAY
 ... ACPI group/action undefined: <b>cd/next</b> / CDNEXT
 </pre>
-<p>Following the information and examples provided in <a href="../en/Acpid.html#Tips_and_tricks" title="Acpid">acpid#Tips and tricks</a>, handlers can be put in <code>/etc/acpi/events/</code> to perform actions on all of these. 
+<p>Following the information and examples provided in <a href="/title/Acpid#Tips_and_tricks" title="Acpid">acpid#Tips and tricks</a>, handlers can be put in <code>/etc/acpi/events/</code> to perform actions on all of these. 
 </p>
 <p>Alternatively, a quick solution to get screen backlight control working with the media keys is to use <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xfce4-power-manager">xfce4-power-manager</a></span>, selecting <code>Handle display brightness keys</code> in the settings.
 </p>
 <h3><span class="mw-headline" id="Auto_Rotation">Auto Rotation</span></h3>
-<p>See <a href="../en/Tablet_PC.html#Automatic_rotation" title="Tablet PC">Tablet PC#Automatic rotation</a> for common methods of achieving this, as well as <a rel="nofollow" class="external text" href="https://github.com/tegan-lamoureux/Rotate-Spectre">here</a>, for a python auto-rotation script specifically written for this laptop.
+<p>See <a href="/title/Tablet_PC#Automatic_rotation" title="Tablet PC">Tablet PC#Automatic rotation</a> for common methods of achieving this, as well as <a rel="nofollow" class="external text" href="https://github.com/tegan-lamoureux/Rotate-Spectre">here</a>, for a python auto-rotation script specifically written for this laptop.
 </p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:HP.html" title="Category:HP">HP</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:HP" title="Category:HP">HP</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Laptop_style" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li></ul>
 </div>
 </div>
 	</div>
@@ -201,15 +200,15 @@ card 0: PCH [HDA Intel PCH], device 0: ALC295 Analog [ALC295 Analog]
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=HP_Spectre_x360_13-w023dx&amp;oldid=656881">https://wiki.archlinux.org/index.php?title=HP_Spectre_x360_13-w023dx&amp;oldid=656881</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 31 March 2021, at 00:36.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=HP_Spectre_x360_13-w023dx&amp;oldid=665664">https://wiki.archlinux.org/index.php?title=HP_Spectre_x360_13-w023dx&amp;oldid=665664</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 30 April 2021, at 21:58.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

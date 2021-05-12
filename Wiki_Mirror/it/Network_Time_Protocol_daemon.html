@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -32,7 +33,7 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p>Questo articolo descrive come configurare ed eseguire NTPd (Network Time Protocol daemon), il metodo più diffuso per sincronizzare l'<a href="../en/System_time.html" title="System time">orologio software</a> di un sistema GNU/Linux con dei time server utilizzando il <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol" class="extiw" title="wikipedia:Network Time Protocol">Network Time Protocol</a>; se appositamente configurato, NTPd può far funzionare il computer stesso come un time server.
+<p>Questo articolo descrive come configurare ed eseguire NTPd (Network Time Protocol daemon), il metodo più diffuso per sincronizzare l'<a href="/title/System_time" title="System time">orologio software</a> di un sistema GNU/Linux con dei time server utilizzando il <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol" class="extiw" title="wikipedia:Network Time Protocol">Network Time Protocol</a>; se appositamente configurato, NTPd può far funzionare il computer stesso come un time server.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -72,7 +73,7 @@
 </div>
 
 <h2><span class="mw-headline" id="Installazione">Installazione</span></h2>
-<p><a href="../it/Pacman.html" title="Pacman (Italiano)">Installare</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ntp">ntp</a></span>, disponibile nei <a href="../it/Official_repositories.html" title="Official repositories (Italiano)">repository ufficiali</a>.
+<p><a href="/title/Pacman_(Italiano)" title="Pacman (Italiano)">Installare</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=ntp">ntp</a></span>, disponibile nei <a href="/title/Official_repositories_(Italiano)" title="Official repositories (Italiano)">repository ufficiali</a>.
 </p>
 <h2><span class="mw-headline" id="Configurazione">Configurazione</span></h2>
 <div class="archwiki-template-box archwiki-template-box-tip">
@@ -82,7 +83,7 @@
 </p>
 <p>I server NTP sono classificati in un sistema gerarchico con vari livelli chiamati <i>stratum</i>: i dispositivi che sono considerati sorgenti indipendenti dell'orario sono classificati come <i>stratum 0</i>; i server direttamente connessi ai dispositivi <i>stratum 0</i> sono classificati come <i>stratum 1</i>; i server connessi a loro volta a dispositivi <i>stratum 1</i> sono classificati come <i>stratum 2</i> e così via.
 </p>
-<p>È necessario comprendere che lo <i>stratum</i> di un server non può essere considerato un'indicazione della sua precisione o affidabilità. Tipicamente, per scopi generici di sincronizzazione sono utilizzati server dello <i>stratum 2</i>: a meno che non si conoscano già i server a cui connettersi, è bene utilizzare quelli forniti da <a rel="nofollow" class="external text" href="http://www.pool.ntp.org/">pool.ntp.org</a> (<a rel="nofollow" class="external text" href="http://support.ntp.org/bin/view/Servers/NTPPoolServers">link alternativo</a>) scegliendo il pool di server più vicino alla propria posizione geografica.
+<p>È necessario comprendere che lo <i>stratum</i> di un server non può essere considerato un'indicazione della sua precisione o affidabilità. Tipicamente, per scopi generici di sincronizzazione sono utilizzati server dello <i>stratum 2</i>: a meno che non si conoscano già i server a cui connettersi, è bene utilizzare quelli forniti da <a rel="nofollow" class="external text" href="https://www.pool.ntp.org/">pool.ntp.org</a> (<a rel="nofollow" class="external text" href="http://support.ntp.org/bin/view/Servers/NTPPoolServers">link alternativo</a>) scegliendo il pool di server più vicino alla propria posizione geografica.
 </p>
 <p>Le seguenti linee sono un esempio:
 </p>
@@ -98,7 +99,7 @@
 <p>L'opzione <code>iburst</code> è consigliata, e invia una serie (burst) di pacchetti solo se non riesce ad ottenere una connessione al primo tentativo. L'opzione <code>burst</code> agisce sempre così, anche al primo tentativo, e non dovrebbe essere mai usata senza un'esplicita autorizzazione, perché potrebbe causare l'inserimento in blacklist.
 </p>
 <h3><span class="mw-headline" id="Configurare_il_proprio_server_NTP">Configurare il proprio server NTP</span></h3>
-<p>Se si sta configurando un server ntp, è necessario aggiungere <a rel="nofollow" class="external text" href="http://www.ntp.org/ntpfaq/NTP-s-refclk.htm#Q-LOCAL-CLOCK"><i>local clock</i></a> come server, in maniera che, nel caso il computer perda la connessione ad internet, non smetta comunque di inviare l'orario al network; è bene aggiungere <i>localhost</i> come un server <i>stratum 10</i> (utilizzando il comando <i>fudge</i>) in maniera che non sia mai usato a meno che sia perso l'accesso ad internet:
+<p>Se si sta configurando un server ntp, è necessario aggiungere <a rel="nofollow" class="external text" href="https://www.ntp.org/ntpfaq/NTP-s-refclk.htm#Q-LOCAL-CLOCK"><i>local clock</i></a> come server, in maniera che, nel caso il computer perda la connessione ad internet, non smetta comunque di inviare l'orario al network; è bene aggiungere <i>localhost</i> come un server <i>stratum 10</i> (utilizzando il comando <i>fudge</i>) in maniera che non sia mai usato a meno che sia perso l'accesso ad internet:
 </p>
 <pre>server 127.127.1.0
 fudge  127.127.1.0 stratum 10
@@ -174,11 +175,11 @@ logfile /var/log/ntp.log
 <li>Lanciare <code>ntpd -qg</code> come un evento di <i>cron</i> è da evitare assolutamente, a meno di essere perfettamente consapevoli del comportamento delle proprie applicazioni avviate in caso di modifiche istantanee dell'orologio di sistema.</li>
 </ul>
 </div>
-<p>Se si vuole sincronizzare l'orologio di sistema ogni volta che il sistema si avvia, si può aggiungere la riga <code>ntpd -qg &amp;</code> al proprio <code>/etc/rc.local</code>. Vedere <a href="../en/Autostarting.html" title="Autostarting">Autostarting</a> per i metodi alternativi:
+<p>Se si vuole sincronizzare l'orologio di sistema ogni volta che il sistema si avvia, si può aggiungere la riga <code>ntpd -qg &amp;</code> al proprio <code>/etc/rc.local</code>. Vedere <a href="/title/Autostarting" title="Autostarting">Autostarting</a> per i metodi alternativi:
 </p>
 <pre>ntpd -qg &amp;
 </pre>
-<p>Si dovrebbe anche aggiungere il demone <code>hwclock</code> al proprio <a href="../it/Daemons.html#SEsecuzione_automatica_all.27avvio" class="mw-redirect" title="Daemon (Italiano)">DAEMONS array</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>, a meno che qualcos'altro, ad esempio un altro sistema operativo in dual boot, non aggiorni già l'orologio hardware. Vedere <a href="../en/System_time.html#hwclock_daemon" title="System time">System time#hwclock daemon</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> per maggiori informazioni.
+<p>Si dovrebbe anche aggiungere il demone <code>hwclock</code> al proprio <a href="/title/Daemon_(Italiano)#SEsecuzione_automatica_all.27avvio" class="mw-redirect" title="Daemon (Italiano)">DAEMONS array</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>, a meno che qualcos'altro, ad esempio un altro sistema operativo in dual boot, non aggiorni già l'orologio hardware. Vedere <a href="/title/System_time#hwclock_daemon" title="System time">System time#hwclock daemon</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> per maggiori informazioni.
 </p>
 <p>Affinché questo metodo funzioni è necessario fare in modo che, quando <code>rc.local</code> viene eseguito, la connessione di rete sia già stata inizializzata (ad esempio, non si dovrebbero avere in background demoni correlati alla rete in <code>/etc/rc.conf</code>)
 </p>
@@ -222,7 +223,7 @@ logfile /var/log/ntp.log
 <h3><span class="mw-headline" id="NetworkManager">NetworkManager</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong> ntpd dovrebbe restare in esecuzione quando la rete non funziona, se il demone hwclock è disabilitato, quindi questo non dovrebbe essere necessario.</div>
-<p><i>ntpd</i> può essere acceso/spento a seconda della connessione internet attraverso l'uso dei <a href="../it/NetworkManager.html#Servizi_di_rete_con_NetworkManager_Dispatcher" title="NetworkManager (Italiano)">dispatcher script di NetworkManager</a>. È possibile installare gli script necessari dal repo [community]:
+<p><i>ntpd</i> può essere acceso/spento a seconda della connessione internet attraverso l'uso dei <a href="/title/NetworkManager_(Italiano)#Servizi_di_rete_con_NetworkManager_Dispatcher" title="NetworkManager (Italiano)">dispatcher script di NetworkManager</a>. È possibile installare gli script necessari dal repo [community]:
 </p>
 <pre># pacman -S networkmanager-dispatcher-ntpd</pre>
 <h3><span class="mw-headline" id="Esecuzione_in_chroot">Esecuzione in chroot</span></h3>
@@ -265,26 +266,26 @@ logfile /var/log/ntp.log
 <p>E' relativamente difficile essere sicuri che la configurazione driftfile sta funionando, senza attendere un po' di tempo, perchè ntpd non legge né scrive molto spesso. Se qualcosa è andato storto, si registrerà un errore; se funziona tutto bene, il timestamp si aggiornerà. Se non si ottengono errori dopo un'intera giornata ed il timestamp viene aggiornato, si dovrebbe essere sicuri del successo.
 </p>
 <h2><span class="mw-headline" id="Alternative">Alternative</span></h2>
-<p>Possibili alternative ad NTPd sono <a href="../en/Chrony.html" title="Chrony">Chrony</a>, una connessione dial-up semplice e specificatamente progettata per sistemi che non sono sempre online, e <a href="../it/OpenNTPD.html" title="OpenNTPD (Italiano)">OpenNTPD</a>, parte del progetto OpenBSD e attualmente non mantenuto per Linux.
+<p>Possibili alternative ad NTPd sono <a href="/title/Chrony" title="Chrony">Chrony</a>, una connessione dial-up semplice e specificatamente progettata per sistemi che non sono sempre online, e <a href="/title/OpenNTPD_(Italiano)" title="OpenNTPD (Italiano)">OpenNTPD</a>, parte del progetto OpenBSD e attualmente non mantenuto per Linux.
 </p>
 <h2><span class="mw-headline" id="Vedere_anche">Vedere anche</span></h2>
 <ul><li>
-<a href="../en/System_time.html" title="System time">System time</a> (per maggiori informazioni sulla gestione del tempo nel computer)</li></ul>
+<a href="/title/System_time" title="System time">System time</a> (per maggiori informazioni sulla gestione del tempo nel computer)</li></ul>
 <h2><span class="mw-headline" id="Link_esterni">Link esterni</span></h2>
 <ul>
-<li><a rel="nofollow" class="external free" href="http://www.ntp.org/">http://www.ntp.org/</a></li>
+<li><a rel="nofollow" class="external free" href="https://www.ntp.org/">https://www.ntp.org/</a></li>
 <li><a rel="nofollow" class="external free" href="http://support.ntp.org/">http://support.ntp.org/</a></li>
-<li><a rel="nofollow" class="external free" href="http://www.pool.ntp.org/">http://www.pool.ntp.org/</a></li>
+<li><a rel="nofollow" class="external free" href="https://www.pool.ntp.org/">https://www.pool.ntp.org/</a></li>
 <li><a rel="nofollow" class="external free" href="http://www.eecis.udel.edu/~mills/ntp/html/index.html">http://www.eecis.udel.edu/~mills/ntp/html/index.html</a></li>
-<li><a rel="nofollow" class="external free" href="http://www.akadia.com/services/ntp_synchronize.html">http://www.akadia.com/services/ntp_synchronize.html</a></li>
+<li><a rel="nofollow" class="external free" href="https://www.akadia.com/services/ntp_synchronize.html">https://www.akadia.com/services/ntp_synchronize.html</a></li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../it/Category:Network_Time_Protocol.html" title="Category:Network Time Protocol (Italiano)">Network Time Protocol (Italiano)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Network_Time_Protocol_(Italiano)" title="Category:Network Time Protocol (Italiano)">Network Time Protocol (Italiano)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -292,15 +293,15 @@ logfile /var/log/ntp.log
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_Time_Protocol_daemon_(Italiano)&amp;oldid=617329">https://wiki.archlinux.org/index.php?title=Network_Time_Protocol_daemon_(Italiano)&amp;oldid=617329</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 31 May 2020, at 14:48.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Network_Time_Protocol_daemon_(Italiano)&amp;oldid=669151">https://wiki.archlinux.org/index.php?title=Network_Time_Protocol_daemon_(Italiano)&amp;oldid=669151</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:20.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

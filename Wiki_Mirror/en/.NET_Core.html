@@ -65,11 +65,11 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p>If you only want to run .NET Core managed applications, <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dotnet-runtime">dotnet-runtime</a></span> package. 
+<p>If you only want to run .NET Core managed applications, <a href="/title/Install" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dotnet-runtime">dotnet-runtime</a></span> package. 
 </p>
 <p>To build apps with .NET Core, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dotnet-sdk">dotnet-sdk</a></span> as well.
 </p>
-<p>Microsoft recommends using <a href="../en/Visual_Studio_Code.html" title="Visual Studio Code">Visual Studio Code</a> , their <a rel="nofollow" class="external text" href="https://electron.atom.io/">Electron</a>-based IDE, to build &amp; debug .NET Core apps.
+<p>Microsoft recommends using <a href="/title/Visual_Studio_Code" title="Visual Studio Code">Visual Studio Code</a> , their <a rel="nofollow" class="external text" href="https://electron.atom.io/">Electron</a>-based IDE, to build &amp; debug .NET Core apps.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
 <strong>Tip:</strong> Add <code>~/.dotnet/tools</code> to <code>PATH</code>, otherwise dotnet tools will not work from shell.</div>
@@ -84,37 +84,38 @@
 </p>
 <p>Once installed, you can verify the SDKs available:
 </p>
-<pre>$ dotnet --list-sdks
-2.2.108 [/usr/share/dotnet/sdk]
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dotnet --list-sdks</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">2.2.108 [/usr/share/dotnet/sdk]
 3.0.103 [/usr/share/dotnet/sdk]
-$ dotnet --version
-3.0.103
+</pre>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dotnet --version</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">3.0.103
 </pre>
 <h3><span class="mw-headline" id="Uninstall_manually_installed_version">Uninstall manually installed version</span></h3>
-<p>You may want to remove outdated versions installed with <code>dotnet-install.sh</code>. The automated <a rel="nofollow" class="external text" href="https://docs.microsoft.com/en-us/dotnet/core/additional-tools/uninstall-tool">.NET Uninstall Tool</a> does still not support linux, so the deinstallation has to be done manually.
+<p>You may want to remove outdated versions installed with <code>dotnet-install.sh</code>. The automated <a rel="nofollow" class="external text" href="https://docs.microsoft.com/en-us/dotnet/core/additional-tools/uninstall-tool">.NET Uninstall Tool</a> does still not support Linux, so the desinstallation has to be done manually.
 </p>
-<pre>$ dotnet --list-sdks
-5.0.100 [/usr/share/dotnet/sdk]
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ dotnet --list-sdks</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">5.0.100 [/usr/share/dotnet/sdk]
 5.0.102 [/usr/share/dotnet/sdk]
 </pre>
-<p>Deinstallation of the sdk:
+<p>Desinstallation of the sdk:
 </p>
-<pre>SDK_VERSION="5.0.100"
-DOTNET_UNINSTALL_PATH="/usr/share/dotnet"
-sudo rm -rf $DOTNET_UNINSTALL_PATH/sdk/$SDK_VERSION
+<pre>$ SDK_VERSION="5.0.100"
+$ DOTNET_UNINSTALL_PATH="/usr/share/dotnet"
+# rm -rf $DOTNET_UNINSTALL_PATH/sdk/$SDK_VERSION
 </pre>
 <p>Using <code>dotnet-install.sh</code> also dotnet host and shared packages are getting installed, which may have to get removed additionally depending on the release.
 </p>
 <p>Complete deinstallation of the .NET Version (sdk, host, shared):
 </p>
-<pre>SDK_VERSION="5.0.100"
-DOTNET_VERSION="5.0.0"
-DOTNET_UNINSTALL_PATH="/usr/share/dotnet"
-sudo rm -rf $DOTNET_UNINSTALL_PATH/sdk/$SDK_VERSION
-sudo rm -rf $DOTNET_UNINSTALL_PATH/shared/Microsoft.NETCore.App/$DOTNET_VERSION
-sudo rm -rf $DOTNET_UNINSTALL_PATH/shared/Microsoft.AspNetCore.All/$DOTNET_VERSION
-sudo rm -rf $DOTNET_UNINSTALL_PATH/shared/Microsoft.AspNetCore.App/$DOTNET_VERSION
-sudo rm -rf $DOTNET_UNINSTALL_PATH/host/fxr/$DOTNET_VERSION
+<pre>$ SDK_VERSION="5.0.100"
+$ DOTNET_VERSION="5.0.0"
+$ DOTNET_UNINSTALL_PATH="/usr/share/dotnet"
+# rm -rf $DOTNET_UNINSTALL_PATH/sdk/$SDK_VERSION
+# rm -rf $DOTNET_UNINSTALL_PATH/shared/Microsoft.NETCore.App/$DOTNET_VERSION
+# rm -rf $DOTNET_UNINSTALL_PATH/shared/Microsoft.AspNetCore.All/$DOTNET_VERSION
+# rm -rf $DOTNET_UNINSTALL_PATH/shared/Microsoft.AspNetCore.App/$DOTNET_VERSION
+# rm -rf $DOTNET_UNINSTALL_PATH/host/fxr/$DOTNET_VERSION
 </pre>
 <h3><span class="mw-headline" id="Install_multiple_versions_via_AUR">Install multiple versions via AUR</span></h3>
 <p>Some of the AUR dotnet packages are made to be installed alongside each other. Only one host package (<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/dotnet-host-bin/">dotnet-host-bin</a></span><sup><small>AUR</small></sup> or <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dotnet-host">dotnet-host</a></span>) is needed containing the command-line tool and you can install any of the available SDKs and Runtimes (latest packages of all major versions) next to it. List of compatible packages:
@@ -140,12 +141,12 @@ sudo rm -rf $DOTNET_UNINSTALL_PATH/host/fxr/$DOTNET_VERSION
 </p>
 <pre># dotnet tool install --global PowerShell
 </pre>
-<p>to update to current version
+<p>to update to the current version
 </p>
 <pre># dotnet tool update --global PowerShell
 </pre>
 <h2><span class="mw-headline" id="Telemetry">Telemetry</span></h2>
-<p>Telemetry is enabled by default but can be disabled by <a href="../en/Environment_variables.html" title="Environment variables">setting environment variable</a> <code>DOTNET_CLI_TELEMETRY_OPTOUT=1</code>.
+<p>Telemetry is enabled by default but can be disabled by <a href="/title/Environment_variables" title="Environment variables">setting environment variable</a> <code>DOTNET_CLI_TELEMETRY_OPTOUT=1</code>.
 </p>
 <h2><span class="mw-headline" id="Tab-Completion">Tab-Completion</span></h2>
 <p>All dotnet core programs that use <code>System.CommandLine.Parser</code> to parse their arguments have auto-complete support. Enabling it just requires adding a few lines to your <code>.bashrc</code> / <code>.zshrc</code> file, as described in <a rel="nofollow" class="external text" href="https://docs.microsoft.com/en-us/dotnet/core/tools/enable-tab-autocomplete#zsh">their documentation</a>. Instructions for standalone binaries are <a rel="nofollow" class="external text" href="https://github.com/dotnet/command-line-api/blob/main/docs/dotnet-suggest.md">here</a>.
@@ -192,22 +193,22 @@ If this is a framework-dependent application, install the runtime in the default
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Frameworks.html" title="Category:Frameworks">Frameworks</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Frameworks" title="Category:Frameworks">Frameworks</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=.NET_Core&amp;oldid=656376">https://wiki.archlinux.org/index.php?title=.NET_Core&amp;oldid=656376</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 28 March 2021, at 04:49.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=.NET_Core&amp;oldid=669957">https://wiki.archlinux.org/index.php?title=.NET_Core&amp;oldid=669957</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 May 2021, at 11:53.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

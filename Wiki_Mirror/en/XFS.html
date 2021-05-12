@@ -36,7 +36,7 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/File_systems.html" title="File systems">File systems</a></li>
+<li><a href="/title/File_systems" title="File systems">File systems</a></li>
 </ul>
 </div>
 <p>XFS is a high-performance journaling file system created by Silicon Graphics, Inc. XFS is particularly proficient at parallel IO due to its allocation group based design. This enables extreme scalability of IO threads, filesystem bandwidth, file and filesystem size when spanning multiple storage devices.
@@ -101,7 +101,7 @@
 </div>
 
 <h2><span class="mw-headline" id="Preparation">Preparation</span></h2>
-<p>For XFS userspace utilities <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xfsprogs">xfsprogs</a></span> package. It contains the tools necessary to manage an XFS file system.
+<p>For XFS userspace utilities <a href="/title/Install" class="mw-redirect" title="Install">install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xfsprogs">xfsprogs</a></span> package. It contains the tools necessary to manage an XFS file system.
 </p>
 <h2><span class="mw-headline" id="Creation">Creation</span></h2>
 <p>To create a new filesystem on <i>device</i> use:
@@ -137,7 +137,7 @@ Based upon CRC32 it provides for example additional protection against metadata 
 <p>The XFS v5 on-disk format is considered stable for production workloads starting in Linux Kernel 3.15.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Unlike <a href="../en/Btrfs.html" title="Btrfs">Btrfs</a> and <a href="../en/ZFS.html" title="ZFS">ZFS</a>, the CRC32 checksum only applies to the metadata and not actual data.</div>
+<strong>Note:</strong> Unlike <a href="/title/Btrfs" title="Btrfs">Btrfs</a> and <a href="/title/ZFS" title="ZFS">ZFS</a>, the CRC32 checksum only applies to the metadata and not actual data.</div>
 <h3><span class="mw-headline" id="Free_inode_btree">Free inode btree</span></h3>
 <p>Starting in Linux 3.16, XFS has added a btree that tracks free inodes. It is equivalent to the existing inode allocation btree with the exception that the free inode btree tracks inode chunks with at least one free inode. The purpose is to improve lookups for free inode clusters for inode allocation. It improves performance on aged filesystems i.e. months or years down the track when you have added and removed millions of files to/from the filesystem. Using this feature does not impact overall filesystem reliability level or recovery capabilities.
 </p>
@@ -187,7 +187,7 @@ Based upon CRC32 it provides for example additional protection against metadata 
 <p><q>In most cases, the only thing you need to to consider for <code>mkfs.xfs</code> is specifying the stripe unit and width for hardware RAID devices.</q> (see <a href="#Stripe_size_and_width">#Stripe size and width</a>)
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> When using the XFS filesystem on <a href="../en/RAID.html" title="RAID">RAID</a> devices, performance improvements may be possible by using <code>largeio</code>, <code>swalloc</code>, increased <code>logbsize</code> and <code>allocsize</code> values, etc. The following articles may provide additional details about those flags:
+<strong>Tip:</strong> When using the XFS filesystem on <a href="/title/RAID" title="RAID">RAID</a> devices, performance improvements may be possible by using <code>largeio</code>, <code>swalloc</code>, increased <code>logbsize</code> and <code>allocsize</code> values, etc. The following articles may provide additional details about those flags:
 <ul>
 <li><a rel="nofollow" class="external free" href="https://www.beegfs.io/wiki/StorageServerTuning">https://www.beegfs.io/wiki/StorageServerTuning</a></li>
 <li><a rel="nofollow" class="external free" href="https://help.marklogic.com/Knowledgebase/Article/View/505/0/recommended-xfs-settings-for-marklogic-server">https://help.marklogic.com/Knowledgebase/Article/View/505/0/recommended-xfs-settings-for-marklogic-server</a></li>
@@ -200,7 +200,7 @@ Based upon CRC32 it provides for example additional protection against metadata 
 <p><q>As of kernel 3.2.12, the default i/o scheduler, CFQ, will defeat much of the parallelization in XFS.</q>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Arch is configured to use no I/O scheduler when a SATA or <a href="../en/Solid_state_drive/NVMe.html" class="mw-redirect" title="NVMe">NVMe</a> <a href="../en/Solid_state_drive.html" class="mw-redirect" title="SSD">SSD</a> is detected; this can confirmed by reading the content of <code>/sys/block/nvme*n*/queue/scheduler</code>.</div>
+<strong>Note:</strong> Arch is configured to use no I/O scheduler when a SATA or <a href="/title/NVMe" class="mw-redirect" title="NVMe">NVMe</a> <a href="/title/SSD" class="mw-redirect" title="SSD">SSD</a> is detected; this can confirmed by reading the content of <code>/sys/block/nvme*n*/queue/scheduler</code>.</div>
 <p>Therefore for optimal performance, in most cases you can just follow <a href="#Creation">#Creation</a>.
 </p>
 <h3><span class="mw-headline" id="Stripe_size_and_width">Stripe size and width</span></h3>
@@ -211,12 +211,12 @@ Based upon CRC32 it provides for example additional protection against metadata 
 <h3><span class="mw-headline" id="Access_time">Access time</span></h3>
 <p>On some filesystems you can increase performance by adding the <code>noatime</code> mount option to the <code>/etc/fstab</code> file. For XFS filesystems <q>the default atime behaviour is <code>relatime</code>, which has almost no overhead compared to noatime but still maintains sane atime values. All Linux filesystems use this as the default now (since around 2.6.30), but XFS has used relatime-like behaviour since 2006, so no-one should really need to ever use noatime on XFS for performance reasons.</q><a rel="nofollow" class="external autonumber" href="https://xfs.org/index.php/XFS_FAQ#Q:_Is_using_noatime_or.2Fand_nodiratime_at_mount_time_giving_any_performance_benefits_in_xfs_.28or_not_using_them_performance_decrease.29.3F">[9]</a>
 </p>
-<p>See <a href="../en/Fstab.html#atime_options" title="Fstab">Fstab#atime options</a> for more on this topic.
+<p>See <a href="/title/Fstab#atime_options" title="Fstab">Fstab#atime options</a> for more on this topic.
 </p>
 <h3><span class="mw-headline" id="Discard">Discard</span></h3>
-<p>Despite XFS supporting async discard<a rel="nofollow" class="external autonumber" href="https://lwn.net/Articles/787272/">[10]</a> since kernel 4.7<a rel="nofollow" class="external autonumber" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Async-Discard-Linux-4.7">[11]</a><a rel="nofollow" class="external autonumber" href="https://events.static.linuxfound.org/sites/events/files/slides/discard_0.pdf">[12]</a>, <span class="plainlinks archwiki-template-man" title="$ man 8 xfs"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xfs.8">xfs(8)</a></span><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">dead link</a> 2020-12-13]</sup> still recommends <q>that you use the <a href="../en/Solid_state_drive.html#Periodic_TRIM" class="mw-redirect" title="Fstrim">fstrim</a> application to discard unused blocks rather than the discard mount option because the performance impact of this option is quite severe.</q>
+<p>Despite XFS supporting async discard<a rel="nofollow" class="external autonumber" href="https://lwn.net/Articles/787272/">[10]</a> since kernel 4.7<a rel="nofollow" class="external autonumber" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Async-Discard-Linux-4.7">[11]</a><a rel="nofollow" class="external autonumber" href="https://events.static.linuxfound.org/sites/events/files/slides/discard_0.pdf">[12]</a>, <span class="plainlinks archwiki-template-man" title="$ man 5 xfs"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xfs.5">xfs(5)</a></span> still recommends <q>that you use the <a href="/title/Fstrim" class="mw-redirect" title="Fstrim">fstrim</a> application to discard unused blocks rather than the discard mount option because the performance impact of this option is quite severe.</q>
 </p>
-<p>See <a href="../en/Solid_state_drive.html#Periodic_TRIM" title="Solid state drive">Solid state drive#Periodic TRIM</a>.
+<p>See <a href="/title/Solid_state_drive#Periodic_TRIM" title="Solid state drive">Solid state drive#Periodic TRIM</a>.
 </p>
 <h3><span class="mw-headline" id="Defragmentation">Defragmentation</span></h3>
 <p>Although the extent-based nature of XFS and the delayed allocation strategy it uses significantly improves the file system's resistance to fragmentation problems, XFS provides a filesystem defragmentation utility (<i>xfs_fsr</i>, short for XFS filesystem reorganizer) that can defragment the files on a mounted and active XFS filesystem. It can be useful to view XFS fragmentation periodically.
@@ -234,7 +234,7 @@ Based upon CRC32 it provides for example additional protection against metadata 
 <pre># xfs_fsr /dev/sda3
 </pre>
 <h3><span class="mw-headline" id="Deduplication">Deduplication</span></h3>
-<p>The <i>reflink</i> feature, available since kernel version 4.9 and enabled by default since <code>mkfs.xfs</code> version 5.1.0, allows creating fast reflink'ed copies of files as well as deduplication after the fact, in the same way as <a href="../en/Btrfs.html" title="Btrfs">btrfs</a>:
+<p>The <i>reflink</i> feature, available since kernel version 4.9 and enabled by default since <code>mkfs.xfs</code> version 5.1.0, allows creating fast reflink'ed copies of files as well as deduplication after the fact, in the same way as <a href="/title/Btrfs" title="Btrfs">btrfs</a>:
 </p>
 <h4><span class="mw-headline" id="Reflink_copies">Reflink copies</span></h4>
 <p>Reflink copies initially use no additional space:
@@ -247,14 +247,14 @@ Based upon CRC32 it provides for example additional protection against metadata 
 <p>Existing filesystems can be deduped using tools like <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=duperemove">duperemove</a></span>.
 </p>
 <h3><span class="mw-headline" id="External_XFS_Journal">External XFS Journal</span></h3>
-<p>Using an external log (metadata journal) on for instance a <a href="../en/Solid_state_drive.html" class="mw-redirect" title="SSD">SSD</a> may be useful to improve performance <a rel="nofollow" class="external autonumber" href="https://docs.oracle.com/en/operating-systems/oracle-linux/8/fsadmin/xfs-main.html#extjnl-xfs">[13]</a>. See <span class="plainlinks archwiki-template-man" title="$ man 8 mkfs.xfs"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mkfs.xfs.8">mkfs.xfs(8)</a></span> for details about the <code>logdev</code> parameter.
+<p>Using an external log (metadata journal) on for instance a <a href="/title/SSD" class="mw-redirect" title="SSD">SSD</a> may be useful to improve performance <a rel="nofollow" class="external autonumber" href="https://docs.oracle.com/en/operating-systems/oracle-linux/8/fsadmin/xfs-main.html#extjnl-xfs">[13]</a>. See <span class="plainlinks archwiki-template-man" title="$ man 8 mkfs.xfs"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/mkfs.xfs.8">mkfs.xfs(8)</a></span> for details about the <code>logdev</code> parameter.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Beware using flash-memory may wear-out the drive. See <a href="../en/Improving_performance.html#Reduce_disk_reads/writes" title="Improving performance">Improving performance#Reduce disk reads/writes</a> for SSD wear-out details.</div>
-<p>To reserve an external journal with a specified size when you create an XFS file system, specify the <code>-l logdev=<i>device</i>,size=<i>size</i></code> option to the <code>mkfs.xfs</code> command. If you omit the <code>size</code> parameter, a journal size based on the size of the file system is used. To mount the XFS file system so that it uses the external journal, specify the <code>-o logdev=<i>device</i></code> option to the <a href="../en/File_systems.html#Mount_a_file_system" class="mw-redirect" title="Mount">mount</a> command.
+<strong>Warning:</strong> Beware using flash-memory may wear-out the drive. See <a href="/title/Improving_performance#Reduce_disk_reads/writes" title="Improving performance">Improving performance#Reduce disk reads/writes</a> for SSD wear-out details.</div>
+<p>To reserve an external journal with a specified size when you create an XFS file system, specify the <code>-l logdev=<i>device</i>,size=<i>size</i></code> option to the <code>mkfs.xfs</code> command. If you omit the <code>size</code> parameter, a journal size based on the size of the file system is used. To mount the XFS file system so that it uses the external journal, specify the <code>-o logdev=<i>device</i></code> option to the <a href="/title/Mount" class="mw-redirect" title="Mount">mount</a> command.
 </p>
 <h3><span class="mw-headline" id="Sync_interval">Sync interval</span></h3>
-<p>XFS has it dedicated <a href="../en/Sysctl.html" title="Sysctl">sysctl</a> variable for setting "<a href="../en/Improving_performance.html#Writeback_interval_and_buffer_size" title="Improving performance">writeback interval</a>".  Arch has a default value of 3000, larger value is possible to set, just keep in mind that too large may result data loss in some cases:
+<p>XFS has it dedicated <a href="/title/Sysctl" title="Sysctl">sysctl</a> variable for setting "<a href="/title/Improving_performance#Writeback_interval_and_buffer_size" title="Improving performance">writeback interval</a>".  Arch has a default value of 3000, larger value is possible to set, just keep in mind that too large may result data loss in some cases:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/sysctl.d/20-xfs-sync-interval.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">fs.xfs.xfssyncd_centisecs = 10000</pre>
@@ -273,10 +273,10 @@ Based upon CRC32 it provides for example additional protection against metadata 
 <strong>Warning:</strong> This program is <b>experimental</b>, which means that its behavior and interface could change at any time. See <span class="plainlinks archwiki-template-man" title="$ man 8 xfs_scrub"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xfs_scrub.8">xfs_scrub(8)</a></span>.</div>
 <p><code>xfs_scrub</code> asks the kernel to scrub all metadata objects in the XFS filesystem. Metadata records are scanned for obviously bad values and then cross-referenced against other metadata. The goal is to establish a reasonable confidence about the consistency of the overall filesystem by examining the consistency of individual metadata records against the other metadata in the filesystem. Damaged metadata can be rebuilt from other metadata if there exists redundant data structures which are intact.
 </p>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">Enable</a>/<a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>xfs_scrub_all.timer</code> to periodic check online metadata for all XFS filesystems.
+<p><a href="/title/Enable" class="mw-redirect" title="Enable">Enable</a>/<a href="/title/Start" class="mw-redirect" title="Start">start</a> <code>xfs_scrub_all.timer</code> to periodic check online metadata for all XFS filesystems.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> One may want to <a href="../en/Systemd.html#Editing_provided_units" class="mw-redirect" title="Edit">edit</a> <code>xfs_scrub_all.timer</code>: the timer runs every Sunday at 3:10am and will be <a href="../en/Systemd/Timers.html#Realtime_timer" title="Systemd/Timers">triggered immediately</a> if it missed the last start time, i.e. due to the system being powered off.</div>
+<strong>Note:</strong> One may want to <a href="/title/Edit" class="mw-redirect" title="Edit">edit</a> <code>xfs_scrub_all.timer</code>: the timer runs every Sunday at 3:10am and will be <a href="/title/Systemd/Timers#Realtime_timer" title="Systemd/Timers">triggered immediately</a> if it missed the last start time, i.e. due to the system being powered off.</div>
 <h3><span class="mw-headline" id="Repair">Repair</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> <q>Unlike other Linux file systems, <i>xfs_repair</i> does not run at boot time, even when an XFS file system was not cleanly unmounted. In the event of an unclean unmount, <i>xfs_repair</i> simply replays the log at mount time, ensuring a consistent file system.</q><a rel="nofollow" class="external autonumber" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/storage_administration_guide/xfsrepair">[14]</a>
@@ -289,7 +289,7 @@ Based upon CRC32 it provides for example additional protection against metadata 
 </p>
 <p><q>You can use the <b>xfs_repair</b> command to attempt to repair an XFS file system specified by its device file. The command replays the journal log to fix any inconsistencies that might have resulted from the file system not being cleanly unmounted. Unless the file system has an inconsistency, it is usually not necessary to use the command, as the journal is replayed every time that you mount an XFS file system.</q>
 </p>
-<p>First <a href="../en/File_systems.html#Unmount_a_file_system" class="mw-redirect" title="Unmount">unmount</a> the filesystem, then run the <span class="plainlinks archwiki-template-man" title="$ man 8 xfs_repair"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xfs_repair.8">xfs_repair(8)</a></span> tool:
+<p>First <a href="/title/Unmount" class="mw-redirect" title="Unmount">unmount</a> the filesystem, then run the <span class="plainlinks archwiki-template-man" title="$ man 8 xfs_repair"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/xfs_repair.8">xfs_repair(8)</a></span> tool:
 </p>
 <pre># xfs_repair <i>device</i>
 </pre>
@@ -313,10 +313,10 @@ Based upon CRC32 it provides for example additional protection against metadata 
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Root_file_system_quota">Root file system quota</span></h3>
-<p>XFS quota mount options (<code>uquota</code>, <code>gquota</code>, <code>prjquota</code>, etc.) fail during re-mount of the file system. To enable quota for root file system, the mount option must be passed to initramfs as a <a href="../en/Kernel_parameters.html" class="mw-redirect" title="Kernel parameter">kernel parameter</a> <code>rootflags=</code>. Subsequently, it should not be listed among mount options in <code>/etc/fstab</code> for the root (<code>/</code>) filesystem.
+<p>XFS quota mount options (<code>uquota</code>, <code>gquota</code>, <code>prjquota</code>, etc.) fail during re-mount of the file system. To enable quota for root file system, the mount option must be passed to initramfs as a <a href="/title/Kernel_parameter" class="mw-redirect" title="Kernel parameter">kernel parameter</a> <code>rootflags=</code>. Subsequently, it should not be listed among mount options in <code>/etc/fstab</code> for the root (<code>/</code>) filesystem.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> There are some differences of XFS Quota compared to standard Linux <a href="../en/Disk_quota.html" title="Disk quota">Disk quota</a>, this article <a rel="nofollow" class="external free" href="http://inai.de/linux/adm_quota">http://inai.de/linux/adm_quota</a> may be worth reading.</div>
+<strong>Note:</strong> There are some differences of XFS Quota compared to standard Linux <a href="/title/Disk_quota" title="Disk quota">Disk quota</a>, this article <a rel="nofollow" class="external free" href="http://inai.de/linux/adm_quota">http://inai.de/linux/adm_quota</a> may be worth reading.</div>
 <h3>
 <span id="xfs_scrub_all_fails_if_user_.22nobody.22_can_not_access_the_mountpoint"></span><span class="mw-headline" id='xfs_scrub_all_fails_if_user_"nobody"_can_not_access_the_mountpoint'>xfs_scrub_all fails if user "nobody" can not access the mountpoint</span>
 </h3>
@@ -326,7 +326,7 @@ Based upon CRC32 it provides for example additional protection against metadata 
 xfs_scrub@<i>mountpoint</i>.service: Failed at step CHDIR spawning /usr/bin/xfs_scrub: Permission denied
 xfs_scrub@<i>mountpoint</i>.service: Main process exited, code=exited, status=200/CHDIR
 </pre>
-<p>To allow the service to run, change the <a href="../en/File_permissions_and_attributes.html" class="mw-redirect" title="Permissions">permissions</a> of the mountpoint so that user <code>nobody</code> has execute permissions.
+<p>To allow the service to run, change the <a href="/title/Permissions" class="mw-redirect" title="Permissions">permissions</a> of the mountpoint so that user <code>nobody</code> has execute permissions.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
@@ -336,27 +336,23 @@ xfs_scrub@<i>mountpoint</i>.service: Main process exited, code=exited, status=20
 </ul>
 </div>
 </div>
-<div id="catlinks" class="catlinks" data-mw="interface">
-<div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:File_systems.html" title="Category:File systems">File systems</a></li></ul>
-</div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
-</div>
-</div>
+<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:File_systems" title="Category:File systems">File systems</a></li></ul>
+</div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=XFS&amp;oldid=661950">https://wiki.archlinux.org/index.php?title=XFS&amp;oldid=661950</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 17:49.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=XFS&amp;oldid=666988">https://wiki.archlinux.org/index.php?title=XFS&amp;oldid=666988</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 23:38.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

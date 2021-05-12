@@ -33,12 +33,12 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p><b><a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/">LXD</a></b> is a manager/hypervisor for containers (via <a href="../en/Linux_Containers.html" class="mw-redirect" title="LXC">LXC</a>) and virtual-machines (via <a href="../en/QEMU.html" title="QEMU">QEMU</a>).
+<p><b><a rel="nofollow" class="external text" href="https://linuxcontainers.org/lxd/">LXD</a></b> is a manager/hypervisor for containers (via <a href="/title/LXC" class="mw-redirect" title="LXC">LXC</a>) and virtual-machines (via <a href="/title/QEMU" title="QEMU">QEMU</a>).
 </p>
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Linux_Containers.html" title="Linux Containers">Linux Containers</a></li>
+<li><a href="/title/Linux_Containers" title="Linux Containers">Linux Containers</a></li>
 </ul>
 </div>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -101,12 +101,12 @@
 
 <h2><span class="mw-headline" id="Setup">Setup</span></h2>
 <h3><span class="mw-headline" id="Required_software">Required software</span></h3>
-<p>Install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxd">lxd</a></span> package, then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>lxd.service</code>.
+<p>Install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxd">lxd</a></span> package, then <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> <code>lxd.service</code>.
 </p>
 <h3><span class="mw-headline" id="Setup_for_unprivileged_containers">Setup for unprivileged containers</span></h3>
-<p>It is recommended to use unprivileged containers (See <a href="../en/Linux_Containers.html#Privileged_containers_or_unprivileged_containers" title="Linux Containers">Linux Containers#Privileged containers or unprivileged containers</a> for an explanation of the difference).
+<p>It is recommended to use unprivileged containers (See <a href="/title/Linux_Containers#Privileged_containers_or_unprivileged_containers" title="Linux Containers">Linux Containers#Privileged containers or unprivileged containers</a> for an explanation of the difference).
 </p>
-<p>In order to use them, you need to <a href="../en/Linux_Containers.html#Enable_support_to_run_unprivileged_containers_(optional)" title="Linux Containers">enable support to run unprivileged containers</a>.
+<p>In order to use them, you need to <a href="/title/Linux_Containers#Enable_support_to_run_unprivileged_containers_(optional)" title="Linux Containers">enable support to run unprivileged containers</a>.
 </p>
 <p>Once enabled, every container will be started <code>unprivileged</code> by default.
 </p>
@@ -201,7 +201,7 @@ See <a rel="nofollow" class="external text" href="https://linuxcontainers.org/lx
 </p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Access_the_containers_by_name_on_the_host">Access the containers by name on the host</span></h3>
-<p>This assumes that you are using the default bridge, that it is named lxdbr0 and that you are using <a href="../en/Systemd-resolved.html" title="Systemd-resolved">systemd-resolved</a>.
+<p>This assumes that you are using the default bridge, that it is named lxdbr0 and that you are using <a href="/title/Systemd-resolved" title="Systemd-resolved">systemd-resolved</a>.
 </p>
 <pre> # systemd-resolve --interface lxdbr0 --set-domain '~lxd' --set-dns $(lxc network get lxdbr0 ipv4.address | cut -d / -f 1)
  
@@ -225,7 +225,7 @@ See <a rel="nofollow" class="external text" href="https://linuxcontainers.org/lx
  Address=10.x.y.1/24
  Gateway=10.x.y.1
 </pre>
-<p>And then <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>systemd-networkd.service</code>.
+<p>And then <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> and <a href="/title/Start" class="mw-redirect" title="Start">start</a> <code>systemd-networkd.service</code>.
 </p>
 <h3><span class="mw-headline" id="Use_Wayland_and_Xorg_applications">Use Wayland and Xorg applications</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -258,7 +258,7 @@ Use Wayland instead (but be aware that Xorgs downsides also apply to XWayland).<
 </p>
 <ul>
 <li>Adjust the Display (wayland-0) accordingly.</li>
-<li>Add the folders in /mnt and /tmp inside the container, if they don't already exist.</li>
+<li>Add the folders in /mnt and /tmp inside the container, if they do not already exist.</li>
 </ul>
 <pre>Waylandsocket:
     bind: container
@@ -303,8 +303,7 @@ ln -s /mnt/wayland1/wayland-0 /run/user/1000/wayland-0
 <pre>#!/bin/sh
 ln -s /mnt/xorg1/X0 /tmp/.X11-unix/X0
 </pre>
-<p><br>
-<b>3. Add Environment variables to the users config inside the container.</b>
+<p><b>3. Add Environment variables to the users config inside the container.</b>
 </p>
 <p><b>Note:</b> Adjust the Display Numbers and/or the filename (.profile) accordingly.
 </p>
@@ -322,14 +321,12 @@ $ echo "export QT_QPA_PLATFORM=wayland" &gt;&gt; ~/.profile
 </p>
 <pre>$ . .profile
 </pre>
-<p><br>
-<b>4. Install necessary software in the container.</b>
+<p><b>4. Install necessary software in the container.</b>
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong>  Necessary software needs to be added.
 For now you can install an example GUI application, this will probably install all necessary packages as well.</div>
-<p><br>
-<b>5. Start GUI applications.</b>
+<p><b>5. Start GUI applications.</b>
 </p>
 <p>Now you should be able to start GUI applications inside the container (via terminal for example) and make them appear as a window on your hosts display.
 </p>
@@ -395,9 +392,9 @@ $ ./install.sh
 <pre>$ lxc-checkconfig
 </pre>
 <h3><span class="mw-headline" id="Resource_limits_are_not_applied_when_viewed_from_inside_a_container">Resource limits are not applied when viewed from inside a container</span></h3>
-<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxcfs">lxcfs</a></span> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>lxcfs.service</code>.
+<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxcfs">lxcfs</a></span> and <a href="/title/Start" class="mw-redirect" title="Start">start</a> <code>lxcfs.service</code>.
 </p>
-<p>lxd will need to be restarted. <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">Enable</a> <code>lxcfs.service</code> for the service to be started at boot time.
+<p>lxd will need to be restarted. <a href="/title/Enable" class="mw-redirect" title="Enable">Enable</a> <code>lxcfs.service</code> for the service to be started at boot time.
 </p>
 <h3><span class="mw-headline" id="Starting_a_virtual_machine_fails">Starting a virtual machine fails</span></h3>
 <p>If you see the error:  <code>Error: Required EFI firmware settings file missing: /usr/share/ovmf/x64/OVMF_VARS.ms.fd</code>
@@ -421,7 +418,7 @@ BindReadOnlyPaths=/sys</pre>
 <p>You could also work around this issue by setting <code>raw.lxc: lxc.mount.auto = proc:rw sys:ro</code> in the profile of the container to ensure <code>/sys</code> is read-only for the entire container, although this may be problematic, as per the linked discussion above.
 </p>
 <h2><span class="mw-headline" id="Uninstall">Uninstall</span></h2>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Stop">Stop</a> and disable <code>lxd.service</code> and <code>lxd.socket</code>. Then <a href="../en/Pacman.html#Removing_packages" class="mw-redirect" title="Uninstall">uninstall</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxd">lxd</a></span> package.
+<p><a href="/title/Stop" class="mw-redirect" title="Stop">Stop</a> and disable <code>lxd.service</code> and <code>lxd.socket</code>. Then <a href="/title/Uninstall" class="mw-redirect" title="Uninstall">uninstall</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lxd">lxd</a></span> package.
 </p>
 <p>If you uninstalled the package without disabling the service, you might have a lingering broken symlink at <code>/etc/systemd/system/multi-user.wants/lxd.service</code>.
 </p>
@@ -445,22 +442,22 @@ BindReadOnlyPaths=/sys</pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Virtualization.html" title="Category:Virtualization">Virtualization</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Virtualization" title="Category:Virtualization">Virtualization</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=LXD&amp;oldid=653177">https://wiki.archlinux.org/index.php?title=LXD&amp;oldid=653177</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 22 February 2021, at 17:41.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=LXD&amp;oldid=670326">https://wiki.archlinux.org/index.php?title=LXD&amp;oldid=670326</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 10 May 2021, at 19:43.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

@@ -38,14 +38,14 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Fingerprint_GUI.html" title="Fingerprint GUI">Fingerprint GUI</a></li>
-<li><a href="../en/ThinkFinger.html" title="ThinkFinger">ThinkFinger</a></li>
+<li><a href="/title/Fingerprint_GUI" title="Fingerprint GUI">Fingerprint GUI</a></li>
+<li><a href="/title/ThinkFinger" title="ThinkFinger">ThinkFinger</a></li>
 </ul>
 </div>
 <p>From <a rel="nofollow" class="external text" href="https://www.freedesktop.org/wiki/Software/fprint/">the fprint homepage</a>:
 </p>
 <dl><dd>The fprint project aims to plug a gap in the Linux desktop: support for consumer fingerprint reader devices.</dd></dl>
-<p>The idea is to use the built-in fingerprint reader in some notebooks for login using <a href="../en/PAM.html" title="PAM">PAM</a>. This article will also explain how to use regular password for backup login method (solely fingerprint scanner is not recommended due to numerous reasons).
+<p>The idea is to use the built-in fingerprint reader in some notebooks for login using <a href="/title/PAM" title="PAM">PAM</a>. This article will also explain how to use regular password for backup login method (solely fingerprint scanner is not recommended due to numerous reasons).
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -78,9 +78,9 @@
 <pre>$ lsusb
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> The above list of supported devices is not updated regularly and is not complete. Its worth testing your device using the instructions on this page even if it does not appear on that list, prior to resorting to <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a> packages.</div>
+<strong>Note:</strong> The above list of supported devices is not updated regularly and is not complete. Its worth testing your device using the instructions on this page even if it does not appear on that list, prior to resorting to <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a> packages.</div>
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fprintd">fprintd</a></span> package. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=imagemagick">imagemagick</a></span> might also be needed.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=fprintd">fprintd</a></span> package. <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=imagemagick">imagemagick</a></span> might also be needed.
 </p>
 <p>Some devices require a different fork of libfprint specifically made for touch-based sensors and not (yet?) merged with the main libfprint: <a rel="nofollow" class="external text" href="https://gitlab.freedesktop.org/3v1n0/libfprint/-/tree/tod">libfprint-tod</a>. This is available as <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/libfprint-tod-git/">libfprint-tod-git</a></span><sup><small>AUR</small></sup>
 </p>
@@ -89,8 +89,8 @@
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> 
 <ul>
-<li>If you use <a href="../en/GDM.html" title="GDM">GDM</a>, the fingerprint-option is already available in the login menu (if not add yourself to the <code>input</code> group). You can skip this section!</li>
-<li>If you use <a href="../en/SDDM.html" title="SDDM">SDDM</a>, see <a href="../en/SDDM.html#Using_a_fingerprint_reader" title="SDDM">SDDM#Using a fingerprint reader</a>.</li>
+<li>If you use <a href="/title/GDM" title="GDM">GDM</a>, the fingerprint-option is already available in the login menu (if not add yourself to the <code>input</code> group). You can skip this section!</li>
+<li>If you use <a href="/title/SDDM" title="SDDM">SDDM</a>, see <a href="/title/SDDM#Using_a_fingerprint_reader" title="SDDM">SDDM#Using a fingerprint reader</a>.</li>
 </ul>
 </div>
 <p>Add <code>pam_fprintd.so</code> as <i>sufficient</i> to the top of the auth section of <code>/etc/pam.d/system-local-login</code>:
@@ -115,7 +115,7 @@ auth		sufficient  	pam_fprintd.so
 <p>This will prompt for a password, if the field is left blank and enter is pressed it will proceed to fingerprint authentication
 </p>
 <h3><span class="mw-headline" id="Create_fingerprint_signature">Create fingerprint signature</span></h3>
-<p>You will need to have an <a href="../en/Polkit.html#Authentication_agents" title="Polkit">authentication agent</a> running before being able to enroll.
+<p>You will need to have an <a href="/title/Polkit#Authentication_agents" title="Polkit">authentication agent</a> running before being able to enroll.
 </p>
 <p>To add a signature for a finger, run:
 </p>
@@ -153,34 +153,34 @@ $ for finger in {left,right}-{thumb,{index,middle,ring,little}-finger}; do fprin
 <h3><span class="mw-headline" id="No_devices_available">No devices available</span></h3>
 <p>If your <a rel="nofollow" class="external text" href="https://fprint.freedesktop.org/supported-devices.html">supported device</a> cannot be found or is claimed to be already open (in use), check <code>fprintd</code> logs with:
 </p>
-<pre>$ journalctl -u fprintd
+<pre># journalctl -u fprintd.service
 </pre>
 <p>You may find log entries like:
 </p>
 <pre>fprintd[2936592]: Corrupted message received
 fprintd[2936592]: Ignoring device due to initialization error: unsupported firmware version
 </pre>
-<p>Ensure your device's firmware is up to date with <a href="../en/Fwupd.html" title="Fwupd">Fwupd</a>.
+<p>Ensure your device's firmware is up to date with <a href="/title/Fwupd" title="Fwupd">Fwupd</a>.
 </p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Input_devices.html" title="Category:Input devices">Input devices</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Input_devices" title="Category:Input devices">Input devices</a></li></ul>
 </div></div>
 	</div>
 </div>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fprint&amp;oldid=661065">https://wiki.archlinux.org/index.php?title=Fprint&amp;oldid=661065</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 17 April 2021, at 09:23.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Fprint&amp;oldid=665720">https://wiki.archlinux.org/index.php?title=Fprint&amp;oldid=665720</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 06:40.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

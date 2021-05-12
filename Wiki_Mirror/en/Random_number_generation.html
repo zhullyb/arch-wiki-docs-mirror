@@ -36,7 +36,7 @@
 <p>From <a href="https://en.wikipedia.org/wiki/Random_number_generation" class="extiw" title="wikipedia:Random number generation">wikipedia:Random number generation</a>:
 </p>
 <dl><dd>A random number generator (RNG) is a computational or physical device designed to generate a sequence of numbers or symbols that lack any pattern, i.e. appear random.</dd></dl>
-<p>Generation of random data is crucial for several applications like making cryptographic keys (e.g. for <a href="../en/Data-at-rest_encryption.html" title="Data-at-rest encryption">data-at-rest encryption</a>), <a href="../en/Securely_wipe_disk.html" title="Securely wipe disk">securely wiping disks</a>, running encrypted <a href="../en/Software_access_point.html" title="Software access point">Software access points</a>.
+<p>Generation of random data is crucial for several applications like making cryptographic keys (e.g. for <a href="/title/Data-at-rest_encryption" title="Data-at-rest encryption">data-at-rest encryption</a>), <a href="/title/Securely_wipe_disk" title="Securely wipe disk">securely wiping disks</a>, running encrypted <a href="/title/Software_access_point" title="Software access point">Software access points</a>.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -66,9 +66,9 @@
 <span id=".2Fdev.2Frandom"></span><span class="mw-headline" id="/dev/random">/dev/random</span>
 </h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="../File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a><b>This article or section is out of date.</b><a href="/title/File:Tango-view-refresh-red.png" class="image"><img alt="Tango-view-refresh-red.png" src="../File:Tango-view-refresh-red.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> <code>/dev/random</code> works similarly to <code>/dev/urandom</code> since v5.6<a rel="nofollow" class="external autonumber" href="https://github.com/torvalds/linux/commit/30c08efec8884fb106b8e57094baa51bb4c44e32">[1]</a><a rel="nofollow" class="external autonumber" href="https://lwn.net/Articles/808575/">[2]</a> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Random_number_generation">Talk:Random number generation#</a>)</div>
+<b>Reason:</b> <code>/dev/random</code> works similarly to <code>/dev/urandom</code> since v5.6<a rel="nofollow" class="external autonumber" href="https://github.com/torvalds/linux/commit/30c08efec8884fb106b8e57094baa51bb4c44e32">[1]</a><a rel="nofollow" class="external autonumber" href="https://lwn.net/Articles/808575/">[2]</a> (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Random_number_generation">Talk:Random number generation#</a>)</div>
 </div>
 <p><code>/dev/random</code> uses an entropy pool of 4096 bits (512 Bytes) to generate random data and stops when the pool is exhausted until it gets (slowly) refilled. <code>/dev/random</code> is designed for generating cryptographic keys (e.g. SSL, SSH, dm-crypt's LUKS), but it is impractical to use for wiping current HDD capacities: what makes disk wiping take so long is waiting for the system to <a href="https://en.wikipedia.org/wiki/Hardware_random_number_generator#Using_observed_events" class="extiw" title="wikipedia:Hardware random number generator">gather enough true entropy</a>. In an entropy-starved situation (e.g. a remote server) this might never end. While doing search operations on large directories or moving the mouse in X can slowly refill the entropy pool, it's designated pool size alone will be indication enough of the inadequacy for wiping a disk. 
 </p>
@@ -85,13 +85,13 @@
 <p>The kernel's pool size is given by <code>INPUT_POOL_WORDS * OUTPUT_POOL_WORDS</code> which makes, as already stated, 4096 bits.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Do not use even <code>/dev/random</code> to generate <i>critical</i> cryptographic keys on a system you do not <a rel="nofollow" class="external text" href="http://everything2.com/title/Compromising+%252Fdev%252Frandom">control</a>. If in doubt, for example in shared server environments, rather choose to create the keys on another system and transfer them. The cryptographer D. J. Bernstein illustrates the control problem with a <a rel="nofollow" class="external text" href="https://blog.cr.yp.to/20140205-entropy.html">Mark Twain quotation</a>.</div>
+<strong>Warning:</strong> Do not use even <code>/dev/random</code> to generate <i>critical</i> cryptographic keys on a system you do not <a rel="nofollow" class="external text" href="https://everything2.com/title/Compromising+%252Fdev%252Frandom">control</a>. If in doubt, for example in shared server environments, rather choose to create the keys on another system and transfer them. The cryptographer D. J. Bernstein illustrates the control problem with a <a rel="nofollow" class="external text" href="https://blog.cr.yp.to/20140205-entropy.html">Mark Twain quotation</a>.</div>
 <h3>
 <span id=".2Fdev.2Furandom"></span><span class="mw-headline" id="/dev/urandom">/dev/urandom</span>
 </h3>
 <p>In contrast to <code>/dev/random</code>, <code>/dev/urandom</code> takes (since kernel 4.8) an initial random seed to feed a cryptographic stream cipher.<a rel="nofollow" class="external autonumber" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e192be9d9a30555aae2ca1dc3aad37cba484cd4a">[3]</a>
 </p>
-<p>The stream cipher is used because it can provide a high volume of high quality pseudo-random data suitable for many purposes like, for example, <a href="../en/Securely_wipe_disk.html#Preparations_for_block_device_encryption" title="Securely wipe disk">preparing for block device encryption</a>, wiping LUKS keyslots, etc.
+<p>The stream cipher is used because it can provide a high volume of high quality pseudo-random data suitable for many purposes like, for example, <a href="/title/Securely_wipe_disk#Preparations_for_block_device_encryption" title="Securely wipe disk">preparing for block device encryption</a>, wiping LUKS keyslots, etc.
 </p>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> <code>/dev/urandom</code> is <b>not</b> recommended for the generation of long-term cryptographic keys.</div>
@@ -101,9 +101,9 @@
 </p>
 <ul>
 <li>
-<a rel="nofollow" class="external text" href="http://www.2uo.de/myths-about-urandom/">Myths about urandom</a> - highly informative but (unfortunately) also containing fallacies, and</li>
+<a rel="nofollow" class="external text" href="https://www.2uo.de/myths-about-urandom/">Myths about urandom</a> - highly informative but (unfortunately) also containing fallacies, and</li>
 <li>
-<a rel="nofollow" class="external text" href="http://sockpuppet.org/blog/2014/02/25/safely-generate-random-numbers/">Safely generate random numbers</a> - a post which illustrates what may happen when trying to single-handedly change the kernel infrastructure for gathering entropy.</li>
+<a rel="nofollow" class="external text" href="https://sockpuppet.org/blog/2014/02/25/safely-generate-random-numbers/">Safely generate random numbers</a> - a post which illustrates what may happen when trying to single-handedly change the kernel infrastructure for gathering entropy.</li>
 </ul>
 <p>For an Arch system, the above implies the following for <code>/dev/urandom</code>:
 </p>
@@ -123,27 +123,27 @@
 </pre>
 <p>In above example, the system has long reached its default boot target before the kernel gathered enough entropy to initialize the pool. Due to systemd <a rel="nofollow" class="external text" href="https://github.com/systemd/systemd/issues/4167">requiring</a> entropy at an early stage, it may happen though that the pool is depleted in the boot process without further kernel warnings.
 </p>
-<p>Hence, a problem at this boot stage is that another service, e.g. an <a href="../en/OpenSSL.html" title="OpenSSL">OpenSSL</a> session for a web server or any other cryptographic service, may start without receiving a sufficient quality entropy seed from the depleted <code>/dev/urandom</code> pool. Moving on, in a typical configuration OpenSSL may use that seed during the whole session's runtime, and only request a fresh seed for a new session.
+<p>Hence, a problem at this boot stage is that another service, e.g. an <a href="/title/OpenSSL" title="OpenSSL">OpenSSL</a> session for a web server or any other cryptographic service, may start without receiving a sufficient quality entropy seed from the depleted <code>/dev/urandom</code> pool. Moving on, in a typical configuration OpenSSL may use that seed during the whole session's runtime, and only request a fresh seed for a new session.
 </p>
 <h2><span class="mw-headline" id="Alternatives">Alternatives</span></h2>
 <p>For applications other than the generation of long-term cryptographic keys, a practical compromise between performance and security is the use of a <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator" class="extiw" title="wikipedia:Pseudorandom number generator">pseudorandom number generator</a>. In Arch Linux repositories for example: 
 </p>
 <ul>
-<li><a href="../en/Haveged.html" title="Haveged">Haveged</a></li>
-<li><a href="../en/Frandom.html" title="Frandom">Frandom</a></li>
-<li><a href="../en/Rng-tools.html" title="Rng-tools">rng-tools</a></li>
+<li><a href="/title/Haveged" title="Haveged">Haveged</a></li>
+<li><a href="/title/Frandom" title="Frandom">Frandom</a></li>
+<li><a href="/title/Rng-tools" title="Rng-tools">rng-tools</a></li>
 </ul>
 <p>There are also <a href="https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator" class="extiw" title="wikipedia:Cryptographically secure pseudorandom number generator">cryptographically secure pseudorandom number generators</a> like <a href="https://en.wikipedia.org/wiki/Yarrow_algorithm" class="extiw" title="wikipedia:Yarrow algorithm">Yarrow</a> (macOS) or <a href="https://en.wikipedia.org/wiki/Fortuna_(PRNG)" class="extiw" title="wikipedia:Fortuna (PRNG)">Fortuna</a> (FreeBSD, the successor of Yarrow).
 </p>
 <h2><span class="mw-headline" id="OpenSSL_issues">OpenSSL issues</span></h2>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> No explanation of the actual issues. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Random_number_generation">Talk:Random number generation#</a>)</div>
+<b>Reason:</b> No explanation of the actual issues. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Random_number_generation">Talk:Random number generation#</a>)</div>
 </div>
-<p><a href="../en/OpenSSL.html" title="OpenSSL">OpenSSL</a> supports <a href="https://en.wikipedia.org/wiki/RDRAND" class="extiw" title="wikipedia:RDRAND">RDRAND</a> as <code>rdrand</code> engine (use <code>openssl engine</code> to view available OpenSSL engines), but OpenSSL and related applications (such as <a href="../en/Nginx.html" title="Nginx">Nginx</a>, <a href="../en/Stunnel.html" title="Stunnel">Stunnel</a> and <a href="../en/CURL.html" title="CURL">CURL</a>) may not use RDRAND by default. OpenSSL does not use the <code>/dev/urandom</code> directly.
+<p><a href="/title/OpenSSL" title="OpenSSL">OpenSSL</a> supports <a href="https://en.wikipedia.org/wiki/RDRAND" class="extiw" title="wikipedia:RDRAND">RDRAND</a> as <code>rdrand</code> engine (use <code>openssl engine</code> to view available OpenSSL engines), but OpenSSL and related applications (such as <a href="/title/Nginx" title="Nginx">Nginx</a>, <a href="/title/Stunnel" title="Stunnel">Stunnel</a> and <a href="/title/CURL" title="CURL">CURL</a>) may not use RDRAND by default. OpenSSL does not use the <code>/dev/urandom</code> directly.
 </p>
-<p>For example, you can pass <code>-engine rdrand</code> option to the <code>openssl</code> command line tools, or you can add <code>ssl_engine rdrand;</code> line to the <code>/etc/nginx/nginx.conf</code> for <a href="../en/Nginx.html" title="Nginx">nginx</a>.
+<p>For example, you can pass <code>-engine rdrand</code> option to the <code>openssl</code> command line tools, or you can add <code>ssl_engine rdrand;</code> line to the <code>/etc/nginx/nginx.conf</code> for <a href="/title/Nginx" title="Nginx">nginx</a>.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
@@ -160,7 +160,7 @@
 <li>
 <a rel="nofollow" class="external text" href="https://www.fourmilab.ch/random/">ENT</a> - A simple program for testing random sequences (entropy, Chi square test, Monte Carlo, correlation, etc.)</li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.codeproject.com/Articles/795845/Arduino-Hardware-Random-Sequence-Generator-with-Ja">DIY HRNG</a> - One example of a low-cost, DIY Arduino HRNG</li>
+<a rel="nofollow" class="external text" href="https://www.codeproject.com/Articles/795845/Arduino-Hardware-Random-Sequence-Generator-with-Ja">DIY HRNG</a> - One example of a low-cost, DIY Arduino HRNG</li>
 <li>
 <a rel="nofollow" class="external text" href="https://eprint.iacr.org/2016/367">An Analysis of OpenSSL's Random Number Generator</a> - Paper on RNG reseeding risks in OpenSSL functionality</li>
 <li>
@@ -170,11 +170,11 @@
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Cryptography.html" title="Category:Cryptography">Cryptography</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Cryptography" title="Category:Cryptography">Cryptography</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Out_of_date.html" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Out_of_date" title="Category:Pages or sections flagged with Template:Out of date">Pages or sections flagged with Template:Out of date</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Expansion" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 </ul>
 </div>
 </div>
@@ -183,15 +183,15 @@
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Random_number_generation&amp;oldid=663291">https://wiki.archlinux.org/index.php?title=Random_number_generation&amp;oldid=663291</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 21 April 2021, at 09:36.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Random_number_generation&amp;oldid=669299">https://wiki.archlinux.org/index.php?title=Random_number_generation&amp;oldid=669299</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 11:32.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

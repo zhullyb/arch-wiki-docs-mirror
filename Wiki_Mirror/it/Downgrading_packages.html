@@ -36,9 +36,9 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Articoli correlati</p>
 <ul>
-<li><a href="../it/Arch_Build_System.html" title="Arch Build System (Italiano)">Arch Build System (Italiano)</a></li>
-<li><a href="../it/Pacman.html" title="Pacman (Italiano)">pacman (Italiano)</a></li>
-<li><a href="../it/LVM.html" title="LVM (Italiano)">LVM (Italiano)</a></li>
+<li><a href="/title/Arch_Build_System_(Italiano)" title="Arch Build System (Italiano)">Arch Build System (Italiano)</a></li>
+<li><a href="/title/Pacman_(Italiano)" title="Pacman (Italiano)">pacman (Italiano)</a></li>
+<li><a href="/title/LVM_(Italiano)" title="LVM (Italiano)">LVM (Italiano)</a></li>
 </ul>
 </div>
 <p>Questa guida vi mostrerà come effettuare il downgrade di un pacchetto ad una versione precedente. Il declassamento di un pacchetto non viene normalmente raccomandato ed è spesso necessario solo quando viene introdotto un bug nel pacchetto corrente.
@@ -105,9 +105,9 @@
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Nota:</strong>  Se si modifica una parte fondamentale del sistema operativo, ci si può ritrovare a dover estrarre decine di pacchetti e sostituirli con le loro versioni precedenti.  Oppure potrebbero non essere più disponibili e si dovrà rimetterli manualmente, facendo attenzione che un particolare aggiornamento, non reinstalli la versione del pacchetto indesiderata.</div>
-<p>C'è anche un pacchetto in <a href="../it/Arch_User_Repository.html" class="mw-redirect" title="AUR (Italiano)">AUR</a>, chiamato <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/downgrade/">downgrade</a></span><sup><small>AUR</small></sup>. Si tratta di un semplice script Bash che verificherà la presenza, nella propria cache, di versioni precedenti dei pacchetti. Qualora non fossero trovati pacchetti nella cache, lo script cercherà anche in <a href="#ARM">A.R.M.</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> Si potrà quindi selezionare il pacchetto da installare. Sostanzialmete si tratta di un'automatizzazione dei processi descritti qui. Vedere <code>downgrade --help</code> per informazioni sull'utilizzo.
+<p>C'è anche un pacchetto in <a href="/title/AUR_(Italiano)" class="mw-redirect" title="AUR (Italiano)">AUR</a>, chiamato <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/downgrade/">downgrade</a></span><sup><small>AUR</small></sup>. Si tratta di un semplice script Bash che verificherà la presenza, nella propria cache, di versioni precedenti dei pacchetti. Qualora non fossero trovati pacchetti nella cache, lo script cercherà anche in <a href="#ARM">A.R.M.</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup> Si potrà quindi selezionare il pacchetto da installare. Sostanzialmete si tratta di un'automatizzazione dei processi descritti qui. Vedere <code>downgrade --help</code> per informazioni sull'utilizzo.
 </p>
-<p>Un altro strumento utile è <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/downgrader/">downgrader</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>, esso funziona con i log di pacman, può effettuare il downgrade dei pacchetti da ARM, dalla cache locale, e funziona con la lista dei pacchetti (se il sistema risulta instabile dopo l'aggiornamento di alcuni pacchetti e si è insicuri circa il loro nome).
+<p>Un altro strumento utile è <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/downgrader-git/">downgrader-git</a></span><sup><small>AUR</small></sup>, esso funziona con i log di pacman, può effettuare il downgrade dei pacchetti da ARM, dalla cache locale, e funziona con la lista dei pacchetti (se il sistema risulta instabile dopo l'aggiornamento di alcuni pacchetti e si è insicuri circa il loro nome).
 </p>
 <h3><span class="mw-headline" id="Effettuare_il_downgrade_del_kernel">Effettuare il downgrade del kernel</span></h3>
 <p>Se dopo l'aggiornamento del kernel non si riesce ad avviare il sistema, si può effettuare il downgrade del kernel tramite il live cd. Utilizzare un supporto di installazione Arch Linux abbastanza recente. Una volta avviato, montare la partizione del proprio sistema, ad esempio /mnt e se si ha /boot oppure /var in partizioni separate, montarle entrambe (<code>mount /dev/sdc3 /mnt/boot</code>). Quindi montare proc, ecc..
@@ -133,7 +133,7 @@
 <h3><span class="mw-headline" id="Ricompilare_il_pacchetto">Ricompilare il pacchetto</span></h3>
 <p>Nella peggiore delle ipotesi, se il pacchetto non è reperibile altrove, sarà necessario compilare la versione precedente da soli. Per fare questo è necessario un PKGBUILD per il file; si può modificare il PKGBUILD esistente fornito da ABS per utilizzare i vecchi sorgenti, o si può visitare <a rel="nofollow" class="external free" href="https://archlinux.org/packages/">https://archlinux.org/packages/</a> e cercare il pacchetto di cui si desidera effettuare il downgrade. Una volta trovato, cliccare "View Changes" e selezionare "log". Individuare la versione desiderata e fare clic sul percorso. Poi basta scaricare i file che si trovano in tale directory e compilarli con makepkg.
 </p>
-<p>Per i pacchetti AUR, attualmente l'unico metodo per ottenere i vecchi PKGBUILDs è prenderli da <a rel="nofollow" class="external free" href="http://pkgbuild.com/git/aur-mirror.git/">http://pkgbuild.com/git/aur-mirror.git/</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">link interrotto</a> 2020-08-02]</sup> oppure controllare l'<a href="../en/Unofficial_user_repositories.html" title="Unofficial user repositories">Unofficial user repositories</a> per i binari precompilati (a volte non sono aggiornati).
+<p>Per i pacchetti AUR, attualmente l'unico metodo per ottenere i vecchi PKGBUILDs è prenderli da <a rel="nofollow" class="external free" href="http://pkgbuild.com/git/aur-mirror.git/">http://pkgbuild.com/git/aur-mirror.git/</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">link interrotto</a> 2020-08-02]</sup> oppure controllare l'<a href="/title/Unofficial_user_repositories" title="Unofficial user repositories">Unofficial user repositories</a> per i binari precompilati (a volte non sono aggiornati).
 </p>
 <h2><span class="mw-headline" id="Cambiare_Repository">Cambiare Repository</span></h2>
 <p>Per cambiare repository in ARM, occorre commentare la riga obsoleta ed aggiungere il percorso dell'idonea directory nel seguente formato:
@@ -149,7 +149,7 @@ pacman -Suu  # declassa tutti i pacchetti ad una versione inferiore nei repo
 </pre>
 <p>Questo da solo non garantisce un rollback completo, dato che a volte ci possono essere conflitti tra i vari pacchetti per quanto riguarda i numeri di versione, ecc. Se si conosce il repository può essere più facile visitare il mirror globale, per esempio <a rel="nofollow" class="external free" href="http://arm.konnichi.com/core/os/i686">http://arm.konnichi.com/core/os/i686</a><sup>[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">link interrotto</a> 2020-08-02]</sup>. Notare l'omissione della data.
 </p>
-<p>Per maggiori informazioni si prega di vedere <a href="../it/Pacman.html" title="Pacman (Italiano)">pacman</a>.
+<p>Per maggiori informazioni si prega di vedere <a href="/title/Pacman_(Italiano)" title="Pacman (Italiano)">pacman</a>.
 </p>
 <h2><span class="mw-headline" id="FAQ">FAQ</span></h2>
 <h3>
@@ -163,18 +163,15 @@ pacman -Suu  # declassa tutti i pacchetti ad una versione inferiore nei repo
 <p><code>IgnorePkg = package1 package2</code> nel proprio <code>pacman.conf</code> indicherà a Pacman, quando si esegue --sysupgrade, di ignorare ogni aggiornamento per i pacchetti selezionati.
 </p>
 <h3><span class="mw-headline" id="Vorrei_tornare_a_come_era_il_mio_sistema_ieri.">Vorrei tornare a come era il mio sistema ieri.</span></h3>
-<p>È facilmente ottenibile se si sono eseguiti gli snapshot periodici forniti da <a href="../it/LVM.html" title="LVM (Italiano)">LVM</a>.
+<p>È facilmente ottenibile se si sono eseguiti gli snapshot periodici forniti da <a href="/title/LVM_(Italiano)" title="LVM (Italiano)">LVM</a>.
 </p>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../it/Category:Package_management.html" title="Category:Package management (Italiano)">Package management (Italiano)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Package_management_(Italiano)" title="Category:Package management (Italiano)">Package management (Italiano)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-</ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -182,15 +179,15 @@ pacman -Suu  # declassa tutti i pacchetti ad una versione inferiore nei repo
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Downgrading_packages_(Italiano)&amp;oldid=659890">https://wiki.archlinux.org/index.php?title=Downgrading_packages_(Italiano)&amp;oldid=659890</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 15 April 2021, at 12:34.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Downgrading_packages_(Italiano)&amp;oldid=664896">https://wiki.archlinux.org/index.php?title=Downgrading_packages_(Italiano)&amp;oldid=664896</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 28 April 2021, at 12:27.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

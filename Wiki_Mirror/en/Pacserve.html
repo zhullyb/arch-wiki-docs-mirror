@@ -33,7 +33,7 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p><a rel="nofollow" class="external text" href="http://xyne.archlinux.ca/projects/pacserve/">Pacserve</a> allows to easily share pacman packages between computers. This is very useful if you have a slow internet connection and multiple machines running Arch Linux.
+<p><a rel="nofollow" class="external text" href="https://xyne.archlinux.ca/projects/pacserve/">Pacserve</a> allows to easily share pacman packages between computers. This is very useful if you have a slow internet connection and multiple machines running Arch Linux.
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -62,19 +62,19 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/pacserve/">pacserve</a></span><sup><small>AUR</small></sup>.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/pacserve/">pacserve</a></span><sup><small>AUR</small></sup>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> The package is also available in the <a href="../en/Unofficial_user_repositories.html#xyne-x86_64" title="Unofficial user repositories">xyne-x86_64</a> unofficial repository.</div>
-<p>Finally <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> <code>pacserve.service</code>.
+<strong>Tip:</strong> The package is also available in the <a href="/title/Unofficial_user_repositories#xyne-x86_64" title="Unofficial user repositories">xyne-x86_64</a> unofficial repository.</div>
+<p>Finally <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> <code>pacserve.service</code>.
 </p>
-<p>In case you use <a href="../en/Iptables.html" title="Iptables">iptables</a>, you will probably want to start <code>pacserve-ports.service</code> too. For other <a href="../en/Category:Firewalls.html" class="mw-redirect" title="Firewalls">firewalls</a> open TCP port <code>15678</code> and UDP port <code>15679</code>. The UDP port can be limited to multicast traffic only.
+<p>In case you use <a href="/title/Iptables" title="Iptables">iptables</a>, you will probably want to start <code>pacserve-ports.service</code> too. For other <a href="/title/Firewalls" class="mw-redirect" title="Firewalls">firewalls</a> open TCP port <code>15678</code> and UDP port <code>15679</code>. The UDP port can be limited to multicast traffic only.
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <p>The <code>pacserve.service</code> can configured by editing <code>PACSERVE_ARGS</code> in <code>/etc/pacserve/pacserve.service.conf</code>. Run <code>pacserve --help</code> to see the available options.
 </p>
 <h3><span class="mw-headline" id="Avahi">Avahi</span></h3>
-<p>To announce and discover Pacserve using <a href="../en/Avahi.html" class="mw-redirect" title="MDNS">mDNS</a> add the option <code>--avahi</code> to <code>PACSERVE_ARGS</code> in <code>/etc/pacserve/pacserve.service.conf</code>.
+<p>To announce and discover Pacserve using <a href="/title/MDNS" class="mw-redirect" title="MDNS">mDNS</a> add the option <code>--avahi</code> to <code>PACSERVE_ARGS</code> in <code>/etc/pacserve/pacserve.service.conf</code>.
 </p>
 <h2><span class="mw-headline" id="Standalone_usage">Standalone usage</span></h2>
 <p>Instead of pacman, use the <i>pacsrv</i> wrapper to perform an update, install packages and so on. It will automatically download all packages from the LAN, if someone hosts them with pacserve there. Otherwise it will just download them from the internet mirrors, as usually. For example:
@@ -94,20 +94,20 @@
 [xyne-x86_64]
 SigLevel = Required
 <b>Include  = /etc/pacman.d/pacserve</b>
-Server   = http://xyne.archlinux.ca/repos/xyne
+Server   = https://xyne.archlinux.ca/repos/xyne
 ...</pre>
 <p>Alternatively (for official mirrors only), you may insert the <code>Include</code> line at the top of the Pacman mirrorlist file or let <i>pacman.conf-insert_pacserve</i> generate a <code>pacman.conf</code> file for you.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="Problems_if_using_external_downloaders_in_pacman.conf">Problems if using external downloaders in pacman.conf</span></h3>
-<p>If you are using an external downloader such as <a href="../en/Wget.html" title="Wget">wget</a>, <i>pacsrv</i> may return errors when downloading. To work around these errors, simply quote the url and output formatting strings (<code>%u</code> resp. <code>%o</code>) using single quotes:
+<p>If you are using an external downloader such as <a href="/title/Wget" title="Wget">wget</a>, <i>pacsrv</i> may return errors when downloading. To work around these errors, simply quote the url and output formatting strings (<code>%u</code> resp. <code>%o</code>) using single quotes:
 </p>
 <pre>XferCommand = /usr/bin/wget --timeout=6 --passive-ftp -c -O '%o' '%u'
 </pre>
 <h3><span class="mw-headline" id="Machines_do_not_see_each_other">Machines do not see each other</span></h3>
 <p>Peers detection relies on version of <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/python3-threaded_servers/">python3-threaded_servers</a></span><sup><small>AUR</small></sup>.
 TCP multicast frames coming from a different version of the service are discarded.
-In this case, <code>journalctl -u pacserve</code> warns about such unrecognized frames.
+In this case, running <code>journalctl -u pacserve</code> as root will warn about such unrecognized frames.
 Upgrade this package first then restart the <code>pacserve.service</code>.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
@@ -115,9 +115,9 @@ Upgrade this package first then restart the <code>pacserve.service</code>.
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Internet_applications.html" title="Category:Internet applications">Internet applications</a></li>
-<li><a href="../en/Category:Package_management.html" title="Category:Package management">Package management</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Internet_applications" title="Category:Internet applications">Internet applications</a></li>
+<li><a href="/title/Category:Package_management" title="Category:Package management">Package management</a></li>
 </ul>
 </div></div>
 	</div>
@@ -125,15 +125,15 @@ Upgrade this package first then restart the <code>pacserve.service</code>.
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pacserve&amp;oldid=662015">https://wiki.archlinux.org/index.php?title=Pacserve&amp;oldid=662015</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 19:01.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Pacserve&amp;oldid=666824">https://wiki.archlinux.org/index.php?title=Pacserve&amp;oldid=666824</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 14:54.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

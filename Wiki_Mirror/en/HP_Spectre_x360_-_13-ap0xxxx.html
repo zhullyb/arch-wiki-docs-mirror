@@ -34,9 +34,9 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="/title/Help:Laptop_page_guidelines" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Stub (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:HP_Spectre_x360_-_13-ap0xxxx">Talk:HP Spectre x360 - 13-ap0xxxx#</a>)</div>
+<b>Reason:</b> Stub (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:HP_Spectre_x360_-_13-ap0xxxx">Talk:HP Spectre x360 - 13-ap0xxxx#</a>)</div>
 </div>
 <table class="wikitable" style="float: right;">
 <tbody>
@@ -243,26 +243,28 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 </p>
 <p>Upon boot, you need to edit the kernel cmdline ( press e in UEFI mode when presented with the list of boot options on the arch USB key ) and remove the first initrd lines mentionning intel and amd.
 </p>
-<p>Then follow the <a href="../en/Installation_guide.html" title="Installation guide">installation guide</a> as usual.
+<p>Then follow the <a href="/title/Installation_guide" title="Installation guide">installation guide</a> as usual.
 </p>
 <h2>
 <span id="Issues_.2F_Notes"></span><span class="mw-headline" id="Issues_/_Notes">Issues / Notes</span>
 </h2>
 <h3><span class="mw-headline" id="Audio">Audio</span></h3>
+<p>This laptop requires firmware in order for the soundcard to work. See <a href="/title/Advanced_Linux_Sound_Architecture#ALSA_firmware" title="Advanced Linux Sound Architecture">Advanced Linux Sound Architecture#ALSA firmware</a>.
+</p>
 <p>The laptop has a Realtek ALC285 Codec with a 4 speaker system built in. External mic with headphones works and legacy driver plays only on two speakers.
 </p>
-<p>As of kernel 5.4 the digital mic is detected using linux-sof driver.  Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sof-firmware">sof-firmware</a></span> and add this to your <code>/etc/modprobe.d/blacklist.conf</code> file:
+<p>Add this to your <code>/etc/modprobe.d/blacklist.conf</code> file:
 </p>
 <pre>blacklist snd_hda_intel
 blacklist snd_soc_skl
 </pre>
 <p>You may also need to to this to unmute:
 </p>
-<pre>alsamixer
+<pre>$ alsamixer
 </pre>
 <p>Then hit F6, select sof-hda-dsp and hit enter, then user the arrow keys to up the volume on master and hit 'm' to unmute it (if it says "MM" at the bottom).  Then hit esc to exit and type this to save the settings:
 </p>
-<pre>sudo alsactl store
+<pre># alsactl store
 </pre>
 <p>There is still work needed to support the 4 speakers.
 </p>
@@ -323,7 +325,7 @@ EndSection</pre>
 <p>The touchscreen should be at /dev/input/event11, but to make sure you can use a utility like <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=evtest">evtest</a></span> and verify the location of your touchscreen by testing the input events.
 </p>
 <h3><span class="mw-headline" id="IR_Camera_Login">IR Camera Login</span></h3>
-<p>Works with <a href="../en/Howdy.html" title="Howdy">Howdy</a> configured to use /dev/video2 and the patch referenced in <a rel="nofollow" class="external free" href="https://github.com/boltgolt/howdy/issues/70#issuecomment-439123621">https://github.com/boltgolt/howdy/issues/70#issuecomment-439123621</a>
+<p>Works with <a href="/title/Howdy" title="Howdy">Howdy</a> configured to use /dev/video2 and the patch referenced in <a rel="nofollow" class="external free" href="https://github.com/boltgolt/howdy/issues/70#issuecomment-439123621">https://github.com/boltgolt/howdy/issues/70#issuecomment-439123621</a>
 </p>
 <h3><span class="mw-headline" id="Battery_optimizations">Battery optimizations</span></h3>
 <p>tlp installed, no customisations: around 8-12h of browsing / sysadmin work, depending on the tasks. (Please, see next section, since tlp messes up with suspend).
@@ -331,7 +333,7 @@ EndSection</pre>
 <p>Powertop display a constant mW consumption of 570 mW ( probably wrong ). There is a setting in the BIOS to allow reporting via ACPI of the battery remaining time. It is disabled by default =&gt; to investigate.
 </p>
 <h3><span class="mw-headline" id="Suspend_issues">Suspend issues</span></h3>
-<p>This model only supports the S0ix, and so only S0 (s2idle) sleep mode is activated. Since this device use a Hynix SSD, it is affected by a bug <a rel="nofollow" class="external autonumber" href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1801875">[2]</a>, resulting in 4-5% battery drain per hour during suspend. A patch set is available, but will not be merged <a rel="nofollow" class="external autonumber" href="https://lore.kernel.org/patchwork/patch/1007283/">[3]</a>. In any case, you can install the patched kernel from AUR <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-hynix/">linux-hynix</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> or compile the one at <a href="#Advanced_/_Kernel_update">#Advanced / Kernel update</a><sup>[<a href="../en/Help:Procedures.html#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>. The battery drain during suspend should drop to 1-2% per hour.
+<p>This model only supports the S0ix, and so only S0 (s2idle) sleep mode is activated. Since this device use a Hynix SSD, it is affected by a bug <a rel="nofollow" class="external autonumber" href="https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1801875">[2]</a>, resulting in 4-5% battery drain per hour during suspend. A patch set is available, but will not be merged <a rel="nofollow" class="external autonumber" href="https://lore.kernel.org/patchwork/patch/1007283/">[3]</a>. In any case, you can install the patched kernel from AUR <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/linux-hynix/">linux-hynix</a></span><sup><small>AUR</small></sup><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup> or compile the one at <a href="#Advanced_/_Kernel_update">#Advanced / Kernel update</a><sup>[<a href="/title/Help:Procedures#Fix_broken_section_links" title="Help:Procedures">broken link</a>: invalid section]</sup>. The battery drain during suspend should drop to 1-2% per hour.
 </p>
 <p>As it is mentioned by Intel <a rel="nofollow" class="external autonumber" href="https://01.org/blogs/qwang59/2018/how-achieve-s0ix-states-linux">[4]</a>, TLP may not work, and so it should not be used with S0ix.
 </p>
@@ -358,9 +360,9 @@ temp1:        +45.0°C
 </p>
 <h3><span class="mw-headline" id="ACPI_Errors">ACPI Errors</span></h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Add a solution to the error. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:HP_Spectre_x360_-_13-ap0xxxx">Talk:HP Spectre x360 - 13-ap0xxxx#</a>)</div>
+<b>Reason:</b> Add a solution to the error. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:HP_Spectre_x360_-_13-ap0xxxx">Talk:HP Spectre x360 - 13-ap0xxxx#</a>)</div>
 </div>
 <p>Many ACPI errors are logged on boot:
 </p>
@@ -520,13 +522,13 @@ temp1:        +45.0°C
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:HP.html" title="Category:HP">HP</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:HP" title="Category:HP">HP</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li>
-<li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li>
-<li><a href="../en/Category:Pages_with_broken_section_links.html" title="Category:Pages with broken section links">Pages with broken section links</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Laptop_style" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li>
+<li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li>
+<li><a href="/title/Category:Pages_with_broken_section_links" title="Category:Pages with broken section links">Pages with broken section links</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Expansion" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
 </ul>
 </div>
 </div>
@@ -535,15 +537,15 @@ temp1:        +45.0°C
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=HP_Spectre_x360_-_13-ap0xxxx&amp;oldid=663118">https://wiki.archlinux.org/index.php?title=HP_Spectre_x360_-_13-ap0xxxx&amp;oldid=663118</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 20 April 2021, at 21:32.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=HP_Spectre_x360_-_13-ap0xxxx&amp;oldid=670036">https://wiki.archlinux.org/index.php?title=HP_Spectre_x360_-_13-ap0xxxx&amp;oldid=670036</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 9 May 2021, at 13:26.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

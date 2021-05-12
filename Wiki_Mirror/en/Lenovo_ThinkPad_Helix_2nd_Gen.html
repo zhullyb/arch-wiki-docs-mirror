@@ -34,9 +34,9 @@
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="../en/Help:Laptop_page_guidelines.html" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="../File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a><b>This article or section does not follow the <a href="/title/Help:Laptop_page_guidelines" title="Help:Laptop page guidelines">Laptop page guidelines</a>.</b><a href="/title/File:Tango-edit-clear.png" class="image"><img alt="Tango-edit-clear.png" src="../File:Tango-edit-clear.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Hardware table needs some adjustments (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Lenovo_ThinkPad_Helix_2nd_Gen">Talk:Lenovo ThinkPad Helix 2nd Gen#</a>)</div>
+<b>Reason:</b> Hardware table needs some adjustments (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Lenovo_ThinkPad_Helix_2nd_Gen">Talk:Lenovo ThinkPad Helix 2nd Gen#</a>)</div>
 </div>
 <table class="wikitable">
 <caption>Hardware Information
@@ -92,7 +92,7 @@
 </tr>
 </tbody>
 </table>
-<p>This hardware is substantially different from the <a href="../en/Lenovo_ThinkPad_Helix.html" title="Lenovo ThinkPad Helix">Lenovo ThinkPad Helix 1st Gen</a>  and thus the solutions outlined there are not helpful.
+<p>This hardware is substantially different from the <a href="/title/Lenovo_ThinkPad_Helix" title="Lenovo ThinkPad Helix">Lenovo ThinkPad Helix 1st Gen</a>  and thus the solutions outlined there are not helpful.
 Note: the following was tested with the standard ThinkPad Ultrabook
 keyboard, not the Pro one.
 </p>
@@ -145,13 +145,13 @@ the device can resume from suspend-to-idle under all conditions.
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/sleep.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Sleep]
 SuspendState=freeze</pre>
-<p>On the most recent BIOS versions, this isn't necessary, since <code>/sys/power/mem_sleeep</code> will only contain <code>s2idle</code> and thus any attempt to suspend in any manner will default to suspend-to-idle.
+<p>On the most recent BIOS versions, this is not necessary, since <code>/sys/power/mem_sleeep</code> will only contain <code>s2idle</code> and thus any attempt to suspend in any manner will default to suspend-to-idle.
 </p>
 <h3><span class="mw-headline" id="Disable_embedded-controller_wake-ups">Disable embedded-controller wake-ups</span></h3>
 <p>By default, s2idle will still exhibit a significant battery drain while suspended (the batteries will be dead within a few hours).  It appears that the device suffers from embedded controller wake-ups.  For a more reasonable drain while suspended (i.e. you can leave it suspended for days), you must set the <code>acpi.ec_no_wakeup=1</code> kernel parameter.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If you set the <code>acpi.ec_no_wakeup=1</code> kernel parameter, the device will not be able to wake up after any lid events (attaching/detaching the tablet from the base).  So, it's a trade-off: enable the parameter and enjoy proper suspend behavior as long as you don't remove the device from the base (e.g. to close it), or do not set the parameter and enjoy the ability to close and re-open the laptop but suffer wake-level battery drainage.</div>
+<strong>Note:</strong> If you set the <code>acpi.ec_no_wakeup=1</code> kernel parameter, the device will not be able to wake up after any lid events (attaching/detaching the tablet from the base).  So, it's a trade-off: enable the parameter and enjoy proper suspend behavior as long as you do not remove the device from the base (e.g. to close it), or do not set the parameter and enjoy the ability to close and re-open the laptop but suffer wake-level battery drainage.</div>
 <h3><span class="mw-headline" id="Workaround_for_no_wifi_connection_on_resume">Workaround for no wifi connection on resume</span></h3>
 <p>The WiFi chip in this computer (Intel Wireless 7265) has a problem where it can stop re-connecting after waking from suspend.  The system can no longer communicate with the card, so restarting NetworkManager (etc) is not sufficient to regain a connection, nor is unloading and reloading the <code>iwlwifi</code> module after resuming. A casual internet search reveals this to be a hardware problem that affects Windows users as well.  
 </p>
@@ -188,10 +188,10 @@ Use tlp package for further improvements.
 </p>
 <h2><span class="mw-headline" id="Sensors">Sensors</span></h2>
 <p>In order to use the sensors (particularly the accelerometer and the
-ambient light sensor) in <a href="../en/GNOME.html" title="GNOME">GNOME</a>, you should install the
-<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iio-sensor-proxy">iio-sensor-proxy</a></span> package.  There is presumably a quirk with this sensor hardware. The effect is that <code>iio-sensor-proxy</code> loads too early, requiring the service to be restarted before the sensors can be read properly.  To fix this, edit the systemd unit so that it starts after GDM (<code>After=gdm.service</code>; see <a href="../en/Systemd.html#Editing_provided_units" title="Systemd">Systemd#Editing provided units</a>).
+ambient light sensor) in <a href="/title/GNOME" title="GNOME">GNOME</a>, you should install the
+<span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=iio-sensor-proxy">iio-sensor-proxy</a></span> package.  There is presumably a quirk with this sensor hardware. The effect is that <code>iio-sensor-proxy</code> loads too early, requiring the service to be restarted before the sensors can be read properly.  To fix this, edit the systemd unit so that it starts after GDM (<code>After=gdm.service</code>; see <a href="/title/Systemd#Editing_provided_units" title="Systemd">Systemd#Editing provided units</a>).
 </p>
-<p>If you are using <a href="../en/GNOME.html" title="GNOME">GNOME</a>, a program called <a rel="nofollow" class="external text" href="http://brandon.invergo.net/software/tp-helix-orientation-lock.html">tp-helix-orientation-lock</a> enables the use of the "rotation lock" button on the Helix 2, as well as optionally automatically locking/unlocking the screen orientation when docking/undocking the tablet.
+<p>If you are using <a href="/title/GNOME" title="GNOME">GNOME</a>, a program called <a rel="nofollow" class="external text" href="http://brandon.invergo.net/software/tp-helix-orientation-lock.html">tp-helix-orientation-lock</a> enables the use of the "rotation lock" button on the Helix 2, as well as optionally automatically locking/unlocking the screen orientation when docking/undocking the tablet.
 </p>
 <h2><span class="mw-headline" id="Touch_Screen">Touch Screen</span></h2>
 <p>In order to enable multitouch, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xf86-input-wacom">xf86-input-wacom</a></span> and
@@ -236,9 +236,9 @@ Attempt to load psmouse with "proto=imps" option. To do that, add this line to y
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Lenovo.html" title="Category:Lenovo">Lenovo</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Lenovo" title="Category:Lenovo">Lenovo</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Laptop_style.html" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Laptop_style" title="Category:Pages or sections flagged with Template:Laptop style">Pages or sections flagged with Template:Laptop style</a></li></ul>
 </div>
 </div>
 	</div>
@@ -246,15 +246,15 @@ Attempt to load psmouse with "proto=imps" option. To do that, add this line to y
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_Helix_2nd_Gen&amp;oldid=654514">https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_Helix_2nd_Gen&amp;oldid=654514</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 11 March 2021, at 15:31.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_Helix_2nd_Gen&amp;oldid=669709">https://wiki.archlinux.org/index.php?title=Lenovo_ThinkPad_Helix_2nd_Gen&amp;oldid=669709</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 14:04.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -35,6 +36,8 @@
 <p><a rel="nofollow" class="external text" href="https://github.com/JoseExposito/touchegg">Touchegg</a> is a multitouch gesture program, that runs as a user in the background,
 recognizes gestures, translates them to more conventional types of events and/or performs custom actions in response to them.
 </p>
+<p>Touchegg is not compatible with Wayland.
+</p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
 <h2 id="mw-toc-heading">Contents</h2>
@@ -42,28 +45,25 @@ recognizes gestures, translates them to more conventional types of events and/or
 </div>
 <ul>
 <li class="toclevel-1 tocsection-1"><a href="#Installation"><span class="tocnumber">1</span> <span class="toctext">Installation</span></a></li>
-<li class="toclevel-1 tocsection-2">
-<a href="#Configuration"><span class="tocnumber">2</span> <span class="toctext">Configuration</span></a>
+<li class="toclevel-1 tocsection-2"><a href="#Configuration"><span class="tocnumber">2</span> <span class="toctext">Configuration</span></a></li>
+<li class="toclevel-1 tocsection-3">
+<a href="#Start_on_login"><span class="tocnumber">3</span> <span class="toctext">Start on login</span></a>
 <ul>
-<li class="toclevel-2 tocsection-3">
-<a href="#Gnome_Shell"><span class="tocnumber">2.1</span> <span class="toctext">Gnome Shell</span></a>
-<ul>
-<li class="toclevel-3 tocsection-4"><a href="#Start_on_login"><span class="tocnumber">2.1.1</span> <span class="toctext">Start on login</span></a></li>
-</ul>
-</li>
+<li class="toclevel-2 tocsection-4"><a href="#For_gnome"><span class="tocnumber">3.1</span> <span class="toctext">For gnome</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#For_the_startx_command"><span class="tocnumber">3.2</span> <span class="toctext">For the startx command</span></a></li>
 </ul>
 </li>
 </ul>
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/touchegg/">touchegg</a></span><sup><small>AUR</small></sup> package. Alternatively, it is also available at <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/touchegg-git/">touchegg-git</a></span><sup><small>AUR</small></sup>. A qt5 version can be found at <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/touchegg-qt5/">touchegg-qt5</a></span><sup><small>AUR</small></sup><sup>[<a href="../en/Help:Procedures.html#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>
+<p>Install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/touchegg/">touchegg</a></span><sup><small>AUR</small></sup> package. Alternatively, it is also available at <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/touchegg-git/">touchegg-git</a></span><sup><small>AUR</small></sup>. A qt5 version can be found at <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/touchegg-qt5/">touchegg-qt5</a></span><sup><small>AUR</small></sup><sup>[<a href="/title/Help:Procedures#Fix_broken_package_links" title="Help:Procedures">broken link</a>: package not found]</sup>
 </p>
 <p>Touchegg comes with its own minimal GUI, but you can also install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/touchegg-gce-git/">touchegg-gce-git</a></span><sup><small>AUR</small></sup>
 - <a rel="nofollow" class="external text" href="https://github.com/Raffarti/Touchegg-gce">Touchegg-GCE</a> (GUI configuration editor).
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
-<p>The configuration file is found in <code>~/.config/touchegg/touchegg.conf</code>.
+<p>The user configuration file is found in <code>~/.config/touchegg/touchegg.conf</code>.
 </p>
 <p>It is a basic XML file that defines various gestures. Please note that at this time
 <code>TAP_AND_HOLD</code>, <code>PINCH</code>, and <code>ROTATE</code>, do not appear to work.
@@ -72,22 +72,33 @@ recognizes gestures, translates them to more conventional types of events and/or
 </p>
 <p>The list of actions can be found <a rel="nofollow" class="external text" href="https://github.com/JoseExposito/touchegg/wiki/All-actions-supported-by-Touch%C3%A9gg">here</a>.
 </p>
-<h3><span class="mw-headline" id="Gnome_Shell">Gnome Shell</span></h3>
-<p>Very basic so far. This should give you basic functionality. Hopefully we can update this for complete application support.
+<p>A default configuration can be found in <code>/usr/share/touchegg/touchegg.conf</code>.
 </p>
-<p>Edit <code>~/.config/touchegg/touchegg.conf</code>, add this:
+<p>The two-fingers scrolling emulation <a rel="nofollow" class="external text" href="https://github.com/JoseExposito/touchegg/issues/438">has been droped</a>, due to bad user experience, in the recent 2.0 rewrite of touchegg.
+To restore it, install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=xdotool">xdotool</a></span>, and add the following to the configuration file :
 </p>
-<pre>&lt;gesture type="DRAG" fingers="1" direction="ALL"&gt;
-    &lt;action type="DRAG_AND_DROP"&gt;BUTTON=1&lt;/action&gt;
-&lt;/gesture&gt;
+<pre>   &lt;gesture type="SWIPE" fingers="2" direction="DOWN"&gt;
+     &lt;action type="RUN_COMMAND"&gt;
+       &lt;repeat&gt;true&lt;/repeat&gt;
+       &lt;command&gt;xdotool click 4&lt;/command&gt;
+       &lt;decreaseCommand&gt;xdotool click 5&lt;/decreaseCommand&gt;
+     &lt;/action&gt;
+   &lt;/gesture&gt;
+   &lt;gesture type="SWIPE" fingers="2" direction="UP"&gt;
+     &lt;action type="RUN_COMMAND"&gt;
+       &lt;repeat&gt;true&lt;/repeat&gt;
+       &lt;command&gt;xdotool click 5&lt;/command&gt;
+       &lt;decreaseCommand&gt;xdotool click 4&lt;/decreaseCommand&gt;
+     &lt;/action&gt;
+   &lt;/gesture&gt;
 </pre>
-<p>and then edit this entry:
+<p>Note that on Kde, text gets selected while scrolling (<a rel="nofollow" class="external text" href="https://github.com/JoseExposito/touchegg/issues/401">see</a>).
 </p>
-<pre>&lt;gesture type="DRAG" fingers="2" direction="ALL"&gt;
-    &lt;action type="SCROLL"&gt;SPEED=7:INVERTED=<b>true</b>&lt;/action&gt;
-&lt;/gesture&gt;
-</pre>
-<h4><span class="mw-headline" id="Start_on_login">Start on login</span></h4>
+<h2><span class="mw-headline" id="Start_on_login">Start on login</span></h2>
+<p>The daemon is started with systemd : <code>systemctl enable touchegg.service</code>
+The client can be loaded from the wm.
+</p>
+<h3><span class="mw-headline" id="For_gnome">For gnome</span></h3>
 <ol>
 <li>Hit <code>alt-f2</code>;</li>
 <li>Type <code>gnome-session-properties</code>;</li>
@@ -96,8 +107,9 @@ recognizes gestures, translates them to more conventional types of events and/or
 <li>Hit <code>OK</code>.</li>
 </ol>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong>  <code>gnome-session-properties</code> has been removed from <code>gnome 3.12</code>. Currently, you can install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gnome-session-properties/">gnome-session-properties</a></span><sup><small>AUR</small></sup> from the <a href="../en/Arch_User_Repository.html" class="mw-redirect" title="AUR">AUR</a>. See more details in the <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=180282">BBS thread</a> </div>
-<p>Alternatively, you can modify your <a href="../en/Xprofile.html" class="mw-redirect" title=".xprofile">.xprofile</a>:
+<strong>Note:</strong>  <code>gnome-session-properties</code> has been removed from <code>gnome 3.12</code>. Currently, you can install <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/gnome-session-properties/">gnome-session-properties</a></span><sup><small>AUR</small></sup> from the <a href="/title/AUR" class="mw-redirect" title="AUR">AUR</a>. See more details in the <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?id=180282">BBS thread</a> </div>
+<h3><span class="mw-headline" id="For_the_startx_command">For the startx command</span></h3>
+<p>You can modify your <a href="/title/.xprofile" class="mw-redirect" title=".xprofile">.xprofile</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">~/.xprofile</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">touchegg &amp;</pre>
@@ -105,9 +117,9 @@ recognizes gestures, translates them to more conventional types of events and/or
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Input.html" title="Category:Input">Input</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Input" title="Category:Input">Input</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_broken_package_links.html" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li></ul>
 </div>
 </div>
 	</div>
@@ -115,15 +127,15 @@ recognizes gestures, translates them to more conventional types of events and/or
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Touchegg&amp;oldid=641495">https://wiki.archlinux.org/index.php?title=Touchegg&amp;oldid=641495</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 14 November 2020, at 08:27.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Touchegg&amp;oldid=665462">https://wiki.archlinux.org/index.php?title=Touchegg&amp;oldid=665462</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 29 April 2021, at 21:23.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

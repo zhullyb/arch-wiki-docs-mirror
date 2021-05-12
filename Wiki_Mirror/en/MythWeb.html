@@ -33,7 +33,7 @@
 		<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
 <div class="warningbox">The printable version is no longer supported and may have rendering errors. Please update your browser bookmarks and please use the default browser print function instead.</div>
 <div class="mw-parser-output">
-<p>MythWeb is a web interface for <a href="../en/MythTV.html" title="MythTV">MythTV</a>
+<p>MythWeb is a web interface for <a href="/title/MythTV" title="MythTV">MythTV</a>
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
 <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none"><div class="toctitle" lang="en" dir="ltr">
@@ -59,18 +59,18 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p>Before installing MythWeb, first set up Apache with PHP as described in <a href="../en/Apache_HTTP_Server.html" title="Apache HTTP Server">Apache HTTP Server</a> and <a href="../en/Apache_HTTP_Server.html#PHP" title="Apache HTTP Server">Apache HTTP Server#PHP</a>.
+<p>Before installing MythWeb, first set up Apache with PHP as described in <a href="/title/Apache_HTTP_Server" title="Apache HTTP Server">Apache HTTP Server</a> and <a href="/title/Apache_HTTP_Server#PHP" title="Apache HTTP Server">Apache HTTP Server#PHP</a>.
 </p>
 <p>Install the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/mythplugins-mythweb/">mythplugins-mythweb</a></span><sup><small>AUR</small></sup> package.
 </p>
 <h2><span class="mw-headline" id="Configuration">Configuration</span></h2>
 <h3><span class="mw-headline" id="MythTV_integration">MythTV integration</span></h3>
-<p>MythWeb looks in the <code>video_dir</code> directory for <a href="../en/MythTV.html" title="MythTV">MythTV</a> recordings. Create a link to the folder where your MythTV recordings are stored:
+<p>MythWeb looks in the <code>video_dir</code> directory for <a href="/title/MythTV" title="MythTV">MythTV</a> recordings. Create a link to the folder where your MythTV recordings are stored:
 </p>
 <pre># ln -s <i>recording_dir</i> /var/lib/mythtv/mythweb/video_dir
 </pre>
 <h3><span class="mw-headline" id="MythWeb">MythWeb</span></h3>
-<p>Copy the MythWeb configuration file <code>mythweb.conf</code> to the <a href="../en/Apache_HTTP_Server.html" title="Apache HTTP Server">Apache HTTP Server</a> configuration directory.
+<p>Copy the MythWeb configuration file <code>mythweb.conf</code> to the <a href="/title/Apache_HTTP_Server" title="Apache HTTP Server">Apache HTTP Server</a> configuration directory.
 </p>
 <pre># cp /var/lib/mythtv/mythweb/mythweb.conf.apache /etc/httpd/conf/extra/mythweb.conf
 </pre>
@@ -98,7 +98,7 @@ LoadModule deflate_module modules/mod_deflate.so
 </pre>
 <pre>&lt;Directory "/srv/http/mythweb" &gt;
 </pre>
-<p>Then check that the configuration matches your <a href="../en/MythTV.html" title="MythTV">MythTV</a> setup. If you have changed the database login or password, you will need to change the following section. Double-check the following lines are uncommented in any case:
+<p>Then check that the configuration matches your <a href="/title/MythTV" title="MythTV">MythTV</a> setup. If you have changed the database login or password, you will need to change the following section. Double-check the following lines are uncommented in any case:
 </p>
 <pre>setenv db_server        "localhost"
 setenv db_name          "mythconverg"
@@ -106,7 +106,7 @@ setenv db_login         "mythtv"
 setenv db_password      "mythtv"
 </pre>
 <h3><span class="mw-headline" id="PHP">PHP</span></h3>
-<p>Edit the <a href="../en/PHP.html" title="PHP">PHP</a> configuration file <code>/etc/php/php.ini</code>
+<p>Edit the <a href="/title/PHP" title="PHP">PHP</a> configuration file <code>/etc/php/php.ini</code>
 </p>
 <p>Uncomment the following lines in the <i>Dynamic extensions</i> section.
 </p>
@@ -126,11 +126,11 @@ setenv db_password      "mythtv"
 <pre>ln -s /var/lib/mythtv/mythweb /srv/http/
 </pre>
 <h2><span class="mw-headline" id="Using_MythWeb">Using MythWeb</span></h2>
-<p>You can now start the Apache daemon by <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">starting</a> the <code>httpd.service</code> systemd unit. <i>mythbackend</i> must already be running.
+<p>You can now start the Apache daemon by <a href="/title/Start" class="mw-redirect" title="Start">starting</a> the <code>httpd.service</code> systemd unit. <i>mythbackend</i> must already be running.
 </p>
 <p>Open MythWeb in your browser.
 </p>
-<pre><a rel="nofollow" class="external free" href="http://localhost/mythweb">http://localhost/mythweb</a>
+<pre>http://localhost/mythweb
 </pre>
 <h2><span class="mw-headline" id="Securing_MythWeb">Securing MythWeb</span></h2>
 <p>It is also probably a good idea to set up password protection for MythWeb, if you intend to allow connections from the Internet.
@@ -178,14 +178,14 @@ Satisfy            any
 </p>
 <pre># htdigest /etc/httpd/conf/extra/httpd-passwords MythTV <i>myuser2</i>
 </pre>
-<p>Now all we need to do now is <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> apache's <code>httpd.service</code> for the changes to take effect.
+<p>Now all we need to do now is <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> apache's <code>httpd.service</code> for the changes to take effect.
 </p>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <p>If you get a 403 Forbidden error, recheck your paths in <code>mythweb.conf</code>
 </p>
 <p>If you can not start the apache service, and you get and error like this:
 </p>
-<pre>$ journalctl -u httpd -xn
+<pre># journalctl -u httpd -xn
 ...
 AH00013: Pre-configuration failed
 ...
@@ -203,9 +203,9 @@ AH00013: Pre-configuration failed
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Home_theater.html" title="Category:Home theater">Home theater</a></li>
-<li><a href="../en/Category:Web_applications.html" title="Category:Web applications">Web applications</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Home_theater" title="Category:Home theater">Home theater</a></li>
+<li><a href="/title/Category:Web_applications" title="Category:Web applications">Web applications</a></li>
 </ul>
 </div></div>
 	</div>
@@ -213,15 +213,15 @@ AH00013: Pre-configuration failed
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MythWeb&amp;oldid=661984">https://wiki.archlinux.org/index.php?title=MythWeb&amp;oldid=661984</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 18 April 2021, at 18:52.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=MythWeb&amp;oldid=665660">https://wiki.archlinux.org/index.php?title=MythWeb&amp;oldid=665660</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 30 April 2021, at 21:53.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

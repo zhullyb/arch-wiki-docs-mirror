@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="../ArchWikiOffline.css">
 <meta name="ResourceLoaderDynamicStyles" content="">
 <meta name="generator" content="MediaWiki 1.35.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
@@ -23,7 +24,7 @@
 	<h1 id="firstHeading" class="firstHeading" lang="en">GRUB (简体中文)/EFI examples (简体中文)</h1>
 	<div id="bodyContent" class="mw-body-content">
 		<div id="siteSub" class="noprint">From ArchWiki</div>
-		<div id="contentSub"><span class="subpages">&lt; <a href="../zh-CN/GRUB.html" title="GRUB (简体中文)">GRUB (简体中文)</a></span></div>
+		<div id="contentSub"><span class="subpages">&lt; <a href="/title/GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="GRUB (简体中文)">GRUB (简体中文)</a></span></div>
 		<div id="contentSub2"></div>
 		
 		<div id="jump-to-nav"></div>
@@ -35,11 +36,16 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>相关文章</p>
 <ul>
-<li><a href="../en/GRUB.html" class="mw-redirect" title="Grub">Grub</a></li>
+<li><a href="/title/Grub" class="mw-redirect" title="Grub">Grub</a></li>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>翻译状态：</strong>本文是 <a href="../en/GRUB/EFI_examples.html" title="GRUB/EFI examples">GRUB/EFI_examples</a> 的<a href="../zh-CN/ArchWiki:Translation_Team.html" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2015-02-28。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=GRUB/EFI_examples&amp;diff=0&amp;oldid=362948">更改</a>，则您可以帮助同步翻译。</div>
+<strong>翻译状态：</strong>本文是 <a href="/title/GRUB/EFI_examples" title="GRUB/EFI examples">GRUB/EFI_examples</a> 的<a href="/title/ArchWiki:Translation_Team_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="ArchWiki:Translation Team (简体中文)">翻译</a>。上次翻译日期：2015-02-28。如果英文版本有所<a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=GRUB/EFI_examples&amp;diff=0&amp;oldid=362948">更改</a>，则您可以帮助同步翻译。</div>
+<div class="noprint archwiki-template-message">
+<p><a href="/title/File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a><b>The <a href="/title/ArchWiki:Contributing#Translating" title="ArchWiki:Contributing">translation</a> of this article or section does not reflect the original text.</b><a href="/title/File:Tango-preferences-desktop-locale-modified.png" class="image"><img alt="Tango-preferences-desktop-locale-modified.png" src="../File:Tango-preferences-desktop-locale-modified.png" decoding="async" width="48" height="48"></a></p>
+<div>
+<b>Reason:</b> Last updated in 2015 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/EFI_examples_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Talk:GRUB (简体中文)/EFI examples (简体中文)#</a>)</div>
+</div>
 <p>我们都知道不同的主板制造商有不同的 UEFI 实现。本文介绍了一些针对不同硬件来以 EFI 模式安装/恢复 GRUB 的可行方法。
 </p>
 <div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading">
@@ -116,11 +122,11 @@
 </h3>
 <pre># cp /boot/efi/EFI/arch_grub/grubx64.efi /boot/efi/shellx64.efi
 </pre>
-<p>从 UEFI 设置/菜单启动 UEFI Shell 之后 (在华硕 UEFI BIOS 中切换到高级模式，按下位于右上角的 Exit 并选择"Launch EFI shell from filesystem device"). GRUB2 菜单会出现然后可以进入系统。之后，可以使用 efibootmgr 来设置菜单条目，例如 UEFI 分区是 /dev/sda1: (参见 <a href="../en/Unified_Extensible_Firmware_Interface.html" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface</a>)
+<p>从 UEFI 设置/菜单启动 UEFI Shell 之后 (在华硕 UEFI BIOS 中切换到高级模式，按下位于右上角的 Exit 并选择"Launch EFI shell from filesystem device"). GRUB2 菜单会出现然后可以进入系统。之后，可以使用 efibootmgr 来设置菜单条目，例如 UEFI 分区是 /dev/sda1: (参见 <a href="/title/Unified_Extensible_Firmware_Interface" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface</a>)
 </p>
 <pre>efibootmgr -c -g -d /dev/sda -p 1 -w -L "Arch Linux (GRUB)" -l /EFI/arch_grub/grubx64.efi
 </pre>
-<p>如果你的主板没有这个选项 (就算它有), 你也可以使用 UEFI shell (<a href="../en/Unified_Extensible_Firmware_Interface.html#UEFI_Shell" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface#UEFI Shell</a>) 来临时为 Arch 分区创建 UEFI 启动选项。
+<p>如果你的主板没有这个选项 (就算它有), 你也可以使用 UEFI shell (<a href="/title/Unified_Extensible_Firmware_Interface#UEFI_Shell" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface#UEFI Shell</a>) 来临时为 Arch 分区创建 UEFI 启动选项。
 </p>
 <p>进入 EFI shell 之后，添加 UEFI 启动菜单条目:
 </p>
@@ -128,7 +134,7 @@
 </pre>
 <p>此处 <code>fs1</code> 映射到 UEFI 系统分区，<code>\EFI\arch_grub\grubx64.efi</code> 来源于上面 <code>grub-install</code> 命令含有的 <code>--bootloader-id</code>.
 </p>
-<p>这会临时添加 UEFI 启动选项以在下一次重启时进入 Arch. 进入之后，输入命令 <code>modprobe efivars</code> 并确证 <code>efibootmgr</code> 没有错误 (没有错误意味着你成功地进入了 UEFI 模式). 然后 <a href="../en/GRUB.html#UEFI_systems" title="GRUB">GRUB#UEFI systems</a> 会再次运行并能成功地往 UEFI 菜单永久性地添加启动条目。
+<p>这会临时添加 UEFI 启动选项以在下一次重启时进入 Arch. 进入之后，输入命令 <code>modprobe efivars</code> 并确证 <code>efibootmgr</code> 没有错误 (没有错误意味着你成功地进入了 UEFI 模式). 然后 <a href="/title/GRUB#UEFI_systems" title="GRUB">GRUB#UEFI systems</a> 会再次运行并能成功地往 UEFI 菜单永久性地添加启动条目。
 </p>
 <h3><span class="mw-headline" id="ux32vd">ux32vd</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -155,7 +161,7 @@
 <pre># mount -t vfat /dev/sdXY /boot/efi
 # grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch --recheck
 # grub-mkconfig -o /boot/grub/grub.cfg
-# wget <a rel="nofollow" class="external free" href="https://edk2.svn.sourceforge.net/svnroot/edk2/trunk/edk2/ShellBinPkg/UefiShell/X64/Shell.efi">https://edk2.svn.sourceforge.net/svnroot/edk2/trunk/edk2/ShellBinPkg/UefiShell/X64/Shell.efi</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-02 ⓘ]</sup>
+# wget <a rel="nofollow" class="external free" href="https://github.com/tianocore/edk2/raw/ab7e02a4f86a8fe2afa2dcf88c404bcf210f9e62/ShellBinPkg/UefiShell/X64/Shell.efi">https://github.com/tianocore/edk2/raw/ab7e02a4f86a8fe2afa2dcf88c404bcf210f9e62/ShellBinPkg/UefiShell/X64/Shell.efi</a>
 # umount /boot/efi
 </pre>
 <p>EFI 分区应该只包含两个文件:
@@ -166,7 +172,7 @@
 <ul>
 <li>重启进入 BIOS (<code>Delete</code> 键可以做到).</li>
 <li>使用方向键移动到 'exit' 菜单进入到 EFI Shell.</li>
-<li>往菜单里为 Arch 添加新条目。下面的是一个范例，更多见文章 <a href="../en/Unified_Extensible_Firmware_Interface.html#Launching_UEFI_Shell" class="mw-redirect" title="UEFI">UEFI#Launching UEFI Shell</a>.</li>
+<li>往菜单里为 Arch 添加新条目。下面的是一个范例，更多见文章 <a href="/title/UEFI#Launching_UEFI_Shell" class="mw-redirect" title="UEFI">UEFI#Launching UEFI Shell</a>.</li>
 </ul>
 <p><b>在 EFI SHELL 内</b>
 </p>
@@ -182,7 +188,7 @@ Shell&gt; exit
 <h3><span class="mw-headline" id="M5A97">M5A97</span></h3>
 <p>完成标准 Arch 安装流程，确保已安装 <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=grub">grub</a></span> 并且硬盘是 GPT 格式。
 </p>
-<p>来自 <a href="../en/GRUB.html#UEFI_systems" title="GRUB">GRUB#UEFI systems</a>:
+<p>来自 <a href="/title/GRUB#UEFI_systems" title="GRUB">GRUB#UEFI systems</a>:
 </p>
 <p>UEFI 系统分区需要挂载到 <code>/boot/efi/</code> 以便 GRUB 安装脚本探测到:
 </p>
@@ -202,7 +208,7 @@ Shell&gt; exit
 </p>
 <pre># grub-mkconfig -o /boot/grub/grub.cfg
 </pre>
-<p>然后复制 <a rel="nofollow" class="external text" href="http://dl.dropbox.com/u/17629062/Shell2.zip">修改版 UEFI Shell v2 二进制文件</a><sup title="最后检查状态：404">[<a href="https://en.wikipedia.org/wiki/Wikipedia:Link_rot" class="extiw" title="wikipedia:Wikipedia:Link rot">失效链接</a> 2020-08-02 ⓘ]</sup> UefiShellX64.efi 到你的 EFI 系统分区根目录。
+<p>然后复制 <a rel="nofollow" class="external text" href="https://web.archive.org/web/20141222130301/http://dl.dropboxusercontent.com/u/17629062/Shell2.zip">修改版 UEFI Shell v2 二进制文件</a> UefiShellX64.efi 到你的 EFI 系统分区根目录。
 </p>
 <pre># cp ~/Shell2/UefiShellX64.efi /mnt/boot/efi/shellx64.efi
 </pre>
@@ -215,7 +221,7 @@ Shell&gt; exit
 <p>此处 <code>fs0</code> 映射到 UEFI 系统分区，<code>3</code> 是0启动项目录。
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>注意：</strong> UEFI Shell 命令通常支持 <code>-b</code> 选项，它用来在每页输出完后暂停。<code>map</code> 列出识别的文件系统 (<code>fs0</code>, ...) 和数据存储设备 (<code>blk0</code>, ...). 运行 <code>help -b</code> 以列出可用命令。 <a href="../en/Unified_Extensible_Firmware_Interface.html#Important_UEFI_Shell_commands" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface#Important UEFI Shell commands</a>
+<strong>注意：</strong> UEFI Shell 命令通常支持 <code>-b</code> 选项，它用来在每页输出完后暂停。<code>map</code> 列出识别的文件系统 (<code>fs0</code>, ...) 和数据存储设备 (<code>blk0</code>, ...). 运行 <code>help -b</code> 以列出可用命令。 <a href="/title/Unified_Extensible_Firmware_Interface#Important_UEFI_Shell_commands" title="Unified Extensible Firmware Interface">Unified Extensible Firmware Interface#Important UEFI Shell commands</a>
 </div> 
 <p>列出目前启动条目，运行:
 </p>
@@ -223,7 +229,7 @@ Shell&gt; exit
 </pre>
 <h2><span class="mw-headline" id="HP">HP</span></h2>
 <h3><span class="mw-headline" id="EliteBook_840_G1">EliteBook 840 G1</span></h3>
-<p>详见 <a href="../en/HP_EliteBook_840_G1.html#UEFI_Setup" title="HP EliteBook 840 G1">HP EliteBook 840 G1#UEFI Setup</a>.
+<p>详见 <a href="/title/HP_EliteBook_840_G1#UEFI_Setup" title="HP EliteBook 840 G1">HP EliteBook 840 G1#UEFI Setup</a>.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>注意：</strong> 上面的流程对一些 HP 其他型号也有用。</div>
@@ -263,9 +269,12 @@ Shell&gt; exit
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../zh-CN/Category:Boot_loaders.html" title="Category:Boot loaders (简体中文)">Boot loaders (简体中文)</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Boot_loaders_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Category:Boot loaders (简体中文)">Boot loaders (简体中文)</a></li></ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_with_dead_links.html" title="Category:Pages with dead links">Pages with dead links</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Bad_translation" title="Category:Pages or sections flagged with Template:Bad translation">Pages or sections flagged with Template:Bad translation</a></li>
+<li><a href="/title/Category:Pages_with_dead_links" title="Category:Pages with dead links">Pages with dead links</a></li>
+</ul>
 </div>
 </div>
 	</div>
@@ -273,15 +282,15 @@ Shell&gt; exit
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/EFI_examples_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=628558">https://wiki.archlinux.org/index.php?title=GRUB_(简体中文)/EFI_examples_(简体中文)&amp;oldid=628558</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 2 August 2020, at 20:55.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/EFI_examples_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)&amp;oldid=670663">https://wiki.archlinux.org/index.php?title=GRUB_(简体中文)/EFI_examples_(简体中文)&amp;oldid=670663</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 12 May 2021, at 11:25.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

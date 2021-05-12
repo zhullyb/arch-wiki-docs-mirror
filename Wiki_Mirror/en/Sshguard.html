@@ -38,13 +38,13 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Fail2ban.html" title="Fail2ban">fail2ban</a></li>
-<li><a href="../en/Secure_Shell.html" class="mw-redirect" title="Ssh">ssh</a></li>
+<li><a href="/title/Fail2ban" title="Fail2ban">fail2ban</a></li>
+<li><a href="/title/Ssh" class="mw-redirect" title="Ssh">ssh</a></li>
 </ul>
 </div>
 <div class="archwiki-template-box archwiki-template-box-warning">
-<strong>Warning:</strong> Using an IP blacklist will stop trivial attacks but it relies on an additional daemon and successful logging (the partition containing /var can become full, especially if an attacker is pounding on the server). Additionally, with the knowledge of your IP address, the attacker can send packets with a spoofed source header and get you locked out of the server. <a href="../en/SSH_keys.html" title="SSH keys">SSH keys</a> provide an elegant solution to brute forcing without these problems.</div>
-<p><a rel="nofollow" class="external text" href="http://www.sshguard.net">sshguard</a> is a daemon that protects <a href="../en/Secure_Shell.html" class="mw-redirect" title="SSH">SSH</a> and other services against brute-force attacks, similar to <a href="../en/Fail2ban.html" title="Fail2ban">fail2ban</a>.
+<strong>Warning:</strong> Using an IP blacklist will stop trivial attacks but it relies on an additional daemon and successful logging (the partition containing /var can become full, especially if an attacker is pounding on the server). Additionally, with the knowledge of your IP address, the attacker can send packets with a spoofed source header and get you locked out of the server. <a href="/title/SSH_keys" title="SSH keys">SSH keys</a> provide an elegant solution to brute forcing without these problems.</div>
+<p><a rel="nofollow" class="external text" href="https://www.sshguard.net">sshguard</a> is a daemon that protects <a href="/title/SSH" class="mw-redirect" title="SSH">SSH</a> and other services against brute-force attacks, similar to <a href="/title/Fail2ban" title="Fail2ban">fail2ban</a>.
 </p>
 <p>sshguard is different from the latter in that it is written in C, is lighter and simpler to use with fewer features while performing its core function equally well.
 </p>
@@ -98,17 +98,17 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sshguard">sshguard</a></span> package.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=sshguard">sshguard</a></span> package.
 </p>
 <h2><span class="mw-headline" id="Setup">Setup</span></h2>
-<p>sshguard works by monitoring <code>/var/log/auth.log</code>, syslog-ng or the <a href="../en/Systemd/Journal.html" class="mw-redirect" title="Systemd journal">systemd journal</a> for failed login attempts. For each failed attempt, the offending host is banned from further communication for a limited amount of time. The default amount of time the offender is banned starts at 120 seconds, and is increases by a factor of 1.5 every time it fails another login. sshguard can be configured to permanently ban a host with too many failed attempts.
+<p>sshguard works by monitoring <code>/var/log/auth.log</code>, syslog-ng or the <a href="/title/Systemd_journal" class="mw-redirect" title="Systemd journal">systemd journal</a> for failed login attempts. For each failed attempt, the offending host is banned from further communication for a limited amount of time. The default amount of time the offender is banned starts at 120 seconds, and is increases by a factor of 1.5 every time it fails another login. sshguard can be configured to permanently ban a host with too many failed attempts.
 </p>
 <p>Both temporary and permanent bans are done by adding an entry into the "sshguard" chain in iptables that drops all packets from the offender. The ban is then logged to syslog and ends up in <code>/var/log/auth.log</code>, or the systemd journal if the latter is being used.
 </p>
-<p>You must configure one of the following firewalls to be used with sshguard in order for blocking to work. 
+<p>You must configure one of the following firewalls to be used with sshguard in order for blocking to work.
 </p>
-<h4><span class="mw-headline" id="firewalld">firewalld</span></h4>
-<p>sshguard can work with <a href="../en/Firewalld.html" title="Firewalld">firewalld</a>. Make sure you have firewalld enabled, configured and setup first. To make sshguard write to your zone of preference, issue the following commands:
+<h3><span class="mw-headline" id="firewalld">firewalld</span></h3>
+<p>sshguard can work with <a href="/title/Firewalld" title="Firewalld">firewalld</a>. Make sure you have firewalld enabled, configured and setup first. To make sshguard write to your zone of preference, issue the following commands:
 </p>
 <pre># firewall-cmd --permanent --zone=public --add-rich-rule="rule source ipset=sshguard4 drop"
 </pre>
@@ -124,7 +124,7 @@
 </p>
 <pre>BACKEND="/usr/lib/sshguard/sshg-fw-firewalld"
 </pre>
-<h4><span class="mw-headline" id="UFW">UFW</span></h4>
+<h3><span class="mw-headline" id="UFW">UFW</span></h3>
 <p>
 If UFW is installed and enabled, it must be given the ability to pass along DROP control to sshguard.  This is accomplished by modifying <code>/etc/ufw/before.rules</code> to contain the following lines which should be inserted just after the section for loopback devices.  </p>
 <div class="archwiki-template-box archwiki-template-box-note">
@@ -138,11 +138,11 @@ If UFW is installed and enabled, it must be given the ability to pass along DROP
 :sshguard - [0:0]
 -A ufw-before-input -p tcp --dport 22 -j sshguard
 </pre>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">Restart</a> ufw after making this modification.
+<p><a href="/title/Restart" class="mw-redirect" title="Restart">Restart</a> ufw after making this modification.
 </p>
-<h4><span class="mw-headline" id="iptables">iptables</span></h4>
+<h3><span class="mw-headline" id="iptables">iptables</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> See <a href="../en/Iptables.html" title="Iptables">iptables</a> and <a href="../en/Simple_stateful_firewall.html" title="Simple stateful firewall">Simple stateful firewall</a> first to set up a firewall.</div>
+<strong>Note:</strong> See <a href="/title/Iptables" title="Iptables">iptables</a> and <a href="/title/Simple_stateful_firewall" title="Simple stateful firewall">Simple stateful firewall</a> first to set up a firewall.</div>
 <p>The main configuration required is creating a chain named <code>sshguard</code>, where sshguard automatically inserts rules to drop packets coming from bad hosts:
 </p>
 <pre># iptables -N sshguard
@@ -157,16 +157,16 @@ If UFW is installed and enabled, it must be given the ability to pass along DROP
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> For IPv6, repeat the same steps with <i>ip6tables</i> and save the rules with <i>ip6tables-save</i> to <code>/etc/iptables/ip6tables.rules</code>.</div>
-<h4><span class="mw-headline" id="nftables">nftables</span></h4>
+<h3><span class="mw-headline" id="nftables">nftables</span></h3>
 <p>Edit <code>/etc/sshguard.conf</code> and change the value of <code>BACKEND</code> to the following:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/sshguard.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">BACKEND="/usr/lib/sshguard/sshg-fw-nft-sets"</pre>
-<p>When you <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">start/enable</a> the <code>sshguard.service</code>, two new tables named <code>sshguard</code> in the <code>ip</code> and <code>ip6</code> address families are added which filter incoming traffic through sshguard's list of IP addresses. The chains in the <code>sshguard</code> table have a priority of -10 and will be processed before other rules of lower priority. See <span class="plainlinks archwiki-template-man" title="$ man 7 sshguard-setup"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/sshguard-setup.7">sshguard-setup(7)</a></span> and <a href="../en/Nftables.html" title="Nftables">nftables</a> for more information.
+<p>When you <a href="/title/Start/enable" class="mw-redirect" title="Start/enable">start/enable</a> the <code>sshguard.service</code>, two new tables named <code>sshguard</code> in the <code>ip</code> and <code>ip6</code> address families are added which filter incoming traffic through sshguard's list of IP addresses. The chains in the <code>sshguard</code> table have a priority of -10 and will be processed before other rules of lower priority. See <span class="plainlinks archwiki-template-man" title="$ man 7 sshguard-setup"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/sshguard-setup.7">sshguard-setup(7)</a></span> and <a href="/title/Nftables" title="Nftables">nftables</a> for more information.
 </p>
 <h2><span class="mw-headline" id="Usage">Usage</span></h2>
 <h3><span class="mw-headline" id="systemd">systemd</span></h3>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">Enable</a> and <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start">start</a> <code>sshguard.service</code>.
+<p><a href="/title/Enable" class="mw-redirect" title="Enable">Enable</a> and <a href="/title/Start" class="mw-redirect" title="Start">start</a> <code>sshguard.service</code>.
 </p>
 <h3><span class="mw-headline" id="syslog-ng">syslog-ng</span></h3>
 <p>If you have <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=syslog-ng">syslog-ng</a></span> installed, you may start sshguard directly from the command line instead.
@@ -185,13 +185,13 @@ If UFW is installed and enabled, it must be given the ability to pass along DROP
 </pre>
 <p>The <code>200:</code> in this example tells sshguard to permanently ban a host after achieving a danger level of 200.
 </p>
-<p>Finally <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>sshguard.service</code>
+<p>Finally <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> <code>sshguard.service</code>
 </p>
 <h3><span class="mw-headline" id="Moderate_banning_example">Moderate banning example</span></h3>
 <p>A slightly more aggressive banning rule than the default one is proposed here to illustrate various options:
 </p>
 <ul>
-<li>It monitors <a href="../en/OpenSSH.html" class="mw-redirect" title="Sshd">sshd</a> and <a href="../en/Very_Secure_FTP_Daemon.html" class="mw-redirect" title="Vsftpd">vsftpd</a> via logs from the <a href="../en/Systemd/Journal.html" title="Systemd/Journal">systemd/Journal</a>
+<li>It monitors <a href="/title/Sshd" class="mw-redirect" title="Sshd">sshd</a> and <a href="/title/Vsftpd" class="mw-redirect" title="Vsftpd">vsftpd</a> via logs from the <a href="/title/Systemd/Journal" title="Systemd/Journal">systemd/Journal</a>
 </li>
 <li>It blocks attackers after 2 attempts (each having a cost of 10, explaining the <code>20</code> value of the <code>THRESHOLD</code> parameter) for 180 seconds with subsequent block time longer by a factor of 1.5. Note that this 1.5 multiplicative delay is internal and not controlled in the settings</li>
 <li>Attackers are permanently blacklisted after 10 attempts (10 attempts having each a cost of 10, explaining the <code>100</code> value in the <code>BLACKLIST_FILE</code> parameter)</li>
@@ -224,13 +224,13 @@ IPV4_SUBNET=24</pre>
 <pre>THRESHOLD=10
 BLACKLIST_FILE=10:/var/db/sshguard/blacklist.db
 </pre>
-<p>Finally <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">restart</a> <code>sshguard.service</code>.
+<p>Finally <a href="/title/Restart" class="mw-redirect" title="Restart">restart</a> <code>sshguard.service</code>.
 </p>
 <p>Also, to prevent multiple authentication attempts during a single connection, you may want to change <code>/etc/ssh/sshd_config</code> by defining:
 </p>
 <pre>MaxAuthTries 1
 </pre>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Restart">Restart</a> <code>sshd.service</code> for this change to take effect.
+<p><a href="/title/Restart" class="mw-redirect" title="Restart">Restart</a> <code>sshd.service</code> for this change to take effect.
 </p>
 <h2><span class="mw-headline" id="Tips_and_Tricks">Tips and Tricks</span></h2>
 <h3><span class="mw-headline" id="Unbanning">Unbanning</span></h3>
@@ -257,14 +257,14 @@ BLACKLIST_FILE=10:/var/db/sshguard/blacklist.db
 <h3><span class="mw-headline" id="Logging">Logging</span></h3>
 <p>To see what is being passed to sshguard, examine the script in <code>/usr/lib/systemd/scripts/sshguard-journalctl</code> and the systemd service <code>sshguard.service</code>. An equivalent command to view the logs in the terminal:
 </p>
-<pre>$ journalctl -afb -p info SYSLOG_FACILITY=4 SYSLOG_FACILITY=10
+<pre># journalctl -afb -p info SYSLOG_FACILITY=4 SYSLOG_FACILITY=10
 </pre>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Secure_Shell.html" title="Category:Secure Shell">Secure Shell</a></li>
-<li><a href="../en/Category:Firewalls.html" title="Category:Firewalls">Firewalls</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Secure_Shell" title="Category:Secure Shell">Secure Shell</a></li>
+<li><a href="/title/Category:Firewalls" title="Category:Firewalls">Firewalls</a></li>
 </ul>
 </div></div>
 	</div>
@@ -272,15 +272,15 @@ BLACKLIST_FILE=10:/var/db/sshguard/blacklist.db
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Sshguard&amp;oldid=657645">https://wiki.archlinux.org/index.php?title=Sshguard&amp;oldid=657645</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 4 April 2021, at 22:18.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Sshguard&amp;oldid=667675">https://wiki.archlinux.org/index.php?title=Sshguard&amp;oldid=667675</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 3 May 2021, at 12:54.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

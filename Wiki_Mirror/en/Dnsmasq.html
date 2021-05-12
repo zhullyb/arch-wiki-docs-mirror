@@ -38,7 +38,7 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Domain_name_resolution.html" title="Domain name resolution">Domain name resolution</a></li>
+<li><a href="/title/Domain_name_resolution" title="Domain name resolution">Domain name resolution</a></li>
 </ul>
 </div>
 <p><a rel="nofollow" class="external text" href="https://www.thekelleys.org.uk/dnsmasq/doc.html">dnsmasq</a> provides a <a href="https://en.wikipedia.org/wiki/Name_server" class="extiw" title="wikipedia:Name server">DNS server</a>, a <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol" class="extiw" title="wikipedia:Dynamic Host Configuration Protocol">DHCP server</a> with support for <a href="https://en.wikipedia.org/wiki/DHCPv6" class="extiw" title="wikipedia:DHCPv6">DHCPv6</a> and <a href="https://en.wikipedia.org/wiki/Preboot_Execution_Environment" class="extiw" title="wikipedia:Preboot Execution Environment">PXE</a>, and a <a href="https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol" class="extiw" title="wikipedia:Trivial File Transfer Protocol">TFTP server</a>. It is designed to be lightweight and have a small footprint, suitable for resource constrained routers and firewalls. dnsmasq can also be configured to cache DNS queries for improved DNS lookup speeds to previously visited sites.
@@ -99,14 +99,14 @@
 </div>
 
 <h2><span class="mw-headline" id="Installation">Installation</span></h2>
-<p><a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> package.
+<p><a href="/title/Install" class="mw-redirect" title="Install">Install</a> the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> package.
 </p>
 <h2><span class="mw-headline" id="Start_the_daemon">Start the daemon</span></h2>
-<p><a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Start/enable">Start/enable</a> <code>dnsmasq.service</code>.
+<p><a href="/title/Start/enable" class="mw-redirect" title="Start/enable">Start/enable</a> <code>dnsmasq.service</code>.
 </p>
-<p>To see if dnsmasq started properly, check the system's journal:
+<p>To see if dnsmasq started properly, check the system's <a href="/title/Journal" class="mw-redirect" title="Journal">journal</a>:
 </p>
-<pre>$ journalctl -u dnsmasq.service
+<pre># journalctl -u dnsmasq.service
 </pre>
 <p>The network will also need to be restarted so the DHCP client can create a new <code>/etc/resolv.conf</code>.
 </p>
@@ -115,7 +115,7 @@
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
 <strong>Note:</strong> dnsmasq's default configuration enables its DNS server. If you do not require it, you need to explicitly disable it by setting <code>port=0</code>.
-<p>If dnsmasq will not be used as a local DNS resolver, you may also want to <a href="../en/Systemd.html#Editing_provided_units" class="mw-redirect" title="Edit">edit</a> <code>dnsmasq.service</code> so that it does not pull in <code>nss-lookup.target</code>:
+<p>If dnsmasq will not be used as a local DNS resolver, you may also want to <a href="/title/Edit" class="mw-redirect" title="Edit">edit</a> <code>dnsmasq.service</code> so that it does not pull in <code>nss-lookup.target</code>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/dnsmasq.service.d/no-nss-lookup-target.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
@@ -139,7 +139,7 @@ Wants=</pre>
 </p>
 <pre>cache-size=1000
 </pre>
-<p>To validate <a href="../en/DNSSEC.html" title="DNSSEC">DNSSEC</a> load the DNSSEC trust anchors provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> package  and set the option <code>dnssec</code>:
+<p>To validate <a href="/title/DNSSEC" title="DNSSEC">DNSSEC</a> load the DNSSEC trust anchors provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=dnsmasq">dnsmasq</a></span> package  and set the option <code>dnssec</code>:
 </p>
 <pre>conf-file=/usr/share/dnsmasq/trust-anchors.conf
 dnssec
@@ -149,10 +149,10 @@ dnssec
 <h4><span class="mw-headline" id="DNS_addresses_file_and_forwarding">DNS addresses file and forwarding</span></h4>
 <p>After configuring dnsmasq, you need to add the localhost addresses as the only nameservers in <code>/etc/resolv.conf</code>. This causes all queries to be sent to dnsmasq.
 </p>
-<p>Since dnsmasq is a stub resolver not a recursive resolver you must set up forwarding to an external DNS server. This can be done automatically by using <a href="../en/Openresolv.html" title="Openresolv">openresolv</a> or by manually specifying the DNS server address in dnsmasq's configuration.
+<p>Since dnsmasq is a stub resolver not a recursive resolver you must set up forwarding to an external DNS server. This can be done automatically by using <a href="/title/Openresolv" title="Openresolv">openresolv</a> or by manually specifying the DNS server address in dnsmasq's configuration.
 </p>
 <h5><span class="mw-headline" id="openresolv">openresolv</span></h5>
-<p>If your network manager supports <i>resolvconf</i>, instead of directly altering <code>/etc/resolv.conf</code>, you can use <a href="../en/Openresolv.html" title="Openresolv">openresolv</a> to <a rel="nofollow" class="external text" href="https://roy.marples.name/projects/openresolv/configuration/">generate configuration files for dnsmasq</a>.
+<p>If your network manager supports <i>resolvconf</i>, instead of directly altering <code>/etc/resolv.conf</code>, you can use <a href="/title/Openresolv" title="Openresolv">openresolv</a> to <a rel="nofollow" class="external text" href="https://roy.marples.name/projects/openresolv/configuration/">generate configuration files for dnsmasq</a>.
 </p>
 <p>Edit <code>/etc/resolvconf.conf</code> and add the loopback addresses as name servers, and configure openresolv to write out dnsmasq configuration:
 </p>
@@ -180,7 +180,7 @@ resolv-file=/etc/dnsmasq-resolv.conf
 nameserver 127.0.0.1
 options trust-ad
 </pre>
-<p>Make sure to protect <code>/etc/resolv.conf</code> from modification as described in <a href="../en/Domain_name_resolution.html#Overwriting_of_/etc/resolv.conf" title="Domain name resolution">Domain name resolution#Overwriting of /etc/resolv.conf</a>.
+<p>Make sure to protect <code>/etc/resolv.conf</code> from modification as described in <a href="/title/Domain_name_resolution#Overwriting_of_/etc/resolv.conf" title="Domain name resolution">Domain name resolution#Overwriting of /etc/resolv.conf</a>.
 </p>
 <p>The upstream DNS server addresses must then be specified in dnsmasq's configuration file as <code>server=<i>server_address</i></code>. Also add <code>no-resolv</code> so dnsmasq does not needlessly read <code>/etc/resolv.conf</code> which only contains the localhost addresses of itself. 
 </p>
@@ -220,13 +220,13 @@ domain=lan
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ drill archlinux.org | grep "Query time"</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">;; Query time: 2 msec
 </pre>
-<p>To test if DNSSEC validation is working see <a href="../en/DNSSEC.html#Testing" title="DNSSEC">DNSSEC#Testing</a>.
+<p>To test if DNSSEC validation is working see <a href="/title/DNSSEC#Testing" title="DNSSEC">DNSSEC#Testing</a>.
 </p>
 <h3><span class="mw-headline" id="DHCP_server">DHCP server</span></h3>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Add instructions for IPv6 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Dnsmasq">Talk:Dnsmasq#</a>)</div>
+<b>Reason:</b> Add instructions for IPv6 (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:Dnsmasq">Talk:Dnsmasq#</a>)</div>
 </div>
 <p>By default dnsmasq has the DHCP functionality turned off, if you want to use it you must turn it on.  Here are the important settings:
 </p>
@@ -273,14 +273,14 @@ dhcp-host=aa:bb:cc:ff:dd:ee,192.168.111.51</pre>
 <p>If you inspect the <code>/var/lib/misc/dnsmasq.leases</code> file on the server, you should be able to see the lease.
 </p>
 <h3><span class="mw-headline" id="TFTP_server">TFTP server</span></h3>
-<p>dnsmasq has built-in <a href="../en/TFTP.html" title="TFTP">TFTP</a> server.
+<p>dnsmasq has built-in <a href="/title/TFTP" title="TFTP">TFTP</a> server.
 </p>
 <p>To use it, create a root directory for TFTP (e.g. <code>/srv/tftp</code>) to put transferable files in.
 </p>
 <pre>enable-tftp
 tftp-root=/srv/tftp
 </pre>
-<p>For increased security it is advised to use dnsmasq's TFTP secure mode. In secure mode only files owned by the <code>dnsmasq</code> user will be served over TFTP. You will need to <a href="../en/File_permissions_and_attributes.html#Changing_ownership" class="mw-redirect" title="Chown">chown</a> TFTP root and all files in it to <code>dnsmasq</code> user to use this feature.
+<p>For increased security it is advised to use dnsmasq's TFTP secure mode. In secure mode only files owned by the <code>dnsmasq</code> user will be served over TFTP. You will need to <a href="/title/Chown" class="mw-redirect" title="Chown">chown</a> TFTP root and all files in it to <code>dnsmasq</code> user to use this feature.
 </p>
 <pre>tftp-secure
 </pre>
@@ -291,7 +291,7 @@ tftp-root=/srv/tftp
 </p>
 <ol>
 <li>Setup the <a href="#TFTP_server">#TFTP server</a> and the <a href="#DHCP_server">#DHCP server</a> (in full DHCP or proxy mode) in the dnsmasq configuration file,</li>
-<li>Copy and configure a PXE compatible bootloader (e.g. <a href="../en/Syslinux.html#PXELINUX" class="mw-redirect" title="PXELINUX">PXELINUX</a>) in the TFTP root directory,</li>
+<li>Copy and configure a PXE compatible bootloader (e.g. <a href="/title/PXELINUX" class="mw-redirect" title="PXELINUX">PXELINUX</a>) in the TFTP root directory,</li>
 <li>Enable PXE in the dnsmasq configuration file:</li>
 </ol>
 <p>To simply send one file:
@@ -322,7 +322,7 @@ dhcp-boot=tag:bios,bios/lpxelinux.0
 </pre>
 <p>See <span class="plainlinks archwiki-template-man" title="$ man 8 dnsmasq"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/dnsmasq.8">dnsmasq(8)</a></span> for more options.
 </p>
-<p>The rest is up to the <a href="../en/Arch_boot_process.html#Boot_loader" class="mw-redirect" title="Bootloader">bootloader</a>.
+<p>The rest is up to the <a href="/title/Bootloader" class="mw-redirect" title="Bootloader">bootloader</a>.
 </p>
 <h2><span class="mw-headline" id="Tips_and_tricks">Tips and tricks</span></h2>
 <h3><span class="mw-headline" id="Prevent_OpenDNS_redirecting_Google_queries">Prevent OpenDNS redirecting Google queries</span></h3>
@@ -351,7 +351,7 @@ dhcp-boot=tag:bios,bios/lpxelinux.0
 bind-dynamic
 </pre>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> This is the default in <a href="../en/Libvirt.html" title="Libvirt">libvirt</a>.</div>
+<strong>Note:</strong> This is the default in <a href="/title/Libvirt" title="Libvirt">libvirt</a>.</div>
 <h3><span class="mw-headline" id="Domain_blocklisting">Domain blocklisting</span></h3>
 <p>To blocklist domains, i.e. answer queries for them with NXDOMAIN, use the <code>address</code> option without specifying the IP address:
 </p>
@@ -368,12 +368,12 @@ address=/anotherblocked.example/
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Categories</a>: <ul>
-<li><a href="../en/Category:Domain_Name_System.html" title="Category:Domain Name System">Domain Name System</a></li>
-<li><a href="../en/Category:DHCP.html" title="Category:DHCP">DHCP</a></li>
+<a href="/title/Special:Categories" title="Special:Categories">Categories</a>: <ul>
+<li><a href="/title/Category:Domain_Name_System" title="Category:Domain Name System">Domain Name System</a></li>
+<li><a href="/title/Category:DHCP" title="Category:DHCP">DHCP</a></li>
 </ul>
 </div>
-<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
+<div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden category: <ul><li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Expansion" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li></ul>
 </div>
 </div>
 	</div>
@@ -381,15 +381,15 @@ address=/anotherblocked.example/
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dnsmasq&amp;oldid=660907">https://wiki.archlinux.org/index.php?title=Dnsmasq&amp;oldid=660907</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 16 April 2021, at 20:15.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Dnsmasq&amp;oldid=666879">https://wiki.archlinux.org/index.php?title=Dnsmasq&amp;oldid=666879</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 1 May 2021, at 17:39.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">

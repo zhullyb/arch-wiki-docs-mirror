@@ -36,12 +36,12 @@
 <div class="archwiki-template-meta-related-articles-start">
 <p>Related articles</p>
 <ul>
-<li><a href="../en/Install_Arch_Linux_on_LVM.html" title="Install Arch Linux on LVM">Install Arch Linux on LVM</a></li>
-<li><a href="../en/LVM_on_software_RAID.html" title="LVM on software RAID">LVM on software RAID</a></li>
-<li><a href="../en/Dm-crypt/Encrypting_an_entire_system.html#LVM_on_LUKS" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LVM on LUKS</a></li>
-<li><a href="../en/Dm-crypt/Encrypting_an_entire_system.html#LUKS_on_LVM" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LUKS on LVM</a></li>
-<li><a href="../en/Resizing_LVM-on-LUKS.html" title="Resizing LVM-on-LUKS">Resizing LVM-on-LUKS</a></li>
-<li><a href="../en/Create_root_filesystem_snapshots_with_LVM.html" title="Create root filesystem snapshots with LVM">Create root filesystem snapshots with LVM</a></li>
+<li><a href="/title/Install_Arch_Linux_on_LVM" title="Install Arch Linux on LVM">Install Arch Linux on LVM</a></li>
+<li><a href="/title/LVM_on_software_RAID" title="LVM on software RAID">LVM on software RAID</a></li>
+<li><a href="/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LVM on LUKS</a></li>
+<li><a href="/title/Dm-crypt/Encrypting_an_entire_system#LUKS_on_LVM" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LUKS on LVM</a></li>
+<li><a href="/title/Resizing_LVM-on-LUKS" title="Resizing LVM-on-LUKS">Resizing LVM-on-LUKS</a></li>
+<li><a href="/title/Create_root_filesystem_snapshots_with_LVM" title="Create root filesystem snapshots with LVM">Create root filesystem snapshots with LVM</a></li>
 </ul>
 </div>
 <p>From <a href="https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)" class="extiw" title="wikipedia:Logical Volume Manager (Linux)">Wikipedia:Logical Volume Manager (Linux)</a>:
@@ -164,7 +164,7 @@
 
 <h2><span class="mw-headline" id="Background">Background</span></h2>
 <h3><span class="mw-headline" id="LVM_building_blocks">LVM building blocks</span></h3>
-<p>Logical Volume Management utilizes the kernel's <a rel="nofollow" class="external text" href="http://sources.redhat.com/dm/">device-mapper</a> feature to provide a system of <a href="../en/Partitioning.html" class="mw-redirect" title="Partition">partitions</a> independent of underlying disk layout. With LVM you abstract your storage and have "virtual partitions", making <a href="#Resizing_the_logical_volume_and_file_system_separately">extending/shrinking</a> easier (subject to potential filesystem limitations).
+<p>Logical Volume Management utilizes the kernel's <a rel="nofollow" class="external text" href="http://sources.redhat.com/dm/">device-mapper</a> feature to provide a system of <a href="/title/Partition" class="mw-redirect" title="Partition">partitions</a> independent of underlying disk layout. With LVM you abstract your storage and have "virtual partitions", making <a href="#Resizing_the_logical_volume_and_file_system_separately">extending/shrinking</a> easier (subject to potential filesystem limitations).
 </p>
 <p>Virtual partitions allow addition and removal without worry of whether you have enough contiguous space on a particular disk, getting caught up fdisking a disk in use (and wondering whether the kernel is using the old or new partition table), or, having to move other partitions out of the way.
 </p>
@@ -172,11 +172,11 @@
 </p>
 <dl>
 <dt>Physical volume (PV)</dt>
-<dd>Unix block device node, usable for storage by LVM. Examples: a hard disk, an <a href="../en/Partitioning.html#Master_Boot_Record" class="mw-redirect" title="MBR">MBR</a> or <a href="../en/Partitioning.html#GUID_Partition_Table" class="mw-redirect" title="GPT">GPT</a> partition, a loopback file, a device mapper device (e.g. <a href="../en/Dm-crypt.html" title="Dm-crypt">dm-crypt</a>). It hosts an LVM header.</dd>
+<dd>Unix block device node, usable for storage by LVM. Examples: a hard disk, an <a href="/title/MBR" class="mw-redirect" title="MBR">MBR</a> or <a href="/title/GPT" class="mw-redirect" title="GPT">GPT</a> partition, a loopback file, a device mapper device (e.g. <a href="/title/Dm-crypt" title="Dm-crypt">dm-crypt</a>). It hosts an LVM header.</dd>
 <dt>Volume group (VG)</dt>
 <dd>Group of PVs that serves as a container for LVs. PEs are allocated from a VG for a LV.</dd>
 <dt>Logical volume (LV)</dt>
-<dd>"Virtual/logical partition" that resides in a VG and is composed of PEs. LVs are Unix block devices analogous to physical partitions, e.g. they can be directly formatted with a <a href="../en/File_systems.html" class="mw-redirect" title="File system">file system</a>.</dd>
+<dd>"Virtual/logical partition" that resides in a VG and is composed of PEs. LVs are Unix block devices analogous to physical partitions, e.g. they can be directly formatted with a <a href="/title/File_system" class="mw-redirect" title="File system">file system</a>.</dd>
 <dt>Physical extent (PE)</dt>
 <dd>The smallest contiguous extent (default 4 MiB) in the PV that can be assigned to a LV. Think of PEs as parts of PVs that can be allocated to any LV.</dd>
 </dl>
@@ -215,7 +215,7 @@
 <li>Resize/create/delete logical and physical volumes online. File systems on them still need to be resized, but some (such as ext4) support online resizing.</li>
 <li>Online/live migration of LV being used by services to different disks without having to restart services.</li>
 <li>Snapshots allow you to backup a frozen copy of the file system, while keeping service downtime to a minimum.</li>
-<li>Support for various device-mapper targets, including transparent filesystem encryption and caching of frequently used data. This allows creating a system with (one or more) physical disks (encrypted with LUKS) and <a href="../en/Dm-crypt/Encrypting_an_entire_system.html#LVM_on_LUKS" title="Dm-crypt/Encrypting an entire system">LVM on top</a> to allow for easy resizing and management of separate volumes (e.g. for <code>/</code>, <code>/home</code>, <code>/backup</code>, etc.) without the hassle of entering a key multiple times on boot.</li>
+<li>Support for various device-mapper targets, including transparent filesystem encryption and caching of frequently used data. This allows creating a system with (one or more) physical disks (encrypted with LUKS) and <a href="/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS" title="Dm-crypt/Encrypting an entire system">LVM on top</a> to allow for easy resizing and management of separate volumes (e.g. for <code>/</code>, <code>/home</code>, <code>/backup</code>, etc.) without the hassle of entering a key multiple times on boot.</li>
 </ul>
 <h3><span class="mw-headline" id="Disadvantages">Disadvantages</span></h3>
 <ul>
@@ -224,7 +224,7 @@
 <li>If your physical volumes are not on a RAID-1, RAID-5 or RAID-6 losing one disk <i>can</i> lose one or more logical volumes if you span (or extend) your logical volumes across multiple non-redundant disks.</li>
 </ul>
 <h3><span class="mw-headline" id="Getting_started">Getting started</span></h3>
-<p>Make sure the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lvm2">lvm2</a></span> package is <a href="../en/Help:Reading.html#Installation_of_packages" class="mw-redirect" title="Install">installed</a>.
+<p>Make sure the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lvm2">lvm2</a></span> package is <a href="/title/Install" class="mw-redirect" title="Install">installed</a>.
 </p>
 <h2><span class="mw-headline" id="Volume_operations">Volume operations</span></h2>
 <h3><span class="mw-headline" id="Physical_volumes">Physical volumes</span></h3>
@@ -240,7 +240,7 @@
 <h4><span class="mw-headline" id="Growing">Growing</span></h4>
 <p>After extending or prior to reducing the size of a device that has a physical volume on it, you need to grow or shrink the PV using <code>pvresize</code>.
 </p>
-<p>To expand the PV on <code>/dev/sda1</code> after enlarging the <a href="../en/Partitioning.html" class="mw-redirect" title="Partition">partition</a>, run:
+<p>To expand the PV on <code>/dev/sda1</code> after enlarging the <a href="/title/Partition" class="mw-redirect" title="Partition">partition</a>, run:
 </p>
 <pre># pvresize /dev/sda1
 </pre>
@@ -306,8 +306,8 @@
 <li>this command moves 399668 - 307201 + 1 = 92468 PEs <b>from</b> the last segment <b>to</b> the first segment. This is possible as the first segment encloses 153600 free PEs, which can contain the 92467 - 0 + 1 = 92468 moved PEs.</li>
 <li>the <code>--alloc anywhere</code> option is used as we move PEs inside the same partition. In case of different partitions, the command would look something like this: <pre># pvmove /dev/sdb1:1000-1999 /dev/sdc1:0-999</pre>
 </li>
-<li>this command may take a long time (one to two hours) in case of large volumes. It might be a good idea to run this command in a <a href="../en/Tmux.html" title="Tmux">Tmux</a> or <a href="../en/GNU_Screen.html" title="GNU Screen">GNU Screen</a> session. Any unwanted stop of the process could be fatal.</li>
-<li>once the operation is complete, run <a href="../en/Fsck.html" title="Fsck">fsck</a> to make sure your file system is valid.</li>
+<li>this command may take a long time (one to two hours) in case of large volumes. It might be a good idea to run this command in a <a href="/title/Tmux" title="Tmux">Tmux</a> or <a href="/title/GNU_Screen" title="GNU Screen">GNU Screen</a> session. Any unwanted stop of the process could be fatal.</li>
+<li>once the operation is complete, run <a href="/title/Fsck" title="Fsck">fsck</a> to make sure your file system is valid.</li>
 </ul>
 </div>
 <h5><span class="mw-headline" id="Resize_physical_volume">Resize physical volume</span></h5>
@@ -324,7 +324,7 @@
   /dev/sdd1  vg1  lvm2 a--     1t     500g
 </pre>
 <h5><span class="mw-headline" id="Resize_partition">Resize partition</span></h5>
-<p>Last, you need to shrink the partition with your favorite <a href="../en/Partitioning.html#Partitioning_tools" title="Partitioning">partitioning tool</a>.
+<p>Last, you need to shrink the partition with your favorite <a href="/title/Partitioning#Partitioning_tools" title="Partitioning">partitioning tool</a>.
 </p>
 <h3><span class="mw-headline" id="Volume_groups">Volume groups</span></h3>
 <h4><span class="mw-headline" id="Creating_a_volume_group">Creating a volume group</span></h4>
@@ -383,7 +383,7 @@
 <p>This of course will increase the total number of physical extents on your volume group, which can be allocated by logical volumes as you see fit.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> It is considered good form to have a <a href="../en/Partitioning.html#Partition_table" class="mw-redirect" title="Partition table">partition table</a> on your storage medium below LVM. Use the appropriate partition type: <code>8e</code> for MBR, and <code>E6D6D379-F507-44C2-A23C-238F2A3DF928</code> for GPT partitions.</div>
+<strong>Note:</strong> It is considered good form to have a <a href="/title/Partition_table" class="mw-redirect" title="Partition table">partition table</a> on your storage medium below LVM. Use the appropriate partition type: <code>8e</code> for MBR, and <code>E6D6D379-F507-44C2-A23C-238F2A3DF928</code> for GPT partitions.</div>
 <h4><span class="mw-headline" id="Remove_partition_from_a_volume_group">Remove partition from a volume group</span></h4>
 <p>If you created a logical volume on the partition, <a href="#Removing_a_logical_volume">remove</a> it first.
 </p>
@@ -413,7 +413,7 @@
 </pre>
 <h3><span class="mw-headline" id="Logical_volumes">Logical volumes</span></h3>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> <span class="plainlinks archwiki-template-man" title="$ man 8 lvresize"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvresize.8">lvresize(8)</a></span> provides more or less the same options as the specialized <span class="plainlinks archwiki-template-man" title="$ man 8 lvextend"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvextend.8">lvextend(8)</a></span> and <span class="plainlinks archwiki-template-man" title="$ man 8 lvreduce"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvreduce.8">lvreduce(8)</a></span> commands, while allowing to do both types of operation. Notwithstanding this, all those utilities offer a <code>-r</code>/<code>--resizefs</code> option which allows to resize the file system together with the LV using <span class="plainlinks archwiki-template-man" title="$ man 8 fsadm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsadm.8">fsadm(8)</a></span> (<i>ext2</i>, <a href="../en/Ext3.html" title="Ext3">ext3</a>, <a href="../en/Ext4.html" title="Ext4">ext4</a>, <i>ReiserFS</i> and <a href="../en/XFS.html" title="XFS">XFS</a> supported). Therefore it may be easier to simply use <code>lvresize</code> for both operations and use <code>--resizefs</code> to simplify things a bit, except if you have specific needs or want full control over the process.</div>
+<strong>Note:</strong> <span class="plainlinks archwiki-template-man" title="$ man 8 lvresize"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvresize.8">lvresize(8)</a></span> provides more or less the same options as the specialized <span class="plainlinks archwiki-template-man" title="$ man 8 lvextend"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvextend.8">lvextend(8)</a></span> and <span class="plainlinks archwiki-template-man" title="$ man 8 lvreduce"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvreduce.8">lvreduce(8)</a></span> commands, while allowing to do both types of operation. Notwithstanding this, all those utilities offer a <code>-r</code>/<code>--resizefs</code> option which allows to resize the file system together with the LV using <span class="plainlinks archwiki-template-man" title="$ man 8 fsadm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsadm.8">fsadm(8)</a></span> (<i>ext2</i>, <a href="/title/Ext3" title="Ext3">ext3</a>, <a href="/title/Ext4" title="Ext4">ext4</a>, <i>ReiserFS</i> and <a href="/title/XFS" title="XFS">XFS</a> supported). Therefore it may be easier to simply use <code>lvresize</code> for both operations and use <code>--resizefs</code> to simplify things a bit, except if you have specific needs or want full control over the process.</div>
 <div class="archwiki-template-box archwiki-template-box-warning">
 <strong>Warning:</strong> While enlarging a file system can often be done on-line (<i>i.e.</i> while it is mounted), even for the root partition, shrinking will nearly always require to first unmount the file system so as to prevent data loss. Make sure your file system supports what you are trying to do.</div>
 <h4><span class="mw-headline" id="Creating_a_logical_volume">Creating a logical volume</span></h4>
@@ -425,7 +425,7 @@
 </p>
 <pre># lvcreate -l +100%FREE MyVolGroup -n homevol
 </pre>
-<p>The new LV will appear as <code>/dev/MyVolGroup/homevol</code>. Now you can <a href="../en/File_systems.html#Create_a_file_system" class="mw-redirect" title="Format">format</a> the LV with an appropriate file system.
+<p>The new LV will appear as <code>/dev/MyVolGroup/homevol</code>. Now you can <a href="/title/Format" class="mw-redirect" title="Format">format</a> the LV with an appropriate file system.
 </p>
 <p>You can check the LV is created using the following command:
 </p>
@@ -444,7 +444,7 @@
 </p>
 <h4><span class="mw-headline" id="Resizing_the_logical_volume_and_file_system_in_one_go">Resizing the logical volume and file system in one go</span></h4>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> Only <i>ext2</i>, <a href="../en/Ext3.html" title="Ext3">ext3</a>, <a href="../en/Ext4.html" title="Ext4">ext4</a>, <i>ReiserFS</i> and <a href="../en/XFS.html" title="XFS">XFS</a> <a href="../en/File_systems.html" title="File systems">file systems</a> are supported. For a different type of file system see <a href="#Resizing_the_logical_volume_and_file_system_separately">#Resizing the logical volume and file system separately</a>.</div>
+<strong>Note:</strong> Only <i>ext2</i>, <a href="/title/Ext3" title="Ext3">ext3</a>, <a href="/title/Ext4" title="Ext4">ext4</a>, <i>ReiserFS</i> and <a href="/title/XFS" title="XFS">XFS</a> <a href="/title/File_systems" title="File systems">file systems</a> are supported. For a different type of file system see <a href="#Resizing_the_logical_volume_and_file_system_separately">#Resizing the logical volume and file system separately</a>.</div>
 <p>Extend the logical volume <code>mediavol</code> in <code>MyVolGroup</code> by 10 GiB  and resize its file system <i>all at once</i>:
 </p>
 <pre># lvresize -L +10G --resizefs MyVolGroup/mediavol
@@ -460,17 +460,17 @@
 <p>See <span class="plainlinks archwiki-template-man" title="$ man 8 lvresize"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvresize.8">lvresize(8)</a></span> for more detailed options.
 </p>
 <h4><span class="mw-headline" id="Resizing_the_logical_volume_and_file_system_separately">Resizing the logical volume and file system separately</span></h4>
-<p>For file systems not supported by <span class="plainlinks archwiki-template-man" title="$ man 8 fsadm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsadm.8">fsadm(8)</a></span> will need to use the <a href="../en/File_systems.html#Types_of_file_systems" title="File systems">appropriate utility</a> to resize the file system before shrinking the logical volume or after expanding it.
+<p>For file systems not supported by <span class="plainlinks archwiki-template-man" title="$ man 8 fsadm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/fsadm.8">fsadm(8)</a></span> will need to use the <a href="/title/File_systems#Types_of_file_systems" title="File systems">appropriate utility</a> to resize the file system before shrinking the logical volume or after expanding it.
 </p>
 <p>To extend logical volume <code>mediavol</code> within volume group <code>MyVolGroup</code> by 2 GiB <i>without</i> touching its file system:
 </p>
 <pre># lvresize -L +2G MyVolGroup/mediavol
 </pre>
-<p>Now expand the file system (<a href="../en/Ext4.html" title="Ext4">ext4</a> in this example) to the maximum size of the underlying logical volume:
+<p>Now expand the file system (<a href="/title/Ext4" title="Ext4">ext4</a> in this example) to the maximum size of the underlying logical volume:
 </p>
 <pre># resize2fs /dev/MyVolGroup/mediavol
 </pre>
-<p>To reduce the size of logical volume <code>mediavol</code> in <code>MyVolGroup</code> by 500 MiB, first calculate the resulting file system size and shrink the file system (<a href="../en/Ext4.html" title="Ext4">ext4</a> in this example) to the new size:
+<p>To reduce the size of logical volume <code>mediavol</code> in <code>MyVolGroup</code> by 500 MiB, first calculate the resulting file system size and shrink the file system (<a href="/title/Ext4" title="Ext4">ext4</a> in this example) to the new size:
 </p>
 <pre># resize2fs /dev/MyVolGroup/mediavol <i>NewSize</i>
 </pre>
@@ -478,7 +478,7 @@
 </p>
 <pre># lvresize -L -500M MyVolGroup/mediavol
 </pre>
-<p>To calculate the exact logical volume size for <i>ext2</i>, <a href="../en/Ext3.html" title="Ext3">ext3</a>, <a href="../en/Ext4.html" title="Ext4">ext4</a> file systems, use a simple formula: <code>LVM_EXTENTS = FS_BLOCKS × FS_BLOCKSIZE ÷ LVM_EXTENTSIZE</code>.
+<p>To calculate the exact logical volume size for <i>ext2</i>, <a href="/title/Ext3" title="Ext3">ext3</a>, <a href="/title/Ext4" title="Ext4">ext4</a> file systems, use a simple formula: <code>LVM_EXTENTS = FS_BLOCKS × FS_BLOCKSIZE ÷ LVM_EXTENTSIZE</code>.
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;"># tune2fs -l /dev/MyVolGroup/mediavol | grep Block</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">Block count:              102400000
@@ -554,21 +554,21 @@ Logical volume sysvg/root successfully resized.
 <strong>Note:</strong> The snapshot will no longer exist after merging.</div>
 <p>Also multiple snapshots can be taken and each one can be merged with the origin logical volume at will.
 </p>
-<p>The snapshot can be mounted and backed up with <a href="../en/Dd.html" title="Dd">dd</a> or <a href="../en/Archiving_and_compression.html" class="mw-redirect" title="Tar">tar</a>. The size of the backup file done with <i>dd</i> will be the size of the files residing on the snapshot volume. 
+<p>The snapshot can be mounted and backed up with <a href="/title/Dd" title="Dd">dd</a> or <a href="/title/Tar" class="mw-redirect" title="Tar">tar</a>. The size of the backup file done with <i>dd</i> will be the size of the files residing on the snapshot volume. 
 To restore just create a snapshot, mount it, and write or extract the backup to it. And then merge it with the origin.
 </p>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="../File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a><b>This article or section needs expansion.</b><a href="/title/File:Tango-view-fullscreen.png" class="image"><img alt="Tango-view-fullscreen.png" src="../File:Tango-view-fullscreen.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> scripts to automate snapshots of root before updates, to rollback... updating <code>menu.lst</code> to boot snapshots (separate article?) (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:LVM">Talk:LVM#</a>)</div>
+<b>Reason:</b> scripts to automate snapshots of root before updates, to rollback... updating <code>menu.lst</code> to boot snapshots (separate article?) (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:LVM">Talk:LVM#</a>)</div>
 </div>
 <p>Snapshots are primarily used to provide a frozen copy of a file system to make backups; a backup taking two hours provides a more consistent image of the file system than directly backing up the partition.
 </p>
-<p>See <a href="../en/Create_root_filesystem_snapshots_with_LVM.html" title="Create root filesystem snapshots with LVM">Create root filesystem snapshots with LVM</a> for automating the creation of clean root file system snapshots during system startup for backup and rollback.
+<p>See <a href="/title/Create_root_filesystem_snapshots_with_LVM" title="Create root filesystem snapshots with LVM">Create root filesystem snapshots with LVM</a> for automating the creation of clean root file system snapshots during system startup for backup and rollback.
 </p>
-<p><a href="../en/Dm-crypt/Encrypting_an_entire_system.html#LVM_on_LUKS" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LVM on LUKS</a> and <a href="../en/Dm-crypt/Encrypting_an_entire_system.html#LUKS_on_LVM" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LUKS on LVM</a>.
+<p><a href="/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LVM on LUKS</a> and <a href="/title/Dm-crypt/Encrypting_an_entire_system#LUKS_on_LVM" title="Dm-crypt/Encrypting an entire system">dm-crypt/Encrypting an entire system#LUKS on LVM</a>.
 </p>
-<p>If you have LVM volumes not activated via the <a href="../en/Arch_boot_process.html#initramfs" class="mw-redirect" title="Initramfs">initramfs</a>, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> <code>lvm-monitoring.service</code>, which is provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lvm2">lvm2</a></span> package.
+<p>If you have LVM volumes not activated via the <a href="/title/Initramfs" class="mw-redirect" title="Initramfs">initramfs</a>, <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> <code>lvm-monitoring.service</code>, which is provided by the <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://archlinux.org/packages/?name=lvm2">lvm2</a></span> package.
 </p>
 <h3><span class="mw-headline" id="Cache">Cache</span></h3>
 <p>From <span class="plainlinks archwiki-template-man" title="$ man 7 lvmcache"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvmcache.7">lvmcache(7)</a></span>:
@@ -604,16 +604,16 @@ To restore just create a snapshot, mount it, and write or extract the backup to 
 <p>This commits any pending writes still in the cache back to the origin LV, then deletes the cache. Other options are available and described in <span class="plainlinks archwiki-template-man" title="$ man 7 lvmcache"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvmcache.7">lvmcache(7)</a></span>.
 </p>
 <h3><span class="mw-headline" id="RAID">RAID</span></h3>
-<p>LVM may be used to create a <a href="../en/RAID.html#Implementation" title="RAID">software RAID</a>. It is a good choice if the user does not have hardware RAID and was planning on using LVM anyway. From <span class="plainlinks archwiki-template-man" title="$ man 7 lvmraid"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvmraid.7">lvmraid(7)</a></span>:
+<p>LVM may be used to create a <a href="/title/RAID#Implementation" title="RAID">software RAID</a>. It is a good choice if the user does not have hardware RAID and was planning on using LVM anyway. From <span class="plainlinks archwiki-template-man" title="$ man 7 lvmraid"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvmraid.7">lvmraid(7)</a></span>:
 </p>
 <dl><dd>
 <span class="plainlinks archwiki-template-man" title="$ man 8 lvm"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvm.8">lvm(8)</a></span> RAID is a way to create a Logical Volume (LV) that uses multiple physical devices to improve performance or tolerate device failures.  In LVM, the physical devices are Physical Volumes (PVs) in a single Volume Group (VG).</dd></dl>
 <p>LVM RAID supports RAID 0, RAID 1, RAID 4, RAID 5, RAID 6 and RAID 10. See <a href="https://en.wikipedia.org/wiki/Standard_RAID_levels" class="extiw" title="wikipedia:Standard RAID levels">Wikipedia:Standard RAID levels</a> for details on each level.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> If your root file system is on LVM RAID, additional configuration for <i>mkinitcpio</i> is needed. See <a href="../en/Install_Arch_Linux_on_LVM.html#Configure_mkinitcpio_for_RAID" title="Install Arch Linux on LVM">Install Arch Linux on LVM#Configure mkinitcpio for RAID</a>.</div>
+<strong>Note:</strong> If your root file system is on LVM RAID, additional configuration for <i>mkinitcpio</i> is needed. See <a href="/title/Install_Arch_Linux_on_LVM#Configure_mkinitcpio_for_RAID" title="Install Arch Linux on LVM">Install Arch Linux on LVM#Configure mkinitcpio for RAID</a>.</div>
 <div class="archwiki-template-box archwiki-template-box-tip">
-<strong>Tip:</strong> <a href="../en/RAID.html" class="mw-redirect" title="Mdadm">mdadm</a> may also be used to create a software RAID. It is arguably simpler, more popular, and easier to setup.</div>
+<strong>Tip:</strong> <a href="/title/Mdadm" class="mw-redirect" title="Mdadm">mdadm</a> may also be used to create a software RAID. It is arguably simpler, more popular, and easier to setup.</div>
 <h4><span class="mw-headline" id="Setup_RAID">Setup RAID</span></h4>
 <p>Create physical volumes:
 </p>
@@ -635,7 +635,7 @@ To restore just create a snapshot, mount it, and write or extract the backup to 
 </p>
 <h2><span class="mw-headline" id="Thin_provisioning">Thin provisioning</span></h2>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> When mounting a thin LV file system, always remember to use the <code>discard</code> option or to use <a href="../en/Solid_state_drive.html#Periodic_TRIM" class="mw-redirect" title="Fstrim">fstrim</a> regularly, to allow the thin LV to shrink as files are deleted.</div>
+<strong>Note:</strong> When mounting a thin LV file system, always remember to use the <code>discard</code> option or to use <a href="/title/Fstrim" class="mw-redirect" title="Fstrim">fstrim</a> regularly, to allow the thin LV to shrink as files are deleted.</div>
 <p>From <span class="plainlinks archwiki-template-man" title="$ man 7 lvmthin"><a rel="nofollow" class="external text" href="https://man.archlinux.org/man/lvmthin.7">lvmthin(7)</a></span>:
 </p>
 <dl><dd>Blocks in a standard lvm(8) Logical Volume (LV) are allocated when the LV is created, but blocks in a thin provisioned LV are allocated as they are written. Because of this, a thin provisioned LV is given a virtual size, and can then be much larger than physically available storage. The amount of physical storage provided for thin provisioned LVs can be increased later as the need arises.</dd></dl>
@@ -656,7 +656,7 @@ To restore just create a snapshot, mount it, and write or extract the backup to 
 </p>
 <pre># lvcreate -n SomeClientsRoot -V 30G --thinpool MyThinPool MyVolGroup
 </pre>
-<p>The block device <code>/dev/mapper/MyVolGroup-SomeClientsRoot</code> may then be used by a <a href="../en/VirtualBox.html" title="VirtualBox">VirtualBox</a> instance as the root partition.
+<p>The block device <code>/dev/mapper/MyVolGroup-SomeClientsRoot</code> may then be used by a <a href="/title/VirtualBox" title="VirtualBox">VirtualBox</a> instance as the root partition.
 </p>
 <h4><span class="mw-headline" id="Use_thin_snapshots_to_save_more_space">Use thin snapshots to save more space</span></h4>
 <p>Thin snapshots are much more powerful than regular snapshots, because they are themselves thin LVs. See Redhat's guide <a rel="nofollow" class="external autonumber" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/assembly_thinly-provisioned-logical-volumes_configuring-and-managing-logical-volumes#con_thin-snapshot-volumes_thinly-provisioned-logical-volumes">[1]</a> for a complete list of advantages thin snapshots have.
@@ -692,7 +692,7 @@ To restore just create a snapshot, mount it, and write or extract the backup to 
 <p>Since this thin LV's size is 16 TiB, you could add another 15.09 TiB of hard drive space before finally having to unmount and resize the file system.
 </p>
 <div class="archwiki-template-box archwiki-template-box-note">
-<strong>Note:</strong> You will probably want to use a <a href="../en/Disk_quota.html" title="Disk quota">disk quota</a> to prevent applications from attempting to use more physical storage than there actually is.</div>
+<strong>Note:</strong> You will probably want to use a <a href="/title/Disk_quota" title="Disk quota">disk quota</a> to prevent applications from attempting to use more physical storage than there actually is.</div>
 <h2><span class="mw-headline" id="Troubleshooting">Troubleshooting</span></h2>
 <h3><span class="mw-headline" id="LVM_commands_do_not_work">LVM commands do not work</span></h3>
 <ul><li>Load proper module:</li></ul>
@@ -701,13 +701,13 @@ To restore just create a snapshot, mount it, and write or extract the backup to 
 <p>The <code>dm_mod</code> module should be automatically loaded. In case it does not, you can try:
 </p>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="/title/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Should module loading at boot be done using "/etc/modules-load.d" instead? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:LVM">Talk:LVM#</a>)</div>
+<b>Reason:</b> Should module loading at boot be done using "/etc/modules-load.d" instead? (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:LVM">Talk:LVM#</a>)</div>
 </div>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/mkinitcpio.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">MODULES=(dm_mod ...)</pre>
-<p>You will need to <a href="../en/Mkinitcpio.html#Image_creation_and_activation" class="mw-redirect" title="Regenerate the initramfs">regenerate the initramfs</a> to commit any changes you made.
+<p>You will need to <a href="/title/Regenerate_the_initramfs" class="mw-redirect" title="Regenerate the initramfs">regenerate the initramfs</a> to commit any changes you made.
 </p>
 <ul><li>Try preceding commands with <i>lvm</i> like this:</li></ul>
 <pre># lvm pvdisplay
@@ -747,9 +747,9 @@ To restore just create a snapshot, mount it, and write or extract the backup to 
 <span id="Suspend.2Fresume_with_LVM_and_removable_media"></span><span class="mw-headline" id="Suspend/resume_with_LVM_and_removable_media">Suspend/resume with LVM and removable media</span>
 </h4>
 <div class="noprint archwiki-template-message">
-<p><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="../File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
+<p><a href="/title/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a><b>The factual accuracy of this article or section is disputed.</b><a href="/title/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="../File:Tango-inaccurate.png" decoding="async" width="48" height="48"></a></p>
 <div>
-<b>Reason:</b> Provided solution will not work in more complex setups like LUKS on LVM. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:LVM#LVM_on_removable_media">Talk:LVM#LVM on removable media</a>)</div>
+<b>Reason:</b> Provided solution will not work in more complex setups like LUKS on LVM. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/title/Talk:LVM#LVM_on_removable_media">Talk:LVM#LVM on removable media</a>)</div>
 </div>
 <p>In order for LVM to work properly with removable media – like an external USB drive – the volume group of the external drive needs to be deactivated before suspend. If this is not done, you may get 'buffer I/O errors on the dm device (after resume). For this reason, it is not recommended to mix external and internal drives in the same volume group.
 </p>
@@ -793,7 +793,7 @@ for vg in $vgs; do
     echo "Deactivating volume group $vg"
     vgchange -an $vg
 done</pre>
-<p>Finally, <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Enable">enable</a> the unit.
+<p>Finally, <a href="/title/Enable" class="mw-redirect" title="Enable">enable</a> the unit.
 </p>
 <h3><span class="mw-headline" id="Resizing_a_contiguous_logical_volume_fails">Resizing a contiguous logical volume fails</span></h3>
 <p>If trying to extend a logical volume errors with:
@@ -807,18 +807,18 @@ done</pre>
 <h3>
 <span id="Command_.22grub-mkconfig.22_reports_.22unknown_filesystem.22_errors"></span><span class="mw-headline" id='Command_"grub-mkconfig"_reports_"unknown_filesystem"_errors'>Command "grub-mkconfig" reports "unknown filesystem" errors</span>
 </h3>
-<p>Make sure to remove snapshot volumes before <a href="../en/GRUB.html#Generate_the_main_configuration_file" title="GRUB">generating grub.cfg</a>.
+<p>Make sure to remove snapshot volumes before <a href="/title/GRUB#Generate_the_main_configuration_file" title="GRUB">generating grub.cfg</a>.
 </p>
 <h3><span class="mw-headline" id="Thinly-provisioned_root_volume_device_times_out">Thinly-provisioned root volume device times out</span></h3>
-<p>With a large number of snapshots, <code>thin_check</code> runs for a long enough time so that waiting for the root device times out. To compensate, add the <code>rootdelay=60</code> kernel boot parameter to your boot loader configuration.  Or, make <code>thin_check</code> skip checking block mappings (see <a rel="nofollow" class="external autonumber" href="https://www.redhat.com/archives/linux-lvm/2016-January/msg00010.html">[3]</a>) and <a href="../en/Mkinitcpio.html#Image_creation_and_activation" class="mw-redirect" title="Regenerate the initramfs">regenerate the initramfs</a>:
+<p>With a large number of snapshots, <code>thin_check</code> runs for a long enough time so that waiting for the root device times out. To compensate, add the <code>rootdelay=60</code> kernel boot parameter to your boot loader configuration.  Or, make <code>thin_check</code> skip checking block mappings (see <a rel="nofollow" class="external autonumber" href="https://www.redhat.com/archives/linux-lvm/2016-January/msg00010.html">[3]</a>) and <a href="/title/Regenerate_the_initramfs" class="mw-redirect" title="Regenerate the initramfs">regenerate the initramfs</a>:
 </p>
 <pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/lvm/lvm.conf</pre>
 <pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">thin_check_options = [ "-q", "--clear-needs-check-flag", "--skip-mappings" ]</pre>
 <h3><span class="mw-headline" id="Delay_on_shutdown">Delay on shutdown</span></h3>
-<p>If you use RAID, snapshots or thin provisioning and experience a delay on shutdown, make sure <code>lvm2-monitor.service</code> is <a href="../en/Systemd.html#Using_units" class="mw-redirect" title="Started">started</a>. See <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/50420">FS#50420</a>.
+<p>If you use RAID, snapshots or thin provisioning and experience a delay on shutdown, make sure <code>lvm2-monitor.service</code> is <a href="/title/Started" class="mw-redirect" title="Started">started</a>. See <a rel="nofollow" class="external text" href="https://bugs.archlinux.org/task/50420">FS#50420</a>.
 </p>
 <h3><span class="mw-headline" id="Hibernating_into_a_thinly-provisioned_swap_volume">Hibernating into a thinly-provisioned swap volume</span></h3>
-<p>See <a href="../en/Power_management/Suspend_and_hibernate.html#Hibernation_into_a_thinly-provisioned_LVM_volume" title="Power management/Suspend and hibernate">Power management/Suspend and hibernate#Hibernation into a thinly-provisioned LVM volume</a>.
+<p>See <a href="/title/Power_management/Suspend_and_hibernate#Hibernation_into_a_thinly-provisioned_LVM_volume" title="Power management/Suspend and hibernate">Power management/Suspend and hibernate#Hibernation into a thinly-provisioned LVM volume</a>.
 </p>
 <h2><span class="mw-headline" id="See_also">See also</span></h2>
 <ul>
@@ -827,18 +827,18 @@ done</pre>
 <li><a href="https://wiki.gentoo.org/wiki/LVM" class="extiw" title="gentoo:LVM">Gentoo:LVM</a></li>
 <li><a rel="nofollow" class="external text" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/configuring_and_managing_logical_volumes/index">Red Hat Enterprise 8: Configuring and managing logical volumes</a></li>
 <li>
-<a rel="nofollow" class="external text" href="http://www.tutonics.com/2012/11/ubuntu-lvm-guide-part-1.html">Ubuntu LVM Guide Part 1</a><a rel="nofollow" class="external text" href="http://www.tutonics.com/2012/12/lvm-guide-part-2-snapshots.html">Part 2 details snapshots</a>
+<a rel="nofollow" class="external text" href="https://www.tutonics.com/2012/11/ubuntu-lvm-guide-part-1.html">Ubuntu LVM Guide Part 1</a><a rel="nofollow" class="external text" href="https://www.tutonics.com/2012/12/lvm-guide-part-2-snapshots.html">Part 2 details snapshots</a>
 </li>
 </ul>
 </div>
 </div>
 <div id="catlinks" class="catlinks" data-mw="interface">
 <div id="mw-normal-catlinks" class="mw-normal-catlinks">
-<a href="../Special:Categories.html" title="Special:Categories">Category</a>: <ul><li><a href="../en/Category:Storage_virtualization.html" title="Category:Storage virtualization">Storage virtualization</a></li></ul>
+<a href="/title/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/title/Category:Storage_virtualization" title="Category:Storage virtualization">Storage virtualization</a></li></ul>
 </div>
 <div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Expansion.html" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
-<li><a href="../en/Category:Pages_or_sections_flagged_with_Template:Accuracy.html" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Expansion" title="Category:Pages or sections flagged with Template:Expansion">Pages or sections flagged with Template:Expansion</a></li>
+<li><a href="/title/Category:Pages_or_sections_flagged_with_Template:Accuracy" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li>
 </ul>
 </div>
 </div>
@@ -847,15 +847,15 @@ done</pre>
 
 <footer id="footer" class="mw-footer" role="contentinfo" style="margin: 0">
 	<ul id="footer-info">
-		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=LVM&amp;oldid=662754">https://wiki.archlinux.org/index.php?title=LVM&amp;oldid=662754</a>"</li>
-		<li id="footer-info-lastmod"> This page was last edited on 19 April 2021, at 08:14.</li>
+		<li>Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=LVM&amp;oldid=668940">https://wiki.archlinux.org/index.php?title=LVM&amp;oldid=668940</a>"</li>
+		<li id="footer-info-lastmod"> This page was last edited on 8 May 2021, at 10:56.</li>
 		<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
 	<br>
 </ul>
 	<ul id="footer-places">
-		<li id="footer-places-privacy"><a href="../en/ArchWiki:Privacy_policy.html" title="ArchWiki:Privacy policy">Privacy policy</a></li>
-		<li id="footer-places-about"><a href="../en/ArchWiki:About.html" title="ArchWiki:About">About ArchWiki</a></li>
-		<li id="footer-places-disclaimer"><a href="../en/ArchWiki:General_disclaimer.html" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+		<li id="footer-places-privacy"><a href="/title/ArchWiki:Privacy_policy" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+		<li id="footer-places-about"><a href="/title/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+		<li id="footer-places-disclaimer"><a href="/title/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
 	</ul>
 	<ul id="footer-icons" class="noprint">
 		<li id="footer-copyrightico">
